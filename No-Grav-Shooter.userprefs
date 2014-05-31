@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\zScripts\NoGravCharacterMotor.cs">
+    <Files>
+      <File FileName="Assets\zScripts\PlayerResources.cs" Line="50" Column="42" />
+      <File FileName="Assets\zScripts\GameStart.cs" Line="31" Column="5" />
+      <File FileName="Assets\zScripts\MouseLook.cs" Line="64" Column="44" />
+      <File FileName="Assets\zScripts\NoGravCharacterMotor.cs" Line="29" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
