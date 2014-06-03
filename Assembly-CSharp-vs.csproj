@@ -46,12 +46,12 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\zScripts\GUIScript.cs" />
-     <Compile Include="Assets\zScripts\GameStart.cs" />
-     <Compile Include="Assets\zScripts\MouseLook.cs" />
-     <Compile Include="Assets\zScripts\NoGravCharacterMotor.cs" />
-     <Compile Include="Assets\zScripts\PlayerResources.cs" />
-     <Compile Include="Assets\zScripts\WallNormalGenerator.cs" />
+     <Compile Include="Assets\zScripts\GUI\GUIScript.cs" />
+     <Compile Include="Assets\zScripts\Gameplay\GameStart.cs" />
+     <Compile Include="Assets\zScripts\Gameplay\MouseLook.cs" />
+     <Compile Include="Assets\zScripts\Gameplay\NoGravCharacterMotor.cs" />
+     <Compile Include="Assets\zScripts\Gameplay\PlayerResources.cs" />
+     <Compile Include="Assets\zScripts\Menu\MenuGUI.cs" />
      <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularSmooth.shader" />
      <None Include="Assets\Standard Assets\Lumos\Read Me.txt" />
      <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularDisplacement.shader" />
