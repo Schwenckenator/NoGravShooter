@@ -2,27 +2,21 @@
 using System.Collections;
 
 public class PlayerResources : MonoBehaviour {
-	public int maxFuel;
-	public int minFuel;
+	public int maxFuel = 100;
+	public int minFuel = 0;
 	private float fuel;
 
-	public float fuelRecharge;
-	public float maxRechargeWaitTime;
+	public float fuelRecharge = 50;
+	public float maxRechargeWaitTime = 1.0f;
 	private float rechargeWaitTime;
 	// Use this for initialization
 	void Start () {
 		//Use them like percentage, for now
-		maxFuel = 100;
+
 		fuel = maxFuel;
-
-		minFuel = 0;
-
-		fuelRecharge = 100; // per second
-
-		maxRechargeWaitTime = 1.0f; // seconds
-		rechargeWaitTime = maxRechargeWaitTime;
+		rechargeWaitTime = 0;
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		RechargeFuel(fuelRecharge);

@@ -24,7 +24,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private bool grounded = false;
 	private bool inAirFlag = false;
 
-	public float fuelSpend = 1.0f;
+	public float fuelSpend = 0.5f;
 
 	void Awake () {
 		rigidbody.useGravity = false;
@@ -77,7 +77,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			force *= speed;
 
 			// If non-zero force, spend fuel
-			if(force.sqrMagnitude > 0){
+			if(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw ("JetPackUpDown"), Input.GetAxisRaw("Vertical")).sqrMagnitude > 0){
 				if(resource.SpendFuel(fuelSpend)){
 					rigidbody.AddRelativeForce(force, ForceMode.Acceleration);
 				}
