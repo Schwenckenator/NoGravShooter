@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MenuGUI : MonoBehaviour {
 	//
@@ -7,34 +8,39 @@ public class MenuGUI : MonoBehaviour {
 
 	private int currentWindow = 0;
 	private bool displayGameSettingsWindow = false;
+	private bool displayJoinByIpWindow = false;
 
-	//private Rect winRect = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
-	private Rect rectMainMenu = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
-	private Rect rectCreateGame = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
-	private Rect rectJoinGame = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
-	private Rect rectOptions = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
-	private Rect rectLobby = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
-	private Rect rectGameSettings = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
+	private Rect largeMenuRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
+	private Rect smallMenuRect = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
 
-	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings}
+	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, connecting}
 
 	private int yPosBase = 20;
 	private int yPosInc = 50;
 	private int buttonNum = 0;
 
-	private string strPortNum = "";
+	private const string GAME_TYPE = "NoGravShooter";
 
 	// For lobby chat
 	private string submittedChat = "";
 	private string currentChat = "";
-	private int numOfPlayers = 0;
+	//private int numOfPlayers = 0;
 
 	private const int MAX_PLAYERS = 32;
-	private string[] connectedPlayers = new string[MAX_PLAYERS];
+	private Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
 
 	private string serverName = "";
 	private string playerName = "";
+
 	private string ipAddress = "";
+	private bool useMasterServer = false;
+	private HostData masterServerData;
+
+	private string password = "";
+	private string strPortNum = "";
+
+	private bool connectionError = false;
+	private bool connectingNow = false;
 
 	// For Game Settings
 	public string levelName = "TestShip";
@@ -47,12 +53,12 @@ public class MenuGUI : MonoBehaviour {
 	void Start(){
 		manager = GetComponent<GameManagerScript>();
 
+		//Set Rect sizes
+
+
 		currentWindow = (int) Menu.MainMenu;
 
 		serverName = PlayerPrefs.GetString("serverName");
-		if(serverName == ""){
-			serverName = "Server";
-		}
 
 		playerName = PlayerPrefs.GetString("playerName");
 		if(playerName == ""){
@@ -72,71 +78,105 @@ public class MenuGUI : MonoBehaviour {
 	}
 
 	void OnGUI(){
-
+		if(connectingNow){
+			if(currentWindow != (int) Menu.connecting){
+				connectingNow = false;
+			}
+		}
 		if(GameManagerScript.IsSceneMenu()){
 			switch(currentWindow){
 
 			case (int) Menu.MainMenu:
-				rectMainMenu = GUI.Window ((int) Menu.MainMenu, rectMainMenu, MainMenuWindow, "Main Menu");
+				GUI.Window ((int) Menu.MainMenu, largeMenuRect, MainMenuWindow, "Main Menu");
 				break;
 			case (int) Menu.CreateGame:
-				rectCreateGame = GUI.Window ((int) Menu.CreateGame, rectCreateGame, CreateGameWindow, "Create Game");
+				GUI.Window ((int) Menu.CreateGame, largeMenuRect, CreateGameWindow, "Create Game");
 				break;
 			case (int) Menu.JoinGame:
-				rectJoinGame = GUI.Window ((int) Menu.JoinGame, rectJoinGame, JoinGameWindow, "Join Game");
+				GUI.Window ((int) Menu.JoinGame, largeMenuRect, JoinGameWindow, "Join Game");
 				break;
 			case (int) Menu.Options:
-				rectOptions = GUI.Window ((int) Menu.Options, rectOptions, OptionsWindow, "Options");
+				GUI.Window ((int) Menu.Options, largeMenuRect, OptionsWindow, "Options");
 				break;
 			case (int) Menu.Lobby:
-				rectLobby = GUI.Window ((int) Menu.Lobby, rectLobby, LobbyWindow, "Lobby");
+				GUI.Window ((int) Menu.Lobby, largeMenuRect, LobbyWindow, serverName);
+				break;
+			case (int) Menu.connecting:
+				GUI.Window ((int) Menu.connecting, smallMenuRect, ConnectingWindow, "");
 				break;
 			}
 			if(displayGameSettingsWindow){
-				rectGameSettings =GUI.ModalWindow((int) Menu.GameSettings, rectGameSettings, GameSettingsWindow, "Settings");
+				GUI.ModalWindow((int) Menu.GameSettings, smallMenuRect, GameSettingsWindow, "Settings");
 			}
-		}
-
-		if(GUI.changed){
-			Debug.Log (currentWindow.ToString());
+			if(displayJoinByIpWindow){
+				GUI.ModalWindow((int) Menu.JoinByIP, smallMenuRect, JoinByIpWindow, "Join By IP");
+			}
 		}
 	}
 
-	void MainMenuWindow(int windowId){ //
-		buttonNum = 0;
-		if(GUI.Button(new Rect(20, yPosBase+(yPosInc*buttonNum++), -40+Screen.width/3, 30), "Create Game")){
+	void MainMenuWindow(int windowId){
+		Rect standard = new Rect(largeMenuRect.width/4, 20, largeMenuRect.width/2, 30);
+			
+		GUI.Label(standard, "Player Name");
+
+		standard.y += 20;	
+		playerName = GUI.TextField(standard, playerName); 
+
+		standard.y += 50;
+		if(GUI.Button(standard, "Create Game")){
+			PlayerPrefs.SetString("playerName", playerName);
+			//Check for preferred server name
+			if(serverName == ""){
+				serverName = playerName+"'s Server";
+			}
+
 			currentWindow = (int) Menu.CreateGame;
 		}
-		if(GUI.Button(new Rect(20, yPosBase+(yPosInc*buttonNum++), -40+Screen.width/3, 30), "Join Game")){
+
+		standard.y += 50;
+		if(GUI.Button(standard, "Join Game")){
+
+			MasterServer.RequestHostList(GAME_TYPE);
+
+			PlayerPrefs.SetString("playerName", playerName);
 			currentWindow = (int) Menu.JoinGame;
 		}
-		if(GUI.Button(new Rect(20, yPosBase+(yPosInc*buttonNum++), -40+Screen.width/3, 30), "Options")){
+		standard.y += 50;
+		if(GUI.Button(standard, "Options")){
 			currentWindow = (int) Menu.Options;
 		}
 		if(!Application.isWebPlayer && !Application.isEditor){
-			if(GUI.Button(new Rect(20, yPosBase+(yPosInc*buttonNum++), -40+Screen.width/3, 30), "Quit")){
+			standard.y += 50;
+			if(GUI.Button(standard, "Quit")){
 				Application.Quit();
 			}
 		}
 	}
 
 	void CreateGameWindow(int windowId){
-		buttonNum = 0; // Ordering made easy!
-		int currentY = 0;
+		Rect standard = new Rect(largeMenuRect.width/4, 20, largeMenuRect.width/2, 30);
 
+		GUI.Label(standard, "Server Name");
 
-		currentY += 20;		GUI.Label(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), "Server Name");
-		currentY += 30;		serverName = GUI.TextField(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), serverName);
+		standard.y += 30;	
+		serverName = GUI.TextField(standard, serverName);
 
+		standard.y += 50;		
+		GUI.Label(standard, "Port Number");
+		standard.y += 30;			
+		strPortNum = GUI.TextField(standard, strPortNum);
 
-		currentY += 50;		GUI.Label(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), "Player Name");
-		currentY += 30;		playerName = GUI.TextField(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), playerName);
+		standard.y += 50;	
+		GUI.Label(standard, "Password Required");
+		standard.y += 30;			
+		password = GUI.TextField(standard, password);
 
-		currentY += 50;		GUI.Label(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), "Port Number");
-		currentY += 30;		strPortNum = GUI.TextField(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), strPortNum);
+		standard.y += 50;		
+		useMasterServer = GUI.Toggle(standard, useMasterServer, "Publish Server");
 
-		currentY += 50;
-		if(GUI.Button(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), "Create Game")){
+		standard.y += 50;
+		if(GUI.Button(standard, "Create Game")){
+
 			//Get port number, create Server
 			//Sanitise Port number input
 			bool error = false;
@@ -150,62 +190,64 @@ public class MenuGUI : MonoBehaviour {
 
 			if(!error){
 				Network.InitializeServer(32, portNum, !Network.HavePublicAddress());
+				if(useMasterServer){
+					MasterServer.RegisterHost(GAME_TYPE, serverName);
+				}
 				PlayerPrefs.SetString("serverName", serverName);
-				PlayerPrefs.SetString("playerName", playerName);
 				PlayerPrefs.SetString ("portNumber", strPortNum);
 				currentWindow = (int) Menu.Lobby;
 			}
 
 		}
 
-		currentY += 50;
-		if(GUI.Button(new Rect((rectCreateGame.width/4), currentY, (rectCreateGame.width/2), 30), "Back")){
+		standard.y += 50;
+		if(GUI.Button(standard, "Back")){
 			currentWindow = (int) Menu.MainMenu;
 		}
 	}
 
 	void JoinGameWindow(int windowId){
-		buttonNum = 0; // Ordering made easy!
-		int currentY = 0;
-		
-		
-		currentY += 20;		GUI.Label(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), "Server IP Address");
-		currentY += 30;		ipAddress = GUI.TextField(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), ipAddress);
 
-		
-		currentY += 50;		GUI.Label(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), "Port Number");
-		currentY += 30;		strPortNum = GUI.TextField(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), strPortNum);
-		
-		currentY += 50;		GUI.Label(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), "Player Name");
-		currentY += 30;		playerName = GUI.TextField(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), playerName);
-		
-		currentY += 50;
-		if(GUI.Button(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), "Join Game")){
-			bool error = false;
-			int portNum = 0;
-			
-			try{
-				portNum = int.Parse(strPortNum);
-			}catch{
-				error = true;
+		Rect rectServerName = new Rect(30, 30, largeMenuRect.width/3, 30);
+		Rect rectStatus = new Rect(largeMenuRect.width/3, 30, largeMenuRect.width/6, 30);
+		Rect rectPlayers = new Rect(largeMenuRect.width*3/6, 30, largeMenuRect.width/6, 30);
+		Rect rectJoinButton = new Rect(largeMenuRect.width*4/6, 30, largeMenuRect.width/6, 18);
+
+
+		GUI.Box(new Rect(20, 20, largeMenuRect.width-40, largeMenuRect.height-100), "");
+
+		GUI.Label(rectServerName, "Server Name");
+		GUI.Label(rectStatus, "Status");
+		GUI.Label(rectPlayers, "Players");
+
+		HostData[] servers = MasterServer.PollHostList();
+
+		for(int i=0; i< servers.Length; i++){
+			rectServerName.y = 	50+(20*i);
+			rectStatus.y = 		50+(20*i);
+			rectPlayers.y = 	50+(20*i);
+			rectJoinButton.y = 	50+(20*i);
+
+			GUI.Label(rectServerName, servers[i].gameName);
+			GUI.Label(rectStatus, servers[i].comment);
+			GUI.Label(rectPlayers, servers[i].connectedPlayers+"/"+servers[i].playerLimit);
+			if(GUI.Button(rectJoinButton, "Join Game")){
+				masterServerData = servers[i];
+				useMasterServer = true;
+				currentWindow = (int) Menu.connecting;
 			}
-			
-			if(!error){
-				Network.Connect(ipAddress, portNum);
-
-				PlayerPrefs.SetString("ipAddress", ipAddress);
-				PlayerPrefs.SetString("playerName", playerName);
-				PlayerPrefs.SetString ("portNumber", strPortNum);
-
-				currentWindow = (int) Menu.Lobby;
-			}
-			
 		}
-		
-		currentY += 50;
-		if(GUI.Button(new Rect((rectJoinGame.width/4), currentY, (rectJoinGame.width/2), 30), "Back")){
+
+		if(GUI.Button(new Rect(20, largeMenuRect.height-70, largeMenuRect.width/5, 30), "Refresh")){
+			MasterServer.RequestHostList(GAME_TYPE);
+		}
+		if(GUI.Button (new Rect(largeMenuRect.width/4+20, largeMenuRect.height-70, largeMenuRect.width/5, 30), "Join By IP")){
+			displayJoinByIpWindow = true;
+		}
+		if(GUI.Button (new Rect(largeMenuRect.width/2+20, largeMenuRect.height-70, largeMenuRect.width/5, 30), "Back")){
 			currentWindow = (int) Menu.MainMenu;
 		}
+
 	}
 
 	void OptionsWindow(int windowId){
@@ -217,50 +259,90 @@ public class MenuGUI : MonoBehaviour {
 
 	void GameSettingsWindow(int windowId){
 		string[] levelList = {"TestShip", "TestScene"};
-		levelSelectInt = GUI.Toolbar(new Rect(20, 20, rectGameSettings.width-40, 30), levelSelectInt, levelList);
-		if(GUI.Button(new Rect(20, rectGameSettings.height-50, rectGameSettings.width-40, 30), "Close")){
+		levelSelectInt = GUI.Toolbar(new Rect(20, 20, smallMenuRect.width-40, 30), levelSelectInt, levelList);
+		if(GUI.Button(new Rect(20, smallMenuRect.height-50, smallMenuRect.width-40, 30), "Close")){
 			levelName = levelList[levelSelectInt];
 			displayGameSettingsWindow = false;
+		}
+	}
+
+	void JoinByIpWindow(int windowId){
+		Rect standard = new Rect(20, 20, smallMenuRect.width-40, 30);
+		
+		GUI.Label(standard, "Server IP Address");
+		standard.y += 30;		
+		ipAddress = GUI.TextField(standard, ipAddress);
+
+		
+		standard.y += 50;		
+		GUI.Label(standard, "Port Number");
+		standard.y += 30;		
+		strPortNum = GUI.TextField(standard, strPortNum);
+
+		standard.y += 50;
+		if(GUI.Button(standard, "Join Game")){
+			displayJoinByIpWindow = false;
+
+			bool error = false;
+			
+			try{
+				int.Parse(strPortNum);
+			}catch{
+				error = true;
+			}
+			
+			if(!error){
+				PlayerPrefs.SetString("ipAddress", ipAddress);
+				PlayerPrefs.SetString ("portNumber", strPortNum);
+				useMasterServer = false;
+				currentWindow = (int) Menu.connecting;
+			}
+			
+		}
+
+		standard.y = smallMenuRect.height-50;
+		if(GUI.Button(standard, "Close")){
+			displayJoinByIpWindow = false;
 		}
 	}
 
 	void LobbyWindow(int windowId){
 		buttonNum = 0;
 		if(Network.isServer){
-			if(GUI.Button(new Rect(20, 20, rectLobby.width/3, 30), "Start Game")){
+			if(GUI.Button(new Rect(20, 20, largeMenuRect.width/3, 30), "Start Game")){
 				// Start game
 				networkView.RPC("LoadLevel", RPCMode.AllBuffered, levelName);
 			}
-			if(GUI.Button(new Rect(20, 60, rectLobby.width/3, 30), "Settings")){
+			if(GUI.Button(new Rect(20, 60, largeMenuRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
 			}
 		}
 
 		string strPlayers = "";
-		foreach(string player in connectedPlayers){
+		foreach(string player in connectedPlayers.Values){
 			strPlayers += player + "\n";
 		}
 
 		GUIStyle leftTextAlign = new GUIStyle(GUI.skin.box);
 		leftTextAlign.alignment = TextAnchor.UpperLeft;
-		GUI.Box(new Rect(20, 100, rectLobby.width/3, rectLobby.height-150), strPlayers, leftTextAlign);
+		GUI.Box(new Rect(20, 100, largeMenuRect.width/3, largeMenuRect.height-150), strPlayers, leftTextAlign);
 
 		if(Network.isServer){
-			if(GUI.Button(new Rect(20, rectLobby.height-40, rectLobby.width/3, 30), "Shutdown Server")){
+			if(GUI.Button(new Rect(20, largeMenuRect.height-40, largeMenuRect.width/3, 30), "Shutdown Server")){
 				Network.Disconnect();
 			}
 		}else{
-			if(GUI.Button(new Rect(20, rectLobby.height-40, rectLobby.width/3, 30), "Disconnect")){
+			if(GUI.Button(new Rect(20, largeMenuRect.height-40, largeMenuRect.width/3, 30), "Disconnect")){
 				Network.Disconnect();
 			}
 		}
 
-		GUI.Box(new Rect( (rectLobby.width/3) + 40, 20, (rectLobby.width*2/3)-60, rectLobby.height - 80), submittedChat, leftTextAlign);
+		GUI.Box(new Rect( (largeMenuRect.width/3) + 40, 20, (largeMenuRect.width*2/3)-60, largeMenuRect.height - 80), submittedChat, leftTextAlign);
 
-		currentChat = GUI.TextField(new Rect( (rectLobby.width/3) + 40, rectLobby.height - 40 , (rectLobby.width*2/3)-160, 20), currentChat);
+		currentChat = GUI.TextField(new Rect( (largeMenuRect.width/3) + 40, largeMenuRect.height - 40 , (largeMenuRect.width*2/3)-160, 20), currentChat);
 
 		// Choo choo, all aboard the dodgy train
-		if(GUI.Button(new Rect(rectLobby.width-100, rectLobby.height - 40, 80, 20), "Enter")){
+		if(GUI.Button(new Rect(largeMenuRect.width-100, largeMenuRect.height - 40, 80, 20), "Enter")){
 			SubmitTextToChat();
 		}
 
@@ -269,12 +351,42 @@ public class MenuGUI : MonoBehaviour {
 		}
 	}
 
+	void ConnectingWindow(int windowId){
+		Rect standard = new Rect(smallMenuRect.width/4, smallMenuRect.height/4, smallMenuRect.width/2, smallMenuRect.height/2);
+		GUIStyle style = new GUIStyle("box");
+		style.alignment = TextAnchor.MiddleCenter;
+
+		if(!connectingNow){
+			connectingNow = true;
+			if(useMasterServer){
+				Network.Connect(masterServerData);
+			}else{
+				Network.Connect(ipAddress, int.Parse(strPortNum));
+			}
+		}
+		if(!connectionError){
+			GUI.Box (standard, "Connecting....", style);
+		}else{
+			GUI.Box (standard, "An error occured.", style);
+
+			standard.y = smallMenuRect.height-50;
+			standard.height = 30;
+
+			if(GUI.Button(standard, "Back")){
+				connectionError = false;
+				currentWindow = (int) Menu.JoinGame;
+			}
+		}
+	}
+
+
+
 	void SubmitTextToChat(){
 		if(currentChat != ""){
 			string newChat = playerName+ ": "+currentChat +"\n";
 			currentChat = "";
 
-			networkView.RPC("UpdateChat", RPCMode.AllBuffered, newChat);
+			networkView.RPC("UpdateChat", RPCMode.All, newChat);
 		}
 	}
 
@@ -284,9 +396,15 @@ public class MenuGUI : MonoBehaviour {
 	}
 
 	[RPC]
-	void UpdateConnectedPlayers(string newPlayers, NetworkPlayer netPlayer){
-		connectedPlayers[int.Parse(netPlayer.ToString())] = newPlayers;
-		numOfPlayers++;
+	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
+		connectedPlayers.Add(newPlayer, newPlayerName);
+		//numOfPlayers = connectedPlayers.Count;
+	}
+
+	[RPC]
+	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
+		connectedPlayers.Remove(disconnectedPlayer);
+		//numOfPlayers = connectedPlayers.Count;
 	}
 
 	[RPC]
@@ -294,29 +412,38 @@ public class MenuGUI : MonoBehaviour {
 		Application.LoadLevel(level);
 	}
 
-	
-	void OnServerInitialized(){
-		networkView.RPC ("UpdateConnectedPlayers", RPCMode.AllBuffered, playerName, Network.player);
-	}
-	void OnConnectedToServer(){
-		networkView.RPC ("UpdateConnectedPlayers", RPCMode.AllBuffered, playerName, Network.player);
+	[RPC]
+	void ChangeServerName(string name){
+		serverName = name;
 	}
 
+	
+	void OnServerInitialized(){
+		networkView.RPC ("AddPlayerToList", RPCMode.AllBuffered, Network.player, playerName);
+		networkView.RPC ("ChangeServerName", RPCMode.OthersBuffered, serverName);
+	}
+	void OnConnectedToServer(){
+		currentWindow = (int) Menu.Lobby;
+		networkView.RPC ("AddPlayerToList", RPCMode.AllBuffered, Network.player, playerName);
+	}
+
+	void OnFailedToConnect(){
+		connectionError = true;
+	}
+
+	void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer){
+		networkView.RPC ("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
+	}
 	void OnDisconnectedFromServer(){
 
 		manager.CursorVisible(true);
 
 		currentWindow = (int) Menu.MainMenu;
-		numOfPlayers = 0;
-		for(int i=0; i<MAX_PLAYERS; i++){
-			connectedPlayers[i] = "";
-		}
+
+		//Reset Varibles
+		//numOfPlayers = 0;
+		connectedPlayers.Clear();
 		submittedChat = "";
 		currentChat = "";
-	}
-
-	void OnPlayerDisconnected(NetworkPlayer netPlayer){
-
-		networkView.RPC("UpdateConnectedPlayers", RPCMode.AllBuffered, "", netPlayer);
 	}
 }

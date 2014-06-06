@@ -25,6 +25,7 @@ public class GameManagerScript : MonoBehaviour {
 		}
 
 		if(!GameManagerScript.IsSceneMenu()){
+			//int numOfSpawns = spawnPoints.GetLength(0);
 			Network.Instantiate(playerPrefab, spawnPoints[int.Parse(Network.player.ToString())].transform.position, spawnPoints[int.Parse(Network.player.ToString())].transform.rotation, 0);
 			Spawned(true);
 
@@ -73,15 +74,14 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	void OnApplicationQuit(){
-
-		if(Network.isClient){
-
-			Network.RemoveRPCs(Network.player);
-			Network.DestroyPlayerObjects(Network.player);
-
-			Network.Disconnect();
-		}else if(Network.isServer){
+		if(Network.isClient || Network.isServer){
 			Network.Disconnect();
 		}
+	}
+
+	void OnPlayerDisconnected(NetworkPlayer player){
+
+		Network.RemoveRPCs(player);
+		Network.DestroyPlayerObjects(player);
 	}
 }

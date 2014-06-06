@@ -31,7 +31,7 @@ public class GUIScript : MonoBehaviour {
 
 	}
 	void PauseWindow(int windowId){
-		if(GUI.Button(new Rect(20, 50, pauseRect.width-40, 30), "Resume")){
+		if(GUI.Button(new Rect(20, 50, pauseRect.width-40, 30), "Return to Game")){
 			manager.Pause(false);
 		}
 		if(Network.isServer){
