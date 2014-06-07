@@ -4,28 +4,28 @@ using System.Collections;
 public class CameraMove : MonoBehaviour {
 	private Transform myPlayer;
 
-	// Use this for initialization
-	void Start () {
-		GameStart();
-	}
-
-
-	void GameStart(){
+	public void Spawn(){
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
 			Debug.Log ("Checking player");
 			if(player.networkView.isMine){
 				myPlayer = player.transform.GetChild(0);
-				MoveCamera();
+				AttachCamera();
 			}
 		}
 	}
+
 	// Update is called once per frame
-	void MoveCamera(){
+	void AttachCamera(){
 
 		transform.position = myPlayer.position;
 		transform.rotation = myPlayer.rotation;
 
 		transform.parent = myPlayer;
+	}
+
+	public void DetachCamera(){
+		transform.parent = null;
+		transform.position = new Vector3(0, 30, 0);
 	}
 }

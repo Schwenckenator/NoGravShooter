@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManagerScript : MonoBehaviour {
 	private bool paused;
 	private MouseLook cameraLook;
+	private CameraMove cameraMove;
 
 	private bool myPlayerSpawned = false;
 	public GameObject playerPrefab;
@@ -17,25 +18,15 @@ public class GameManagerScript : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level){
-
-		if(!GameManagerScript.IsSceneMenu()){
+		CursorVisible(true);
+		if(!GameManagerScript.SceneIsMenu()){
 			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-			
+			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 			Pause (false);
-		}
-
-		if(!GameManagerScript.IsSceneMenu()){
-			//int numOfSpawns = spawnPoints.GetLength(0);
-			Network.Instantiate(playerPrefab, spawnPoints[int.Parse(Network.player.ToString())].transform.position, spawnPoints[int.Parse(Network.player.ToString())].transform.rotation, 0);
-			Spawned(true);
-
-			if(myPlayerSpawned){
-				cameraLook = GameObject.FindGameObjectWithTag("CameraPosObj").GetComponent<MouseLook>();
-			}
 		}
 	}
 
-	public static bool IsSceneMenu(){
+	public static bool SceneIsMenu(){
 		return Application.loadedLevelName == "MenuScene";
 	}
 	public bool IsPaused(){
@@ -44,17 +35,35 @@ public class GameManagerScript : MonoBehaviour {
 	public bool IsPlayerSpawned(){
 		return myPlayerSpawned;
 	}
-	private void Spawned(bool playerSpawned){
-		myPlayerSpawned = playerSpawned;
-		SendMessage("PlayerSpawned", playerSpawned);
+	public void Spawn(){
+		myPlayerSpawned = true;
+
+		CursorVisible(false);
+
+		Network.Instantiate(playerPrefab, spawnPoints[0].transform.position, spawnPoints[0].transform.rotation, 0);
+		cameraMove.Spawn();
+
+		GameObject[] list = GameObject.FindGameObjectsWithTag("CameraPosObj");
+		foreach(GameObject mLook in list){
+			if(mLook.transform.parent.networkView.isMine){
+				cameraLook = mLook.GetComponent<MouseLook>();
+			}
+		}
+
+	}
+
+	public void PlayerDied(){
+		myPlayerSpawned = false;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(!GameManagerScript.IsSceneMenu()){
+		if(!GameManagerScript.SceneIsMenu()){
 
 			if(Input.GetKeyDown(KeyCode.Escape)){
+				CursorVisible(!paused);
 				Pause (!paused); // Toggle Pause
+
 			}
 			if(Input.GetKeyDown(KeyCode.F1)){
 
@@ -65,12 +74,13 @@ public class GameManagerScript : MonoBehaviour {
 	}
 	public void Pause(bool input){
 		paused = input;
-		CursorVisible(input);
-
 	}
 	public void CursorVisible(bool visible){
 		Screen.showCursor = visible;
 		Screen.lockCursor = !visible;
+	}
+	public void ManagerDetachCamera(){
+		cameraMove.DetachCamera();
 	}
 
 	void OnApplicationQuit(){

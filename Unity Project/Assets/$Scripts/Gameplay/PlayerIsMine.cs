@@ -9,10 +9,9 @@ public class PlayerIsMine : MonoBehaviour {
 
 			GetComponent<MouseLook>().enabled = false;
 
-			GetComponentInChildren<MouseLook>().enabled = false;
+			transform.FindChild("CameraPos").GetComponent<MouseLook>().enabled = false;
 
-			GetComponent<PlayerResources>().enabled = false;
-
+			GetComponentInChildren<FireWeapon>().enabled = false;
 		}
 	}
 }

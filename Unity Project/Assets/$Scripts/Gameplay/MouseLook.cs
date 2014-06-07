@@ -63,7 +63,7 @@ public class MouseLook : MonoBehaviour {
 			}
 		}
 	}
-
+	
 	public void SetX_Rotation(float newRot){
 
 		rotationY = newRot * yDirection;

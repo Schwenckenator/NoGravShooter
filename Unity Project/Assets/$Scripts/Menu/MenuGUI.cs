@@ -53,9 +53,6 @@ public class MenuGUI : MonoBehaviour {
 	void Start(){
 		manager = GetComponent<GameManagerScript>();
 
-		//Set Rect sizes
-
-
 		currentWindow = (int) Menu.MainMenu;
 
 		serverName = PlayerPrefs.GetString("serverName");
@@ -83,7 +80,7 @@ public class MenuGUI : MonoBehaviour {
 				connectingNow = false;
 			}
 		}
-		if(GameManagerScript.IsSceneMenu()){
+		if(GameManagerScript.SceneIsMenu()){
 			switch(currentWindow){
 
 			case (int) Menu.MainMenu:
@@ -437,6 +434,9 @@ public class MenuGUI : MonoBehaviour {
 	void OnDisconnectedFromServer(){
 
 		manager.CursorVisible(true);
+		if(!GameManagerScript.SceneIsMenu()){
+			Application.LoadLevel("MenuScene");
+		}
 
 		currentWindow = (int) Menu.MainMenu;
 
