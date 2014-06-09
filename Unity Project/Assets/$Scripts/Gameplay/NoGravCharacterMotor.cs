@@ -7,7 +7,8 @@ using System.Collections;
 public class NoGravCharacterMotor : MonoBehaviour {
 
 	private GameManagerScript manager;
-	private AudioSource movementAudio;
+	private AudioSource jetpackAudio;
+	private AudioSource feetAudio;
 
 	private PlayerResources resource;
 
@@ -17,11 +18,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private bool jetPackOn;
 	private int magnetPower; // 0-4 is on, 5 is off
 
-	public AudioClip soundFootsteps;
+	public AudioClip[] soundFootsteps;
 	public AudioClip soundJetpack;
 	public AudioClip soundJetpackShutoff;
 
 	private bool jetpackSoundWasPlayed = false;
+	private bool playJetSound = false;
+	private bool playWalkingSound = false;
+
+	public float audioLength = 0.3f;
 
 	public float speed = 10.0f;
 	public float rollSpeed = 3.0f;
@@ -38,7 +43,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
-		movementAudio = transform.FindChild("Graphics").GetComponent<AudioSource>();
+		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
+		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
 
 		rigidbody.freezeRotation = true;
 		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0));
@@ -49,12 +55,14 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		cameraTransform = transform.GetChild(0);
 		cameraLook = cameraTransform.GetComponent<MouseLook>();
 
-
+		StartCoroutine("PlayJetpackSound");
+		StartCoroutine("PlayFeetSound");
 	}
 
 	void FixedUpdate () {
 		LockMouseLook(!grounded);
-		bool playJetSound = false;
+		playJetSound = false;
+		playWalkingSound = false;
 
 		if (grounded) {
 
@@ -72,6 +80,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			// Apply a force that attempts to reach our target velocity
 			Vector3 velocity = rigidbody.velocity;
 			Vector3 velocityChange = (targetVelocity - velocity);
+
+			if(rigidbody.velocity.sqrMagnitude > 0.5f){
+				playWalkingSound = true;
+			}
 
 			velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
 			velocityChange.y = Mathf.Clamp(velocityChange.y, -maxVelocityChange, maxVelocityChange);
@@ -121,20 +133,45 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		grounded = false;
 		magnetPower++;
 
-		if(playJetSound){
-			jetpackSoundWasPlayed = true;
-			if(!movementAudio.isPlaying){
-				movementAudio.clip = soundJetpack;
-				movementAudio.Play();
+
+
+	}
+	IEnumerator PlayJetpackSound(){
+		while(true){
+			if(playJetSound){
+				jetpackSoundWasPlayed = true;
+				if(!jetpackAudio.isPlaying){
+					jetpackAudio.clip = soundJetpack;
+					jetpackAudio.Play();
+				}
+			}else if(jetpackSoundWasPlayed){
+				jetpackAudio.clip = soundJetpackShutoff;
+				jetpackAudio.Play();
+				jetpackSoundWasPlayed = false;
+				yield return new WaitForSeconds(soundJetpackShutoff.length);
+			}else{
+				jetpackAudio.Stop();
 			}
-		}else{
-			if(jetpackSoundWasPlayed){
-				movementAudio.clip = soundJetpackShutoff;
-				movementAudio.Play();
-			}
-			jetpackSoundWasPlayed = false;
+			yield return null;
 		}
 
+	}
+	IEnumerator PlayFeetSound(){
+		int stepKind = 0;
+		while(true){
+			if(playWalkingSound){
+				if(!feetAudio.isPlaying){
+					feetAudio.clip = soundFootsteps[stepKind];
+					feetAudio.Play();
+					yield return new WaitForSeconds(soundFootsteps[stepKind].length);
+					stepKind = (stepKind+1)%2;
+				}
+			}else{
+				stepKind = 0;
+				feetAudio.Stop();
+			}
+			yield return null;
+		}
 	}
 
 	void OnCollisionEnter(Collision info){

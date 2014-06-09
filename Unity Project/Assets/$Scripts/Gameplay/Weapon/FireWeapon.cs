@@ -3,6 +3,10 @@ using System.Collections;
 
 public class FireWeapon : MonoBehaviour {
 	Transform gun;
+	Transform cameraPos;
+
+	public GameObject particle;
+
 	PlayerResources resource;
 	public AudioClip soundLaserShot;
 	public GameObject laserShot;
@@ -17,6 +21,7 @@ public class FireWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
+		cameraPos = transform.FindChild("CameraPos");
 		resource = GetComponent<PlayerResources>();
 	}
 	
@@ -28,21 +33,24 @@ public class FireWeapon : MonoBehaviour {
 			nextFire = Time.time + fireDelay;
 			RaycastHit hit;
 
-			Physics.Raycast(gun.position, gun.forward, out hit, Mathf.Infinity);
+			Physics.Raycast(cameraPos.position, cameraPos.forward, out hit, Mathf.Infinity);
 			//Deal with the shot
 			if(hit.collider.CompareTag("Player")){
 				if(!hit.collider.networkView.isMine){
 					hit.collider.GetComponent<PlayerResources>().TakeDamage(weaponDamage);
 				}
 			}
+			Network.Instantiate(particle, hit.point, Quaternion.identity, 0);
 
-
-			shot = Instantiate(laserShot, gun.position, gun.rotation) as GameObject;
-			shot.transform.parent = gun;
+			shot = Instantiate(laserShot, gun.position, cameraPos.rotation) as GameObject;
+			shot.transform.parent = cameraPos;
 			LineRenderer render = shot.GetComponent<LineRenderer>();
 
-			render.SetPosition(0, Vector3.zero);
-			render.SetPosition(1, gun.InverseTransformPoint(hit.point));
+
+			render.SetPosition(0, gun.InverseTransformPoint(gun.position));
+			render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
+
+
 
 			networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
 

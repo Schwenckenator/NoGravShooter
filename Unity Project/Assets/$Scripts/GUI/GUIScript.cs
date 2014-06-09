@@ -229,7 +229,7 @@ public class GUIScript : MonoBehaviour {
 			}
 			
 			if(!error){
-				Network.InitializeServer(32, portNum, !Network.HavePublicAddress());
+				Network.InitializeServer(MAX_PLAYERS, portNum, !Network.HavePublicAddress());
 				if(useMasterServer){
 					MasterServer.RegisterHost(GAME_TYPE, serverName);
 				}
