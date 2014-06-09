@@ -3,9 +3,12 @@ using System.Collections;
 
 public class FireWeapon : MonoBehaviour {
 	Transform gun;
+	PlayerResources resource;
+	public AudioClip soundLaserShot;
 	public GameObject laserShot;
 	public float fireDelay;
 	public int weaponDamage;
+	public float weaponHeat;
 
 	GameObject shot;
 
@@ -14,11 +17,14 @@ public class FireWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
+		resource = GetComponent<PlayerResources>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire)){
+		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire()){
+			audio.PlayOneShot(soundLaserShot);
+			resource.WeaponFired(weaponHeat);
 			nextFire = Time.time + fireDelay;
 			RaycastHit hit;
 

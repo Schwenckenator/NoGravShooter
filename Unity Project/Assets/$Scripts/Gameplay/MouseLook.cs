@@ -36,6 +36,9 @@ public class MouseLook : MonoBehaviour {
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
+
+		sensitivityX = PlayerPrefs.GetFloat("sensitivityX");
+		sensitivityY = PlayerPrefs.GetFloat("sensitivityY");
 	}
 
 	void Update ()

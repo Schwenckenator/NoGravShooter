@@ -7,6 +7,7 @@ using System.Collections;
 public class NoGravCharacterMotor : MonoBehaviour {
 
 	private GameManagerScript manager;
+	private AudioSource movementAudio;
 
 	private PlayerResources resource;
 
@@ -15,6 +16,12 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	private bool jetPackOn;
 	private int magnetPower; // 0-4 is on, 5 is off
+
+	public AudioClip soundFootsteps;
+	public AudioClip soundJetpack;
+	public AudioClip soundJetpackShutoff;
+
+	private bool jetpackSoundWasPlayed = false;
 
 	public float speed = 10.0f;
 	public float rollSpeed = 3.0f;
@@ -31,6 +38,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
+		movementAudio = transform.FindChild("Graphics").GetComponent<AudioSource>();
 
 		rigidbody.freezeRotation = true;
 		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0));
@@ -46,6 +54,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void FixedUpdate () {
 		LockMouseLook(!grounded);
+		bool playJetSound = false;
 
 		if (grounded) {
 
@@ -91,6 +100,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			// If non-zero force, spend fuel
 			if(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw ("JetPackUpDown"), Input.GetAxisRaw("Vertical")).sqrMagnitude > 0 && !manager.IsPaused()){
 				if(resource.SpendFuel(fuelSpend)){
+					playJetSound = true;
 					rigidbody.AddRelativeForce(force, ForceMode.Acceleration);
 				}
 			}
@@ -110,6 +120,20 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		grounded = false;
 		magnetPower++;
+
+		if(playJetSound){
+			jetpackSoundWasPlayed = true;
+			if(!movementAudio.isPlaying){
+				movementAudio.clip = soundJetpack;
+				movementAudio.Play();
+			}
+		}else{
+			if(jetpackSoundWasPlayed){
+				movementAudio.clip = soundJetpackShutoff;
+				movementAudio.Play();
+			}
+			jetpackSoundWasPlayed = false;
+		}
 
 	}
 
