@@ -20,13 +20,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	public AudioClip[] soundFootsteps;
 	public AudioClip soundJetpack;
+	public AudioClip soundJetpackEmpty;
 	public AudioClip soundJetpackShutoff;
 
 	private bool jetpackSoundWasPlayed = false;
 	private bool playJetSound = false;
+	private bool playJetEmpty = false;
 	private bool playWalkingSound = false;
-
-	public float audioLength = 0.3f;
 
 	public float speed = 10.0f;
 	public float rollSpeed = 3.0f;
@@ -34,6 +34,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	public bool canJump = true;
 	public float jumpForce = 40.0f;
 	public float airPitchSensitivity = 2.0f;
+
+	public float sqrWalkingSoundVelocity;
 
 	private bool grounded = false;
 	private bool inAirFlag = false;
@@ -62,7 +64,9 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	void FixedUpdate () {
 		LockMouseLook(!grounded);
 		playJetSound = false;
+		playJetEmpty = false;
 		playWalkingSound = false;
+
 
 		if (grounded) {
 
@@ -81,7 +85,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			Vector3 velocity = rigidbody.velocity;
 			Vector3 velocityChange = (targetVelocity - velocity);
 
-			if(rigidbody.velocity.sqrMagnitude > 0.5f){
+			if(rigidbody.velocity.sqrMagnitude > sqrWalkingSoundVelocity){
 				playWalkingSound = true;
 			}
 
@@ -114,6 +118,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 				if(resource.SpendFuel(fuelSpend)){
 					playJetSound = true;
 					rigidbody.AddRelativeForce(force, ForceMode.Acceleration);
+				}else{
+					playJetEmpty = true;
 				}
 			}
 
@@ -140,17 +146,20 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		while(true){
 			if(playJetSound){
 				jetpackSoundWasPlayed = true;
-				if(!jetpackAudio.isPlaying){
+				if(!jetpackAudio.isPlaying || jetpackAudio.clip != soundJetpack){
 					jetpackAudio.clip = soundJetpack;
 					jetpackAudio.Play();
+				}
+			}else if(playJetEmpty){
+				jetpackSoundWasPlayed = true;
+				if(!jetpackAudio.isPlaying || jetpackAudio.clip != soundJetpackEmpty){
+					jetpackAudio.clip = soundJetpackEmpty;
+					jetpackAudio.Play ();
 				}
 			}else if(jetpackSoundWasPlayed){
 				jetpackAudio.clip = soundJetpackShutoff;
 				jetpackAudio.Play();
 				jetpackSoundWasPlayed = false;
-				yield return new WaitForSeconds(soundJetpackShutoff.length);
-			}else{
-				jetpackAudio.Stop();
 			}
 			yield return null;
 		}
@@ -176,14 +185,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void OnCollisionEnter(Collision info){
 		if(networkView.isMine){
-			Vector3 colNormal = info.contacts[0].normal;
-			Vector3 UpNorm = colNormal + transform.up; // Up + Normal = UpNorm
-
-
-			// Means the collision is on your feet
-			if(UpNorm.sqrMagnitude > 3.3f){
-				RaycastHit hit;
-				Physics.Raycast(transform.position, -transform.up, out hit, 1.5f);
+			RaycastHit hit;
+			if(Physics.Raycast(transform.position, -transform.up, out hit, 1.5f)){
 
 				// Preserve camera angle
 				Quaternion curCamRot = cameraTransform.rotation;
