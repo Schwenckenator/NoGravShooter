@@ -19,9 +19,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private int magnetPower; // 0-4 is on, 5 is off
 
 	public AudioClip[] soundFootsteps;
+	public float volumeFootsteps;
 	public AudioClip soundJetpack;
+	public float volumeJetpack;
 	public AudioClip soundJetpackEmpty;
+	public float volumeJetpackEmpty;
 	public AudioClip soundJetpackShutoff;
+	public float volumeJetpackShutoff;
 
 	private bool jetpackSoundWasPlayed = false;
 	private bool playJetSound = false;
@@ -58,6 +62,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		cameraLook = cameraTransform.GetComponent<MouseLook>();
 
 		StartCoroutine("PlayJetpackSound");
+
+		feetAudio.volume = volumeFootsteps;
 		StartCoroutine("PlayFeetSound");
 	}
 
@@ -148,16 +154,19 @@ public class NoGravCharacterMotor : MonoBehaviour {
 				jetpackSoundWasPlayed = true;
 				if(!jetpackAudio.isPlaying || jetpackAudio.clip != soundJetpack){
 					jetpackAudio.clip = soundJetpack;
+					jetpackAudio.volume = volumeJetpack;
 					jetpackAudio.Play();
 				}
 			}else if(playJetEmpty){
 				jetpackSoundWasPlayed = true;
 				if(!jetpackAudio.isPlaying || jetpackAudio.clip != soundJetpackEmpty){
 					jetpackAudio.clip = soundJetpackEmpty;
+					jetpackAudio.volume = volumeJetpackEmpty;
 					jetpackAudio.Play ();
 				}
 			}else if(jetpackSoundWasPlayed){
 				jetpackAudio.clip = soundJetpackShutoff;
+				jetpackAudio.volume = volumeJetpackShutoff;
 				jetpackAudio.Play();
 				jetpackSoundWasPlayed = false;
 			}
@@ -169,12 +178,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		int stepKind = 0;
 		while(true){
 			if(playWalkingSound){
-				if(!feetAudio.isPlaying){
-					feetAudio.clip = soundFootsteps[stepKind];
-					feetAudio.Play();
-					yield return new WaitForSeconds(soundFootsteps[stepKind].length);
-					stepKind = (stepKind+1)%2;
-				}
+				feetAudio.clip = soundFootsteps[stepKind];
+				feetAudio.Play();
+				yield return new WaitForSeconds(soundFootsteps[stepKind].length);
+				stepKind = (stepKind+1)%2;
 			}else{
 				stepKind = 0;
 				feetAudio.Stop();

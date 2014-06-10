@@ -46,6 +46,9 @@ public class GUIScript : MonoBehaviour {
 	
 	private float xMouseSensitivity = 15f;
 	private float yMouseSensitivity = 10f;
+
+	private int mouseYDirection = -1;
+	private bool mouseInverted = false;
 	
 	private bool connectionError = false;
 	private bool connectingNow = false;
@@ -84,9 +87,15 @@ public class GUIScript : MonoBehaviour {
 		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY");
 		if(yMouseSensitivity == 0)
 			yMouseSensitivity = 10;
-		
+
+		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection");
+		if(mouseYDirection == 0){
+			mouseYDirection = -1;
+		}
+		mouseInverted = (mouseYDirection == 1);
 	}
 	
+
 	void OnGUI(){
 		if(connectingNow){
 			if(currentWindow != (int) Menu.connecting){
@@ -125,14 +134,18 @@ public class GUIScript : MonoBehaviour {
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
 		}else if(manager.IsPlayerSpawned()){
-			Rect heat = new Rect(Screen.width-310, Screen.height-150, 300, 40);
-			GUI.DrawTexture(heat, empty);
-			
-			float temp = res.GetWeaponHeat();
-			temp = Mathf.Clamp(temp, 0, 100);
-			heat.xMin = heat.xMax - temp*3;
-			
-			GUI.DrawTexture(heat, fullHeat);
+
+//			Hidden for now
+//
+//			Rect heat = new Rect(Screen.width-310, Screen.height-150, 300, 40);
+//			GUI.DrawTexture(heat, empty);
+//
+//
+//			float temp = res.GetWeaponHeat();
+//			temp = Mathf.Clamp(temp, 0, 100);
+//			heat.xMin = heat.xMax - temp*3;
+//			
+//			GUI.DrawTexture(heat, fullHeat);
 			
 			Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
 			GUI.DrawTexture(fuel, empty);
@@ -307,10 +320,20 @@ public class GUIScript : MonoBehaviour {
 		yMouseSensitivity = GUI.HorizontalSlider(standard, yMouseSensitivity, 5, 15);
 		
 		standard.y += 50;
+		mouseInverted = GUI.Toggle(standard, mouseInverted, "Invert Y Axis");
+
+		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 			PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity);
 			PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity);
-			
+
+			if(mouseInverted){
+				mouseYDirection = 1;
+			}else{
+				mouseYDirection = -1;
+			}
+
+			PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
 			currentWindow = (int) Menu.MainMenu;
 		}
 	}
@@ -466,11 +489,11 @@ public class GUIScript : MonoBehaviour {
 		
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Shutdown Server")){
-				Network.Disconnect();
+				BackToMainMenu();
 			}
 		}else{
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Disconnect")){
-				Network.Disconnect();
+				BackToMainMenu();
 			}
 		}
 		
@@ -558,10 +581,12 @@ public class GUIScript : MonoBehaviour {
 	}
 	
 	void BackToMainMenu(){
-		Network.Disconnect();
+
+		if(Network.isClient || Network.isServer){
+			Network.Disconnect();
+		}
 		Application.LoadLevel("MenuScene");
-		
-		Destroy(gameObject);
+
 	}
 
 }

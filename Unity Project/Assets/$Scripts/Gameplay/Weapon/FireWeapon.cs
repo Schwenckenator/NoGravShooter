@@ -40,7 +40,7 @@ public class FireWeapon : MonoBehaviour {
 					hit.collider.GetComponent<PlayerResources>().TakeDamage(weaponDamage);
 				}
 			}
-			Network.Instantiate(particle, hit.point, Quaternion.identity, 0);
+			Instantiate(particle, hit.point, Quaternion.identity);
 
 			shot = Instantiate(laserShot, gun.position, cameraPos.rotation) as GameObject;
 			shot.transform.parent = cameraPos;
@@ -59,6 +59,9 @@ public class FireWeapon : MonoBehaviour {
 
 	[RPC]
 	void MultiplayerLaserRender(Vector3 start, Vector3 end){
+		Instantiate(particle, end, Quaternion.identity);
+		audio.PlayOneShot(soundLaserShot);
+
 		shot = Instantiate(laserShot, start, Quaternion.identity) as GameObject;
 		LineRenderer render = shot.GetComponent<LineRenderer>();
 		render.useWorldSpace = true;

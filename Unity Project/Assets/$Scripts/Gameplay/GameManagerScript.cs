@@ -11,8 +11,7 @@ public class GameManagerScript : MonoBehaviour {
 	private GameObject[] spawnPoints;
 
 	//int bullshit = 1; // This is bullshit
-
-
+	
 	void Awake(){
 		DontDestroyOnLoad(gameObject);
 	}
@@ -22,6 +21,9 @@ public class GameManagerScript : MonoBehaviour {
 		if(!GameManagerScript.SceneIsMenu()){
 			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+
+			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
+
 			Pause (false);
 		}
 	}
@@ -47,6 +49,7 @@ public class GameManagerScript : MonoBehaviour {
 		foreach(GameObject mLook in list){
 			if(mLook.transform.parent.networkView.isMine){
 				cameraLook = mLook.GetComponent<MouseLook>();
+				cameraLook.SetYDirection(PlayerPrefs.GetInt("mouseYDirection"));
 			}
 		}
 
@@ -59,16 +62,9 @@ public class GameManagerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!GameManagerScript.SceneIsMenu()){
-
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				CursorVisible(!paused);
 				Pause (!paused); // Toggle Pause
-
-			}
-			if(Input.GetKeyDown(KeyCode.F1)){
-
-				// Multiply by -1, reversing the direction
-				cameraLook.MultYDirection(-1);
 			}
 		}
 	}

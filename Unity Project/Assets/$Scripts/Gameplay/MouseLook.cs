@@ -80,6 +80,10 @@ public class MouseLook : MonoBehaviour {
 
 		yDirection *= newIn;
 	}
+	public void SetYDirection(int input){
+		int newIn = Mathf.Clamp(input, -1, 1);
+		yDirection = newIn;
+	}
 
 	public int GetYDirection(){
 		return yDirection;

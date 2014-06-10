@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 578e1cb86ecc850459091c07846f7e1f
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - soundOverheat: {fileID: 8300000, guid: fc9ea58188ea94d4b8bc8914a8bdd7fc, type: 3}
+  - soundJetpackRecharge: {fileID: 8300000, guid: 1369ecac5b6456947976e021609afd9c,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

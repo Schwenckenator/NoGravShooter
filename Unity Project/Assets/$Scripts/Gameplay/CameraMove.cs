@@ -7,7 +7,6 @@ public class CameraMove : MonoBehaviour {
 	public void Spawn(){
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
-			Debug.Log ("Checking player");
 			if(player.networkView.isMine){
 				myPlayer = player.transform.GetChild(0);
 				AttachCamera();
