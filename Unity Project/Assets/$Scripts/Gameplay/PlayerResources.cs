@@ -140,6 +140,10 @@ public class PlayerResources : MonoBehaviour {
 		}
 	}
 
+	public bool IsFullHealth(){
+		return health == maxHealth;
+	}
+
 	public bool WeaponCanFire(){
 		return (weapon < maxWeapon);
 	}

@@ -41,8 +41,8 @@ public class GameManagerScript : MonoBehaviour {
 		myPlayerSpawned = true;
 
 		CursorVisible(false);
-
-		Network.Instantiate(playerPrefab, spawnPoints[0].transform.position, spawnPoints[0].transform.rotation, 0);
+		int point = Random.Range(0, spawnPoints.Length);
+		Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
 		cameraMove.Spawn();
 
 		GameObject[] list = GameObject.FindGameObjectsWithTag("CameraPosObj");
