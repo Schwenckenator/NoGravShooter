@@ -20,14 +20,11 @@ public class SpawnBonuses : MonoBehaviour {
 
 	IEnumerator SpawnBonus(){
 		while(true){
-			Debug.Log ("Roll for bonus!");
 			if(Random.Range(0.0f, 1.0f) < bonusProbability){ //All decimal
-				Debug.Log("Yeah! Bonus!");
 
 				int point = Random.Range(0, bonusSpawnPoints.Length);
 				Network.Instantiate(bonuses[0], bonusSpawnPoints[point].transform.position, bonusSpawnPoints[point].transform.rotation, 0);
 			}else{
-				Debug.Log ("No bonus :(");
 			}
 			yield return new WaitForSeconds(bonusSpawnDelay);
 		}

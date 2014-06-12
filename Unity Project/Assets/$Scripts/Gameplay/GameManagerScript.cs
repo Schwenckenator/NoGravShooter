@@ -5,6 +5,7 @@ public class GameManagerScript : MonoBehaviour {
 	private bool paused;
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
+	private FireWeapon fireWeapon;
 
 	private bool myPlayerSpawned = false;
 	public GameObject playerPrefab;
@@ -45,11 +46,13 @@ public class GameManagerScript : MonoBehaviour {
 		Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
 		cameraMove.Spawn();
 
-		GameObject[] list = GameObject.FindGameObjectsWithTag("CameraPosObj");
-		foreach(GameObject mLook in list){
-			if(mLook.transform.parent.networkView.isMine){
-				cameraLook = mLook.GetComponent<MouseLook>();
+		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject player in list){
+			if(player.networkView.isMine){
+				cameraLook = player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
 				cameraLook.SetYDirection(PlayerPrefs.GetInt("mouseYDirection"));
+
+				fireWeapon = player.GetComponent<FireWeapon>();
 			}
 		}
 
@@ -65,6 +68,12 @@ public class GameManagerScript : MonoBehaviour {
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				CursorVisible(!paused);
 				Pause (!paused); // Toggle Pause
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha1) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(0);
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha2) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(1);
 			}
 		}
 	}
