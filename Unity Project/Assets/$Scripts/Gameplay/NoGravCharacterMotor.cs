@@ -53,7 +53,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
 
 		rigidbody.freezeRotation = true;
-		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0));
+		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Acceleration);
 		jetPackOn = true;
 		magnetPower = 0;
 
@@ -107,8 +107,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.VelocityChange);
 			}
 		}else if(jetPackOn){
-			if(magnetPower < 5){
-				rigidbody.AddRelativeForce(new Vector3 (0, -10, 0));
+			if(magnetPower < 5 && Physics.Raycast(transform.position, -transform.up, 1.5f)){
+				rigidbody.AddRelativeForce(new Vector3 (0, -1, 0), ForceMode.VelocityChange);
 			}
 			//Apply Jetpack force as Acceleration
 			Vector3 force;
@@ -148,6 +148,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 
 	}
+	#region Play Sounds
 	IEnumerator PlayJetpackSound(){
 		while(true){
 			if(playJetSound){
@@ -189,37 +190,47 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			yield return null;
 		}
 	}
+	#endregion
 
+	#region Collisions
 	void OnCollisionEnter(Collision info){
 		if(networkView.isMine){
-			RaycastHit hit;
-			if(Physics.Raycast(transform.position, -transform.up, out hit, 1.5f)){
+			if(info.collider.CompareTag("Walkable")){
+				RaycastHit hit;
 
-				// Preserve camera angle
-				Quaternion curCamRot = cameraTransform.rotation;
+				if(Physics.Raycast(transform.position, -transform.up, out hit, 1.5f)){
 
-				// Rotate main body
-				transform.rotation = Quaternion.LookRotation(hit.normal, transform.forward);
-				transform.Rotate(new Vector3(-90, 180, 0));
+					// Preserve camera angle
+					Quaternion curCamRot = cameraTransform.rotation;
+
+					transform.rotation = Quaternion.LookRotation(info.contacts[0].normal, transform.forward);
+					transform.Rotate(new Vector3(-90, 180, 0));
+
+					Physics.Raycast(transform.position, -transform.up, out hit, 1.5f);
+
+					transform.rotation = Quaternion.LookRotation(hit.normal, transform.forward);
+					transform.Rotate(new Vector3(-90, 180, 0));
+
+					// Rotate Camera
+					cameraTransform.rotation = curCamRot;
+
+					// But the mouse code will overwrite this
+					// Find the local X rot
+					float xRot = cameraTransform.localEulerAngles.x;
+					float yRot = cameraTransform.localEulerAngles.y;
 
 
-				// Rotate Camera
-				cameraTransform.rotation = curCamRot;
+					// Make sure Y and Z local rotations are 0
+					cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, 0, 0);
+					transform.Rotate(0, yRot, 0);
 
-				// But the mouse code will overwrite this
-				// Find the local X rot
-				float xRot = cameraTransform.localEulerAngles.x;
+					// Make it digestable
+					if(xRot > 180){
+						xRot -= 360;
+					}
 
-				// Make sure Y and Z local rotations are 0
-				cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, 0, 0);
-
-				// Make it digestable
-				if(xRot > 180){
-					xRot -= 360;
+					cameraLook.SetX_Rotation(xRot);
 				}
-
-				// Set as new X value, need to take negative for god knows why
-				cameraLook.SetX_Rotation(xRot);
 			}
 		}
 	}
@@ -236,6 +247,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 		
 	}
+	#endregion
 	void LockMouseLook(bool inAir){
 		if(inAir){
 			cameraLook.sensitivityY = 0;
@@ -254,9 +266,17 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 	}
 
+
 	float CalculateJumpVerticalSpeed () {
 		// From the jump height and gravity we deduce the upwards speed 
 		// for the character to reach at the apex.
 		return Mathf.Sqrt(jumpForce);
+	}
+	public void Recoil(){
+		if(inAirFlag){
+			transform.Rotate(-1, 0, 0);
+		}else{
+			cameraLook.AddX_Rotation(1);
+		}
 	}
 }

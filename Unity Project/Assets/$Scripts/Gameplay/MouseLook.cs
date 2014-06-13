@@ -74,6 +74,11 @@ public class MouseLook : MonoBehaviour {
 
 	}
 
+	public void AddX_Rotation(float addRot){
+		rotationY -= addRot * yDirection;
+		rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
+	}
+
 	// *= this shit dawg
 	public void MultYDirection(int input){
 		int newIn = Mathf.Clamp(input, -1, 1);

@@ -4,7 +4,8 @@ using System.Collections;
 public class FireWeapon : MonoBehaviour {
 	Transform gun;
 	Transform cameraPos;
-
+	MouseLook cameraLook;
+	NoGravCharacterMotor motor;
 
 
 	private LaserWeaponValues laser;
@@ -19,7 +20,7 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		laser = ScriptableObject.CreateInstance<LaserWeaponValues>();
 		slug = ScriptableObject.CreateInstance<SlugRifleWeaponValues>();
 
@@ -28,47 +29,58 @@ public class FireWeapon : MonoBehaviour {
 
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
 		cameraPos = transform.FindChild("CameraPos");
-		resource = GetComponent<PlayerResources>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire()){
-			audio.PlayOneShot(currentWeapon.FireSound);
-			resource.WeaponFired(currentWeapon.HeatPerShot);
-			nextFire = Time.time + currentWeapon.FireDelay;
-			RaycastHit hit;
 
+		cameraLook = cameraPos.GetComponent<MouseLook>();
+
+		motor = GetComponent<NoGravCharacterMotor>();
+
+		resource = GetComponent<PlayerResources>();
+
+		ChangeWeapon(0);
+	}
+	void FixedUpdate(){
+		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire()){
+			resource.WeaponFired(currentWeapon.heatPerShot);
+			audio.PlayOneShot(currentWeapon.fireSound);
+			nextFire = Time.time + currentWeapon.fireDelay;
+			RaycastHit hit;
+			
 			Physics.Raycast(cameraPos.position, cameraPos.forward, out hit, Mathf.Infinity);
 			//Deal with the shot
 			if(hit.collider.CompareTag("Player")){
 				if(!hit.collider.networkView.isMine){
-					hit.collider.GetComponent<PlayerResources>().TakeDamage(laser.DamagePerShot);
+					hit.collider.GetComponent<PlayerResources>().TakeDamage(laser.damagePerShot);
 				}
+			}else if(hit.collider.CompareTag("BonusPickup")){
+				Network.Destroy(hit.collider.gameObject);
 			}
-			Instantiate(currentWeapon.HitParticle, hit.point, Quaternion.identity);
-
-			shot = Instantiate(currentWeapon.Projectile, gun.position, cameraPos.rotation) as GameObject;
+			Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+			
+			shot = Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation) as GameObject;
 			shot.transform.parent = cameraPos;
 			LineRenderer render = shot.GetComponent<LineRenderer>();
-
-
+			
+			
 			render.SetPosition(0, gun.InverseTransformPoint(gun.position));
 			render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
-
-
-
+			
+			
+			
 			networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
 
+			if(currentWeapon == slug){
+				motor.Recoil();
+			}
+			
 		}
 	}
 
 	[RPC]
 	void MultiplayerLaserRender(Vector3 start, Vector3 end){
-		Instantiate(laser.HitParticle, end, Quaternion.identity);
-		audio.PlayOneShot(laser.FireSound);
+		Instantiate(laser.hitParticle, end, Quaternion.identity);
+		audio.PlayOneShot(laser.fireSound);
 
-		shot = Instantiate(laser.Projectile, start, Quaternion.identity) as GameObject;
+		shot = Instantiate(laser.projectile, start, Quaternion.identity) as GameObject;
 		LineRenderer render = shot.GetComponent<LineRenderer>();
 		render.useWorldSpace = true;
 		render.SetPosition(0, start);
@@ -77,5 +89,8 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		currentWeapon = weapons[weaponId];
+		resource.ChangeWeapon(currentWeapon);
 	}
+
+
 }

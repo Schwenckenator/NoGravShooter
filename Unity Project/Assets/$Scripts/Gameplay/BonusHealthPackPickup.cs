@@ -11,7 +11,7 @@ public class BonusHealthPackPickup : MonoBehaviour {
 			
 			if(!res.IsFullHealth()){
 				res.RestoreHealth(healStrength);
-				Destroy(gameObject);
+				Network.Destroy(gameObject);
 			}
 			
 		}

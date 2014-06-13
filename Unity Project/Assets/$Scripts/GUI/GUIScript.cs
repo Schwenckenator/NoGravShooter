@@ -134,18 +134,11 @@ public class GUIScript : MonoBehaviour {
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
 		}else if(manager.IsPlayerSpawned()){
+			GUIStyle style = new GUIStyle("label");
+			style.fontSize = 50;
+			style.alignment = TextAnchor.UpperCenter;
 
-//			Hidden for now
-//
-//			Rect heat = new Rect(Screen.width-310, Screen.height-150, 300, 40);
-//			GUI.DrawTexture(heat, empty);
-//
-//
-//			float temp = res.GetWeaponHeat();
-//			temp = Mathf.Clamp(temp, 0, 100);
-//			heat.xMin = heat.xMax - temp*3;
-//			
-//			GUI.DrawTexture(heat, fullHeat);
+			GUI.Label(new Rect(Screen.width-310, Screen.height-175, 300, 100), res.GetCurrentClip().ToString()+" / "+res.GetMaxClip().ToString(), style);
 			
 			Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
 			GUI.DrawTexture(fuel, empty);

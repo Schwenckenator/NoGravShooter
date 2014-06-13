@@ -3,27 +3,43 @@ using System.Collections;
 
 public interface IWeaponValues{
 
-	int DamagePerShot {
+	int damagePerShot {
 		get;
 		set;
 	}
-	int HeatPerShot {
+	int heatPerShot {
 		get;
 		set;
 	}
-	float FireDelay{
+	float fireDelay{
 		get;
 		set;
 	}
-	GameObject Projectile{
+	int clipSize{
 		get;
 		set;
 	}
-	GameObject HitParticle{
+	int currentClip{
 		get;
 		set;
 	}
-	AudioClip FireSound{
+	float reloadTime{
+		get;
+		set;
+	}
+	GameObject projectile{
+		get;
+		set;
+	}
+	GameObject hitParticle{
+		get;
+		set;
+	}
+	AudioClip fireSound{
+		get;
+		set;
+	}
+	AudioClip reloadSound{
 		get;
 		set;
 	}
