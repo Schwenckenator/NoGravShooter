@@ -20,11 +20,11 @@ public class SpawnBonuses : MonoBehaviour {
 
 	IEnumerator SpawnBonus(){
 		while(true){
-			if(Random.Range(0.0f, 1.0f) < bonusProbability){ //All decimal
+			GameObject[] aliveBonuses = GameObject.FindGameObjectsWithTag("BonusPickup");
 
+			if((aliveBonuses.Length <= 0) && (Random.Range(0.0f, 1.0f) < bonusProbability)){ //All decimal
 				int point = Random.Range(0, bonusSpawnPoints.Length);
 				Network.Instantiate(bonuses[0], bonusSpawnPoints[point].transform.position, bonusSpawnPoints[point].transform.rotation, 0);
-			}else{
 			}
 			yield return new WaitForSeconds(bonusSpawnDelay);
 		}

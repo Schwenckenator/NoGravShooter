@@ -4,7 +4,6 @@ using System.Collections;
 public class FireWeapon : MonoBehaviour {
 	Transform gun;
 	Transform cameraPos;
-	MouseLook cameraLook;
 	NoGravCharacterMotor motor;
 
 
@@ -29,8 +28,6 @@ public class FireWeapon : MonoBehaviour {
 
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
 		cameraPos = transform.FindChild("CameraPos");
-
-		cameraLook = cameraPos.GetComponent<MouseLook>();
 
 		motor = GetComponent<NoGravCharacterMotor>();
 
@@ -65,8 +62,11 @@ public class FireWeapon : MonoBehaviour {
 			render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
 			
 			
-			
-			networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
+			if(currentWeapon == laser){
+				networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
+			}else if(currentWeapon == slug){
+				networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
+			}
 
 			if(currentWeapon == slug){
 				motor.Recoil();
@@ -81,6 +81,18 @@ public class FireWeapon : MonoBehaviour {
 		audio.PlayOneShot(laser.fireSound);
 
 		shot = Instantiate(laser.projectile, start, Quaternion.identity) as GameObject;
+		LineRenderer render = shot.GetComponent<LineRenderer>();
+		render.useWorldSpace = true;
+		render.SetPosition(0, start);
+		render.SetPosition(1, end);
+	}
+
+	[RPC]
+	void MultiplayerSlugRender(Vector3 start, Vector3 end){
+		Instantiate(slug.hitParticle, end, Quaternion.identity);
+		audio.PlayOneShot(slug.fireSound);
+		
+		shot = Instantiate(slug.projectile, start, Quaternion.identity) as GameObject;
 		LineRenderer render = shot.GetComponent<LineRenderer>();
 		render.useWorldSpace = true;
 		render.SetPosition(0, start);

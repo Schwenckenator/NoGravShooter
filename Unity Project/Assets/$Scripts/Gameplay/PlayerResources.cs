@@ -5,6 +5,7 @@ public class PlayerResources : MonoBehaviour {
 	#region Public Declarations
 	public AudioClip soundOverheat;
 	public AudioClip soundJetpackRecharge;
+	public AudioClip soundChangeWeapon;
 
 	public int maxFuel = 100;
 	public int maxHealth = 100;
@@ -32,6 +33,7 @@ public class PlayerResources : MonoBehaviour {
 	private float rechargeWaitTime;
 
 	private bool recharging = true;
+	private bool weaponBusy = false;
 
 	private IWeaponValues currentWeapon;
 	#endregion
@@ -40,7 +42,8 @@ public class PlayerResources : MonoBehaviour {
 	void Start () {
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
-		smokeParticle = transform.FindChild("CameraPos").FindChild("GunSmokeParticle").GetComponent<ParticleSystem>();
+		//smokeParticle = transform.FindChild("CameraPos").FindChild("GunSmokeParticle").GetComponent<ParticleSystem>();
+		smokeParticle = GetComponentInChildren<ParticleSystem>();
 		smokeParticle.emissionRate = 0;
 		smokeParticle.Play();
 		//Use them like percentage, for now
@@ -181,7 +184,7 @@ public class PlayerResources : MonoBehaviour {
 	}
 
 	public bool WeaponCanFire(){
-		return (heat < maxHeat) && (currentWeapon.currentClip > 0);
+		return (heat < maxHeat) && (currentWeapon.currentClip > 0) && !weaponBusy;
 	}
 	#endregion
 	
@@ -208,6 +211,10 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	IEnumerator WeaponReload(){
+		if(currentWeapon.reloadTime > 1.0f){
+			GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(currentWeapon.reloadTime);
+		}
+		weaponBusy = true;
 		audio.clip = currentWeapon.reloadSound;
 		audio.Play ();
 		float wait = 0;
@@ -215,14 +222,27 @@ public class PlayerResources : MonoBehaviour {
 			wait += Time.deltaTime;
 			yield return null;
 		}
+		weaponBusy = false;
 		currentWeapon.currentClip = currentWeapon.clipSize;
 	}
 
+	IEnumerator WeaponChange(){
+		audio.PlayOneShot(soundChangeWeapon);
+		weaponBusy = true;
+		float waitTime = 1.0f;
+		GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(waitTime);
+		yield return new WaitForSeconds(waitTime);
+		weaponBusy = false;
+	}
+
 	public void ChangeWeapon(IWeaponValues newWeapon){
-		currentWeapon = newWeapon;
-		if(currentWeapon.currentClip == 0){
-			StopCoroutine("WeaponReload");
-			StartCoroutine("WeaponReload");
+		if(!weaponBusy){
+			StartCoroutine(WeaponChange());
+			currentWeapon = newWeapon;
+			if(currentWeapon.currentClip == 0){
+				StopCoroutine("WeaponReload");
+				StartCoroutine("WeaponReload");
+			}
 		}
 	}
 

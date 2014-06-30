@@ -1,0 +1,9 @@
+fileFormatVersion: 2
+guid: 3a5df28fc86a1f045beb3f505cf30846
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - grenade: {fileID: 100000, guid: 65676a098f6aa694eba877963d5f7f20, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
