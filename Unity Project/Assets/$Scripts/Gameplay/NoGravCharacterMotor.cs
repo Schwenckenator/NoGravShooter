@@ -47,6 +47,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	public float fuelSpend = 0.5f;
 
 
+
+	// Input Axes
+	float horizontal = 0.0f;
+	float vertical = 0.0f;
+	float jetPackUpDown = 0.0f;
+	float roll = 0.0f;
+	bool jetPackInUse = false;
+
+	#region Start
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
@@ -65,7 +74,93 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		feetAudio.volume = volumeFootsteps;
 		StartCoroutine("PlayFeetSound");
+
 	}
+	#endregion
+
+	#region UpdateInput
+	void UpdateInput(){
+		jetPackInUse = false;
+
+		// If exclusive input
+		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveForward]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveBack]) ){
+			//Move forward
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveForward])){
+				if(vertical < 0.0f) vertical = 0.0f;
+				vertical = Mathf.MoveTowards(vertical, 1.0f, 3*Time.deltaTime);
+				jetPackInUse = true;
+			}
+			//Move back
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveBack])){
+				if(vertical > 0.0f) vertical = 0.0f;
+				vertical = Mathf.MoveTowards(vertical, -1.0f, 3*Time.deltaTime);
+				jetPackInUse = true;
+			}
+		
+		}else {// If both or neither
+			//Move to rest
+			vertical = Mathf.MoveTowards(vertical, 0.0f, 3*Time.deltaTime);
+		}
+
+		// If exclusive input
+		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveRight]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveLeft]) ){
+			//Move Right
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveRight])){
+				if(horizontal < 0.0f) horizontal = 0.0f;
+				horizontal = Mathf.MoveTowards(horizontal, 1.0f, 3*Time.deltaTime);
+				jetPackInUse = true;
+			}
+			//Move Left
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveLeft])){
+				if(horizontal > 0.0f) horizontal = 0.0f;
+				horizontal = Mathf.MoveTowards(horizontal, -1.0f, 3*Time.deltaTime);
+				jetPackInUse = true;
+			}
+			
+		}else {// If both or neither
+			//Move to rest
+			horizontal = Mathf.MoveTowards(horizontal, 0.0f, 3*Time.deltaTime);
+		}
+
+		// If exclusive input
+		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown]) ){
+			//Move forward
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp])){
+				if(jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
+				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3*Time.deltaTime);
+				jetPackInUse = true;
+			}
+			//Move back
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown])){
+				if(jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
+				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3*Time.deltaTime);
+				jetPackInUse = true;
+			}
+			
+		}else {// If both or neither
+			//Move to rest
+			jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 0.0f, 3*Time.deltaTime);
+		}
+
+		// If exclusive input
+		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollRight]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollLeft]) ){
+			//Move forward
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollRight])){
+				if(roll > 0.0f) roll = 0.0f;
+				roll = Mathf.MoveTowards(roll, -1.0f, 3*Time.deltaTime);
+			}
+			//Move back
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollLeft])){
+				if(roll < 0.0f) roll = 0.0f;
+				roll = Mathf.MoveTowards(roll, 1.0f, 3*Time.deltaTime);
+			}
+			
+		}else {// If both or neither
+			//Move to rest
+			roll = Mathf.MoveTowards(roll, 0.0f, 3*Time.deltaTime);
+		}
+	}
+	#endregion
 
 	void FixedUpdate () {
 		LockMouseLook(!grounded);
@@ -73,6 +168,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		playJetEmpty = false;
 		playWalkingSound = false;
 
+		UpdateInput();
 
 		if (grounded) {
 
@@ -81,9 +177,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if(manager.IsPaused()){
 				targetVelocity = Vector3.zero;
 			}else{
-				targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+				targetVelocity = new Vector3(horizontal, 0, vertical);
 			}
 
+			targetVelocity = Vector3.ClampMagnitude(targetVelocity, 1.0f);
 			targetVelocity = transform.TransformDirection(targetVelocity);
 			targetVelocity *= speed;
 			
@@ -103,7 +200,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 			
 			// Jump
-			if (canJump && Input.GetButton("Jump") && !manager.IsPaused()) {
+			if (canJump && Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp]) && !manager.IsPaused()) {
 				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.VelocityChange);
 			}
 		}else if(jetPackOn){
@@ -115,12 +212,12 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if(manager.IsPaused()){
 				force = Vector3.zero;
 			}else{
-				force = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis ("JetPackUpDown"), Input.GetAxis("Vertical"));
+				force = new Vector3(horizontal, jetPackUpDown, vertical);
 			}
 			force *= speed;
 
 			// If non-zero force, spend fuel
-			if(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw ("JetPackUpDown"), Input.GetAxisRaw("Vertical")).sqrMagnitude > 0 && !manager.IsPaused()){
+			if(jetPackInUse && !manager.IsPaused()){
 				if(resource.SpendFuel(fuelSpend)){
 					playJetSound = true;
 					rigidbody.AddRelativeForce(force, ForceMode.Acceleration);
@@ -134,7 +231,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if(manager.IsPaused()){
 				torque = Vector3.zero;
 			}else{
-				torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * cameraLook.GetYDirection(), 0, Input.GetAxis("Roll")); // the change wanted
+				torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * cameraLook.GetYDirection(), 0, roll); // the change wanted
 			}
 			torque = torque * rollSpeed;
 			transform.Rotate(torque);

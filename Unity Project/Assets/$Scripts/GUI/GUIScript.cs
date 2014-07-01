@@ -17,12 +17,14 @@ public class GUIScript : MonoBehaviour {
 	private int currentWindow = 0;
 	private bool displayGameSettingsWindow = false;
 	private bool displayJoinByIpWindow = false;
+	private bool displayChangeKeybindWindow = false;
 	
 	private Rect largeRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
 	private Rect smallRect = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
 	
 	
-	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, connecting}
+	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind}
+
 	
 	private const string GAME_TYPE = "NoGravShooter";
 	
@@ -60,45 +62,31 @@ public class GUIScript : MonoBehaviour {
 	
 	private int levelSelectInt = 0;
 	
+	GameManagerScript.KeyBind editedBinding;
+	
 	
 	void Start(){
 		manager = GetComponent<GameManagerScript>();
 		
 		currentWindow = (int) Menu.MainMenu;
+
 		
 		serverName = PlayerPrefs.GetString("serverName");
-		
-		playerName = PlayerPrefs.GetString("playerName");
-		if(playerName == "")
-			playerName = "Player";
-		
-		strPortNum = PlayerPrefs.GetString("portNumber");
-		if(strPortNum == "")
-			strPortNum = "25000";
-		
-		ipAddress = PlayerPrefs.GetString("ipAddress");
-		if(ipAddress == "")
-			ipAddress = "127.0.0.1";
-		
-		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX");
-		if(xMouseSensitivity == 0)
-			xMouseSensitivity = 15;
-		
-		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY");
-		if(yMouseSensitivity == 0)
-			yMouseSensitivity = 10;
+		playerName = PlayerPrefs.GetString("playerName", "Player");
+		strPortNum = PlayerPrefs.GetString("portNumber", "25000");
+		ipAddress = PlayerPrefs.GetString("ipAddress", "127.0.0.1");
 
-		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection");
-		if(mouseYDirection == 0){
-			mouseYDirection = -1;
-		}
+		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 15);
+		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 10);
+		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
+
 		mouseInverted = (mouseYDirection == 1);
 	}
 	
-
+	#region OnGUI
 	void OnGUI(){
 		if(connectingNow){
-			if(currentWindow != (int) Menu.connecting){
+			if(currentWindow != (int) Menu.Connecting){
 				connectingNow = false;
 			}
 		}
@@ -120,8 +108,11 @@ public class GUIScript : MonoBehaviour {
 			case (int) Menu.Lobby:
 				GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, serverName);
 				break;
-			case (int) Menu.connecting:
-				GUI.Window ((int) Menu.connecting, smallRect, ConnectingWindow, "");
+			case (int) Menu.Connecting:
+				GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
+				break;
+			case (int) Menu.Keybind:
+				GUI.Window ((int) Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
 				break;
 			}
 			if(displayGameSettingsWindow){
@@ -129,6 +120,9 @@ public class GUIScript : MonoBehaviour {
 			}
 			if(displayJoinByIpWindow){
 				GUI.ModalWindow((int) Menu.JoinByIP, smallRect, JoinByIpWindow, "Join By IP");
+			}
+			if(displayChangeKeybindWindow){
+				GUI.ModalWindow((int) Menu.ChangeKeybind, smallRect, ChangeKeybindWindow, "Press new key");
 			}
 		}else if(manager.IsPaused()){
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
@@ -159,7 +153,9 @@ public class GUIScript : MonoBehaviour {
 			
 		}
 	}
-	
+	#endregion
+
+	#region MainMenuWindow
 	void MainMenuWindow(int windowId){
 		Rect standard = new Rect(largeRect.width/4, 20, largeRect.width/2, 30);
 		
@@ -198,7 +194,9 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 	}
-	
+	#endregion
+
+	#region CreateGameWindow
 	void CreateGameWindow(int windowId){
 		Rect standard = new Rect(largeRect.width/4, 20, largeRect.width/2, 30);
 		
@@ -251,7 +249,9 @@ public class GUIScript : MonoBehaviour {
 			currentWindow = (int) Menu.MainMenu;
 		}
 	}
-	
+	#endregion
+
+	#region JoinGameWindow
 	void JoinGameWindow(int windowId){
 		
 		Rect rectServerName = new Rect(30, 30, largeRect.width/3, 30);
@@ -280,7 +280,7 @@ public class GUIScript : MonoBehaviour {
 			if(GUI.Button(rectJoinButton, "Join Game")){
 				masterServerData = servers[i];
 				useMasterServer = true;
-				currentWindow = (int) Menu.connecting;
+				currentWindow = (int) Menu.Connecting;
 			}
 		}
 		
@@ -295,7 +295,9 @@ public class GUIScript : MonoBehaviour {
 		}
 		
 	}
-	
+	#endregion
+
+	#region OptionsWindow
 	void OptionsWindow(int windowId){
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
 		standard.y += 50;
@@ -316,6 +318,11 @@ public class GUIScript : MonoBehaviour {
 		mouseInverted = GUI.Toggle(standard, mouseInverted, "Invert Y Axis");
 
 		standard.y += 50;
+		if(GUI.Button(standard, "Edit Keybinds")){
+			currentWindow = (int)Menu.Keybind;
+		}
+
+		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 			PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity);
 			PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity);
@@ -330,7 +337,117 @@ public class GUIScript : MonoBehaviour {
 			currentWindow = (int) Menu.MainMenu;
 		}
 	}
-	
+	#endregion
+
+	#region KeyBindWindow
+	void KeyBindWindow(int windowId){
+		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
+
+		//Move Forward
+		standard.y += 50;
+		GUI.Label(standard, "Move Forward: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveForward].ToString())){
+			editedBinding = GameManagerScript.KeyBind.MoveForward;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
+		GUI.Label(standard, "Move Backward: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveBack].ToString())){
+			editedBinding = GameManagerScript.KeyBind.MoveBack;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
+		GUI.Label(standard, "Move Left: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveLeft].ToString())){
+			editedBinding = GameManagerScript.KeyBind.MoveLeft;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
+		GUI.Label(standard, "Move Right: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveRight].ToString())){
+			editedBinding = GameManagerScript.KeyBind.MoveRight;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
+		GUI.Label(standard, "Roll Left: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollLeft].ToString())){
+			editedBinding = GameManagerScript.KeyBind.RollLeft;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
+		GUI.Label(standard, "Roll Right: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollRight].ToString())){
+			editedBinding = GameManagerScript.KeyBind.RollRight;
+			displayChangeKeybindWindow = true;
+		}
+		standard.y += 30;
+		GUI.Label(standard, "Jump / Jetpack Up: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp].ToString())){
+			editedBinding = GameManagerScript.KeyBind.JetUp;
+			displayChangeKeybindWindow = true;
+		}
+		standard.y += 30;
+		GUI.Label(standard, "Jetpack Down: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown].ToString())){
+			editedBinding = GameManagerScript.KeyBind.JetDown;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 50;
+		GUI.Label(standard, "Reload: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Reload].ToString())){
+			editedBinding = GameManagerScript.KeyBind.Reload;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
+		GUI.Label(standard, "Grenade: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Grenade].ToString())){
+			editedBinding = GameManagerScript.KeyBind.Grenade;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 50;
+		if(GUI.Button(standard, "Back")){
+			// Save Configuation
+			PlayerPrefs.SetInt("bindMoveForward", 	(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveForward] );
+			PlayerPrefs.SetInt("bindMoveBack", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveBack] );
+			PlayerPrefs.SetInt("bindMoveLeft", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveLeft] );
+			PlayerPrefs.SetInt("bindMoveRight", 	(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveRight] );
+			
+			
+			PlayerPrefs.SetInt("bindRollLeft", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.RollLeft] );
+			PlayerPrefs.SetInt("bindRollRight", 	(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.RollRight] );
+			PlayerPrefs.SetInt("bindJetUp", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.JetUp] );
+			PlayerPrefs.SetInt("bindJetDown", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.JetDown] );
+
+			PlayerPrefs.SetInt("bindReload", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.Reload] );
+			PlayerPrefs.SetInt("bindGrenade", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.Grenade] );
+
+			currentWindow = (int) Menu.Options;
+		}
+	}
+	#endregion
+
+	#region ChangeKeybindWindow
+	void ChangeKeybindWindow(int windowId){
+		GUI.Label(new Rect(20, 20, smallRect.width-40, 30), "Press Escape to cancel.");
+
+		if(Event.current.isKey){
+			if(Event.current.keyCode != KeyCode.Escape){
+				GameManagerScript.keyBindings[(int)editedBinding] = Event.current.keyCode;
+			}
+			displayChangeKeybindWindow = false;
+		}
+	}
+	#endregion
+
+	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
 		string[] levelList = {"TestShip", "TestScene"};
 		levelSelectInt = GUI.Toolbar(new Rect(20, 20, smallRect.width-40, 30), levelSelectInt, levelList);
@@ -339,7 +456,9 @@ public class GUIScript : MonoBehaviour {
 			displayGameSettingsWindow = false;
 		}
 	}
+	#endregion
 	
+	#region JoinByIpWindow
 	void JoinByIpWindow(int windowId){
 		Rect standard = new Rect(20, 20, smallRect.width-40, 30);
 		
@@ -369,7 +488,7 @@ public class GUIScript : MonoBehaviour {
 				PlayerPrefs.SetString("ipAddress", ipAddress);
 				PlayerPrefs.SetString ("portNumber", strPortNum);
 				useMasterServer = false;
-				currentWindow = (int) Menu.connecting;
+				currentWindow = (int) Menu.Connecting;
 			}
 			
 		}
@@ -379,7 +498,9 @@ public class GUIScript : MonoBehaviour {
 			displayJoinByIpWindow = false;
 		}
 	}
-	
+	#endregion
+
+	#region LobbyWindow
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
@@ -423,7 +544,9 @@ public class GUIScript : MonoBehaviour {
 			SubmitTextToChat();
 		}
 	}
-	
+	#endregion
+
+	#region ConnectingWindow
 	void ConnectingWindow(int windowId){
 		Rect standard = new Rect(smallRect.width/4, smallRect.height/4, smallRect.width/2, smallRect.height/2);
 		GUIStyle style = new GUIStyle("box");
@@ -451,8 +574,9 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 	}
-	
-	
+	#endregion
+
+	#region PauseWindow
 	void PauseWindow(int windowId){
 		if(manager.IsPlayerSpawned()){
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), "Return to Game")){
@@ -503,7 +627,8 @@ public class GUIScript : MonoBehaviour {
 			SubmitTextToChat();
 		}
 	}
-	
+	#endregion
+
 	void SubmitTextToChat(){
 		if(currentChat != ""){
 			string newChat = playerName+ ": "+currentChat +"\n";

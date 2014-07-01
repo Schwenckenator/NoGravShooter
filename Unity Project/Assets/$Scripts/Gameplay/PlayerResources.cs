@@ -56,7 +56,7 @@ public class PlayerResources : MonoBehaviour {
 
 	#region Fixed Update()
 	void FixedUpdate () {
-		if(Input.GetKeyDown(KeyCode.P)){ //Because fuck you it's P
+		if(Input.GetKeyDown(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Reload])){ //Because fuck you it's P
 			StartCoroutine("WeaponReload");
 		}
 		if(recharging){
@@ -64,7 +64,7 @@ public class PlayerResources : MonoBehaviour {
 		}
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K)){ //K is for kill!
-			TakeDamage(10);
+			TakeDamage(20);
 		}
 
 		if(heat > maxHeat){
