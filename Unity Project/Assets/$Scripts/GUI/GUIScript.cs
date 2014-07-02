@@ -80,6 +80,8 @@ public class GUIScript : MonoBehaviour {
 		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 10);
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
 
+		levelSelectInt = PlayerPrefs.GetInt ("levelSelectInt", 0);
+
 		mouseInverted = (mouseYDirection == 1);
 	}
 	
@@ -91,67 +93,82 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 		if(GameManagerScript.SceneIsMenu()){
-			switch(currentWindow){
-				
-			case (int) Menu.MainMenu:
-				GUI.Window ((int) Menu.MainMenu, largeRect, MainMenuWindow, "Main Menu");
-				break;
-			case (int) Menu.CreateGame:
-				GUI.Window ((int) Menu.CreateGame, largeRect, CreateGameWindow, "Create Game");
-				break;
-			case (int) Menu.JoinGame:
-				GUI.Window ((int) Menu.JoinGame, largeRect, JoinGameWindow, "Join Game");
-				break;
-			case (int) Menu.Options:
-				GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
-				break;
-			case (int) Menu.Lobby:
-				GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, serverName);
-				break;
-			case (int) Menu.Connecting:
-				GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
-				break;
-			case (int) Menu.Keybind:
-				GUI.Window ((int) Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
-				break;
-			}
-			if(displayGameSettingsWindow){
-				GUI.ModalWindow((int) Menu.GameSettings, smallRect, GameSettingsWindow, "Settings");
-			}
-			if(displayJoinByIpWindow){
-				GUI.ModalWindow((int) Menu.JoinByIP, smallRect, JoinByIpWindow, "Join By IP");
-			}
-			if(displayChangeKeybindWindow){
-				GUI.ModalWindow((int) Menu.ChangeKeybind, smallRect, ChangeKeybindWindow, "Press new key");
-			}
+			ChooseMenuWindow();
+
 		}else if(manager.IsPaused()){
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
 		}else if(manager.IsPlayerSpawned()){
-			GUIStyle style = new GUIStyle("label");
-			style.fontSize = 50;
-			style.alignment = TextAnchor.UpperCenter;
-
-			GUI.Label(new Rect(Screen.width-310, Screen.height-175, 300, 100), res.GetCurrentClip().ToString()+" / "+res.GetMaxClip().ToString(), style);
-			
-			Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
-			GUI.DrawTexture(fuel, empty);
-			fuel.xMin = fuel.xMax - res.GetFuel()*3;
-			GUI.DrawTexture(fuel, fullFuel);
-			
-			Rect health = new Rect(Screen.width-310, Screen.height-50, 300, 40);
-			GUI.DrawTexture(health, empty);
-			health.xMin = health.xMax - res.GetHealth()*3;
-			GUI.DrawTexture(health, fullHealth);
-			
-			Rect rectCrosshair = new Rect(0, 0, 32, 32);
-			rectCrosshair.center = new Vector2(Screen.width/2, Screen.height/2);
-			GUI.DrawTexture(rectCrosshair, crosshair);
+			PlayerGUI();
 			
 		}else if(!GameManagerScript.SceneIsMenu()){
 			GUI.Window(1, largeRect, PauseWindow, "");
 			
 		}
+	}
+	#endregion
+
+	#region ChooseMenuWindow
+	void ChooseMenuWindow(){
+		switch(currentWindow){
+			
+		case (int) Menu.MainMenu:
+			GUI.Window ((int) Menu.MainMenu, largeRect, MainMenuWindow, "Main Menu");
+			break;
+		case (int) Menu.CreateGame:
+			GUI.Window ((int) Menu.CreateGame, largeRect, CreateGameWindow, "Create Game");
+			break;
+		case (int) Menu.JoinGame:
+			GUI.Window ((int) Menu.JoinGame, largeRect, JoinGameWindow, "Join Game");
+			break;
+		case (int) Menu.Options:
+			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
+			break;
+		case (int) Menu.Lobby:
+			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, serverName);
+			break;
+		case (int) Menu.Connecting:
+			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
+			break;
+		case (int) Menu.Keybind:
+			GUI.Window ((int) Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
+			break;
+		}
+		if(displayGameSettingsWindow){
+			GUI.ModalWindow((int) Menu.GameSettings, smallRect, GameSettingsWindow, "Settings");
+		}
+		if(displayJoinByIpWindow){
+			GUI.ModalWindow((int) Menu.JoinByIP, smallRect, JoinByIpWindow, "Join By IP");
+		}
+		if(displayChangeKeybindWindow){
+			GUI.ModalWindow((int) Menu.ChangeKeybind, smallRect, ChangeKeybindWindow, "Press new key");
+		}
+	}
+	#endregion
+
+	#region PlayerGUI
+	void PlayerGUI(){
+		GUIStyle style = new GUIStyle("label");
+		style.fontSize = 50;
+		style.alignment = TextAnchor.UpperCenter;
+
+		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetGrenades().ToString(), style);
+		GUI.Label(new Rect(Screen.width-200, Screen.height-175, 300, 100), res.GetCurrentClip().ToString(), style);
+
+		
+		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
+		GUI.DrawTexture(fuel, empty);
+		fuel.xMin = fuel.xMax - res.GetFuel()*3;
+		GUI.DrawTexture(fuel, fullFuel);
+		
+		Rect health = new Rect(Screen.width-310, Screen.height-50, 300, 40);
+		GUI.DrawTexture(health, empty);
+		health.xMin = health.xMax - res.GetHealth()*3;
+		GUI.DrawTexture(health, fullHealth);
+		
+		Rect rectCrosshair = new Rect(0, 0, 32, 32);
+		rectCrosshair.center = new Vector2(Screen.width/2, Screen.height/2);
+		GUI.DrawTexture(rectCrosshair, crosshair);
 	}
 	#endregion
 
@@ -452,6 +469,7 @@ public class GUIScript : MonoBehaviour {
 		string[] levelList = {"TestShip", "TestScene"};
 		levelSelectInt = GUI.Toolbar(new Rect(20, 20, smallRect.width-40, 30), levelSelectInt, levelList);
 		if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
+			PlayerPrefs.SetInt ("levelSelectInt", levelSelectInt);
 			levelName = levelList[levelSelectInt];
 			displayGameSettingsWindow = false;
 		}

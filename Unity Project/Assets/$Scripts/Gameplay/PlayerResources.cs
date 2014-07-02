@@ -31,6 +31,7 @@ public class PlayerResources : MonoBehaviour {
 	private int health;
 	private float heat;
 	private float rechargeWaitTime;
+	private int grenades;
 
 	private bool recharging = true;
 	private bool weaponBusy = false;
@@ -51,19 +52,20 @@ public class PlayerResources : MonoBehaviour {
 		fuel = maxFuel;
 		health = maxHealth;
 		rechargeWaitTime = 0;
+		grenades = 0;
 	}
 	#endregion
 
 	#region Fixed Update()
 	void FixedUpdate () {
-		if(Input.GetKeyDown(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Reload])){ //Because fuck you it's P
+		if(Input.GetKeyDown(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Reload])){ //Because fuck you it's P // nevermind
 			StartCoroutine("WeaponReload");
 		}
 		if(recharging){
 			RechargeFuel(fuelRecharge);
 		}
 		RechargeWeapon(heatOverheat);
-		if(Input.GetKeyDown(KeyCode.K)){ //K is for kill!
+		if(Input.GetKeyDown(KeyCode.K)){ //K is for kill! // This is for testing purposes only
 			TakeDamage(20);
 		}
 
@@ -96,9 +98,14 @@ public class PlayerResources : MonoBehaviour {
 	public float GetWeaponHeat(){
 		return heat;
 	}
+	public int GetGrenades(){
+		return grenades;
+	}
 	#endregion
 
 	#region Variable Mutators
+	// Checks itself to see if there is fuel available
+	// Returns false if fuel empty
 	public bool SpendFuel(float spentFuel){
 		recharging = true;
 		rechargeWaitTime = maxRechargeWaitTime;
@@ -108,6 +115,21 @@ public class PlayerResources : MonoBehaviour {
 			return false;
 		}
 		return true;
+	}
+
+	// Checks to see if there is grenades available
+	// Returns false if no grenades
+	public bool ThrowGrenade(){
+		if(grenades > 0){
+			grenades--;
+			return true;
+		}else{
+			return false;
+		}
+	}
+
+	public void PickUpGrenades(int amount){
+		grenades += amount;
 	}
 	
 	public void TakeDamage(int damage){
@@ -252,5 +274,6 @@ public class PlayerResources : MonoBehaviour {
 	public int GetMaxClip(){
 		return currentWeapon.clipSize;
 	}
+
 
 }

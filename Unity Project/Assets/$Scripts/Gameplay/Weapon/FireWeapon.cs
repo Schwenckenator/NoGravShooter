@@ -46,7 +46,7 @@ public class FireWeapon : MonoBehaviour {
 			//Deal with the shot
 			if(hit.collider.CompareTag("Player")){
 				if(!hit.collider.networkView.isMine){
-					hit.collider.GetComponent<PlayerResources>().TakeDamage(laser.damagePerShot);
+					hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot);
 				}
 			}else if(hit.collider.CompareTag("BonusPickup")){
 				Network.Destroy(hit.collider.gameObject);
@@ -65,7 +65,7 @@ public class FireWeapon : MonoBehaviour {
 			if(currentWeapon == laser){
 				networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
 			}else if(currentWeapon == slug){
-				networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
+				networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gun.position, hit.point);
 			}
 
 			if(currentWeapon == slug){
