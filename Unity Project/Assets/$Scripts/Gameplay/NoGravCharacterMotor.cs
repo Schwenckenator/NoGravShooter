@@ -213,6 +213,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 				force = Vector3.zero;
 			}else{
 				force = new Vector3(horizontal, jetPackUpDown, vertical);
+				force = Vector3.ClampMagnitude(force, 1.0f);
 			}
 			force *= speed;
 
