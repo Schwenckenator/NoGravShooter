@@ -32,6 +32,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private bool playJetEmpty = false;
 	private bool playWalkingSound = false;
 
+	public float maxLandingAngle = 45f;
 	public float speed = 10.0f;
 	public float rollSpeed = 3.0f;
 	public float maxVelocityChange = 10.0f;
@@ -294,9 +295,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	void OnCollisionEnter(Collision info){
 		if(networkView.isMine){
 			if(info.collider.CompareTag("Walkable")){
+				// Find angle between vectors
+
+				float angle = Vector3.Angle(-transform.up, info.contacts[0].normal);
+				Debug.Log(angle.ToString());
 				RaycastHit hit;
 
-				if(Physics.Raycast(transform.position, -transform.up, out hit, 1.5f)){
+				if(angle > 180 - maxLandingAngle && Physics.Raycast(transform.position, -transform.up, 2.0f)){
 
 					// Preserve camera angle
 					Quaternion curCamRot = cameraTransform.rotation;
@@ -304,7 +309,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 					transform.rotation = Quaternion.LookRotation(info.contacts[0].normal, transform.forward);
 					transform.Rotate(new Vector3(-90, 180, 0));
 
-					Physics.Raycast(transform.position, -transform.up, out hit, 1.5f);
+					Physics.Raycast(transform.position, -transform.up, out hit, 2.0f);
 
 					transform.rotation = Quaternion.LookRotation(hit.normal, transform.forward);
 					transform.Rotate(new Vector3(-90, 180, 0));

@@ -56,7 +56,8 @@ public class GUIScript : MonoBehaviour {
 	private bool connectingNow = false;
 	
 	// For Game Settings
-	public string levelName = "TestShip";
+	public string levelName;
+	string[] levelList = {"FirstLevel"};
 	public string gameMode = "DeathMatch";
 	public int killsToWin = 20;
 	
@@ -81,6 +82,7 @@ public class GUIScript : MonoBehaviour {
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
 
 		levelSelectInt = PlayerPrefs.GetInt ("levelSelectInt", 0);
+		levelName = levelList[levelSelectInt];
 
 		mouseInverted = (mouseYDirection == 1);
 	}
@@ -251,6 +253,32 @@ public class GUIScript : MonoBehaviour {
 			
 			if(!error){
 				Network.InitializeServer(MAX_PLAYERS, portNum, !Network.HavePublicAddress());
+				if(useMasterServer){
+					MasterServer.RegisterHost(GAME_TYPE, serverName);
+				}
+				PlayerPrefs.SetString("serverName", serverName);
+				PlayerPrefs.SetString ("portNumber", strPortNum);
+				currentWindow = (int) Menu.Lobby;
+			}
+			
+		}
+
+		standard.y += 50;
+		if(GUI.Button(standard, "Create LAN Game")){
+			
+			//Get port number, create Server
+			//Sanitise Port number input
+			bool error = false;
+			int portNum = 0;
+			
+			try{
+				portNum = int.Parse(strPortNum);
+			}catch{
+				error = true;
+			}
+			
+			if(!error){
+				Network.InitializeServer(MAX_PLAYERS, portNum, false);
 				if(useMasterServer){
 					MasterServer.RegisterHost(GAME_TYPE, serverName);
 				}
@@ -466,7 +494,6 @@ public class GUIScript : MonoBehaviour {
 
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
-		string[] levelList = {"TestShip", "TestScene"};
 		levelSelectInt = GUI.Toolbar(new Rect(20, 20, smallRect.width-40, 30), levelSelectInt, levelList);
 		if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
 			PlayerPrefs.SetInt ("levelSelectInt", levelSelectInt);
