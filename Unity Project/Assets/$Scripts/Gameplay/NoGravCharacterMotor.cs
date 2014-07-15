@@ -224,7 +224,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 					playJetSound = true;
 					rigidbody.AddRelativeForce(force, ForceMode.Acceleration);
 				}else{
-					playJetEmpty = true;
+					jetpackSoundWasPlayed = false;
 				}
 			}
 
@@ -256,13 +256,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 					jetpackAudio.clip = soundJetpack;
 					jetpackAudio.volume = volumeJetpack;
 					jetpackAudio.Play();
-				}
-			}else if(playJetEmpty){
-				jetpackSoundWasPlayed = true;
-				if(!jetpackAudio.isPlaying || jetpackAudio.clip != soundJetpackEmpty){
-					jetpackAudio.clip = soundJetpackEmpty;
-					jetpackAudio.volume = volumeJetpackEmpty;
-					jetpackAudio.Play ();
 				}
 			}else if(jetpackSoundWasPlayed){
 				jetpackAudio.clip = soundJetpackShutoff;

@@ -7,7 +7,12 @@ public class PlayerResources : MonoBehaviour {
 	public AudioClip soundJetpackRecharge;
 	public AudioClip soundChangeWeapon;
 
-	public int maxFuel = 100;
+	public AudioClip soundJetpackEmpty;
+	public float volumeJetpackEmpty;
+	public AudioClip soundJetpackShutoff;
+	public float volumeJetpackShutoff;
+
+	public int maxFuel = 150;
 	public int maxHealth = 100;
 	public int maxHeat = 100;
 
@@ -34,6 +39,7 @@ public class PlayerResources : MonoBehaviour {
 	private int grenades;
 
 	private bool recharging = true;
+	private bool jetpackDisabled = false;
 	private bool weaponBusy = false;
 
 	private IWeaponValues currentWeapon;
@@ -65,7 +71,7 @@ public class PlayerResources : MonoBehaviour {
 			RechargeFuel(fuelRecharge);
 		}
 		RechargeWeapon(heatOverheat);
-		if(Input.GetKeyDown(KeyCode.K)){ //K is for kill! // This is for testing purposes only
+		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(20);
 		}
 
@@ -92,6 +98,9 @@ public class PlayerResources : MonoBehaviour {
 	public int GetHealth(){
 		return health;
 	}
+	public float GetMaxFuel(){
+		return maxFuel;
+	}
 	public float GetFuel(){
 		return fuel;
 	}
@@ -108,12 +117,18 @@ public class PlayerResources : MonoBehaviour {
 	// Returns false if fuel empty
 	public bool SpendFuel(float spentFuel){
 		recharging = true;
-		rechargeWaitTime = maxRechargeWaitTime;
+		if(jetpackDisabled){
+			return false;
+		}
 		fuel -= spentFuel;
 		if(fuel < minFuel){
 			fuel = minFuel;
+			jetpackDisabled = true;
+			rechargeWaitTime = maxRechargeWaitTime*2;
+			StartCoroutine(PlayJetpackEmptySound());
 			return false;
 		}
+		rechargeWaitTime = maxRechargeWaitTime;
 		return true;
 	}
 
@@ -169,6 +184,7 @@ public class PlayerResources : MonoBehaviour {
 			if(fuel > maxFuel){
 				fuel = maxFuel;
 				recharging = false;
+				jetpackDisabled = false;
 				StartCoroutine("StopRechargeSound");
 			}else{
 				PlayRechargeSound();
@@ -218,6 +234,15 @@ public class PlayerResources : MonoBehaviour {
 			jetpackAudio.Play();
 		}
 	}
+	IEnumerator PlayJetpackEmptySound(){
+
+		jetpackAudio.clip = soundJetpackEmpty;
+		jetpackAudio.Play();
+		yield return new WaitForSeconds(1.25f);
+		jetpackAudio.Stop();
+		jetpackAudio.PlayOneShot(soundJetpackShutoff);
+	}
+
 	IEnumerator StopRechargeSound(){
 
 		while (jetpackAudio.volume > 0){
@@ -273,6 +298,14 @@ public class PlayerResources : MonoBehaviour {
 	}
 	public int GetMaxClip(){
 		return currentWeapon.clipSize;
+	}
+
+	public bool IsJetpackDisabled(){
+		return jetpackDisabled;
+	}
+
+	public bool IsWeaponBusy(){
+		return weaponBusy;
 	}
 
 

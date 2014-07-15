@@ -159,8 +159,13 @@ public class GUIScript : MonoBehaviour {
 
 		
 		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
-		GUI.DrawTexture(fuel, empty);
-		fuel.xMin = fuel.xMax - res.GetFuel()*3;
+		if(res.IsJetpackDisabled()){
+			GUI.DrawTexture(fuel, fullHeat);
+		}else{
+			GUI.DrawTexture(fuel, empty);
+		}
+
+		fuel.xMin = fuel.xMax - (res.GetFuel() / res.GetMaxFuel())*300;
 		GUI.DrawTexture(fuel, fullFuel);
 		
 		Rect health = new Rect(Screen.width-310, Screen.height-50, 300, 40);
@@ -487,6 +492,9 @@ public class GUIScript : MonoBehaviour {
 			if(Event.current.keyCode != KeyCode.Escape){
 				GameManagerScript.keyBindings[(int)editedBinding] = Event.current.keyCode;
 			}
+			displayChangeKeybindWindow = false;
+		}else if(Event.current.shift){
+			GameManagerScript.keyBindings[(int)editedBinding] = KeyCode.LeftShift;
 			displayChangeKeybindWindow = false;
 		}
 	}

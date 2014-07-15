@@ -100,8 +100,10 @@ public class FireWeapon : MonoBehaviour {
 	}
 
 	public void ChangeWeapon(int weaponId){
-		currentWeapon = weapons[weaponId];
-		resource.ChangeWeapon(currentWeapon);
+		if(!resource.IsWeaponBusy()){
+			currentWeapon = weapons[weaponId];
+			resource.ChangeWeapon(currentWeapon);
+		}
 	}
 
 
