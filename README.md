@@ -29,5 +29,5 @@ G = Grenade
 5 = Shock Cannon<br />
 6 = Shotgun
 
-7 = Plasma Launcher<br />
+7 = Plasma Blaster<br />
 8 = Rocket Launcher
