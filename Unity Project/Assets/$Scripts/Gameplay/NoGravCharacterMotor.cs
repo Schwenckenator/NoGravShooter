@@ -29,7 +29,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	private bool jetpackSoundWasPlayed = false;
 	private bool playJetSound = false;
-	private bool playJetEmpty = false;
 	private bool playWalkingSound = false;
 
 	public float maxLandingAngle = 45f;
@@ -163,10 +162,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 	#endregion
 
+	#region FixedUpdate
 	void FixedUpdate () {
 		LockMouseLook(!grounded);
 		playJetSound = false;
-		playJetEmpty = false;
 		playWalkingSound = false;
 
 		UpdateInput();
@@ -247,6 +246,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 
 	}
+	#endregion
+
 	#region Play Sounds
 	IEnumerator PlayJetpackSound(){
 		while(true){
@@ -288,23 +289,26 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	void OnCollisionEnter(Collision info){
 		if(networkView.isMine){
 			if(info.collider.CompareTag("Walkable")){
-				// Find angle between vectors
+				RaycastHit[] hits;
+				Vector3 colObjNorm = Vector3.zero;
+				Ray r = new Ray(transform.position, info.collider.transform.position - transform.position);
 
-				float angle = Vector3.Angle(-transform.up, info.contacts[0].normal);
-				Debug.Log(angle.ToString());
-				RaycastHit hit;
+				hits = Physics.RaycastAll(r);
+				foreach(RaycastHit hit in hits){
+					if(hit.collider == info.collider){
+						colObjNorm = hit.normal;
+						break;
+					}
+				}
 
-				if(angle > 180 - maxLandingAngle && Physics.Raycast(transform.position, -transform.up, 2.0f)){
+				float angle = Vector3.Angle(transform.up, colObjNorm);
+
+				if(angle < maxLandingAngle){
 
 					// Preserve camera angle
 					Quaternion curCamRot = cameraTransform.rotation;
 
-					transform.rotation = Quaternion.LookRotation(info.contacts[0].normal, transform.forward);
-					transform.Rotate(new Vector3(-90, 180, 0));
-
-					Physics.Raycast(transform.position, -transform.up, out hit, 2.0f);
-
-					transform.rotation = Quaternion.LookRotation(hit.normal, transform.forward);
+					transform.rotation = Quaternion.LookRotation(colObjNorm, transform.forward);
 					transform.Rotate(new Vector3(-90, 180, 0));
 
 					// Rotate Camera
