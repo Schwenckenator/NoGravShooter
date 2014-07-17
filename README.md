@@ -31,3 +31,6 @@ G = Grenade
 
 7 = Plasma Blaster<br />
 8 = Rocket Launcher
+
+9 = Gravity Mines<br />
+0 = Frag Grenades
