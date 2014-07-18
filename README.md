@@ -18,7 +18,8 @@ Mousewheelup = Previous Weapon<br />
 Mousewheeldown = Next Weapon
 
 R = Reload<br />
-G = Grenade
+G = Grenade<br />
+K = Suicide
 
 1 = Laser Rifle<br />
 2 = Assault Rifle
