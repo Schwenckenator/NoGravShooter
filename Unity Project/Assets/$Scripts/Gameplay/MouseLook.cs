@@ -18,6 +18,7 @@ using System.Collections;
 public class MouseLook : MonoBehaviour {
 
 	private GameManagerScript manager;
+	private bool ragdoll = false;
 
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
 	public RotationAxes axes = RotationAxes.MouseXAndY;
@@ -43,6 +44,8 @@ public class MouseLook : MonoBehaviour {
 
 	void Update ()
 	{
+		if(ragdoll) return;
+
 		if(!manager.IsPaused()){
 			if (axes == RotationAxes.MouseXAndY)
 			{
@@ -88,6 +91,10 @@ public class MouseLook : MonoBehaviour {
 	public void SetYDirection(int input){
 		int newIn = Mathf.Clamp(input, -1, 1);
 		yDirection = newIn;
+	}
+
+	public void Ragdoll(bool state){
+		ragdoll = state;
 	}
 
 	public int GetYDirection(){

@@ -11,6 +11,7 @@ public class GUIScript : MonoBehaviour {
 	public Texture fullHealth;
 	public Texture fullHeat;
 	public Texture crosshair;
+	public Texture bloodyScreen;
 	
 	private PlayerResources res;
 	

@@ -72,7 +72,7 @@ public class PlayerResources : MonoBehaviour {
 		}
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
-			TakeDamage(20);
+			TakeDamage(100);
 		}
 
 		if(heat > maxHeat){
@@ -207,14 +207,21 @@ public class PlayerResources : MonoBehaviour {
 		if(health <= minHealth){
 			//You is dead nigs
 			if(networkView.isMine){
-				manager.PlayerDied();
-				manager.ManagerDetachCamera();
-				manager.CursorVisible(true);
+				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
+				StartCoroutine(PlayerCleanup());
 			}
-			Destroy(gameObject);
+
 		}
 	}
 	#endregion
+
+	IEnumerator PlayerCleanup(){
+		yield return new WaitForSeconds(3.0f);
+		manager.PlayerDied();
+		manager.ManagerDetachCamera();
+		manager.CursorVisible(true);
+		Network.Destroy(gameObject);
+	}
 
 	#region Variable Checkers
 	public bool IsFullHealth(){

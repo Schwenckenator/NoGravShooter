@@ -46,6 +46,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	public float fuelSpend = 0.5f;
 
+	private bool ragdoll = false;
+
 
 
 	// Input Axes
@@ -78,8 +80,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 	#endregion
 
+	void OnGUI(){
+		if(!ragdoll) return;
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), manager.GetComponent<GUIScript>().bloodyScreen);
+	}
+
 	#region UpdateInput
 	void UpdateInput(){
+		if(ragdoll) return;
+
 		jetPackInUse = false;
 
 		// If exclusive input
@@ -164,6 +173,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	#region FixedUpdate
 	void FixedUpdate () {
+		if(ragdoll) return;
+
 		LockMouseLook(!grounded);
 		playJetSound = false;
 		playWalkingSound = false;
@@ -182,6 +193,81 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 			targetVelocity = Vector3.ClampMagnitude(targetVelocity, 1.0f);
 			targetVelocity = transform.TransformDirection(targetVelocity);
+
+			Vector3 totalPushBackDir = Vector3.zero;
+			//check for edges
+
+			bool sneaking = false;
+			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown])){
+				sneaking = true;
+				int numOfVectors = 16;
+				//Fire rays!
+				Vector3 rayPosition = transform.TransformPoint(0, -0.5f, 0);
+				Vector3 rayDown = transform.TransformDirection(0, -1, 0);
+
+				Vector3[] dirs = new Vector3[numOfVectors];
+				int vec = 0;
+				dirs[vec++] = transform.TransformDirection(0, 0, 1);
+				dirs[vec++] = transform.TransformDirection(0.5f, 0, 1);
+
+				dirs[vec++] = transform.TransformDirection(.707f, 0, .707f);
+				dirs[vec++] = transform.TransformDirection(1, 0, 0.5f);
+
+				dirs[vec++] = transform.TransformDirection(1, 0, 0);
+				dirs[vec++] = transform.TransformDirection(1, 0, -0.5f);
+
+				dirs[vec++] = transform.TransformDirection(.707f, 0, -.707f);
+				dirs[vec++] = transform.TransformDirection(0.5f, 0, -1);
+
+				
+				dirs[vec++] = transform.TransformDirection(0, 0, -1);
+				dirs[vec++] = transform.TransformDirection(-0.5f, 0, -1);
+
+				dirs[vec++] = transform.TransformDirection(-.707f, 0, -.707f);
+				dirs[vec++] = transform.TransformDirection(-1, 0, -0.5f);
+
+				dirs[vec++] = transform.TransformDirection(-1, 0, 0);
+				dirs[vec++] = transform.TransformDirection(-1, 0, 0.5f);
+
+				dirs[vec++] = transform.TransformDirection(-.707f, 0, .707f);
+				dirs[vec++] = transform.TransformDirection(-0.5f, 0, 1);
+
+
+
+
+
+				bool[] misses = new bool[numOfVectors];
+				float rayLength = 3.0f;
+				Vector3 pushBackDir = Vector3.zero;
+
+
+				for(int i=0; i<numOfVectors; i++){
+					misses[i] = !Physics.Raycast(rayPosition, (dirs[i]+rayDown).normalized, rayLength);
+				}
+
+				for(int i=0; i<numOfVectors; i++){
+					if(misses[i] && misses[(i+1)%numOfVectors]){
+						//Found an edge!
+						Vector3 edge = dirs[(i+1)%numOfVectors] - dirs[i];
+						//Debug.DrawLine(transform.position + dirs[i], transform.position + dirs[(i+1)%8], Color.magenta, 30, false);
+
+						Vector3 up = transform.up;
+						Vector3.OrthoNormalize(ref up, ref edge, ref pushBackDir);
+						totalPushBackDir += pushBackDir;
+
+					}
+				}
+			}
+			if(sneaking && totalPushBackDir.sqrMagnitude > 0){
+				totalPushBackDir.Normalize();
+				Debug.DrawRay(transform.position, totalPushBackDir, Color.magenta, 10, false);
+				Debug.Log (totalPushBackDir.ToString("G4"));
+				//Make every value positive
+				totalPushBackDir = new Vector3(1 - Mathf.Abs(totalPushBackDir.x), 1 - Mathf.Abs(totalPushBackDir.y), 1 - Mathf.Abs(totalPushBackDir.z));
+
+				targetVelocity = Vector3.Scale(targetVelocity, totalPushBackDir);
+			}
+			//Multiply by speed
 			targetVelocity *= speed;
 			
 			// Apply a force that attempts to reach our target velocity
@@ -378,5 +464,17 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}else{
 			cameraLook.AddX_Rotation(1);
 		}
+	}
+
+	public void Ragdoll(bool state){
+		ragdoll = state;
+		if(ragdoll){
+			rigidbody.constraints = RigidbodyConstraints.None;
+			rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.VelocityChange);
+		}else{
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+		}
+		cameraLook.Ragdoll(state);
+		GetComponent<MouseLook>().Ragdoll(state);
 	}
 }
