@@ -5,11 +5,7 @@ public class FireWeapon : MonoBehaviour {
 	Transform gun;
 	Transform cameraPos;
 	NoGravCharacterMotor motor;
-
-
-	private LaserWeaponValues laser;
-	private SlugRifleWeaponValues slug;
-	private IWeaponValues[] weapons;
+	
 	private IWeaponValues currentWeapon;
 
 	PlayerResources resource;
@@ -20,11 +16,8 @@ public class FireWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		laser = ScriptableObject.CreateInstance<LaserWeaponValues>();
-		slug = ScriptableObject.CreateInstance<SlugRifleWeaponValues>();
 
-		weapons = new IWeaponValues[]{laser, slug};
-		currentWeapon = laser;
+		currentWeapon = GameManagerScript.weapon[0];
 
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
 		cameraPos = transform.FindChild("CameraPos");
@@ -40,36 +33,53 @@ public class FireWeapon : MonoBehaviour {
 			resource.WeaponFired(currentWeapon.heatPerShot);
 			audio.PlayOneShot(currentWeapon.fireSound);
 			nextFire = Time.time + currentWeapon.fireDelay;
-			RaycastHit hit;
-			
-			Physics.Raycast(cameraPos.position, cameraPos.forward, out hit, Mathf.Infinity);
-			//Deal with the shot
-			if(hit.collider.CompareTag("Player")){
-				if(!hit.collider.networkView.isMine){
-					hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot);
-				}
-			}else if(hit.collider.CompareTag("BonusPickup")){
-				Network.Destroy(hit.collider.gameObject);
-			}
-			Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
-			
-			shot = Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation) as GameObject;
-			shot.transform.parent = cameraPos;
-			LineRenderer render = shot.GetComponent<LineRenderer>();
-			
-			
-			render.SetPosition(0, gun.InverseTransformPoint(gun.position));
-			render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
-			
-			
-			if(currentWeapon == laser){
-				networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
-			}else if(currentWeapon == slug){
-				networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gun.position, hit.point);
-			}
 
-			if(currentWeapon == slug){
-				motor.Recoil();
+
+			if(currentWeapon.useRay){ //Does this weapon use a ray to hit?
+				RaycastHit hit;
+				for(int i=0; i< currentWeapon.rayNum; i++){
+					//Find direction after shot spread
+					Vector3 shotDir = cameraPos.forward;
+					//Apply two rotations
+					float angle1 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+					float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+
+					shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
+
+					Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
+					//Deal with the shot
+					if(hit.collider.CompareTag("Player")){
+						if(!hit.collider.networkView.isMine){
+							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot);
+						}
+					}else if(hit.collider.CompareTag("BonusPickup")){
+						Network.Destroy(hit.collider.gameObject);
+					}
+					Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+
+					shot = Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation) as GameObject;
+					shot.transform.parent = cameraPos;
+					LineRenderer render = shot.GetComponent<LineRenderer>();
+					
+					
+					render.SetPosition(0, gun.InverseTransformPoint(gun.position));
+					render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
+					
+					
+					if(currentWeapon.projectile == GameManagerScript.weapon[0].projectile){
+						networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
+					}else if(currentWeapon.projectile == GameManagerScript.weapon[1].projectile){
+						networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gun.position, hit.point);
+					}
+				}
+			}else{
+				Network.Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation, 0);
+			}
+			
+
+
+			if(currentWeapon.hasRecoil){
+				motor.Recoil(currentWeapon.recoil);
 			}
 			
 		}
@@ -77,6 +87,9 @@ public class FireWeapon : MonoBehaviour {
 
 	[RPC]
 	void MultiplayerLaserRender(Vector3 start, Vector3 end){
+
+		IWeaponValues laser = GameManagerScript.weapon[0];
+
 		Instantiate(laser.hitParticle, end, Quaternion.identity);
 		audio.PlayOneShot(laser.fireSound);
 
@@ -89,6 +102,9 @@ public class FireWeapon : MonoBehaviour {
 
 	[RPC]
 	void MultiplayerSlugRender(Vector3 start, Vector3 end){
+
+		IWeaponValues slug = GameManagerScript.weapon[1];
+
 		Instantiate(slug.hitParticle, end, Quaternion.identity);
 		audio.PlayOneShot(slug.fireSound);
 		
@@ -101,7 +117,7 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		if(!resource.IsWeaponBusy()){
-			currentWeapon = weapons[weaponId];
+			currentWeapon = GameManagerScript.weapon[weaponId];
 			resource.ChangeWeapon(currentWeapon);
 		}
 	}

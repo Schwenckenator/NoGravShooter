@@ -199,6 +199,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 			bool sneaking = false;
 			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown])){
+				#region EdgeDetection
 				sneaking = true;
 				int numOfVectors = 16;
 				//Fire rays!
@@ -257,6 +258,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 					}
 				}
+				#endregion
 			}
 			if(sneaking && totalPushBackDir.sqrMagnitude > 0){
 				totalPushBackDir.Normalize();
@@ -458,11 +460,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		// for the character to reach at the apex.
 		return Mathf.Sqrt(jumpForce);
 	}
-	public void Recoil(){
+	public void Recoil(float recoil){
 		if(inAirFlag){
-			transform.Rotate(-1, 0, 0);
+			transform.Rotate(-recoil, 0, 0);
 		}else{
-			cameraLook.AddX_Rotation(1);
+			cameraLook.AddX_Rotation(recoil);
 		}
 	}
 

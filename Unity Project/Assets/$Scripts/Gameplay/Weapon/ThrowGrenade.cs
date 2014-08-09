@@ -15,12 +15,12 @@ public class ThrowGrenade : MonoBehaviour {
 		resource = GetComponent<PlayerResources>();
 		grenadeSpawn = transform.FindChild("CameraPos").FindChild("GrenadeSpawn");
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		if((Input.GetKeyDown(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Grenade])) && Time.time > nextThrow){
 			if(resource.ThrowGrenade()){
-				GameObject newGrenade = Instantiate(grenade, grenadeSpawn.position, grenadeSpawn.rotation) as GameObject;
+				GameObject newGrenade = Network.Instantiate(grenade, grenadeSpawn.position, grenadeSpawn.rotation, 0) as GameObject;
 				newGrenade.rigidbody.AddRelativeForce(0, 0, 20, ForceMode.VelocityChange);
 				nextThrow = Time.time + throwDelay;
 			}

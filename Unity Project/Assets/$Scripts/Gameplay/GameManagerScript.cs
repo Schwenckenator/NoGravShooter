@@ -14,6 +14,20 @@ public class GameManagerScript : MonoBehaviour {
 	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade};
 	public static KeyCode[] keyBindings;
 
+	public static IWeaponValues[] weapon = {
+		
+		ScriptableObject.CreateInstance<LaserRifleValues>(), 
+		ScriptableObject.CreateInstance<SlugRifleWeaponValues>(), 
+		ScriptableObject.CreateInstance<LaserSniperValues>(),
+		
+		ScriptableObject.CreateInstance<ShotgunValues>(), 
+		
+		ScriptableObject.CreateInstance<ForceShotgunValues>(),
+		ScriptableObject.CreateInstance<RocketLauncherValues>(),
+		ScriptableObject.CreateInstance<PlasmaBlasterValues>()
+		
+	};
+
 	//int bullshit = 1; // This is bullshit
 	
 	void Awake(){
@@ -75,6 +89,11 @@ public class GameManagerScript : MonoBehaviour {
 			}
 		}
 
+		//Reload all weapons
+		for(int i=0; i< weapon.Length; i++){
+			weapon[i].currentClip = weapon[i].clipSize;
+		}
+
 	}
 
 	public void PlayerDied(){
@@ -93,6 +112,21 @@ public class GameManagerScript : MonoBehaviour {
 			}
 			if(Input.GetKeyDown(KeyCode.Alpha2) && myPlayerSpawned){
 				fireWeapon.ChangeWeapon(1);
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha3) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(2);
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha4) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(3);
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha5) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(4);
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha6) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(5);
+			}
+			if(Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned){
+				fireWeapon.ChangeWeapon(6);
 			}
 		}
 	}
