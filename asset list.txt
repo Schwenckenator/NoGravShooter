@@ -1,0 +1,37 @@
+MODELS
+General:
+player models (one for each helmet variation)
+jetpack models
+guns (rifle, laser rifle, sniper, laser sniper, shotgun, laser shotgun, rocket launcher, plasma launcher)
+grenades (explosion, black hole)
+
+Levels:
+factory conveyor claws (robotic claw that moves around a rail and pulls objects in front of other factory components)
+factory spray paint nozzles (robotic arm extending from wall to paint parts being towed by claws)
+factory welding arms (robotic arm extending from wall to weld two metal panels together)
+factory laser cutter (robotic arm extending from wall with laser to cut holes in metal panels)
+small ship part (part in one of the claws, near end of welding section)
+crates
+
+
+
+
+TEXTURES
+General:
+player skins
+jetpack skin
+gun skins
+grenade skins
+blood splatter death screen (fairly high resolution, transparent red tint over whole thing, denser blood around edges)
+menu backgrounds
+menu buttons
+
+Levels:
+metallic wall/panel
+plastered wall
+painted wall
+in-set wall light (a light that is flush with the wall and not sticking out)
+robotic arm (same texture can be used for all factory components)
+painted ship part
+crates
+servers
