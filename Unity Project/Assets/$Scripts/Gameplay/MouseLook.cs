@@ -17,7 +17,7 @@ using System.Collections;
 [AddComponentMenu("Camera-Control/Mouse Look")]
 public class MouseLook : MonoBehaviour {
 
-	private GameManagerScript manager;
+	private GameManager manager;
 	private bool ragdoll = false;
 
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
@@ -36,7 +36,7 @@ public class MouseLook : MonoBehaviour {
 	int yDirection = -1;
 
 	void Start(){
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
+		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 
 		sensitivityX = PlayerPrefs.GetFloat("sensitivityX");
 		sensitivityY = PlayerPrefs.GetFloat("sensitivityY");

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class GUIScript : MonoBehaviour {
 	//
-	private GameManagerScript manager;
+	private GameManager manager;
 	
 	public Texture empty;
 	public Texture fullFuel;
@@ -64,11 +64,11 @@ public class GUIScript : MonoBehaviour {
 	
 	private int levelSelectInt = 0;
 	
-	GameManagerScript.KeyBind editedBinding;
+	GameManager.KeyBind editedBinding;
 	
 	
 	void Start(){
-		manager = GetComponent<GameManagerScript>();
+		manager = GetComponent<GameManager>();
 		
 		currentWindow = (int) Menu.MainMenu;
 
@@ -95,7 +95,7 @@ public class GUIScript : MonoBehaviour {
 				connectingNow = false;
 			}
 		}
-		if(GameManagerScript.SceneIsMenu()){
+		if(GameManager.SceneIsMenu()){
 			ChooseMenuWindow();
 
 		}else if(manager.IsPaused()){
@@ -104,7 +104,7 @@ public class GUIScript : MonoBehaviour {
 		}else if(manager.IsPlayerSpawned()){
 			PlayerGUI();
 			
-		}else if(!GameManagerScript.SceneIsMenu()){
+		}else if(!GameManager.SceneIsMenu()){
 			GUI.Window(1, largeRect, PauseWindow, "");
 			
 		}
@@ -155,8 +155,14 @@ public class GUIScript : MonoBehaviour {
 		style.fontSize = 50;
 		style.alignment = TextAnchor.UpperCenter;
 
+		string ammoText = res.GetCurrentClip().ToString();
+		if(res.GetRemainingAmmo() > 0){
+			ammoText += "/" + res.GetRemainingAmmo().ToString();
+		}
+
+
 		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetGrenades().ToString(), style);
-		GUI.Label(new Rect(Screen.width-200, Screen.height-175, 300, 100), res.GetCurrentClip().ToString(), style);
+		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
 
 		
 		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
@@ -397,88 +403,88 @@ public class GUIScript : MonoBehaviour {
 		//Move Forward
 		standard.y += 50;
 		GUI.Label(standard, "Move Forward: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveForward].ToString())){
-			editedBinding = GameManagerScript.KeyBind.MoveForward;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward].ToString())){
+			editedBinding = GameManager.KeyBind.MoveForward;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Backward: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveBack].ToString())){
-			editedBinding = GameManagerScript.KeyBind.MoveBack;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack].ToString())){
+			editedBinding = GameManager.KeyBind.MoveBack;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Left: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveLeft].ToString())){
-			editedBinding = GameManagerScript.KeyBind.MoveLeft;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveLeft].ToString())){
+			editedBinding = GameManager.KeyBind.MoveLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Right: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveRight].ToString())){
-			editedBinding = GameManagerScript.KeyBind.MoveRight;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveRight].ToString())){
+			editedBinding = GameManager.KeyBind.MoveRight;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Left: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollLeft].ToString())){
-			editedBinding = GameManagerScript.KeyBind.RollLeft;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft].ToString())){
+			editedBinding = GameManager.KeyBind.RollLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Right: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollRight].ToString())){
-			editedBinding = GameManagerScript.KeyBind.RollRight;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.RollRight].ToString())){
+			editedBinding = GameManager.KeyBind.RollRight;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jump / Jetpack Up: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp].ToString())){
-			editedBinding = GameManagerScript.KeyBind.JetUp;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.JetUp].ToString())){
+			editedBinding = GameManager.KeyBind.JetUp;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jetpack Down: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown].ToString())){
-			editedBinding = GameManagerScript.KeyBind.JetDown;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.JetDown].ToString())){
+			editedBinding = GameManager.KeyBind.JetDown;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 50;
 		GUI.Label(standard, "Reload: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Reload].ToString())){
-			editedBinding = GameManagerScript.KeyBind.Reload;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Reload].ToString())){
+			editedBinding = GameManager.KeyBind.Reload;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Grenade: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Grenade].ToString())){
-			editedBinding = GameManagerScript.KeyBind.Grenade;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Grenade].ToString())){
+			editedBinding = GameManager.KeyBind.Grenade;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 			// Save Configuation
-			PlayerPrefs.SetInt("bindMoveForward", 	(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveForward] );
-			PlayerPrefs.SetInt("bindMoveBack", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveBack] );
-			PlayerPrefs.SetInt("bindMoveLeft", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveLeft] );
-			PlayerPrefs.SetInt("bindMoveRight", 	(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.MoveRight] );
+			PlayerPrefs.SetInt("bindMoveForward", 	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveForward] );
+			PlayerPrefs.SetInt("bindMoveBack", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveBack] );
+			PlayerPrefs.SetInt("bindMoveLeft", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveLeft] );
+			PlayerPrefs.SetInt("bindMoveRight", 	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveRight] );
 			
 			
-			PlayerPrefs.SetInt("bindRollLeft", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.RollLeft] );
-			PlayerPrefs.SetInt("bindRollRight", 	(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.RollRight] );
-			PlayerPrefs.SetInt("bindJetUp", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.JetUp] );
-			PlayerPrefs.SetInt("bindJetDown", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.JetDown] );
+			PlayerPrefs.SetInt("bindRollLeft", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.RollLeft] );
+			PlayerPrefs.SetInt("bindRollRight", 	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.RollRight] );
+			PlayerPrefs.SetInt("bindJetUp", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.JetUp] );
+			PlayerPrefs.SetInt("bindJetDown", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.JetDown] );
 
-			PlayerPrefs.SetInt("bindReload", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.Reload] );
-			PlayerPrefs.SetInt("bindGrenade", 		(int) GameManagerScript.keyBindings[ (int) GameManagerScript.KeyBind.Grenade] );
+			PlayerPrefs.SetInt("bindReload", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Reload] );
+			PlayerPrefs.SetInt("bindGrenade", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Grenade] );
 
 			currentWindow = (int) Menu.Options;
 		}
@@ -491,11 +497,11 @@ public class GUIScript : MonoBehaviour {
 
 		if(Event.current.isKey){
 			if(Event.current.keyCode != KeyCode.Escape){
-				GameManagerScript.keyBindings[(int)editedBinding] = Event.current.keyCode;
+				GameManager.keyBindings[(int)editedBinding] = Event.current.keyCode;
 			}
 			displayChangeKeybindWindow = false;
 		}else if(Event.current.shift){
-			GameManagerScript.keyBindings[(int)editedBinding] = KeyCode.LeftShift;
+			GameManager.keyBindings[(int)editedBinding] = KeyCode.LeftShift;
 			displayChangeKeybindWindow = false;
 		}
 	}
@@ -739,7 +745,7 @@ public class GUIScript : MonoBehaviour {
 	void OnDisconnectedFromServer(){
 		
 		manager.CursorVisible(true);
-		if(!GameManagerScript.SceneIsMenu()){
+		if(!GameManager.SceneIsMenu()){
 			Application.LoadLevel("MenuScene");
 		}
 		

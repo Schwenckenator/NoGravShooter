@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class GameManagerScript : MonoBehaviour {
+public class GameManager : MonoBehaviour {
 	private bool paused;
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
@@ -13,46 +14,41 @@ public class GameManagerScript : MonoBehaviour {
 
 	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade};
 	public static KeyCode[] keyBindings;
-
-	public static IWeaponValues[] weapon = {
-		
-		ScriptableObject.CreateInstance<LaserRifleValues>(), 
-		ScriptableObject.CreateInstance<SlugRifleWeaponValues>(), 
-		ScriptableObject.CreateInstance<LaserSniperValues>(),
-		
-		ScriptableObject.CreateInstance<ShotgunValues>(), 
-		
-		ScriptableObject.CreateInstance<ForceShotgunValues>(),
-		ScriptableObject.CreateInstance<RocketLauncherValues>(),
-		ScriptableObject.CreateInstance<PlasmaBlasterValues>()
-		
-	};
-
-	//int bullshit = 1; // This is bullshit
 	
+	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
+
 	void Awake(){
 		DontDestroyOnLoad(gameObject);
 
-		keyBindings = new KeyCode[System.Enum.GetNames(typeof(GameManagerScript.KeyBind)).Length];
+		keyBindings = new KeyCode[System.Enum.GetNames(typeof(GameManager.KeyBind)).Length];
 
-		keyBindings[(int)GameManagerScript.KeyBind.MoveForward]	= (KeyCode)PlayerPrefs.GetInt("bindMoveForward", (int)KeyCode.W);
-		keyBindings[(int)GameManagerScript.KeyBind.MoveBack] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveBack", (int)KeyCode.S);
-		keyBindings[(int)GameManagerScript.KeyBind.MoveLeft] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveLeft", (int)KeyCode.A);
-		keyBindings[(int)GameManagerScript.KeyBind.MoveRight] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveRight", (int)KeyCode.D);
+		keyBindings[(int)GameManager.KeyBind.MoveForward]	= (KeyCode)PlayerPrefs.GetInt("bindMoveForward", (int)KeyCode.W);
+		keyBindings[(int)GameManager.KeyBind.MoveBack] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveBack", (int)KeyCode.S);
+		keyBindings[(int)GameManager.KeyBind.MoveLeft] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveLeft", (int)KeyCode.A);
+		keyBindings[(int)GameManager.KeyBind.MoveRight] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveRight", (int)KeyCode.D);
 		
-		keyBindings[(int)GameManagerScript.KeyBind.RollLeft]	= (KeyCode)PlayerPrefs.GetInt("bindRollLeft", (int)KeyCode.Q);
-		keyBindings[(int)GameManagerScript.KeyBind.RollRight] 	= (KeyCode)PlayerPrefs.GetInt("bindRollRight", (int)KeyCode.E);
-		keyBindings[(int)GameManagerScript.KeyBind.JetUp]		= (KeyCode)PlayerPrefs.GetInt("bindJetUp", (int)KeyCode.Space);
-		keyBindings[(int)GameManagerScript.KeyBind.JetDown] 	= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.X);
+		keyBindings[(int)GameManager.KeyBind.RollLeft]	= (KeyCode)PlayerPrefs.GetInt("bindRollLeft", (int)KeyCode.Q);
+		keyBindings[(int)GameManager.KeyBind.RollRight] 	= (KeyCode)PlayerPrefs.GetInt("bindRollRight", (int)KeyCode.E);
+		keyBindings[(int)GameManager.KeyBind.JetUp]		= (KeyCode)PlayerPrefs.GetInt("bindJetUp", (int)KeyCode.Space);
+		keyBindings[(int)GameManager.KeyBind.JetDown] 	= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.X);
 		
-		keyBindings[(int)GameManagerScript.KeyBind.Reload] 		= (KeyCode)PlayerPrefs.GetInt("bindReload", (int)KeyCode.R);
-		keyBindings[(int)GameManagerScript.KeyBind.Grenade] 	= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
+		keyBindings[(int)GameManager.KeyBind.Reload] 		= (KeyCode)PlayerPrefs.GetInt("bindReload", (int)KeyCode.R);
+		keyBindings[(int)GameManager.KeyBind.Grenade] 	= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
+
+		// Add weapons to list
+		weapon.Add(gameObject.AddComponent<LaserRifleValues>());
+		weapon.Add(gameObject.AddComponent<SlugRifleValues>());
+		weapon.Add(gameObject.AddComponent<LaserSniperValues>());
+		weapon.Add(gameObject.AddComponent<ShotgunValues>());
+		weapon.Add(gameObject.AddComponent<ForceShotgunValues>());
+		weapon.Add(gameObject.AddComponent<RocketLauncherValues>());
+		weapon.Add(gameObject.AddComponent<PlasmaBlasterValues>());
 
 	}
 
 	void OnLevelWasLoaded(int level){
 		CursorVisible(true);
-		if(!GameManagerScript.SceneIsMenu()){
+		if(!GameManager.SceneIsMenu()){
 			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 
@@ -61,7 +57,6 @@ public class GameManagerScript : MonoBehaviour {
 			Pause (false);
 		}
 	}
-
 	public static bool SceneIsMenu(){
 		return Application.loadedLevelName == "MenuScene";
 	}
@@ -90,8 +85,9 @@ public class GameManagerScript : MonoBehaviour {
 		}
 
 		//Reload all weapons
-		for(int i=0; i< weapon.Length; i++){
+		for(int i=0; i< weapon.Count; i++){
 			weapon[i].currentClip = weapon[i].clipSize;
+			weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
 		}
 
 	}
@@ -102,7 +98,7 @@ public class GameManagerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!GameManagerScript.SceneIsMenu()){
+		if(!GameManager.SceneIsMenu()){
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				CursorVisible(!paused);
 				Pause (!paused); // Toggle Pause

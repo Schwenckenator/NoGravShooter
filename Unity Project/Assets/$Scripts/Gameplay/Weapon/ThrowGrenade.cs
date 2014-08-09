@@ -18,7 +18,7 @@ public class ThrowGrenade : MonoBehaviour {
 
 	// Update is called once per frame
 	void FixedUpdate () {
-		if((Input.GetKeyDown(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Grenade])) && Time.time > nextThrow){
+		if((Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Grenade])) && Time.time > nextThrow){
 			if(resource.ThrowGrenade()){
 				GameObject newGrenade = Network.Instantiate(grenade, grenadeSpawn.position, grenadeSpawn.rotation, 0) as GameObject;
 				newGrenade.rigidbody.AddRelativeForce(0, 0, 20, ForceMode.VelocityChange);

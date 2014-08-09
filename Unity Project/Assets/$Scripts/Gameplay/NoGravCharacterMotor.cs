@@ -6,7 +6,7 @@ using System.Collections;
 
 public class NoGravCharacterMotor : MonoBehaviour {
 
-	private GameManagerScript manager;
+	private GameManager manager;
 	private AudioSource jetpackAudio;
 	private AudioSource feetAudio;
 
@@ -59,7 +59,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	#region Start
 	void Start(){
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
+		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
 
@@ -92,15 +92,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		jetPackInUse = false;
 
 		// If exclusive input
-		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveForward]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveBack]) ){
+		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack]) ){
 			//Move forward
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveForward])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward])){
 				if(vertical < 0.0f) vertical = 0.0f;
 				vertical = Mathf.MoveTowards(vertical, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
 			//Move back
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveBack])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack])){
 				if(vertical > 0.0f) vertical = 0.0f;
 				vertical = Mathf.MoveTowards(vertical, -1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
@@ -112,15 +112,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 
 		// If exclusive input
-		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveRight]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveLeft]) ){
+		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveRight]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveLeft]) ){
 			//Move Right
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveRight])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveRight])){
 				if(horizontal < 0.0f) horizontal = 0.0f;
 				horizontal = Mathf.MoveTowards(horizontal, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
 			//Move Left
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.MoveLeft])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveLeft])){
 				if(horizontal > 0.0f) horizontal = 0.0f;
 				horizontal = Mathf.MoveTowards(horizontal, -1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
@@ -132,15 +132,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 
 		// If exclusive input
-		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown]) ){
+		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown]) ){
 			//Move forward
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp])){
 				if(jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
 				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
 			//Move back
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown])){
 				if(jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
 				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
@@ -152,14 +152,14 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 
 		// If exclusive input
-		if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollRight]) ^ Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollLeft]) ){
+		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollRight]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft]) ){
 			//Move forward
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollRight])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollRight])){
 				if(roll > 0.0f) roll = 0.0f;
 				roll = Mathf.MoveTowards(roll, -1.0f, 3*Time.deltaTime);
 			}
 			//Move back
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.RollLeft])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft])){
 				if(roll < 0.0f) roll = 0.0f;
 				roll = Mathf.MoveTowards(roll, 1.0f, 3*Time.deltaTime);
 			}
@@ -198,7 +198,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			//check for edges
 
 			bool sneaking = false;
-			if(Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetDown])){
+			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown])){
 				#region EdgeDetection
 				sneaking = true;
 				int numOfVectors = 16;
@@ -288,7 +288,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 			
 			// Jump
-			if (canJump && Input.GetKey(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.JetUp]) && !manager.IsPaused()) {
+			if (canJump && Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp]) && !manager.IsPaused()) {
 				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.VelocityChange);
 			}
 		}else if(jetPackOn){

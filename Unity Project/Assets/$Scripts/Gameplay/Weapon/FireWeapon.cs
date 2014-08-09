@@ -6,7 +6,7 @@ public class FireWeapon : MonoBehaviour {
 	Transform cameraPos;
 	NoGravCharacterMotor motor;
 	
-	private IWeaponValues currentWeapon;
+	private WeaponSuperClass currentWeapon;
 
 	PlayerResources resource;
 
@@ -17,7 +17,7 @@ public class FireWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 
-		currentWeapon = GameManagerScript.weapon[0];
+		currentWeapon = GameManager.weapon[0];
 
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
 		cameraPos = transform.FindChild("CameraPos");
@@ -66,9 +66,9 @@ public class FireWeapon : MonoBehaviour {
 					render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
 					
 					
-					if(currentWeapon.projectile == GameManagerScript.weapon[0].projectile){
+					if(currentWeapon.projectile == GameManager.weapon[0].projectile){
 						networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
-					}else if(currentWeapon.projectile == GameManagerScript.weapon[1].projectile){
+					}else if(currentWeapon.projectile == GameManager.weapon[1].projectile){
 						networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gun.position, hit.point);
 					}
 				}
@@ -88,7 +88,7 @@ public class FireWeapon : MonoBehaviour {
 	[RPC]
 	void MultiplayerLaserRender(Vector3 start, Vector3 end){
 
-		IWeaponValues laser = GameManagerScript.weapon[0];
+		WeaponSuperClass laser = GameManager.weapon[0];
 
 		Instantiate(laser.hitParticle, end, Quaternion.identity);
 		audio.PlayOneShot(laser.fireSound);
@@ -103,7 +103,7 @@ public class FireWeapon : MonoBehaviour {
 	[RPC]
 	void MultiplayerSlugRender(Vector3 start, Vector3 end){
 
-		IWeaponValues slug = GameManagerScript.weapon[1];
+		WeaponSuperClass slug = GameManager.weapon[1];
 
 		Instantiate(slug.hitParticle, end, Quaternion.identity);
 		audio.PlayOneShot(slug.fireSound);
@@ -117,7 +117,7 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		if(!resource.IsWeaponBusy()){
-			currentWeapon = GameManagerScript.weapon[weaponId];
+			currentWeapon = GameManager.weapon[weaponId];
 			resource.ChangeWeapon(currentWeapon);
 		}
 	}

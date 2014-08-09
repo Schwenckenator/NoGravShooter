@@ -24,7 +24,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	#region Private Declarations
-	private GameManagerScript manager;
+	private GameManager manager;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
 
@@ -42,12 +42,12 @@ public class PlayerResources : MonoBehaviour {
 	private bool jetpackDisabled = false;
 	private bool weaponBusy = false;
 
-	private IWeaponValues currentWeapon;
+	private WeaponSuperClass currentWeapon;
 	#endregion
 	
 	#region Start()
 	void Start () {
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManagerScript>();
+		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		//smokeParticle = transform.FindChild("CameraPos").FindChild("GunSmokeParticle").GetComponent<ParticleSystem>();
 		smokeParticle = GetComponentInChildren<ParticleSystem>();
@@ -64,7 +64,7 @@ public class PlayerResources : MonoBehaviour {
 
 	#region Fixed Update()
 	void FixedUpdate () {
-		if(Input.GetKeyDown(GameManagerScript.keyBindings[(int)GameManagerScript.KeyBind.Reload])){ //Because fuck you it's P // nevermind
+		if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Reload])){ //Because fuck you it's P // nevermind
 			StartCoroutine("WeaponReload");
 		}
 		if(recharging){
@@ -265,6 +265,10 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	IEnumerator WeaponReload(){
+		// If no remaining ammo, don't attempt to reload
+		if(currentWeapon.remainingAmmo <= 0) yield break;
+
+
 		if(currentWeapon.reloadTime > 1.0f){
 			GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(currentWeapon.reloadTime);
 		}
@@ -277,7 +281,11 @@ public class PlayerResources : MonoBehaviour {
 			yield return null;
 		}
 		weaponBusy = false;
-		currentWeapon.currentClip = currentWeapon.clipSize;
+		int newBullets = currentWeapon.clipSize - currentWeapon.currentClip;
+		currentWeapon.currentClip = Mathf.Min (currentWeapon.clipSize, currentWeapon.remainingAmmo+currentWeapon.currentClip);
+
+		currentWeapon.remainingAmmo -= newBullets; 
+		currentWeapon.remainingAmmo = Mathf.Max (currentWeapon.remainingAmmo, 0);
 	}
 
 	IEnumerator WeaponChange(){
@@ -289,7 +297,7 @@ public class PlayerResources : MonoBehaviour {
 		weaponBusy = false;
 	}
 
-	public void ChangeWeapon(IWeaponValues newWeapon){
+	public void ChangeWeapon(WeaponSuperClass newWeapon){
 		if(!weaponBusy){
 			StartCoroutine(WeaponChange());
 			currentWeapon = newWeapon;
@@ -305,6 +313,9 @@ public class PlayerResources : MonoBehaviour {
 	}
 	public int GetMaxClip(){
 		return currentWeapon.clipSize;
+	}
+	public int GetRemainingAmmo(){
+		return currentWeapon.remainingAmmo;
 	}
 
 	public bool IsJetpackDisabled(){

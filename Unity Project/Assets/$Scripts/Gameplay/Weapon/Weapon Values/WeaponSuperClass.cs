@@ -1,27 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SlugRifleWeaponValues : ScriptableObject, IWeaponValues{
-	#region CopyPaste for new Weapon.  No I don't like it either
+public class WeaponSuperClass : MonoBehaviour{
 	
 	#region Private Declarations
-	private static bool _useRay;
-	private static bool _hasRecoil;
-	private static float _recoil;
-	private static int _rayNum;
-	private static float _shotSpread;
-	private static int _damagePerShot;
-	private static int _heatPerShot;
-	private static float _fireDelay;
-	private static int _clipSize;
-	private static int _currentClip;
-	private static float _reloadTime;
-	private static GameObject _projectile;
-	private static GameObject _hitParticle;
-	private static AudioClip _fireSound;
-	private static AudioClip _reloadSound;
+	private bool _useRay;
+	private bool _hasRecoil;
+	private float _recoil;
+	private int _rayNum;
+	private float _shotSpread;
+	private int _damagePerShot;
+	private int _heatPerShot;
+	private float _fireDelay;
+	private int _clipSize;
+	private int _currentClip;
+	private int _remainingAmmo;
+	private int _defaultRemainingAmmo;
+	private float _reloadTime;
+	private GameObject _projectile;
+	private GameObject _hitParticle;
+	private AudioClip _fireSound;
+	private AudioClip _reloadSound;
 	#endregion
-
+	
 	#region Accessors and Mutators
 	public bool hasRecoil{
 		get{
@@ -103,6 +104,22 @@ public class SlugRifleWeaponValues : ScriptableObject, IWeaponValues{
 			_currentClip = value;
 		}
 	}
+	public int remainingAmmo{
+		get{
+			return _remainingAmmo;
+		}
+		set{
+			_remainingAmmo = value;
+		}
+	}
+	public int defaultRemainingAmmo{
+		get{
+			return _defaultRemainingAmmo;
+		}
+		set{
+			_defaultRemainingAmmo = value;
+		}
+	}
 	public float reloadTime{
 		get{
 			return _reloadTime;
@@ -144,7 +161,5 @@ public class SlugRifleWeaponValues : ScriptableObject, IWeaponValues{
 			_reloadSound = value;
 		}
 	}
-	#endregion
-	
 	#endregion
 }
