@@ -36,13 +36,13 @@ public class GameManager : MonoBehaviour {
 		keyBindings[(int)GameManager.KeyBind.Grenade] 	= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
 
 		// Add weapons to list
-		weapon.Add(gameObject.AddComponent<LaserRifleValues>());
-		weapon.Add(gameObject.AddComponent<SlugRifleValues>());
-		weapon.Add(gameObject.AddComponent<LaserSniperValues>());
-		weapon.Add(gameObject.AddComponent<ShotgunValues>());
-		weapon.Add(gameObject.AddComponent<ForceShotgunValues>());
-		weapon.Add(gameObject.AddComponent<RocketLauncherValues>());
-		weapon.Add(gameObject.AddComponent<PlasmaBlasterValues>());
+		weapon.Add(new LaserRifleValues());
+		weapon.Add(new SlugRifleValues());
+		weapon.Add(new LaserSniperValues());
+		weapon.Add(new ShotgunValues());
+		weapon.Add(new ForceShotgunValues());
+		weapon.Add(new RocketLauncherValues());
+		weapon.Add(new PlasmaBlasterValues());
 
 	}
 

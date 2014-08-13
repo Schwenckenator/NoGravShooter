@@ -2,44 +2,23 @@
 using System.Collections;
 
 public class ShotgunValues : WeaponSuperClass {
-	// All detail for weapon are set here
-	#region Public in Variables
-	public bool in_useRay			= true;
-	public bool in_hasRecoil		= true;
-	public float in_recoil			= 5;
-	public int in_rayNum			= 30;
-	
-	public float in_shotSpread		= 10f;
-	public int in_damagePerShot		= 5;
-	public int in_heatPerShot		= 0;
-	public float in_fireDelay		= 0.75f;
-	
-	public int in_clipSize			= 6;
-	public int in_currentClip		= 6;
-	public int in_remainingAmmo		= 12;
-	public float in_reloadTime		= 2f;
-	
 
-	#endregion
-	
 	public ShotgunValues(){
-		//Debug.Log (this.ToString());
-
-		this.useRay = in_useRay;
-		this.rayNum = in_rayNum;
-		this.shotSpread = in_shotSpread;
-		this.damagePerShot = in_damagePerShot;
+		this.useRay 				= true;
+		this.hasRecoil 				= true;
+		this.recoil 				= 5;
+		this.rayNum 				= 30;
 		
-		this.hasRecoil = in_hasRecoil;
-		this.recoil = in_recoil;
-		this.heatPerShot = in_heatPerShot;
-		this.fireDelay = in_fireDelay;
+		this.shotSpread 			= 10f;
+		this.damagePerShot 			= 5;
+		this.heatPerShot 			= 0;
+		this.fireDelay 				= 0.75f;
 		
-		this.clipSize = in_clipSize;
-		this.currentClip = in_currentClip;
-		this.remainingAmmo = in_remainingAmmo;
-		this.defaultRemainingAmmo = in_remainingAmmo;
-		this.reloadTime = in_reloadTime;
+		this.clipSize 				= 6;
+		this.currentClip 			= 6;
+		this.remainingAmmo 			= 12;
+		this.defaultRemainingAmmo 	= this.remainingAmmo;
+		this.reloadTime 			= 2f;
 	}
 	
 }

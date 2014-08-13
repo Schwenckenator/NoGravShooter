@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WeaponSuperClass : MonoBehaviour{
+public class WeaponSuperClass{
 	
 	#region Private Declarations
 	private bool _useRay;
