@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class FireWeapon : MonoBehaviour {
 	Transform gun;
@@ -14,10 +15,15 @@ public class FireWeapon : MonoBehaviour {
 
 	float nextFire = 0;
 
+	private List<WeaponSuperClass> heldWeapons;
+
 	// Use this for initialization
 	void Awake () {
 
-		currentWeapon = GameManager.weapon[0];
+		heldWeapons = new List<WeaponSuperClass>();
+
+		heldWeapons.Add(GameManager.weapon[0]);
+		currentWeapon = heldWeapons[0];
 
 		gun = transform.FindChild("CameraPos").FindChild("Weapon");
 		cameraPos = transform.FindChild("CameraPos");
@@ -53,7 +59,7 @@ public class FireWeapon : MonoBehaviour {
 							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot);
 						}
 					}else if(hit.collider.CompareTag("BonusPickup")){
-						Network.Destroy(hit.collider.gameObject);
+						hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
 					}
 					Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 
@@ -117,10 +123,23 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		if(!resource.IsWeaponBusy()){
-			currentWeapon = GameManager.weapon[weaponId];
-			resource.ChangeWeapon(currentWeapon);
+			if(weaponId < heldWeapons.Count){
+				currentWeapon = heldWeapons[weaponId];
+				resource.ChangeWeapon(currentWeapon);
+			}
 		}
 	}
 
+	public bool IsWeaponHeld(int weaponId){
+		return heldWeapons.Contains(GameManager.weapon[weaponId]);
+	}
 
+	public void AddWeapon(int weaponId){
+		heldWeapons.Add(GameManager.weapon[weaponId]);
+	}
+
+	public void removeWeapon(WeaponSuperClass item){
+		heldWeapons.Remove(item);
+	}
+	
 }

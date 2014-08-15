@@ -266,7 +266,15 @@ public class PlayerResources : MonoBehaviour {
 
 	IEnumerator WeaponReload(){
 		// If no remaining ammo, don't attempt to reload
-		if(currentWeapon.remainingAmmo <= 0) yield break;
+		if(currentWeapon.remainingAmmo <= 0){
+			if(currentWeapon.currentClip <= 0){
+
+				//GetComponent<FireWeapon>().removeWeapon(currentWeapon);
+				//GetComponent<FireWeapon>().ChangeWeapon(0);
+			}
+
+			yield break;
+		}
 
 
 		if(currentWeapon.reloadTime > 1.0f){
@@ -301,10 +309,6 @@ public class PlayerResources : MonoBehaviour {
 		if(!weaponBusy){
 			StartCoroutine(WeaponChange());
 			currentWeapon = newWeapon;
-			if(currentWeapon.currentClip == 0){
-				StopCoroutine("WeaponReload");
-				StartCoroutine("WeaponReload");
-			}
 		}
 	}
 
