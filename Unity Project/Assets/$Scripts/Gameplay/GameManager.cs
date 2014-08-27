@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
+	// *****************Test Mode Variable************************
+	public static bool testMode = true;
+	// ***********************************************************
 	private bool paused;
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
 	private FireWeapon fireWeapon;
 
 	private bool myPlayerSpawned = false;
-	public static bool testVersion = true;
+
 	public GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
@@ -99,6 +102,9 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(Input.GetKeyDown(KeyCode.F1)){
+			testMode = !testMode;
+		}
 		if(!GameManager.SceneIsMenu()){
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				CursorVisible(!paused);

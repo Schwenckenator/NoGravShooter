@@ -13,6 +13,6 @@ public class DestroyOnNextFrame : MonoBehaviour {
 
 	IEnumerator KillOnNextFrame(){
 		yield return null;
-		Network.Destroy (gameObject);
+		GetComponent<ObjectCleanUp>().KillMe();
 	}
 }

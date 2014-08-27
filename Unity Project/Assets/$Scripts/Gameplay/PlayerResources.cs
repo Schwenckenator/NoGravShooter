@@ -135,6 +135,9 @@ public class PlayerResources : MonoBehaviour {
 	// Checks to see if there is grenades available
 	// Returns false if no grenades
 	public bool ThrowGrenade(){
+		if(GameManager.testMode){
+			grenades++;
+		}
 		if(grenades > 0){
 			grenades--;
 			return true;
@@ -220,7 +223,7 @@ public class PlayerResources : MonoBehaviour {
 		manager.PlayerDied();
 		manager.ManagerDetachCamera();
 		manager.CursorVisible(true);
-		Network.Destroy(gameObject);
+		GetComponent<ObjectCleanUp>().KillMe();
 	}
 
 	#region Variable Checkers
@@ -309,6 +312,7 @@ public class PlayerResources : MonoBehaviour {
 		if(!weaponBusy){
 			StartCoroutine(WeaponChange());
 			currentWeapon = newWeapon;
+			heat = 0;
 		}
 	}
 

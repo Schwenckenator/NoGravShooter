@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(ObjectCleanUp))]
 public class BonusBlackHoleMinePackPickup : MonoBehaviour {
 
 	public int amount;
@@ -11,7 +12,7 @@ public class BonusBlackHoleMinePackPickup : MonoBehaviour {
 			PlayerResources res = info.collider.GetComponent<PlayerResources>();
 
 			res.PickUpGrenades(amount);
-			Network.Destroy(gameObject);
+			GetComponent<ObjectCleanUp>().KillMe();
 		}
 	}
 }

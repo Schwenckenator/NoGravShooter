@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(ObjectCleanUp))]
 public class BonusHealthPackPickup : MonoBehaviour {
 	public int healStrength;
 
@@ -11,7 +12,7 @@ public class BonusHealthPackPickup : MonoBehaviour {
 			
 			if(!res.IsFullHealth()){
 				res.RestoreHealth(healStrength);
-				Network.Destroy(gameObject);
+				GetComponent<ObjectCleanUp>().KillMe();
 			}
 			
 		}

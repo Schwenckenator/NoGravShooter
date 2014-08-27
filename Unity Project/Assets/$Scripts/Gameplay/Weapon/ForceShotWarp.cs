@@ -19,7 +19,7 @@ public class ForceShotWarp : MonoBehaviour {
 
 	void FixedUpdate(){
 		if(Time.time > endTime){
-			Network.Destroy (gameObject);
+			GetComponent<ObjectCleanUp>().KillMe();
 		}
 		transform.localScale = new Vector3( transform.localScale.x + (xWarp * Time.deltaTime), transform.localScale.y + (yWarp * Time.deltaTime), transform.localScale.z);
 	}

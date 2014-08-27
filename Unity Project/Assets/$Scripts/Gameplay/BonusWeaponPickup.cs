@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(ObjectCleanUp))]
 public class BonusWeaponPickup : MonoBehaviour {
 
 
@@ -16,7 +17,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 				weapon.AddWeapon(id);
 			}
 
-			Network.Destroy(gameObject);
+			GetComponent<ObjectCleanUp>().KillMe();
 		}
 	}
 }

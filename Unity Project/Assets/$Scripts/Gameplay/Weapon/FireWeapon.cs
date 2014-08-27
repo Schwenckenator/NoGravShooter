@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -123,7 +123,7 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		if(!resource.IsWeaponBusy()){
-			if(GameManager.testVersion){
+			if(GameManager.testMode){
 				if(weaponId < GameManager.weapon.Count){
 					currentWeapon = GameManager.weapon[weaponId];
 					resource.ChangeWeapon(currentWeapon);
@@ -141,6 +141,10 @@ public class FireWeapon : MonoBehaviour {
 
 	public bool IsWeaponHeld(int weaponId){
 		return heldWeapons.Contains(GameManager.weapon[weaponId]);
+	}
+	
+	public bool IsCurrentWeapon(int weaponId){
+		return currentWeapon == GameManager.weapon[weaponId];
 	}
 
 	public void AddWeapon(int weaponId){

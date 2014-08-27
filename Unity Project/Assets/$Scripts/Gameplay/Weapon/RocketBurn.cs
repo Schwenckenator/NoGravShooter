@@ -36,7 +36,7 @@ public class RocketBurn : MonoBehaviour {
 	void OnCollisionEnter(){
 		if(networkView.isMine){
 			Network.Instantiate(rocketBlast, transform.position, Quaternion.identity, 0);
-			Network.Destroy(gameObject);
+			GetComponent<ObjectCleanUp>().KillMe();
 		}
 	}
 }

@@ -90,6 +90,10 @@ public class GUIScript : MonoBehaviour {
 	
 	#region OnGUI
 	void OnGUI(){
+		if(GameManager.testMode){
+			GUI.Label(new Rect(10, 10, 100, 20), "TEST MODE");
+		}
+
 		if(connectingNow){
 			if(currentWindow != (int) Menu.Connecting){
 				connectingNow = false;

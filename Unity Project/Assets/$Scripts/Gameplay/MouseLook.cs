@@ -34,9 +34,13 @@ public class MouseLook : MonoBehaviour {
 	float rotationY = 0F;
 
 	int yDirection = -1;
+	
+	private AimingFOVChanger cameraFOV;
+	private float zoomCameraSlow;
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+		cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
 		sensitivityX = PlayerPrefs.GetFloat("sensitivityX");
 		sensitivityY = PlayerPrefs.GetFloat("sensitivityY");
@@ -47,22 +51,23 @@ public class MouseLook : MonoBehaviour {
 		if(ragdoll) return;
 
 		if(!manager.IsPaused()){
+				zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)
 			{
-				float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX;
+				float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX * zoomCameraSlow;
 				
-				rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+				rotationY += Input.GetAxis("Mouse Y") * sensitivityY * zoomCameraSlow;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 				
 				transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 			}
 			else if (axes == RotationAxes.MouseX)
 			{
-				transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX, 0);
+				transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX * zoomCameraSlow, 0);
 			}
 			else
 			{
-				rotationY += Input.GetAxis("Mouse Y") * sensitivityY;
+				rotationY += Input.GetAxis("Mouse Y") * sensitivityY * zoomCameraSlow;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
 				transform.localEulerAngles = new Vector3(rotationY * yDirection, transform.localEulerAngles.y, 0);
