@@ -6,8 +6,8 @@ public class ForceShotgunValues : WeaponSuperClass {
 	public ForceShotgunValues(){
 
 		this.useRay 				= false;
-		this.hasRecoil 				= true;
-		this.recoil 				= 5;
+		this.hasRecoil 				= false;
+		this.recoil 				= 0;
 		this.rayNum 				= 0;
 
 		this.shotSpread 			= 0;

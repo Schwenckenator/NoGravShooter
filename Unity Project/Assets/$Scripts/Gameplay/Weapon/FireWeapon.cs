@@ -123,10 +123,19 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		if(!resource.IsWeaponBusy()){
-			if(weaponId < heldWeapons.Count){
-				currentWeapon = heldWeapons[weaponId];
-				resource.ChangeWeapon(currentWeapon);
+			if(GameManager.testVersion){
+				if(weaponId < GameManager.weapon.Count){
+					currentWeapon = GameManager.weapon[weaponId];
+					resource.ChangeWeapon(currentWeapon);
+				}
 			}
+			else{
+				if(weaponId < heldWeapons.Count){
+					currentWeapon = heldWeapons[weaponId];
+					resource.ChangeWeapon(currentWeapon);
+				}
+			}
+
 		}
 	}
 

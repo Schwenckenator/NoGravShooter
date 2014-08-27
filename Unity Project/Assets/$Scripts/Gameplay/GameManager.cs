@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	private FireWeapon fireWeapon;
 
 	private bool myPlayerSpawned = false;
+	public static bool testVersion = true;
 	public GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 

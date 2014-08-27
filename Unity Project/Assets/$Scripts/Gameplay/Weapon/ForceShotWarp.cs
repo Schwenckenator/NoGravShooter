@@ -3,24 +3,18 @@ using System.Collections;
 
 public class ForceShotWarp : MonoBehaviour {
 
-	public int maxDamage;
-	public int minDamage;
+	public int damage;
 
-	public float maxPush;
-	public float minPush;
+	public float push;
 
 	public float xWarp;
 	public float yWarp;
-
-	private float shotLifeTime;
-	private float startTime;
+	
 	private float endTime;
 
 	void Start(){
 		transform.Translate(new Vector3(0, 0, 1), Space.Self);
-		shotLifeTime = GetComponent<ShotLifeTime>().lifeTime;
-		startTime = Time.time;
-		endTime = Time.time + shotLifeTime;
+		endTime = Time.time + GetComponent<ShotLifeTime>().lifeTime;
 	}
 
 	void FixedUpdate(){
@@ -40,12 +34,10 @@ public class ForceShotWarp : MonoBehaviour {
 	}
 
 	void DamagePlayer(PlayerResources input){
-		int damage = (int)Mathf.Lerp(maxDamage, minDamage, (Time.time - startTime) / shotLifeTime);
 		input.TakeDamage(damage);
 	}
 
 	void PushObject(Rigidbody rigid){
-		float push = Mathf.Lerp(maxPush, minPush, (Time.time - startTime) / shotLifeTime);
 		rigid.AddForce(transform.forward * push, ForceMode.Impulse);
 	}
 
