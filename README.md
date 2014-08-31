@@ -19,7 +19,7 @@ Mousewheeldown = Next Weapon
 
 R = Reload<br />
 G = Grenade<br />
-F = Melee<br />
+F = Interact<br />
 K = Suicide
 
 1 = Laser Rifle<br />
