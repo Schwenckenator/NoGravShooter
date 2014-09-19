@@ -8,6 +8,8 @@ public class FireWeapon : MonoBehaviour {
 	NoGravCharacterMotor motor;
 	
 	private WeaponSuperClass currentWeapon;
+	
+	private int currentInventorySlot;
 
 	PlayerResources resource;
 
@@ -21,7 +23,9 @@ public class FireWeapon : MonoBehaviour {
 	void Awake () {
 
 		heldWeapons = new List<WeaponSuperClass>();
-
+		
+		currentInventorySlot = 0;
+		
 		heldWeapons.Add(GameManager.weapon[0]);
 		currentWeapon = heldWeapons[0];
 
@@ -35,6 +39,21 @@ public class FireWeapon : MonoBehaviour {
 		ChangeWeapon(0);
 	}
 	void FixedUpdate(){
+		//change weapons by mouse wheel
+		if (Input.GetAxis("Mouse ScrollWheel") < 0){
+			currentInventorySlot++;
+			if(currentInventorySlot > GameManager.weapon.Count){
+				currentInventorySlot = 0;
+			}
+			ChangeWeapon(currentInventorySlot);
+		} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
+			currentInventorySlot--;
+			if(currentInventorySlot < 0){
+				currentInventorySlot = GameManager.weapon.Count - 1;
+			}
+			ChangeWeapon(currentInventorySlot);
+		}
+		
 		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire()){
 			resource.WeaponFired(currentWeapon.heatPerShot);
 			audio.PlayOneShot(currentWeapon.fireSound);
@@ -122,6 +141,7 @@ public class FireWeapon : MonoBehaviour {
 	}
 
 	public void ChangeWeapon(int weaponId){
+		currentInventorySlot = weaponId;
 		if(!resource.IsWeaponBusy()){
 			if(GameManager.testMode){
 				if(weaponId < GameManager.weapon.Count){
