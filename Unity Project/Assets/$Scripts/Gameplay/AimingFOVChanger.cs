@@ -4,13 +4,14 @@ using System.Collections;
 public class AimingFOVChanger : MonoBehaviour {
 
 	public float minFOV;
-	public float maxFOV;
+	private float maxFOV;
 	public float zoomSpeed;
 	public float sniperFOV;
 	
 	private FireWeapon fireWeapon;
-
+	
 	void FixedUpdate(){
+	maxFOV = PlayerPrefs.GetFloat("FOVsetting", 75);
 	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
@@ -33,6 +34,10 @@ public class AimingFOVChanger : MonoBehaviour {
 				}
 			}
 		} else {
+			//bug fix for changing field of view between games without closing
+			if(Camera.main.fieldOfView > maxFOV){
+				Camera.main.fieldOfView = maxFOV;
+			}
 			if(Camera.main.fieldOfView < maxFOV){
 				Camera.main.fieldOfView += zoomSpeed;
 			}

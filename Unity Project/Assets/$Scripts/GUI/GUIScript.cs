@@ -49,6 +49,8 @@ public class GUIScript : MonoBehaviour {
 	
 	private float xMouseSensitivity = 15f;
 	private float yMouseSensitivity = 10f;
+	
+	private float FOVsetting = 60f;
 
 	private int mouseYDirection = -1;
 	private bool mouseInverted = false;
@@ -81,6 +83,8 @@ public class GUIScript : MonoBehaviour {
 		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 15);
 		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 10);
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
+		
+		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 75);
 
 		levelSelectInt = PlayerPrefs.GetInt ("levelSelectInt", 0);
 		levelName = levelList[levelSelectInt];
@@ -375,8 +379,15 @@ public class GUIScript : MonoBehaviour {
 		standard.y += 20;
 		yMouseSensitivity = GUI.HorizontalSlider(standard, yMouseSensitivity, 5, 15);
 		
-		standard.y += 50;
+		standard.y += 40;
 		mouseInverted = GUI.Toggle(standard, mouseInverted, "Invert Y Axis");
+		
+		standard.y += 50;
+		GUI.Label(standard, "Field Of View: ");
+		FOVsetting = (float)System.Math.Round (FOVsetting, 1);
+		FOVsetting = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), FOVsetting.ToString()));
+		standard.y += 20;
+		FOVsetting = GUI.HorizontalSlider(standard, FOVsetting, 50, 100);
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Edit Keybinds")){
@@ -395,6 +406,8 @@ public class GUIScript : MonoBehaviour {
 			}
 
 			PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
+			
+			PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
 			currentWindow = (int) Menu.MainMenu;
 		}
 	}
