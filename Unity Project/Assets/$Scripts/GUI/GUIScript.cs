@@ -84,7 +84,7 @@ public class GUIScript : MonoBehaviour {
 		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 10);
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
 		
-		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 75);
+		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 60);
 
 		levelSelectInt = PlayerPrefs.GetInt ("levelSelectInt", 0);
 		levelName = levelList[levelSelectInt];
@@ -159,6 +159,8 @@ public class GUIScript : MonoBehaviour {
 
 	#region PlayerGUI
 	void PlayerGUI(){
+
+
 		GUIStyle style = new GUIStyle("label");
 		style.fontSize = 50;
 		style.alignment = TextAnchor.UpperCenter;
@@ -172,6 +174,10 @@ public class GUIScript : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetGrenades().ToString(), style);
 		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
 
+		Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
+		GUI.Box(combatLogRect, "");
+		Rect combatLogTextRect = new Rect(combatLogRect.x + 5, combatLogRect.y + 5, combatLogRect.width - 10, combatLogRect.height - 10);
+		GUI.Label(combatLogTextRect, submittedChat);
 		
 		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
 		if(res.IsJetpackDisabled()){
@@ -191,6 +197,8 @@ public class GUIScript : MonoBehaviour {
 		Rect rectCrosshair = new Rect(0, 0, 32, 32);
 		rectCrosshair.center = new Vector2(Screen.width/2, Screen.height/2);
 		GUI.DrawTexture(rectCrosshair, crosshair);
+
+
 	}
 	#endregion
 
@@ -614,11 +622,11 @@ public class GUIScript : MonoBehaviour {
 		
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			SubmitTextToChat();
+			SubmitTextToChat(currentChat);
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			SubmitTextToChat();
+			SubmitTextToChat(currentChat);
 		}
 	}
 	#endregion
@@ -697,24 +705,25 @@ public class GUIScript : MonoBehaviour {
 		
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			SubmitTextToChat();
+			SubmitTextToChat(currentChat);
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			SubmitTextToChat();
+			SubmitTextToChat(currentChat);
 		}
 	}
 	#endregion
 
-	void SubmitTextToChat(){
-		if(currentChat != ""){
-			string newChat = playerName+ ": "+currentChat +"\n";
+	public void SubmitTextToChat(string input){
+		if(input != ""){
+			string newChat = playerName+ ": "+input +"\n";
 			currentChat = "";
 			
 			networkView.RPC("UpdateChat", RPCMode.All, newChat);
 		}
 	}
-	
+
+
 	[RPC]
 	void UpdateChat(string newChat){
 		submittedChat += newChat;
@@ -723,13 +732,11 @@ public class GUIScript : MonoBehaviour {
 	[RPC]
 	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
 		connectedPlayers.Add(newPlayer, newPlayerName);
-		//numOfPlayers = connectedPlayers.Count;
 	}
 	
 	[RPC]
 	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
 		connectedPlayers.Remove(disconnectedPlayer);
-		//numOfPlayers = connectedPlayers.Count;
 	}
 	
 	[RPC]

@@ -73,6 +73,7 @@ public class PlayerResources : MonoBehaviour {
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(100);
+			manager.AddToChat("committed Seppuku!");
 		}
 
 		if(heat > maxHeat){

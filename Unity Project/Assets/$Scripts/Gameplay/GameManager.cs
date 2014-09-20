@@ -21,8 +21,16 @@ public class GameManager : MonoBehaviour {
 	
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
 
+	private GUIScript gameGUI;
+
+	public void AddToChat(string input){
+		gameGUI.SubmitTextToChat(input);
+	}
+
 	void Awake(){
 		DontDestroyOnLoad(gameObject);
+
+		gameGUI = GetComponent<GUIScript>();
 
 		keyBindings = new KeyCode[System.Enum.GetNames(typeof(GameManager.KeyBind)).Length];
 
