@@ -25,10 +25,17 @@ public class ForceShotWarp : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider input){
+
+		bool push = true;
 		if(input.CompareTag("Player")){ // Hit a player!
-			DamagePlayer(input.GetComponent<PlayerResources>());
+			//If you hit yourself, don't do anything
+			if(input.networkView.isMine){
+				push = false;
+			}else{
+				DamagePlayer(input.GetComponent<PlayerResources>());
+			}
 		}
-		if(input.rigidbody){
+		if(input.rigidbody && push){
 			PushObject(input.rigidbody);
 		}
 	}
