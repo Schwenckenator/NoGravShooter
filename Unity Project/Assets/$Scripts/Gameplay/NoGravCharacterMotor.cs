@@ -170,7 +170,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 	}
 	#endregion
-
+	
+	//to call button prompt
+	//manager.GetComponent<GUIScript>().ButtonPrompt((int)GameManager.KeyBind.BUTTON, "ACTION");
+	
 	#region FixedUpdate
 	void FixedUpdate () {
 		if(ragdoll) return;
@@ -182,7 +185,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		UpdateInput();
 
 		if (grounded) {
-
 			// Calculate how fast we should be moving
 			Vector3 targetVelocity;
 			if(manager.IsPaused()){

@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
-	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade};
+	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact};
 	public static KeyCode[] keyBindings;
 	
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour {
 		
 		keyBindings[(int)GameManager.KeyBind.Reload] 		= (KeyCode)PlayerPrefs.GetInt("bindReload", (int)KeyCode.R);
 		keyBindings[(int)GameManager.KeyBind.Grenade] 	= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
+		keyBindings[(int)GameManager.KeyBind.Interact] 	= (KeyCode)PlayerPrefs.GetInt("bindInteract", (int)KeyCode.F);
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());

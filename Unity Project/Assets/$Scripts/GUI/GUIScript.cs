@@ -198,6 +198,11 @@ public class GUIScript : MonoBehaviour {
 		rectCrosshair.center = new Vector2(Screen.width/2, Screen.height/2);
 		GUI.DrawTexture(rectCrosshair, crosshair);
 
+		//button prompt
+		if(promptShown > 0){
+			GUI.Box(new Rect(Screen.width - 160, Screen.height/2, 150, 30), promptText);
+			promptShown--;
+		}
 
 	}
 	#endregion
@@ -494,6 +499,13 @@ public class GUIScript : MonoBehaviour {
 			displayChangeKeybindWindow = true;
 		}
 
+		standard.y += 30;
+		GUI.Label(standard, "Interact: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Interact].ToString())){
+			editedBinding = GameManager.KeyBind.Interact;
+			displayChangeKeybindWindow = true;
+		}
+
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 			// Save Configuation
@@ -510,6 +522,7 @@ public class GUIScript : MonoBehaviour {
 
 			PlayerPrefs.SetInt("bindReload", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Reload] );
 			PlayerPrefs.SetInt("bindGrenade", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Grenade] );
+			PlayerPrefs.SetInt("bindInteract", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Interact] );
 
 			currentWindow = (int) Menu.Options;
 		}
@@ -721,6 +734,14 @@ public class GUIScript : MonoBehaviour {
 			
 			networkView.RPC("UpdateChat", RPCMode.All, newChat);
 		}
+	}
+	
+	//button prompts
+	string promptText;
+	int promptShown;
+	public void ButtonPrompt(int buttonID, string message){
+		promptText = GameManager.keyBindings[buttonID].ToString() + "  -  " + message;
+		promptShown = 10;
 	}
 
 
