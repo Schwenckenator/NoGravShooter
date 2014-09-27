@@ -39,17 +39,17 @@ public class FireWeapon : MonoBehaviour {
 		ChangeWeapon(0);
 	}
 	void FixedUpdate(){
-		//change weapons by mouse wheel ***** This shit going to bug outside of TESTMODE Yo
+		//change weapons by mouse wheel
 		if (Input.GetAxis("Mouse ScrollWheel") < 0){
 			currentInventorySlot++;
-			if(currentInventorySlot > GameManager.weapon.Count){
+			if(currentInventorySlot > NumberWeaponsHeld()){
 				currentInventorySlot = 0;
 			}
 			ChangeWeapon(currentInventorySlot);
 		} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
 			currentInventorySlot--;
 			if(currentInventorySlot < 0){
-				currentInventorySlot = GameManager.weapon.Count - 1;
+				currentInventorySlot = NumberWeaponsHeld() - 1;
 			}
 			ChangeWeapon(currentInventorySlot);
 		}
@@ -165,6 +165,10 @@ public class FireWeapon : MonoBehaviour {
 	
 	public bool IsCurrentWeapon(int weaponId){
 		return currentWeapon == GameManager.weapon[weaponId];
+	}
+	
+	public int NumberWeaponsHeld(){
+		return heldWeapons.Count;
 	}
 
 	public void AddWeapon(int weaponId){

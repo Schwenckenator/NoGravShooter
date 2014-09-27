@@ -58,6 +58,9 @@ public class GUIScript : MonoBehaviour {
 	private bool connectionError = false;
 	private bool connectingNow = false;
 	
+	private bool autoPickupEnabled = false;
+	private int autoPickup = 0;
+	
 	// For Game Settings
 	public string levelName;
 	string[] levelList = {"FirstLevel"};
@@ -83,6 +86,7 @@ public class GUIScript : MonoBehaviour {
 		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 15);
 		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 10);
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
+		autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
 		
 		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 60);
 
@@ -90,6 +94,7 @@ public class GUIScript : MonoBehaviour {
 		levelName = levelList[levelSelectInt];
 
 		mouseInverted = (mouseYDirection == 1);
+		autoPickupEnabled = (autoPickup == 1);
 	}
 	
 	#region OnGUI
@@ -393,7 +398,8 @@ public class GUIScript : MonoBehaviour {
 		yMouseSensitivity = GUI.HorizontalSlider(standard, yMouseSensitivity, 5, 15);
 		
 		standard.y += 40;
-		mouseInverted = GUI.Toggle(standard, mouseInverted, "Invert Y Axis");
+		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
+		autoPickupEnabled = GUI.Toggle(new Rect(standard.x+150, standard.y,  300, 30), autoPickupEnabled, "Automatically switch to new weapons");
 		
 		standard.y += 50;
 		GUI.Label(standard, "Field Of View: ");
@@ -417,8 +423,15 @@ public class GUIScript : MonoBehaviour {
 			}else{
 				mouseYDirection = -1;
 			}
+			
+			if(autoPickupEnabled){
+				autoPickup = 1;
+			}else{
+				autoPickup = 0;
+			}
 
 			PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
+			PlayerPrefs.SetInt("autoPickup", autoPickup);
 			
 			PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
 			currentWindow = (int) Menu.MainMenu;
