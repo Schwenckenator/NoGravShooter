@@ -23,7 +23,7 @@ F = Interact
 
 1 = Laser Rifle<br />
 2 = Assault Rifle<br />
-3 = High Intensity Beam<br />
+3 = Beam Sniper<br />
 4 = Shotgun<br />
 5 = Force Cannon
 
