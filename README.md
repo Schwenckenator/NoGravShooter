@@ -13,26 +13,22 @@ Q = Lean/Rotate Left<br />
 E = Lean/Rotate Right
 
 Mousebutton1 = Shoot<br />
-Mousebutton2 = Scope (when applicable)<br />
+Mousebutton2 = View Scope/Iron sights<br />
 Mousewheelup = Previous Weapon<br />
 Mousewheeldown = Next Weapon
 
 R = Reload<br />
 G = Grenade<br />
-F = Interact<br />
-K = Suicide
+F = Interact
 
 1 = Laser Rifle<br />
-2 = Assault Rifle
-
+2 = Assault Rifle<br />
 3 = High Intensity Beam<br />
-4 = Sniper Rifle
+4 = Shotgun<br />
+5 = Force Cannon
 
-5 = Shock Cannon<br />
-6 = Shotgun
+6 = Rocket Launcher<br />
+7 = Plasma Blaster
 
-7 = Plasma Blaster<br />
-8 = Rocket Launcher
-
-9 = Gravity Mines<br />
-0 = Frag Grenades
+8 = Proximity Mines<br />
+9 = Gravity Wells
