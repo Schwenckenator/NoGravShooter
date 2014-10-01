@@ -775,6 +775,7 @@ public class GUIScript : MonoBehaviour {
 	
 	[RPC]
 	void LoadLevel(string level){
+		manager.playerCurrentName = playerName;
 		Application.LoadLevel(level);
 	}
 	

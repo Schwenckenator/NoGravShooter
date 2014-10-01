@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
 
 	private GUIScript gameGUI;
 
+	public string playerCurrentName;
+
 	public void AddToChat(string input){
 		gameGUI.SubmitTextToChat(input);
 	}
