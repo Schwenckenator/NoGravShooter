@@ -63,7 +63,7 @@ public class GUIScript : MonoBehaviour {
 	
 	// For Game Settings
 	public string levelName;
-	string[] levelList = {"FirstLevel"};
+	string[] levelList = {"FirstLevel","DerilictShipScene"};
 	public string gameMode = "DeathMatch";
 	public int killsToWin = 20;
 	
