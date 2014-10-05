@@ -1,0 +1,105 @@
+Initialize engine version: 4.5.2f1 (9abb1b59b47c)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.1407]
+    Renderer: NVIDIA GeForce GT 220
+    Vendor:   NVIDIA
+    VRAM:     978 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+- Completed reload, in  0.126 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+Initialize engine version: 4.5.2f1 (9abb1b59b47c)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.1407]
+    Renderer: NVIDIA GeForce GT 220
+    Vendor:   NVIDIA
+    VRAM:     978 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+- Completed reload, in  0.080 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+DNSLookup: Error looking up masterserver.unity3d.com (1460)
+Cannot resolve master server address, you must be connected to the internet before using it or set the address to something accessible to you.
+ 
+(Filename:  Line: 652)
+
+DNSLookup: Error looking up masterserver.unity3d.com (1460)
+Cannot resolve master server address, you must be connected to the internet before using it or set the address to something accessible to you.
+ 
+(Filename:  Line: 652)
+
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1172.
+sendto failed with code -1 for char 9 and length 1172.
+sendto failed with code -1 for char 9 and length 1172.
+sendto failed with code -1 for char 9 and length 1172.
+sendto failed with code -1 for char 9 and length 548.
+sendto failed with code -1 for char 9 and length 548.
+sendto failed with code -1 for char 9 and length 548.
+sendto failed with code -1 for char 9 and length 548.
+sendto failed with code -1 for char 9 and length 548.
+Failed to connect to master server at 0.0.0.0:23466
+ 
+(Filename:  Line: 231)
+
+UnloadTime: 0.481681 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1676.
+Total: 2.148727 ms (FindLiveObjects: 0.157693 ms CreateObjectMapping: 0.029900 ms MarkObjects: 0.335457 ms  DeleteObjects: 0.022937 ms)
+
+UnloadTime: 0.384608 ms
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1672.
+Total: 2.102443 ms (FindLiveObjects: 0.132298 ms CreateObjectMapping: 0.044236 ms MarkObjects: 0.362490 ms  DeleteObjects: 0.024166 ms)
+
+The server has disconnected from the client. Most likely the server has shut down.
+ 
+(Filename:  Line: 745)
+
+UnloadTime: 4.320801 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 328.
+Total: 1.801392 ms (FindLiveObjects: 0.016383 ms CreateObjectMapping: 0.035225 ms MarkObjects: 0.288763 ms  DeleteObjects: 0.074546 ms)
+
+UnloadTime: 4.170071 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 332.
+Total: 1.779683 ms (FindLiveObjects: 0.018431 ms CreateObjectMapping: 0.031129 ms MarkObjects: 0.325217 ms  DeleteObjects: 0.086014 ms)
+
+UnloadTime: 0.376826 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 324.
+Total: 1.727255 ms (FindLiveObjects: 0.016793 ms CreateObjectMapping: 0.020070 ms MarkObjects: 0.256405 ms  DeleteObjects: 0.005734 ms)
+
