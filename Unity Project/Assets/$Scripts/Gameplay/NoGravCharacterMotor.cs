@@ -375,51 +375,67 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 	#endregion
 
+	// Returns normal of surface
+	Vector3 SurfaceNormal(Collision info){
+		RaycastHit[] hits;
+		Vector3 colObjNorm = Vector3.zero;
+		Vector3 origin = transform.position  - transform.up * .95f; // Make the ray emit from feet
+		Ray r = new Ray(origin, info.collider.transform.position - origin);
+
+		Debug.DrawLine(origin, info.collider.transform.position, Color.green, 5.0f, false);
+
+		hits = Physics.RaycastAll(r);
+		foreach(RaycastHit hit in hits){
+			if(hit.collider == info.collider){
+				colObjNorm = hit.normal;
+				break;
+			}
+		}
+	
+		return colObjNorm;
+	}
+
+	// Does the actual rotation of player
+	void SnapToSurface(Vector3 colObjNorm){
+		// Preserve camera angle
+		Quaternion curCamRot = cameraTransform.rotation;
+		
+		transform.rotation = Quaternion.LookRotation(colObjNorm, transform.forward);
+		transform.Rotate(new Vector3(-90, 180, 0));
+		
+		// Rotate Camera
+		cameraTransform.rotation = curCamRot;
+		
+		// But the mouse code will overwrite this
+		// Find the local X rot
+		float xRot = cameraTransform.localEulerAngles.x;
+		float yRot = cameraTransform.localEulerAngles.y;
+		
+		
+		// Make sure Y and Z local rotations are 0
+		cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, 0, 0);
+		transform.Rotate(0, yRot, 0);
+		
+		// Make it digestable
+		if(xRot > 180){
+			xRot -= 360;
+		}
+		
+		cameraLook.SetX_Rotation(xRot);
+	}
+
 	#region Collisions
 	void OnCollisionEnter(Collision info){
 		if(networkView.isMine){
 			if(info.collider.CompareTag("Walkable")){
-				RaycastHit[] hits;
-				Vector3 colObjNorm = Vector3.zero;
-				Ray r = new Ray(transform.position, info.collider.transform.position - transform.position);
 
-				hits = Physics.RaycastAll(r);
-				foreach(RaycastHit hit in hits){
-					if(hit.collider == info.collider){
-						colObjNorm = hit.normal;
-						break;
-					}
-				}
+				Vector3 colObjNorm = SurfaceNormal(info);
 
 				float angle = Vector3.Angle(transform.up, colObjNorm);
 
 				if(angle < maxLandingAngle){
+					SnapToSurface(colObjNorm);
 
-					// Preserve camera angle
-					Quaternion curCamRot = cameraTransform.rotation;
-
-					transform.rotation = Quaternion.LookRotation(colObjNorm, transform.forward);
-					transform.Rotate(new Vector3(-90, 180, 0));
-
-					// Rotate Camera
-					cameraTransform.rotation = curCamRot;
-
-					// But the mouse code will overwrite this
-					// Find the local X rot
-					float xRot = cameraTransform.localEulerAngles.x;
-					float yRot = cameraTransform.localEulerAngles.y;
-
-
-					// Make sure Y and Z local rotations are 0
-					cameraTransform.localEulerAngles = new Vector3(cameraTransform.localEulerAngles.x, 0, 0);
-					transform.Rotate(0, yRot, 0);
-
-					// Make it digestable
-					if(xRot > 180){
-						xRot -= 360;
-					}
-
-					cameraLook.SetX_Rotation(xRot);
 				}
 			}
 		}
@@ -427,6 +443,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void OnCollisionStay (Collision info) {
 		if(networkView.isMine){
+			Vector3 surfaceNorm = SurfaceNormal(info);
+			float angle = Vector3.Angle(transform.up, surfaceNorm);
+
+			if(angle > 1f && angle < maxLandingAngle){
+				SnapToSurface(surfaceNorm);
+			}
+
 			RaycastHit hit;
 			if(Physics.Raycast(transform.position, -transform.up, out hit, 1.10f)){
 				grounded = true; 
@@ -434,6 +457,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			}else{ // Hit a roof or some shit
 				rigidbody.AddForce(info.contacts[0].normal, ForceMode.VelocityChange);
 			}
+
 		}
 		
 	}
