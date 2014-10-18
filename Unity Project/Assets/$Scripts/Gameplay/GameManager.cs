@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour {
 	// *****************Test Mode Variable************************
 	public static bool testMode = true;
 	// ***********************************************************
-	private bool paused;
+	public static bool paused;
+
+
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
 	private FireWeapon fireWeapon;
@@ -75,7 +77,7 @@ public class GameManager : MonoBehaviour {
 	public static bool SceneIsMenu(){
 		return Application.loadedLevelName == "MenuScene";
 	}
-	public bool IsPaused(){
+	public static bool IsPaused(){
 		return paused;
 	}
 	public bool IsPlayerSpawned(){

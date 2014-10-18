@@ -15,26 +15,813 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\N
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.078 seconds
+- Completed reload, in  0.083 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+Initialize engine version: 4.5.2f1 (9abb1b59b47c)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.1407]
+    Renderer: NVIDIA GeForce GT 220
+    Vendor:   NVIDIA
+    VRAM:     978 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+- Completed reload, in  0.088 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-UnloadTime: 0.378873 ms
-Unloading 5 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+UnloadTime: 0.392800 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 1677.
-Total: 2.065170 ms (FindLiveObjects: 0.170390 ms CreateObjectMapping: 0.035225 ms MarkObjects: 0.470622 ms  DeleteObjects: 0.024985 ms)
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 3275.
+Total: 1.962772 ms (FindLiveObjects: 0.249852 ms CreateObjectMapping: 0.057752 ms MarkObjects: 0.412870 ms  DeleteObjects: 0.027442 ms)
 
-UnloadTime: 4.064396 ms
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+View ID SceneID: 1 Level Prefix: 0 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' SceneID: 1 Level Prefix: 0' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID SceneID: 2 Level Prefix: 0 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' SceneID: 2 Level Prefix: 0' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+UnloadTime: 0.544759 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 3273.
+Total: 1.980384 ms (FindLiveObjects: 0.215036 ms CreateObjectMapping: 0.041368 ms MarkObjects: 0.532471 ms  DeleteObjects: 0.026623 ms)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+View ID AllocatedID: 2 not found during lookup. Strange behaviour may occur
+ 
+(Filename:  Line: 1681)
+
+Received state update for view id' AllocatedID: 2' but the NetworkView doesn't exist
+ 
+(Filename:  Line: 2474)
+
+UnloadTime: 6.441676 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 8 unused Assets to reduce memory usage. Loaded Objects now: 332.
-Total: 1.625676 ms (FindLiveObjects: 0.016793 ms CreateObjectMapping: 0.018431 ms MarkObjects: 0.269102 ms  DeleteObjects: 0.074546 ms)
+Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 332.
+Total: 1.515495 ms (FindLiveObjects: 0.037273 ms CreateObjectMapping: 0.025804 ms MarkObjects: 0.256815 ms  DeleteObjects: 0.146634 ms)
 
-UnloadTime: 0.358394 ms
+UnloadTime: 0.388704 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
 Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 325.
-Total: 1.574477 ms (FindLiveObjects: 0.020889 ms CreateObjectMapping: 0.025394 ms MarkObjects: 0.255176 ms  DeleteObjects: 0.005324 ms)
+Total: 1.366403 ms (FindLiveObjects: 0.016793 ms CreateObjectMapping: 0.036863 ms MarkObjects: 0.264187 ms  DeleteObjects: 0.006143 ms)
+
+UnloadTime: 7.014698 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 335.
+Total: 1.742820 ms (FindLiveObjects: 0.017612 ms CreateObjectMapping: 0.025394 ms MarkObjects: 0.260091 ms  DeleteObjects: 0.172848 ms)
+
+UnloadTime: 0.366586 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 327.
+Total: 1.597414 ms (FindLiveObjects: 0.017202 ms CreateObjectMapping: 0.026213 ms MarkObjects: 0.258863 ms  DeleteObjects: 0.006553 ms)
 

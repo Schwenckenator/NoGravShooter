@@ -54,7 +54,7 @@ public class FireWeapon : MonoBehaviour {
 			ChangeWeapon(currentInventorySlot);
 		}
 		
-		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire()){
+		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire() && !GameManager.IsPaused()){
 			resource.WeaponFired(currentWeapon.heatPerShot);
 			audio.PlayOneShot(currentWeapon.fireSound);
 			nextFire = Time.time + currentWeapon.fireDelay;

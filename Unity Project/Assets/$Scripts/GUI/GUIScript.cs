@@ -111,7 +111,7 @@ public class GUIScript : MonoBehaviour {
 		if(GameManager.SceneIsMenu()){
 			ChooseMenuWindow();
 
-		}else if(manager.IsPaused()){
+		}else if(GameManager.IsPaused()){
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
 		}else if(manager.IsPlayerSpawned()){

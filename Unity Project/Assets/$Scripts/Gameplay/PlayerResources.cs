@@ -269,8 +269,8 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	IEnumerator WeaponReload(){
-		// If no remaining ammo, don't attempt to reload
-		if(currentWeapon.remainingAmmo <= 0){
+		// If no remaining ammo and NOT testmode, don't attempt to reload
+		if(currentWeapon.remainingAmmo <= 0 && !GameManager.testMode){
 			if(currentWeapon.currentClip <= 0){
 
 				//GetComponent<FireWeapon>().removeWeapon(currentWeapon);
@@ -294,7 +294,11 @@ public class PlayerResources : MonoBehaviour {
 		}
 		weaponBusy = false;
 		int newBullets = currentWeapon.clipSize - currentWeapon.currentClip;
-		currentWeapon.currentClip = Mathf.Min (currentWeapon.clipSize, currentWeapon.remainingAmmo+currentWeapon.currentClip);
+		if(GameManager.testMode){
+			currentWeapon.currentClip = currentWeapon.clipSize;
+		}else{
+			currentWeapon.currentClip = Mathf.Min (currentWeapon.clipSize, currentWeapon.remainingAmmo+currentWeapon.currentClip);
+		}
 
 		currentWeapon.remainingAmmo -= newBullets; 
 		currentWeapon.remainingAmmo = Mathf.Max (currentWeapon.remainingAmmo, 0);
