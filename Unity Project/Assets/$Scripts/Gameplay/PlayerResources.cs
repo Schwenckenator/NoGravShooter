@@ -308,15 +308,15 @@ public class PlayerResources : MonoBehaviour {
 		audio.PlayOneShot(soundChangeWeapon);
 		weaponBusy = true;
 		float waitTime = 1.0f;
-		GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(waitTime);
+		GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(waitTime, currentWeapon);
 		yield return new WaitForSeconds(waitTime);
 		weaponBusy = false;
 	}
 
 	public void ChangeWeapon(WeaponSuperClass newWeapon){
 		if(!weaponBusy){
-			StartCoroutine(WeaponChange());
 			currentWeapon = newWeapon;
+			StartCoroutine(WeaponChange());
 			heat = 0;
 		}
 	}
