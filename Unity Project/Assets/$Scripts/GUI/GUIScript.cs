@@ -616,7 +616,7 @@ public class GUIScript : MonoBehaviour {
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
 				// Start game
-				networkView.RPC("LoadLevel", RPCMode.AllBuffered, levelName);
+				networkView.RPC("LoadLevel", RPCMode.AllBuffered, levelName, lastLevelPrefix + 1);
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
@@ -772,12 +772,37 @@ public class GUIScript : MonoBehaviour {
 	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
 		connectedPlayers.Remove(disconnectedPlayer);
 	}
-	
+
+
+	int lastLevelPrefix = 0;
+	bool rpcDisabled = false;
+
 	[RPC]
-	void LoadLevel(string level){
+	void LoadLevel(string level, int levelPrefix){
+
+		lastLevelPrefix = levelPrefix;
+
 		manager.playerCurrentName = playerName;
+
+		Network.SetSendingEnabled(0, false);
+		Network.isMessageQueueRunning = false;
+		rpcDisabled = true;
+
+		Network.SetLevelPrefix(levelPrefix);
+
 		Application.LoadLevel(level);
+
+
 	}
+
+	void OnLevelWasLoaded(){
+		if(rpcDisabled){
+			Network.isMessageQueueRunning = true;
+			Network.SetSendingEnabled(0, true);
+			rpcDisabled = false;
+		}
+	}
+
 	
 	[RPC]
 	void ChangeServerName(string name){

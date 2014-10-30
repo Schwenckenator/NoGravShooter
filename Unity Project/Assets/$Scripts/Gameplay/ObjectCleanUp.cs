@@ -11,6 +11,7 @@ public class ObjectCleanUp : MonoBehaviour {
 
 	[RPC]
 	void KillThisObject(){
+		Debug.Log (gameObject.ToString() + " is being killed.");
 		Destroy (gameObject);
 	}
 }
