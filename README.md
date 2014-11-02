@@ -31,4 +31,5 @@ F = Interact
 7 = Plasma Blaster
 
 8 = Proximity Mines<br />
-9 = Gravity Wells
+9 = Gravity Wells<br />
+0 = EMP Generators
