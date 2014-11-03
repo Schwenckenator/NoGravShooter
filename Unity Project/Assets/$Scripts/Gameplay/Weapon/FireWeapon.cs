@@ -12,6 +12,8 @@ public class FireWeapon : MonoBehaviour {
 	private WeaponSuperClass currentWeapon;
 	
 	private int currentInventorySlot;
+	
+	private int startingWeapon;
 
 	PlayerResources resource;
 
@@ -31,7 +33,14 @@ public class FireWeapon : MonoBehaviour {
 		
 		currentInventorySlot = 0;
 		
-		heldWeapons.Add(GameManager.weapon[0]);
+		startingWeapon = PlayerPrefs.GetInt("1stWeapon", 0);
+		heldWeapons.Add(GameManager.weapon[startingWeapon]);
+		Debug.Log("startingWeapon");
+		startingWeapon = PlayerPrefs.GetInt("2ndWeapon", 7);
+		if(startingWeapon < 7){
+			heldWeapons.Add(GameManager.weapon[startingWeapon]);
+			Debug.Log("startingWeapon2");
+		}
 		currentWeapon = heldWeapons[0];
 
 		gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("GunSmokeParticle");

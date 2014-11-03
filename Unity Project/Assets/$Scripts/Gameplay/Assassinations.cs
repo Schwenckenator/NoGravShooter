@@ -25,10 +25,11 @@ public class Assassinations : MonoBehaviour {
 				//kinda dodgy but it works, dont ask where the 12 came from
 				if (Vector3.Dot(toTarget, transform.forward) < -0.75 && heading.sqrMagnitude < detectionRadius*detectionRadius/12) {
 					//checks if the player is actually facing the player they want to assassinate
-					if (Vector3.Dot(toPlayer, target.forward) > 0.75){
+					if (Vector3.Dot(toPlayer, target.forward) > 0.75 && hit.GetComponent<PlayerResources>().GetHealth() > 0 ){
 						manager.GetComponent<GUIScript>().ButtonPrompt((int)GameManager.KeyBind.Interact, "Assassinate");
 						if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.Interact])){
 							Debug.Log("stab stab stab.");
+							manager.AddToChat("Assassinated " + hit.transform.FindChild("NameText").GetComponent<TextMesh>().text + "!");
 							hit.GetComponent<PlayerResources>().TakeDamage(100);
 						}
 					}

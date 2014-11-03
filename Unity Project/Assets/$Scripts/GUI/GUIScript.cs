@@ -21,7 +21,7 @@ public class GUIScript : MonoBehaviour {
 	private bool displayChangeKeybindWindow = false;
 	
 	private Rect largeRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
-	private Rect smallRect = new Rect(Screen.width/3, Screen.height/3, Screen.width/3, Screen.height/3);
+	private Rect smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
 	
 	
 	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind}
@@ -69,6 +69,13 @@ public class GUIScript : MonoBehaviour {
 	
 	private int levelSelectInt = 0;
 	
+	public string weapon1Name;
+	public string weapon2Name;
+	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
+	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
+	private int spawnWeapon1 = 0;
+	private int spawnWeapon2 = 7;
+	
 	GameManager.KeyBind editedBinding;
 	
 	
@@ -90,8 +97,13 @@ public class GUIScript : MonoBehaviour {
 		
 		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 60);
 
-		levelSelectInt = PlayerPrefs.GetInt ("levelSelectInt", 0);
+		levelSelectInt = PlayerPrefs.GetInt("levelSelectInt", 0);
 		levelName = levelList[levelSelectInt];
+		
+		weapon1Name = weaponlist[spawnWeapon1];
+		weapon2Name = weaponlist2[spawnWeapon2];
+		spawnWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
+		spawnWeapon2 = PlayerPrefs.GetInt("2ndWeapon", 7);
 
 		mouseInverted = (mouseYDirection == 1);
 		autoPickupEnabled = (autoPickup == 1);
@@ -560,9 +572,15 @@ public class GUIScript : MonoBehaviour {
 
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
-		levelSelectInt = GUI.Toolbar(new Rect(20, 20, smallRect.width-40, 30), levelSelectInt, levelList);
+		GUI.Label(new Rect(20, 20, smallRect.width-40, 30), "Map");
+		levelSelectInt = GUI.Toolbar(new Rect(20, 40, smallRect.width-40, 30), levelSelectInt, levelList);
+		GUI.Label(new Rect(20, 80, smallRect.width-40, 30), "Starting Weapons");
+		spawnWeapon1 = GUI.Toolbar(new Rect(20, 100, smallRect.width-40, 30), spawnWeapon1, weaponlist);
+		spawnWeapon2 = GUI.Toolbar(new Rect(20, 140, smallRect.width-40, 30), spawnWeapon2, weaponlist2);
 		if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
 			PlayerPrefs.SetInt ("levelSelectInt", levelSelectInt);
+			PlayerPrefs.SetInt ("1stWeapon", spawnWeapon1);
+			PlayerPrefs.SetInt ("2ndWeapon", spawnWeapon2);
 			levelName = levelList[levelSelectInt];
 			displayGameSettingsWindow = false;
 		}
