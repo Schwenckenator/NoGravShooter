@@ -33,9 +33,13 @@ public class FireWeapon : MonoBehaviour {
 		
 		currentInventorySlot = 0;
 		
+		//startingWeapon = weapon 1 server setting;
+		//just reading the player pref as placeholder
 		startingWeapon = PlayerPrefs.GetInt("1stWeapon", 0);
 		heldWeapons.Add(GameManager.weapon[startingWeapon]);
 		Debug.Log("startingWeapon");
+		//startingWeapon = weapon 2 server setting;
+		//just reading the player pref as placeholder
 		startingWeapon = PlayerPrefs.GetInt("2ndWeapon", 7);
 		if(startingWeapon < 7){
 			heldWeapons.Add(GameManager.weapon[startingWeapon]);
