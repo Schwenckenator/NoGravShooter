@@ -252,6 +252,13 @@ public class GUIScript : MonoBehaviour {
 			PlayerPrefs.SetString("playerName", playerName);
 			currentWindow = (int) Menu.JoinGame;
 		}
+		
+		standard.y += 50;
+		if(GUI.Button(standard, "Tutorial")){
+			GameManager.testMode = true;
+			StartCoroutine(LoadTutorial());
+		}
+		
 		standard.y += 50;
 		if(GUI.Button(standard, "Options")){
 			currentWindow = (int) Menu.Options;
@@ -264,6 +271,38 @@ public class GUIScript : MonoBehaviour {
 		}
 	}
 	#endregion
+	
+	 IEnumerator LoadTutorial(){
+		//Get port number, create Server
+		//Sanitise Port number input
+		bool error = false;
+		int portNum = 0;
+			
+		try{
+			portNum = int.Parse(strPortNum);
+		}catch{
+			error = true;
+		}
+			
+		if(!error){
+			Network.InitializeServer(MAX_PLAYERS, portNum, !Network.HavePublicAddress());
+			if(useMasterServer){
+				MasterServer.RegisterHost(GAME_TYPE, serverName);
+			}
+			PlayerPrefs.SetString("serverName", serverName);
+			PlayerPrefs.SetString ("portNumber", strPortNum);
+			currentWindow = (int) Menu.Lobby;
+		}
+		LoadLevel("Tutorial", lastLevelPrefix + 1);
+		yield return new WaitForSeconds(1/5);
+		manager.Spawn();
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject player in players){
+			if(player.networkView.isMine){
+				res = player.GetComponent<PlayerResources>();
+			}
+		}
+	}
 
 	#region CreateGameWindow
 	void CreateGameWindow(int windowId){

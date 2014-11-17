@@ -25,10 +25,7 @@ public class FireWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		if(GameManager.testMode){
-			maxWeapons = 99;
-		}
-
+		
 		heldWeapons = new List<WeaponSuperClass>();
 		
 		currentInventorySlot = 0;
@@ -59,30 +56,58 @@ public class FireWeapon : MonoBehaviour {
 	void FixedUpdate(){
 		//change weapons by mouse wheel
 		//checks if player has max number of weapons
-		if (Input.GetAxis("Mouse ScrollWheel") < 0){
-			currentInventorySlot++;
-			if(NumberWeaponsHeld() < maxWeapons){
-				if(currentInventorySlot >= NumberWeaponsHeld()){
-					currentInventorySlot = 0;
+		if(GameManager.testMode){
+			if (Input.GetAxis("Mouse ScrollWheel") < 0){
+				currentInventorySlot++;
+				if(NumberWeaponsHeld() < 7){
+					if(currentInventorySlot >= 7){
+						currentInventorySlot = 0;
+					}
+				} else {
+					if(currentInventorySlot >= 7){
+						currentInventorySlot = 0;
+					}
 				}
-			} else {
-				if(currentInventorySlot >= maxWeapons){
-					currentInventorySlot = 0;
+				ChangeWeapon(currentInventorySlot);
+			} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
+				currentInventorySlot--;
+				if(NumberWeaponsHeld() < 7){
+					if(currentInventorySlot < 0){
+						currentInventorySlot = 7 - 1;
+					}
+				} else {
+					if(currentInventorySlot < 0){
+						currentInventorySlot = 7 - 1;
+					}
 				}
+				ChangeWeapon(currentInventorySlot);
 			}
-			ChangeWeapon(currentInventorySlot);
-		} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
-			currentInventorySlot--;
-			if(NumberWeaponsHeld() < maxWeapons){
-				if(currentInventorySlot < 0){
-					currentInventorySlot = NumberWeaponsHeld() - 1;
+		} else {
+			if (Input.GetAxis("Mouse ScrollWheel") < 0){
+				currentInventorySlot++;
+				if(NumberWeaponsHeld() < maxWeapons){
+					if(currentInventorySlot >= NumberWeaponsHeld()){
+						currentInventorySlot = 0;
+					}
+				} else {
+					if(currentInventorySlot >= maxWeapons){
+						currentInventorySlot = 0;
+					}
 				}
-			} else {
-				if(currentInventorySlot < 0){
-					currentInventorySlot = maxWeapons - 1;
+				ChangeWeapon(currentInventorySlot);
+			} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
+				currentInventorySlot--;
+				if(NumberWeaponsHeld() < maxWeapons){
+					if(currentInventorySlot < 0){
+						currentInventorySlot = NumberWeaponsHeld() - 1;
+					}
+				} else {
+					if(currentInventorySlot < 0){
+						currentInventorySlot = maxWeapons - 1;
+					}
 				}
+				ChangeWeapon(currentInventorySlot);
 			}
-			ChangeWeapon(currentInventorySlot);
 		}
 		
 		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire() && !GameManager.IsPaused()){
