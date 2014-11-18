@@ -48,7 +48,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 				if(weaponcount >= maxweaponcount){
 					if(swapTimeout < Time.time){
 						swapTimeout = weaponSwapCooldown;
-						manager.GetComponent<GUIScript>().ButtonPrompt((int)GameManager.KeyBind.Interact, "Swap Weapons");
+						manager.GetComponent<GUIScript>().ButtonPrompt("Swap Weapons", (int)GameManager.KeyBind.Interact);
 						if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.Interact])){
 							for(int i=0; i < 7; i++){
 								if(weapon.IsCurrentWeapon(i)){
