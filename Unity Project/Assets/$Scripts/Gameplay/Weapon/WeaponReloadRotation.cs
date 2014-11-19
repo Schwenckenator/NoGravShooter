@@ -4,6 +4,9 @@ using System.Collections;
 public class WeaponReloadRotation : MonoBehaviour {
 	
 	public GameObject[] weaponModelList;
+	public float[] firePointZPosition;
+
+	private Transform firePoint;
 
 	private GameObject weaponModel;
 
@@ -18,6 +21,7 @@ public class WeaponReloadRotation : MonoBehaviour {
 
 	void Start(){
 		oldPosition = transform.localPosition;
+		firePoint = transform.FindChild("FirePoint");
 	}
 
 	public void ReloadRotation(float reloadTime, WeaponSuperClass newWeapon = null){
@@ -59,6 +63,8 @@ public class WeaponReloadRotation : MonoBehaviour {
 
 		weaponModel.transform.localPosition = Vector3.zero;
 		weaponModel.transform.localEulerAngles = new Vector3(0, 270, 0);
+
+		firePoint.localPosition = new Vector3(0, 0, firePointZPosition[newModelNum]);
 
 		newModel = false;
 	}

@@ -2,7 +2,35 @@ fileFormatVersion: 2
 guid: 97ec8ccceba5b96438dde953154204aa
 ModelImporter:
   serializedVersion: 16
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Gun_Bacl_Part
+    100004: Gun_Body_Cube
+    100006: Gun_Body_Cylinder
+    100008: Gun_Cartrige
+    100010: Gun_Hand_Part
+    100012: Gun_Nose
+    400000: //RootNode
+    400002: Gun_Bacl_Part
+    400004: Gun_Body_Cube
+    400006: Gun_Body_Cylinder
+    400008: Gun_Cartrige
+    400010: Gun_Hand_Part
+    400012: Gun_Nose
+    2300000: Gun_Bacl_Part
+    2300002: Gun_Body_Cube
+    2300004: Gun_Body_Cylinder
+    2300006: Gun_Cartrige
+    2300008: Gun_Hand_Part
+    2300010: Gun_Nose
+    3300000: Gun_Bacl_Part
+    3300002: Gun_Body_Cube
+    3300004: Gun_Body_Cylinder
+    3300006: Gun_Cartrige
+    3300008: Gun_Hand_Part
+    3300010: Gun_Nose
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

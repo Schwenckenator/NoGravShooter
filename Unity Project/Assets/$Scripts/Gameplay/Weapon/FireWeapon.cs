@@ -47,7 +47,7 @@ public class FireWeapon : MonoBehaviour {
 		}
 		currentWeapon = heldWeapons[0];
 
-		gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("GunSmokeParticle");
+		gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		cameraPos = transform.FindChild("CameraPos");
 
 		motor = GetComponent<NoGravCharacterMotor>();

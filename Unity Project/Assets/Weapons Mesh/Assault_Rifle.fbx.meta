@@ -1,13 +1,49 @@
 fileFormatVersion: 2
-guid: e560e0333a907644b8c70b943ee5ac13
+guid: edd7909a11678dd4c8ade43739e208d0
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Camera
+    100004: Cube
+    100006: Gun_Bacl_Part
+    100008: Gun_Body_Cube
+    100010: Gun_Body_Cylinder
+    100012: Gun_Cartrige
+    100014: Gun_Hand_Part
+    100016: Gun_Nose
+    100018: Lamp
     400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    7400000: Default Take
+    400002: Camera
+    400004: Cube
+    400006: Gun_Bacl_Part
+    400008: Gun_Body_Cube
+    400010: Gun_Body_Cylinder
+    400012: Gun_Cartrige
+    400014: Gun_Hand_Part
+    400016: Gun_Nose
+    400018: Lamp
+    2300000: Cube
+    2300002: Gun_Bacl_Part
+    2300004: Gun_Body_Cube
+    2300006: Gun_Body_Cylinder
+    2300008: Gun_Cartrige
+    2300010: Gun_Hand_Part
+    2300012: Gun_Nose
+    3300000: Cube
+    3300002: Gun_Bacl_Part
+    3300004: Gun_Body_Cube
+    3300006: Gun_Body_Cylinder
+    3300008: Gun_Cartrige
+    3300010: Gun_Hand_Part
+    3300012: Gun_Nose
+    4300000: Cube
+    4300002: Gun_Cartrige
+    4300004: Gun_Nose
+    4300006: Gun_Body_Cylinder
+    4300008: Gun_Body_Cube
+    4300010: Gun_Hand_Part
+    4300012: Gun_Bacl_Part
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -28,7 +64,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: .125
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1

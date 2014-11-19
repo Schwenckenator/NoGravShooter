@@ -2,7 +2,43 @@ fileFormatVersion: 2
 guid: abd5bc3a0ca51ad4591d35801a3c4284
 ModelImporter:
   serializedVersion: 16
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Cube_001
+    100004: Cube_002
+    100006: Cube_003
+    100008: Cube_004
+    100010: Cylinder
+    100012: Cylinder_001
+    100014: Cylinder_002
+    100016: //RootNode
+    400000: Cube
+    400002: Cube_001
+    400004: Cube_002
+    400006: Cube_003
+    400008: Cube_004
+    400010: Cylinder
+    400012: Cylinder_001
+    400014: Cylinder_002
+    400016: //RootNode
+    2300000: Cube
+    2300002: Cube_001
+    2300004: Cube_002
+    2300006: Cube_003
+    2300008: Cube_004
+    2300010: Cylinder
+    2300012: Cylinder_001
+    2300014: Cylinder_002
+    3300000: Cube
+    3300002: Cube_001
+    3300004: Cube_002
+    3300006: Cube_003
+    3300008: Cube_004
+    3300010: Cylinder
+    3300012: Cylinder_001
+    3300014: Cylinder_002
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

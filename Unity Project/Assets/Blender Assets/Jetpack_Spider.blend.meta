@@ -2,7 +2,28 @@ fileFormatVersion: 2
 guid: d1376242eaa887f4d8d8bf3970bf117e
 ModelImporter:
   serializedVersion: 16
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    100000: Boost_L
+    100002: Boost_R
+    100004: Cube
+    100006: //RootNode
+    100008: The_Spider
+    400000: Boost_L
+    400002: Boost_R
+    400004: Cube
+    400006: //RootNode
+    400008: The_Spider
+    2300000: Boost_L
+    2300002: Boost_R
+    2300004: Cube
+    2300006: The_Spider
+    3300000: Boost_L
+    3300002: Boost_R
+    3300004: Cube
+    3300006: The_Spider
+    4300006: Cube
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0

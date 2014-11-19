@@ -64,7 +64,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
 
 		rigidbody.freezeRotation = true;
-		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Acceleration);
+		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
 		jetPackOn = true;
 		magnetPower = 0;
 
@@ -287,15 +287,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
 
 
-			rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+			rigidbody.AddForce(velocityChange, ForceMode.Impulse);
 			
 			// Jump
 			if (canJump && Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp]) && !GameManager.IsPaused()) {
-				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.VelocityChange);
+				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
 			}
 		}else if(jetPackOn){
 			if(magnetPower < 5 && Physics.Raycast(transform.position, -transform.up, 1.5f)){
-				rigidbody.AddRelativeForce(new Vector3 (0, -1, 0), ForceMode.VelocityChange);
+				rigidbody.AddRelativeForce(new Vector3 (0, -1, 0), ForceMode.Impulse);
 			}
 			//Apply Jetpack force as Acceleration
 			Vector3 force;
@@ -311,7 +311,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if(jetPackInUse && !GameManager.IsPaused()){
 				if(resource.SpendFuel(fuelSpend)){
 					playJetSound = true;
-					rigidbody.AddRelativeForce(force, ForceMode.Acceleration);
+					rigidbody.AddRelativeForce(force, ForceMode.Force);
 				}else{
 					jetpackSoundWasPlayed = false;
 				}
@@ -455,7 +455,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 				grounded = true; 
 				magnetPower = 0;
 			}else{ // Hit a roof or some shit
-				rigidbody.AddForce(info.contacts[0].normal, ForceMode.VelocityChange);
+				rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
 			}
 
 		}
@@ -498,7 +498,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		ragdoll = state;
 		if(ragdoll){
 			rigidbody.constraints = RigidbodyConstraints.None;
-			rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.VelocityChange);
+			rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
 		}else{
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		}

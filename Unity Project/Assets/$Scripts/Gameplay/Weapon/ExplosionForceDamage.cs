@@ -18,7 +18,7 @@ public class ExplosionForceDamage : MonoBehaviour {
 
 		foreach(Collider hit in hits){
 			if(hit.rigidbody){
-				hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius, 1.0f);
+				hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius, 1.0f, ForceMode.Force);
 			}
 			if(hit.CompareTag("Player")){
 				//Find distance
