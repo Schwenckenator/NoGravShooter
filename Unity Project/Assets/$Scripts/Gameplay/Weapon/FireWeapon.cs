@@ -13,8 +13,10 @@ public class FireWeapon : MonoBehaviour {
 	
 	private int currentInventorySlot;
 	
-	private int startingWeapon;
-
+	public static int startingWeapon1 = 99;
+	public static int startingWeapon2 = 99;
+	private bool needWeapons = true;
+	
 	PlayerResources resource;
 
 	GameObject shot;
@@ -25,35 +27,43 @@ public class FireWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		
-		heldWeapons = new List<WeaponSuperClass>();
-		
-		currentInventorySlot = 0;
-		
-		//startingWeapon = weapon 1 server setting;
-		//just reading the player pref as placeholder
-		startingWeapon = PlayerPrefs.GetInt("1stWeapon", 0);
-		heldWeapons.Add(GameManager.weapon[startingWeapon]);
-		Debug.Log("startingWeapon");
-		//startingWeapon = weapon 2 server setting;
-		//just reading the player pref as placeholder
-		startingWeapon = PlayerPrefs.GetInt("2ndWeapon", 7);
-		if(startingWeapon < 7){
-			heldWeapons.Add(GameManager.weapon[startingWeapon]);
-			Debug.Log("startingWeapon2");
+		if(Network.isServer){
+			heldWeapons = new List<WeaponSuperClass>();
+			currentInventorySlot = 0;
+			startingWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
+			heldWeapons.Add(GameManager.weapon[startingWeapon1]);
+			startingWeapon2 = PlayerPrefs.GetInt("2ndWeapon", 7);
+			if(startingWeapon2 < 7){
+				heldWeapons.Add(GameManager.weapon[startingWeapon2]);
+			}
+			currentWeapon = heldWeapons[0];
+			gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("GunSmokeParticle");
+			cameraPos = transform.FindChild("CameraPos");
+			motor = GetComponent<NoGravCharacterMotor>();
+			resource = GetComponent<PlayerResources>();
+			ChangeWeapon(0);
 		}
-		currentWeapon = heldWeapons[0];
-
-		gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("GunSmokeParticle");
-		cameraPos = transform.FindChild("CameraPos");
-
-		motor = GetComponent<NoGravCharacterMotor>();
-
-		resource = GetComponent<PlayerResources>();
-
-		ChangeWeapon(0);
 	}
 	void FixedUpdate(){
+		//if server tell clients which weapons to use, if client get weapons
+		if(Network.isServer){
+			networkView.RPC ("setWeapons", RPCMode.OthersBuffered, startingWeapon1, startingWeapon2);
+		}
+		if(startingWeapon1 != 99 && needWeapons){
+			heldWeapons = new List<WeaponSuperClass>();
+			currentInventorySlot = 0;
+			heldWeapons.Add(GameManager.weapon[startingWeapon1]);
+			if(startingWeapon2 < 7){
+				heldWeapons.Add(GameManager.weapon[startingWeapon2]);
+			}
+			currentWeapon = heldWeapons[0];
+			gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("GunSmokeParticle");
+			cameraPos = transform.FindChild("CameraPos");
+			motor = GetComponent<NoGravCharacterMotor>();
+			resource = GetComponent<PlayerResources>();
+			ChangeWeapon(0);
+			needWeapons = false;
+		}
 		//change weapons by mouse wheel
 		//checks if player has max number of weapons
 		if(GameManager.testMode){
@@ -241,6 +251,12 @@ public class FireWeapon : MonoBehaviour {
 
 	public void removeWeapon(WeaponSuperClass item){
 		heldWeapons.Remove(item);
+	}
+	
+	[RPC]
+	void setWeapons(int weapon1, int weapon2){
+		startingWeapon1 = weapon1;
+		startingWeapon2 = weapon2;
 	}
 	
 }
