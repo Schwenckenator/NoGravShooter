@@ -215,6 +215,12 @@ public class GUIScript : MonoBehaviour {
 		rectCrosshair.center = new Vector2(Screen.width/2, Screen.height/2);
 		GUI.DrawTexture(rectCrosshair, crosshair);
 
+		//tutorial prompt
+		if(tutePromptShown > 0){
+			GUI.Box(new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100), tutePromptText);
+			tutePromptShown--;
+		}
+		
 		//button prompt
 		if(promptShown > 0){
 			GUI.Box(new Rect(Screen.width - 160, Screen.height/2, 150, 30), promptText);
@@ -252,6 +258,13 @@ public class GUIScript : MonoBehaviour {
 			PlayerPrefs.SetString("playerName", playerName);
 			currentWindow = (int) Menu.JoinGame;
 		}
+		
+		standard.y += 50;
+		if(GUI.Button(standard, "Tutorial")){
+			GameManager.testMode = true;
+			StartCoroutine(LoadTutorial());
+		}
+		
 		standard.y += 50;
 		if(GUI.Button(standard, "Options")){
 			currentWindow = (int) Menu.Options;
@@ -264,6 +277,39 @@ public class GUIScript : MonoBehaviour {
 		}
 	}
 	#endregion
+	
+	//load the tutorial level
+	IEnumerator LoadTutorial(){
+		//Get port number, create Server
+		//Sanitise Port number input
+		bool error = false;
+		int portNum = 0;
+			
+		try{
+			portNum = int.Parse(strPortNum);
+		}catch{
+			error = true;
+		}
+			
+		if(!error){
+			Network.InitializeServer(MAX_PLAYERS, portNum, !Network.HavePublicAddress());
+			if(useMasterServer){
+				MasterServer.RegisterHost(GAME_TYPE, serverName);
+			}
+			PlayerPrefs.SetString("serverName", serverName);
+			PlayerPrefs.SetString ("portNumber", strPortNum);
+			currentWindow = (int) Menu.Lobby;
+		}
+		LoadLevel("Tutorial", lastLevelPrefix + 1);
+		yield return new WaitForSeconds(1/5);
+		manager.Spawn();
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject player in players){
+			if(player.networkView.isMine){
+				res = player.GetComponent<PlayerResources>();
+			}
+		}
+	}
 
 	#region CreateGameWindow
 	void CreateGameWindow(int windowId){
@@ -769,10 +815,18 @@ public class GUIScript : MonoBehaviour {
 	
 	//button prompts
 	string promptText;
-	int promptShown;
-	public void ButtonPrompt(int buttonID, string message){
+	public int promptShown;
+	public void ButtonPrompt(string message, int buttonID){
 		promptText = GameManager.keyBindings[buttonID].ToString() + "  -  " + message;
 		promptShown = 10;
+	}
+	
+	//tutorial prompts tutePromptShown
+	string tutePromptText;
+	public int tutePromptShown;
+	public void TutorialPrompt(string message, int delay){
+		tutePromptText = message;
+		tutePromptShown = delay;
 	}
 
 

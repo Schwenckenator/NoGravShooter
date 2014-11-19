@@ -1,0 +1,65 @@
+Default Passive Ability:
+Radar/Sonar/Motion Detector
+shows location of other players
+display is relative to players 'upwards' direction (eg if an enemy is ahead of the player that enemies icon will display above the players icon)
+the size of an enemies icon is defined by their 'height' relative to the player
+enemies above the player will have larger icons, while enemies below will have smaller icons
+the icons will be somewhat transparent to account for overlaps
+
+
+1 Module may be equipped as an active, 2 modules may be equipped as passives
+the module equipped as an active cannot be equipped as a passive
+all active modules need a cool-down/warm-up time
+
+
+Module1:
+Active: Dash/Blink/Short range teleport
+player instantly rushes forwards a set distance, regardless of current speed & direction
+after use speed & direction would return to the what they were before use
+module would detect if anything solid is in front of the player and cut the distance so the player stops just before the object
+
+Passive: Movement Speed/Acceleration
+player walks faster
+player can speed up and change direction faster when floating
+
+
+Module2:
+Active: Invulnerability/Invincibility
+temporarily become unable to take damage
+
+Passive: More Health/Stronger
+player has more health/stronger armour and takes more damage to kill
+a bit more mass so a little slower at walking and accelerating/changing direction when floating
+(equipping module2 as another passive can cancel out the slowness)
+
+
+Module3:
+Active: Invisibility/Cloaking
+temporarily become invisible
+also not show up on radar?
+perhaps not completely invisible, just mostly, so people still have a chance to notice
+
+Passive: scan-proof
+player is not shown on enemy radars while standing/walking (campers yolo420swagMLGpro)
+
+
+Module4:
+Active: Weapon Recharge
+player uses suit power to recharge energy weapon
+temporarily disables flight controls
+doesnt work if a slug weapon is equipped
+gives the weapon an extra ammo with amount depending on weapon type
+(eg laserrifle gets 30, shock-cannon gets 12, plasma blaster gets 4)
+
+Passive: Gradual Charge
+equipped energy weapons gradually gain ammo over time
+(relative to clip size, so you arent gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
+
+
+Module5:
+Active: Energy Pulse
+effectively a force-cannon blast except its a sphere expanding around the player
+has slightly less 'push' as force-cannon and does much less damage
+
+Passive: Energy Shield
+player takes less damage from energy weapons
