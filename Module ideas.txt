@@ -30,7 +30,7 @@ temporarily become unable to take damage
 Passive: More Health/Stronger
 player has more health/stronger armour and takes more damage to kill
 a bit more mass so a little slower at walking and accelerating/changing direction when floating
-(equipping module2 as another passive can cancel out the slowness)
+(equipping module1 as another passive can cancel out the slowness)
 
 
 Module3:
