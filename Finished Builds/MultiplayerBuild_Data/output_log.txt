@@ -1,0 +1,21 @@
+Initialize engine version: 4.5.2f1 (9abb1b59b47c)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.1407]
+    Renderer: NVIDIA GeForce GT 220
+    Vendor:   NVIDIA
+    VRAM:     978 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\MultiplayerBuild_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+- Completed reload, in  0.190 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0

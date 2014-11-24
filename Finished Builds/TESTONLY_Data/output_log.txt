@@ -15,7 +15,7 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\N
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.083 seconds
+- Completed reload, in  0.105 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
@@ -27,7 +27,6 @@ Direct3D:
     Vendor:   NVIDIA
     VRAM:     978 MB (via DXGI)
     Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
-WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
 Begin MonoManager ReloadAssembly
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -37,425 +36,136 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\N
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.086 seconds
+- Completed reload, in  0.079 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-Running as server. Player ID is 0.
- 
-(Filename:  Line: 2484)
-
-Sent RPC call 'AddPlayerToList' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC 'AddPlayerToList' to buffer.
- 
-(Filename:  Line: 2484)
-
-Sent RPC call 'ChangeServerName' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC 'ChangeServerName' to buffer.
- 
-(Filename:  Line: 2484)
-
-Sent RPC call 'LoadLevel' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC 'LoadLevel' to buffer.
- 
-(Filename:  Line: 2484)
-
-UnloadTime: 0.432936 ms
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 3489.
-Total: 2.189669 ms (FindLiveObjects: 0.283436 ms CreateObjectMapping: 0.057752 ms MarkObjects: 0.417372 ms  DeleteObjects: 0.024575 ms)
-
-Allocating view ID AllocatedID: 1.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 2.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Sent RPC call 'SetName' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC 'SetName' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 3.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 4.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 5.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 6.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
-Running as client. No player ID set yet.
+UnloadnloadTi.53240. m451
+68 ms
+UnlUading 4 Unused Serialized files (S rialized fil f now loaded: 0 / Dirty serialized files: 0)
+ 0)
+
+Uning 10 unused Assets to reduce memory usage. Loaded Objects now: 3522.
+Tota
+l: 2.775815 ms (FindLiveObjects: 0.3206.6 ms 36 ms CreateObjectMapp0.0800.071678 ms MarkObjects: 0.457515 ms  DeleteObje0.0270.028671
  
-(Filename:  Line: 2484)
-
-Connected to 127.0.0.1:25000
-
- 
-(Filename:  Line: 2484)
-
-New connection established (127.0.0.1:62670)
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 0
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for SceneID: 1 Level Prefix: 1
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for SceneID: 2 Level Prefix: 1
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 1
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 2
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 5
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 6
- 
-(Filename:  Line: 2484)
-
-Sent initalization to player 1
- 
-(Filename:  Line: 2484)
-
-Set player ID to 1
-
- 
-(Filename:  Line: 2484)
-
-Added RPC 'AddPlayerToList' to buffer.
- 
-(Filename:  Line: 2484)
-
-UnloadTime: 0.421878 ms
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 10 unused Assets to reduce memory usage. Loaded Objects now: 3485.
-Total: 2.178610 ms (FindLiveObjects: 0.247392 ms CreateObjectMapping: 0.057342 ms MarkObjects: 0.488641 ms  DeleteObjects: 0.027032 ms)
-
-Allocating view ID AllocatedID: 150.
-
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 150
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Added RPC 'SetName' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 7.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 151.
-
- 
-(Filename:  Line: 2484)
-
-AddeN RPC '_ew scope index 0 isate' to buffer.
- 
-(Filename:  Line: 
-24
-(F8len4): 
- Line: 2484)
+ms)
 
 NullReferenceException: Object reference not set to an instance of an object
-  at ForceShotWarp.FixedUpdate () [0x00000] in <filename unknown>:0 
+  at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
+  at GUIScript.OnGUI () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
-Allocating view ID AllocatedID: 8.
-
- 
-(Filename:  Line: 2484)
-
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-Allocating view ID AllocatedID: 152.
-
- 
-(Filename:  Line: 2484)
-
-Added RPC '__RPCNetworkInstantiate' to buffer.
- 
-(Filename:  Line: 2484)
-
-New scope index 0 is now in scope for AllocatedID: 152
- 
-(Filename:  Line: 2484)
-
 NullReferenceException: Object reference not set to an instance of an object
-  at ForceShotWarp.FixedUpdate () [0x00000] in <filename unknown>:0 
+  at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
+  at GUIScript.OnGUI () [0x00000] in <filename unknown>:0 
  
 (Filename:  Line: -1)
 
-Allocating view ID AllocatedID: 9.
-
+NullReferenceException: Object reference not set to an instance of an object
+  at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
+  at GUIScript.OnGUI () [0x00000] in <filename unknown>:0 
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
+NullReferenceException: Object reference not set to an instance of an object
+  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+PlayerResources:FixedUpdate()
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Added RPC '__RPCNetworkInstantiate' to buffer.
+NullReferenceException: Object reference not set to an instance of an object
+  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+PlayerResources:FixedUpdate()
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Allocating view ID AllocatedID: 10.
-
+NullReferenceException: Object reference not set to an instance of an object
+  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+PlayerResources:FixedUpdate()
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
+NullReferenceException: Object reference not set to an instance of an object
+  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+PlayerResources:FixedUpdate()
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Added RPC '__RPCNetworkInstantiate' to buffer.
+NullReferenceException: Object reference not set to an instance of an object
+  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+PlayerResources:FixedUpdate()
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Allocating view ID AllocatedID: 11.
-
+NullReferenceException: Object reference not set to an instance of an object
+  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String)
+PlayerResources:FixedUpdate()
  
-(Filename:  Line: 2484)
+(Filename:  Line: -1)
 
-Sent RPC call '__RPCNetworkInstantiate' to all connected clients
-
+stab stab stab.
  
-(Filename:  Line: 2484)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-Added RPC '__RPCNetworkInstantiate' to buffer.
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
  
-(Filename:  Line: 2484)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-A client has disconnected from this server. Player ID 1, IP 127.0.0.1:62670
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
  
-(Filename:  Line: 2484)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-Sent RPC call 'RemovePlayerFromList' to all connected clients
-
+stab stab stab.
  
-(Filename:  Line: 2484)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-Added RPC 'RemovePlayerFromList' to buffer.
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
  
-(Filename:  Line: 2484)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-RPC AddPlayerToList with AllocatedID: 0, player ID 1 and group 0, removed from RPC buffer.
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
  
-(Filename:  Line: 2484)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
 
-RPC __RPCNetworkInstantiate with AllocatedID: 0, player ID 1 and group 0, removed from RPC buffer.
+The server has disconnected from the client. Most likely the server has shut down.
  
-(Filename:  Line: 2484)
+(Filename:  Line: 745)
 
-RPC SetName with AllocatedID: 150, player ID 1 and group 0, removed from RPC buffer.
- 
-(Filename:  Line: 2484)
-
-RPC __RPCNetworkInstantiate with AllocatedID: 0, player ID 1 and group 0, removed from RPC buffer.
- 
-(Filename:  Line: 2484)
-
-RPC __RPCNetworkInstantiate with AllocatedID: 0, player ID 1 and group 0, removed from RPC buffer.
- 
-(Filename:  Line: 2484)
-
-5 RPC function were removed with RemoveRPC
- 
-(Filename:  Line: 2484)
-
-Destroying objects belonging to player 1
- 
-(Filename:  Line: 2484)
-
-Destroying object with view ID 'AllocatedID: 150'
- 
-(Filename:  Line: 1379)
-
-UnloadTime: 7.118270 ms
+UnloadTime: 7.629088 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 546.
-Total: 1.518760 ms (FindLiveObjects: 0.020479 ms CreateObjectMapping: 0.022937 ms MarkObjects: 0.291218 ms  DeleteObjects: 0.148271 ms)
+Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 579.
+Total: 1.848085 ms (FindLiveObjects: 0.027033 ms CreateObjectMapping: 0.027033 ms MarkObjects: 0.292040 ms  DeleteObjects: 0.169981 ms)
 
-UnloadTime: 0.481678 ms
+UnloadTime: 7.559048 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 539.
-Total: 1.356563 ms (FindLiveObjects: 0.020479 ms CreateObjectMapping: 0.024165 ms MarkObjects: 0.258861 ms  DeleteObjects: 0.010239 ms)
+Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 582.
+Total: 1.677285 ms (FindLiveObjects: 0.027033 ms CreateObjectMapping: 0.027852 ms MarkObjects: 0.297364 ms  DeleteObjects: 0.177353 ms)
 
-UnloadTime: 8.307310 ms
+UnloadTime: 0.428434 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 549.
-Total: 1.842337 ms (FindLiveObjects: 0.026623 ms CreateObjectMapping: 0.025394 ms MarkObjects: 0.296133 ms  DeleteObjects: 0.172027 ms)
-
-UnloadTime: 0.409180 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 541.
-Total: 1.638770 ms (FindLiveObjects: 0.025394 ms CreateObjectMapping: 0.027442 ms MarkObjects: 0.272787 ms  DeleteObjects: 0.006143 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 574.
+Total: 1.771901 ms (FindLiveObjects: 0.027442 ms CreateObjectMapping: 0.023346 ms MarkObjects: 0.279342 ms  DeleteObjects: 0.007372 ms)
 
