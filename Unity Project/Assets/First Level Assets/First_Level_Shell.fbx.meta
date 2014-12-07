@@ -27,6 +27,8 @@ ModelImporter:
     100042: Shorter_L_Tunnel_2
     100044: Shorter_L_Tunnel_3
     100046: Shorter_L_Tunnel_3.001
+    100048: Power_Room
+    100050: Sphere
     400000: Box_Room_1
     400002: Box_Room_2
     400004: Box_Room_3
@@ -51,6 +53,8 @@ ModelImporter:
     400042: Shorter_L_Tunnel_2
     400044: Shorter_L_Tunnel_3
     400046: Shorter_L_Tunnel_3.001
+    400048: Power_Room
+    400050: Sphere
     2300000: Box_Room_1
     2300002: Box_Room_2
     2300004: Box_Room_3
@@ -74,6 +78,8 @@ ModelImporter:
     2300040: Shorter_L_Tunnel_2
     2300042: Shorter_L_Tunnel_3
     2300044: Shorter_L_Tunnel_3.001
+    2300046: Power_Room
+    2300048: Sphere
     3300000: Box_Room_1
     3300002: Box_Room_2
     3300004: Box_Room_3
@@ -97,6 +103,8 @@ ModelImporter:
     3300040: Shorter_L_Tunnel_2
     3300042: Shorter_L_Tunnel_3
     3300044: Shorter_L_Tunnel_3.001
+    3300046: Power_Room
+    3300048: Sphere
     4300000: Shorter_L_Tunnel_3.001
     4300002: Shorter_L_Tunnel_3
     4300004: Shorter_L_Tunnel_2
@@ -120,6 +128,8 @@ ModelImporter:
     4300040: MR_Tunnel_3
     4300042: MR_Tunnel_1
     4300044: Main_Room
+    4300046: Power_Room
+    4300048: Sphere
     9500000: //RootNode
   materials:
     importMaterials: 1
