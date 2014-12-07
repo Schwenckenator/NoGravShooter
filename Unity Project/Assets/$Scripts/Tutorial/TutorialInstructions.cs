@@ -17,10 +17,19 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool reloaded = false;
 	private bool grenade = false;
 	private bool step3 = false;
+	
+	private bool items = false;
+	private bool step4 = false;
+	
+	public GameObject[] bonuses;
+	private GameObject[] bonusSpawnPoints;
+	private GameObject[] bonusItems;
+	
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-		StartCoroutine(StartTutorial());
+		bonusSpawnPoints = GameObject.FindGameObjectsWithTag("BonusSpawnPoint");
+		StartCoroutine(MovementTutorial());
 	}
 	
 	void Update(){
@@ -56,19 +65,33 @@ public class TutorialInstructions : MonoBehaviour {
 			grenade = true;
 			Debug.Log("Player Threw Mine");
 		}
-		
-		if (moved && step1){
-			StartCoroutine(MovementTutorial());
+		if(step4){
+			bonusItems = GameObject.FindGameObjectsWithTag("BonusPickup");
+			if(bonusItems.Length == 0){
+				items = true;
+			}
 		}
-		if (jumped && rolled && step2){
+
+
+		if (moved && step1){
+			step1 = false;
 			StartCoroutine(FlightTutorial());
 		}
-		if (shot && aimed && changedgun && reloaded && grenade && step3){
+		if (jumped && rolled && step2){
+			step2 = false;
 			StartCoroutine(GunTutorial());
+		}
+		if (shot && aimed && changedgun && reloaded && grenade && step3){
+			step3 = false;
+			StartCoroutine(ItemTutorial());
+		}
+		if (items && step4){
+			step4 = false;
+			StartCoroutine(FinalTutorial());
 		}
 	}
 	
-	IEnumerator StartTutorial(){
+	IEnumerator MovementTutorial(){
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
 		yield return new WaitForSeconds(1);
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
@@ -86,19 +109,28 @@ public class TutorialInstructions : MonoBehaviour {
 		step1 = true;
 	}
 	
-	IEnumerator MovementTutorial(){
+	IEnumerator FlightTutorial(){
 		manager.GetComponent<GUIScript>().TutorialPrompt("Use "+GameManager.keyBindings[(int)GameManager.KeyBind.JetUp].ToString()+" to boost upwards and "+GameManager.keyBindings[(int)GameManager.KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "+GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft].ToString()+" to roll to the left and "+GameManager.keyBindings[(int)GameManager.KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
 		yield return new WaitForSeconds(5);
 		step2 = true;		
 	}
 	
-	IEnumerator FlightTutorial(){
+	IEnumerator GunTutorial(){
 		manager.GetComponent<GUIScript>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "+GameManager.keyBindings[(int)GameManager.KeyBind.Reload].ToString()+" to reload your weapon and press "+GameManager.keyBindings[(int)GameManager.KeyBind.Grenade].ToString()+" to throw a Proximity Mine.\nKeep in mind that without gravity, the mines will fly in a straight line.", 99999);
 		yield return new WaitForSeconds(5);
 		step3 = true;
 	}
 	
-	IEnumerator GunTutorial(){
+	IEnumerator ItemTutorial(){
+		manager.GetComponent<GUIScript>().TutorialPrompt("Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Mine box.\n\nTry picking them up.", 9999);
+		Network.Instantiate(bonuses[0], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
+		Network.Instantiate(bonuses[1], bonusSpawnPoints[1].transform.position, bonusSpawnPoints[1].transform.rotation, 0);
+		Network.Instantiate(bonuses[2], bonusSpawnPoints[0].transform.position, bonusSpawnPoints[0].transform.rotation, 0);
+		yield return new WaitForSeconds(5);
+		step4 = true;
+	}
+	
+	IEnumerator FinalTutorial(){
 		manager.GetComponent<GUIScript>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nThis suit uses air as fuel, if you run low on air the suit will\nautomatically disable boosting temporarily while it generates more.", 5000);
 		yield return new WaitForSeconds(40);
 		manager.GetComponent<GUIScript>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 6000);
