@@ -3,6 +3,7 @@ using System.Collections;
      
 public class TutorialInstructions : MonoBehaviour {
 	private GameManager manager;
+	private PlayerResources playerRes;
 	
 	private bool moved = false;
 	private bool step1 = false;
@@ -92,8 +93,12 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	IEnumerator MovementTutorial(){
+		//give player mines
+		Network.Instantiate(bonuses[2], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
 		yield return new WaitForSeconds(1);
+		//damage player so they can pick up Medikit
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10);
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
 		yield return new WaitForSeconds(1);
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating...", 6000);
@@ -122,7 +127,7 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	IEnumerator ItemTutorial(){
-		manager.GetComponent<GUIScript>().TutorialPrompt("Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Mine box.\n\nTry picking them up.", 9999);
+		manager.GetComponent<GUIScript>().TutorialPrompt("Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Mine box.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
 		Network.Instantiate(bonuses[0], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
 		Network.Instantiate(bonuses[1], bonusSpawnPoints[1].transform.position, bonusSpawnPoints[1].transform.rotation, 0);
 		Network.Instantiate(bonuses[2], bonusSpawnPoints[0].transform.position, bonusSpawnPoints[0].transform.rotation, 0);

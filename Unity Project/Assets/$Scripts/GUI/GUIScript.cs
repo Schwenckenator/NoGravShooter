@@ -82,8 +82,10 @@ public class GUIScript : MonoBehaviour {
 	void Start(){
 		manager = GetComponent<GameManager>();
 		
+		GameManager.testMode = false;
+		
 		currentWindow = (int) Menu.MainMenu;
-
+		
 		
 		serverName = PlayerPrefs.GetString("serverName");
 		playerName = PlayerPrefs.GetString("playerName", "Player");
@@ -261,7 +263,6 @@ public class GUIScript : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Tutorial")){
-			GameManager.testMode = true;
 			StartCoroutine(LoadTutorial());
 		}
 		
