@@ -755,7 +755,8 @@ public class GUIScript : MonoBehaviour {
 	#region PauseWindow
 	void PauseWindow(int windowId){
 		if(manager.IsPlayerSpawned()){
-			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), "Return to Game")){
+			string strReturnToGame = "Return to Game"; if(Application.loadedLevelName == "Tutorial") strReturnToGame = "Return to Simulation";
+			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
 				manager.Pause(false);
 				manager.CursorVisible(false);
 			}
@@ -781,7 +782,8 @@ public class GUIScript : MonoBehaviour {
 		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, leftTextAlign);
 		
 		if(Network.isServer){
-			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Shutdown Server")){
+			string strShutdown = "Shutdown Server"; if(Application.loadedLevelName == "Tutorial") strShutdown = "Shutdown Simulation";
+			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), strShutdown)){
 				BackToMainMenu();
 			}
 		}else{

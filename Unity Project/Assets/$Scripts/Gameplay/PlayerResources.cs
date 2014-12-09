@@ -39,6 +39,7 @@ public class PlayerResources : MonoBehaviour {
 	private int grenades;
 
 	private bool recharging = true;
+	private bool reloading = false;
 	private bool jetpackDisabled = false;
 	private bool weaponBusy = false;
 
@@ -64,7 +65,7 @@ public class PlayerResources : MonoBehaviour {
 
 	#region Fixed Update()
 	void FixedUpdate () {
-		if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Reload])){ //Because fuck you it's P // nevermind
+		if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Reload]) && !reloading){
 			StartCoroutine("WeaponReload");
 		}
 		if(recharging){
@@ -269,6 +270,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	IEnumerator WeaponReload(){
+		reloading = true;
 		// If no remaining ammo and NOT testmode, don't attempt to reload
 		if(currentWeapon.remainingAmmo <= 0 && !GameManager.testMode){
 			if(currentWeapon.currentClip <= 0){
@@ -302,6 +304,7 @@ public class PlayerResources : MonoBehaviour {
 
 		currentWeapon.remainingAmmo -= newBullets; 
 		currentWeapon.remainingAmmo = Mathf.Max (currentWeapon.remainingAmmo, 0);
+		reloading = false;
 	}
 
 	IEnumerator WeaponChange(){
