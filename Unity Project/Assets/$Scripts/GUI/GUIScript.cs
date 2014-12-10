@@ -13,6 +13,13 @@ public class GUIScript : MonoBehaviour {
 	public Texture crosshair;
 	public Texture bloodyScreen;
 	
+	public GUIStyle customGui;
+    public Texture2D radar;
+    public Texture2D playericon;
+    public Texture2D enemyicon;
+    public Texture2D itemicon;
+    public Texture2D allyicon;
+	
 	private PlayerResources res;
 	
 	private int currentWindow = 0;
@@ -193,7 +200,9 @@ public class GUIScript : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetGrenades().ToString(), style);
 		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
 
-		Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
+		//Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
+		Rect combatLogRect = new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100);
+		//temporarily moving chat box while testing radar
 		GUI.Box(combatLogRect, "");
 		Rect combatLogTextRect = new Rect(combatLogRect.x + 5, combatLogRect.y + 5, combatLogRect.width - 10, combatLogRect.height - 10);
 		GUI.Label(combatLogTextRect, submittedChat);
@@ -228,7 +237,61 @@ public class GUIScript : MonoBehaviour {
 			GUI.Box(new Rect(Screen.width - 160, Screen.height/2, 150, 30), promptText);
 			promptShown--;
 		}
-
+		
+		
+		//radar system
+		
+		//detect all players and items within certain distance of player
+		//get x, y, z distances of object, relative to players rotation
+		//dot.x = x distance/detect radius * 110(half of radar area height)
+		//dot.y = z distance/detect radius * 110(half of radar area height)
+		//dot.size = (y distance/detect radius * 20) + 30 (biggest icon is 50 pixels, smallest is 10)
+		//dot.type = enemy, ally, item
+		
+		//if dot.size < 30 add to remainingsmalldots[]
+		//if dot.size >= 30 add to remainingbigdots[]
+		
+		//while (remainingsmalldots.length > 0)
+		//	draw dot at dot.x + radar position, dot.y + radar position, with dot.size width and height
+		
+		//draw player dot at center of radar at medium size
+		
+		//while (remainingbigdots.length > 0)
+		//	draw dot at dot.x + radar position, dot.y + radar position, with dot.size width and height
+		
+		
+		
+		//just using center of map vs player position for testing
+		//doesnt take player rotation into account yet
+		int detectionRadius = 75;
+		int radarCenter = 110;
+		int radarPadding = 20;
+		int defaultdotsize = 30;
+		Vector3 playerpos = new Vector3(0,0,0);
+		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		foreach(GameObject player in players){
+			if(player.networkView.isMine){
+				playerpos.x = player.transform.position.x;
+				playerpos.y = player.transform.position.y;
+				playerpos.z = player.transform.position.z;
+			}
+		}
+		float dotx = playerpos.x/detectionRadius * radarCenter;
+		float doty = playerpos.z/detectionRadius * radarCenter;
+		float dotsize = (playerpos.y/detectionRadius * 20) + defaultdotsize;
+		
+		
+		GUI.Box(new Rect(radarPadding, Screen.height-(radarCenter*2 + radarPadding), radarCenter*2, radarCenter*2), radar, customGui);
+		
+		if(dotsize < defaultdotsize){
+			GUI.Box(new Rect(radarCenter+radarPadding+dotx - dotsize/2, Screen.height-(radarCenter+radarPadding) + doty - dotsize/2, dotsize, dotsize), enemyicon, customGui);
+		}
+		
+		GUI.Box(new Rect(radarCenter+radarPadding-(defaultdotsize/2), Screen.height-(radarCenter+radarPadding+(defaultdotsize/2)), defaultdotsize, defaultdotsize), playericon, customGui);
+		
+		if(dotsize >= defaultdotsize){
+			GUI.Box(new Rect(radarCenter+radarPadding+dotx - dotsize/2, Screen.height-(radarCenter+radarPadding) + doty - dotsize/2, dotsize, dotsize), enemyicon, customGui);
+		}		
 	}
 	#endregion
 
