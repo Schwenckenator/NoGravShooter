@@ -240,57 +240,61 @@ public class GUIScript : MonoBehaviour {
 		
 		
 		//radar system
+		//does everything except detect items and take player rotation into account
 		
-		//detect all players and items within certain distance of player
-		//get x, y, z distances of object, relative to players rotation
-		//dot.x = x distance/detect radius * 110(half of radar area height)
-		//dot.y = z distance/detect radius * 110(half of radar area height)
-		//dot.size = (y distance/detect radius * 20) + 30 (biggest icon is 50 pixels, smallest is 10)
-		//dot.type = enemy, ally, item
-		
-		//if dot.size < 30 add to remainingsmalldots[]
-		//if dot.size >= 30 add to remainingbigdots[]
-		
-		//while (remainingsmalldots.length > 0)
-		//	draw dot at dot.x + radar position, dot.y + radar position, with dot.size width and height
-		
-		//draw player dot at center of radar at medium size
-		
-		//while (remainingbigdots.length > 0)
-		//	draw dot at dot.x + radar position, dot.y + radar position, with dot.size width and height
-		
-		
-		
-		//just using center of map vs player position for testing
-		//doesnt take player rotation into account yet
 		int detectionRadius = 75;
 		int radarCenter = 110;
 		int radarPadding = 20;
 		int defaultdotsize = 30;
-		Vector3 playerpos = new Vector3(0,0,0);
+		int dotsizevariation = 20;
+		Vector3 mypos = new Vector3(0,0,0);
+		int i = 0;
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
 			if(player.networkView.isMine){
-				playerpos.x = player.transform.position.x;
-				playerpos.y = player.transform.position.y;
-				playerpos.z = player.transform.position.z;
+				mypos = player.transform.position;
+			} else {
+				i++;
 			}
 		}
-		float dotx = playerpos.x/detectionRadius * radarCenter;
-		float doty = playerpos.z/detectionRadius * radarCenter;
-		float dotsize = (playerpos.y/detectionRadius * 20) + defaultdotsize;
+		Vector3 playerpos = new Vector3(0,0,0);
+		float[] dotx = new float[i];
+		float[] doty = new float[i];
+		float[] dotsize = new float[i];
+		i = 0;
 		
+		foreach(GameObject player in players){
+			if(!player.networkView.isMine){
+				Vector3 distance = player.transform.position - mypos;
+				float sqrRadius = distance.sqrMagnitude;
+				if (sqrRadius <= detectionRadius * detectionRadius){
+					playerpos.x = player.transform.position.x - mypos.x;
+					playerpos.y = player.transform.position.y - mypos.y;
+					playerpos.z = player.transform.position.z - mypos.z;
+					dotx[i] = playerpos.x/detectionRadius * radarCenter;
+					doty[i] = playerpos.z/detectionRadius * radarCenter;
+					dotsize[i] = (playerpos.y/detectionRadius * dotsizevariation) + defaultdotsize;
+					i++;
+				}
+			}
+		}
+		i = 0;
 		
 		GUI.Box(new Rect(radarPadding, Screen.height-(radarCenter*2 + radarPadding), radarCenter*2, radarCenter*2), radar, customGui);
 		
-		if(dotsize < defaultdotsize){
-			GUI.Box(new Rect(radarCenter+radarPadding+dotx - dotsize/2, Screen.height-(radarCenter+radarPadding) + doty - dotsize/2, dotsize, dotsize), enemyicon, customGui);
+		foreach (float element in dotx){
+			if(dotsize[i] < defaultdotsize){
+				GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), enemyicon, customGui);
+			}
+			i++;
 		}
-		
+		i = 0;
 		GUI.Box(new Rect(radarCenter+radarPadding-(defaultdotsize/2), Screen.height-(radarCenter+radarPadding+(defaultdotsize/2)), defaultdotsize, defaultdotsize), playericon, customGui);
-		
-		if(dotsize >= defaultdotsize){
-			GUI.Box(new Rect(radarCenter+radarPadding+dotx - dotsize/2, Screen.height-(radarCenter+radarPadding) + doty - dotsize/2, dotsize, dotsize), enemyicon, customGui);
+		foreach (float element in dotx){
+			if(dotsize[i] >= defaultdotsize){
+				GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), enemyicon, customGui);
+			}
+			i++;
 		}		
 	}
 	#endregion
