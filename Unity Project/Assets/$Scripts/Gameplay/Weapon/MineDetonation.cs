@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+[RequireComponent(typeof(ObjectCleanUp))]
 
 public class MineDetonation : MonoBehaviour {
 
@@ -33,6 +34,6 @@ public class MineDetonation : MonoBehaviour {
 		Instantiate(explosion, transform.position, Quaternion.identity);
 
 		//Then destroy this
-		Destroy(gameObject);
+		GetComponent<ObjectCleanUp>().KillMe();
 	}
 }

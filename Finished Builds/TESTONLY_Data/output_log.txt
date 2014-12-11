@@ -15,47 +15,84 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\N
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.105 seconds
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
-Initialize engine version: 4.5.2f1 (9abb1b59b47c)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.4052]
-    Renderer: NVIDIA GeForce GT 220
-    Vendor:   NVIDIA
-    VRAM:     978 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.079 seconds
+- Completed reload, in  0.097 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
-UnloadnloadTi.53240. m451
-68 ms
-UnlUading 4 Unused Serialized files (S rialized fil f now loaded: 0 / Dirty serialized files: 0)
- 0)
+UnloadTime: 0.447274 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Uning 10 unused Assets to reduce memory usage. Loaded Objects now: 3522.
-Tota
-l: 2.775815 ms (FindLiveObjects: 0.3206.6 ms 36 ms CreateObjectMapp0.0800.071678 ms MarkObjects: 0.457515 ms  DeleteObje0.0270.028671
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4406.
+Total: 2.426421 ms (FindLiveObjects: 0.493558 ms CreateObjectMapping: 0.082327 ms MarkObjects: 0.532059 ms  DeleteObjects: 0.030719 ms)
+
+PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
  
-ms)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Grenade(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Grenade(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Grenade(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Grenade(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
+ 
+(Filename:  Line: 133)
+
+RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
+ 
+(Filename:  Line: 133)
+
+RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
+ 
+(Filename:  Line: 133)
+
+RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
+ 
+(Filename:  Line: 133)
 
 NullReferenceException: Object reference not set to an instance of an object
   at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
@@ -75,97 +112,15 @@ NullReferenceException: Object reference not set to an instance of an object
  
 (Filename:  Line: -1)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
-UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-PlayerResources:FixedUpdate()
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
-UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-PlayerResources:FixedUpdate()
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
-UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-PlayerResources:FixedUpdate()
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
-UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-PlayerResources:FixedUpdate()
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
-UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-PlayerResources:FixedUpdate()
- 
-(Filename:  Line: -1)
-
-NullReferenceException: Object reference not set to an instance of an object
-  at PlayerResources+<WeaponReload>c__Iterator8.MoveNext () [0x00000] in <filename unknown>:0 
-UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
-UnityEngine.MonoBehaviour:StartCoroutine(String)
-PlayerResources:FixedUpdate()
- 
-(Filename:  Line: -1)
-
-stab stab stab.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-stab stab stab.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-The server has disconnected from the client. Most likely the server has shut down.
- 
-(Filename:  Line: 745)
-
-UnloadTime: 7.629088 ms
+UnloadTime: 10.064490 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 579.
-Total: 1.848085 ms (FindLiveObjects: 0.027033 ms CreateObjectMapping: 0.027033 ms MarkObjects: 0.292040 ms  DeleteObjects: 0.169981 ms)
+Unloading 130 unused Assets to reduce memory usage. Loaded Objects now: 606.
+Total: 1.895181 ms (FindLiveObjects: 0.026213 ms CreateObjectMapping: 0.032357 ms MarkObjects: 0.327263 ms  DeleteObjects: 0.436215 ms)
 
-UnloadTime: 7.559048 ms
+UnloadTime: 0.368632 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 46 unused Assets to reduce memory usage. Loaded Objects now: 582.
-Total: 1.677285 ms (FindLiveObjects: 0.027033 ms CreateObjectMapping: 0.027852 ms MarkObjects: 0.297364 ms  DeleteObjects: 0.177353 ms)
-
-UnloadTime: 0.428434 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 574.
-Total: 1.771901 ms (FindLiveObjects: 0.027442 ms CreateObjectMapping: 0.023346 ms MarkObjects: 0.279342 ms  DeleteObjects: 0.007372 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 600.
+Total: 1.515080 ms (FindLiveObjects: 0.023756 ms CreateObjectMapping: 0.023346 ms MarkObjects: 0.300230 ms  DeleteObjects: 0.006553 ms)
 

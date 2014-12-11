@@ -14,7 +14,6 @@ public class BonusHealthPackPickup : MonoBehaviour {
 				res.RestoreHealth(healStrength);
 				GetComponent<ObjectCleanUp>().KillMe();
 			}
-			
 		}
 	}
 }

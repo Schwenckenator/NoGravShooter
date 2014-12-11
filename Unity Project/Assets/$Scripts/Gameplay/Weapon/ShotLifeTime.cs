@@ -14,7 +14,12 @@ public class ShotLifeTime : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Time.time > deathTime){
-			Destroy(gameObject);
+			if(GetComponent<ObjectCleanUp>() != null){
+				GetComponent<ObjectCleanUp>().KillMe();
+			}else{
+				Destroy(gameObject);
+			}
+
 		}
 	}
 }
