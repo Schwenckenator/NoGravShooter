@@ -360,16 +360,10 @@ public class GUIScript : MonoBehaviour {
 		}
 			
 		if(!error){
-			Network.InitializeServer(MAX_PLAYERS, portNum, !Network.HavePublicAddress());
-			if(useMasterServer){
-				MasterServer.RegisterHost(GAME_TYPE, serverName);
-			}
-			PlayerPrefs.SetString("serverName", serverName);
-			PlayerPrefs.SetString ("portNumber", strPortNum);
-			currentWindow = (int) Menu.Lobby;
+			Network.InitializeServer(MAX_PLAYERS, portNum, false);
 		}
 		LoadLevel("Tutorial", lastLevelPrefix + 1);
-		yield return new WaitForSeconds(1/5);
+		yield return new WaitForSeconds(1/5f);
 		manager.Spawn();
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){

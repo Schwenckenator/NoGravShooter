@@ -9,7 +9,7 @@ public class SlugRifleValues : WeaponSuperClass {
 		this.recoil 				= 1;
 		this.rayNum 				= 1;
 		
-		this.shotSpread 			= 1f;
+		this.shotSpread 			= 0.25f;
 		this.damagePerShot 			= 10;
 		this.heatPerShot 			= 0;
 		this.fireDelay 				= 0.125f;

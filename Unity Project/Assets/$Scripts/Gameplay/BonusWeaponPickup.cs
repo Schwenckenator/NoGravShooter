@@ -3,7 +3,9 @@ using System.Collections;
 
 [RequireComponent(typeof(ObjectCleanUp))]
 public class BonusWeaponPickup : MonoBehaviour {
-	
+	public GameObject[] weaponModelsArray;
+	private GameObject currentWeaponModel;
+
 	public int id;
 	private GameManager manager;
 	private FireWeapon weapon;
@@ -12,12 +14,24 @@ public class BonusWeaponPickup : MonoBehaviour {
 	private int maxweaponcount;
 	private int currentInventorySlot;
 	private bool playerColliding = false;
+
 	void Start(){
 		if(GameManager.testMode){
 			maxweaponcount = 99;
 		}
 		id = Random.Range(0,6);
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
+		UpdateModel();
+	}
+
+	//
+	void UpdateModel(){
+		if(currentWeaponModel != null){
+			Destroy(currentWeaponModel);
+		}
+		currentWeaponModel = Network.Instantiate(weaponModelsArray[id], transform.position, transform.rotation, 0) as GameObject;
+		currentWeaponModel.transform.parent = transform;
 	}
 	
 	void OnTriggerEnter(Collider info){
@@ -58,6 +72,9 @@ public class BonusWeaponPickup : MonoBehaviour {
 									id = i;
 									swapTimeout = Time.time + weaponSwapCooldown;
 									i = 99;//lol
+
+									//Change the weapon box model to the new weapon
+									UpdateModel();
 								}
 							}
 						}
