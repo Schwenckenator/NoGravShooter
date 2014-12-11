@@ -29,6 +29,8 @@ ModelImporter:
     100046: Shorter_L_Tunnel_3.001
     100048: Power_Room
     100050: Sphere
+    100052: Shorter_L_Tunnel_4
+    100054: Super_Outer_Wall
     400000: Box_Room_1
     400002: Box_Room_2
     400004: Box_Room_3
@@ -55,6 +57,8 @@ ModelImporter:
     400046: Shorter_L_Tunnel_3.001
     400048: Power_Room
     400050: Sphere
+    400052: Shorter_L_Tunnel_4
+    400054: Super_Outer_Wall
     2300000: Box_Room_1
     2300002: Box_Room_2
     2300004: Box_Room_3
@@ -80,6 +84,8 @@ ModelImporter:
     2300044: Shorter_L_Tunnel_3.001
     2300046: Power_Room
     2300048: Sphere
+    2300050: Shorter_L_Tunnel_4
+    2300052: Super_Outer_Wall
     3300000: Box_Room_1
     3300002: Box_Room_2
     3300004: Box_Room_3
@@ -105,6 +111,8 @@ ModelImporter:
     3300044: Shorter_L_Tunnel_3.001
     3300046: Power_Room
     3300048: Sphere
+    3300050: Shorter_L_Tunnel_4
+    3300052: Super_Outer_Wall
     4300000: Shorter_L_Tunnel_3.001
     4300002: Shorter_L_Tunnel_3
     4300004: Shorter_L_Tunnel_2
@@ -130,6 +138,8 @@ ModelImporter:
     4300044: Main_Room
     4300046: Power_Room
     4300048: Sphere
+    4300050: Super_Outer_Wall
+    4300052: Shorter_L_Tunnel_4
     9500000: //RootNode
   materials:
     importMaterials: 1
