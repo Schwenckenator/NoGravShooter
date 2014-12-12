@@ -241,23 +241,25 @@ public class GUIScript : MonoBehaviour {
 		
 		//radar system
 		//does everything except detect items and take player rotation into account
+
+		//Totes making this local space now
 		
 		int detectionRadius = 75;
 		int radarCenter = 110;
 		int radarPadding = 20;
 		int defaultdotsize = 30;
 		int dotsizevariation = 20;
-		Vector3 mypos = new Vector3(0,0,0);
+		//Vector3 mypos = new Vector3(0,0,0);
+		Transform myTransform = null;
 		int i = 0;
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
 			if(player.networkView.isMine){
-				mypos = player.transform.position;
+				myTransform = player.transform;
 			} else {
 				i++;
 			}
 		}
-		Vector3 playerpos = new Vector3(0,0,0);
 		float[] dotx = new float[i];
 		float[] doty = new float[i];
 		float[] dotsize = new float[i];
@@ -265,15 +267,14 @@ public class GUIScript : MonoBehaviour {
 		
 		foreach(GameObject player in players){
 			if(!player.networkView.isMine){
-				Vector3 distance = player.transform.position - mypos;
-				float sqrRadius = distance.sqrMagnitude;
+
+				Vector3 posDiff = myTransform.InverseTransformPoint(player.transform.position); // Inverse is world space -> local space
+				float sqrRadius = posDiff.sqrMagnitude;
+
 				if (sqrRadius <= detectionRadius * detectionRadius){
-					playerpos.x = player.transform.position.x - mypos.x;
-					playerpos.y = player.transform.position.y - mypos.y;
-					playerpos.z = player.transform.position.z - mypos.z;
-					dotx[i] = playerpos.x/detectionRadius * radarCenter;
-					doty[i] = playerpos.z/detectionRadius * radarCenter;
-					dotsize[i] = (playerpos.y/detectionRadius * dotsizevariation) + defaultdotsize;
+					dotx[i] = posDiff.x/detectionRadius * radarCenter;
+					doty[i] = -posDiff.z/detectionRadius * radarCenter;
+					dotsize[i] = (posDiff.y/detectionRadius * dotsizevariation) + defaultdotsize;
 					i++;
 				}
 			}

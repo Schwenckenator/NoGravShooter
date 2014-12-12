@@ -15,7 +15,7 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\N
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.097 seconds
+- Completed reload, in  0.116 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
@@ -24,75 +24,11 @@ sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
 sendto failed with code -1 for char 9 and length 1464.
-UnloadTime: 0.447274 ms
+UnloadTime: 0.435396 ms
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4406.
-Total: 2.426421 ms (FindLiveObjects: 0.493558 ms CreateObjectMapping: 0.082327 ms MarkObjects: 0.532059 ms  DeleteObjects: 0.030719 ms)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaExplosion(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Grenade(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Grenade(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Grenade(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Grenade(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
- 
-(Filename:  Line: 133)
-
-RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
- 
-(Filename:  Line: 133)
-
-RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
- 
-(Filename:  Line: 133)
-
-RPC call failed because the function 'KillThisObject' does not exist in any script attached to'GameManager(Clone)'
- 
-(Filename:  Line: 133)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4402.
+Total: 2.133973 ms (FindLiveObjects: 0.330131 ms CreateObjectMapping: 0.062257 ms MarkObjects: 0.443997 ms  DeleteObjects: 0.026623 ms)
 
 NullReferenceException: Object reference not set to an instance of an object
   at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
@@ -112,15 +48,23 @@ NullReferenceException: Object reference not set to an instance of an object
  
 (Filename:  Line: -1)
 
-UnloadTime: 10.064490 ms
+BonusWeaponPickup(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+UnloadTime: 10.587538 ms
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 131 unused Assets to reduce memory usage. Loaded Objects now: 604.
+Total: 1.832513 ms (FindLiveObjects: 0.024165 ms CreateObjectMapping: 0.027033 ms MarkObjects: 0.280160 ms  DeleteObjects: 0.437853 ms)
+
+UnloadTime: 0.408772 ms
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 
-Unloading 130 unused Assets to reduce memory usage. Loaded Objects now: 606.
-Total: 1.895181 ms (FindLiveObjects: 0.026213 ms CreateObjectMapping: 0.032357 ms MarkObjects: 0.327263 ms  DeleteObjects: 0.436215 ms)
-
-UnloadTime: 0.368632 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 600.
-Total: 1.515080 ms (FindLiveObjects: 0.023756 ms CreateObjectMapping: 0.023346 ms MarkObjects: 0.300230 ms  DeleteObjects: 0.006553 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 597.
+Total: 1.729706 ms (FindLiveObjects: 0.031948 ms CreateObjectMapping: 0.033176 ms MarkObjects: 0.387473 ms  DeleteObjects: 0.012287 ms)
 
