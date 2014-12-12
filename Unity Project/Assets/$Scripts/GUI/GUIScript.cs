@@ -20,6 +20,9 @@ public class GUIScript : MonoBehaviour {
     public Texture2D itemicon;
     public Texture2D allyicon;
 	
+	public int detectionRadius;
+	public bool detectItems;
+	
 	private PlayerResources res;
 	
 	private int currentWindow = 0;
@@ -240,19 +243,14 @@ public class GUIScript : MonoBehaviour {
 		
 		
 		//radar system
-		//does everything except detect items and take player rotation into account
-
-		//Totes making this local space now
-		
-		int detectionRadius = 75;
 		int radarCenter = 110;
 		int radarPadding = 20;
 		int defaultdotsize = 30;
 		int dotsizevariation = 20;
-		//Vector3 mypos = new Vector3(0,0,0);
 		Transform myTransform = null;
 		int i = 0;
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+		GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");
 		foreach(GameObject player in players){
 			if(player.networkView.isMine){
 				myTransform = player.transform;
@@ -260,9 +258,15 @@ public class GUIScript : MonoBehaviour {
 				i++;
 			}
 		}
+		if(detectItems){
+			foreach(GameObject bonus in items){
+				i++;
+			}
+		}
 		float[] dotx = new float[i];
 		float[] doty = new float[i];
 		float[] dotsize = new float[i];
+		string[] dottype = new string[i];
 		i = 0;
 		
 		foreach(GameObject player in players){
@@ -275,6 +279,22 @@ public class GUIScript : MonoBehaviour {
 					dotx[i] = posDiff.x/detectionRadius * radarCenter;
 					doty[i] = -posDiff.z/detectionRadius * radarCenter;
 					dotsize[i] = (posDiff.y/detectionRadius * dotsizevariation) + defaultdotsize;
+					//If (on same team) dottype[i] = "Ally", else "Enemy"
+					dottype[i] = "Enemy";
+					i++;
+				}
+			}
+		}
+		if(detectItems){
+			foreach(GameObject bonus in items){
+				Vector3 posDiff = myTransform.InverseTransformPoint(bonus.transform.position); // Inverse is world space -> local space
+				float sqrRadius = posDiff.sqrMagnitude;
+
+				if (sqrRadius <= detectionRadius * detectionRadius){
+					dotx[i] = posDiff.x/detectionRadius * radarCenter;
+					doty[i] = -posDiff.z/detectionRadius * radarCenter;
+					dotsize[i] = (posDiff.y/detectionRadius * dotsizevariation) + defaultdotsize;
+					dottype[i] = "Item";
 					i++;
 				}
 			}
@@ -285,15 +305,29 @@ public class GUIScript : MonoBehaviour {
 		
 		foreach (float element in dotx){
 			if(dotsize[i] < defaultdotsize){
-				GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), enemyicon, customGui);
+				if(dottype[i] == "Enemy"){
+					GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), enemyicon, customGui);
+				} else if(dottype[i] == "Item"){
+					GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), itemicon, customGui);
+				} else {
+					GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), allyicon, customGui);
+				}
 			}
 			i++;
 		}
 		i = 0;
+		
 		GUI.Box(new Rect(radarCenter+radarPadding-(defaultdotsize/2), Screen.height-(radarCenter+radarPadding+(defaultdotsize/2)), defaultdotsize, defaultdotsize), playericon, customGui);
+		
 		foreach (float element in dotx){
 			if(dotsize[i] >= defaultdotsize){
-				GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), enemyicon, customGui);
+				if(dottype[i] == "Enemy"){
+					GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), enemyicon, customGui);
+				} else if(dottype[i] == "Item"){
+					GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), itemicon, customGui);
+				} else {
+					GUI.Box(new Rect(radarCenter+radarPadding+dotx[i] - dotsize[i]/2, Screen.height-(radarCenter+radarPadding) + doty[i] - dotsize[i]/2, dotsize[i], dotsize[i]), allyicon, customGui);
+				}
 			}
 			i++;
 		}		
