@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour {
 	private CameraMove cameraMove;
 	private FireWeapon fireWeapon;
 
+	public static int maxStartingWeapons = 2;
+	private int[] startingWeapons = new int[maxStartingWeapons];
+
 	private bool myPlayerSpawned = false;
 
 	public GameObject playerPrefab;
@@ -72,8 +75,25 @@ public class GameManager : MonoBehaviour {
 			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
 
 			Pause (false);
+
+			//
+			if(Network.isServer){
+				startingWeapons[0] = PlayerPrefs.GetInt("1stWeapon", 0);
+				startingWeapons[1] = PlayerPrefs.GetInt("2ndWeapon", 7);
+				networkView.RPC ("SetStartingWeapons", RPCMode.OthersBuffered, startingWeapons);
+			}
 		}
 	}
+
+	[RPC]
+	private void SetStartingWeapons(int[] selection){
+		startingWeapons = selection;
+	}
+	public int[] GetStartingWeapons(){
+		return startingWeapons;
+	}
+
+
 	public static bool SceneIsMenu(){
 		return Application.loadedLevelName == "MenuScene";
 	}

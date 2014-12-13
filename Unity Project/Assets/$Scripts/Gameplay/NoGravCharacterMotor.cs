@@ -380,9 +380,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		RaycastHit[] hits;
 		Vector3 colObjNorm = Vector3.zero;
 		Vector3 origin = transform.position  - transform.up * .95f; // Make the ray emit from feet
-		Ray r = new Ray(origin, info.collider.transform.position - origin);
 
-		Debug.DrawLine(origin, info.collider.transform.position, Color.green, 5.0f, false);
+
+
+
+		//Ray r = new Ray(origin, info.collider.transform.position - origin);
+		//Debug.DrawLine(origin, info.collider.transform.position, Color.green, 5.0f, false);
+
+		Ray r = new Ray(origin, -transform.up);
+		Debug.DrawRay(origin, -transform.up, Color.green, 5.0f, false);
 
 		hits = Physics.RaycastAll(r);
 		foreach(RaycastHit hit in hits){

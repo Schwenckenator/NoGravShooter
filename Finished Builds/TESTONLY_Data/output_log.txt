@@ -15,56 +15,122 @@ Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\N
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
 Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.116 seconds
+- Completed reload, in  0.107 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-sendto failed with code -1 for char 9 and length 1464.
-sendto failed with code -1 for char 9 and length 1464.
-sendto failed with code -1 for char 9 and length 1464.
-sendto failed with code -1 for char 9 and length 1464.
-UnloadTime: 0.435396 ms
+UnloadTime: 0.557044 ms
+System memory in use before: 21.5 MB.
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 21.5 MB.
 
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4402.
-Total: 2.133973 ms (FindLiveObjects: 0.330131 ms CreateObjectMapping: 0.062257 ms MarkObjects: 0.443997 ms  DeleteObjects: 0.026623 ms)
+Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4409.
+Total: 2.689789 ms (FindLiveObjects: 0.427613 ms CreateObjectMapping: 0.061848 ms MarkObjects: 0.491100 ms  DeleteObjects: 0.040959 ms)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
-  at GUIScript.OnGUI () [0x00000] in <filename unknown>:0 
+LaserRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
  
-(Filename:  Line: -1)
+(Filename: C Line: 0)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
-  at GUIScript.OnGUI () [0x00000] in <filename unknown>:0 
+AssaultRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
  
-(Filename:  Line: -1)
+(Filename: C Line: 0)
 
-NullReferenceException: Object reference not set to an instance of an object
-  at GUIScript.PlayerGUI () [0x00000] in <filename unknown>:0 
-  at GUIScript.OnGUI () [0x00000] in <filename unknown>:0 
+LaserRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
  
-(Filename:  Line: -1)
+(Filename: C Line: 0)
 
-BonusWeaponPickup(Clone) (UnityEngine.GameObject) is being killed.
+AssaultRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
  
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+(Filename: C Line: 0)
+
+LaserRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+BonusWeaponPickup:UpdateModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:32)
+BonusWeaponPickup:FixedUpdate() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:99)
+ 
+(Filename: C Line: 0)
+
+ForceShotgunProjectile(Clone) (UnityEngine.GameObject) is being killed.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
+ShotLifeTime:Update() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\Weapon\ShotLifeTime.cs:19)
+ 
+(Filename: C Line: 0)
+
+AssaultRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+BonusWeaponPickup:UpdateModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:32)
+BonusWeaponPickup:FixedUpdate() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:99)
+ 
+(Filename: C Line: 0)
+
+Force Shotgun(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+BonusWeaponPickup:UpdateModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:32)
+BonusWeaponPickup:FixedUpdate() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:99)
+ 
+(Filename: C Line: 0)
 
 NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
  
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+(Filename: C Line: 0)
 
-UnloadTime: 10.587538 ms
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+LaserRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:39)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+BonusWeaponPickup:UpdateModel() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:32)
+BonusWeaponPickup:FixedUpdate() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusWeaponPickup.cs:99)
+ 
+(Filename: C Line: 0)
 
-Unloading 131 unused Assets to reduce memory usage. Loaded Objects now: 604.
-Total: 1.832513 ms (FindLiveObjects: 0.024165 ms CreateObjectMapping: 0.027033 ms MarkObjects: 0.280160 ms  DeleteObjects: 0.437853 ms)
-
-UnloadTime: 0.408772 ms
+UnloadTime: 15.108613 ms
+System memory in use before: 19.6 MB.
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 17.8 MB.
 
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 597.
-Total: 1.729706 ms (FindLiveObjects: 0.031948 ms CreateObjectMapping: 0.033176 ms MarkObjects: 0.387473 ms  DeleteObjects: 0.012287 ms)
+Unloading 131 unused Assets to reduce memory usage. Loaded Objects now: 606.
+Total: 2.615243 ms (FindLiveObjects: 0.028671 ms CreateObjectMapping: 0.031128 ms MarkObjects: 0.284256 ms  DeleteObjects: 0.735626 ms)
+
+UnloadTime: 0.437444 ms
+System memory in use before: 17.7 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 17.7 MB.
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 600.
+Total: 2.009867 ms (FindLiveObjects: 0.034815 ms CreateObjectMapping: 0.024985 ms MarkObjects: 0.333407 ms  DeleteObjects: 0.018022 ms)
 

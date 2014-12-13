@@ -24,46 +24,28 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
 	private List<WeaponSuperClass> heldWeapons;
+	private GameManager manager;
 
 	// Use this for initialization
 	void Awake () {
-		if(Network.isServer){
-			heldWeapons = new List<WeaponSuperClass>();
-			currentInventorySlot = 0;
-			startingWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
-			heldWeapons.Add(GameManager.weapon[startingWeapon1]);
-			startingWeapon2 = PlayerPrefs.GetInt("2ndWeapon", 7);
-			if(startingWeapon2 < 7){
-				heldWeapons.Add(GameManager.weapon[startingWeapon2]);
-			}
-			currentWeapon = heldWeapons[0];
-			gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-			cameraPos = transform.FindChild("CameraPos");
-			motor = GetComponent<NoGravCharacterMotor>();
-			resource = GetComponent<PlayerResources>();
-			ChangeWeapon(0);
+		heldWeapons = new List<WeaponSuperClass>();
+
+		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+		int[] temp = manager.GetStartingWeapons();
+		foreach(int id in temp){
+			AddWeapon(id);
 		}
+
+		currentInventorySlot = 0;
+		currentWeapon = heldWeapons[0];
+		gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
+		cameraPos = transform.FindChild("CameraPos");
+		motor = GetComponent<NoGravCharacterMotor>();
+		resource = GetComponent<PlayerResources>();
+		ChangeWeapon(0);
 	}
 	void FixedUpdate(){
-		//if server tell clients which weapons to use, if client get weapons
-		if(Network.isServer){
-			networkView.RPC ("setWeapons", RPCMode.OthersBuffered, startingWeapon1, startingWeapon2);
-		}
-		if(startingWeapon1 != 99 && needWeapons){
-			heldWeapons = new List<WeaponSuperClass>();
-			currentInventorySlot = 0;
-			heldWeapons.Add(GameManager.weapon[startingWeapon1]);
-			if(startingWeapon2 < 7){
-				heldWeapons.Add(GameManager.weapon[startingWeapon2]);
-			}
-			currentWeapon = heldWeapons[0];
-			gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-			cameraPos = transform.FindChild("CameraPos");
-			motor = GetComponent<NoGravCharacterMotor>();
-			resource = GetComponent<PlayerResources>();
-			ChangeWeapon(0);
-			needWeapons = false;
-		}
+
 		//change weapons by mouse wheel
 		//checks if player has max number of weapons
 		if(GameManager.testMode){
