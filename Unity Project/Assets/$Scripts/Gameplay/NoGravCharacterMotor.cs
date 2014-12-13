@@ -471,11 +471,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	void LockMouseLook(bool inAir){
 		if(inAir){
 			cameraLook.sensitivityY = 0;
+			FixRotation();
+
 			if(!inAirFlag){
 				inAirFlag = true;
-				transform.Rotate(cameraTransform.localEulerAngles);
-				
-				cameraLook.SetX_Rotation(0f);
 			}
 
 		}else {
@@ -484,6 +483,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
 				inAirFlag = false;
 			}
 		}
+	}
+
+	void FixRotation(){
+		transform.Rotate(cameraTransform.localEulerAngles);
+		cameraLook.SetX_Rotation(0f);
 	}
 
 
