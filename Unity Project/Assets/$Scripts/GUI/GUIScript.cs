@@ -245,8 +245,8 @@ public class GUIScript : MonoBehaviour {
 		//radar system
 		int radarCenter = 110;
 		int radarPadding = 20;
+		int radarDotArea = 95;
 		int defaultdotsize = 30;
-		int dotsizevariation = 20;
 		Transform myTransform = null;
 		int i = 0;
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -276,9 +276,9 @@ public class GUIScript : MonoBehaviour {
 				float sqrRadius = posDiff.sqrMagnitude;
 
 				if (sqrRadius <= detectionRadius * detectionRadius){
-					dotx[i] = posDiff.x/detectionRadius * radarCenter;
-					doty[i] = -posDiff.z/detectionRadius * radarCenter;
-					dotsize[i] = (posDiff.y/detectionRadius * dotsizevariation) + defaultdotsize;
+					dotx[i] = posDiff.x/detectionRadius * radarDotArea;
+					doty[i] = -posDiff.z/detectionRadius * radarDotArea;
+					dotsize[i] = (posDiff.y/detectionRadius * defaultdotsize) + defaultdotsize;
 					//If (on same team) dottype[i] = "Ally", else "Enemy"
 					dottype[i] = "Enemy";
 					i++;
@@ -291,9 +291,9 @@ public class GUIScript : MonoBehaviour {
 				float sqrRadius = posDiff.sqrMagnitude;
 
 				if (sqrRadius <= detectionRadius * detectionRadius){
-					dotx[i] = posDiff.x/detectionRadius * radarCenter;
-					doty[i] = -posDiff.z/detectionRadius * radarCenter;
-					dotsize[i] = (posDiff.y/detectionRadius * dotsizevariation) + defaultdotsize;
+					dotx[i] = posDiff.x/detectionRadius * radarDotArea;
+					doty[i] = -posDiff.z/detectionRadius * radarDotArea;
+					dotsize[i] = (posDiff.y/detectionRadius * defaultdotsize) + defaultdotsize;
 					dottype[i] = "Item";
 					i++;
 				}
@@ -890,16 +890,21 @@ public class GUIScript : MonoBehaviour {
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), submittedChat, leftTextAlign);
 		
-		currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), currentChat);
+		if(Application.loadedLevelName != "Tutorial"){
+			currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), currentChat);
+		}
 		
 		// Choo choo, all aboard the dodgy train
-		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			SubmitTextToChat(currentChat);
+		if(Application.loadedLevelName != "Tutorial"){
+			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
+				SubmitTextToChat(currentChat);
+			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
 			SubmitTextToChat(currentChat);
 		}
+		
 	}
 	#endregion
 
@@ -950,7 +955,8 @@ public class GUIScript : MonoBehaviour {
 
 	[RPC]
 	void LoadLevel(string level, int levelPrefix){
-
+		tutePromptShown = 0;
+		//stops tutorial scripts showing after you leave and start a game
 		lastLevelPrefix = levelPrefix;
 
 		manager.playerCurrentName = playerName;
