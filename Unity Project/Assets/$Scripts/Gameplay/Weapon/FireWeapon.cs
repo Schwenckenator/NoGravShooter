@@ -127,6 +127,8 @@ public class FireWeapon : MonoBehaviour {
 						}
 					}else if(hit.collider.CompareTag("BonusPickup")){
 						hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
+					}else if(hit.collider.CompareTag("GrenadeMine")){
+						hit.collider.GetComponent<MineDetonation>().Shot ();
 					}
 					Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 

@@ -28,6 +28,10 @@ public class MineDetonation : MonoBehaviour {
 		}
 	}
 
+	public void Shot(){
+		Detonate();
+	}
+
 	void Detonate(){
 
 		//Make something depending on what you are

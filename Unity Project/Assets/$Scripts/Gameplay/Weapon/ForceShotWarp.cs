@@ -22,6 +22,11 @@ public class ForceShotWarp : MonoBehaviour {
 	void OnTriggerEnter(Collider input){
 
 		bool push = true;
+
+		if(input.CompareTag("BonusPickup")){ // If this hits a bonus, kill it
+			input.GetComponent<DestroyOnNextFrame>().DestroyMe();
+		}
+
 		if(input.CompareTag("Player")){ // Hit a player!
 			//If you hit yourself, don't do anything
 			if(networkView.isMine && input.networkView.isMine){
