@@ -30,9 +30,7 @@ public class GameManager : MonoBehaviour {
 
 	public string playerCurrentName;
 
-	public void AddToChat(string input){
-		gameGUI.SubmitTextToChat(input);
-	}
+
 
 	void Awake(){
 		DontDestroyOnLoad(gameObject);
@@ -64,6 +62,19 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new RocketLauncherValues());
 		weapon.Add(new PlasmaBlasterValues());
 
+	}
+
+	public void AddToChat(string input, bool addPlayerPrefix = true){
+		gameGUI.SubmitTextToChat(input, addPlayerPrefix);
+	}
+
+	public static int WeaponClassToWeaponId(WeaponSuperClass input){
+		for(int i=0; i<weapon.Count; i++){
+			if(input == weapon[i]){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 	void OnLevelWasLoaded(int level){

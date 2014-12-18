@@ -87,7 +87,9 @@ public class GUIScript : MonoBehaviour {
 	private int spawnWeapon2 = 7;
 	
 	GameManager.KeyBind editedBinding;
-	
+
+	GUIStyle upperLeftTextAlign;
+	GUIStyle lowerLeftTextAlign;
 	
 	void Start(){
 		manager = GetComponent<GameManager>();
@@ -119,10 +121,20 @@ public class GUIScript : MonoBehaviour {
 
 		mouseInverted = (mouseYDirection == 1);
 		autoPickupEnabled = (autoPickup == 1);
+
+
 	}
 	
 	#region OnGUI
 	void OnGUI(){
+		// Has to be in here for some reason
+		upperLeftTextAlign = new GUIStyle(GUI.skin.box);
+		upperLeftTextAlign.alignment = TextAnchor.UpperLeft;
+
+		lowerLeftTextAlign = new GUIStyle(GUI.skin.box);
+		lowerLeftTextAlign.alignment = TextAnchor.LowerLeft;
+		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 		if(GameManager.testMode){
 			GUI.Label(new Rect(10, 10, 100, 20), "TEST MODE");
 		}
@@ -206,9 +218,8 @@ public class GUIScript : MonoBehaviour {
 		//Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
 		Rect combatLogRect = new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100);
 		//temporarily moving chat box while testing radar
-		GUI.Box(combatLogRect, "");
-		Rect combatLogTextRect = new Rect(combatLogRect.x + 5, combatLogRect.y + 5, combatLogRect.width - 10, combatLogRect.height - 10);
-		GUI.Label(combatLogTextRect, submittedChat);
+		GUI.Box(combatLogRect, submittedChat, lowerLeftTextAlign);
+
 		
 		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
 		if(res.IsJetpackDisabled()){
@@ -788,10 +799,8 @@ public class GUIScript : MonoBehaviour {
 		foreach(string player in connectedPlayers.Values){
 			strPlayers += player + "\n";
 		}
-		
-		GUIStyle leftTextAlign = new GUIStyle(GUI.skin.box);
-		leftTextAlign.alignment = TextAnchor.UpperLeft;
-		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, leftTextAlign);
+
+		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, upperLeftTextAlign);
 		
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Shutdown Server")){
@@ -803,7 +812,7 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 		
-		GUI.Box(new Rect( (largeRect.width/3) + 40, 20, (largeRect.width*2/3)-60, largeRect.height - 80), submittedChat, leftTextAlign);
+		GUI.Box(new Rect( (largeRect.width/3) + 40, 20, (largeRect.width*2/3)-60, largeRect.height - 80), submittedChat, lowerLeftTextAlign);
 		
 		currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), currentChat);
 		
@@ -872,10 +881,8 @@ public class GUIScript : MonoBehaviour {
 		foreach(string player in connectedPlayers.Values){
 			strPlayers += player + "\n";
 		}
-		
-		GUIStyle leftTextAlign = new GUIStyle(GUI.skin.box);
-		leftTextAlign.alignment = TextAnchor.UpperLeft;
-		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, leftTextAlign);
+
+		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, upperLeftTextAlign);
 		
 		if(Network.isServer){
 			string strShutdown = "Shutdown Server"; if(Application.loadedLevelName == "Tutorial") strShutdown = "Shutdown Simulation";
@@ -888,7 +895,7 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 		
-		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), submittedChat, leftTextAlign);
+		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), submittedChat, lowerLeftTextAlign);
 		
 		if(Application.loadedLevelName != "Tutorial"){
 			currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), currentChat);
@@ -908,9 +915,14 @@ public class GUIScript : MonoBehaviour {
 	}
 	#endregion
 
-	public void SubmitTextToChat(string input){
+	public void SubmitTextToChat(string input, bool addPlayerPrefix = true){
 		if(input != ""){
-			string newChat = playerName+ ": "+input +"\n";
+			string newChat = "";
+			if(addPlayerPrefix){
+				newChat = playerName+ ": "+input +"\n";
+			}else {
+				newChat = input + "\n";
+			}
 			currentChat = "";
 			
 			networkView.RPC("UpdateChat", RPCMode.All, newChat);

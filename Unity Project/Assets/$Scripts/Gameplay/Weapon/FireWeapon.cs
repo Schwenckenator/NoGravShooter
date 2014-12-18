@@ -28,6 +28,7 @@ public class FireWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+
 		heldWeapons = new List<WeaponSuperClass>();
 
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
@@ -123,7 +124,7 @@ public class FireWeapon : MonoBehaviour {
 					//Deal with the shot
 					if(hit.collider.CompareTag("Player")){
 						if(!hit.collider.networkView.isMine){
-							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot);
+							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, manager.playerCurrentName, GameManager.WeaponClassToWeaponId(currentWeapon));
 						}
 					}else if(hit.collider.CompareTag("BonusPickup")){
 						hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();

@@ -42,6 +42,7 @@ public class PlayerResources : MonoBehaviour {
 	private bool reloading = false;
 	private bool jetpackDisabled = false;
 	private bool weaponBusy = false;
+	private bool dying = false;
 
 	private WeaponSuperClass currentWeapon;
 	#endregion
@@ -152,8 +153,8 @@ public class PlayerResources : MonoBehaviour {
 		grenades += amount;
 	}
 	
-	public void TakeDamage(int damage){
-		networkView.RPC("TakeDamageRPC", RPCMode.All, damage);
+	public void TakeDamage(int damage, string fromPlayer = "", int weaponId = -1){
+		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
 	}
 
 	public void RestoreHealth(int restore){
@@ -207,11 +208,20 @@ public class PlayerResources : MonoBehaviour {
 	#region RPC
 
 	[RPC]
-	void TakeDamageRPC(int damage){
+	void TakeDamageRPC(int damage, string fromPlayer, int weaponId){
+
+		if(dying) return; // Don't bother if you are already dying
+
 		health -= damage;
 		if(health <= minHealth){
-			//You is dead nigs
+			health = minHealth;
+			dying = true;//You is dead nigs
+
 			if(networkView.isMine){
+				if(fromPlayer != "" && weaponId != -1){
+					string killMessage = fromPlayer + KillMessageGenerator(weaponId) + manager.playerCurrentName;
+					manager.AddToChat(killMessage, false);
+				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
 				StartCoroutine(PlayerCleanup());
 			}
@@ -219,6 +229,28 @@ public class PlayerResources : MonoBehaviour {
 		}
 	}
 	#endregion
+
+	string KillMessageGenerator(int weaponId){
+		switch(weaponId){
+		case 0:
+			return " lasered ";
+		case 1:
+			return " shot ";
+		case 2:
+			return " sniped ";
+		case 3:
+			return " shotgunned ";
+		case 4:
+			return " forced? ";
+		case 5:
+			return " exploded? ";
+		case 6:
+			return " plasmered? ";
+		}
+
+		return " killed ";
+
+	}
 
 	IEnumerator PlayerCleanup(){
 		yield return new WaitForSeconds(3.0f);
