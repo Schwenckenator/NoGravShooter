@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
 	private FireWeapon fireWeapon;
+	private PlayerResources playerResources;
 
 	public static int maxStartingWeapons = 2;
 	private int[] startingWeapons = new int[maxStartingWeapons];
@@ -21,7 +22,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
-	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact};
+	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch};
 	public static KeyCode[] keyBindings;
 	
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
@@ -40,18 +41,19 @@ public class GameManager : MonoBehaviour {
 		keyBindings = new KeyCode[System.Enum.GetNames(typeof(GameManager.KeyBind)).Length];
 
 		keyBindings[(int)GameManager.KeyBind.MoveForward]	= (KeyCode)PlayerPrefs.GetInt("bindMoveForward", (int)KeyCode.W);
-		keyBindings[(int)GameManager.KeyBind.MoveBack] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveBack", (int)KeyCode.S);
-		keyBindings[(int)GameManager.KeyBind.MoveLeft] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveLeft", (int)KeyCode.A);
+		keyBindings[(int)GameManager.KeyBind.MoveBack] 		= (KeyCode)PlayerPrefs.GetInt("bindMoveBack", (int)KeyCode.S);
+		keyBindings[(int)GameManager.KeyBind.MoveLeft] 		= (KeyCode)PlayerPrefs.GetInt("bindMoveLeft", (int)KeyCode.A);
 		keyBindings[(int)GameManager.KeyBind.MoveRight] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveRight", (int)KeyCode.D);
 		
-		keyBindings[(int)GameManager.KeyBind.RollLeft]	= (KeyCode)PlayerPrefs.GetInt("bindRollLeft", (int)KeyCode.Q);
+		keyBindings[(int)GameManager.KeyBind.RollLeft]		= (KeyCode)PlayerPrefs.GetInt("bindRollLeft", (int)KeyCode.Q);
 		keyBindings[(int)GameManager.KeyBind.RollRight] 	= (KeyCode)PlayerPrefs.GetInt("bindRollRight", (int)KeyCode.E);
-		keyBindings[(int)GameManager.KeyBind.JetUp]		= (KeyCode)PlayerPrefs.GetInt("bindJetUp", (int)KeyCode.Space);
-		keyBindings[(int)GameManager.KeyBind.JetDown] 	= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.X);
+		keyBindings[(int)GameManager.KeyBind.JetUp]			= (KeyCode)PlayerPrefs.GetInt("bindJetUp", (int)KeyCode.Space);
+		keyBindings[(int)GameManager.KeyBind.JetDown] 		= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.X);
 		
 		keyBindings[(int)GameManager.KeyBind.Reload] 		= (KeyCode)PlayerPrefs.GetInt("bindReload", (int)KeyCode.R);
-		keyBindings[(int)GameManager.KeyBind.Grenade] 	= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
-		keyBindings[(int)GameManager.KeyBind.Interact] 	= (KeyCode)PlayerPrefs.GetInt("bindInteract", (int)KeyCode.F);
+		keyBindings[(int)GameManager.KeyBind.Grenade] 		= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
+		keyBindings[(int)GameManager.KeyBind.Interact] 		= (KeyCode)PlayerPrefs.GetInt("bindInteract", (int)KeyCode.F);
+		keyBindings[(int)GameManager.KeyBind.GrenadeSwitch]	= (KeyCode)PlayerPrefs.GetInt("bindGrenadeSwitch", (int)KeyCode.H);
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -129,6 +131,7 @@ public class GameManager : MonoBehaviour {
 				cameraLook.SetYDirection(PlayerPrefs.GetInt("mouseYDirection"));
 
 				fireWeapon = player.GetComponent<FireWeapon>();
+				playerResources = player.GetComponent<PlayerResources>();
 			}
 		}
 
@@ -174,6 +177,10 @@ public class GameManager : MonoBehaviour {
 			}
 			if(Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned){
 				fireWeapon.ChangeWeapon(6);
+			}
+			if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.GrenadeSwitch])){
+				Debug.Log ("Grenade Switch!");
+				playerResources.ChangeGrenade();
 			}
 		}
 	}

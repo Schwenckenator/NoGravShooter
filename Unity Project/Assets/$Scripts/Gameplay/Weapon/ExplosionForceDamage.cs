@@ -3,9 +3,11 @@ using System.Collections;
 
 public class ExplosionForceDamage : MonoBehaviour {
 
+	public float distanceReduction;
 	public float explosionPower;
 	public float explosionRadius;
 	public float maxDamage;
+
 
 
 	void Start(){
@@ -30,7 +32,7 @@ public class ExplosionForceDamage : MonoBehaviour {
 			if(hit.CompareTag("Player")){
 				//Find distance
 				float distance = (hit.transform.position - transform.position).magnitude;
-				float damage = maxDamage / Mathf.Max(distance, 1);
+				float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
 
 				hit.GetComponent<PlayerResources>().TakeDamage((int)damage);
 			}

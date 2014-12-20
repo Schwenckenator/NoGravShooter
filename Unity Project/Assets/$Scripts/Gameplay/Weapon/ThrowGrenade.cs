@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ThrowGrenade : MonoBehaviour {
-	public GameObject grenade;
+	public GameObject[] grenade;
 	private Transform grenadeSpawn;
 
 	PlayerResources resource;
@@ -17,10 +17,10 @@ public class ThrowGrenade : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		if((Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Grenade])) && Time.time > nextThrow && networkView.isMine){
 			if(resource.ThrowGrenade()){
-				GameObject newGrenade = Network.Instantiate(grenade, grenadeSpawn.position, grenadeSpawn.rotation, 0) as GameObject;
+				GameObject newGrenade = Network.Instantiate(grenade[resource.GetCurrentGrenadeType()], grenadeSpawn.position, grenadeSpawn.rotation, 0) as GameObject;
 				newGrenade.rigidbody.AddRelativeForce(0, 0, 20, ForceMode.VelocityChange);
 				nextThrow = Time.time + throwDelay;
 			}

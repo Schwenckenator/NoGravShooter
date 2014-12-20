@@ -36,7 +36,10 @@ public class PlayerResources : MonoBehaviour {
 	private int health;
 	private float heat;
 	private float rechargeWaitTime;
-	private int grenades;
+
+	private int[] grenades;				// Id is alphabetical
+	private int grenadeTypes = 3; 		// Black Hole, EMP, Frag
+	private int currentGrenadeType = 0;	//      0       1     2
 
 	private bool recharging = true;
 	private bool reloading = false;
@@ -48,7 +51,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 	
 	#region Start()
-	void Start () {
+	void Awake () {
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		//smokeParticle = transform.FindChild("CameraPos").FindChild("GunSmokeParticle").GetComponent<ParticleSystem>();
@@ -60,12 +63,17 @@ public class PlayerResources : MonoBehaviour {
 		fuel = maxFuel;
 		health = maxHealth;
 		rechargeWaitTime = 0;
-		grenades = 0;
+
+
+		grenades = new int[grenadeTypes];
+		for(int i=0; i<grenadeTypes; i++){
+			grenades[i] = 0;
+		}
 	}
 	#endregion
 
 	#region Fixed Update()
-	void FixedUpdate () {
+	void Update () {
 		if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Reload]) && !reloading){
 			StartCoroutine("WeaponReload");
 		}
@@ -110,9 +118,15 @@ public class PlayerResources : MonoBehaviour {
 	public float GetWeaponHeat(){
 		return heat;
 	}
-	public int GetGrenades(){
-		return grenades;
+
+
+	public int GetCurrentGrenadeCount(){
+		return grenades[currentGrenadeType];
 	}
+	public int GetCurrentGrenadeType(){
+		return currentGrenadeType;
+	}
+
 	#endregion
 
 	#region Variable Mutators
@@ -139,18 +153,18 @@ public class PlayerResources : MonoBehaviour {
 	// Returns false if no grenades
 	public bool ThrowGrenade(){
 		if(GameManager.testMode){
-			grenades++;
+			grenades[currentGrenadeType]++;
 		}
-		if(grenades > 0){
-			grenades--;
+		if(grenades[currentGrenadeType] > 0){
+			grenades[currentGrenadeType]--;
 			return true;
 		}else{
 			return false;
 		}
 	}
 
-	public void PickUpGrenades(int amount){
-		grenades += amount;
+	public void PickUpGrenades(int amount, int grenadeId){
+		grenades[grenadeId] += amount;
 	}
 	
 	public void TakeDamage(int damage, string fromPlayer = "", int weaponId = -1){
@@ -354,6 +368,11 @@ public class PlayerResources : MonoBehaviour {
 			StartCoroutine(WeaponChange());
 			heat = 0;
 		}
+	}
+
+	public void ChangeGrenade(){
+		currentGrenadeType++;
+		currentGrenadeType %= grenadeTypes; // Keep value within range
 	}
 
 	public int GetCurrentClip(){

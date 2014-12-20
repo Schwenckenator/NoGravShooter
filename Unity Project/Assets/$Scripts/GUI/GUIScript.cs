@@ -211,8 +211,21 @@ public class GUIScript : MonoBehaviour {
 			ammoText += "/" + res.GetRemainingAmmo().ToString();
 		}
 
-
-		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetGrenades().ToString(), style);
+		Rect grenadeTypeLabel = new Rect(Screen.width-300, Screen.height-250, 300, 100);
+		string grenadeTypeString = "";
+		switch(res.GetCurrentGrenadeType()){
+			case 0: // Black hole
+				grenadeTypeString = "BH";
+				break;
+			case 1:
+				grenadeTypeString = "EMP";
+				break;
+			case 2:
+				grenadeTypeString = "Frag";
+				break;
+		}
+		GUI.Label(grenadeTypeLabel, grenadeTypeString, style);
+		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetCurrentGrenadeCount().ToString(), style);
 		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
 
 		//Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
@@ -679,6 +692,13 @@ public class GUIScript : MonoBehaviour {
 		}
 
 		standard.y += 30;
+		GUI.Label(standard, "Switch Grenade: ");
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.GrenadeSwitch].ToString())){
+			editedBinding = GameManager.KeyBind.GrenadeSwitch;
+			displayChangeKeybindWindow = true;
+		}
+
+		standard.y += 30;
 		GUI.Label(standard, "Interact: ");
 		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Interact].ToString())){
 			editedBinding = GameManager.KeyBind.Interact;
@@ -702,6 +722,7 @@ public class GUIScript : MonoBehaviour {
 			PlayerPrefs.SetInt("bindReload", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Reload] );
 			PlayerPrefs.SetInt("bindGrenade", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Grenade] );
 			PlayerPrefs.SetInt("bindInteract", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Interact] );
+			PlayerPrefs.SetInt("bindGrenadeSwitch",	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.GrenadeSwitch]);
 
 			currentWindow = (int) Menu.Options;
 		}
