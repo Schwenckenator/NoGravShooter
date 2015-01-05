@@ -83,8 +83,8 @@ public class GUIScript : MonoBehaviour {
 	public string weapon2Name;
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
-	private int spawnWeapon1 = 0;
-	private int spawnWeapon2 = 7;
+    private int spawnWeapon1;
+    private int spawnWeapon2;
 	
 	GameManager.KeyBind editedBinding;
 
@@ -104,20 +104,30 @@ public class GUIScript : MonoBehaviour {
 		strPortNum = PlayerPrefs.GetString("portNumber", "25000");
 		ipAddress = PlayerPrefs.GetString("ipAddress", "127.0.0.1");
 
-		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 15);
-		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 10);
+		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 10);
+		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 5);
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
+
+        PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity);
+        PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity);
+        PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
+
 		autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
+        PlayerPrefs.SetInt("autoPickup", 0);
 		
-		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 60);
+		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 70);
+        PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
 
 		levelSelectInt = PlayerPrefs.GetInt("levelSelectInt", 0);
 		levelName = levelList[levelSelectInt];
-		
+
+
+        spawnWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
+        spawnWeapon2 = PlayerPrefs.GetInt("2ndWeapon", 7);
+
 		weapon1Name = weaponlist[spawnWeapon1];
 		weapon2Name = weaponlist2[spawnWeapon2];
-		spawnWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
-		spawnWeapon2 = PlayerPrefs.GetInt("2ndWeapon", 7);
+
 
 		mouseInverted = (mouseYDirection == 1);
 		autoPickupEnabled = (autoPickup == 1);

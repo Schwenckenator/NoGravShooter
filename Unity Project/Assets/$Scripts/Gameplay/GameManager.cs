@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
 		keyBindings[(int)GameManager.KeyBind.RollLeft]		= (KeyCode)PlayerPrefs.GetInt("bindRollLeft", (int)KeyCode.Q);
 		keyBindings[(int)GameManager.KeyBind.RollRight] 	= (KeyCode)PlayerPrefs.GetInt("bindRollRight", (int)KeyCode.E);
 		keyBindings[(int)GameManager.KeyBind.JetUp]			= (KeyCode)PlayerPrefs.GetInt("bindJetUp", (int)KeyCode.Space);
-		keyBindings[(int)GameManager.KeyBind.JetDown] 		= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.X);
+		keyBindings[(int)GameManager.KeyBind.JetDown] 		= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.LeftShift);
 		
 		keyBindings[(int)GameManager.KeyBind.Reload] 		= (KeyCode)PlayerPrefs.GetInt("bindReload", (int)KeyCode.R);
 		keyBindings[(int)GameManager.KeyBind.Grenade] 		= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
@@ -152,6 +152,12 @@ public class GameManager : MonoBehaviour {
 		if(Input.GetKeyDown(KeyCode.F1)){
 			testMode = !testMode;
 		}
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            if (testMode) {
+                PlayerPrefs.DeleteAll();
+                Debug.Log("PlayerPrefs Wiped!");
+            }
+        }
 		if(!GameManager.SceneIsMenu()){
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				CursorVisible(!paused);

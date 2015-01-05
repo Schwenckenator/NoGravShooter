@@ -34,7 +34,9 @@ public class FireWeapon : MonoBehaviour {
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		int[] temp = manager.GetStartingWeapons();
 		foreach(int id in temp){
-			AddWeapon(id);
+            if (id < GameManager.weapon.Count) {
+                AddWeapon(id);
+            }
 		}
 
 		currentInventorySlot = 0;
