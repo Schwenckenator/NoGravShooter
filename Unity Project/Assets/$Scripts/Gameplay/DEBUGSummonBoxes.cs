@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class DEBUGSummonBoxes : MonoBehaviour {
-
-	public GameObject box;
+    [SerializeField]
+	private GameObject box;
 
 
 	// Update is called once per frame

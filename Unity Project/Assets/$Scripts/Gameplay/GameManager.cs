@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour {
 	// *****************Test Mode Variable************************
 	public static bool testMode = true;
 	// ***********************************************************
-	public static bool paused;
+	
+    private static bool paused;
 
 
 	private MouseLook cameraLook;
@@ -14,12 +15,14 @@ public class GameManager : MonoBehaviour {
 	private FireWeapon fireWeapon;
 	private PlayerResources playerResources;
 
-	public static int maxStartingWeapons = 2;
+    [SerializeField]
+	private static int maxStartingWeapons = 2;
 	private int[] startingWeapons = new int[maxStartingWeapons];
 
 	private bool myPlayerSpawned = false;
 
-	public GameObject playerPrefab;
+    [SerializeField]
+	private GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
 	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch};
@@ -200,6 +203,10 @@ public class GameManager : MonoBehaviour {
 	public void ManagerDetachCamera(){
 		cameraMove.DetachCamera();
 	}
+
+    public static int GetMaxStartingWeapons() {
+        return maxStartingWeapons;
+    }
 
 	void OnApplicationQuit(){
 		if(Network.isClient || Network.isServer){

@@ -3,7 +3,8 @@ using System.Collections;
 
 [RequireComponent(typeof(ObjectCleanUp))]
 public class BonusHealthPackPickup : MonoBehaviour {
-	public int healStrength;
+	[SerializeField]
+    private int healStrength;
 
 	void OnTriggerEnter(Collider info){
 		if(info.CompareTag("Player")){

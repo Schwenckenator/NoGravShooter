@@ -3,10 +3,13 @@ using System.Collections;
 
 [RequireComponent(typeof(ObjectCleanUp))]
 public class BonusWeaponPickup : MonoBehaviour {
-	public GameObject[] weaponModelsArray;
-	private GameObject currentWeaponModel;
+	[SerializeField]
+    private GameObject[] weaponModelsArray;
+	
+    private GameObject currentWeaponModel;
 
-	public int id;
+    [SerializeField]
+	private int id;
 	private GameManager manager;
 	private FireWeapon weapon;
 	private int autoPickup = 0;
@@ -58,7 +61,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 				autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
 				weapon = info.GetComponent<FireWeapon>();
 				weaponcount = weapon.NumberWeaponsHeld();
-				maxweaponcount = GameManager.maxStartingWeapons;
+				maxweaponcount = GameManager.GetMaxStartingWeapons();
 				currentInventorySlot = weapon.CurrentWeaponSlot();
 			}
 		}

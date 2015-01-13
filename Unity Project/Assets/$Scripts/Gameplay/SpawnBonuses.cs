@@ -5,10 +5,14 @@ using System.Collections.Generic;
 public class SpawnBonuses : MonoBehaviour {
 
 	#region Public Fields
-	public float bonusSpawnDelay;
-	public float bonusProbability;
-	public GameObject[] bonuses;
-	public int maxBonuses;
+    [SerializeField]
+	private float bonusSpawnDelay;
+    [SerializeField]
+	private float bonusProbability;
+    [SerializeField]
+	private GameObject[] bonuses;
+    [SerializeField]
+	private int maxBonuses;
 	#endregion
 
 	private GameObject[] bonusSpawnPoints;

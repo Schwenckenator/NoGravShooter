@@ -2,28 +2,40 @@
 using System.Collections;
 
 public class PlayerResources : MonoBehaviour {
-	#region Public Declarations
-	public AudioClip soundOverheat;
-	public AudioClip soundJetpackRecharge;
-	public AudioClip soundChangeWeapon;
+	#region Declarations
+    
+    [SerializeField]
+	private AudioClip soundOverheat;
+    [SerializeField]
+    private AudioClip soundJetpackRecharge;
+    [SerializeField]
+    private AudioClip soundChangeWeapon;
 
-	public AudioClip soundJetpackEmpty;
-	public float volumeJetpackEmpty;
-	public AudioClip soundJetpackShutoff;
-	public float volumeJetpackShutoff;
+    [SerializeField]
+    private AudioClip soundJetpackEmpty;
+    [SerializeField]
+    private float volumeJetpackEmpty;
+    [SerializeField]
+    private AudioClip soundJetpackShutoff;
+    [SerializeField]
+    private float volumeJetpackShutoff;
 
-	public int maxFuel = 150;
-	public int maxHealth = 100;
-	public int maxHeat = 100;
+    [SerializeField]
+    private int maxFuel = 150;
+    [SerializeField]
+    private int maxHealth = 100;
+    [SerializeField]
+    private int maxHeat = 100;
 
-	public float fuelRecharge = 50;
-	public float maxRechargeWaitTime = 1.0f;
-	public float heatOverheat = 30;
-	public float heatCooldownWaitTime = 2.0f;
+    [SerializeField]
+    private float fuelRecharge = 50;
+    [SerializeField]
+    private float maxRechargeWaitTime = 1.0f;
+    [SerializeField]
+    private float heatOverheat = 30;
+    [SerializeField]
+    private float heatCooldownWaitTime = 2.0f;
 
-	#endregion
-
-	#region Private Declarations
 	private GameManager manager;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;

@@ -3,9 +3,10 @@ using System.Collections;
 
 [RequireComponent(typeof(ObjectCleanUp))]
 public class BonusGrenadePackPickup : MonoBehaviour {
-
-	public int amount;
-	public int grenadeType;
+    [SerializeField]
+	private int amount;
+    [SerializeField]
+	private int grenadeType;
 
 	void Start(){
 		//Randomise here, just for now

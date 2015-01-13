@@ -18,33 +18,52 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private bool jetPackOn;
 	private int magnetPower; // 0-4 is on, 5 is off
 
-	public AudioClip[] soundFootsteps;
-	public float volumeFootsteps;
-	public AudioClip soundJetpack;
-	public float volumeJetpack;
-	public AudioClip soundJetpackEmpty;
-	public float volumeJetpackEmpty;
-	public AudioClip soundJetpackShutoff;
-	public float volumeJetpackShutoff;
+    [SerializeField]
+    private AudioClip[] soundFootsteps;
+    [SerializeField]
+    private float volumeFootsteps;
+    [SerializeField]
+    private AudioClip soundJetpack;
+    [SerializeField]
+    private float volumeJetpack;
+    [SerializeField]
+    private AudioClip soundJetpackEmpty;
+    [SerializeField]
+    private float volumeJetpackEmpty;
+    [SerializeField]
+    private AudioClip soundJetpackShutoff;
+    [SerializeField]
+    private float volumeJetpackShutoff;
+    [SerializeField]
 
 	private bool jetpackSoundWasPlayed = false;
 	private bool playJetSound = false;
 	private bool playWalkingSound = false;
 
-	public float maxLandingAngle = 45f;
-	public float speed = 10.0f;
-	public float rollSpeed = 3.0f;
-	public float maxVelocityChange = 10.0f;
-	public bool canJump = true;
-	public float jumpForce = 40.0f;
-	public float airPitchSensitivity = 2.0f;
+    [SerializeField]
+    private float maxLandingAngle = 45f;
+    [SerializeField]
+    private float speed = 10.0f;
+    [SerializeField]
+    private float rollSpeed = 3.0f;
+    [SerializeField]
+    private float maxVelocityChange = 10.0f;
+    [SerializeField]
+    private bool canJump = true;
+    [SerializeField]
+    private float jumpForce = 40.0f;
+    [SerializeField]
+    private float airPitchSensitivity = 2.0f;
 
-	public float sqrWalkingSoundVelocity;
+
+    [SerializeField]
+    private float sqrWalkingSoundVelocity;
 
 	private bool grounded = false;
 	private bool inAirFlag = false;
 
-	public float fuelSpend = 0.5f;
+    [SerializeField]
+    private float fuelSpend = 0.5f;
 
 	private bool ragdoll = false;
 
@@ -449,23 +468,23 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void OnCollisionStay (Collision info) {
 		if(networkView.isMine){
-			Vector3 surfaceNorm = SurfaceNormal(info);
-			float angle = Vector3.Angle(transform.up, surfaceNorm);
+            if (info.collider.CompareTag("Walkable")) {
+                Vector3 surfaceNorm = SurfaceNormal(info);
+                float angle = Vector3.Angle(transform.up, surfaceNorm);
 
-			if(angle > 1f && angle < maxLandingAngle){
-				SnapToSurface(surfaceNorm);
-			}
+                if (angle > 1f && angle < maxLandingAngle) {
+                    SnapToSurface(surfaceNorm);
+                }
 
-			RaycastHit hit;
-			if(Physics.Raycast(transform.position, -transform.up, out hit, 1.10f)){
-				grounded = true; 
-				magnetPower = 0;
-			}else{ // Hit a roof or some shit
-				rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
-			}
-
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, -transform.up, out hit, 1.10f)) {
+                    grounded = true;
+                    magnetPower = 0;
+                } else { // Hit a roof or some shit
+                    rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
+                }
+            }
 		}
-		
 	}
 	#endregion
 	void LockMouseLook(bool inAir){

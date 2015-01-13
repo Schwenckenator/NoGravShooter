@@ -3,10 +3,19 @@ using System.Collections;
 
 public class AimingFOVChanger : MonoBehaviour {
 
-	public float minFOV;
-	private float maxFOV;
-	public float zoomSpeed;
-	public float sniperFOV;
+    //public float minFOV;
+    //private float maxFOV;
+    //public float zoomSpeed;
+    //public float sniperFOV;
+
+    private float maxFOV;
+
+    [SerializeField]
+    private float minFOV;
+    [SerializeField]
+    private float zoomSpeed;
+    [SerializeField]
+    private float sniperFOV;
 	
 	private FireWeapon fireWeapon;
 	

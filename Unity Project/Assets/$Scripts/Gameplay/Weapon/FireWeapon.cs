@@ -15,7 +15,7 @@ public class FireWeapon : MonoBehaviour {
 	
 	public static int startingWeapon1 = 99;
 	public static int startingWeapon2 = 99;
-	private bool needWeapons = true;
+	//private bool needWeapons = true;
 	
 	PlayerResources resource;
 
