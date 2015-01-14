@@ -20,9 +20,10 @@ public class MouseLook : MonoBehaviour {
 	//private GameManager manager;
 	private bool ragdoll = false;
 
-	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2 }
+	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2, MouseNone }
 	public RotationAxes axes = RotationAxes.MouseXAndY;
-	public float sensitivityX = 15F;
+    public float maxSensitivity = 15f;
+    public float sensitivityX = 15F;
 	public float sensitivityY = 15F;
 
 	public float minimumX = -360F;
@@ -44,6 +45,7 @@ public class MouseLook : MonoBehaviour {
 
 		sensitivityX = PlayerPrefs.GetFloat("sensitivityX");
 		sensitivityY = PlayerPrefs.GetFloat("sensitivityY");
+
 	}
 
 	void Update ()
@@ -51,23 +53,23 @@ public class MouseLook : MonoBehaviour {
 		if(ragdoll) return;
 
 		if(!GameManager.IsPaused()){
-				zoomCameraSlow = cameraFOV.zoomRotationRatio();
+            zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)
 			{
-				float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX * zoomCameraSlow;
-				
-				rotationY += Input.GetAxis("Mouse Y") * sensitivityY * zoomCameraSlow;
+                float rotationX = transform.localEulerAngles.y + Input.GetAxis("Mouse X") * sensitivityX * maxSensitivity * zoomCameraSlow;
+
+                rotationY += Input.GetAxis("Mouse Y") * sensitivityY * maxSensitivity * zoomCameraSlow;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 				
 				transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
 			}
 			else if (axes == RotationAxes.MouseX)
 			{
-				transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX * zoomCameraSlow, 0);
+                transform.Rotate(0, Input.GetAxis("Mouse X") * sensitivityX * maxSensitivity * zoomCameraSlow, 0);
 			}
-			else
+			else if (axes == RotationAxes.MouseY)
 			{
-				rotationY += Input.GetAxis("Mouse Y") * sensitivityY * zoomCameraSlow;
+                rotationY += Input.GetAxis("Mouse Y") * sensitivityY * maxSensitivity * zoomCameraSlow;
 				rotationY = Mathf.Clamp (rotationY, minimumY, maximumY);
 
 				transform.localEulerAngles = new Vector3(rotationY * yDirection, transform.localEulerAngles.y, 0);

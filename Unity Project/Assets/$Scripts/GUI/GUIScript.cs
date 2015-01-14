@@ -70,8 +70,8 @@ public class GUIScript : MonoBehaviour {
 	private string password = "";
 	private string strPortNum = "";
 	
-	private float xMouseSensitivity = 15f;
-	private float yMouseSensitivity = 10f;
+	private float xMouseSensitivity = 50f;
+	private float yMouseSensitivity = 50f;
 	
 	private float FOVsetting = 60f;
 
@@ -123,12 +123,12 @@ public class GUIScript : MonoBehaviour {
 		strPortNum = PlayerPrefs.GetString("portNumber", "25000");
 		ipAddress = PlayerPrefs.GetString("ipAddress", "127.0.0.1");
 
-		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 10);
-		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 5);
+		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 0.5f) * 100; // Store as floats in playerPrefs
+		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 0.5f) * 100; // Display as percentage
 		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
 
-        PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity);
-        PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity);
+        PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity * 0.01f);
+        PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity * 0.01f);
         PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
 
 		autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
@@ -599,14 +599,14 @@ public class GUIScript : MonoBehaviour {
 		xMouseSensitivity = (float)System.Math.Round (xMouseSensitivity, 1);
 		xMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), xMouseSensitivity.ToString()));
 		standard.y += 20;
-		xMouseSensitivity = GUI.HorizontalSlider(standard, xMouseSensitivity, 5, 25);
+		xMouseSensitivity = GUI.HorizontalSlider(standard, xMouseSensitivity, 0, 100);
 		
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity Y: ");
 		yMouseSensitivity = (float)System.Math.Round (yMouseSensitivity, 1);
 		yMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), yMouseSensitivity.ToString()));
 		standard.y += 20;
-		yMouseSensitivity = GUI.HorizontalSlider(standard, yMouseSensitivity, 5, 15);
+		yMouseSensitivity = GUI.HorizontalSlider(standard, yMouseSensitivity, 0, 100);
 		
 		standard.y += 40;
 		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
@@ -631,8 +631,8 @@ public class GUIScript : MonoBehaviour {
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-			PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity);
-			PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity);
+			PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity * 0.01f);
+            PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity * 0.01f);
 
 			if(mouseInverted){
 				mouseYDirection = 1;

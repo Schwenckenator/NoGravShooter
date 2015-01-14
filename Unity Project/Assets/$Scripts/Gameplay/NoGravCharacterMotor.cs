@@ -13,6 +13,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private PlayerResources resource;
 
 	private MouseLook cameraLook; // Camera Mouse Look
+    private AimingFOVChanger cameraFOV;
 	private Transform cameraTransform;
 
 	private bool jetPackOn;
@@ -53,7 +54,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
     [SerializeField]
     private float jumpForce = 40.0f;
     [SerializeField]
-    private float airPitchSensitivity = 2.0f;
+    private float airPitchSensitivity = 10.0f;
+    private float mouseSensitivityY;
 
 
     [SerializeField]
@@ -81,6 +83,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
+        cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
 		rigidbody.freezeRotation = true;
 		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
@@ -95,6 +98,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		feetAudio.volume = volumeFootsteps;
 		StartCoroutine("PlayFeetSound");
+
+        mouseSensitivityY = PlayerPrefs.GetFloat("sensitivityY");
 
 	}
 	#endregion
@@ -112,13 +117,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		// If exclusive input
 		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack]) ){
-			//Move forward
+			//Move Forward
 			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward])){
 				if(vertical < 0.0f) vertical = 0.0f;
 				vertical = Mathf.MoveTowards(vertical, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
-			//Move back
+			//Move Back
 			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack])){
 				if(vertical > 0.0f) vertical = 0.0f;
 				vertical = Mathf.MoveTowards(vertical, -1.0f, 3*Time.deltaTime);
@@ -152,13 +157,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		// If exclusive input
 		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown]) ){
-			//Move forward
+			//Move Up
 			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp])){
 				if(jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
 				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
-			//Move back
+			//Move Down
 			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown])){
 				if(jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
 				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3*Time.deltaTime);
@@ -172,12 +177,12 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		// If exclusive input
 		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollRight]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft]) ){
-			//Move forward
+			//Roll Right
 			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollRight])){
 				if(roll > 0.0f) roll = 0.0f;
 				roll = Mathf.MoveTowards(roll, -1.0f, 3*Time.deltaTime);
 			}
-			//Move back
+			//Roll Left
 			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft])){
 				if(roll < 0.0f) roll = 0.0f;
 				roll = Mathf.MoveTowards(roll, 1.0f, 3*Time.deltaTime);
@@ -341,7 +346,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if(GameManager.IsPaused()){
 				torque = Vector3.zero;
 			}else{
-				torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * cameraLook.GetYDirection(), 0, roll); // the change wanted
+				torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * mouseSensitivityY * cameraLook.GetYDirection() * cameraFOV.zoomRotationRatio(), 0, roll); // the change wanted
 			}
 			torque = torque * rollSpeed;
 			transform.Rotate(torque);
@@ -497,7 +502,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			}
 
 		}else {
-			cameraLook.sensitivityY = 10;
+            cameraLook.sensitivityY = mouseSensitivityY;
 			if(inAirFlag){
 				inAirFlag = false;
 			}
