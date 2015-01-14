@@ -34,7 +34,7 @@ public class ExplosionForceDamage : MonoBehaviour {
 				float distance = (hit.transform.position - transform.position).magnitude;
 				float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
 
-				hit.GetComponent<PlayerResources>().TakeDamage((int)damage);
+				hit.GetComponent<PlayerResources>().TakeDamage((int)damage, GetComponent<ProjectileOwnerName>().ProjectileOwner);
 			}
 		}
 	}

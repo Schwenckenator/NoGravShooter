@@ -34,7 +34,7 @@ public class Assassinations : MonoBehaviour {
 						if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.Interact])){
 							Debug.Log("stab stab stab.");
 							manager.AddToChat("Assassinated " + hit.transform.FindChild("NameText").GetComponent<TextMesh>().text + "!");
-                            resource.TakeDamage(100);
+                            resource.TakeDamage(100, Network.player);
 						}
 					}
 				}

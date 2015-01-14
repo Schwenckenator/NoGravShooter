@@ -126,7 +126,7 @@ public class FireWeapon : MonoBehaviour {
 					//Deal with the shot
 					if(hit.collider.CompareTag("Player")){
 						if(!hit.collider.networkView.isMine){
-							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, manager.playerCurrentName, GameManager.WeaponClassToWeaponId(currentWeapon));
+							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
 						}
 					}else if(hit.collider.CompareTag("BonusPickup")){
 						hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
@@ -151,7 +151,8 @@ public class FireWeapon : MonoBehaviour {
 					}
 				}
 			}else{
-				Network.Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation, 0);
+				shot = Network.Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation, 0) as GameObject;
+                shot.GetComponent<ProjectileOwnerName>().ProjectileOwner = Network.player;
 			}
 			
 

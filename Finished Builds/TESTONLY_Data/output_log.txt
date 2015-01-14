@@ -1,204 +1,23 @@
-Initialize engine version: 4.5.2f1 (9abb1b59b47c)
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
 GfxDevice: creating device client; threaded=1
 Direct3D:
-    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.4052]
-    Renderer: NVIDIA GeForce GT 220
-    Vendor:   NVIDIA
-    VRAM:     978 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2021 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.086 seconds
+Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.064 seconds
 <RI> Initializing input.
 <RI> Input initialized.
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
-WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-Initialize engine version: 4.5.2f1 (9abb1b59b47c)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 9.0c [nvd3dum.dll 9.18.13.4052]
-    Renderer: NVIDIA GeForce GT 220
-    Vendor:   NVIDIA
-    VRAM:     978 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 RAWZ=0 NULL=1 RESZ=0 SlowINTZ=0
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-- Completed reload, in  0.088 seconds
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
-WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-sendto failed with code -1 for char 9 and length 1464.
-sendto failed with code -1 for char 9 and length 1464.
-sendto failed with code -1 for char 9 and length 1464.
-sendto failed with code -1 for char 9 and length 1464.
-UnloadTime: 0.526735 ms
-UnloadTime: 0.481270 ms
-System memory in use before: 21.7 MB.
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 21.7 MB.
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4419.
-Total: 2.620978 ms (FindLiveObjects: 0.446045 ms CreateObjectMapping: 0.070040 ms MarkObjects: 0.488643 ms  DeleteObjects: 0.040959 ms)
-
-System memory in use before: 21.7 MB.
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 21.7 MB.
-
-Unloading 11 unused Assets to reduce memory usage. Loaded Objects now: 4413.
-Total: 2.650059 ms (FindLiveObjects: 0.387883 ms CreateObjectMapping: 0.071678 ms MarkObjects: 0.472668 ms  DeleteObjects: 0.044235 ms)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
-UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
-UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
-ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
-<PlayerCleanup>c__Iterator5:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\PlayerResources.cs:260)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
-UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
-UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
-ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
-<PlayerCleanup>c__Iterator5:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\PlayerResources.cs:260)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
-UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
-UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
-ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
-<PlayerCleanup>c__Iterator5:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\PlayerResources.cs:260)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
-UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
-UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
-ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
-<PlayerCleanup>c__Iterator5:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\PlayerResources.cs:260)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
-UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
-UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
-ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
-<PlayerCleanup>c__Iterator5:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\PlayerResources.cs:260)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
-UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
-UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
-ObjectCleanUp:KillMe() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
-<PlayerCleanup>c__Iterator5:MoveNext() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\PlayerResources.cs:260)
- 
-(Filename: C Line: 0)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
-UnityEngine.Debug:Internal_Log(Int32, String, Object)
-UnityEngine.Debug:Log(Object)
-ObjectCleanUp:KillThisObject() (at C:\Users\Public\Documents\Unity Projects\Git- NoGravShooter\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
- 
-(Filename: C Line: 0)
-
-UnloadTime: 14.436473 ms
-System memory in use before: 20.0 MB.
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 18.2 MB.
-
-Unloading 131 unused Assets to reduce memory usage. Loaded Objects now: 615.
-Total: 2.857722 ms (FindLiveObjects: 0.035634 ms CreateObjectMapping: 0.039730 ms MarkObjects: 0.421060 ms  DeleteObjects: 0.857275 ms)
-
-UnloadTime: 0.414916 ms
-System memory in use before: 18.2 MB.
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 18.2 MB.
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 607.
-Total: 1.948018 ms (FindLiveObjects: 0.025804 ms CreateObjectMapping: 0.023346 ms MarkObjects: 0.415326 ms  DeleteObjects: 0.008601 ms)
-
-UnloadTime: 16.304213 ms
-System memory in use before: 20.0 MB.
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 18.2 MB.
-
-Unloading 131 unused Assets to reduce memory usage. Loaded Objects now: 617.
-Total: 3.555257 ms (FindLiveObjects: 0.031538 ms CreateObjectMapping: 0.031128 ms MarkObjects: 0.350201 ms  DeleteObjects: 1.148905 ms)
-
-UnloadTime: 0.457923 ms
-System memory in use before: 18.2 MB.
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 18.2 MB.
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 610.
-Total: 2.236780 ms (FindLiveObjects: 0.036863 ms CreateObjectMapping: 0.026623 ms MarkObjects: 0.325215 ms  DeleteObjects: 0.011468 ms)
-
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0

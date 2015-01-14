@@ -98,7 +98,7 @@ public class TutorialInstructions : MonoBehaviour {
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
 		yield return new WaitForSeconds(1);
 		//damage player so they can pick up Medikit
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10);
+		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10, Network.player);
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
 		yield return new WaitForSeconds(1);
 		manager.GetComponent<GUIScript>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating...", 6000);

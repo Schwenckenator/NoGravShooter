@@ -35,7 +35,10 @@ public class RocketBurn : MonoBehaviour {
 
 	void OnCollisionEnter(){
 		if(networkView.isMine){
-			Network.Instantiate(rocketBlast, transform.position, Quaternion.identity, 0);
+
+			GameObject projectile = Network.Instantiate(rocketBlast, transform.position, Quaternion.identity, 0) as GameObject;
+            projectile.GetComponent<ProjectileOwnerName>().ProjectileOwner = GetComponent<ProjectileOwnerName>().ProjectileOwner;
+
 			GetComponent<ObjectCleanUp>().KillMe();
 		}
 	}

@@ -48,7 +48,7 @@ public class GUIScript : MonoBehaviour {
 	private Rect smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
 	
 	
-	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind}
+	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions}
 
 	
 	private const string GAME_TYPE = "NoGravShooter";
@@ -59,7 +59,6 @@ public class GUIScript : MonoBehaviour {
 	//private int numOfPlayers = 0;
 	
 	private const int MAX_PLAYERS = 31;
-	private Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
 	
 	private string serverName = "";
 	private string playerName = "";
@@ -84,15 +83,18 @@ public class GUIScript : MonoBehaviour {
 	
 	private bool autoPickupEnabled = false;
 	private int autoPickup = 0;
+
+    private int index = 0; // index for graphics resolutions
+    private bool fullscreen = false;
 	
-	// For Game Settings
-    [SerializeField]
-    private string levelName;
-	string[] levelList = {"FirstLevel","DerilictShipScene","SpaceStationScene"};
-    [SerializeField]
-    private string gameMode = "DeathMatch";
-    [SerializeField]
-    private int killsToWin = 20;
+    //// For Game Settings
+    //[SerializeField]
+    //private string levelName;
+    //string[] levelList = {"FirstLevel","DerilictShipScene","SpaceStationScene"};
+    //[SerializeField]
+    //private string gameMode = "DeathMatch";
+    //[SerializeField]
+    //private int killsToWin = 20;
 	
 	private int levelSelectInt = 0;
 
@@ -105,6 +107,8 @@ public class GUIScript : MonoBehaviour {
 
 	GUIStyle upperLeftTextAlign;
 	GUIStyle lowerLeftTextAlign;
+
+
 	
 	void Start(){
 		manager = GetComponent<GameManager>();
@@ -134,7 +138,7 @@ public class GUIScript : MonoBehaviour {
         PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
 
 		levelSelectInt = PlayerPrefs.GetInt("levelSelectInt", 0);
-		levelName = levelList[levelSelectInt];
+        manager.LevelName = manager.LevelList[levelSelectInt];
 
 
         spawnWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
@@ -208,6 +212,9 @@ public class GUIScript : MonoBehaviour {
 		case (int) Menu.Keybind:
 			GUI.Window ((int) Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
 			break;
+        case (int) Menu.GraphicsOptions:
+            GUI.Window ((int)Menu.GraphicsOptions, largeRect, GraphicsOptionsWindow, "Graphics Options");
+            break;
 		}
 		if(displayGameSettingsWindow){
 			GUI.ModalWindow((int) Menu.GameSettings, smallRect, GameSettingsWindow, "Settings");
@@ -617,6 +624,11 @@ public class GUIScript : MonoBehaviour {
 			currentWindow = (int)Menu.Keybind;
 		}
 
+        standard.y += 50;
+        if (GUI.Button(standard, "Graphics Settings")) {
+            currentWindow = (int)Menu.GraphicsOptions;
+        }
+
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 			PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity);
@@ -643,8 +655,34 @@ public class GUIScript : MonoBehaviour {
 	}
 	#endregion
 
-	#region KeyBindWindow
-	void KeyBindWindow(int windowId){
+    #region GraphicsOptionsWindow
+    void GraphicsOptionsWindow(int windowId) {
+        Rect standard = new Rect(20, 20, -40 + Screen.width / 3, 30);
+        Resolution[] resolutions = Screen.resolutions;
+        int maxIndex = resolutions.Length;
+
+        standard.y += 50;
+        GUI.Label(standard, "Resolution: ");
+        if (GUI.Button(new Rect(100, standard.y, 100, 30), resolutions[index].width + " x " + resolutions[index].height)) {
+            index++;
+            index %= maxIndex;
+        }
+        
+        standard.y += 50;
+        fullscreen = GUI.Toggle(new Rect(standard.x, standard.y, 100, 30), fullscreen, "Fullscreen");
+
+        standard.y += 50;
+        if (GUI.Button(standard, "Back")) {
+
+            Screen.SetResolution(resolutions[index].width, resolutions[index].height, fullscreen);
+
+            currentWindow = (int)Menu.Options;
+        }
+    }
+    #endregion
+
+    #region KeyBindWindow
+    void KeyBindWindow(int windowId){
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
 
 		//Move Forward
@@ -773,15 +811,18 @@ public class GUIScript : MonoBehaviour {
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
 		GUI.Label(new Rect(20, 20, smallRect.width-40, 30), "Map");
-		levelSelectInt = GUI.Toolbar(new Rect(20, 40, smallRect.width-40, 30), levelSelectInt, levelList);
+		levelSelectInt = GUI.Toolbar(new Rect(20, 40, smallRect.width-40, 30), levelSelectInt, manager.LevelList);
 		GUI.Label(new Rect(20, 80, smallRect.width-40, 30), "Starting Weapons");
 		spawnWeapon1 = GUI.Toolbar(new Rect(20, 100, smallRect.width-40, 30), spawnWeapon1, weaponlist);
 		spawnWeapon2 = GUI.Toolbar(new Rect(20, 140, smallRect.width-40, 30), spawnWeapon2, weaponlist2);
+        GUI.Label(new Rect(20, 180, 100, 30), "Kills to Win");
+        manager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 180, 50, 30), manager.KillsToWin.ToString()));
 		if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
 			PlayerPrefs.SetInt ("levelSelectInt", levelSelectInt);
 			PlayerPrefs.SetInt ("1stWeapon", spawnWeapon1);
 			PlayerPrefs.SetInt ("2ndWeapon", spawnWeapon2);
-			levelName = levelList[levelSelectInt];
+            PlayerPrefs.SetInt("KillsToWin", manager.KillsToWin);
+            manager.LevelName = manager.LevelList[levelSelectInt];
 			displayGameSettingsWindow = false;
 		}
 	}
@@ -834,7 +875,7 @@ public class GUIScript : MonoBehaviour {
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
 				// Start game
-				networkView.RPC("LoadLevel", RPCMode.AllBuffered, levelName, lastLevelPrefix + 1);
+                networkView.RPC("LoadLevel", RPCMode.AllBuffered, manager.LevelName, lastLevelPrefix + 1);
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
@@ -842,7 +883,7 @@ public class GUIScript : MonoBehaviour {
 		}
 		
 		string strPlayers = "";
-		foreach(string player in connectedPlayers.Values){
+		foreach(string player in GameManager.connectedPlayers.Values){
 			strPlayers += player + "\n";
 		}
 
@@ -905,6 +946,7 @@ public class GUIScript : MonoBehaviour {
 
 	#region PauseWindow
 	void PauseWindow(int windowId){
+
 		if(manager.IsPlayerSpawned()){
 			string strReturnToGame = "Return to Game"; if(Application.loadedLevelName == "Tutorial") strReturnToGame = "Return to Simulation";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
@@ -912,29 +954,45 @@ public class GUIScript : MonoBehaviour {
 				manager.CursorVisible(false);
 			}
 		}else {
-			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), "Spawn")){
-				manager.Spawn();
-				GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-				foreach(GameObject player in players){
-					if(player.networkView.isMine){
-						res = player.GetComponent<PlayerResources>();
-					}
-				}
-			}
+            if (manager.IsVictor) {
+                GUI.enabled = false;
+                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), manager.VictorName + " has won!");
+                GUI.enabled = true;
+            } else {
+                if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
+                    manager.Spawn();
+                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+                    foreach (GameObject player in players) {
+                        if (player.networkView.isMine) {
+                            res = player.GetComponent<PlayerResources>();
+                        }
+                    }
+                }
+            }
+
 		}
 
 		string strPlayers = "";
-		foreach(string player in connectedPlayers.Values){
+		foreach(string player in GameManager.connectedPlayers.Values){
 			strPlayers += player + "\n";
 		}
 
-		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, upperLeftTextAlign);
+		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-190), strPlayers, upperLeftTextAlign);
 		
 		if(Network.isServer){
-			string strShutdown = "Shutdown Server"; if(Application.loadedLevelName == "Tutorial") strShutdown = "Shutdown Simulation";
-			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), strShutdown)){
-				BackToMainMenu();
-			}
+            if (Application.loadedLevelName == "Tutorial") {
+                if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Simulation")) {
+                    BackToMainMenu();
+                }
+            } else {
+                if (GUI.Button(new Rect(20, largeRect.height - 80, largeRect.width / 3, 30), "Return to Lobby")) {
+                    ReturnToLobby();
+                }
+                if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Server")) {
+                    BackToMainMenu();
+                }
+            }
+
 		}else{
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Disconnect")){
 				BackToMainMenu();
@@ -999,12 +1057,14 @@ public class GUIScript : MonoBehaviour {
 	
 	[RPC]
 	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
-		connectedPlayers.Add(newPlayer, newPlayerName);
+        GameManager.connectedPlayers.Add(newPlayer, newPlayerName);
+        ScoreAndVictoryTracker.playerScores.Add(newPlayer, 0);
 	}
 	
 	[RPC]
 	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
-		connectedPlayers.Remove(disconnectedPlayer);
+        GameManager.connectedPlayers.Remove(disconnectedPlayer);
+        ScoreAndVictoryTracker.playerScores.Remove(disconnectedPlayer);
 	}
 
 
@@ -1017,7 +1077,7 @@ public class GUIScript : MonoBehaviour {
 		//stops tutorial scripts showing after you leave and start a game
 		lastLevelPrefix = levelPrefix;
 
-		manager.playerCurrentName = playerName;
+		manager.CurrentPlayerName = playerName;
 
 		Network.SetSendingEnabled(0, false);
 		Network.isMessageQueueRunning = false;
@@ -1072,7 +1132,8 @@ public class GUIScript : MonoBehaviour {
 		
 		//Reset Varibles
 		//numOfPlayers = 0;
-		connectedPlayers.Clear();
+        GameManager.connectedPlayers.Clear();
+        ScoreAndVictoryTracker.playerScores.Clear();
 		submittedChat = "";
 		currentChat = "";
 	}
@@ -1085,5 +1146,27 @@ public class GUIScript : MonoBehaviour {
 		Application.LoadLevel("MenuScene");
 
 	}
+
+    void ReturnToLobby() {
+
+        networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
+        networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MenuScene", lastLevelPrefix + 1);
+    }
+
+    [RPC]
+    void RPCReturnToLobby() {
+        currentWindow = (int)Menu.Lobby;
+
+        // Keep the players, but wipe the scores
+        Dictionary<NetworkPlayer, int> buffer = new Dictionary<NetworkPlayer, int>();
+        foreach (NetworkPlayer player in ScoreAndVictoryTracker.playerScores.Keys) {
+            buffer.Add(player, 0);
+        }
+        ScoreAndVictoryTracker.playerScores = buffer;
+
+        //Clear data about a winner, the games over yo
+        manager.IsVictor = false;
+        manager.VictorName = "";
+    }
 
 }

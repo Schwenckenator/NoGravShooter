@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour {
 	
     private static bool paused;
 
+    public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
+
 
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
@@ -32,7 +34,57 @@ public class GameManager : MonoBehaviour {
 
 	private GUIScript gameGUI;
 
-	public string playerCurrentName;
+    private string currentPlayerName;
+    public string CurrentPlayerName {
+        get { return currentPlayerName; }
+        set { currentPlayerName = value; }
+    }
+
+    private NetworkPlayer currentPlayer;
+    public NetworkPlayer CurrentPlayer {
+        get { return currentPlayer; }
+        set { currentPlayer = value; }
+    }
+
+    // For Game Settings
+    string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
+    public string[] LevelList {
+        get { return levelList; }
+    }
+    
+    [SerializeField]
+    private string levelName;
+    public string LevelName {
+        get { return levelName; }
+        set { levelName = value; }
+    }
+
+    [SerializeField]
+    private string gameMode = "DeathMatch";
+    public string GameMode {
+        get { return gameMode; }
+        set { gameMode = value; }
+    }
+    
+    [SerializeField]
+    private int killsToWin;
+    public int KillsToWin {
+        get { return killsToWin; }
+        set { killsToWin = value; }
+    }
+
+    bool isVictor = false;
+
+    public bool IsVictor {
+        get { return isVictor; }
+        set { isVictor = value; }
+    }
+    string victorName = "";
+
+    public string VictorName {
+        get { return victorName; }
+        set { victorName = value; }
+    }
 
 
 
@@ -66,6 +118,8 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new ForceShotgunValues());
 		weapon.Add(new RocketLauncherValues());
 		weapon.Add(new PlasmaBlasterValues());
+
+        KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
 
 	}
 

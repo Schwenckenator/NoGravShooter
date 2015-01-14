@@ -94,7 +94,7 @@ public class PlayerResources : MonoBehaviour {
 		}
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
-			TakeDamage(100);
+			TakeDamage(100, Network.player);
 			manager.AddToChat("committed Seppuku!");
 		}
 
@@ -179,7 +179,7 @@ public class PlayerResources : MonoBehaviour {
 		grenades[grenadeId] += amount;
 	}
 	
-	public void TakeDamage(int damage, string fromPlayer = "", int weaponId = -1){
+	public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1){
 		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
 	}
 
@@ -234,7 +234,7 @@ public class PlayerResources : MonoBehaviour {
 	#region RPC
 
 	[RPC]
-	void TakeDamageRPC(int damage, string fromPlayer, int weaponId){
+	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponId){
 
 		if(dying) return; // Don't bother if you are already dying
 
@@ -244,9 +244,10 @@ public class PlayerResources : MonoBehaviour {
 			dying = true;//You is dead nigs
 
 			if(networkView.isMine){
-				if(fromPlayer != "" && weaponId != -1){
-					string killMessage = fromPlayer + KillMessageGenerator(weaponId) + manager.playerCurrentName;
+				if(GameManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
+					string killMessage = GameManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.CurrentPlayerName;
 					manager.AddToChat(killMessage, false);
+                    manager.GetComponent<ScoreAndVictoryTracker>().KillScored(fromPlayer);
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
 				StartCoroutine(PlayerCleanup());

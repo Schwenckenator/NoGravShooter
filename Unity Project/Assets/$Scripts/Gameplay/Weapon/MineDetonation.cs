@@ -35,8 +35,8 @@ public class MineDetonation : MonoBehaviour {
 	void Detonate(){
 
 		//Make something depending on what you are
-		Instantiate(explosion, transform.position, Quaternion.identity);
-
+		GameObject boom = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+        boom.GetComponent<ProjectileOwnerName>().ProjectileOwner = GetComponent<ProjectileOwnerName>().ProjectileOwner;
 		//Then destroy this
 		GetComponent<ObjectCleanUp>().KillMe();
 	}

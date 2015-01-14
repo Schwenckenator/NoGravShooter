@@ -41,7 +41,7 @@ public class ForceShotWarp : MonoBehaviour {
 	}
 
 	void DamagePlayer(PlayerResources input){
-		input.TakeDamage(damage);
+		input.TakeDamage(damage, GetComponent<ProjectileOwnerName>().ProjectileOwner);
 	}
 
 	void PushObject(Rigidbody rigid){
