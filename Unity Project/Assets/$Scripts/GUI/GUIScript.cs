@@ -85,6 +85,14 @@ public class GUIScript : MonoBehaviour {
 	
 	private bool autoPickupEnabled = false;
 	private int autoPickup = 0;
+	
+	
+	private bool MedkitSpawning = true;
+	private int medspawn = 1;
+	private bool GrenadeSpawning = true;
+	private int bombspawn = 1;
+	private bool WeaponSpawning = true;
+	private int gunspawn = 1;
 
     private int index = 0; // index for graphics resolutions
     private bool fullscreen = false;
@@ -99,6 +107,8 @@ public class GUIScript : MonoBehaviour {
     //private int killsToWin = 20;
 	
 	private int levelSelectInt = 0;
+	
+	private int gamemodeSelectInt = 0;
 
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
@@ -135,12 +145,22 @@ public class GUIScript : MonoBehaviour {
 
 		autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
         PlayerPrefs.SetInt("autoPickup", 0);
+
+		medspawn = PlayerPrefs.GetInt("medspawn", 1);
+        PlayerPrefs.SetInt("medspawn", 1);
+		bombspawn = PlayerPrefs.GetInt("bombspawn", 1);
+        PlayerPrefs.SetInt("bombspawn", 1);
+		gunspawn = PlayerPrefs.GetInt("gunspawn", 1);
+        PlayerPrefs.SetInt("gunspawn", 1);
 		
 		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 70);
         PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
 
 		levelSelectInt = PlayerPrefs.GetInt("levelSelectInt", 0);
         manager.LevelName = manager.LevelList[levelSelectInt];
+		
+		gamemodeSelectInt = PlayerPrefs.GetInt("gamemodeSelectInt", 0);
+        manager.GameModeName = manager.GameModeList[gamemodeSelectInt];
 
 
         spawnWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
@@ -150,6 +170,10 @@ public class GUIScript : MonoBehaviour {
 
 		mouseInverted = (mouseYDirection == 1);
 		autoPickupEnabled = (autoPickup == 1);
+		
+		MedkitSpawning = (medspawn == 1);
+		GrenadeSpawning = (bombspawn == 1);
+		WeaponSpawning = (gunspawn == 1);
 
 
 	}
@@ -839,19 +863,30 @@ public class GUIScript : MonoBehaviour {
 
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
-		GUI.Label(new Rect(20, 20, smallRect.width-40, 30), "Map");
-		levelSelectInt = GUI.Toolbar(new Rect(20, 40, smallRect.width-40, 30), levelSelectInt, manager.LevelList);
-		GUI.Label(new Rect(20, 80, smallRect.width-40, 30), "Starting Weapons");
-		spawnWeapon1 = GUI.Toolbar(new Rect(20, 100, smallRect.width-40, 30), spawnWeapon1, weaponlist);
-		spawnWeapon2 = GUI.Toolbar(new Rect(20, 140, smallRect.width-40, 30), spawnWeapon2, weaponlist2);
-        GUI.Label(new Rect(20, 180, 100, 30), "Kills to Win");
-        manager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 180, 50, 30), manager.KillsToWin.ToString()));
-		if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
+		GUI.Label(new Rect(20, 20, 100, 30), "Game Mode");
+		gamemodeSelectInt = GUI.Toolbar(new Rect(20, 40, smallRect.width-40, 30), gamemodeSelectInt, manager.GameModeList);
+		GUI.Label(new Rect(20, 75, 100, 30), "Score Limit");
+        manager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), manager.KillsToWin.ToString()));
+		GUI.Label(new Rect(190, 75, 120, 30), "Time Limit (mins)");
+        manager.TimeLimit = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), manager.TimeLimit.ToString()));
+		GUI.Label(new Rect(410, 75, 90, 30), "Item Spawning");
+		MedkitSpawning = GUI.Toggle(new Rect(520, 75,  80, 30), MedkitSpawning, "Medkits");
+		GrenadeSpawning = GUI.Toggle(new Rect(610, 75,  80, 30), GrenadeSpawning, "Grenades");
+		WeaponSpawning = GUI.Toggle(new Rect(700, 75,  80, 30), WeaponSpawning, "Weapons");
+		
+		GUI.Label(new Rect(20, 105, smallRect.width-40, 30), "Map");
+		levelSelectInt = GUI.Toolbar(new Rect(20, 125, smallRect.width-40, 30), levelSelectInt, manager.LevelList);
+		GUI.Label(new Rect(20, 165, smallRect.width-40, 30), "Starting Weapons");
+		spawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width-40, 30), spawnWeapon1, weaponlist);
+		spawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width-40, 30), spawnWeapon2, weaponlist2);
+        if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
 			PlayerPrefs.SetInt ("levelSelectInt", levelSelectInt);
 			PlayerPrefs.SetInt ("1stWeapon", spawnWeapon1);
 			PlayerPrefs.SetInt ("2ndWeapon", spawnWeapon2);
             PlayerPrefs.SetInt("KillsToWin", manager.KillsToWin);
+            PlayerPrefs.SetInt("TimeLimit", manager.TimeLimit);
             manager.LevelName = manager.LevelList[levelSelectInt];
+            manager.GameModeName = manager.GameModeList[gamemodeSelectInt];
 			displayGameSettingsWindow = false;
 		}
 	}

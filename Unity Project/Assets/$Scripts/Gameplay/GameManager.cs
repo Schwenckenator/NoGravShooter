@@ -58,14 +58,27 @@ public class GameManager : MonoBehaviour {
         get { return levelName; }
         set { levelName = value; }
     }
-
-    [SerializeField]
-    private string gameMode = "DeathMatch";
-    public string GameMode {
-        get { return gameMode; }
-        set { gameMode = value; }
+	
+	string[] gamemodeList = { "DeathMatch", "Team DeathMatch", "Capture the Flags", "Test1", "Test2", "Test3" };
+    public string[] GameModeList {
+        get { return gamemodeList; }
     }
-    
+	
+	[SerializeField]
+    private string gamemodeName;
+    public string GameModeName {
+        get { return gamemodeName; }
+        set { gamemodeName = value; }
+    }
+	
+	
+    [SerializeField]
+    private int timeLimit;
+    public int TimeLimit {
+        get { return timeLimit; }
+        set { timeLimit = value; }
+    }
+
     [SerializeField]
     private int killsToWin;
     public int KillsToWin {
@@ -120,6 +133,8 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new PlasmaBlasterValues());
 
         KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
+		
+        TimeLimit = PlayerPrefs.GetInt("TimiLimit", 30);
 
 	}
 
