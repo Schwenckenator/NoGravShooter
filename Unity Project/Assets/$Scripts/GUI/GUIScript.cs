@@ -69,6 +69,8 @@ public class GUIScript : MonoBehaviour {
 	
 	private string password = "";
 	private string strPortNum = "";
+
+    private string scoreBoardText = "";
 	
 	private float xMouseSensitivity = 50f;
 	private float yMouseSensitivity = 50f;
@@ -296,7 +298,7 @@ public class GUIScript : MonoBehaviour {
 		}
 
         Radar();
-		
+        ScoreBoard();
 	}
 
     void Radar() {
@@ -387,6 +389,33 @@ public class GUIScript : MonoBehaviour {
                 }
             }
         }
+    }
+    void ScoreBoard() {
+        Rect scoreBoard = new Rect(10, 10, 300 , GameManager.connectedPlayers.Count * 20 + 20);
+        GUI.Box(scoreBoard, scoreBoardText);
+    }
+    public void UpdateScoreBoard() {
+        List<NetworkPlayer> playerBuffer = new List<NetworkPlayer>();
+
+        // Sort the players descending score
+        foreach (NetworkPlayer player in GameManager.connectedPlayers.Keys) {
+            int score = ScoreAndVictoryTracker.playerScores[player];
+            int i;
+            for (i = 0; i < playerBuffer.Count; i++) {
+                if (score > ScoreAndVictoryTracker.playerScores[playerBuffer[i]]) {
+                    break;
+                }
+
+            }
+            playerBuffer.Insert(i, player);
+        }
+        // Generate the text for the scoreboard
+        scoreBoardText = ""; // Clear the text for reshuffling
+
+        foreach (NetworkPlayer player in playerBuffer) {
+            scoreBoardText += GameManager.connectedPlayers[player] + ": " + ScoreAndVictoryTracker.playerScores[player] + "\n";
+        }
+        
     }
 	#endregion
 
@@ -1059,12 +1088,16 @@ public class GUIScript : MonoBehaviour {
 	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
         GameManager.connectedPlayers.Add(newPlayer, newPlayerName);
         ScoreAndVictoryTracker.playerScores.Add(newPlayer, 0);
+
+        UpdateScoreBoard();
 	}
 	
 	[RPC]
 	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
         GameManager.connectedPlayers.Remove(disconnectedPlayer);
         ScoreAndVictoryTracker.playerScores.Remove(disconnectedPlayer);
+
+        UpdateScoreBoard();
 	}
 
 
@@ -1084,6 +1117,8 @@ public class GUIScript : MonoBehaviour {
 		rpcDisabled = true;
 
 		Network.SetLevelPrefix(levelPrefix);
+
+        UpdateScoreBoard();
 
 		Application.LoadLevel(level);
 

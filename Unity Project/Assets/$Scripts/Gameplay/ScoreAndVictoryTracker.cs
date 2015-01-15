@@ -13,14 +13,22 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
 
     public void KillScored(NetworkPlayer player) {
         Debug.Log(GameManager.connectedPlayers[player] + "kills");
+        networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player);
+    }
+
+    [RPC]
+    private void RPCKillScored(NetworkPlayer player) {
         playerScores[player] += 1;
         CheckForVictory();
+        manager.GetComponent<GUIScript>().UpdateScoreBoard();
     }
 
     void CheckForVictory() {
         foreach (NetworkPlayer player in playerScores.Keys) {
             if (playerScores[player] >= manager.KillsToWin) {
-                manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
+                if (Network.isServer) {
+                    manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
+                }
                 manager.IsVictor = true;
                 manager.VictorName = GameManager.connectedPlayers[player];
             }

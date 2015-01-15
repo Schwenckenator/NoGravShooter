@@ -7,17 +7,173 @@ Direct3D:
     VRAM:     2021 MB (via DXGI)
     Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
 Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.064 seconds
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.069 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2021 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.063 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2021 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.065 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\System.Core.dll (this message is harmless)
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\System.Core.dll (this message is harmless)
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\System.Core.dll (this message is harmless)
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+UnloadTime: 0.308501 ms
+UnloadTime: 0.289548 ms
+UnloadTime: 0.284008 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4510.
+Total: 1.561461 ms (FindLiveObjects: 0.197406 ms CreateObjectMapping: 0.037323 ms MarkObjects: 0.386647 ms  DeleteObjects: 0.021577 ms)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4505.
+Total: 1.473110 ms (FindLiveObjects: 0.190699 ms CreateObjectMapping: 0.035U65nls MarkObjects: 0 Serialized files (Serialized files now 
+
+loaded: 0 / Dirty serialized files: 0)
+
+Unloading 12 unused Assets to reduce memory usage. Loaded Objects now: 4504.
+Total: 1.844303 ms (FindLiveObjects: 0.199447 ms CreateObjectMapping: 0.037906 ms MarkObjects: 0.370610 ms  DeleteObjects: 0.020994 ms)
+
+0
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+1
+ 
+(Filename: C:/BuildAgent/work/d63df16
+ 
+1Filename:rtifBuitsdAgtandalonePlayerGenerated0/artifacts/StandalonePlaye: 49)
+
+ated/UnityEngineDebug.cpp Line: 49)
+
+Schwenckenatorkills
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+Schwenckenatorkills
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+1
+ 
+(Filename: C:/BuildAgent/work/d63dfc638519
+ 
+(Filenamct /S
+/Buildonenl/yorkidedAgedtU8ir1k0b60d/Dcrb3g8ctp/Stnn/altifP
+c
+ts/StandalonePlayerGenerated/UnicppEngineDe49)
+
+cpp Line: 49)
+
+The server has disconnected from the clies discMonnected from the client. Most likely
+ t
+(Fhlenasme:  Line:shut )
+
+n.
+ 
+(Filename:  Line: 745)
+
+UnloadTime: 6.540060 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 127 unused Assets to reduce memory usage. Loaded Objects now: 715.
+Total: 1.588579 ms (FindLiveObjects: 0.022743 ms CreateObjectMapping: 0.024201 ms MarkObjects: 0.226856 ms  DeleteObjects: 0.367111 ms)
+
+UnloadTime: 13.371127 ms
+UnloadTime: 14.163959 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialinload files:Unuse
+d
+U loadiing 12 7 ues (Serializet fileds nomemloaded usag/ DiLoty serObjects now:es: 0)
+
+Unloading 1276 ms (Findssets tveOrejduce me.053360 ms Creoaded ObjtMapping: 0.052
+Total: ar.kObjectms (FindLiveObs  Delet0Ob06006s: 0s Cr4013 ms)
+
+Mapping: 0.051611 ms MarkObjects: 0.524277 ms  DeleteObjects: 0.859022 ms)
+
+UnloadTime: 0.804786 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 706.
+Total: 2.804799 ms (FindLiveObjects: 0.047529 ms CreateObjectMapping: 0.052194 ms MarkObjects: 0.494244 ms  DeleteObjects: 0.011080 ms)
+

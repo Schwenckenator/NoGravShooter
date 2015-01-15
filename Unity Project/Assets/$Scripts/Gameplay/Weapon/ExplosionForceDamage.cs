@@ -8,6 +8,8 @@ public class ExplosionForceDamage : MonoBehaviour {
 	public float explosionRadius;
 	public float maxDamage;
 
+    [SerializeField]
+    private int weaponId;
 
 
 	void Start(){
@@ -15,6 +17,9 @@ public class ExplosionForceDamage : MonoBehaviour {
 	}
 
 	void Bang(){
+
+        Debug.Log("Explosion. Owner Player Number: " + GetComponent<ProjectileOwnerName>().ProjectileOwner.ToString());
+
 		Collider[] hits;
 		hits = Physics.OverlapSphere(transform.position, explosionRadius);
 
@@ -34,7 +39,7 @@ public class ExplosionForceDamage : MonoBehaviour {
 				float distance = (hit.transform.position - transform.position).magnitude;
 				float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
 
-				hit.GetComponent<PlayerResources>().TakeDamage((int)damage, GetComponent<ProjectileOwnerName>().ProjectileOwner);
+				hit.GetComponent<PlayerResources>().TakeDamage((int)damage, GetComponent<ProjectileOwnerName>().ProjectileOwner, weaponId);
 			}
 		}
 	}

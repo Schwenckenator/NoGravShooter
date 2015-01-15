@@ -7,6 +7,9 @@ public class ProjectileOwnerName : MonoBehaviour {
 
     public NetworkPlayer ProjectileOwner {
         get { return projectileOwner; }
-        set { projectileOwner = value; }
+        set { 
+            projectileOwner = value;
+            //Debug.Log(value.ToString());
+        }
     }
 }
