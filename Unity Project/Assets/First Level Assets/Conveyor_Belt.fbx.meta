@@ -18,12 +18,15 @@ ModelImporter:
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002
+    2300006: //RootNode
     3300000: Cube
     3300002: Cube.001
     3300004: Cube.002
+    3300006: //RootNode
     4300000: Cube
     4300002: Cube.002
     4300004: Cube.001
+    4300006: ConveyorB
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -44,7 +47,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 25
+    globalScale: 15
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
