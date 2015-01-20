@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour {
         get { return timeLimit; }
         set { timeLimit = value; }
     }
+	
+	private bool GameInProgress = false;
 
     [SerializeField]
     private int killsToWin;
@@ -134,7 +136,7 @@ public class GameManager : MonoBehaviour {
 
         KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
 		
-        TimeLimit = PlayerPrefs.GetInt("TimiLimit", 30);
+        TimeLimit = PlayerPrefs.GetInt("TimeLimit", 30);
 
 	}
 
@@ -177,6 +179,17 @@ public class GameManager : MonoBehaviour {
 	public int[] GetStartingWeapons(){
 		return startingWeapons;
 	}
+	
+	public void RoundStart(){
+		GameInProgress = true;
+	}
+	public void RoundEnd(){
+		GameInProgress = false;
+	}
+	public bool RoundInProgress(){
+		return GameInProgress;
+	}
+	public float endTime;
 
 
 	public static bool SceneIsMenu(){

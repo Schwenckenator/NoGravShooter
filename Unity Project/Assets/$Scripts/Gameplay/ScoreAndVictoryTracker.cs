@@ -6,10 +6,23 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
 
     public static Dictionary<NetworkPlayer, int> playerScores = new Dictionary<NetworkPlayer, int>();
     private GameManager manager;
+	
+	private NetworkPlayer winningPlayer;
+	
+	private bool roundstarted = false;
 
     void Start() {
         manager = GetComponent<GameManager>();
     }
+	
+	void Update() {
+		if (!manager.RoundInProgress()){
+			manager.endTime = Time.time + (manager.TimeLimit*60);
+		} else if (roundstarted == false){
+			InvokeRepeating("CheckForVictory", 1, 1F);
+			roundstarted = true;
+		}
+	}
 
     public void KillScored(NetworkPlayer player) {
         Debug.Log(GameManager.connectedPlayers[player] + "kills");
@@ -19,11 +32,28 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     [RPC]
     private void RPCKillScored(NetworkPlayer player) {
         playerScores[player] += 1;
-        CheckForVictory();
+        //CheckForVictory();
         manager.GetComponent<GUIScript>().UpdateScoreBoard();
     }
 
     void CheckForVictory() {
+		if(Time.time >= manager.endTime && manager.RoundInProgress()){
+			int maxValue = -1;
+			foreach (NetworkPlayer player in playerScores.Keys) {
+				if (playerScores[player] > maxValue){
+					maxValue = playerScores[player];
+					winningPlayer = player;
+				}
+			}
+			if (Network.isServer) {
+                manager.AddToChat("Time is up.", false);
+                manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
+            }
+            manager.IsVictor = true;
+            manager.VictorName = GameManager.connectedPlayers[winningPlayer];
+			manager.RoundEnd();
+			roundstarted = false;
+		}
         foreach (NetworkPlayer player in playerScores.Keys) {
             if (playerScores[player] >= manager.KillsToWin) {
                 if (Network.isServer) {
@@ -31,6 +61,8 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
                 }
                 manager.IsVictor = true;
                 manager.VictorName = GameManager.connectedPlayers[player];
+				manager.RoundEnd();
+				roundstarted = false;
             }
 
         }

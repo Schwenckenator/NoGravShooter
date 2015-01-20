@@ -106,6 +106,9 @@ public class GUIScript : MonoBehaviour {
     //[SerializeField]
     //private int killsToWin = 20;
 	
+	private float timeLeftMins;
+	private float timeLeftSecs;
+	
 	private int levelSelectInt = 0;
 	
 	private int gamemodeSelectInt = 0;
@@ -319,6 +322,15 @@ public class GUIScript : MonoBehaviour {
 		if(promptShown > 0){
 			GUI.Box(new Rect(Screen.width - 160, Screen.height/2, 150, 30), promptText);
 			promptShown--;
+		}
+		
+		//timer
+		timeLeftMins = Mathf.Floor((manager.endTime - Time.time)/60);
+		timeLeftSecs = Mathf.Floor((manager.endTime - Time.time)-(timeLeftMins*60));
+		if(timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.RoundInProgress()){
+			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), timeLeftMins + ":" + timeLeftSecs);
+		} else {
+			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), "0:0");
 		}
 
         Radar();
@@ -1143,6 +1155,10 @@ public class GUIScript : MonoBehaviour {
 	void LoadLevel(string level, int levelPrefix){
 		tutePromptShown = 0;
 		//stops tutorial scripts showing after you leave and start a game
+		manager.RoundStart();
+		manager.endTime = Time.time + (manager.TimeLimit*60);
+		//stuff for timer
+		
 		lastLevelPrefix = levelPrefix;
 
 		manager.CurrentPlayerName = playerName;
