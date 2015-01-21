@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour {
 	// *****************Test Mode Variable************************
 	public static bool testMode = true;
-	// ***********************************************************
-	
+    // ***********************************************************
+    #region Variable Declarations
     private static bool paused;
 
     public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
@@ -34,6 +34,13 @@ public class GameManager : MonoBehaviour {
 
 	private GUIScript gameGUI;
 
+    private float endTime;
+
+    public float EndTime {
+        get { return endTime; }
+        set { endTime = value; }
+    }
+
     private string currentPlayerName;
     public string CurrentPlayerName {
         get { return currentPlayerName; }
@@ -59,7 +66,7 @@ public class GameManager : MonoBehaviour {
         set { levelName = value; }
     }
 	
-	string[] gamemodeList = { "DeathMatch", "Team DeathMatch", "Capture the Flags", "Test1", "Test2", "Test3" };
+	string[] gamemodeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Test1", "Test2", "Test3" };
     public string[] GameModeList {
         get { return gamemodeList; }
     }
@@ -78,8 +85,13 @@ public class GameManager : MonoBehaviour {
         get { return timeLimit; }
         set { timeLimit = value; }
     }
-	
-	private bool GameInProgress = false;
+
+    private bool gameInProgress = false;
+
+    public bool GameInProgress {
+        get { return gameInProgress; }
+        set { gameInProgress = value; }
+    }
 
     [SerializeField]
     private int killsToWin;
@@ -101,9 +113,9 @@ public class GameManager : MonoBehaviour {
         set { victorName = value; }
     }
 
+    #endregion
 
-
-	void Awake(){
+    void Awake(){
 		DontDestroyOnLoad(gameObject);
 
 		gameGUI = GetComponent<GUIScript>();
@@ -179,17 +191,11 @@ public class GameManager : MonoBehaviour {
 	public int[] GetStartingWeapons(){
 		return startingWeapons;
 	}
-	
-	public void RoundStart(){
-		GameInProgress = true;
-	}
-	public void RoundEnd(){
-		GameInProgress = false;
-	}
-	public bool RoundInProgress(){
-		return GameInProgress;
-	}
-	public float endTime;
+
+    [RPC]
+    public void SetEndTime(float remainingSeconds) {
+        EndTime = Time.time + remainingSeconds;
+    }
 
 
 	public static bool SceneIsMenu(){
@@ -289,6 +295,16 @@ public class GameManager : MonoBehaviour {
     public static int GetMaxStartingWeapons() {
         return maxStartingWeapons;
     }
+
+    // If a player connects mid game,
+    // we need to send an updated remaining time
+    void OnPlayerConnected(NetworkPlayer player) {
+        if (GameInProgress) {
+            networkView.RPC("SetEndTime", player, EndTime - Time.time);
+        }
+    }
+
+
 
 	void OnApplicationQuit(){
 		if(Network.isClient || Network.isServer){
