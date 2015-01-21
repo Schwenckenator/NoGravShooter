@@ -3,9 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GUIScript : MonoBehaviour {
-
-    #region  variable Dec
-    private GameManager manager;
+	//
+	private GameManager manager;
 	
     [SerializeField]
 	private Texture empty;
@@ -57,6 +56,7 @@ public class GUIScript : MonoBehaviour {
 	// For lobby chat
 	private string submittedChat = "";
 	private string currentChat = "";
+	//private int numOfPlayers = 0;
 	
 	private const int MAX_PLAYERS = 31;
 	
@@ -97,6 +97,15 @@ public class GUIScript : MonoBehaviour {
     private int index = 0; // index for graphics resolutions
     private bool fullscreen = false;
 	
+    //// For Game Settings
+    //[SerializeField]
+    //private string levelName;
+    //string[] levelList = {"FirstLevel","DerilictShipScene","SpaceStationScene"};
+    //[SerializeField]
+    //private string gameMode = "DeathMatch";
+    //[SerializeField]
+    //private int killsToWin = 20;
+	
 	private float timeLeftMins;
 	private float timeLeftSecs;
 	
@@ -114,10 +123,9 @@ public class GUIScript : MonoBehaviour {
 	GUIStyle upperLeftTextAlign;
 	GUIStyle lowerLeftTextAlign;
 
-    #endregion
 
-
-    void Start(){
+	
+	void Start(){
 		manager = GetComponent<GameManager>();
 		
 		GameManager.testMode = false;
@@ -317,9 +325,9 @@ public class GUIScript : MonoBehaviour {
 		}
 		
 		//timer
-		timeLeftMins = Mathf.Floor((manager.EndTime - Time.time)/60);
-		timeLeftSecs = Mathf.Floor((manager.EndTime - Time.time)-(timeLeftMins*60));
-		if(timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.GameInProgress){
+		timeLeftMins = Mathf.Floor((manager.endTime - Time.time)/60);
+		timeLeftSecs = Mathf.Floor((manager.endTime - Time.time)-(timeLeftMins*60));
+		if(timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.RoundInProgress()){
 			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), timeLeftMins + ":" + timeLeftSecs);
 		} else {
 			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), "0:0");
@@ -328,6 +336,7 @@ public class GUIScript : MonoBehaviour {
         Radar();
         ScoreBoard();
 	}
+
     void Radar() {
         //radar system
         int radarCenter = 110;
@@ -509,7 +518,7 @@ public class GUIScript : MonoBehaviour {
 		if(!error){
 			Network.InitializeServer(MAX_PLAYERS, portNum, false);
 		}
-		LoadLevel("Tutorial", lastLevelPrefix + 1, int.MaxValue/2); // Because I need a big number
+		LoadLevel("Tutorial", lastLevelPrefix + 1);
 		yield return new WaitForSeconds(1/5f);
 		manager.Spawn();
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -941,10 +950,8 @@ public class GUIScript : MonoBehaviour {
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
-                int secondsInMinute = 5; // low value for testing, change to 60 later
-                int secondsOfGame = manager.TimeLimit * secondsInMinute;
 				// Start game
-                networkView.RPC("LoadLevel", RPCMode.AllBuffered, manager.LevelName, lastLevelPrefix + 1, secondsOfGame);
+                networkView.RPC("LoadLevel", RPCMode.AllBuffered, manager.LevelName, lastLevelPrefix + 1);
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
@@ -1145,18 +1152,12 @@ public class GUIScript : MonoBehaviour {
 	bool rpcDisabled = false;
 
 	[RPC]
-	void LoadLevel(string level, int levelPrefix, int secondsOfGame){
-
-
-        //stops tutorial scripts showing after you leave and start a game
+	void LoadLevel(string level, int levelPrefix){
 		tutePromptShown = 0;
-
+		//stops tutorial scripts showing after you leave and start a game
+		manager.RoundStart();
+		manager.endTime = Time.time + (manager.TimeLimit*60);
 		//stuff for timer
-        if (level != "MenuScene") {
-            manager.GameInProgress = true;
-            manager.GetComponent<ScoreAndVictoryTracker>().GameStart();
-            manager.EndTime = Time.time + secondsOfGame;
-        }
 		
 		lastLevelPrefix = levelPrefix;
 
@@ -1235,9 +1236,7 @@ public class GUIScript : MonoBehaviour {
     void ReturnToLobby() {
 
         networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
-        
-        int dummy = 0;
-        networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MenuScene", lastLevelPrefix + 1, dummy);
+        networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MenuScene", lastLevelPrefix + 1);
     }
 
     [RPC]

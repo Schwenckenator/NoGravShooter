@@ -14,9 +14,15 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     void Start() {
         manager = GetComponent<GameManager>();
     }
-    public void GameStart() {
-        StartCoroutine(CheckForGameEnd());
-    }
+	
+	void Update() {
+		if (!manager.RoundInProgress()){
+			manager.endTime = Time.time + (manager.TimeLimit*60);
+		} else if (roundstarted == false){
+			InvokeRepeating("CheckForVictory", 1, 1F);
+			roundstarted = true;
+		}
+	}
 
     public void KillScored(NetworkPlayer player) {
         Debug.Log(GameManager.connectedPlayers[player] + "kills");
@@ -26,12 +32,12 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     [RPC]
     private void RPCKillScored(NetworkPlayer player) {
         playerScores[player] += 1;
-        CheckForVictory(false);
+        //CheckForVictory();
         manager.GetComponent<GUIScript>().UpdateScoreBoard();
     }
 
-    void CheckForVictory(bool forceVictor) { // Force a victory?
-        if(forceVictor){
+    void CheckForVictory() {
+		if(Time.time >= manager.endTime && manager.RoundInProgress()){
 			int maxValue = -1;
 			foreach (NetworkPlayer player in playerScores.Keys) {
 				if (playerScores[player] > maxValue){
@@ -45,34 +51,20 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
             }
             manager.IsVictor = true;
             manager.VictorName = GameManager.connectedPlayers[winningPlayer];
-            manager.GameInProgress = false;
+			manager.RoundEnd();
 			roundstarted = false;
-        } else {
-            foreach (NetworkPlayer player in playerScores.Keys) {
-                if (playerScores[player] >= manager.KillsToWin) {
-                    if (Network.isServer) {
-                        manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
-                    }
-                    manager.IsVictor = true;
-                    manager.VictorName = GameManager.connectedPlayers[player];
-                    manager.GameInProgress = false;
-                    roundstarted = false;
+		}
+        foreach (NetworkPlayer player in playerScores.Keys) {
+            if (playerScores[player] >= manager.KillsToWin) {
+                if (Network.isServer) {
+                    manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
                 }
-
+                manager.IsVictor = true;
+                manager.VictorName = GameManager.connectedPlayers[player];
+				manager.RoundEnd();
+				roundstarted = false;
             }
-        }
-    }
 
-    IEnumerator CheckForGameEnd() {
-        float waitTime = 1.0f;
-        
-        while(true){
-            yield return new WaitForSeconds(waitTime);
-            if (Time.time >= manager.EndTime && manager.GameInProgress) {
-                CheckForVictory(true);
-                break;
-            }
         }
-
     }
 }
