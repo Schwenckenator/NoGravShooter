@@ -19,7 +19,9 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
 		if (!manager.RoundInProgress()){
 			manager.endTime = Time.time + (manager.TimeLimit*60);
 		} else if (roundstarted == false){
-			InvokeRepeating("CheckForVictory", 1, 1F);
+			if(Application.loadedLevelName != "Tutorial"){
+				InvokeRepeating("CheckForVictory", 1, 1F);
+			}
 			roundstarted = true;
 		}
 	}
@@ -37,22 +39,24 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     }
 
     void CheckForVictory() {
-		if(Time.time >= manager.endTime && manager.RoundInProgress()){
-			int maxValue = -1;
-			foreach (NetworkPlayer player in playerScores.Keys) {
-				if (playerScores[player] > maxValue){
-					maxValue = playerScores[player];
-					winningPlayer = player;
+		if(Application.loadedLevelName != "Tutorial"){
+			if(Time.time >= manager.endTime && manager.RoundInProgress()){
+				int maxValue = -1;
+				foreach (NetworkPlayer player in playerScores.Keys) {
+					if (playerScores[player] > maxValue){
+						maxValue = playerScores[player];
+						winningPlayer = player;
+					}
 				}
+				if (Network.isServer) {
+					manager.AddToChat("Time is up.", false);
+					manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
+				}
+				manager.IsVictor = true;
+				manager.VictorName = GameManager.connectedPlayers[winningPlayer];
+				manager.RoundEnd();
+				roundstarted = false;
 			}
-			if (Network.isServer) {
-                manager.AddToChat("Time is up.", false);
-                manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
-            }
-            manager.IsVictor = true;
-            manager.VictorName = GameManager.connectedPlayers[winningPlayer];
-			manager.RoundEnd();
-			roundstarted = false;
 		}
         foreach (NetworkPlayer player in playerScores.Keys) {
             if (playerScores[player] >= manager.KillsToWin) {

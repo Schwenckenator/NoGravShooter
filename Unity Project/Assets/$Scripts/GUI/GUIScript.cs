@@ -325,16 +325,20 @@ public class GUIScript : MonoBehaviour {
 		}
 		
 		//timer
-		timeLeftMins = Mathf.Floor((manager.endTime - Time.time)/60);
-		timeLeftSecs = Mathf.Floor((manager.endTime - Time.time)-(timeLeftMins*60));
-		if(timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.RoundInProgress()){
-			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), timeLeftMins + ":" + timeLeftSecs);
-		} else {
-			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), "0:0");
+		if(Application.loadedLevelName != "Tutorial"){
+			timeLeftMins = Mathf.Floor((manager.endTime - Time.time)/60);
+			timeLeftSecs = Mathf.Floor((manager.endTime - Time.time)-(timeLeftMins*60));
+			if(timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.RoundInProgress()){
+				GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), timeLeftMins + ":" + timeLeftSecs);
+			} else {
+				GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), "0:0");
+			}
 		}
 
         Radar();
-        ScoreBoard();
+		if(Application.loadedLevelName != "Tutorial"){
+			ScoreBoard();
+		}
 	}
 
     void Radar() {
