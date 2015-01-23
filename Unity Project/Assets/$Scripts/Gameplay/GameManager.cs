@@ -167,7 +167,7 @@ public class GameManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level){
 		CursorVisible(true);
-		if(!GameManager.SceneIsMenu()){
+		if(!GameManager.IsMenuScene()){
 			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 
@@ -198,9 +198,12 @@ public class GameManager : MonoBehaviour {
     }
 
 
-	public static bool SceneIsMenu(){
+	public static bool IsMenuScene(){
 		return Application.loadedLevelName == "MenuScene";
 	}
+    public static bool IsTutorialScene() {
+        return Application.loadedLevelName == "Tutorial";
+    }
 	public static bool IsPaused(){
 		return paused;
 	}
@@ -249,7 +252,7 @@ public class GameManager : MonoBehaviour {
                 Debug.Log("PlayerPrefs Wiped!");
             }
         }
-		if(!GameManager.SceneIsMenu()){
+		if(!GameManager.IsMenuScene()){
 			if(Input.GetKeyDown(KeyCode.Escape)){
 				CursorVisible(!paused);
 				Pause (!paused); // Toggle Pause
