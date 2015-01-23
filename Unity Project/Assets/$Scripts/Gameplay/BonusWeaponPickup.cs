@@ -23,7 +23,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 			maxweaponcount = 99;
 		}
 		if(Network.isServer){
-			networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,6));
+			networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
 			UpdateModel();
 		}
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();

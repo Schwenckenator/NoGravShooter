@@ -387,6 +387,11 @@ public class PlayerResources : MonoBehaviour {
 		currentGrenadeType++;
 		currentGrenadeType %= grenadeTypes; // Keep value within range
 	}
+	
+	public void ChangeGrenadeTypeTo(int typeOfGrenade){
+		currentGrenadeType = typeOfGrenade;
+	}
+	
 
 	public int GetCurrentClip(){
 		return currentWeapon.currentClip;

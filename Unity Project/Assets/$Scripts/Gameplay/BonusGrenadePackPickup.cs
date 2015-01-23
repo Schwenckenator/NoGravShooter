@@ -7,10 +7,11 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 	private int amount;
     [SerializeField]
 	private int grenadeType;
+	private int autoPickup = 0;
 
 	void Start(){
 		//Randomise here, just for now
-		grenadeType = Random.Range(0, 2);
+		grenadeType = Random.Range(0, 3);
 		Debug.Log (grenadeType.ToString());
 	}
 
@@ -19,7 +20,12 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 			
 			PlayerResources res = info.collider.GetComponent<PlayerResources>();
 
+			autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
+			if(autoPickup == 1){
+				res.ChangeGrenadeTypeTo(grenadeType);
+			}
 			res.PickUpGrenades(amount, grenadeType);
+			
 			GetComponent<ObjectCleanUp>().KillMe();
 		}
 	}
