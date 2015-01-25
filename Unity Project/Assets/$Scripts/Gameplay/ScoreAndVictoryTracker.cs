@@ -35,7 +35,8 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
                 if (Network.isServer) {
                     manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
                 }
-                EndGameCleanUp(player);
+                manager.EndGame(player);
+                break;
             }
 
         }
@@ -53,13 +54,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
             manager.AddToChat("Time is up.", false);
             manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
         }
-        EndGameCleanUp(winningPlayer);
-    }
-
-    void EndGameCleanUp(NetworkPlayer winningPlayer) {
-        manager.IsVictor = true;
-        manager.VictorName = GameManager.connectedPlayers[winningPlayer];
-        manager.GameInProgress = false;
+        manager.EndGame(winningPlayer);
     }
 
     IEnumerator CheckForGameEnd() {

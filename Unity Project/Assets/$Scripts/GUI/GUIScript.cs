@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class GUIScript : MonoBehaviour {
     #region ConstantDeclarations
    
-    const int SecondsInMinute = 60;
+    const int SecondsInMinute = 5;
     
     #endregion
     
@@ -424,7 +424,7 @@ public class GUIScript : MonoBehaviour {
         //timer
         timeLeftMins = Mathf.Floor((manager.EndTime - Time.time) / 60);
         timeLeftSecs = Mathf.Floor((manager.EndTime - Time.time) - (timeLeftMins * 60));
-        if (timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.GameInProgress) {
+        if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
         } else {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
@@ -1031,7 +1031,7 @@ public class GUIScript : MonoBehaviour {
 			string strReturnToGame = "Return to Game"; if(Application.loadedLevelName == "Tutorial") strReturnToGame = "Return to Simulation";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
 				manager.Pause(false);
-				manager.CursorVisible(false);
+				manager.SetCursorVisibility(false);
 			}
 		}else {
             if (manager.IsVictor) {
@@ -1221,7 +1221,7 @@ public class GUIScript : MonoBehaviour {
 	}
 	void OnDisconnectedFromServer(){
 		
-		manager.CursorVisible(true);
+		manager.SetCursorVisibility(true);
 		if(!GameManager.IsMenuScene()){
 			Application.LoadLevel("MenuScene");
 		}
@@ -1239,13 +1239,14 @@ public class GUIScript : MonoBehaviour {
 	void BackToMainMenu(){
 
 		if(Network.isClient || Network.isServer){
+            ClearWinnerData();
 			Network.Disconnect();
 		}
 		Application.LoadLevel("MenuScene");
 
 	}
 
-    void ReturnToLobby() {
+    public void ReturnToLobby() {
 
         networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
         
@@ -1265,6 +1266,9 @@ public class GUIScript : MonoBehaviour {
         ScoreAndVictoryTracker.playerScores = buffer;
 
         //Clear data about a winner, the games over yo
+        ClearWinnerData();
+    }
+    void ClearWinnerData() {
         manager.IsVictor = false;
         manager.VictorName = "";
     }

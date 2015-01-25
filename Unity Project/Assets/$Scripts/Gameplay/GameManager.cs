@@ -113,6 +113,9 @@ public class GameManager : MonoBehaviour {
         set { victorName = value; }
     }
 
+    [SerializeField]
+    private int secondsUntilKick = 10;
+
     #endregion
 
     void Awake(){
@@ -166,7 +169,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void OnLevelWasLoaded(int level){
-		CursorVisible(true);
+		SetCursorVisibility(true);
 		if(!GameManager.IsMenuScene()){
 			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
@@ -213,7 +216,7 @@ public class GameManager : MonoBehaviour {
 	public void Spawn(){
 		myPlayerSpawned = true;
 
-		CursorVisible(false);
+		SetCursorVisibility(false);
 		int point = Random.Range(0, spawnPoints.Length);
 		Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
 		cameraMove.Spawn();
@@ -254,7 +257,7 @@ public class GameManager : MonoBehaviour {
         }
 		if(!GameManager.IsMenuScene()){
 			if(Input.GetKeyDown(KeyCode.Escape)){
-				CursorVisible(!paused);
+				SetCursorVisibility(!paused);
 				Pause (!paused); // Toggle Pause
 			}
 			if(Input.GetKeyDown(KeyCode.Alpha1) && myPlayerSpawned){
@@ -287,7 +290,7 @@ public class GameManager : MonoBehaviour {
 	public void Pause(bool input){
 		paused = input;
 	}
-	public void CursorVisible(bool visible){
+	public void SetCursorVisibility(bool visible){
 		Screen.showCursor = visible;
 		Screen.lockCursor = !visible;
 	}
@@ -320,4 +323,23 @@ public class GameManager : MonoBehaviour {
 		Network.RemoveRPCs(player);
 		Network.DestroyPlayerObjects(player);
 	}
+
+    public void EndGame(NetworkPlayer winningPlayer) {
+        isVictor = true;
+        gameInProgress = false;
+        VictorName = GameManager.connectedPlayers[winningPlayer];
+        SetEndTime(secondsUntilKick);
+        if (Network.isServer) {
+            StartCoroutine(KickPlayersAfterGameEnd());
+        }
+    }
+    public void EndGame() {
+        // This method is here for when we enevitably write code for ties/draws
+    }
+    IEnumerator KickPlayersAfterGameEnd() {
+        yield return new WaitForSeconds(secondsUntilKick);
+        if (!gameInProgress && !IsMenuScene()) {
+            GetComponent<GUIScript>().ReturnToLobby();
+        }
+    }
 }

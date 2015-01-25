@@ -24,6 +24,7 @@ public class SpawnBonuses : MonoBehaviour {
 		if(Network.isServer){
             //Determine what bonuses are being spawned this game
             manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+            spawnableBonuses = new List<GameObject>();
 
             bool[] allowedBonuses = manager.GetComponent<GUIScript>().GetAllowedBonuses();
 

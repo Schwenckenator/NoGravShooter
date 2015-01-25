@@ -288,7 +288,7 @@ public class PlayerResources : MonoBehaviour {
 		yield return new WaitForSeconds(3.0f);
 		manager.PlayerDied();
 		manager.ManagerDetachCamera();
-		manager.CursorVisible(true);
+		manager.SetCursorVisibility(true);
 		GetComponent<ObjectCleanUp>().KillMe();
 	}
 
