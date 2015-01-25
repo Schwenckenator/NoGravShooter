@@ -192,7 +192,7 @@ public class GUIScript : MonoBehaviour {
 				connectingNow = false;
 			}
 		}
-		if(GameManager.SceneIsMenu()){
+		if(GameManager.IsMenuScene()){
 			ChooseMenuWindow();
 
 		}else if(GameManager.IsPaused()){
@@ -201,7 +201,7 @@ public class GUIScript : MonoBehaviour {
 		}else if(manager.IsPlayerSpawned()){
 			PlayerGUI();
 			
-		}else if(!GameManager.SceneIsMenu()){
+		}else if(!GameManager.IsMenuScene()){
 			GUI.Window(1, largeRect, PauseWindow, "");
 			
 		}
@@ -315,18 +315,12 @@ public class GUIScript : MonoBehaviour {
 			GUI.Box(new Rect(Screen.width - 160, Screen.height/2, 150, 30), promptText);
 			promptShown--;
 		}
-		
-		//timer
-		timeLeftMins = Mathf.Floor((manager.EndTime - Time.time)/60);
-		timeLeftSecs = Mathf.Floor((manager.EndTime - Time.time)-(timeLeftMins*60));
-		if(timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.GameInProgress){
-			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), timeLeftMins + ":" + timeLeftSecs);
-		} else {
-			GUI.Box(new Rect(Screen.width/2 - 35, 10, 70, 23), "0:0");
-		}
 
         Radar();
-        ScoreBoard();
+        if (!GameManager.IsTutorialScene()) {
+            TimerGUI();
+            ScoreBoard();
+        }
 	}
     void Radar() {
         //radar system
@@ -420,6 +414,16 @@ public class GUIScript : MonoBehaviour {
     void ScoreBoard() {
         Rect scoreBoard = new Rect(10, 10, 300 , GameManager.connectedPlayers.Count * 20 + 20);
         GUI.Box(scoreBoard, scoreBoardText);
+    }
+    void TimerGUI() {
+        //timer
+        timeLeftMins = Mathf.Floor((manager.EndTime - Time.time) / 60);
+        timeLeftSecs = Mathf.Floor((manager.EndTime - Time.time) - (timeLeftMins * 60));
+        if (timeLeftMins >= 0 && timeLeftSecs >= 0 && manager.GameInProgress) {
+            GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
+        } else {
+            GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
+        }
     }
     public void UpdateScoreBoard() {
         List<NetworkPlayer> playerBuffer = new List<NetworkPlayer>();
@@ -1016,6 +1020,9 @@ public class GUIScript : MonoBehaviour {
 
 	#region PauseWindow
 	void PauseWindow(int windowId){
+        if (!GameManager.IsTutorialScene()) {
+            TimerGUI(); // Display the timer even when paused
+        }
 
 		if(manager.IsPlayerSpawned()){
 			string strReturnToGame = "Return to Game"; if(Application.loadedLevelName == "Tutorial") strReturnToGame = "Return to Simulation";
@@ -1152,11 +1159,13 @@ public class GUIScript : MonoBehaviour {
         //stops tutorial scripts showing after you leave and start a game
 		tutePromptShown = 0;
 
-		//stuff for timer
-        if (level != "MenuScene") {
+		//stuff for timer. Don't set up if it's tutorial or the menu.
+        if (level != "MenuScene" && level != "Tutorial") {
             manager.GameInProgress = true;
             manager.GetComponent<ScoreAndVictoryTracker>().GameStart();
             manager.EndTime = Time.time + secondsOfGame;
+        } else {
+            manager.GameInProgress = false;
         }
 		
 		lastLevelPrefix = levelPrefix;
@@ -1210,7 +1219,7 @@ public class GUIScript : MonoBehaviour {
 	void OnDisconnectedFromServer(){
 		
 		manager.CursorVisible(true);
-		if(!GameManager.SceneIsMenu()){
+		if(!GameManager.IsMenuScene()){
 			Application.LoadLevel("MenuScene");
 		}
 		

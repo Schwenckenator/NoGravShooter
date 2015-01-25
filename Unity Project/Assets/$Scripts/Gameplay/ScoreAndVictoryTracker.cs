@@ -9,7 +9,6 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
 	
 	private NetworkPlayer winningPlayer;
 	
-	private bool roundstarted = false;
 
     void Start() {
         manager = GetComponent<GameManager>();
@@ -46,7 +45,6 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
             manager.IsVictor = true;
             manager.VictorName = GameManager.connectedPlayers[winningPlayer];
             manager.GameInProgress = false;
-			roundstarted = false;
         } else {
             foreach (NetworkPlayer player in playerScores.Keys) {
                 if (playerScores[player] >= manager.KillsToWin) {
@@ -56,7 +54,6 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
                     manager.IsVictor = true;
                     manager.VictorName = GameManager.connectedPlayers[player];
                     manager.GameInProgress = false;
-                    roundstarted = false;
                 }
 
             }
@@ -66,7 +63,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     IEnumerator CheckForGameEnd() {
         float waitTime = 1.0f;
         
-        while(true){
+        while(manager.GameInProgress){
             yield return new WaitForSeconds(waitTime);
             if (Time.time >= manager.EndTime && manager.GameInProgress) {
                 CheckForVictory(true);
