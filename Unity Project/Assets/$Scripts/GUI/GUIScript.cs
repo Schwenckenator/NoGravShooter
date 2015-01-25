@@ -8,7 +8,15 @@ public class GUIScript : MonoBehaviour {
     const int SecondsInMinute = 5;
     
     #endregion
-    
+
+    public enum Menu { MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions }
+    public void SetCurrentMenuWindow(Menu newWindow) {
+        currentWindow = newWindow;
+    }
+    public bool IsCurrentWindow(Menu window) {
+        return window == currentWindow;
+    }
+
     #region  variable Dec
     private GameManager manager;
 	
@@ -45,7 +53,7 @@ public class GUIScript : MonoBehaviour {
 	
 	private PlayerResources res;
 	
-	private int currentWindow = 0;
+	private Menu currentWindow = 0;
 	private bool displayGameSettingsWindow = false;
 	private bool displayJoinByIpWindow = false;
 	private bool displayChangeKeybindWindow = false;
@@ -54,7 +62,7 @@ public class GUIScript : MonoBehaviour {
 	private Rect smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
 	
 	
-	private enum Menu {MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions}
+	
 
 	
 	private const string GAME_TYPE = "NoGravShooter";
@@ -121,13 +129,13 @@ public class GUIScript : MonoBehaviour {
 
     #endregion
 
-
+    
     void Start(){
 		manager = GetComponent<GameManager>();
 		
 		GameManager.testMode = false;
-		
-		currentWindow = (int) Menu.MainMenu;
+
+        SetCurrentMenuWindow(Menu.MainMenu);
 		
 		
 		serverName = PlayerPrefs.GetString("serverName");
@@ -193,7 +201,7 @@ public class GUIScript : MonoBehaviour {
 		}
 
 		if(connectingNow){
-			if(currentWindow != (int) Menu.Connecting){
+			if(!IsCurrentWindow(Menu.Connecting)){
 				connectingNow = false;
 			}
 		}
@@ -217,28 +225,28 @@ public class GUIScript : MonoBehaviour {
 	void ChooseMenuWindow(){
 		switch(currentWindow){
 			
-		case (int) Menu.MainMenu:
+		case Menu.MainMenu:
 			GUI.Window ((int) Menu.MainMenu, largeRect, MainMenuWindow, "Main Menu");
 			break;
-		case (int) Menu.CreateGame:
+		case Menu.CreateGame:
 			GUI.Window ((int) Menu.CreateGame, largeRect, CreateGameWindow, "Create Game");
 			break;
-		case (int) Menu.JoinGame:
+		case Menu.JoinGame:
 			GUI.Window ((int) Menu.JoinGame, largeRect, JoinGameWindow, "Join Game");
 			break;
-		case (int) Menu.Options:
+		case Menu.Options:
 			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
 			break;
-		case (int) Menu.Lobby:
+		case Menu.Lobby:
 			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, serverName);
 			break;
-		case (int) Menu.Connecting:
+		case Menu.Connecting:
 			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
 			break;
-		case (int) Menu.Keybind:
+		case Menu.Keybind:
 			GUI.Window ((int) Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
 			break;
-        case (int) Menu.GraphicsOptions:
+        case Menu.GraphicsOptions:
             GUI.Window ((int)Menu.GraphicsOptions, largeRect, GraphicsOptionsWindow, "Graphics Options");
             break;
 		}
@@ -417,7 +425,7 @@ public class GUIScript : MonoBehaviour {
         }
     }
     void ScoreBoard() {
-        Rect scoreBoard = new Rect(10, 10, 300 , GameManager.connectedPlayers.Count * 20 + 20);
+        Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
         GUI.Box(scoreBoard, scoreBoardText);
     }
     void TimerGUI() {
@@ -434,7 +442,7 @@ public class GUIScript : MonoBehaviour {
         List<NetworkPlayer> playerBuffer = new List<NetworkPlayer>();
 
         // Sort the players descending score
-        foreach (NetworkPlayer player in GameManager.connectedPlayers.Keys) {
+        foreach (NetworkPlayer player in NetworkManager.connectedPlayers.Keys) {
             int score = ScoreAndVictoryTracker.playerScores[player];
             int i;
             for (i = 0; i < playerBuffer.Count; i++) {
@@ -449,7 +457,7 @@ public class GUIScript : MonoBehaviour {
         scoreBoardText = ""; // Clear the text for reshuffling
 
         foreach (NetworkPlayer player in playerBuffer) {
-            scoreBoardText += GameManager.connectedPlayers[player] + ": " + ScoreAndVictoryTracker.playerScores[player] + "\n";
+            scoreBoardText += NetworkManager.connectedPlayers[player] + ": " + ScoreAndVictoryTracker.playerScores[player] + "\n";
         }
         
     }
@@ -472,7 +480,7 @@ public class GUIScript : MonoBehaviour {
 				serverName = playerName+"'s Server";
 			}
 			
-			currentWindow = (int) Menu.CreateGame;
+            SetCurrentMenuWindow(Menu.CreateGame);
 		}
 		
 		standard.y += 50;
@@ -481,7 +489,7 @@ public class GUIScript : MonoBehaviour {
 			MasterServer.RequestHostList(GAME_TYPE);
 			
 			PlayerPrefs.SetString("playerName", playerName);
-			currentWindow = (int) Menu.JoinGame;
+            SetCurrentMenuWindow(Menu.JoinGame);
 		}
 		
 		standard.y += 50;
@@ -491,7 +499,7 @@ public class GUIScript : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Options")){
-			currentWindow = (int) Menu.Options;
+            SetCurrentMenuWindow(Menu.Options);
 		}
 		if(!Application.isWebPlayer && !Application.isEditor){
 			standard.y += 50;
@@ -506,19 +514,14 @@ public class GUIScript : MonoBehaviour {
 	IEnumerator LoadTutorial(){
 		//Get port number, create Server
 		//Sanitise Port number input
-		bool error = false;
-		int portNum = 0;
-			
-		try{
-			portNum = int.Parse(strPortNum);
-		}catch{
-			error = true;
-		}
-			
-		if(!error){
-			Network.InitializeServer(MAX_PLAYERS, portNum, false);
-		}
+		int portNum = 25000;
+		int maxTutorialConnections = 1;
+
+        NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false, false);
+        NetworkManager.InitialiseServer();
+
 		LoadLevel("Tutorial", lastLevelPrefix + 1, int.MaxValue/2); // Because I need a big number
+
 		yield return new WaitForSeconds(1/5f);
 		manager.Spawn();
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -553,61 +556,45 @@ public class GUIScript : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
-			
-			//Get port number, create Server
-			//Sanitise Port number input
-			bool error = false;
-			int portNum = 0;
-			
-			try{
-				portNum = int.Parse(strPortNum);
-			}catch{
-				error = true;
-			}
-			
-			if(!error){
-				Network.InitializeServer(MAX_PLAYERS, portNum, !Network.HavePublicAddress());
-				if(useMasterServer){
-					MasterServer.RegisterHost(GAME_TYPE, serverName);
-				}
-				PlayerPrefs.SetString("serverName", serverName);
-				PlayerPrefs.SetString ("portNumber", strPortNum);
-				currentWindow = (int) Menu.Lobby;
-			}
-			
+            CreateGame(false);
 		}
 
 		standard.y += 50;
-		if(GUI.Button(standard, "Create LAN Game")){
-			
-			//Get port number, create Server
-			//Sanitise Port number input
-			bool error = false;
-			int portNum = 0;
-			
-			try{
-				portNum = int.Parse(strPortNum);
-			}catch{
-				error = true;
-			}
-			
-			if(!error){
-				Network.InitializeServer(MAX_PLAYERS, portNum, false);
-				if(useMasterServer){
-					MasterServer.RegisterHost(GAME_TYPE, serverName);
-				}
-				PlayerPrefs.SetString("serverName", serverName);
-				PlayerPrefs.SetString ("portNumber", strPortNum);
-				currentWindow = (int) Menu.Lobby;
-			}
-			
-		}
+        if (GUI.Button(standard, "Create LAN Game")) {
+            CreateGame(true);
+        }
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-			currentWindow = (int) Menu.MainMenu;
+			currentWindow =  Menu.MainMenu;
 		}
 	}
+    private void CreateGame(bool isLanGame) {
+        int portNum;
+        portNum = ParsePortNumber(strPortNum);
+
+        if (portNum >= 0) { // Check for error
+            NetworkManager.SetServerDetails(MAX_PLAYERS, portNum, useMasterServer, !isLanGame);
+            NetworkManager.InitialiseServer();
+            PlayerPrefs.SetString("serverName", serverName);
+            PlayerPrefs.SetString("portNumber", strPortNum);
+            currentWindow = Menu.Lobby;
+        }
+    }
+    /// <summary>
+    ///  Returns -1 on error
+    /// </summary>
+    private int ParsePortNumber(string stringPortNum) {
+        int portNum = 0;
+
+        try {
+            portNum = int.Parse(stringPortNum);
+        } catch {
+            portNum = -1;
+        }
+
+        return portNum;
+    }
 	#endregion
 
 	#region JoinGameWindow
@@ -639,7 +626,7 @@ public class GUIScript : MonoBehaviour {
 			if(GUI.Button(rectJoinButton, "Join Game")){
 				masterServerData = servers[i];
 				useMasterServer = true;
-				currentWindow = (int) Menu.Connecting;
+				currentWindow =  Menu.Connecting;
 			}
 		}
 		
@@ -650,7 +637,7 @@ public class GUIScript : MonoBehaviour {
 			displayJoinByIpWindow = true;
 		}
 		if(GUI.Button (new Rect(largeRect.width/2+20, largeRect.height-70, largeRect.width/5, 30), "Back")){
-			currentWindow = (int) Menu.MainMenu;
+			currentWindow =  Menu.MainMenu;
 		}
 		
 	}
@@ -686,12 +673,12 @@ public class GUIScript : MonoBehaviour {
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Edit Keybinds")){
-			currentWindow = (int)Menu.Keybind;
+			currentWindow = Menu.Keybind;
 		}
 
         standard.y += 50;
         if (GUI.Button(standard, "Graphics Settings")) {
-            currentWindow = (int)Menu.GraphicsOptions;
+            currentWindow = Menu.GraphicsOptions;
         }
 
 		standard.y += 50;
@@ -715,7 +702,7 @@ public class GUIScript : MonoBehaviour {
 			PlayerPrefs.SetInt("autoPickup", autoPickup);
 			
 			PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
-			currentWindow = (int) Menu.MainMenu;
+			currentWindow =  Menu.MainMenu;
 		}
 	}
 	#endregion
@@ -741,7 +728,7 @@ public class GUIScript : MonoBehaviour {
 
             Screen.SetResolution(resolutions[index].width, resolutions[index].height, fullscreen);
 
-            currentWindow = (int)Menu.Options;
+            currentWindow = Menu.Options;
         }
     }
     #endregion
@@ -852,7 +839,7 @@ public class GUIScript : MonoBehaviour {
 			PlayerPrefs.SetInt("bindInteract", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Interact] );
 			PlayerPrefs.SetInt("bindGrenadeSwitch",	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.GrenadeSwitch]);
 
-			currentWindow = (int) Menu.Options;
+			currentWindow =  Menu.Options;
 		}
 	}
 	#endregion
@@ -934,7 +921,7 @@ public class GUIScript : MonoBehaviour {
 				PlayerPrefs.SetString("ipAddress", ipAddress);
 				PlayerPrefs.SetString ("portNumber", strPortNum);
 				useMasterServer = false;
-				currentWindow = (int) Menu.Connecting;
+				currentWindow =  Menu.Connecting;
 			}
 			
 		}
@@ -960,7 +947,7 @@ public class GUIScript : MonoBehaviour {
 		}
 		
 		string strPlayers = "";
-		foreach(string player in GameManager.connectedPlayers.Values){
+        foreach (string player in NetworkManager.connectedPlayers.Values) {
 			strPlayers += player + "\n";
 		}
 
@@ -968,11 +955,11 @@ public class GUIScript : MonoBehaviour {
 		
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Shutdown Server")){
-				Network.Disconnect();
+				NetworkManager.Disconnect();
 			}
 		}else{
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Disconnect")){
-				Network.Disconnect();
+				NetworkManager.Disconnect();
 			}
 		}
 		
@@ -999,11 +986,8 @@ public class GUIScript : MonoBehaviour {
 		
 		if(!connectingNow){
 			connectingNow = true;
-			if(useMasterServer){
-				Network.Connect(masterServerData);
-			}else{
-				Network.Connect(ipAddress, int.Parse(strPortNum));
-			}
+            NetworkManager.SetClientDetails(masterServerData, useMasterServer, ipAddress, int.Parse(strPortNum));
+            NetworkManager.ConnectToServer();
 		}
 		if(!connectionError){
 			GUI.Box (standard, "Connecting....", style);
@@ -1015,7 +999,7 @@ public class GUIScript : MonoBehaviour {
 			
 			if(GUI.Button(standard, "Back")){
 				connectionError = false;
-				currentWindow = (int) Menu.JoinGame;
+				currentWindow =  Menu.JoinGame;
 			}
 		}
 	}
@@ -1053,7 +1037,7 @@ public class GUIScript : MonoBehaviour {
 		}
 
 		string strPlayers = "";
-		foreach(string player in GameManager.connectedPlayers.Values){
+        foreach (string player in NetworkManager.connectedPlayers.Values) {
 			strPlayers += player + "\n";
 		}
 
@@ -1137,7 +1121,7 @@ public class GUIScript : MonoBehaviour {
 	
 	[RPC]
 	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
-        GameManager.connectedPlayers.Add(newPlayer, newPlayerName);
+        NetworkManager.connectedPlayers.Add(newPlayer, newPlayerName);
         ScoreAndVictoryTracker.playerScores.Add(newPlayer, 0);
 
         UpdateScoreBoard();
@@ -1145,7 +1129,7 @@ public class GUIScript : MonoBehaviour {
 	
 	[RPC]
 	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
-        GameManager.connectedPlayers.Remove(disconnectedPlayer);
+        NetworkManager.connectedPlayers.Remove(disconnectedPlayer);
         ScoreAndVictoryTracker.playerScores.Remove(disconnectedPlayer);
 
         UpdateScoreBoard();
@@ -1208,33 +1192,18 @@ public class GUIScript : MonoBehaviour {
 		networkView.RPC ("ChangeServerName", RPCMode.OthersBuffered, serverName);
 	}
 	void OnConnectedToServer(){
-		currentWindow = (int) Menu.Lobby;
+		currentWindow =  Menu.Lobby;
 		networkView.RPC ("AddPlayerToList", RPCMode.AllBuffered, Network.player, playerName);
 	}
 	
-	void OnFailedToConnect(){
+	public void FailedToConnect(){
 		connectionError = true;
 	}
 	
 	void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer){
 		networkView.RPC ("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
 	}
-	void OnDisconnectedFromServer(){
-		
-		manager.SetCursorVisibility(true);
-		if(!GameManager.IsMenuScene()){
-			Application.LoadLevel("MenuScene");
-		}
-		
-		currentWindow = (int) Menu.MainMenu;
-		
-		//Reset Varibles
-		//numOfPlayers = 0;
-        GameManager.connectedPlayers.Clear();
-        ScoreAndVictoryTracker.playerScores.Clear();
-		submittedChat = "";
-		currentChat = "";
-	}
+
 	
 	void BackToMainMenu(){
 
@@ -1256,7 +1225,7 @@ public class GUIScript : MonoBehaviour {
 
     [RPC]
     void RPCReturnToLobby() {
-        currentWindow = (int)Menu.Lobby;
+        currentWindow = Menu.Lobby;
 
         // Keep the players, but wipe the scores
         Dictionary<NetworkPlayer, int> buffer = new Dictionary<NetworkPlayer, int>();
@@ -1277,6 +1246,11 @@ public class GUIScript : MonoBehaviour {
         // Needs order: Medkit, Grenade, weapon
         bool[] temp = { MedkitSpawning, GrenadeSpawning, WeaponSpawning };
         return temp;
+    }
+
+    public void ClearChat() {
+        submittedChat = "";
+        currentChat = "";
     }
 
 }

@@ -18,7 +18,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     }
 
     public void KillScored(NetworkPlayer player) {
-        Debug.Log(GameManager.connectedPlayers[player] + " kills");
+        Debug.Log(NetworkManager.connectedPlayers[player] + " kills");
         networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player);
     }
 
@@ -33,7 +33,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
         foreach (NetworkPlayer player in playerScores.Keys) {
             if (playerScores[player] >= manager.KillsToWin) {
                 if (Network.isServer) {
-                    manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
+                    manager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
                 }
                 manager.EndGame(player);
                 break;
@@ -52,7 +52,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
         }
         if (Network.isServer) {
             manager.AddToChat("Time is up.", false);
-            manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
+            manager.AddToChat(NetworkManager.connectedPlayers[winningPlayer] + " wins!", false);
         }
         manager.EndGame(winningPlayer);
     }

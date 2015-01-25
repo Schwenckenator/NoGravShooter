@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour {
     #region Variable Declarations
     private static bool paused;
 
-    public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
+
 
 
 	private MouseLook cameraLook;
@@ -151,7 +151,7 @@ public class GameManager : MonoBehaviour {
 
         KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
 		
-        TimeLimit = PlayerPrefs.GetInt("TimeLimit", 30);
+        TimeLimit = PlayerPrefs.GetInt("TimeLimit", 15);
 
 	}
 
@@ -312,22 +312,14 @@ public class GameManager : MonoBehaviour {
 
 
 
-	void OnApplicationQuit(){
-		if(Network.isClient || Network.isServer){
-			Network.Disconnect();
-		}
-	}
 
-	void OnPlayerDisconnected(NetworkPlayer player){
 
-		Network.RemoveRPCs(player);
-		Network.DestroyPlayerObjects(player);
-	}
+
 
     public void EndGame(NetworkPlayer winningPlayer) {
         isVictor = true;
         gameInProgress = false;
-        VictorName = GameManager.connectedPlayers[winningPlayer];
+        VictorName = NetworkManager.connectedPlayers[winningPlayer];
         SetEndTime(secondsUntilKick);
         if (Network.isServer) {
             StartCoroutine(KickPlayersAfterGameEnd());

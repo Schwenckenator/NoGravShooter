@@ -244,13 +244,13 @@ public class PlayerResources : MonoBehaviour {
 			dying = true;//You is dead nigs
 
 			if(networkView.isMine){
-				if(GameManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
+				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
 					if(fromPlayer != Network.player){
-						string killMessage = GameManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.CurrentPlayerName;
+                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.CurrentPlayerName;
 						manager.AddToChat(killMessage, false);
 						manager.GetComponent<ScoreAndVictoryTracker>().KillScored(fromPlayer);
 					} else {
-						string killMessage = GameManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
+                        string killMessage = NetworkManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
 						manager.AddToChat(killMessage, false);
 					}
 				}
