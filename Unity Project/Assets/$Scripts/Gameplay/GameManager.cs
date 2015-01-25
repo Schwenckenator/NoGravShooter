@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour {
         set { levelName = value; }
     }
 	
-	string[] gamemodeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Test1", "Test2", "Test3" };
+	string[] gamemodeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Extraction", "Skirmish", "Team Skirmish", "Elimination", "Infection" };
     public string[] GameModeList {
         get { return gamemodeList; }
     }
