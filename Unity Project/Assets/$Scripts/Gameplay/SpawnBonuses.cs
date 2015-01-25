@@ -16,10 +16,24 @@ public class SpawnBonuses : MonoBehaviour {
 	#endregion
 
 	private GameObject[] bonusSpawnPoints;
+    private GameManager manager;
+    private List<GameObject> spawnableBonuses;
+
 	// Use this for initialization
 	void Start () {
 		if(Network.isServer){
-			bonusSpawnPoints = GameObject.FindGameObjectsWithTag("BonusSpawnPoint");
+            //Determine what bonuses are being spawned this game
+            manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+
+            bool[] allowedBonuses = manager.GetComponent<GUIScript>().GetAllowedBonuses();
+
+            for (int i = 0; i < allowedBonuses.Length; i++) {
+                if (allowedBonuses[i]) {
+                    spawnableBonuses.Add(bonuses[i]);
+                }
+            }
+
+            bonusSpawnPoints = GameObject.FindGameObjectsWithTag("BonusSpawnPoint");
 			StartCoroutine("SpawnBonus");
 		}
 	}
@@ -52,7 +66,7 @@ public class SpawnBonuses : MonoBehaviour {
 					}
 				}
 				if(picked){
-					Network.Instantiate(bonuses[Random.Range(0, bonuses.Length)], point.transform.position, point.transform.rotation, 0);
+					Network.Instantiate(spawnableBonuses[Random.Range(0, spawnableBonuses.Count)], point.transform.position, point.transform.rotation, 0);
 				}
 			}
 			yield return new WaitForSeconds(bonusSpawnDelay);

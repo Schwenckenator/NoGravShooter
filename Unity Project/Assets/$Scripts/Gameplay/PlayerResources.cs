@@ -144,9 +144,9 @@ public class PlayerResources : MonoBehaviour {
 	#region Variable Mutators
 	// Checks itself to see if there is fuel available
 	// Returns false if fuel empty
-	public bool SpendFuel(float spentFuel){
+	public bool SpendFuel(float spentFuel, bool forceSpend = false){
 		recharging = true;
-		if(jetpackDisabled){
+		if(jetpackDisabled && !forceSpend){
 			return false;
 		}
 		fuel -= spentFuel;
@@ -273,11 +273,11 @@ public class PlayerResources : MonoBehaviour {
 		case 3:
 			return " shotgunned ";
 		case 4:
-			return " forced? ";
+			return " forced ";
 		case 5:
-			return " exploded? ";
+			return " exploded ";
 		case 6:
-			return " plasmered? ";
+			return " plasmered ";
 		}
 
 		return " killed ";

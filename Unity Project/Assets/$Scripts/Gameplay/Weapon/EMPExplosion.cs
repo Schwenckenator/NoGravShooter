@@ -21,7 +21,7 @@ public class EMPExplosion : MonoBehaviour {
 			if(hit.CompareTag("Player")){
 
 				// Nuke the jetpack!
-				hit.GetComponent<PlayerResources>().SpendFuel(strength);
+				hit.GetComponent<PlayerResources>().SpendFuel(strength, true);
 			}
 		}
 	}

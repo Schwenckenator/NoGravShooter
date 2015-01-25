@@ -3,7 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GUIScript : MonoBehaviour {
-
+    #region ConstantDeclarations
+   
+    const int SecondsInMinute = 60;
+    
+    #endregion
+    
     #region  variable Dec
     private GameManager manager;
 	
@@ -945,10 +950,8 @@ public class GUIScript : MonoBehaviour {
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
-                //int secondsInMinute = 5; // low value for testing, change to 60 later
-                //int secondsOfGame = manager.TimeLimit * secondsInMinute;
-                int secondsOfGame = manager.TimeLimit * 60;
-				// Start game
+                
+                int secondsOfGame = manager.TimeLimit * SecondsInMinute;
                 networkView.RPC("LoadLevel", RPCMode.AllBuffered, manager.LevelName, lastLevelPrefix + 1, secondsOfGame);
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
@@ -1264,6 +1267,12 @@ public class GUIScript : MonoBehaviour {
         //Clear data about a winner, the games over yo
         manager.IsVictor = false;
         manager.VictorName = "";
+    }
+
+    public bool[] GetAllowedBonuses() {
+        // Needs order: Medkit, Grenade, weapon
+        bool[] temp = { MedkitSpawning, GrenadeSpawning, WeaponSpawning };
+        return temp;
     }
 
 }

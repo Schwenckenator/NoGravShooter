@@ -18,46 +18,48 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     }
 
     public void KillScored(NetworkPlayer player) {
-        Debug.Log(GameManager.connectedPlayers[player] + "kills");
+        Debug.Log(GameManager.connectedPlayers[player] + " kills");
         networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player);
     }
 
     [RPC]
     private void RPCKillScored(NetworkPlayer player) {
         playerScores[player] += 1;
-        CheckForVictory(false);
+        CheckForScoreVictory();
         manager.GetComponent<GUIScript>().UpdateScoreBoard();
     }
 
-    void CheckForVictory(bool forceVictor) { // Force a victory?
-        if(forceVictor){
-			int maxValue = -1;
-			foreach (NetworkPlayer player in playerScores.Keys) {
-				if (playerScores[player] > maxValue){
-					maxValue = playerScores[player];
-					winningPlayer = player;
-				}
-			}
-			if (Network.isServer) {
-                manager.AddToChat("Time is up.", false);
-                manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
-            }
-            manager.IsVictor = true;
-            manager.VictorName = GameManager.connectedPlayers[winningPlayer];
-            manager.GameInProgress = false;
-        } else {
-            foreach (NetworkPlayer player in playerScores.Keys) {
-                if (playerScores[player] >= manager.KillsToWin) {
-                    if (Network.isServer) {
-                        manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
-                    }
-                    manager.IsVictor = true;
-                    manager.VictorName = GameManager.connectedPlayers[player];
-                    manager.GameInProgress = false;
+    void CheckForScoreVictory() {
+        foreach (NetworkPlayer player in playerScores.Keys) {
+            if (playerScores[player] >= manager.KillsToWin) {
+                if (Network.isServer) {
+                    manager.AddToChat(GameManager.connectedPlayers[player] + " wins!", false);
                 }
+                EndGameCleanUp(player);
+            }
 
+        }
+    }
+
+    void TimeVictory() {
+        int maxValue = -1;
+        foreach (NetworkPlayer player in playerScores.Keys) {
+            if (playerScores[player] > maxValue) {
+                maxValue = playerScores[player];
+                winningPlayer = player;
             }
         }
+        if (Network.isServer) {
+            manager.AddToChat("Time is up.", false);
+            manager.AddToChat(GameManager.connectedPlayers[winningPlayer] + " wins!", false);
+        }
+        EndGameCleanUp(winningPlayer);
+    }
+
+    void EndGameCleanUp(NetworkPlayer winningPlayer) {
+        manager.IsVictor = true;
+        manager.VictorName = GameManager.connectedPlayers[winningPlayer];
+        manager.GameInProgress = false;
     }
 
     IEnumerator CheckForGameEnd() {
@@ -66,7 +68,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
         while(manager.GameInProgress){
             yield return new WaitForSeconds(waitTime);
             if (Time.time >= manager.EndTime && manager.GameInProgress) {
-                CheckForVictory(true);
+                TimeVictory();
                 break;
             }
         }
