@@ -245,9 +245,14 @@ public class PlayerResources : MonoBehaviour {
 
 			if(networkView.isMine){
 				if(GameManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
-					string killMessage = GameManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.CurrentPlayerName;
-					manager.AddToChat(killMessage, false);
-                    manager.GetComponent<ScoreAndVictoryTracker>().KillScored(fromPlayer);
+					if(fromPlayer != Network.player){
+						string killMessage = GameManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.CurrentPlayerName;
+						manager.AddToChat(killMessage, false);
+						manager.GetComponent<ScoreAndVictoryTracker>().KillScored(fromPlayer);
+					} else {
+						string killMessage = GameManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
+						manager.AddToChat(killMessage, false);
+					}
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
 				StartCoroutine(PlayerCleanup());
