@@ -63,7 +63,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     IEnumerator CheckForGameEnd() {
         float waitTime = 1.0f;
         
-        while(true){
+        while(manager.GameInProgress){
             yield return new WaitForSeconds(waitTime);
             if (Time.time >= manager.EndTime && manager.GameInProgress) {
                 CheckForVictory(true);

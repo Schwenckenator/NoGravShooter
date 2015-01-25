@@ -1163,6 +1163,8 @@ public class GUIScript : MonoBehaviour {
             manager.GameInProgress = true;
             manager.GetComponent<ScoreAndVictoryTracker>().GameStart();
             manager.EndTime = Time.time + secondsOfGame;
+        } else {
+            manager.GameInProgress = false;
         }
 		
 		lastLevelPrefix = levelPrefix;
