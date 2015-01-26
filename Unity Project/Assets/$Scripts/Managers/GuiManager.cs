@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-public class GUIScript : MonoBehaviour {
+/// <summary>
+/// Manages the GUI and all GUI operations
+/// </summary>
+public class GuiManager : MonoBehaviour {
     #region ConstantDeclarations
    
     const int SecondsInMinute = 5;
@@ -18,7 +20,9 @@ public class GUIScript : MonoBehaviour {
     }
 
     #region  variable Dec
-    private GameManager manager;
+    private GameManager gameManager;
+    private ChatManager chatManager;
+    private SettingsManager settingsManager;
 	
     [SerializeField]
 	private Texture empty;
@@ -61,68 +65,43 @@ public class GUIScript : MonoBehaviour {
 	private Rect largeRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
 	private Rect smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
 	
-	
-	
-
-	
 	private const string GAME_TYPE = "NoGravShooter";
 	
 	// For lobby chat
-	private string submittedChat = "";
-	private string currentChat = "";
 	
 	private const int MAX_PLAYERS = 31;
 	
-	private string serverName = "";
-	private string playerName = "";
-	
-	private string ipAddress = "";
 	private bool useMasterServer = false;
 	private HostData masterServerData;
 	
-	private string password = "";
-	private string strPortNum = "";
 
     private string scoreBoardText = "";
+    public void SetScoreBoardText(string value) {
+        scoreBoardText = value;
+    }
 	
-	private float xMouseSensitivity = 50f;
-	private float yMouseSensitivity = 50f;
-	
-	private float FOVsetting = 60f;
-
-	private int mouseYDirection = -1;
 	private bool mouseInverted = false;
 	
 	private bool connectionError = false;
 	private bool connectingNow = false;
 	
 	private bool autoPickupEnabled = false;
-	private int autoPickup = 0;
 	
 	
 	private bool MedkitSpawning = true;
-	private int medspawn = 1;
 	private bool GrenadeSpawning = true;
-	private int bombspawn = 1;
 	private bool WeaponSpawning = true;
-	private int gunspawn = 1;
 
     private int index = 0; // index for graphics resolutions
     private bool fullscreen = false;
 	
 	private float timeLeftMins;
 	private float timeLeftSecs;
-	
-	private int levelSelectInt = 0;
-	
-	private int gamemodeSelectInt = 0;
 
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
-    private int spawnWeapon1;
-    private int spawnWeapon2;
-	
-	GameManager.KeyBind editedBinding;
+
+    SettingsManager.KeyBind editedBinding;
 
 	GUIStyle upperLeftTextAlign;
 	GUIStyle lowerLeftTextAlign;
@@ -131,64 +110,30 @@ public class GUIScript : MonoBehaviour {
 
     
     void Start(){
-		manager = GetComponent<GameManager>();
+		gameManager = GetComponent<GameManager>();
+        chatManager = GetComponent<ChatManager>();
+        settingsManager = GetComponent<SettingsManager>();
 		
-		GameManager.testMode = false;
-
         SetCurrentMenuWindow(Menu.MainMenu);
 		
+        gameManager.LevelName = gameManager.LevelList[settingsManager.LevelIndex];
 		
-		serverName = PlayerPrefs.GetString("serverName");
-		playerName = PlayerPrefs.GetString("playerName", "Player");
-		strPortNum = PlayerPrefs.GetString("portNumber", "25000");
-		ipAddress = PlayerPrefs.GetString("ipAddress", "127.0.0.1");
+        gameManager.GameModeName = gameManager.GameModeList[settingsManager.GameModeIndex];
 
-		xMouseSensitivity = PlayerPrefs.GetFloat("sensitivityX", 0.5f) * 100; // Store as floats in playerPrefs
-		yMouseSensitivity = PlayerPrefs.GetFloat("sensitivityY", 0.5f) * 100; // Display as percentage
-		mouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
 
-        PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity * 0.01f);
-        PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity * 0.01f);
-        PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
-
-		autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
-        PlayerPrefs.SetInt("autoPickup", 0);
-
-		medspawn = PlayerPrefs.GetInt("medspawn", 1);
-        PlayerPrefs.SetInt("medspawn", 1);
-		bombspawn = PlayerPrefs.GetInt("bombspawn", 1);
-        PlayerPrefs.SetInt("bombspawn", 1);
-		gunspawn = PlayerPrefs.GetInt("gunspawn", 1);
-        PlayerPrefs.SetInt("gunspawn", 1);
+		mouseInverted = (settingsManager.MouseYDirection == 1);
+        autoPickupEnabled = (settingsManager.AutoPickup == 1);
 		
-		FOVsetting = PlayerPrefs.GetFloat("FOVsetting", 70);
-        PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
-
-		levelSelectInt = PlayerPrefs.GetInt("levelSelectInt", 0);
-        manager.LevelName = manager.LevelList[levelSelectInt];
-		
-		gamemodeSelectInt = PlayerPrefs.GetInt("gamemodeSelectInt", 0);
-        manager.GameModeName = manager.GameModeList[gamemodeSelectInt];
-
-
-        spawnWeapon1 = PlayerPrefs.GetInt("1stWeapon", 0);
-        spawnWeapon2 = PlayerPrefs.GetInt("2ndWeapon", 7);
-
-
-
-		mouseInverted = (mouseYDirection == 1);
-		autoPickupEnabled = (autoPickup == 1);
-		
-		MedkitSpawning = (medspawn == 1);
-		GrenadeSpawning = (bombspawn == 1);
-		WeaponSpawning = (gunspawn == 1);
+		MedkitSpawning = (settingsManager.MedkitCanSpawn == 1);
+		GrenadeSpawning = (settingsManager.GrenadeCanSpawn == 1);
+		WeaponSpawning = (settingsManager.WeaponCanSpawn == 1);
 
 
 	}
 	
 	#region OnGUI
 	void OnGUI(){
-		// Has to be in here for some reason
+		// Sets GUI styles
 		upperLeftTextAlign = new GUIStyle(GUI.skin.box);
 		upperLeftTextAlign.alignment = TextAnchor.UpperLeft;
 
@@ -211,7 +156,7 @@ public class GUIScript : MonoBehaviour {
 		}else if(GameManager.IsPaused()){
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
-		}else if(manager.IsPlayerSpawned()){
+		}else if(gameManager.IsPlayerSpawned()){
 			PlayerGUI();
 			
 		}else if(!GameManager.IsMenuScene()){
@@ -238,7 +183,7 @@ public class GUIScript : MonoBehaviour {
 			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
 			break;
 		case Menu.Lobby:
-			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, serverName);
+			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, settingsManager.ServerName);
 			break;
 		case Menu.Connecting:
 			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
@@ -295,7 +240,7 @@ public class GUIScript : MonoBehaviour {
 		//Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
 		Rect combatLogRect = new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100);
 		//temporarily moving chat box while testing radar
-		GUI.Box(combatLogRect, submittedChat, lowerLeftTextAlign);
+		GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
 
 		
 		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
@@ -430,37 +375,15 @@ public class GUIScript : MonoBehaviour {
     }
     void TimerGUI() {
         //timer
-        timeLeftMins = Mathf.Floor((manager.EndTime - Time.time) / 60);
-        timeLeftSecs = Mathf.Floor((manager.EndTime - Time.time) - (timeLeftMins * 60));
+        timeLeftMins = Mathf.Floor((gameManager.endTime - Time.time) / 60);
+        timeLeftSecs = Mathf.Floor((gameManager.endTime - Time.time) - (timeLeftMins * 60));
         if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
         } else {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
         }
     }
-    public void UpdateScoreBoard() {
-        List<NetworkPlayer> playerBuffer = new List<NetworkPlayer>();
-
-        // Sort the players descending score
-        foreach (NetworkPlayer player in NetworkManager.connectedPlayers.Keys) {
-            int score = ScoreAndVictoryTracker.playerScores[player];
-            int i;
-            for (i = 0; i < playerBuffer.Count; i++) {
-                if (score > ScoreAndVictoryTracker.playerScores[playerBuffer[i]]) {
-                    break;
-                }
-
-            }
-            playerBuffer.Insert(i, player);
-        }
-        // Generate the text for the scoreboard
-        scoreBoardText = ""; // Clear the text for reshuffling
-
-        foreach (NetworkPlayer player in playerBuffer) {
-            scoreBoardText += NetworkManager.connectedPlayers[player] + ": " + ScoreAndVictoryTracker.playerScores[player] + "\n";
-        }
-        
-    }
+    
 	#endregion
 
 	#region MainMenuWindow
@@ -469,17 +392,17 @@ public class GUIScript : MonoBehaviour {
 		
 		GUI.Label(standard, "Player Name");
 		
-		standard.y += 20;	
-		playerName = GUI.TextField(standard, playerName); 
+		standard.y += 20;
+        settingsManager.PlayerName = GUI.TextField(standard, settingsManager.PlayerName); 
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
-			PlayerPrefs.SetString("playerName", playerName);
 			//Check for preferred server name
-			if(serverName == ""){
-				serverName = playerName+"'s Server";
+            if (settingsManager.ServerName == "") {
+                settingsManager.ServerName = settingsManager.PlayerName + "'s Server";
 			}
-			
+            settingsManager.SaveSettings();
+
             SetCurrentMenuWindow(Menu.CreateGame);
 		}
 		
@@ -487,8 +410,8 @@ public class GUIScript : MonoBehaviour {
 		if(GUI.Button(standard, "Join Game")){
 			
 			MasterServer.RequestHostList(GAME_TYPE);
-			
-			PlayerPrefs.SetString("playerName", playerName);
+            settingsManager.SaveSettings();
+
             SetCurrentMenuWindow(Menu.JoinGame);
 		}
 		
@@ -523,7 +446,7 @@ public class GUIScript : MonoBehaviour {
 		LoadLevel("Tutorial", lastLevelPrefix + 1, int.MaxValue/2); // Because I need a big number
 
 		yield return new WaitForSeconds(1/5f);
-		manager.Spawn();
+		gameManager.Spawn();
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
 			if(player.networkView.isMine){
@@ -538,18 +461,18 @@ public class GUIScript : MonoBehaviour {
 		
 		GUI.Label(standard, "Server Name");
 		
-		standard.y += 30;	
-		serverName = GUI.TextField(standard, serverName);
+		standard.y += 30;
+        settingsManager.ServerName = GUI.TextField(standard, settingsManager.ServerName);
 		
 		standard.y += 50;		
 		GUI.Label(standard, "Port Number");
-		standard.y += 30;			
-		strPortNum = GUI.TextField(standard, strPortNum);
+		standard.y += 30;
+        settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
 		
 		standard.y += 50;	
 		GUI.Label(standard, "Password Required");
-		standard.y += 30;			
-		password = GUI.TextField(standard, password);
+		standard.y += 30;
+        settingsManager.Password = GUI.TextField(standard, settingsManager.Password);
 		
 		standard.y += 50;		
 		useMasterServer = GUI.Toggle(standard, useMasterServer, "Publish Server");
@@ -570,31 +493,16 @@ public class GUIScript : MonoBehaviour {
 		}
 	}
     private void CreateGame(bool isLanGame) {
-        int portNum;
-        portNum = ParsePortNumber(strPortNum);
+        settingsManager.ParsePortNumber();
 
-        if (portNum >= 0) { // Check for error
-            NetworkManager.SetServerDetails(MAX_PLAYERS, portNum, useMasterServer, !isLanGame);
+        if (settingsManager.PortNum >= 0) { // Check for error
+            NetworkManager.SetServerDetails(MAX_PLAYERS, settingsManager.PortNum, useMasterServer, !isLanGame);
             NetworkManager.InitialiseServer();
-            PlayerPrefs.SetString("serverName", serverName);
-            PlayerPrefs.SetString("portNumber", strPortNum);
+            settingsManager.SaveSettings();
             currentWindow = Menu.Lobby;
         }
     }
-    /// <summary>
-    ///  Returns -1 on error
-    /// </summary>
-    private int ParsePortNumber(string stringPortNum) {
-        int portNum = 0;
 
-        try {
-            portNum = int.Parse(stringPortNum);
-        } catch {
-            portNum = -1;
-        }
-
-        return portNum;
-    }
 	#endregion
 
 	#region JoinGameWindow
@@ -648,17 +556,17 @@ public class GUIScript : MonoBehaviour {
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity X: ");
-		xMouseSensitivity = (float)System.Math.Round (xMouseSensitivity, 1);
-		xMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), xMouseSensitivity.ToString()));
+        settingsManager.xMouseSensitivity = (float)System.Math.Round(settingsManager.xMouseSensitivity, 1);
+        settingsManager.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.xMouseSensitivity.ToString()));
 		standard.y += 20;
-		xMouseSensitivity = GUI.HorizontalSlider(standard, xMouseSensitivity, 0, 100);
+        settingsManager.xMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.xMouseSensitivity, 0, 100);
 		
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity Y: ");
-		yMouseSensitivity = (float)System.Math.Round (yMouseSensitivity, 1);
-		yMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), yMouseSensitivity.ToString()));
+        settingsManager.yMouseSensitivity = (float)System.Math.Round(settingsManager.yMouseSensitivity, 1);
+        settingsManager.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.yMouseSensitivity.ToString()));
 		standard.y += 20;
-		yMouseSensitivity = GUI.HorizontalSlider(standard, yMouseSensitivity, 0, 100);
+        settingsManager.yMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.yMouseSensitivity, 0, 100);
 		
 		standard.y += 40;
 		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
@@ -666,10 +574,10 @@ public class GUIScript : MonoBehaviour {
 		
 		standard.y += 50;
 		GUI.Label(standard, "Field Of View: ");
-		FOVsetting = (float)System.Math.Round (FOVsetting, 1);
-		FOVsetting = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), FOVsetting.ToString()));
+        settingsManager.FieldOfView = (float)System.Math.Round(settingsManager.FieldOfView, 1);
+        settingsManager.FieldOfView = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.FieldOfView.ToString()));
 		standard.y += 20;
-		FOVsetting = GUI.HorizontalSlider(standard, FOVsetting, 50, 100);
+        settingsManager.FieldOfView = GUI.HorizontalSlider(standard, settingsManager.FieldOfView, 50, 100);
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Edit Keybinds")){
@@ -683,25 +591,20 @@ public class GUIScript : MonoBehaviour {
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-			PlayerPrefs.SetFloat("sensitivityX", xMouseSensitivity * 0.01f);
-            PlayerPrefs.SetFloat("sensitivityY", yMouseSensitivity * 0.01f);
 
 			if(mouseInverted){
-				mouseYDirection = 1;
+				settingsManager.MouseYDirection = 1;
 			}else{
-				mouseYDirection = -1;
+                settingsManager.MouseYDirection = -1;
 			}
 			
 			if(autoPickupEnabled){
-				autoPickup = 1;
+                settingsManager.AutoPickup = 1;
 			}else{
-				autoPickup = 0;
+                settingsManager.AutoPickup = 0;
 			}
 
-			PlayerPrefs.SetInt("mouseYDirection", mouseYDirection);
-			PlayerPrefs.SetInt("autoPickup", autoPickup);
-			
-			PlayerPrefs.SetFloat("FOVsetting", FOVsetting);
+            settingsManager.SaveSettings();
 			currentWindow =  Menu.MainMenu;
 		}
 	}
@@ -740,104 +643,90 @@ public class GUIScript : MonoBehaviour {
 		//Move Forward
 		standard.y += 50;
 		GUI.Label(standard, "Move Forward: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward].ToString())){
-			editedBinding = GameManager.KeyBind.MoveForward;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward].ToString())){
+			editedBinding = SettingsManager.KeyBind.MoveForward;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Backward: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack].ToString())){
-			editedBinding = GameManager.KeyBind.MoveBack;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack].ToString())){
+			editedBinding = SettingsManager.KeyBind.MoveBack;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Left: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveLeft].ToString())){
-			editedBinding = GameManager.KeyBind.MoveLeft;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft].ToString())){
+			editedBinding = SettingsManager.KeyBind.MoveLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Right: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.MoveRight].ToString())){
-			editedBinding = GameManager.KeyBind.MoveRight;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight].ToString())){
+			editedBinding = SettingsManager.KeyBind.MoveRight;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Left: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft].ToString())){
-			editedBinding = GameManager.KeyBind.RollLeft;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft].ToString())){
+			editedBinding = SettingsManager.KeyBind.RollLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Right: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.RollRight].ToString())){
-			editedBinding = GameManager.KeyBind.RollRight;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight].ToString())){
+			editedBinding = SettingsManager.KeyBind.RollRight;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jump / Jetpack Up: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.JetUp].ToString())){
-			editedBinding = GameManager.KeyBind.JetUp;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp].ToString())){
+			editedBinding = SettingsManager.KeyBind.JetUp;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jetpack Down: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.JetDown].ToString())){
-			editedBinding = GameManager.KeyBind.JetDown;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown].ToString())){
+			editedBinding = SettingsManager.KeyBind.JetDown;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 50;
 		GUI.Label(standard, "Reload: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Reload].ToString())){
-			editedBinding = GameManager.KeyBind.Reload;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload].ToString())){
+			editedBinding = SettingsManager.KeyBind.Reload;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Grenade: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Grenade].ToString())){
-			editedBinding = GameManager.KeyBind.Grenade;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade].ToString())){
+			editedBinding = SettingsManager.KeyBind.Grenade;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Switch Grenade: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.GrenadeSwitch].ToString())){
-			editedBinding = GameManager.KeyBind.GrenadeSwitch;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch].ToString())){
+			editedBinding = SettingsManager.KeyBind.GrenadeSwitch;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Interact: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), GameManager.keyBindings[(int)GameManager.KeyBind.Interact].ToString())){
-			editedBinding = GameManager.KeyBind.Interact;
+		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact].ToString())){
+			editedBinding = SettingsManager.KeyBind.Interact;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-			// Save Configuation
-			PlayerPrefs.SetInt("bindMoveForward", 	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveForward] );
-			PlayerPrefs.SetInt("bindMoveBack", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveBack] );
-			PlayerPrefs.SetInt("bindMoveLeft", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveLeft] );
-			PlayerPrefs.SetInt("bindMoveRight", 	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.MoveRight] );
-			
-			
-			PlayerPrefs.SetInt("bindRollLeft", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.RollLeft] );
-			PlayerPrefs.SetInt("bindRollRight", 	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.RollRight] );
-			PlayerPrefs.SetInt("bindJetUp", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.JetUp] );
-			PlayerPrefs.SetInt("bindJetDown", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.JetDown] );
-
-			PlayerPrefs.SetInt("bindReload", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Reload] );
-			PlayerPrefs.SetInt("bindGrenade", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Grenade] );
-			PlayerPrefs.SetInt("bindInteract", 		(int) GameManager.keyBindings[ (int) GameManager.KeyBind.Interact] );
-			PlayerPrefs.SetInt("bindGrenadeSwitch",	(int) GameManager.keyBindings[ (int) GameManager.KeyBind.GrenadeSwitch]);
+			// Save Configuation-
+            settingsManager.SaveKeyBinds();
 
 			currentWindow =  Menu.Options;
 		}
@@ -850,11 +739,11 @@ public class GUIScript : MonoBehaviour {
 
 		if(Event.current.isKey){
 			if(Event.current.keyCode != KeyCode.Escape){
-				GameManager.keyBindings[(int)editedBinding] = Event.current.keyCode;
+				SettingsManager.keyBindings[(int)editedBinding] = Event.current.keyCode;
 			}
 			displayChangeKeybindWindow = false;
 		}else if(Event.current.shift){
-			GameManager.keyBindings[(int)editedBinding] = KeyCode.LeftShift;
+			SettingsManager.keyBindings[(int)editedBinding] = KeyCode.LeftShift;
 			displayChangeKeybindWindow = false;
 		}
 	}
@@ -863,29 +752,30 @@ public class GUIScript : MonoBehaviour {
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
 		GUI.Label(new Rect(20, 20, 100, 30), "Game Mode");
-		gamemodeSelectInt = GUI.Toolbar(new Rect(20, 40, smallRect.width-40, 30), gamemodeSelectInt, manager.GameModeList);
+        settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 40, smallRect.width - 40, 30), settingsManager.GameModeIndex, gameManager.GameModeList);
+
 		GUI.Label(new Rect(20, 75, 100, 30), "Score Limit");
-        manager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), manager.KillsToWin.ToString()));
+        gameManager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), gameManager.KillsToWin.ToString()));
+
 		GUI.Label(new Rect(190, 75, 120, 30), "Time Limit (mins)");
-        manager.TimeLimit = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), manager.TimeLimit.ToString()));
+        gameManager.TimeLimit = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), gameManager.TimeLimit.ToString()));
+
 		GUI.Label(new Rect(410, 75, 90, 30), "Item Spawning");
 		MedkitSpawning = GUI.Toggle(new Rect(520, 75,  80, 30), MedkitSpawning, "Medkits");
 		GrenadeSpawning = GUI.Toggle(new Rect(610, 75,  80, 30), GrenadeSpawning, "Grenades");
 		WeaponSpawning = GUI.Toggle(new Rect(700, 75,  80, 30), WeaponSpawning, "Weapons");
 		
 		GUI.Label(new Rect(20, 105, smallRect.width-40, 30), "Map");
-		levelSelectInt = GUI.Toolbar(new Rect(20, 125, smallRect.width-40, 30), levelSelectInt, manager.LevelList);
+        settingsManager.LevelIndex = GUI.Toolbar(new Rect(20, 125, smallRect.width - 40, 30), settingsManager.LevelIndex, gameManager.LevelList);
+
 		GUI.Label(new Rect(20, 165, smallRect.width-40, 30), "Starting Weapons");
-		spawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width-40, 30), spawnWeapon1, weaponlist);
-		spawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width-40, 30), spawnWeapon2, weaponlist2);
+        settingsManager.SpawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width - 40, 30), settingsManager.SpawnWeapon1, weaponlist);
+        settingsManager.SpawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width - 40, 30), settingsManager.SpawnWeapon2, weaponlist2);
+
         if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
-			PlayerPrefs.SetInt ("levelSelectInt", levelSelectInt);
-			PlayerPrefs.SetInt ("1stWeapon", spawnWeapon1);
-			PlayerPrefs.SetInt ("2ndWeapon", spawnWeapon2);
-            PlayerPrefs.SetInt("KillsToWin", manager.KillsToWin);
-            PlayerPrefs.SetInt("TimeLimit", manager.TimeLimit);
-            manager.LevelName = manager.LevelList[levelSelectInt];
-            manager.GameModeName = manager.GameModeList[gamemodeSelectInt];
+            settingsManager.SaveSettings();
+            gameManager.LevelName = gameManager.LevelList[settingsManager.LevelIndex];
+            gameManager.GameModeName = gameManager.GameModeList[settingsManager.GameModeIndex];
 			displayGameSettingsWindow = false;
 		}
 	}
@@ -896,30 +786,22 @@ public class GUIScript : MonoBehaviour {
 		Rect standard = new Rect(20, 20, smallRect.width-40, 30);
 		
 		GUI.Label(standard, "Server IP Address");
-		standard.y += 30;		
-		ipAddress = GUI.TextField(standard, ipAddress);
+		standard.y += 30;
+        settingsManager.IpAddress = GUI.TextField(standard, settingsManager.IpAddress);
 		
 		
 		standard.y += 50;		
 		GUI.Label(standard, "Port Number");
-		standard.y += 30;		
-		strPortNum = GUI.TextField(standard, strPortNum);
+		standard.y += 30;
+        settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Join Game")){
 			displayJoinByIpWindow = false;
+            settingsManager.ParsePortNumber();
 			
-			bool error = false;
-			
-			try{
-				int.Parse(strPortNum);
-			}catch{
-				error = true;
-			}
-			
-			if(!error){
-				PlayerPrefs.SetString("ipAddress", ipAddress);
-				PlayerPrefs.SetString ("portNumber", strPortNum);
+			if(settingsManager.PortNum >= 0){ // Check for error
+                settingsManager.SaveSettings();
 				useMasterServer = false;
 				currentWindow =  Menu.Connecting;
 			}
@@ -938,8 +820,8 @@ public class GUIScript : MonoBehaviour {
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
                 
-                int secondsOfGame = manager.TimeLimit * SecondsInMinute;
-                networkView.RPC("LoadLevel", RPCMode.AllBuffered, manager.LevelName, lastLevelPrefix + 1, secondsOfGame);
+                int secondsOfGame = gameManager.TimeLimit * SecondsInMinute;
+                networkView.RPC("LoadLevel", RPCMode.AllBuffered, gameManager.LevelName, lastLevelPrefix + 1, secondsOfGame);
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
@@ -963,17 +845,17 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 		
-		GUI.Box(new Rect( (largeRect.width/3) + 40, 20, (largeRect.width*2/3)-60, largeRect.height - 80), submittedChat, lowerLeftTextAlign);
+		GUI.Box(new Rect( (largeRect.width/3) + 40, 20, (largeRect.width*2/3)-60, largeRect.height - 80), ChatManager.SubmittedChat, lowerLeftTextAlign);
 		
-		currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), currentChat);
+		ChatManager.currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), ChatManager.currentChat);
 		
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			SubmitTextToChat(currentChat);
+			chatManager.SubmitTextToChat(ChatManager.currentChat);
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			SubmitTextToChat(currentChat);
+			chatManager.SubmitTextToChat(ChatManager.currentChat);
 		}
 	}
 	#endregion
@@ -986,7 +868,7 @@ public class GUIScript : MonoBehaviour {
 		
 		if(!connectingNow){
 			connectingNow = true;
-            NetworkManager.SetClientDetails(masterServerData, useMasterServer, ipAddress, int.Parse(strPortNum));
+            NetworkManager.SetClientDetails(masterServerData, useMasterServer, settingsManager.IpAddress, int.Parse(settingsManager.PortNumStr));
             NetworkManager.ConnectToServer();
 		}
 		if(!connectionError){
@@ -1011,20 +893,20 @@ public class GUIScript : MonoBehaviour {
             TimerGUI(); // Display the timer even when paused
         }
 
-		if(manager.IsPlayerSpawned()){
-			string strReturnToGame = "Return to Game"; if(Application.loadedLevelName == "Tutorial") strReturnToGame = "Return to Simulation";
+		if(gameManager.IsPlayerSpawned()){
+            string strReturnToGame = "Return to Game"; if (GameManager.IsTutorialScene()) strReturnToGame = "Return to Simulation";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
-				manager.Pause(false);
-				manager.SetCursorVisibility(false);
+				gameManager.Pause(false);
+				gameManager.SetCursorVisibility(false);
 			}
 		}else {
-            if (manager.IsVictor) {
+            if (gameManager.IsVictor) {
                 GUI.enabled = false;
-                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), manager.VictorName + " has won!");
+                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), gameManager.VictorName + " has won!");
                 GUI.enabled = true;
             } else {
                 if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
-                    manager.Spawn();
+                    gameManager.Spawn();
                     GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
                     foreach (GameObject player in players) {
                         if (player.networkView.isMine) {
@@ -1044,7 +926,7 @@ public class GUIScript : MonoBehaviour {
 		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-190), strPlayers, upperLeftTextAlign);
 		
 		if(Network.isServer){
-            if (Application.loadedLevelName == "Tutorial") {
+            if (GameManager.IsTutorialScene()) {
                 if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Simulation")) {
                     BackToMainMenu();
                 }
@@ -1063,45 +945,33 @@ public class GUIScript : MonoBehaviour {
 			}
 		}
 		
-		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), submittedChat, lowerLeftTextAlign);
-		
-		if(Application.loadedLevelName != "Tutorial"){
-			currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), currentChat);
+		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), ChatManager.SubmittedChat, lowerLeftTextAlign);
+
+        if (!GameManager.IsTutorialScene()) {
+			ChatManager.currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), ChatManager.currentChat);
 		}
 		
 		// Choo choo, all aboard the dodgy train
-		if(Application.loadedLevelName != "Tutorial"){
+		if(!GameManager.IsTutorialScene()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-				SubmitTextToChat(currentChat);
+				chatManager.SubmitTextToChat(ChatManager.currentChat);
 			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			SubmitTextToChat(currentChat);
+			chatManager.SubmitTextToChat(ChatManager.currentChat);
 		}
 		
 	}
 	#endregion
 
-	public void SubmitTextToChat(string input, bool addPlayerPrefix = true){
-		if(input != ""){
-			string newChat = "";
-			if(addPlayerPrefix){
-				newChat = playerName+ ": "+input +"\n";
-			}else {
-				newChat = input + "\n";
-			}
-			currentChat = "";
-			
-			networkView.RPC("UpdateChat", RPCMode.All, newChat);
-		}
-	}
+
 	
 	//button prompts
 	string promptText;
 	public int promptShown;
 	public void ButtonPrompt(string message, int buttonID){
-		promptText = GameManager.keyBindings[buttonID].ToString() + "  -  " + message;
+		promptText = SettingsManager.keyBindings[buttonID].ToString() + "  -  " + message;
 		promptShown = 10;
 	}
 	
@@ -1112,32 +982,25 @@ public class GUIScript : MonoBehaviour {
 		tutePromptText = message;
 		tutePromptShown = delay;
 	}
-
-
-	[RPC]
-	void UpdateChat(string newChat){
-		submittedChat += newChat;
-	}
 	
 	[RPC]
 	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
         NetworkManager.connectedPlayers.Add(newPlayer, newPlayerName);
-        ScoreAndVictoryTracker.playerScores.Add(newPlayer, 0);
+        ScoreVictoryManager.playerScores.Add(newPlayer, 0);
 
-        UpdateScoreBoard();
+        SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
 	}
 	
 	[RPC]
 	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
         NetworkManager.connectedPlayers.Remove(disconnectedPlayer);
-        ScoreAndVictoryTracker.playerScores.Remove(disconnectedPlayer);
+        ScoreVictoryManager.playerScores.Remove(disconnectedPlayer);
 
-        UpdateScoreBoard();
+        SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
 	}
 
 
 	int lastLevelPrefix = 0;
-	bool rpcDisabled = false;
 
 	[RPC]
 	void LoadLevel(string level, int levelPrefix, int secondsOfGame){
@@ -1148,52 +1011,44 @@ public class GUIScript : MonoBehaviour {
 
 		//stuff for timer. Don't set up if it's tutorial or the menu.
         if (level != "MenuScene" && level != "Tutorial") {
-            manager.GameInProgress = true;
-            manager.GetComponent<ScoreAndVictoryTracker>().GameStart();
-            manager.EndTime = Time.time + secondsOfGame;
+            gameManager.GameInProgress = true;
+            gameManager.GetComponent<ScoreVictoryManager>().GameStart();
+            gameManager.endTime = Time.time + secondsOfGame;
         } else {
-            manager.GameInProgress = false;
+            gameManager.GameInProgress = false;
         }
 		
 		lastLevelPrefix = levelPrefix;
 
-		manager.CurrentPlayerName = playerName;
+        gameManager.currentPlayerName = settingsManager.PlayerName;
 
-		Network.SetSendingEnabled(0, false);
-		Network.isMessageQueueRunning = false;
-		rpcDisabled = true;
+
 
 		Network.SetLevelPrefix(levelPrefix);
 
-        UpdateScoreBoard();
+        SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
 
 		Application.LoadLevel(level);
 
 
 	}
 
-	void OnLevelWasLoaded(){
-		if(rpcDisabled){
-			Network.isMessageQueueRunning = true;
-			Network.SetSendingEnabled(0, true);
-			rpcDisabled = false;
-		}
-	}
+
 
 	
 	[RPC]
 	void ChangeServerName(string name){
-		serverName = name;
+        settingsManager.ServerName = name;
 	}
 	
 	
 	void OnServerInitialized(){
-		networkView.RPC ("AddPlayerToList", RPCMode.AllBuffered, Network.player, playerName);
-		networkView.RPC ("ChangeServerName", RPCMode.OthersBuffered, serverName);
+        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
+		networkView.RPC ("ChangeServerName", RPCMode.OthersBuffered, settingsManager.ServerName);
 	}
 	void OnConnectedToServer(){
 		currentWindow =  Menu.Lobby;
-		networkView.RPC ("AddPlayerToList", RPCMode.AllBuffered, Network.player, playerName);
+        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
 	}
 	
 	public void FailedToConnect(){
@@ -1229,28 +1084,16 @@ public class GUIScript : MonoBehaviour {
 
         // Keep the players, but wipe the scores
         Dictionary<NetworkPlayer, int> buffer = new Dictionary<NetworkPlayer, int>();
-        foreach (NetworkPlayer player in ScoreAndVictoryTracker.playerScores.Keys) {
+        foreach (NetworkPlayer player in ScoreVictoryManager.playerScores.Keys) {
             buffer.Add(player, 0);
         }
-        ScoreAndVictoryTracker.playerScores = buffer;
+        ScoreVictoryManager.playerScores = buffer;
 
         //Clear data about a winner, the games over yo
         ClearWinnerData();
     }
     void ClearWinnerData() {
-        manager.IsVictor = false;
-        manager.VictorName = "";
+        gameManager.IsVictor = false;
+        gameManager.VictorName = "";
     }
-
-    public bool[] GetAllowedBonuses() {
-        // Needs order: Medkit, Grenade, weapon
-        bool[] temp = { MedkitSpawning, GrenadeSpawning, WeaponSpawning };
-        return temp;
-    }
-
-    public void ClearChat() {
-        submittedChat = "";
-        currentChat = "";
-    }
-
 }

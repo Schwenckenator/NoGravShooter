@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ScoreAndVictoryTracker : MonoBehaviour {
+public class ScoreVictoryManager : MonoBehaviour {
 
     public static Dictionary<NetworkPlayer, int> playerScores = new Dictionary<NetworkPlayer, int>();
     private GameManager manager;
+    private GuiManager guiManager;
 	
 	private NetworkPlayer winningPlayer;
 	
 
     void Start() {
         manager = GetComponent<GameManager>();
+        guiManager = GetComponent<GuiManager>();
     }
     public void GameStart() {
         StartCoroutine(CheckForGameEnd());
@@ -26,7 +28,7 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
     private void RPCKillScored(NetworkPlayer player) {
         playerScores[player] += 1;
         CheckForScoreVictory();
-        manager.GetComponent<GUIScript>().UpdateScoreBoard();
+        guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
     }
 
     void CheckForScoreVictory() {
@@ -62,11 +64,36 @@ public class ScoreAndVictoryTracker : MonoBehaviour {
         
         while(manager.GameInProgress){
             yield return new WaitForSeconds(waitTime);
-            if (Time.time >= manager.EndTime && manager.GameInProgress) {
+            if (Time.time >= manager.endTime && manager.GameInProgress) {
                 TimeVictory();
                 break;
             }
         }
+
+    }
+
+    public static string UpdateScoreBoard() {
+        List<NetworkPlayer> playerBuffer = new List<NetworkPlayer>();
+        string scoreBoardBuffer = "";
+
+        // Sort the players descending score
+        foreach (NetworkPlayer player in NetworkManager.connectedPlayers.Keys) {
+            int score = ScoreVictoryManager.playerScores[player];
+            int i;
+            for (i = 0; i < playerBuffer.Count; i++) {
+                if (score > ScoreVictoryManager.playerScores[playerBuffer[i]]) {
+                    break;
+                }
+
+            }
+            playerBuffer.Insert(i, player);
+        }
+
+        foreach (NetworkPlayer player in playerBuffer) {
+            scoreBoardBuffer += NetworkManager.connectedPlayers[player] + ": " + ScoreVictoryManager.playerScores[player] + "\n";
+        }
+
+        return scoreBoardBuffer;
 
     }
 }

@@ -86,7 +86,7 @@ public class PlayerResources : MonoBehaviour {
 
 	#region Fixed Update()
 	void Update () {
-		if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.Reload]) && !reloading){
+        if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]) && !reloading) {
 			StartCoroutine("WeaponReload");
 		}
 		if(recharging){
@@ -246,9 +246,9 @@ public class PlayerResources : MonoBehaviour {
 			if(networkView.isMine){
 				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
 					if(fromPlayer != Network.player){
-                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.CurrentPlayerName;
+                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.currentPlayerName;
 						manager.AddToChat(killMessage, false);
-						manager.GetComponent<ScoreAndVictoryTracker>().KillScored(fromPlayer);
+						manager.GetComponent<ScoreVictoryManager>().KillScored(fromPlayer);
 					} else {
                         string killMessage = NetworkManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
 						manager.AddToChat(killMessage, false);

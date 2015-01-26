@@ -106,7 +106,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void OnGUI(){
 		if(!ragdoll) return;
-		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), manager.GetComponent<GUIScript>().bloodyScreen);
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), manager.GetComponent<GuiManager>().bloodyScreen);
 	}
 
 	#region UpdateInput
@@ -116,15 +116,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		jetPackInUse = false;
 
 		// If exclusive input
-		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack]) ){
+		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack]) ){
 			//Move Forward
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveForward])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward])){
 				if(vertical < 0.0f) vertical = 0.0f;
 				vertical = Mathf.MoveTowards(vertical, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
 			//Move Back
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveBack])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack])){
 				if(vertical > 0.0f) vertical = 0.0f;
 				vertical = Mathf.MoveTowards(vertical, -1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
@@ -136,15 +136,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 
 		// If exclusive input
-		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveRight]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveLeft]) ){
+		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft]) ){
 			//Move Right
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveRight])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight])){
 				if(horizontal < 0.0f) horizontal = 0.0f;
 				horizontal = Mathf.MoveTowards(horizontal, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
 			//Move Left
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.MoveLeft])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft])){
 				if(horizontal > 0.0f) horizontal = 0.0f;
 				horizontal = Mathf.MoveTowards(horizontal, -1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
@@ -156,15 +156,15 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 
 		// If exclusive input
-		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown]) ){
+		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown]) ){
 			//Move Up
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp])){
 				if(jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
 				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
 			}
 			//Move Down
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])){
 				if(jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
 				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3*Time.deltaTime);
 				jetPackInUse = true;
@@ -176,14 +176,14 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 
 		// If exclusive input
-		if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollRight]) ^ Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft]) ){
+		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft]) ){
 			//Roll Right
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollRight])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight])){
 				if(roll > 0.0f) roll = 0.0f;
 				roll = Mathf.MoveTowards(roll, -1.0f, 3*Time.deltaTime);
 			}
 			//Roll Left
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.RollLeft])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])){
 				if(roll < 0.0f) roll = 0.0f;
 				roll = Mathf.MoveTowards(roll, 1.0f, 3*Time.deltaTime);
 			}
@@ -196,7 +196,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	#endregion
 	
 	//to call button prompt
-	//manager.GetComponent<GUIScript>().ButtonPrompt((int)GameManager.KeyBind.BUTTON, "ACTION");
+	//manager.GetComponent<GUIScript>().ButtonPrompt((int)SettingsManager.KeyBind.BUTTON, "ACTION");
 	
 	#region FixedUpdate
 	void FixedUpdate () {
@@ -224,7 +224,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			//check for edges
 
 			bool sneaking = false;
-			if(Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetDown])){
+			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])){
 				#region EdgeDetection
 				sneaking = true;
 				int numOfVectors = 16;
@@ -314,7 +314,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			rigidbody.AddForce(velocityChange, ForceMode.Impulse);
 			
 			// Jump
-			if (canJump && Input.GetKey(GameManager.keyBindings[(int)GameManager.KeyBind.JetUp]) && !GameManager.IsPaused()) {
+			if (canJump && Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) && !GameManager.IsPaused()) {
 				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
 			}
 		}else if(jetPackOn){

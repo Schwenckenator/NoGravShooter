@@ -26,7 +26,7 @@ public class SpawnBonuses : MonoBehaviour {
             manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
             spawnableBonuses = new List<GameObject>();
 
-            bool[] allowedBonuses = manager.GetComponent<GUIScript>().GetAllowedBonuses();
+            bool[] allowedBonuses = manager.GetComponent<SettingsManager>().GetAllowedBonuses();
 
             for (int i = 0; i < allowedBonuses.Length; i++) {
                 if (allowedBonuses[i]) {

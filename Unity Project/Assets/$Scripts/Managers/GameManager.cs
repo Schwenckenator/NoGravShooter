@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/// <summary>
+/// Manages the player and the game 
+/// 
+/// </summary>
 public class GameManager : MonoBehaviour {
 	// *****************Test Mode Variable************************
 	public static bool testMode = true;
     // ***********************************************************
     #region Variable Declarations
+    //Managers
+    private ChatManager chatManager;
+
+
     private static bool paused;
-
-
-
 
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
@@ -27,34 +31,18 @@ public class GameManager : MonoBehaviour {
 	private GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
-	public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch};
-	public static KeyCode[] keyBindings;
 	
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
 
-	private GUIScript gameGUI;
+	
 
-    private float endTime;
 
-    public float EndTime {
-        get { return endTime; }
-        set { endTime = value; }
-    }
-
-    private string currentPlayerName;
-    public string CurrentPlayerName {
-        get { return currentPlayerName; }
-        set { currentPlayerName = value; }
-    }
-
-    private NetworkPlayer currentPlayer;
-    public NetworkPlayer CurrentPlayer {
-        get { return currentPlayer; }
-        set { currentPlayer = value; }
-    }
+    public float endTime;
+    public string currentPlayerName;
+    public NetworkPlayer currentPlayer;
 
     // For Game Settings
-    string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
+    private string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
     public string[] LevelList {
         get { return levelList; }
     }
@@ -121,24 +109,7 @@ public class GameManager : MonoBehaviour {
     void Awake(){
 		DontDestroyOnLoad(gameObject);
 
-		gameGUI = GetComponent<GUIScript>();
-
-		keyBindings = new KeyCode[System.Enum.GetNames(typeof(GameManager.KeyBind)).Length];
-
-		keyBindings[(int)GameManager.KeyBind.MoveForward]	= (KeyCode)PlayerPrefs.GetInt("bindMoveForward", (int)KeyCode.W);
-		keyBindings[(int)GameManager.KeyBind.MoveBack] 		= (KeyCode)PlayerPrefs.GetInt("bindMoveBack", (int)KeyCode.S);
-		keyBindings[(int)GameManager.KeyBind.MoveLeft] 		= (KeyCode)PlayerPrefs.GetInt("bindMoveLeft", (int)KeyCode.A);
-		keyBindings[(int)GameManager.KeyBind.MoveRight] 	= (KeyCode)PlayerPrefs.GetInt("bindMoveRight", (int)KeyCode.D);
-		
-		keyBindings[(int)GameManager.KeyBind.RollLeft]		= (KeyCode)PlayerPrefs.GetInt("bindRollLeft", (int)KeyCode.Q);
-		keyBindings[(int)GameManager.KeyBind.RollRight] 	= (KeyCode)PlayerPrefs.GetInt("bindRollRight", (int)KeyCode.E);
-		keyBindings[(int)GameManager.KeyBind.JetUp]			= (KeyCode)PlayerPrefs.GetInt("bindJetUp", (int)KeyCode.Space);
-		keyBindings[(int)GameManager.KeyBind.JetDown] 		= (KeyCode)PlayerPrefs.GetInt("bindJetDown", (int)KeyCode.LeftShift);
-		
-		keyBindings[(int)GameManager.KeyBind.Reload] 		= (KeyCode)PlayerPrefs.GetInt("bindReload", (int)KeyCode.R);
-		keyBindings[(int)GameManager.KeyBind.Grenade] 		= (KeyCode)PlayerPrefs.GetInt("bindGrenade", (int)KeyCode.G);
-		keyBindings[(int)GameManager.KeyBind.Interact] 		= (KeyCode)PlayerPrefs.GetInt("bindInteract", (int)KeyCode.F);
-		keyBindings[(int)GameManager.KeyBind.GrenadeSwitch]	= (KeyCode)PlayerPrefs.GetInt("bindGrenadeSwitch", (int)KeyCode.H);
+        chatManager = GetComponent<ChatManager>();
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -156,7 +127,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void AddToChat(string input, bool addPlayerPrefix = true){
-		gameGUI.SubmitTextToChat(input, addPlayerPrefix);
+		chatManager.SubmitTextToChat(input, addPlayerPrefix);
 	}
 
 	public static int WeaponClassToWeaponId(WeaponSuperClass input){
@@ -197,7 +168,7 @@ public class GameManager : MonoBehaviour {
 
     [RPC]
     public void SetEndTime(float remainingSeconds) {
-        EndTime = Time.time + remainingSeconds;
+        endTime = Time.time + remainingSeconds;
     }
 
 
@@ -281,7 +252,7 @@ public class GameManager : MonoBehaviour {
 			if(Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned){
 				fireWeapon.ChangeWeapon(6);
 			}
-			if(Input.GetKeyDown(GameManager.keyBindings[(int)GameManager.KeyBind.GrenadeSwitch])){
+            if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch])) {
 				Debug.Log ("Grenade Switch!");
 				playerResources.ChangeGrenade();
 			}
@@ -306,7 +277,7 @@ public class GameManager : MonoBehaviour {
     // we need to send an updated remaining time
     void OnPlayerConnected(NetworkPlayer player) {
         if (GameInProgress) {
-            networkView.RPC("SetEndTime", player, EndTime - Time.time);
+            networkView.RPC("SetEndTime", player, endTime - Time.time);
         }
     }
 
@@ -331,7 +302,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);
         if (!gameInProgress && !IsMenuScene()) {
-            GetComponent<GUIScript>().ReturnToLobby();
+            GetComponent<GuiManager>().ReturnToLobby();
         }
     }
 }

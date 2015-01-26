@@ -9,7 +9,7 @@ public class FloatNameManager : MonoBehaviour {
 	void Start(){
 		if(networkView.isMine){
 			manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-			networkView.RPC("SetName", RPCMode.AllBuffered, manager.CurrentPlayerName);
+			networkView.RPC("SetName", RPCMode.AllBuffered, manager.currentPlayerName);
 			StartCoroutine(SelfNameDelete());
 		}
 	}

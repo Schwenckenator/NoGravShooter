@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
+///<summary>
+/// Manages connections with the Network
+/// </summary>
 public class NetworkManager : MonoBehaviour {
-    ///<summary>
-    /// This class will do everything to do with the network (except RPC?)
-    /// </summary>
+
     // Use this for initialization
     #region variables
     public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
@@ -16,6 +17,8 @@ public class NetworkManager : MonoBehaviour {
     private static HostData masterServerData;
     private static int maxPlayers;
     private static bool useNat;
+
+    private static bool rpcDisabled;
     #endregion
 
     #region Connect To Server
@@ -43,6 +46,12 @@ public class NetworkManager : MonoBehaviour {
     public static void Disconnect() {
         Network.Disconnect();
     }
+
+    public static void DisableRPC() {
+        Network.SetSendingEnabled(0, false);
+        Network.isMessageQueueRunning = false;
+        rpcDisabled = true;
+    }
     
     #region SetDetails
     public static void SetClientDetails(HostData _masterServerData, bool _useMasterServer, string _ipAddress, int _portNum) {
@@ -66,7 +75,7 @@ public class NetworkManager : MonoBehaviour {
 
     #region OnEvent
     void OnFailedToConnect() {
-        GetComponent<GUIScript>().FailedToConnect();
+        GetComponent<GuiManager>().FailedToConnect();
     }
     void OnPlayerDisconnected(NetworkPlayer player) {
 
@@ -86,13 +95,20 @@ public class NetworkManager : MonoBehaviour {
             Application.LoadLevel("MenuScene");
         }
 
-        GetComponent<GUIScript>().SetCurrentMenuWindow(GUIScript.Menu.MainMenu);
+        GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.Menu.MainMenu);
 
         //Reset Varibles
         //numOfPlayers = 0;
         NetworkManager.connectedPlayers.Clear();
-        ScoreAndVictoryTracker.playerScores.Clear();
-        GetComponent<GUIScript>().ClearChat();
+        ScoreVictoryManager.playerScores.Clear();
+        ChatManager.ClearChat();
+    }
+    void OnLevelWasLoaded() {
+        if (rpcDisabled) {
+            Network.isMessageQueueRunning = true;
+            Network.SetSendingEnabled(0, true);
+            rpcDisabled = false;
+        }
     }
     #endregion
 }
