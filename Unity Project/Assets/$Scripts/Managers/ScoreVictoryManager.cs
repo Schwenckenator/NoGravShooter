@@ -5,15 +5,19 @@ using System.Collections.Generic;
 public class ScoreVictoryManager : MonoBehaviour {
 
     public static Dictionary<NetworkPlayer, int> playerScores = new Dictionary<NetworkPlayer, int>();
-    private GameManager manager;
+    private GameManager gameManager;
     private GuiManager guiManager;
+    private SettingsManager settingsManager;
 	
 	private NetworkPlayer winningPlayer;
+    public bool IsVictor { get; set; }
+    public string VictorName { get; set; }
 	
 
     void Start() {
-        manager = GetComponent<GameManager>();
+        gameManager = GetComponent<GameManager>();
         guiManager = GetComponent<GuiManager>();
+        settingsManager = GetComponent<SettingsManager>();
     }
     public void GameStart() {
         StartCoroutine(CheckForGameEnd());
@@ -33,11 +37,11 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     void CheckForScoreVictory() {
         foreach (NetworkPlayer player in playerScores.Keys) {
-            if (playerScores[player] >= manager.KillsToWin) {
+            if (playerScores[player] >= settingsManager.KillsToWin) {
                 if (Network.isServer) {
-                    manager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
+                    gameManager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
                 }
-                manager.EndGame(player);
+                gameManager.EndGame(player);
                 break;
             }
 
@@ -53,18 +57,18 @@ public class ScoreVictoryManager : MonoBehaviour {
             }
         }
         if (Network.isServer) {
-            manager.AddToChat("Time is up.", false);
-            manager.AddToChat(NetworkManager.connectedPlayers[winningPlayer] + " wins!", false);
+            gameManager.AddToChat("Time is up.", false);
+            gameManager.AddToChat(NetworkManager.connectedPlayers[winningPlayer] + " wins!", false);
         }
-        manager.EndGame(winningPlayer);
+        gameManager.EndGame(winningPlayer);
     }
 
     IEnumerator CheckForGameEnd() {
         float waitTime = 1.0f;
         
-        while(manager.GameInProgress){
+        while(gameManager.GameInProgress){
             yield return new WaitForSeconds(waitTime);
-            if (Time.time >= manager.endTime && manager.GameInProgress) {
+            if (Time.time >= gameManager.endTime && gameManager.GameInProgress) {
                 TimeVictory();
                 break;
             }
@@ -95,5 +99,10 @@ public class ScoreVictoryManager : MonoBehaviour {
 
         return scoreBoardBuffer;
 
+    }
+
+    public void ClearWinnerData() {
+        IsVictor = false;
+        VictorName = "";
     }
 }

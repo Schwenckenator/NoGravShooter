@@ -2,8 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 /// <summary>
-/// Manages the player and the game 
-/// 
+/// Handles player, level loading and game interacitons
 /// </summary>
 public class GameManager : MonoBehaviour {
 	// *****************Test Mode Variable************************
@@ -12,6 +11,9 @@ public class GameManager : MonoBehaviour {
     #region Variable Declarations
     //Managers
     private ChatManager chatManager;
+    private GuiManager guiManager; 
+    private ScoreVictoryManager scoreVictoryManager;
+    private SettingsManager settingsManager;
 
 
     private static bool paused;
@@ -34,71 +36,17 @@ public class GameManager : MonoBehaviour {
 	
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
 
-	
-
-
     public float endTime;
     public string currentPlayerName;
     public NetworkPlayer currentPlayer;
 
     // For Game Settings
-    private string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
-    public string[] LevelList {
-        get { return levelList; }
-    }
-    
-    [SerializeField]
-    private string levelName;
-    public string LevelName {
-        get { return levelName; }
-        set { levelName = value; }
-    }
-	
-	string[] gamemodeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Extraction", "Skirmish", "Team Skirmish", "Elimination", "Infection" };
-    public string[] GameModeList {
-        get { return gamemodeList; }
-    }
-	
-	[SerializeField]
-    private string gamemodeName;
-    public string GameModeName {
-        get { return gamemodeName; }
-        set { gamemodeName = value; }
-    }
-	
-	
-    [SerializeField]
-    private int timeLimit;
-    public int TimeLimit {
-        get { return timeLimit; }
-        set { timeLimit = value; }
-    }
 
     private bool gameInProgress = false;
 
     public bool GameInProgress {
         get { return gameInProgress; }
         set { gameInProgress = value; }
-    }
-
-    [SerializeField]
-    private int killsToWin;
-    public int KillsToWin {
-        get { return killsToWin; }
-        set { killsToWin = value; }
-    }
-
-    bool isVictor = false;
-
-    public bool IsVictor {
-        get { return isVictor; }
-        set { isVictor = value; }
-    }
-    string victorName = "";
-
-    public string VictorName {
-        get { return victorName; }
-        set { victorName = value; }
     }
 
     [SerializeField]
@@ -110,6 +58,9 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 
         chatManager = GetComponent<ChatManager>();
+        settingsManager = GetComponent<SettingsManager>();
+        guiManager = GetComponent<GuiManager>();
+        scoreVictoryManager = GetComponent<ScoreVictoryManager>();
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -119,11 +70,6 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new ForceShotgunValues());
 		weapon.Add(new RocketLauncherValues());
 		weapon.Add(new PlasmaBlasterValues());
-
-        KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
-		
-        TimeLimit = PlayerPrefs.GetInt("TimeLimit", 15);
-
 	}
 
 	public void AddToChat(string input, bool addPlayerPrefix = true){
@@ -227,37 +173,41 @@ public class GameManager : MonoBehaviour {
             }
         }
 		if(!GameManager.IsMenuScene()){
-			if(Input.GetKeyDown(KeyCode.Escape)){
-				SetCursorVisibility(!paused);
-				Pause (!paused); // Toggle Pause
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha1) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(0);
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha2) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(1);
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha3) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(2);
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha4) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(3);
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha5) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(4);
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha6) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(5);
-			}
-			if(Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned){
-				fireWeapon.ChangeWeapon(6);
-			}
-            if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch])) {
-				Debug.Log ("Grenade Switch!");
-				playerResources.ChangeGrenade();
-			}
+            GetKeyStrokes();
 		}
 	}
+    void GetKeyStrokes() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            SetCursorVisibility(!paused);
+            Pause(!paused); // Toggle Pause
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(5);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned) {
+            fireWeapon.ChangeWeapon(6);
+        }
+        if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch])) {
+            Debug.Log("Grenade Switch!");
+            playerResources.ChangeGrenade();
+        }
+    }
+
 	public void Pause(bool input){
 		paused = input;
 	}
@@ -281,16 +231,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-
-
-
-
-
-
     public void EndGame(NetworkPlayer winningPlayer) {
-        isVictor = true;
+        scoreVictoryManager.IsVictor = true;
         gameInProgress = false;
-        VictorName = NetworkManager.connectedPlayers[winningPlayer];
+        scoreVictoryManager.VictorName = NetworkManager.connectedPlayers[winningPlayer];
         SetEndTime(secondsUntilKick);
         if (Network.isServer) {
             StartCoroutine(KickPlayersAfterGameEnd());
@@ -302,7 +246,78 @@ public class GameManager : MonoBehaviour {
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);
         if (!gameInProgress && !IsMenuScene()) {
-            GetComponent<GuiManager>().ReturnToLobby();
+            ReturnToLobby();
         }
+    }
+
+    public void LoadLevel() {
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, settingsManager.LevelName, NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
+
+    }
+
+    [RPC]
+    private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame) {
+
+
+        //stops tutorial scripts showing after you leave and start a game
+        guiManager.TutorialPrompt("", 0);
+
+        //stuff for timer. Don't set up if it's tutorial or the menu.
+        if (levelName != "MenuScene" && levelName != "Tutorial") {
+            GameInProgress = true;
+            GetComponent<ScoreVictoryManager>().GameStart();
+            endTime = Time.time + secondsOfGame;
+        } else {
+            GameInProgress = false;
+        }
+
+        NetworkManager.lastLevelPrefix = levelPrefix;
+
+        currentPlayerName = settingsManager.PlayerName;
+
+
+
+        Network.SetLevelPrefix(levelPrefix);
+
+        guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+
+        Application.LoadLevel(levelName);
+
+
+    }
+
+    public void ReturnToLobby() {
+
+        networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
+
+        int dummy = 0;
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy);
+    }
+
+    [RPC]
+    void RPCReturnToLobby() {
+        //currentWindow = Menu.Lobby;
+        guiManager.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
+
+        // Keep the players, but wipe the scores
+        Dictionary<NetworkPlayer, int> buffer = new Dictionary<NetworkPlayer, int>();
+        foreach (NetworkPlayer player in ScoreVictoryManager.playerScores.Keys) {
+            buffer.Add(player, 0);
+        }
+        ScoreVictoryManager.playerScores = buffer;
+
+        //Clear data about a winner, the games over yo
+        scoreVictoryManager.ClearWinnerData();
+    }
+
+    public void BackToMainMenu() {
+
+        if (Network.isClient || Network.isServer) {
+            Network.Disconnect();
+        }
+
+        scoreVictoryManager.ClearWinnerData();
+        Application.LoadLevel("MenuScene");
+
     }
 }

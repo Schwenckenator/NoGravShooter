@@ -22,6 +22,7 @@ public class GuiManager : MonoBehaviour {
     #region  variable Dec
     private GameManager gameManager;
     private ChatManager chatManager;
+    private ScoreVictoryManager scoreVictoryManager;
     private SettingsManager settingsManager;
 	
     [SerializeField]
@@ -55,7 +56,7 @@ public class GuiManager : MonoBehaviour {
     [SerializeField]
     private bool detectItems;
 	
-	private PlayerResources res;
+	private PlayerResources playerResource;
 	
 	private Menu currentWindow = 0;
 	private bool displayGameSettingsWindow = false;
@@ -65,16 +66,12 @@ public class GuiManager : MonoBehaviour {
 	private Rect largeRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
 	private Rect smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
 	
-	private const string GAME_TYPE = "NoGravShooter";
-	
-	// For lobby chat
-	
-	private const int MAX_PLAYERS = 31;
+	private const string GameType = "NoGravShooter";
+	private const int MaxPlayers = 31;
 	
 	private bool useMasterServer = false;
 	private HostData masterServerData;
 	
-
     private string scoreBoardText = "";
     public void SetScoreBoardText(string value) {
         scoreBoardText = value;
@@ -95,8 +92,7 @@ public class GuiManager : MonoBehaviour {
     private int index = 0; // index for graphics resolutions
     private bool fullscreen = false;
 	
-	private float timeLeftMins;
-	private float timeLeftSecs;
+
 
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
@@ -112,14 +108,10 @@ public class GuiManager : MonoBehaviour {
     void Start(){
 		gameManager = GetComponent<GameManager>();
         chatManager = GetComponent<ChatManager>();
+        scoreVictoryManager = GetComponent<ScoreVictoryManager>();
         settingsManager = GetComponent<SettingsManager>();
 		
         SetCurrentMenuWindow(Menu.MainMenu);
-		
-        gameManager.LevelName = gameManager.LevelList[settingsManager.LevelIndex];
-		
-        gameManager.GameModeName = gameManager.GameModeList[settingsManager.GameModeIndex];
-
 
 		mouseInverted = (settingsManager.MouseYDirection == 1);
         autoPickupEnabled = (settingsManager.AutoPickup == 1);
@@ -215,14 +207,14 @@ public class GuiManager : MonoBehaviour {
 		style.fontSize = 50;
 		style.alignment = TextAnchor.UpperCenter;
 
-		string ammoText = res.GetCurrentClip().ToString();
-		if(res.GetRemainingAmmo() > 0){
-			ammoText += "/" + res.GetRemainingAmmo().ToString();
+		string ammoText = playerResource.GetCurrentClip().ToString();
+		if(playerResource.GetRemainingAmmo() > 0){
+			ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
 		}
 
 		Rect grenadeTypeLabel = new Rect(Screen.width-300, Screen.height-250, 300, 100);
 		string grenadeTypeString = "";
-		switch(res.GetCurrentGrenadeType()){
+		switch(playerResource.GetCurrentGrenadeType()){
 			case 0: // Black hole
 				grenadeTypeString = "BH";
 				break;
@@ -234,28 +226,26 @@ public class GuiManager : MonoBehaviour {
 				break;
 		}
 		GUI.Label(grenadeTypeLabel, grenadeTypeString, style);
-		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), res.GetCurrentGrenadeCount().ToString(), style);
+		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), playerResource.GetCurrentGrenadeCount().ToString(), style);
 		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
 
-		//Rect combatLogRect = new Rect(20, Screen.height*3/4, Screen.width * 1/4, (Screen.height*1/4)-20);
 		Rect combatLogRect = new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100);
-		//temporarily moving chat box while testing radar
 		GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
 
 		
 		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
-		if(res.IsJetpackDisabled()){
+		if(playerResource.IsJetpackDisabled()){
 			GUI.DrawTexture(fuel, fullHeat);
 		}else{
 			GUI.DrawTexture(fuel, empty);
 		}
 
-		fuel.xMin = fuel.xMax - (res.GetFuel() / res.GetMaxFuel())*300;
+		fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel())*300;
 		GUI.DrawTexture(fuel, fullFuel);
 		
 		Rect health = new Rect(Screen.width-310, Screen.height-50, 300, 40);
 		GUI.DrawTexture(health, empty);
-		health.xMin = health.xMax - res.GetHealth()*3;
+		health.xMin = health.xMax - playerResource.GetHealth()*3;
 		GUI.DrawTexture(health, fullHealth);
 		
 		Rect rectCrosshair = new Rect(0, 0, 32, 32);
@@ -374,12 +364,14 @@ public class GuiManager : MonoBehaviour {
         GUI.Box(scoreBoard, scoreBoardText);
     }
     void TimerGUI() {
-        //timer
-        timeLeftMins = Mathf.Floor((gameManager.endTime - Time.time) / 60);
-        timeLeftSecs = Mathf.Floor((gameManager.endTime - Time.time) - (timeLeftMins * 60));
+
+        float timeLeftMins = Mathf.Floor((gameManager.endTime - Time.time) / 60);
+        float timeLeftSecs = Mathf.Floor((gameManager.endTime - Time.time) - (timeLeftMins * 60));
+
         if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
         } else {
+            Debug.Log("Displayed the zero-d time area");
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
         }
     }
@@ -409,7 +401,7 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		if(GUI.Button(standard, "Join Game")){
 			
-			MasterServer.RequestHostList(GAME_TYPE);
+			MasterServer.RequestHostList(GameType);
             settingsManager.SaveSettings();
 
             SetCurrentMenuWindow(Menu.JoinGame);
@@ -443,14 +435,15 @@ public class GuiManager : MonoBehaviour {
         NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false, false);
         NetworkManager.InitialiseServer();
 
-		LoadLevel("Tutorial", lastLevelPrefix + 1, int.MaxValue/2); // Because I need a big number
+        settingsManager.LevelName = "Tutorial";
+		gameManager.LoadLevel();
 
 		yield return new WaitForSeconds(1/5f);
 		gameManager.Spawn();
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
 			if(player.networkView.isMine){
-				res = player.GetComponent<PlayerResources>();
+				playerResource = player.GetComponent<PlayerResources>();
 			}
 		}
 	}
@@ -496,7 +489,7 @@ public class GuiManager : MonoBehaviour {
         settingsManager.ParsePortNumber();
 
         if (settingsManager.PortNum >= 0) { // Check for error
-            NetworkManager.SetServerDetails(MAX_PLAYERS, settingsManager.PortNum, useMasterServer, !isLanGame);
+            NetworkManager.SetServerDetails(MaxPlayers, settingsManager.PortNum, useMasterServer, !isLanGame);
             NetworkManager.InitialiseServer();
             settingsManager.SaveSettings();
             currentWindow = Menu.Lobby;
@@ -539,7 +532,7 @@ public class GuiManager : MonoBehaviour {
 		}
 		
 		if(GUI.Button(new Rect(20, largeRect.height-70, largeRect.width/5, 30), "Refresh")){
-			MasterServer.RequestHostList(GAME_TYPE);
+			MasterServer.RequestHostList(GameType);
 		}
 		if(GUI.Button (new Rect(largeRect.width/4+20, largeRect.height-70, largeRect.width/5, 30), "Join By IP")){
 			displayJoinByIpWindow = true;
@@ -549,6 +542,38 @@ public class GuiManager : MonoBehaviour {
 		}
 		
 	}
+
+    void JoinByIpWindow(int windowId) {
+        Rect standard = new Rect(20, 20, smallRect.width - 40, 30);
+
+        GUI.Label(standard, "Server IP Address");
+        standard.y += 30;
+        settingsManager.IpAddress = GUI.TextField(standard, settingsManager.IpAddress);
+
+
+        standard.y += 50;
+        GUI.Label(standard, "Port Number");
+        standard.y += 30;
+        settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
+
+        standard.y += 50;
+        if (GUI.Button(standard, "Join Game")) {
+            displayJoinByIpWindow = false;
+            settingsManager.ParsePortNumber();
+
+            if (settingsManager.PortNum >= 0) { // Check for error
+                settingsManager.SaveSettings();
+                useMasterServer = false;
+                currentWindow = Menu.Connecting;
+            }
+
+        }
+
+        standard.y = smallRect.height - 50;
+        if (GUI.Button(standard, "Close")) {
+            displayJoinByIpWindow = false;
+        }
+    }
 	#endregion
 
 	#region OptionsWindow
@@ -556,17 +581,17 @@ public class GuiManager : MonoBehaviour {
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity X: ");
-        settingsManager.xMouseSensitivity = (float)System.Math.Round(settingsManager.xMouseSensitivity, 1);
+        settingsManager.xMouseSensitivity = (float)System.Math.Round(settingsManager.xMouseSensitivity, 2);
         settingsManager.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.xMouseSensitivity.ToString()));
 		standard.y += 20;
-        settingsManager.xMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.xMouseSensitivity, 0, 100);
+        settingsManager.xMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.xMouseSensitivity, 0, 1);
 		
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity Y: ");
-        settingsManager.yMouseSensitivity = (float)System.Math.Round(settingsManager.yMouseSensitivity, 1);
+        settingsManager.yMouseSensitivity = (float)System.Math.Round(settingsManager.yMouseSensitivity, 2);
         settingsManager.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.yMouseSensitivity.ToString()));
 		standard.y += 20;
-        settingsManager.yMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.yMouseSensitivity, 0, 100);
+        settingsManager.yMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.yMouseSensitivity, 0, 1);
 		
 		standard.y += 40;
 		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
@@ -752,13 +777,13 @@ public class GuiManager : MonoBehaviour {
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
 		GUI.Label(new Rect(20, 20, 100, 30), "Game Mode");
-        settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 40, smallRect.width - 40, 30), settingsManager.GameModeIndex, gameManager.GameModeList);
+        settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 40, smallRect.width - 40, 30), settingsManager.GameModeIndex, settingsManager.GameModeList);
 
 		GUI.Label(new Rect(20, 75, 100, 30), "Score Limit");
-        gameManager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), gameManager.KillsToWin.ToString()));
+        settingsManager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), settingsManager.KillsToWin.ToString()));
 
 		GUI.Label(new Rect(190, 75, 120, 30), "Time Limit (mins)");
-        gameManager.TimeLimit = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), gameManager.TimeLimit.ToString()));
+        settingsManager.TimeLimitMin = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), settingsManager.TimeLimitMin.ToString()));
 
 		GUI.Label(new Rect(410, 75, 90, 30), "Item Spawning");
 		MedkitSpawning = GUI.Toggle(new Rect(520, 75,  80, 30), MedkitSpawning, "Medkits");
@@ -766,7 +791,7 @@ public class GuiManager : MonoBehaviour {
 		WeaponSpawning = GUI.Toggle(new Rect(700, 75,  80, 30), WeaponSpawning, "Weapons");
 		
 		GUI.Label(new Rect(20, 105, smallRect.width-40, 30), "Map");
-        settingsManager.LevelIndex = GUI.Toolbar(new Rect(20, 125, smallRect.width - 40, 30), settingsManager.LevelIndex, gameManager.LevelList);
+        settingsManager.LevelIndex = GUI.Toolbar(new Rect(20, 125, smallRect.width - 40, 30), settingsManager.LevelIndex, settingsManager.LevelList);
 
 		GUI.Label(new Rect(20, 165, smallRect.width-40, 30), "Starting Weapons");
         settingsManager.SpawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width - 40, 30), settingsManager.SpawnWeapon1, weaponlist);
@@ -774,43 +799,7 @@ public class GuiManager : MonoBehaviour {
 
         if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
             settingsManager.SaveSettings();
-            gameManager.LevelName = gameManager.LevelList[settingsManager.LevelIndex];
-            gameManager.GameModeName = gameManager.GameModeList[settingsManager.GameModeIndex];
 			displayGameSettingsWindow = false;
-		}
-	}
-	#endregion
-	
-	#region JoinByIpWindow
-	void JoinByIpWindow(int windowId){
-		Rect standard = new Rect(20, 20, smallRect.width-40, 30);
-		
-		GUI.Label(standard, "Server IP Address");
-		standard.y += 30;
-        settingsManager.IpAddress = GUI.TextField(standard, settingsManager.IpAddress);
-		
-		
-		standard.y += 50;		
-		GUI.Label(standard, "Port Number");
-		standard.y += 30;
-        settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
-		
-		standard.y += 50;
-		if(GUI.Button(standard, "Join Game")){
-			displayJoinByIpWindow = false;
-            settingsManager.ParsePortNumber();
-			
-			if(settingsManager.PortNum >= 0){ // Check for error
-                settingsManager.SaveSettings();
-				useMasterServer = false;
-				currentWindow =  Menu.Connecting;
-			}
-			
-		}
-		
-		standard.y = smallRect.height-50;
-		if(GUI.Button(standard, "Close")){
-			displayJoinByIpWindow = false;
 		}
 	}
 	#endregion
@@ -819,21 +808,16 @@ public class GuiManager : MonoBehaviour {
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
+                gameManager.LoadLevel();
                 
-                int secondsOfGame = gameManager.TimeLimit * SecondsInMinute;
-                networkView.RPC("LoadLevel", RPCMode.AllBuffered, gameManager.LevelName, lastLevelPrefix + 1, secondsOfGame);
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
 			}
 		}
 		
-		string strPlayers = "";
-        foreach (string player in NetworkManager.connectedPlayers.Values) {
-			strPlayers += player + "\n";
-		}
 
-		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), strPlayers, upperLeftTextAlign);
+		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), PlayerList(), upperLeftTextAlign);
 		
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Shutdown Server")){
@@ -900,9 +884,9 @@ public class GuiManager : MonoBehaviour {
 				gameManager.SetCursorVisibility(false);
 			}
 		}else {
-            if (gameManager.IsVictor) {
+            if (scoreVictoryManager.IsVictor) {
                 GUI.enabled = false;
-                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), gameManager.VictorName + " has won!");
+                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), scoreVictoryManager.VictorName + " has won!");
                 GUI.enabled = true;
             } else {
                 if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
@@ -910,7 +894,7 @@ public class GuiManager : MonoBehaviour {
                     GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
                     foreach (GameObject player in players) {
                         if (player.networkView.isMine) {
-                            res = player.GetComponent<PlayerResources>();
+                            playerResource = player.GetComponent<PlayerResources>();
                         }
                     }
                 }
@@ -918,30 +902,25 @@ public class GuiManager : MonoBehaviour {
 
 		}
 
-		string strPlayers = "";
-        foreach (string player in NetworkManager.connectedPlayers.Values) {
-			strPlayers += player + "\n";
-		}
-
-		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-190), strPlayers, upperLeftTextAlign);
+        GUI.Box(new Rect(20, 100, largeRect.width / 3, largeRect.height - 190), PlayerList(), upperLeftTextAlign);
 		
 		if(Network.isServer){
             if (GameManager.IsTutorialScene()) {
                 if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Simulation")) {
-                    BackToMainMenu();
+                    gameManager.BackToMainMenu();
                 }
             } else {
                 if (GUI.Button(new Rect(20, largeRect.height - 80, largeRect.width / 3, 30), "Return to Lobby")) {
-                    ReturnToLobby();
+                    gameManager.ReturnToLobby();
                 }
                 if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Server")) {
-                    BackToMainMenu();
+                    gameManager.BackToMainMenu();
                 }
             }
 
 		}else{
 			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Disconnect")){
-				BackToMainMenu();
+                gameManager.BackToMainMenu();
 			}
 		}
 		
@@ -963,6 +942,14 @@ public class GuiManager : MonoBehaviour {
 		}
 		
 	}
+
+    private string PlayerList() {
+        string playerNames = "";
+        foreach (string playerName in NetworkManager.connectedPlayers.Values) {
+            playerNames += playerName + "\n";
+        }
+        return playerNames;
+    }
 	#endregion
 
 
@@ -982,118 +969,8 @@ public class GuiManager : MonoBehaviour {
 		tutePromptText = message;
 		tutePromptShown = delay;
 	}
-	
-	[RPC]
-	void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName){
-        NetworkManager.connectedPlayers.Add(newPlayer, newPlayerName);
-        ScoreVictoryManager.playerScores.Add(newPlayer, 0);
 
-        SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
-	}
-	
-	[RPC]
-	void RemovePlayerFromList(NetworkPlayer disconnectedPlayer){
-        NetworkManager.connectedPlayers.Remove(disconnectedPlayer);
-        ScoreVictoryManager.playerScores.Remove(disconnectedPlayer);
-
-        SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
-	}
-
-
-	int lastLevelPrefix = 0;
-
-	[RPC]
-	void LoadLevel(string level, int levelPrefix, int secondsOfGame){
-
-
-        //stops tutorial scripts showing after you leave and start a game
-		tutePromptShown = 0;
-
-		//stuff for timer. Don't set up if it's tutorial or the menu.
-        if (level != "MenuScene" && level != "Tutorial") {
-            gameManager.GameInProgress = true;
-            gameManager.GetComponent<ScoreVictoryManager>().GameStart();
-            gameManager.endTime = Time.time + secondsOfGame;
-        } else {
-            gameManager.GameInProgress = false;
-        }
-		
-		lastLevelPrefix = levelPrefix;
-
-        gameManager.currentPlayerName = settingsManager.PlayerName;
-
-
-
-		Network.SetLevelPrefix(levelPrefix);
-
-        SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
-
-		Application.LoadLevel(level);
-
-
-	}
-
-
-
-	
-	[RPC]
-	void ChangeServerName(string name){
-        settingsManager.ServerName = name;
-	}
-	
-	
-	void OnServerInitialized(){
-        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
-		networkView.RPC ("ChangeServerName", RPCMode.OthersBuffered, settingsManager.ServerName);
-	}
-	void OnConnectedToServer(){
-		currentWindow =  Menu.Lobby;
-        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
-	}
-	
 	public void FailedToConnect(){
 		connectionError = true;
 	}
-	
-	void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer){
-		networkView.RPC ("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
-	}
-
-	
-	void BackToMainMenu(){
-
-		if(Network.isClient || Network.isServer){
-            ClearWinnerData();
-			Network.Disconnect();
-		}
-		Application.LoadLevel("MenuScene");
-
-	}
-
-    public void ReturnToLobby() {
-
-        networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
-        
-        int dummy = 0;
-        networkView.RPC("LoadLevel", RPCMode.AllBuffered, "MenuScene", lastLevelPrefix + 1, dummy);
-    }
-
-    [RPC]
-    void RPCReturnToLobby() {
-        currentWindow = Menu.Lobby;
-
-        // Keep the players, but wipe the scores
-        Dictionary<NetworkPlayer, int> buffer = new Dictionary<NetworkPlayer, int>();
-        foreach (NetworkPlayer player in ScoreVictoryManager.playerScores.Keys) {
-            buffer.Add(player, 0);
-        }
-        ScoreVictoryManager.playerScores = buffer;
-
-        //Clear data about a winner, the games over yo
-        ClearWinnerData();
-    }
-    void ClearWinnerData() {
-        gameManager.IsVictor = false;
-        gameManager.VictorName = "";
-    }
 }

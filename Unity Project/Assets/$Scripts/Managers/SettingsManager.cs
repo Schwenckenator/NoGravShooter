@@ -4,6 +4,14 @@ using System.Collections;
 public class SettingsManager : MonoBehaviour {
     public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch };
     public static KeyCode[] keyBindings;
+    const int SecondsInMinute = 60;
+    
+
+    private string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
+    private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Extraction", "Skirmish", "Team Skirmish", "Elimination", "Infection" };
+
+    public string[] LevelList { get { return levelList; } }
+    public string[] GameModeList { get { return gameModeList; } }
 
     #region Networking Settings
     public string ServerName { get; set; }
@@ -23,10 +31,45 @@ public class SettingsManager : MonoBehaviour {
     #endregion
 
     #region GameSettings
-    public int LevelIndex { get; set; }
-    public int GameModeIndex { get; set; }
+    private int levelIndex;
+    public int LevelIndex {
+        get {
+            return levelIndex;
+        }
+        set {
+            levelIndex = value;
+            LevelName = LevelList[value];
+        }
+    }
+    public string LevelName { get; set; }
+
+    private int gameModeIndex;
+    public int GameModeIndex {
+        get {
+            return gameModeIndex;
+        }
+        set {
+            gameModeIndex = value;
+            GameModeName = GameModeList[value];
+        }
+    }
+    public string GameModeName { get; set; }
     public int SpawnWeapon1 { get; set; }
     public int SpawnWeapon2 { get; set; }
+
+    private int timeLimitMin;
+    public int TimeLimitMin {
+        get {
+            return timeLimitMin;
+        }
+        set {
+            timeLimitMin = value;
+            TimeLimitSec = value * SecondsInMinute;
+        }
+    }
+    public int TimeLimitSec { get; protected set;}
+
+    public int KillsToWin { get; set; }
 
     // Bonus spawning
     public int MedkitCanSpawn { get; set; }
@@ -79,32 +122,36 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetInt("bindInteract",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact]);
         PlayerPrefs.SetInt("bindGrenadeSwitch", (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch]);
     }
+
     /// <summary>
     /// Retrieves settings from PlayerPrefs and stores in properties
     /// </summary>
     void RetrieveSettings() {
         // Network Settings
-        ServerName = PlayerPrefs.GetString("serverName");
-        PlayerName = PlayerPrefs.GetString("playerName", "Player");
-        PortNumStr = PlayerPrefs.GetString("portNumStr", "25000");
-        IpAddress = PlayerPrefs.GetString("ipAddress", "127.0.0.1");
-        Password = PlayerPrefs.GetString("password", "");
+        ServerName = PlayerPrefs.GetString("ServerName");
+        PlayerName = PlayerPrefs.GetString("PlayerName", "Player");
+        PortNumStr = PlayerPrefs.GetString("PortNumStr", "25000");
+        IpAddress = PlayerPrefs.GetString("IpAddress", "127.0.0.1");
+        Password = PlayerPrefs.GetString("Password", "");
 
         //Control Settings
         xMouseSensitivity = PlayerPrefs.GetFloat("xMouseSensitivity", 0.5f);
         yMouseSensitivity = PlayerPrefs.GetFloat("yMouseSensitivity", 0.5f);
-        MouseYDirection = PlayerPrefs.GetInt("mouseYDirection", -1);
+        MouseYDirection = PlayerPrefs.GetInt("MouseYDirection", -1);
         FieldOfView = PlayerPrefs.GetFloat("FieldOfView", 70);
-        AutoPickup = PlayerPrefs.GetInt("autoPickup", 0);
+        AutoPickup = PlayerPrefs.GetInt("AutoPickup", 0);
 
         //Game Settings
-        LevelIndex = PlayerPrefs.GetInt("levelIndex", 0);
-        GameModeIndex = PlayerPrefs.GetInt("gameModeIndex", 0);
-        SpawnWeapon1 = PlayerPrefs.GetInt("spawnWeapon1", 0);
-        SpawnWeapon2 = PlayerPrefs.GetInt("spawnWeapon2", 7);
-        MedkitCanSpawn = PlayerPrefs.GetInt("medkitCanSpawn", 1);
-        GrenadeCanSpawn = PlayerPrefs.GetInt("grenadeCanSpawn", 1);
-        WeaponCanSpawn = PlayerPrefs.GetInt("weaponCanSpawn", 1);
+        LevelIndex = PlayerPrefs.GetInt("LevelIndex", 0);
+        GameModeIndex = PlayerPrefs.GetInt("GameModeIndex", 0);
+        SpawnWeapon1 = PlayerPrefs.GetInt("SpawnWeapon1", 0);
+        SpawnWeapon2 = PlayerPrefs.GetInt("SpawnWeapon2", 7);
+        MedkitCanSpawn = PlayerPrefs.GetInt("MedkitCanSpawn", 1);
+        GrenadeCanSpawn = PlayerPrefs.GetInt("GrenadeCanSpawn", 1);
+        WeaponCanSpawn = PlayerPrefs.GetInt("WeaponCanSpawn", 1);
+
+        KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
+        TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
     }
     
     /// <summary>
@@ -112,27 +159,27 @@ public class SettingsManager : MonoBehaviour {
     /// </summary>
     public void SaveSettings() {
         // Network Settings
-        PlayerPrefs.SetString("serverName", ServerName);
-        PlayerPrefs.SetString("playerName", PlayerName);
-        PlayerPrefs.SetString("portNumStr", PortNumStr);
-        PlayerPrefs.SetString("ipAddress", IpAddress);
-        PlayerPrefs.SetString("password", Password);
+        PlayerPrefs.SetString("ServerName", ServerName);
+        PlayerPrefs.SetString("PlayerName", PlayerName);
+        PlayerPrefs.SetString("PortNumStr", PortNumStr);
+        PlayerPrefs.SetString("IpAddress", IpAddress);
+        PlayerPrefs.SetString("Password", Password);
 
         // Control Settings
         PlayerPrefs.SetFloat("xMouseSensitivity", xMouseSensitivity);
         PlayerPrefs.SetFloat("yMouseSensitivity", yMouseSensitivity);
-        PlayerPrefs.SetInt("mouseYDirection", MouseYDirection);
+        PlayerPrefs.SetInt("MouseYDirection", MouseYDirection);
         PlayerPrefs.SetFloat("FieldOfView", FieldOfView);
-        PlayerPrefs.SetInt("autoPickup", AutoPickup);
+        PlayerPrefs.SetInt("AutoPickup", AutoPickup);
         
         //Game Settings
-        PlayerPrefs.SetInt("levelIndex", LevelIndex); 
-        PlayerPrefs.SetInt("gameModeIndex", GameModeIndex);
-        PlayerPrefs.SetInt("spawnWeapon1", SpawnWeapon1);
-        PlayerPrefs.SetInt("spawnWeapon2", SpawnWeapon2);
-        PlayerPrefs.SetInt("medkitCanSpawn", MedkitCanSpawn);
-        PlayerPrefs.SetInt("grenadeCanSpawn", GrenadeCanSpawn);
-        PlayerPrefs.SetInt("weaponCanSpawn", WeaponCanSpawn);
+        PlayerPrefs.SetInt("LevelIndex", LevelIndex); 
+        PlayerPrefs.SetInt("GameModeIndex", GameModeIndex);
+        PlayerPrefs.SetInt("SpawnWeapon1", SpawnWeapon1);
+        PlayerPrefs.SetInt("SpawnWeapon2", SpawnWeapon2);
+        PlayerPrefs.SetInt("MedkitCanSpawn", MedkitCanSpawn);
+        PlayerPrefs.SetInt("GrenadeCanSpawn", GrenadeCanSpawn);
+        PlayerPrefs.SetInt("WeaponCanSpawn", WeaponCanSpawn);
     }
 
     /// <summary>
@@ -151,4 +198,5 @@ public class SettingsManager : MonoBehaviour {
         bool[] temp = {(MedkitCanSpawn == 1),(GrenadeCanSpawn == 1),(WeaponCanSpawn == 1)} ;
         return temp;
     }
+
 }
