@@ -6,7 +6,8 @@ using System.Collections;
 
 public class NoGravCharacterMotor : MonoBehaviour {
 
-	private GameManager manager;
+	private GameManager gameManager;
+    private SettingsManager settingsManager;
 	private AudioSource jetpackAudio;
 	private AudioSource feetAudio;
 
@@ -80,7 +81,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	#region Start
 	void Start(){
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
+		gameManager = manager.GetComponent<GameManager>();
+        settingsManager = manager.GetComponent<SettingsManager>();
+
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
         cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
@@ -99,14 +103,14 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		feetAudio.volume = volumeFootsteps;
 		StartCoroutine("PlayFeetSound");
 
-        mouseSensitivityY = PlayerPrefs.GetFloat("sensitivityY");
+        mouseSensitivityY = settingsManager.yMouseSensitivity;
 
 	}
 	#endregion
 
 	void OnGUI(){
 		if(!ragdoll) return;
-		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), manager.GetComponent<GuiManager>().bloodyScreen);
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), gameManager.GetComponent<GuiManager>().bloodyScreen);
 	}
 
 	#region UpdateInput

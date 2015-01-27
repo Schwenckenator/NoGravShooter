@@ -97,8 +97,8 @@ public class GameManager : MonoBehaviour {
 
 			//
 			if(Network.isServer){
-				startingWeapons[0] = PlayerPrefs.GetInt("1stWeapon", 0);
-				startingWeapons[1] = PlayerPrefs.GetInt("2ndWeapon", 7);
+                startingWeapons[0] = settingsManager.SpawnWeapon1;
+                startingWeapons[1] = settingsManager.SpawnWeapon2;
 				networkView.RPC ("SetStartingWeapons", RPCMode.OthersBuffered, startingWeapons);
 			}
 		}
@@ -142,7 +142,7 @@ public class GameManager : MonoBehaviour {
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
 				cameraLook = player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
-				cameraLook.SetYDirection(PlayerPrefs.GetInt("mouseYDirection"));
+				cameraLook.SetYDirection(settingsManager.MouseYDirection);
 
 				fireWeapon = player.GetComponent<FireWeapon>();
 				playerResources = player.GetComponent<PlayerResources>();

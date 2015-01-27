@@ -10,13 +10,14 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     [SerializeField]
 	private int id;
-	private GameManager manager;
 	private FireWeapon weapon;
-	private int autoPickup = 0;
 	private int weaponcount;
 	private int maxweaponcount;
 	private int currentInventorySlot;
 	private bool playerColliding = false;
+
+    private GameManager gameManager;
+    private SettingsManager settingsManager;
 
 	void Start(){
 		if(GameManager.testMode){
@@ -26,7 +27,8 @@ public class BonusWeaponPickup : MonoBehaviour {
 			networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
 			UpdateModel();
 		}
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
 	}
 
 	//
@@ -58,7 +60,6 @@ public class BonusWeaponPickup : MonoBehaviour {
 		if(info.CompareTag("Player")){
 			if(info.networkView.isMine){
 				playerColliding = true;
-				autoPickup = PlayerPrefs.GetInt("autoPickup", 0);
 				weapon = info.GetComponent<FireWeapon>();
 				weaponcount = weapon.NumberWeaponsHeld();
 				maxweaponcount = GameManager.GetMaxStartingWeapons();
@@ -87,7 +88,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 				if(weaponcount >= maxweaponcount){
 					if(swapTimeout < Time.time){
 						swapTimeout = weaponSwapCooldown;
-                        manager.GetComponent<GuiManager>().ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
+                        gameManager.GetComponent<GuiManager>().ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
                         if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact])) {
 							for(int i=0; i < 7; i++){
 								if(weapon.IsCurrentWeapon(i)){
@@ -106,7 +107,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 					}
 				}else{
 					weapon.AddWeapon(id);
-					if(autoPickup == 1){
+					if(settingsManager.AutoPickup == 1){
 						weapon.ChangeWeapon(weaponcount);
 					}
 					Debug.Log ("Not at maximum weapons, auto picking up");

@@ -69,7 +69,7 @@ public class SettingsManager : MonoBehaviour {
     }
     public int TimeLimitSec { get; protected set;}
 
-    public int KillsToWin { get; set; }
+    public int ScoreToWin { get; set; }
 
     // Bonus spawning
     public int MedkitCanSpawn { get; set; }
@@ -150,7 +150,7 @@ public class SettingsManager : MonoBehaviour {
         GrenadeCanSpawn = PlayerPrefs.GetInt("GrenadeCanSpawn", 1);
         WeaponCanSpawn = PlayerPrefs.GetInt("WeaponCanSpawn", 1);
 
-        KillsToWin = PlayerPrefs.GetInt("KillsToWin", 20);
+        ScoreToWin = PlayerPrefs.GetInt("ScoreToWin", 20);
         TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
     }
     
@@ -180,6 +180,9 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetInt("MedkitCanSpawn", MedkitCanSpawn);
         PlayerPrefs.SetInt("GrenadeCanSpawn", GrenadeCanSpawn);
         PlayerPrefs.SetInt("WeaponCanSpawn", WeaponCanSpawn);
+
+        PlayerPrefs.SetInt("ScoreToWin", ScoreToWin);
+        PlayerPrefs.SetInt("TimeLimitMin", TimeLimitMin);
     }
 
     /// <summary>

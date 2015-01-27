@@ -17,7 +17,7 @@ using System.Collections;
 [AddComponentMenu("Camera-Control/Mouse Look")]
 public class MouseLook : MonoBehaviour {
 
-	//private GameManager manager;
+    private SettingsManager settingsManager;
 	private bool ragdoll = false;
 
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2, MouseNone }
@@ -40,11 +40,11 @@ public class MouseLook : MonoBehaviour {
 	private float zoomCameraSlow;
 
 	void Start(){
-		//manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
 		cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
-		sensitivityX = PlayerPrefs.GetFloat("sensitivityX");
-		sensitivityY = PlayerPrefs.GetFloat("sensitivityY");
+        sensitivityX = settingsManager.xMouseSensitivity;
+        sensitivityY = settingsManager.yMouseSensitivity;
 
 	}
 

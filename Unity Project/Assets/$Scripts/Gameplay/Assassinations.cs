@@ -8,12 +8,12 @@ public class Assassinations : MonoBehaviour {
     [SerializeField]
 	private Transform target = null;
 	
-    private GameManager manager;
+    private GameManager gameManager;
 	private PlayerResources resource;
 	private Vector3 heading;
 
 	void Start () {
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		resource = GetComponent<PlayerResources>();
 	}
 	void Update () {
@@ -30,10 +30,10 @@ public class Assassinations : MonoBehaviour {
 				if (Vector3.Dot(toTarget, transform.forward) < -0.75 && heading.sqrMagnitude < detectionRadius*detectionRadius/12) { // <-- where did that twelve come from? Magic numbers are bad yo
 					//checks if the player is actually facing the player they want to assassinate
 					if (Vector3.Dot(toPlayer, target.forward) > 0.75 && resource.GetHealth() > 0 ){
-						manager.GetComponent<GuiManager>().ButtonPrompt("Assassinate", (int)SettingsManager.KeyBind.Interact);
+						gameManager.GetComponent<GuiManager>().ButtonPrompt("Assassinate", (int)SettingsManager.KeyBind.Interact);
                         if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact])) {
 							Debug.Log("stab stab stab.");
-							manager.AddToChat("Assassinated " + hit.transform.FindChild("NameText").GetComponent<TextMesh>().text + "!");
+							gameManager.AddToChat("Assassinated " + hit.transform.FindChild("NameText").GetComponent<TextMesh>().text + "!");
                             resource.TakeDamage(100, Network.player);
 						}
 					}

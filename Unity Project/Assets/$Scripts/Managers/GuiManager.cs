@@ -780,7 +780,7 @@ public class GuiManager : MonoBehaviour {
         settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 40, smallRect.width - 40, 30), settingsManager.GameModeIndex, settingsManager.GameModeList);
 
 		GUI.Label(new Rect(20, 75, 100, 30), "Score Limit");
-        settingsManager.KillsToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), settingsManager.KillsToWin.ToString()));
+        settingsManager.ScoreToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), settingsManager.ScoreToWin.ToString()));
 
 		GUI.Label(new Rect(190, 75, 120, 30), "Time Limit (mins)");
         settingsManager.TimeLimitMin = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), settingsManager.TimeLimitMin.ToString()));

@@ -37,7 +37,7 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     void CheckForScoreVictory() {
         foreach (NetworkPlayer player in playerScores.Keys) {
-            if (playerScores[player] >= settingsManager.KillsToWin) {
+            if (playerScores[player] >= settingsManager.ScoreToWin) {
                 if (Network.isServer) {
                     gameManager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
                 }

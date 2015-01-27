@@ -36,7 +36,7 @@ public class PlayerResources : MonoBehaviour {
     [SerializeField]
     private float heatCooldownWaitTime = 2.0f;
 
-	private GameManager manager;
+	private GameManager gameManager;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
 
@@ -64,7 +64,7 @@ public class PlayerResources : MonoBehaviour {
 	
 	#region Start()
 	void Awake () {
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		//smokeParticle = transform.FindChild("CameraPos").FindChild("GunSmokeParticle").GetComponent<ParticleSystem>();
 		smokeParticle = GetComponentInChildren<ParticleSystem>();
@@ -95,7 +95,7 @@ public class PlayerResources : MonoBehaviour {
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(100, Network.player);
-			manager.AddToChat("committed Seppuku!");
+			gameManager.AddToChat("committed Seppuku!");
 		}
 
 		if(heat > maxHeat){
@@ -246,12 +246,12 @@ public class PlayerResources : MonoBehaviour {
 			if(networkView.isMine){
 				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
 					if(fromPlayer != Network.player){
-                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + manager.currentPlayerName;
-						manager.AddToChat(killMessage, false);
-						manager.GetComponent<ScoreVictoryManager>().KillScored(fromPlayer);
+                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + gameManager.currentPlayerName;
+						gameManager.AddToChat(killMessage, false);
+						gameManager.GetComponent<ScoreVictoryManager>().KillScored(fromPlayer);
 					} else {
                         string killMessage = NetworkManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
-						manager.AddToChat(killMessage, false);
+						gameManager.AddToChat(killMessage, false);
 					}
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
@@ -286,9 +286,9 @@ public class PlayerResources : MonoBehaviour {
 
 	IEnumerator PlayerCleanup(){
 		yield return new WaitForSeconds(3.0f);
-		manager.PlayerDied();
-		manager.ManagerDetachCamera();
-		manager.SetCursorVisibility(true);
+		gameManager.PlayerDied();
+		gameManager.ManagerDetachCamera();
+		gameManager.SetCursorVisibility(true);
 		GetComponent<ObjectCleanUp>().KillMe();
 	}
 

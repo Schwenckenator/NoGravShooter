@@ -3,11 +3,6 @@ using System.Collections;
 
 public class AimingFOVChanger : MonoBehaviour {
 
-    //public float minFOV;
-    //private float maxFOV;
-    //public float zoomSpeed;
-    //public float sniperFOV;
-
     private float maxFOV;
 
     [SerializeField]
@@ -18,9 +13,15 @@ public class AimingFOVChanger : MonoBehaviour {
     private float sniperFOV;
 	
 	private FireWeapon fireWeapon;
+
+    private SettingsManager settingsManager;
+
+    void Start() {
+        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
+    }
 	
 	void FixedUpdate(){
-	maxFOV = PlayerPrefs.GetFloat("FOVsetting", 75);
+	maxFOV = settingsManager.FieldOfView;
 	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
