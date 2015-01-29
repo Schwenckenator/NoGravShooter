@@ -37,6 +37,7 @@ public class PlayerResources : MonoBehaviour {
     private float heatCooldownWaitTime = 2.0f;
 
 	private GameManager gameManager;
+    private SettingsManager settingsManager;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
 
@@ -64,13 +65,14 @@ public class PlayerResources : MonoBehaviour {
 	
 	#region Start()
 	void Awake () {
-		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
+		gameManager = manager.GetComponent<GameManager>();
+        settingsManager = manager.GetComponent<SettingsManager>();
+
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
-		//smokeParticle = transform.FindChild("CameraPos").FindChild("GunSmokeParticle").GetComponent<ParticleSystem>();
 		smokeParticle = GetComponentInChildren<ParticleSystem>();
 		smokeParticle.emissionRate = 0;
 		smokeParticle.Play();
-		//Use them like percentage, for now
 
 		fuel = maxFuel;
 		health = maxHealth;
@@ -246,7 +248,7 @@ public class PlayerResources : MonoBehaviour {
 			if(networkView.isMine){
 				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
 					if(fromPlayer != Network.player){
-                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + gameManager.currentPlayerName;
+                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + settingsManager.PlayerName;
 						gameManager.AddToChat(killMessage, false);
 						gameManager.GetComponent<ScoreVictoryManager>().KillScored(fromPlayer);
 					} else {

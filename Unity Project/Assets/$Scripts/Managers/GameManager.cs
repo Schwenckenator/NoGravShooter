@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
 
     public float endTime;
-    public string currentPlayerName;
+    //public string currentPlayerName;
     public NetworkPlayer currentPlayer;
 
     // For Game Settings
@@ -273,17 +273,12 @@ public class GameManager : MonoBehaviour {
 
         NetworkManager.lastLevelPrefix = levelPrefix;
 
-        currentPlayerName = settingsManager.PlayerName;
-
-
-
         Network.SetLevelPrefix(levelPrefix);
 
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        ChatManager.ClearAllChat();
 
         Application.LoadLevel(levelName);
-
-
     }
 
     public void ReturnToLobby() {

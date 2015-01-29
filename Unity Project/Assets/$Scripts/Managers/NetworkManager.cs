@@ -113,7 +113,7 @@ public class NetworkManager : MonoBehaviour {
         //numOfPlayers = 0;
         NetworkManager.connectedPlayers.Clear();
         ScoreVictoryManager.playerScores.Clear();
-        ChatManager.ClearChat();
+        ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {

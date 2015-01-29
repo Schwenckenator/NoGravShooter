@@ -3,13 +3,13 @@ using System.Collections;
 
 public class FloatNameManager : MonoBehaviour {
 
-	GameManager manager;
+	SettingsManager settingsManager;
 
 
 	void Start(){
 		if(networkView.isMine){
-			manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-			networkView.RPC("SetName", RPCMode.AllBuffered, manager.currentPlayerName);
+            settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
+            networkView.RPC("SetName", RPCMode.AllBuffered, settingsManager.PlayerName);
 			StartCoroutine(SelfNameDelete());
 		}
 	}
