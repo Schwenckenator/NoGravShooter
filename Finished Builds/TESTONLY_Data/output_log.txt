@@ -17,7 +17,7 @@ Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Bui
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.067 seconds
+- Completed reload, in  0.058 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
@@ -40,7 +40,7 @@ Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Bui
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.063 seconds
+- Completed reload, in  0.060 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
@@ -48,205 +48,7 @@ Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Bui
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\System.Core.dll (this message is harmless)
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-UnloadTime: 0.762508 ms
-UnloadTime: 0.675905 ms
-Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4190.
-Total: 1.527057 ms (FindLiveObjects: 0.190U0nloading teObjectMapeingS:rialize615 ms MarkObjects: 0.383149 ms  DeleteObjects: 0.030033 msfil
-e
-s: 0)
-
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4186.
-Total: 2.157767 ms (FindLiveObjects: 0.223649 ms CreateObjectMapping: 0.046071 ms MarkObjects: 0.397728 ms  DeleteObjects: 0.021869 ms)
-
-RocketProjectile(Clone) (UnityEngine.GameObject) is being killed.
+No objects for the given player ID were deleted 1
  
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 1
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-RocketProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 1
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionFrag(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionFrag(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-RocketProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 1
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-RocketProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-arsohole kills
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 1
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionFrag(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionFrag(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-PlasmaProjectile(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Explosion. Owner Player Number: 0
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-Schwenckenator kills
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-ExplosionPlasma(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-NoGravPlayer(Clone) (UnityEngine.GameObject) is being killed.
- 
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
-
-The server has disconnected from the client. Most likely the server has shut down.
- 
-(Filename:  Line: 745)
-
-UnloadTime: 15.606488 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 719.
-Total: 3.830619 ms (FindLiveObjects: 0.062691 ms CreateObjectMapping: 0.060650 ms MarkObjects: 0.507658 ms  DeleteObjects: 0.989948 ms)
-
-UnloadTime: 9.090323 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 722.
-Total: 2.299188 ms (FindLiveObjects: 0.034990 ms CreateObjectMapping: 0.030616 ms MarkObjects: 0.311709 ms  DeleteObjects: 0.638290 ms)
-
-UnloadTime: 0.280218 ms
-Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 712.
-Total: 1.080049 ms (FindLiveObjects: 0.018661 ms CreateObjectMapping: 0.021577 ms MarkObjects: 0.240561 ms  DeleteObjects: 0.004082 ms)
+(Filename:  Line: 1373)
 

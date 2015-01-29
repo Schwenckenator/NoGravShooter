@@ -26,10 +26,12 @@ public class NetworkManager : MonoBehaviour {
 
     private GuiManager guiManager;
     private static SettingsManager settingsManager;
+    private ChatManager chatManager;
 
     void Start() {
         guiManager = GetComponent<GuiManager>();
         settingsManager = GetComponent<SettingsManager>();
+        chatManager = GetComponent<ChatManager>();
     }
 
     #region Connect To Server
@@ -90,6 +92,8 @@ public class NetworkManager : MonoBehaviour {
         GetComponent<GuiManager>().FailedToConnect();
     }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
+        string message = NetworkManager.connectedPlayers[disconnectedPlayer] + " has disconnected.";
+        chatManager.SubmitTextToChat(message, false);
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
         networkView.RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
@@ -109,8 +113,6 @@ public class NetworkManager : MonoBehaviour {
 
         GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.Menu.MainMenu);
 
-        //Reset Varibles
-        //numOfPlayers = 0;
         NetworkManager.connectedPlayers.Clear();
         ScoreVictoryManager.playerScores.Clear();
         ChatManager.ClearAllChat();
@@ -130,6 +132,9 @@ public class NetworkManager : MonoBehaviour {
         // Set window to lobby
         guiManager.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
+        
+        string message = settingsManager.PlayerName + " has connected.";
+        chatManager.SubmitTextToChat(message, false);
     }
     #endregion
 
