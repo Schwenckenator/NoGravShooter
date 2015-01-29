@@ -841,10 +841,12 @@ public class GuiManager : MonoBehaviour {
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
 			chatManager.SubmitTextToChat(ChatManager.currentChat);
+			ChatManager.ClearCurrentChat();
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
 			chatManager.SubmitTextToChat(ChatManager.currentChat);
+			ChatManager.ClearCurrentChat();
 		}
 	}
 	#endregion
@@ -939,11 +941,13 @@ public class GuiManager : MonoBehaviour {
 		if(!GameManager.IsTutorialScene()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
 				chatManager.SubmitTextToChat(ChatManager.currentChat);
+				ChatManager.ClearCurrentChat();
 			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
 			chatManager.SubmitTextToChat(ChatManager.currentChat);
+			ChatManager.ClearCurrentChat();
 		}
 		
 	}
