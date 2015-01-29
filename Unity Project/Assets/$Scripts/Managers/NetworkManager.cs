@@ -7,6 +7,8 @@ using System.Collections.Generic;
 /// </summary>
 public class NetworkManager : MonoBehaviour {
 
+    public const string GameType = "NoGravShooter";
+
     // Use this for initialization
     #region variables
     public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
@@ -23,7 +25,7 @@ public class NetworkManager : MonoBehaviour {
     #endregion
 
     private GuiManager guiManager;
-    private SettingsManager settingsManager;
+    private static SettingsManager settingsManager;
 
     void Start() {
         guiManager = GetComponent<GuiManager>();
@@ -50,6 +52,7 @@ public class NetworkManager : MonoBehaviour {
     public static void InitialiseServer() {
         if (useNat) useNat = !Network.HavePublicAddress();
         Network.InitializeServer(maxPlayers, portNum, useNat);
+        if (useMasterServer) MasterServer.RegisterHost(GameType, settingsManager.ServerName);
     }
 
     public static void Disconnect() {

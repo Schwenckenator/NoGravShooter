@@ -17,9 +17,34 @@ Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Bui
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.060 seconds
+- Completed reload, in  0.070 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2021 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.061 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\System.Core.dll (this message is harmless)
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\Playtest_2015-01-29_Data\Managed\System.Core.dll (this message is harmless)
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
