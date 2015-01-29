@@ -459,25 +459,25 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 
 	#region Collisions
-	void OnCollisionEnter(Collision info){
-		if(networkView.isMine){
-			if(info.collider.CompareTag("Walkable")){
+    //void OnCollisionEnter(Collision info) {
+    //    if (networkView.isMine) {
+    //        if (!info.collider.CompareTag("NonWalkable")) {
 
-				Vector3 colObjNorm = SurfaceNormal(info);
+    //            Vector3 colObjNorm = SurfaceNormal(info);
 
-				float angle = Vector3.Angle(transform.up, colObjNorm);
+    //            float angle = Vector3.Angle(transform.up, colObjNorm);
 
-				if(angle < maxLandingAngle){
-					SnapToSurface(colObjNorm);
+    //            if (angle < maxLandingAngle) {
+    //                SnapToSurface(colObjNorm);
 
-				}
-			}
-		}
-	}
+    //            }
+    //        }
+    //    }
+    //}
 
 	void OnCollisionStay (Collision info) {
 		if(networkView.isMine){
-            if (info.collider.CompareTag("Walkable")) {
+            if (!info.collider.CompareTag("NonWalkable")) {
                 Vector3 surfaceNorm = SurfaceNormal(info);
                 float angle = Vector3.Angle(transform.up, surfaceNorm);
 
@@ -520,8 +520,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 
 	float CalculateJumpVerticalSpeed () {
-		// From the jump height and gravity we deduce the upwards speed 
-		// for the character to reach at the apex.
 		return Mathf.Sqrt(jumpForce);
 	}
 	public void Recoil(float recoil){

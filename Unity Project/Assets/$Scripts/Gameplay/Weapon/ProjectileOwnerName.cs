@@ -7,9 +7,12 @@ public class ProjectileOwnerName : MonoBehaviour {
 
     public NetworkPlayer ProjectileOwner {
         get { return projectileOwner; }
-        set { 
-            projectileOwner = value;
-            //Debug.Log(value.ToString());
+        set {
+            networkView.RPC("SetProjectileOwner", RPCMode.AllBuffered, value);
         }
+    }
+    [RPC]
+    private void SetProjectileOwner(NetworkPlayer owner) {
+        projectileOwner = owner;
     }
 }
