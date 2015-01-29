@@ -92,7 +92,7 @@ public class GuiManager : MonoBehaviour {
     private int index = 0; // index for graphics resolutions
     private bool fullscreen = false;
 	
-
+	private int chatboxwidth = 500;
 
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
@@ -229,23 +229,28 @@ public class GuiManager : MonoBehaviour {
 		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), playerResource.GetCurrentGrenadeCount().ToString(), style);
 		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
 
-		Rect combatLogRect = new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100);
+		if(Screen.width - 550 < 500){
+			chatboxwidth = Screen.width - 550;
+		} else {
+			chatboxwidth = 500;
+		}
+		Rect combatLogRect = new Rect(Screen.width/2 - chatboxwidth/2, Screen.height - 120, chatboxwidth, 100);
 		GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
 
 		
-		Rect fuel = new Rect(Screen.width-310, Screen.height-100, 300, 40);
+		Rect fuel = new Rect(Screen.width-260, Screen.height-100, 250, 40);
 		if(playerResource.IsJetpackDisabled()){
 			GUI.DrawTexture(fuel, fullHeat);
 		}else{
 			GUI.DrawTexture(fuel, empty);
 		}
 
-		fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel())*300;
+		fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel())*250;
 		GUI.DrawTexture(fuel, fullFuel);
 		
-		Rect health = new Rect(Screen.width-310, Screen.height-50, 300, 40);
+		Rect health = new Rect(Screen.width-260, Screen.height-50, 250, 40);
 		GUI.DrawTexture(health, empty);
-		health.xMin = health.xMax - playerResource.GetHealth()*3;
+		health.xMin = health.xMax - playerResource.GetHealth()*5/2;
 		GUI.DrawTexture(health, fullHealth);
 		
 		Rect rectCrosshair = new Rect(0, 0, 32, 32);
@@ -254,7 +259,7 @@ public class GuiManager : MonoBehaviour {
 
 		//tutorial prompt
 		if(tutePromptShown > 0){
-			GUI.Box(new Rect(Screen.width/2 - 250, Screen.height - 120, 500, 100), tutePromptText);
+			GUI.Box(new Rect(Screen.width/2 - chatboxwidth/2, Screen.height - 120, chatboxwidth, 100), tutePromptText);
 			tutePromptShown--;
 		}
 		
@@ -609,8 +614,7 @@ public class GuiManager : MonoBehaviour {
 			currentWindow = Menu.Keybind;
 		}
 
-        standard.y += 50;
-        if (GUI.Button(standard, "Graphics Settings")) {
+        if (GUI.Button(new Rect(standard.width+50, standard.y, standard.width, standard.height), "Graphics Settings")) {
             currentWindow = Menu.GraphicsOptions;
         }
 
@@ -668,82 +672,83 @@ public class GuiManager : MonoBehaviour {
 		//Move Forward
 		standard.y += 50;
 		GUI.Label(standard, "Move Forward: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward].ToString())){
 			editedBinding = SettingsManager.KeyBind.MoveForward;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Backward: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack].ToString())){
 			editedBinding = SettingsManager.KeyBind.MoveBack;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Left: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft].ToString())){
 			editedBinding = SettingsManager.KeyBind.MoveLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Right: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight].ToString())){
 			editedBinding = SettingsManager.KeyBind.MoveRight;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Left: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft].ToString())){
 			editedBinding = SettingsManager.KeyBind.RollLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Right: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight].ToString())){
 			editedBinding = SettingsManager.KeyBind.RollRight;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jump / Jetpack Up: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp].ToString())){
 			editedBinding = SettingsManager.KeyBind.JetUp;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jetpack Down: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown].ToString())){
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown].ToString())){
 			editedBinding = SettingsManager.KeyBind.JetDown;
 			displayChangeKeybindWindow = true;
 		}
 
-		standard.y += 50;
+		standard.y -= 210;
+		standard.x+= 300;
 		GUI.Label(standard, "Reload: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload].ToString())){
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload].ToString())){
 			editedBinding = SettingsManager.KeyBind.Reload;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Grenade: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade].ToString())){
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade].ToString())){
 			editedBinding = SettingsManager.KeyBind.Grenade;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Switch Grenade: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch].ToString())){
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch].ToString())){
 			editedBinding = SettingsManager.KeyBind.GrenadeSwitch;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Interact: ");
-		if(GUI.Button(new Rect(200, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact].ToString())){
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact].ToString())){
 			editedBinding = SettingsManager.KeyBind.Interact;
 			displayChangeKeybindWindow = true;
 		}
@@ -776,28 +781,28 @@ public class GuiManager : MonoBehaviour {
 
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
-		GUI.Label(new Rect(20, 20, 100, 30), "Game Mode");
-        settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 40, smallRect.width - 40, 30), settingsManager.GameModeIndex, settingsManager.GameModeList);
+		GUI.Label(new Rect(20, 10, 100, 30), "Game Mode");
+        settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 30, smallRect.width - 40, 30), settingsManager.GameModeIndex, settingsManager.GameModeList);
 
-		GUI.Label(new Rect(20, 75, 100, 30), "Score Limit");
-        settingsManager.ScoreToWin = int.Parse(GUI.TextField(new Rect(120, 75, 50, 20), settingsManager.ScoreToWin.ToString()));
+		GUI.Label(new Rect(20, 65, 100, 30), "Score Limit");
+        settingsManager.ScoreToWin = int.Parse(GUI.TextField(new Rect(95, 65, 50, 20), settingsManager.ScoreToWin.ToString()));
 
-		GUI.Label(new Rect(190, 75, 120, 30), "Time Limit (mins)");
-        settingsManager.TimeLimitMin = int.Parse(GUI.TextField(new Rect(310, 75, 50, 20), settingsManager.TimeLimitMin.ToString()));
+		GUI.Label(new Rect(160, 65, 120, 30), "Time Limit (mins)");
+        settingsManager.TimeLimitMin = int.Parse(GUI.TextField(new Rect(275, 65, 50, 20), settingsManager.TimeLimitMin.ToString()));
 
-		GUI.Label(new Rect(410, 75, 90, 30), "Item Spawning");
-		MedkitSpawning = GUI.Toggle(new Rect(520, 75,  80, 30), MedkitSpawning, "Medkits");
-		GrenadeSpawning = GUI.Toggle(new Rect(610, 75,  80, 30), GrenadeSpawning, "Grenades");
-		WeaponSpawning = GUI.Toggle(new Rect(700, 75,  80, 30), WeaponSpawning, "Weapons");
+		GUI.Label(new Rect(20, 90, 90, 30), "Item Spawning");
+		MedkitSpawning = GUI.Toggle(new Rect(115, 90,  80, 30), MedkitSpawning, "Medkits");
+		GrenadeSpawning = GUI.Toggle(new Rect(185, 90,  80, 30), GrenadeSpawning, "Grenades");
+		WeaponSpawning = GUI.Toggle(new Rect(265, 90,  80, 30), WeaponSpawning, "Weapons");
 		
-		GUI.Label(new Rect(20, 105, smallRect.width-40, 30), "Map");
-        settingsManager.LevelIndex = GUI.Toolbar(new Rect(20, 125, smallRect.width - 40, 30), settingsManager.LevelIndex, settingsManager.LevelList);
+		GUI.Label(new Rect(20, 110, smallRect.width-40, 30), "Map");
+        settingsManager.LevelIndex = GUI.Toolbar(new Rect(20, 130, smallRect.width - 40, 30), settingsManager.LevelIndex, settingsManager.LevelList);
 
 		GUI.Label(new Rect(20, 165, smallRect.width-40, 30), "Starting Weapons");
         settingsManager.SpawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width - 40, 30), settingsManager.SpawnWeapon1, weaponlist);
         settingsManager.SpawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width - 40, 30), settingsManager.SpawnWeapon2, weaponlist2);
 
-        if(GUI.Button(new Rect(20, smallRect.height-50, smallRect.width-40, 30), "Close")){
+        if(GUI.Button(new Rect(20, smallRect.height-45, smallRect.width-40, 30), "Close")){
             settingsManager.SaveSettings();
 			displayGameSettingsWindow = false;
 		}
@@ -836,12 +841,10 @@ public class GuiManager : MonoBehaviour {
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
 			chatManager.SubmitTextToChat(ChatManager.currentChat);
-            ChatManager.ClearCurrentChat();
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
 			chatManager.SubmitTextToChat(ChatManager.currentChat);
-            ChatManager.ClearCurrentChat();
 		}
 	}
 	#endregion
@@ -936,13 +939,11 @@ public class GuiManager : MonoBehaviour {
 		if(!GameManager.IsTutorialScene()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
 				chatManager.SubmitTextToChat(ChatManager.currentChat);
-                ChatManager.ClearCurrentChat();
 			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
 			chatManager.SubmitTextToChat(ChatManager.currentChat);
-            ChatManager.ClearCurrentChat();
 		}
 		
 	}
