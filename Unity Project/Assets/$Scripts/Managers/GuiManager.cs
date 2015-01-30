@@ -234,9 +234,11 @@ public class GuiManager : MonoBehaviour {
 		} else {
 			chatboxwidth = 500;
 		}
-		Rect combatLogRect = new Rect(Screen.width/2 - chatboxwidth/2, Screen.height - 120, chatboxwidth, 100);
-		GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
 
+        if (!GameManager.IsTutorialScene()) {
+            Rect combatLogRect = new Rect(Screen.width / 2 - chatboxwidth / 2, Screen.height - 120, chatboxwidth, 100);
+            GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
+        }
 		
 		Rect fuel = new Rect(Screen.width-260, Screen.height-100, 250, 40);
 		if(playerResource.IsJetpackDisabled()){
@@ -414,7 +416,7 @@ public class GuiManager : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Tutorial")){
-			StartCoroutine(LoadTutorial());
+			StartCoroutine(gameManager.LoadTutorial());
 		}
 		
 		standard.y += 50;
@@ -429,29 +431,6 @@ public class GuiManager : MonoBehaviour {
 		}
 	}
 	#endregion
-	
-	//load the tutorial level
-	IEnumerator LoadTutorial(){
-		//Get port number, create Server
-		//Sanitise Port number input
-		int portNum = 25000;
-		int maxTutorialConnections = 1;
-
-        NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false, false);
-        NetworkManager.InitialiseServer();
-
-        settingsManager.LevelName = "Tutorial";
-		gameManager.LoadLevel();
-
-		yield return new WaitForSeconds(1/5f);
-		gameManager.Spawn();
-		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject player in players){
-			if(player.networkView.isMine){
-				playerResource = player.GetComponent<PlayerResources>();
-			}
-		}
-	}
 
 	#region CreateGameWindow
 	void CreateGameWindow(int windowId){
@@ -878,6 +857,15 @@ public class GuiManager : MonoBehaviour {
 	}
 	#endregion
 
+    public void SetMyPlayerResources() {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject player in players) {
+            if (player.networkView.isMine) {
+                playerResource = player.GetComponent<PlayerResources>();
+            }
+        }
+    }
+
 	#region PauseWindow
 	void PauseWindow(int windowId){
         if (!GameManager.IsTutorialScene()) {
@@ -898,12 +886,7 @@ public class GuiManager : MonoBehaviour {
             } else {
                 if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
                     gameManager.Spawn();
-                    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-                    foreach (GameObject player in players) {
-                        if (player.networkView.isMine) {
-                            playerResource = player.GetComponent<PlayerResources>();
-                        }
-                    }
+                    SetMyPlayerResources();
                 }
             }
 

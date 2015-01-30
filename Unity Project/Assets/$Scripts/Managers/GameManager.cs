@@ -252,7 +252,9 @@ public class GameManager : MonoBehaviour {
 
     public void LoadLevel() {
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, settingsManager.LevelName, NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
-
+    }
+    void LoadLevelTutorial() {
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
     }
 
     [RPC]
@@ -279,6 +281,22 @@ public class GameManager : MonoBehaviour {
         ChatManager.ClearAllChat();
 
         Application.LoadLevel(levelName);
+    }
+
+    //load the tutorial level
+    public IEnumerator LoadTutorial() {
+
+        int portNum = 25000; // Dummy values for server creation
+        int maxTutorialConnections = 1;
+
+        NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false, false);
+        NetworkManager.InitialiseServer();
+
+        LoadLevelTutorial();
+
+        yield return new WaitForSeconds(1 / 5f);
+        Spawn();
+        guiManager.SetMyPlayerResources();
     }
 
     public void ReturnToLobby() {
