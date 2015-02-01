@@ -17,38 +17,45 @@ Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Bui
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.058 seconds
-<RI> Initializing input.
-<RI> Input initialized.
-desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
-Initialize engine version: 4.6.1f1 (d1db7a1b5196)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
-    Renderer: AMD Radeon R9 200 Series
-    Vendor:   ATI
-    VRAM:     2021 MB (via DXGI)
-    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
-Begin MonoManager ReloadAssembly
-Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
-Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.060 seconds
+- Completed reload, in  0.075 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\System.Core.dll (this message is harmless)
 WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\System.Core.dll (this message is harmless)
-WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
-No objects for the given player ID were deleted 1
+Profiler is only supported with Pro License
  
-(Filename:  Line: 1373)
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Profiler/ProfilerConnection.cpp Line: 218)
 
+UnloadTime: 0.523695 ms
+System memory in use before: 21.6 MB.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 21.6 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4198.
+Total: 1.981935 ms (FindLiveObjects: 0.197406 ms CreateObjectMapping: 0.046945 ms MarkObjects: 0.409391 ms  DeleteObjects: 0.037615 ms)
+
+1
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusGrenadePackPickup:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusGrenadePackPickup.cs:19)
+ 
+(Filename: C Line: 0)
+
+UnloadTime: 8.801052 ms
+System memory in use before: 19.9 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 18.2 MB.
+
+Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 728.
+Total: 2.102653 ms (FindLiveObjects: 0.023910 ms CreateObjectMapping: 0.024201 ms MarkObjects: 0.269720 ms  DeleteObjects: 0.604173 ms)
+
+UnloadTime: 0.320457 ms
+System memory in use before: 18.1 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 18.1 MB.
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 720.
+Total: 1.468154 ms (FindLiveObjects: 0.017495 ms CreateObjectMapping: 0.020119 ms MarkObjects: 0.256015 ms  DeleteObjects: 0.005540 ms)
+
+Waiting for finish

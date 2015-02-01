@@ -16,7 +16,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 
 		//Randomise here, just for now
 		grenadeType = Random.Range(0, 3);
-		Debug.Log (grenadeType.ToString());
+        //Debug.Log (grenadeType.ToString());
 	}
 
 	void OnTriggerEnter(Collider info){

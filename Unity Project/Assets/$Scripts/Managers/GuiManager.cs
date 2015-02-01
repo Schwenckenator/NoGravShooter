@@ -62,9 +62,9 @@ public class GuiManager : MonoBehaviour {
 	private bool displayGameSettingsWindow = false;
 	private bool displayJoinByIpWindow = false;
 	private bool displayChangeKeybindWindow = false;
-	
-	private Rect largeRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
-	private Rect smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
+
+    private Rect largeRect;
+    private Rect smallRect;
 	
 	private const string GameType = "NoGravShooter";
 	private const int MaxPlayers = 31;
@@ -89,8 +89,8 @@ public class GuiManager : MonoBehaviour {
 	private bool GrenadeSpawning = true;
 	private bool WeaponSpawning = true;
 
-    private int index = 0; // index for graphics resolutions
-    private bool fullscreen = false;
+   
+
 	
 	private int chatboxwidth = 500;
 
@@ -106,6 +106,9 @@ public class GuiManager : MonoBehaviour {
 
     
     void Start(){
+
+        ChangeGuiRectSize(); // Do this first
+
 		gameManager = GetComponent<GameManager>();
         chatManager = GetComponent<ChatManager>();
         scoreVictoryManager = GetComponent<ScoreVictoryManager>();
@@ -119,8 +122,6 @@ public class GuiManager : MonoBehaviour {
 		MedkitSpawning = (settingsManager.MedkitCanSpawn == 1);
 		GrenadeSpawning = (settingsManager.GrenadeCanSpawn == 1);
 		WeaponSpawning = (settingsManager.WeaponCanSpawn == 1);
-
-
 	}
 	
 	#region OnGUI
@@ -594,6 +595,7 @@ public class GuiManager : MonoBehaviour {
 		}
 
         if (GUI.Button(new Rect(standard.width+50, standard.y, standard.width, standard.height), "Graphics Settings")) {
+            GraphicsOptionsSetup();
             currentWindow = Menu.GraphicsOptions;
         }
 
@@ -619,6 +621,9 @@ public class GuiManager : MonoBehaviour {
 	#endregion
 
     #region GraphicsOptionsWindow
+    private int resolutionIndex = 0; // index for graphics resolutions
+    private bool fullscreen = false;
+
     void GraphicsOptionsWindow(int windowId) {
         Rect standard = new Rect(20, 20, -40 + Screen.width / 3, 30);
         Resolution[] resolutions = Screen.resolutions;
@@ -626,21 +631,47 @@ public class GuiManager : MonoBehaviour {
 
         standard.y += 50;
         GUI.Label(standard, "Resolution: ");
-        if (GUI.Button(new Rect(100, standard.y, 100, 30), resolutions[index].width + " x " + resolutions[index].height)) {
-            index++;
-            index %= maxIndex;
+        if (GUI.Button(new Rect(100, standard.y, 100, 30), resolutions[resolutionIndex].width + " x " + resolutions[resolutionIndex].height)) {
+            resolutionIndex++;
+            resolutionIndex %= maxIndex;
         }
         
         standard.y += 50;
         fullscreen = GUI.Toggle(new Rect(standard.x, standard.y, 100, 30), fullscreen, "Fullscreen");
 
         standard.y += 50;
-        if (GUI.Button(standard, "Back")) {
+        if (GUI.Button(standard, "Save Settings")) {
 
-            Screen.SetResolution(resolutions[index].width, resolutions[index].height, fullscreen);
+            Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
+            StartCoroutine(WaitForGUIRectResize());
 
             currentWindow = Menu.Options;
         }
+        standard.y += 50;
+        if (GUI.Button(standard, "Cancel")) {
+            currentWindow = Menu.Options;
+        }
+    }
+
+    void GraphicsOptionsSetup() {
+        Resolution[] resolutions = Screen.resolutions;
+        int maxIndex = resolutions.Length;
+        for (int i = 0; i < maxIndex; i++) {
+            if (Screen.height == resolutions[i].height && Screen.width == resolutions[i].width) {
+                resolutionIndex = i;
+            }
+
+        }
+    }
+
+    void ChangeGuiRectSize() {
+        largeRect = new Rect(Screen.width/8, Screen.height/8, Screen.width*6/8, Screen.height*6/8);
+	    smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
+    }
+    IEnumerator WaitForGUIRectResize() {
+        float smallDelay = 0.1f;
+        yield return new WaitForSeconds(smallDelay);
+        ChangeGuiRectSize();
     }
     #endregion
 

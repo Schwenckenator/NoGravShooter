@@ -7,14 +7,13 @@ using System.Collections;
 public class NoGravCharacterMotor : MonoBehaviour {
 
 	private GameManager gameManager;
-    private SettingsManager settingsManager;
 	private AudioSource jetpackAudio;
 	private AudioSource feetAudio;
 
 	private PlayerResources resource;
 
-	private MouseLook cameraLook; // Camera Mouse Look
-    private AimingFOVChanger cameraFOV;
+	private MouseLook cameraMouseLook;
+    private MouseLook characterMouseLook;
 	private Transform cameraTransform;
 
 	private bool jetPackOn;
@@ -54,9 +53,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
     private bool canJump = true;
     [SerializeField]
     private float jumpForce = 40.0f;
-    [SerializeField]
-    private float airPitchSensitivity = 10.0f;
-    private float mouseSensitivityY;
+
 
 
     [SerializeField]
@@ -83,11 +80,9 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	void Start(){
         GameObject manager = GameObject.FindGameObjectWithTag("GameController");
 		gameManager = manager.GetComponent<GameManager>();
-        settingsManager = manager.GetComponent<SettingsManager>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
-        cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
 		rigidbody.freezeRotation = true;
 		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
@@ -96,14 +91,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		resource = GetComponent<PlayerResources>();
 		cameraTransform = transform.GetChild(0);
-		cameraLook = cameraTransform.GetComponent<MouseLook>();
+		cameraMouseLook = cameraTransform.GetComponent<MouseLook>();
+        characterMouseLook = GetComponent<MouseLook>();
 
 		StartCoroutine("PlayJetpackSound");
 
 		feetAudio.volume = volumeFootsteps;
 		StartCoroutine("PlayFeetSound");
-
-        mouseSensitivityY = settingsManager.yMouseSensitivity;
 
 	}
 	#endregion
@@ -199,8 +193,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 	#endregion
 	
-	//to call button prompt
-	//manager.GetComponent<GUIScript>().ButtonPrompt((int)SettingsManager.KeyBind.BUTTON, "ACTION");
 	
 	#region FixedUpdate
 	void FixedUpdate () {
@@ -218,7 +210,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if(GameManager.IsPaused()){
 				targetVelocity = Vector3.zero;
 			}else{
-				targetVelocity = new Vector3(horizontal, 0, vertical);
+                targetVelocity = new Vector3(horizontal, 0, vertical);
 			}
 
 			targetVelocity = Vector3.ClampMagnitude(targetVelocity, 1.0f);
@@ -229,66 +221,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 			bool sneaking = false;
 			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])){
-				#region EdgeDetection
-				sneaking = true;
-				int numOfVectors = 16;
-				//Fire rays!
-				Vector3 rayPosition = transform.TransformPoint(0, -0.5f, 0);
-				Vector3 rayDown = transform.TransformDirection(0, -1, 0);
-
-				Vector3[] dirs = new Vector3[numOfVectors];
-				int vec = 0;
-				dirs[vec++] = transform.TransformDirection(0, 0, 1);
-				dirs[vec++] = transform.TransformDirection(0.5f, 0, 1);
-
-				dirs[vec++] = transform.TransformDirection(.707f, 0, .707f);
-				dirs[vec++] = transform.TransformDirection(1, 0, 0.5f);
-
-				dirs[vec++] = transform.TransformDirection(1, 0, 0);
-				dirs[vec++] = transform.TransformDirection(1, 0, -0.5f);
-
-				dirs[vec++] = transform.TransformDirection(.707f, 0, -.707f);
-				dirs[vec++] = transform.TransformDirection(0.5f, 0, -1);
-
-				
-				dirs[vec++] = transform.TransformDirection(0, 0, -1);
-				dirs[vec++] = transform.TransformDirection(-0.5f, 0, -1);
-
-				dirs[vec++] = transform.TransformDirection(-.707f, 0, -.707f);
-				dirs[vec++] = transform.TransformDirection(-1, 0, -0.5f);
-
-				dirs[vec++] = transform.TransformDirection(-1, 0, 0);
-				dirs[vec++] = transform.TransformDirection(-1, 0, 0.5f);
-
-				dirs[vec++] = transform.TransformDirection(-.707f, 0, .707f);
-				dirs[vec++] = transform.TransformDirection(-0.5f, 0, 1);
-
-
-
-
-
-				bool[] misses = new bool[numOfVectors];
-				float rayLength = 3.0f;
-				Vector3 pushBackDir = Vector3.zero;
-
-
-				for(int i=0; i<numOfVectors; i++){
-					misses[i] = !Physics.Raycast(rayPosition, (dirs[i]+rayDown).normalized, rayLength);
-				}
-
-				for(int i=0; i<numOfVectors; i++){
-					if(misses[i] && misses[(i+1)%numOfVectors]){
-						//Found an edge!
-						Vector3 edge = dirs[(i+1)%numOfVectors] - dirs[i];
-						//Debug.DrawLine(transform.position + dirs[i], transform.position + dirs[(i+1)%8], Color.magenta, 30, false);
-
-						Vector3 up = transform.up;
-						Vector3.OrthoNormalize(ref up, ref edge, ref pushBackDir);
-						totalPushBackDir += pushBackDir;
-
-					}
-				}
-				#endregion
+                sneaking = true;
+                totalPushBackDir = EdgeDetection();
 			}
 			if(sneaking && totalPushBackDir.sqrMagnitude > 0){
 				totalPushBackDir.Normalize();
@@ -346,15 +280,24 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			}
 
 			//Rotation
-			Vector3 torque;
-			if(GameManager.IsPaused()){
-				torque = Vector3.zero;
-			}else{
-				torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * mouseSensitivityY * cameraLook.GetYDirection() * cameraFOV.zoomRotationRatio(), 0, roll); // the change wanted
-			}
-			torque = torque * rollSpeed;
-			transform.Rotate(torque);
+            //Vector3 torque;
+            //if(GameManager.IsPaused()){
+            //    torque = Vector3.zero;
+            //}else{
+            //    torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * mouseSensitivityY * cameraLook.GetYDirection() * cameraFOV.zoomRotationRatio(), 0, roll); // the change wanted
+            //    Debug.Log("Air: " + Input.GetAxis("Mouse Y").ToString());
+            //}
+            //torque = torque * rollSpeed;
+            //transform.Rotate(torque);
 
+            Vector3 torque;
+            if (GameManager.IsPaused()) {
+                torque = Vector3.zero;
+            } else {
+                torque = new Vector3(0, 0, roll); // the change wanted
+            }
+            torque = torque * rollSpeed;
+            transform.Rotate(torque);
 
 		}
 
@@ -364,6 +307,69 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 
 	}
+
+    private Vector3 EdgeDetection() {
+        Vector3 totalPushBackDir = new Vector3();
+        int numOfVectors = 16;
+        //Fire rays!
+        Vector3 rayPosition = transform.TransformPoint(0, -0.5f, 0);
+        Vector3 rayDown = transform.TransformDirection(0, -1, 0);
+
+        Vector3[] dirs = new Vector3[numOfVectors];
+        int vec = 0;
+        dirs[vec++] = transform.TransformDirection(0, 0, 1);
+        dirs[vec++] = transform.TransformDirection(0.5f, 0, 1);
+
+        dirs[vec++] = transform.TransformDirection(.707f, 0, .707f);
+        dirs[vec++] = transform.TransformDirection(1, 0, 0.5f);
+
+        dirs[vec++] = transform.TransformDirection(1, 0, 0);
+        dirs[vec++] = transform.TransformDirection(1, 0, -0.5f);
+
+        dirs[vec++] = transform.TransformDirection(.707f, 0, -.707f);
+        dirs[vec++] = transform.TransformDirection(0.5f, 0, -1);
+
+
+        dirs[vec++] = transform.TransformDirection(0, 0, -1);
+        dirs[vec++] = transform.TransformDirection(-0.5f, 0, -1);
+
+        dirs[vec++] = transform.TransformDirection(-.707f, 0, -.707f);
+        dirs[vec++] = transform.TransformDirection(-1, 0, -0.5f);
+
+        dirs[vec++] = transform.TransformDirection(-1, 0, 0);
+        dirs[vec++] = transform.TransformDirection(-1, 0, 0.5f);
+
+        dirs[vec++] = transform.TransformDirection(-.707f, 0, .707f);
+        dirs[vec++] = transform.TransformDirection(-0.5f, 0, 1);
+
+
+
+
+
+        bool[] misses = new bool[numOfVectors];
+        float rayLength = 3.0f;
+        Vector3 pushBackDir = Vector3.zero;
+
+
+        for (int i = 0; i < numOfVectors; i++) {
+            misses[i] = !Physics.Raycast(rayPosition, (dirs[i] + rayDown).normalized, rayLength);
+        }
+
+        for (int i = 0; i < numOfVectors; i++) {
+            if (misses[i] && misses[(i + 1) % numOfVectors]) {
+                //Found an edge!
+                Vector3 edge = dirs[(i + 1) % numOfVectors] - dirs[i];
+                //Debug.DrawLine(transform.position + dirs[i], transform.position + dirs[(i+1)%8], Color.magenta, 30, false);
+
+                Vector3 up = transform.up;
+                Vector3.OrthoNormalize(ref up, ref edge, ref pushBackDir);
+                totalPushBackDir += pushBackDir;
+
+            }
+        }
+
+        return totalPushBackDir;
+    }
 	#endregion
 
 	#region Play Sounds
@@ -409,12 +415,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		Vector3 colObjNorm = Vector3.zero;
 		Vector3 origin = transform.position  - transform.up * .95f; // Make the ray emit from feet
 
-
-
-
-		//Ray r = new Ray(origin, info.collider.transform.position - origin);
-		//Debug.DrawLine(origin, info.collider.transform.position, Color.green, 5.0f, false);
-
 		Ray r = new Ray(origin, -transform.up);
 		Debug.DrawRay(origin, -transform.up, Color.green, 5.0f, false);
 
@@ -428,8 +428,9 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	
 		return colObjNorm;
 	}
-
-	// Does the actual rotation of player
+    /// <summary>
+    /// Does the actual rotation of player
+    /// </summary>
 	void SnapToSurface(Vector3 colObjNorm){
 		// Preserve camera angle
 		Quaternion curCamRot = cameraTransform.rotation;
@@ -455,7 +456,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			xRot -= 360;
 		}
 		
-		cameraLook.SetX_Rotation(xRot);
+		cameraMouseLook.SetX_Rotation(xRot);
 	}
 
 	#region Collisions
@@ -498,7 +499,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	#endregion
 	void LockMouseLook(bool inAir){
 		if(inAir){
-			cameraLook.sensitivityY = 0;
+            cameraMouseLook.axes = MouseLook.RotationAxes.MouseNone;
+            characterMouseLook.axes = MouseLook.RotationAxes.MouseXAndY;
 			FixRotation();
 
 			if(!inAirFlag){
@@ -506,7 +508,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			}
 
 		}else {
-            cameraLook.sensitivityY = mouseSensitivityY;
+            cameraMouseLook.axes = MouseLook.RotationAxes.MouseY;
+            characterMouseLook.axes = MouseLook.RotationAxes.MouseX;
 			if(inAirFlag){
 				inAirFlag = false;
 			}
@@ -515,7 +518,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void FixRotation(){
 		transform.Rotate(cameraTransform.localEulerAngles);
-		cameraLook.SetX_Rotation(0f);
+		cameraMouseLook.SetX_Rotation(0f);
 	}
 
 
@@ -526,7 +529,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		if(inAirFlag){
 			transform.Rotate(-recoil, 0, 0);
 		}else{
-			cameraLook.AddX_Rotation(recoil);
+			cameraMouseLook.AddX_Rotation(recoil);
 		}
 	}
 
@@ -538,7 +541,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}else{
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		}
-		cameraLook.Ragdoll(state);
+		cameraMouseLook.Ragdoll(state);
 		GetComponent<MouseLook>().Ragdoll(state);
 	}
 }
