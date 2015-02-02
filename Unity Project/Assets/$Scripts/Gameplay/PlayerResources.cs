@@ -10,6 +10,8 @@ public class PlayerResources : MonoBehaviour {
     private AudioClip soundJetpackRecharge;
     [SerializeField]
     private AudioClip soundChangeWeapon;
+    [SerializeField]
+    private AudioClip soundTakeDamage;
 
     [SerializeField]
     private AudioClip soundJetpackEmpty;
@@ -183,6 +185,7 @@ public class PlayerResources : MonoBehaviour {
 	
 	public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1){
 		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
+		audio.PlayOneShot(soundTakeDamage);
 	}
 
 	public void RestoreHealth(int restore){

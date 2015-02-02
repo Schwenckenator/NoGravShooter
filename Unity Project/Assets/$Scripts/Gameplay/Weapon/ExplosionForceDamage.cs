@@ -10,9 +10,15 @@ public class ExplosionForceDamage : MonoBehaviour {
 
     [SerializeField]
     private int weaponId;
+    [SerializeField]
+    private AudioClip soundExplode;
+	private AudioSource bombAudio;
 
 
 	void Start(){
+		bombAudio = this.GetComponent<AudioSource>();
+		bombAudio.clip = soundExplode;
+		bombAudio.PlayOneShot(soundExplode);
 		Bang ();
 	}
 
