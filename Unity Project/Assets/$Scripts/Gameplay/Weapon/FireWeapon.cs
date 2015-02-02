@@ -23,20 +23,16 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
 	private List<WeaponSuperClass> heldWeapons;
-	private GameManager manager;
+	private GameManager gameManager;
 
 	// Use this for initialization
 	void Awake () {
 
 		heldWeapons = new List<WeaponSuperClass>();
 
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-		int[] temp = manager.GetStartingWeapons();
-		foreach(int id in temp){
-            if (id < GameManager.weapon.Count) {
-                AddWeapon(id);
-            }
-		}
+		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        
+        SetWeaponLoadout();
 
 		currentInventorySlot = 0;
 		currentWeapon = heldWeapons[0];
@@ -46,6 +42,21 @@ public class FireWeapon : MonoBehaviour {
 		resource = GetComponent<PlayerResources>();
 		ChangeWeapon(0);
 	}
+    void SetWeaponLoadout() {
+        if (GameManager.IsTutorialScene()) {
+            int slugRifle = 1;
+            int shotGun = 3;
+            AddWeapon(slugRifle);
+            AddWeapon(shotGun);
+        } else {
+            int[] temp = gameManager.GetStartingWeapons();
+            foreach (int id in temp) {
+                if (id < GameManager.weapon.Count) {
+                    AddWeapon(id);
+                }
+            }
+        }
+    }
 	void FixedUpdate(){
 
 		//change weapons by mouse wheel

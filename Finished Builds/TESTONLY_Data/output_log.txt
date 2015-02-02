@@ -17,7 +17,7 @@ Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Bui
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
 Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll (this message is harmless)
 Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\TESTONLY_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-- Completed reload, in  0.075 seconds
+- Completed reload, in  0.074 seconds
 <RI> Initializing input.
 <RI> Input initialized.
 desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
@@ -27,35 +27,39 @@ Profiler is only supported with Pro License
  
 (Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Profiler/ProfilerConnection.cpp Line: 218)
 
-UnloadTime: 0.523695 ms
+UnloadTime: 0.395978 ms
 System memory in use before: 21.6 MB.
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
-System memory in use after: 21.6 MB.
+System memory in use after: 21.5 MB.
 
-Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4198.
-Total: 1.981935 ms (FindLiveObjects: 0.197406 ms CreateObjectMapping: 0.046945 ms MarkObjects: 0.409391 ms  DeleteObjects: 0.037615 ms)
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 4201.
+Total: 1.989808 ms (FindLiveObjects: 0.218109 ms CreateObjectMapping: 0.054527 ms MarkObjects: 0.403560 ms  DeleteObjects: 0.034699 ms)
 
-1
+ForceShotgunProjectile(Clone) (UnityEngine.GameObject) is being killed.
 UnityEngine.Debug:Internal_Log(Int32, String, Object)
 UnityEngine.Debug:Log(Object)
-BonusGrenadePackPickup:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\BonusGrenadePackPickup.cs:19)
+ObjectCleanUp:KillThisObject() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:15)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+ObjectCleanUp:KillMe() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\ObjectCleanUp.cs:10)
+ShotLifeTime:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Gameplay\Weapon\ShotLifeTime.cs:19)
  
 (Filename: C Line: 0)
 
-UnloadTime: 8.801052 ms
+UnloadTime: 20.953930 ms
 System memory in use before: 19.9 MB.
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 System memory in use after: 18.2 MB.
 
-Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 728.
-Total: 2.102653 ms (FindLiveObjects: 0.023910 ms CreateObjectMapping: 0.024201 ms MarkObjects: 0.269720 ms  DeleteObjects: 0.604173 ms)
+Unloading 163 unused Assets to reduce memory usage. Loaded Objects now: 731.
+Total: 3.504325 ms (FindLiveObjects: 0.037906 ms CreateObjectMapping: 0.033532 ms MarkObjects: 0.512323 ms  DeleteObjects: 0.989947 ms)
 
-UnloadTime: 0.320457 ms
+UnloadTime: 0.440008 ms
 System memory in use before: 18.1 MB.
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
 System memory in use after: 18.1 MB.
 
-Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 720.
-Total: 1.468154 ms (FindLiveObjects: 0.017495 ms CreateObjectMapping: 0.020119 ms MarkObjects: 0.256015 ms  DeleteObjects: 0.005540 ms)
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 723.
+Total: 2.300351 ms (FindLiveObjects: 0.028575 ms CreateObjectMapping: 0.028867 ms MarkObjects: 0.377317 ms  DeleteObjects: 0.009039 ms)
 
 Waiting for finish

@@ -669,8 +669,7 @@ public class GuiManager : MonoBehaviour {
 	    smallRect = new Rect(Screen.width/5, Screen.height/4, Screen.width*3/5, Screen.height/2);
     }
     IEnumerator WaitForGUIRectResize() {
-        float smallDelay = 0.1f;
-        yield return new WaitForSeconds(smallDelay);
+        yield return null;
         ChangeGuiRectSize();
     }
     #endregion
@@ -968,8 +967,8 @@ public class GuiManager : MonoBehaviour {
 
     private string PlayerList() {
         string playerNames = "";
-        foreach (string playerName in NetworkManager.connectedPlayers.Values) {
-            playerNames += playerName + "\n";
+        foreach (NetworkPlayer player in NetworkManager.connectedPlayers.Keys) {
+            playerNames += NetworkManager.connectedPlayers[player] + "\n";
         }
         return playerNames;
     }

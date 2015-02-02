@@ -9,14 +9,16 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 	private int amount;
     [SerializeField]
 	private int grenadeType;
-	private int autoPickup = 0;
 
 	void Start(){
         settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
 
-		//Randomise here, just for now
-		grenadeType = Random.Range(0, 3);
-        //Debug.Log (grenadeType.ToString());
+        if (GameManager.IsTutorialScene()) {
+            grenadeType = 0;
+        } else {
+            //Randomise here, just for now
+            grenadeType = Random.Range(0, 3);
+        }
 	}
 
 	void OnTriggerEnter(Collider info){
@@ -24,9 +26,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 			
 			PlayerResources playerResource = info.collider.GetComponent<PlayerResources>();
 
-            autoPickup = settingsManager.AutoPickup;
-
-			if(autoPickup == 1){
+			if(settingsManager.AutoPickup == 1){
 				playerResource.ChangeGrenadeTypeTo(grenadeType);
 			}
 			playerResource.PickUpGrenades(amount, grenadeType);
