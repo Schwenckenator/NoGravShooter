@@ -42,6 +42,7 @@ public class PlayerResources : MonoBehaviour {
     private SettingsManager settingsManager;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
+	private AudioSource helmetAudio;
 
 	private int minFuel = 0;
 	private int minHealth = 0;
@@ -72,6 +73,7 @@ public class PlayerResources : MonoBehaviour {
         settingsManager = manager.GetComponent<SettingsManager>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
+		helmetAudio = transform.FindChild("HelmetAudio").GetComponent<AudioSource>();
 		smokeParticle = GetComponentInChildren<ParticleSystem>();
 		smokeParticle.emissionRate = 0;
 		smokeParticle.Play();
@@ -185,7 +187,8 @@ public class PlayerResources : MonoBehaviour {
 	
 	public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1){
 		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
-		audio.PlayOneShot(soundTakeDamage);
+		helmetAudio.clip = soundTakeDamage;
+		helmetAudio.PlayOneShot(soundTakeDamage);
 	}
 
 	public void RestoreHealth(int restore){
