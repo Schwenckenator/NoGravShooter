@@ -37,6 +37,10 @@ public class GuiManager : MonoBehaviour {
     private Texture crosshair;
     
     public Texture bloodyScreen; // Needs to be public
+	
+    public Texture[] EMPradar;
+    public Texture[] EMPcursor;
+    public Texture[] EMPstats;
 
     [SerializeField]
     private GUIStyle customGui;

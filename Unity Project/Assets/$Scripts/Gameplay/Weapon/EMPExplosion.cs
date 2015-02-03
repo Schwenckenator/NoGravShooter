@@ -22,6 +22,7 @@ public class EMPExplosion : MonoBehaviour {
 
 				// Nuke the jetpack!
 				hit.GetComponent<PlayerResources>().SpendFuel(strength, true);
+				hit.GetComponent<PlayerResources>().EMPglitch();
 			}
 		}
 	}
