@@ -41,6 +41,9 @@ public class GuiManager : MonoBehaviour {
     public Texture[] EMPradar;
     public Texture[] EMPcursor;
     public Texture[] EMPstats;
+	
+    public Texture SniperScope;
+    public Texture SniperScopeBorder;
 
     [SerializeField]
     private GUIStyle customGui;

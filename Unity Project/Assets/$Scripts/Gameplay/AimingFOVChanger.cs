@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class AimingFOVChanger : MonoBehaviour {
+    private GameManager gameManager;
 
     private float maxFOV;
 
@@ -17,6 +18,7 @@ public class AimingFOVChanger : MonoBehaviour {
     private SettingsManager settingsManager;
 
     void Start() {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
     }
 	
@@ -33,6 +35,8 @@ public class AimingFOVChanger : MonoBehaviour {
 			if (fireWeapon.IsCurrentWeapon(2)){//check if current weapon is sniper
 				if(Camera.main.fieldOfView > sniperFOV){
 					Camera.main.fieldOfView -= zoomSpeed;
+				} else {
+					showscope = true;
 				}
 			} else {
 				//bugfix for zooming with sniper then changing weapons
@@ -44,6 +48,7 @@ public class AimingFOVChanger : MonoBehaviour {
 				}
 			}
 		} else {
+			showscope = false;
 			//bug fix for changing field of view between games without closing
 			if(Camera.main.fieldOfView > maxFOV){
 				Camera.main.fieldOfView = maxFOV;
@@ -56,5 +61,14 @@ public class AimingFOVChanger : MonoBehaviour {
 	
 	public float zoomRotationRatio(){
 		return Camera.main.fieldOfView/maxFOV;
+	}
+	
+	
+	public bool showscope = false;
+	void OnGUI(){
+		if(!showscope) return;
+		GUI.DrawTexture(new Rect(0, 0, Screen.width/2 - Screen.height/2, Screen.height), gameManager.GetComponent<GuiManager>().SniperScopeBorder);
+		GUI.DrawTexture(new Rect(Screen.width/2 - Screen.height/2, 0, Screen.height, Screen.height), gameManager.GetComponent<GuiManager>().SniperScope);
+		GUI.DrawTexture(new Rect(Screen.width/2 + Screen.height/2, 0, Screen.width/2 - Screen.height/2, Screen.height), gameManager.GetComponent<GuiManager>().SniperScopeBorder);
 	}
 }
