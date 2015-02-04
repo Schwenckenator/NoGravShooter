@@ -430,6 +430,10 @@ public class PlayerResources : MonoBehaviour {
 		glitched = true;
 	}
 	public bool glitched = false;
+	/* EMP glitchyness did not like networking, was weird though,
+	if one player got hits by the blast sometimes it was every screen,
+	sometimes it was 2 out of 4, othertimes just the one that was hit.
+	
 	void OnGUI(){
 		if(!glitched) return;
 		if(!GameManager.IsPaused()){
@@ -438,6 +442,6 @@ public class PlayerResources : MonoBehaviour {
 			GUI.DrawTexture(new Rect(Screen.width/2 - 55/2, Screen.height/2 - 45/2, 55, 45), gameManager.GetComponent<GuiManager>().EMPcursor[Random.Range(0, 4)]);
 			GUI.DrawTexture(new Rect(Screen.width-265, Screen.height-235+Random.Range(-5, 6), 265, 235), gameManager.GetComponent<GuiManager>().EMPstats[Random.Range(0, 4)]);
 		}
-	}
+	}*/
 
 }
