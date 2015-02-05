@@ -57,11 +57,11 @@ public class PlayerResources : MonoBehaviour {
 	private int grenadeTypes = 3; 		// Black Hole, EMP, Frag
 	private int currentGrenadeType = 0;	//      0       1     2
 
-	private bool recharging = true;
-	private bool reloading = false;
-	private bool jetpackDisabled = false;
-	private bool weaponBusy = false;
-	private bool dying = false;
+	private bool isRecharging = true;
+	private bool isReloading = false;
+	private bool isJetpackDisabled = false;
+	private bool isWeaponBusy = false;
+	private bool isDying = false;
 
 	private WeaponSuperClass currentWeapon;
 	#endregion
@@ -90,12 +90,11 @@ public class PlayerResources : MonoBehaviour {
 	}
 	#endregion
 
-	#region Fixed Update()
 	void Update () {
-        if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]) && !reloading) {
+        if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]) && !isReloading) {
 			StartCoroutine("WeaponReload");
 		}
-		if(recharging){
+		if(isRecharging){
 			RechargeFuel(fuelRecharge);
 		}
 		RechargeWeapon(heatOverheat);
@@ -104,24 +103,27 @@ public class PlayerResources : MonoBehaviour {
 			gameManager.AddToChat("committed Seppuku!");
 		}
 
-		if(heat > maxHeat){
-			smokeParticle.emissionRate = 10;
-			smokeParticle.startColor = Color.black;
-			
-			
-		}else if(heat > maxHeat*2/3){
-			
-			smokeParticle.emissionRate = 10;
-			smokeParticle.GetComponent<ParticleSystem>().startColor = Color.grey;
-		}else if(heat > maxHeat*1/3){
-			
-			smokeParticle.emissionRate = 10;
-			smokeParticle.GetComponent<ParticleSystem>().startColor = Color.white;
-		}else{
-			smokeParticle.emissionRate = 0;
-		}
+        WeaponSmokeCheck();
 	}
-	#endregion
+
+    private void WeaponSmokeCheck() {
+        if (heat > maxHeat) {
+            smokeParticle.emissionRate = 10;
+            smokeParticle.startColor = Color.black;
+
+
+        } else if (heat > maxHeat * 2 / 3) {
+
+            smokeParticle.emissionRate = 10;
+            smokeParticle.GetComponent<ParticleSystem>().startColor = Color.grey;
+        } else if (heat > maxHeat * 1 / 3) {
+
+            smokeParticle.emissionRate = 10;
+            smokeParticle.GetComponent<ParticleSystem>().startColor = Color.white;
+        } else {
+            smokeParticle.emissionRate = 0;
+        }
+    }
 
 	#region Variable Accessors
 	public int GetHealth(){
@@ -151,14 +153,14 @@ public class PlayerResources : MonoBehaviour {
 	// Checks itself to see if there is fuel available
 	// Returns false if fuel empty
 	public bool SpendFuel(float spentFuel, bool forceSpend = false){
-		recharging = true;
-		if(jetpackDisabled && !forceSpend){
+		isRecharging = true;
+		if(isJetpackDisabled && !forceSpend){
 			return false;
 		}
 		fuel -= spentFuel;
 		if(fuel < minFuel){
 			fuel = minFuel;
-			jetpackDisabled = true;
+			isJetpackDisabled = true;
 			rechargeWaitTime = maxRechargeWaitTime*2;
 			StartCoroutine(PlayJetpackEmptySound());
 			return false;
@@ -170,9 +172,9 @@ public class PlayerResources : MonoBehaviour {
 	// Checks to see if there is grenades available
 	// Returns false if no grenades
 	public bool ThrowGrenade(){
-		if(GameManager.testMode){
-			grenades[currentGrenadeType]++;
-		}
+		
+        if(GameManager.testMode) grenades[currentGrenadeType]++;
+
 		if(grenades[currentGrenadeType] > 0){
 			grenades[currentGrenadeType]--;
 			return true;
@@ -187,9 +189,11 @@ public class PlayerResources : MonoBehaviour {
 	
 	public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1){
 		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
-		helmetAudio.clip = soundTakeDamage;
-		helmetAudio.PlayOneShot(soundTakeDamage);
 	}
+
+    private void PlaySoundTakeDamage() {
+        helmetAudio.PlayOneShot(soundTakeDamage);
+    }
 
 	public void RestoreHealth(int restore){
 		health += restore;
@@ -224,8 +228,8 @@ public class PlayerResources : MonoBehaviour {
 			fuel += charge * Time.deltaTime;
 			if(fuel > maxFuel){
 				fuel = maxFuel;
-				recharging = false;
-				jetpackDisabled = false;
+				isRecharging = false;
+				isJetpackDisabled = false;
 				StartCoroutine("StopRechargeSound");
 			}else{
 				PlayRechargeSound();
@@ -245,12 +249,12 @@ public class PlayerResources : MonoBehaviour {
 	[RPC]
 	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponId){
 
-		if(dying) return; // Don't bother if you are already dying
-
-		health -= damage;
+		if(isDying) return; // Don't bother if you are already dying
+        PlaySoundTakeDamage();
+        health -= damage;
 		if(health <= minHealth){
 			health = minHealth;
-			dying = true;//You is dead nigs
+			isDying = true;//You is dead nigs
 
 			if(networkView.isMine){
 				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
@@ -294,7 +298,8 @@ public class PlayerResources : MonoBehaviour {
 	}
 
 	IEnumerator PlayerCleanup(){
-		yield return new WaitForSeconds(3.0f);
+        float playerDyingTime = 3.0f;
+		yield return new WaitForSeconds(playerDyingTime);
 		gameManager.PlayerDied();
 		gameManager.ManagerDetachCamera();
 		gameManager.SetCursorVisibility(true);
@@ -307,7 +312,7 @@ public class PlayerResources : MonoBehaviour {
 	}
 
 	public bool WeaponCanFire(){
-		return (heat < maxHeat) && (currentWeapon.currentClip > 0) && !weaponBusy;
+		return (heat < maxHeat) && (currentWeapon.currentClip > 0) && !isWeaponBusy;
 	}
 	#endregion
 	
@@ -343,7 +348,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	IEnumerator WeaponReload(){
-		reloading = true;
+		
 		// If no remaining ammo and NOT testmode, don't attempt to reload
 		if(currentWeapon.remainingAmmo <= 0 && !GameManager.testMode){
 			if(currentWeapon.currentClip <= 0){
@@ -355,11 +360,11 @@ public class PlayerResources : MonoBehaviour {
 			yield break;
 		}
 
-
+        isReloading = true;
 		if(currentWeapon.reloadTime > 1.0f){
 			GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(currentWeapon.reloadTime);
 		}
-		weaponBusy = true;
+		isWeaponBusy = true;
 		audio.clip = currentWeapon.reloadSound;
 		audio.Play ();
 		float wait = 0;
@@ -367,7 +372,7 @@ public class PlayerResources : MonoBehaviour {
 			wait += Time.deltaTime;
 			yield return null;
 		}
-		weaponBusy = false;
+		isWeaponBusy = false;
 		int newBullets = currentWeapon.clipSize - currentWeapon.currentClip;
 		if(GameManager.testMode){
 			currentWeapon.currentClip = currentWeapon.clipSize;
@@ -377,20 +382,20 @@ public class PlayerResources : MonoBehaviour {
 
 		currentWeapon.remainingAmmo -= newBullets; 
 		currentWeapon.remainingAmmo = Mathf.Max (currentWeapon.remainingAmmo, 0);
-		reloading = false;
+		isReloading = false;
 	}
 
 	IEnumerator WeaponChange(){
 		audio.PlayOneShot(soundChangeWeapon);
-		weaponBusy = true;
+		isWeaponBusy = true;
 		float waitTime = 1.0f;
 		GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(waitTime, currentWeapon);
 		yield return new WaitForSeconds(waitTime);
-		weaponBusy = false;
+		isWeaponBusy = false;
 	}
 
 	public void ChangeWeapon(WeaponSuperClass newWeapon){
-		if(!weaponBusy){
+		if(!isWeaponBusy){
 			currentWeapon = newWeapon;
 			StartCoroutine(WeaponChange());
 			heat = 0;
@@ -402,7 +407,7 @@ public class PlayerResources : MonoBehaviour {
 		currentGrenadeType %= grenadeTypes; // Keep value within range
 	}
 	
-	public void ChangeGrenadeTypeTo(int typeOfGrenade){
+	public void ChangeGrenade(int typeOfGrenade){
 		currentGrenadeType = typeOfGrenade;
 	}
 	
@@ -418,11 +423,11 @@ public class PlayerResources : MonoBehaviour {
 	}
 
 	public bool IsJetpackDisabled(){
-		return jetpackDisabled;
+		return isJetpackDisabled;
 	}
 
 	public bool IsWeaponBusy(){
-		return weaponBusy;
+		return isWeaponBusy;
 	}
 
 	
@@ -432,7 +437,7 @@ public class PlayerResources : MonoBehaviour {
 	private bool glitched = false;
 	void OnGUI(){
 		if(!glitched) return;
-		if(!GameManager.IsPaused() && networkView.isMine){
+		if(!GameManager.IsPlayerMenu() && networkView.isMine){
 			GUI.depth = 0;
 			GUI.DrawTexture(new Rect(20+Random.Range(-10, 11), Screen.height-240+Random.Range(-10, 11), 220, 220), gameManager.GetComponent<GuiManager>().EMPradar[Random.Range(0, 5)]);
 			GUI.DrawTexture(new Rect(Screen.width/2 - 55/2, Screen.height/2 - 45/2, 55, 45), gameManager.GetComponent<GuiManager>().EMPcursor[Random.Range(0, 4)]);

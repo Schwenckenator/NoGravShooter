@@ -55,7 +55,7 @@ public class MouseLook : MonoBehaviour {
 	{
 		if(ragdoll) return;
         
-		if(!GameManager.IsPaused()){
+		if(!GameManager.IsPlayerMenu()){
 
             zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)

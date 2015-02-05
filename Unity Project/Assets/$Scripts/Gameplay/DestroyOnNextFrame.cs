@@ -2,12 +2,12 @@
 using System.Collections;
 
 public class DestroyOnNextFrame : MonoBehaviour {
-	private bool killMe = false;
+	private bool willBeKilled = false;
 
 	public void DestroyMe(){
-		if(!killMe){
+		if(!willBeKilled){
 			StartCoroutine(KillOnNextFrame());
-			killMe = true;
+			willBeKilled = true;
 		}
 	}
 

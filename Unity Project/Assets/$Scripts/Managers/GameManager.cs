@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     private SettingsManager settingsManager;
 
 
-    private static bool paused;
+    private static bool playerMenu;
 
 	private MouseLook cameraLook;
 	private CameraMove cameraMove;
@@ -93,8 +93,6 @@ public class GameManager : MonoBehaviour {
 
 			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
 
-			Pause (false);
-
 			//
 			if(Network.isServer){
                 startingWeapons[0] = settingsManager.SpawnWeapon1;
@@ -124,8 +122,8 @@ public class GameManager : MonoBehaviour {
     public static bool IsTutorialScene() {
         return Application.loadedLevelName == "Tutorial";
     }
-	public static bool IsPaused(){
-		return paused;
+	public static bool IsPlayerMenu(){
+		return playerMenu;
 	}
 	public bool IsPlayerSpawned(){
 		return myPlayerSpawned;
@@ -159,6 +157,7 @@ public class GameManager : MonoBehaviour {
 
 	public void PlayerDied(){
 		myPlayerSpawned = false;
+        SetPlayerMenu(false);
 	}
 	
 	// Update is called once per frame
@@ -178,8 +177,8 @@ public class GameManager : MonoBehaviour {
 	}
     void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            SetCursorVisibility(!paused);
-            Pause(!paused); // Toggle Pause
+            SetCursorVisibility(!playerMenu);
+            SetPlayerMenu(!playerMenu); // Toggle Pause
         }
         if (Input.GetKeyDown(KeyCode.Alpha1) && myPlayerSpawned) {
             fireWeapon.ChangeWeapon(0);
@@ -208,8 +207,8 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-	public void Pause(bool input){
-		paused = input;
+	public void SetPlayerMenu(bool input){
+		playerMenu = input;
 	}
 	public void SetCursorVisibility(bool visible){
 		Screen.showCursor = visible;

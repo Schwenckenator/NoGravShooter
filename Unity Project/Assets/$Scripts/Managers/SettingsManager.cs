@@ -14,7 +14,17 @@ public class SettingsManager : MonoBehaviour {
     public string[] GameModeList { get { return gameModeList; } }
 
     #region Networking Settings
-    public string ServerName { get; set; }
+    private string myServerName;
+    public string MyServerName {
+        get {
+            return myServerName;
+        }
+        set {
+            myServerName = value;
+            DisplayServerName = value;
+        }
+    }
+    public string DisplayServerName { get; set; }
     public string PlayerName { get; set; }
     public string PortNumStr { get; set; }
     public int PortNum { get; set; }
@@ -128,7 +138,7 @@ public class SettingsManager : MonoBehaviour {
     /// </summary>
     void RetrieveSettings() {
         // Network Settings
-        ServerName = PlayerPrefs.GetString("ServerName");
+        MyServerName = PlayerPrefs.GetString("ServerName");
         PlayerName = PlayerPrefs.GetString("PlayerName", "Player");
         PortNumStr = PlayerPrefs.GetString("PortNumStr", "25000");
         IpAddress = PlayerPrefs.GetString("IpAddress", "127.0.0.1");
@@ -159,7 +169,7 @@ public class SettingsManager : MonoBehaviour {
     /// </summary>
     public void SaveSettings() {
         // Network Settings
-        PlayerPrefs.SetString("ServerName", ServerName);
+        PlayerPrefs.SetString("ServerName", MyServerName);
         PlayerPrefs.SetString("PlayerName", PlayerName);
         PlayerPrefs.SetString("PortNumStr", PortNumStr);
         PlayerPrefs.SetString("IpAddress", IpAddress);

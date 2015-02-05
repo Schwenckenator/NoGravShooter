@@ -4,8 +4,8 @@ using System.Collections;
 public class Assassinations : MonoBehaviour {
 	
     [SerializeField]
-    private float detectionRadius = 0.025f; 
-    [SerializeField]
+    private float detectionRadius = 5f; 
+
 	private Transform target = null;
 	
     private GameManager gameManager;

@@ -153,14 +153,14 @@ public class GuiManager : MonoBehaviour {
 		if(GameManager.IsMenuScene()){
 			ChooseMenuWindow();
 
-		}else if(GameManager.IsPaused()){
+		}else if(GameManager.IsPlayerMenu()){
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
 		}else if(gameManager.IsPlayerSpawned()){
 			PlayerGUI();
 			
 		}else if(!GameManager.IsMenuScene()){
-			GUI.Window(1, largeRect, PauseWindow, "");
+			GUI.Window(1, largeRect, PauseWindow, settingsManager.DisplayServerName);
 			
 		}
 	}
@@ -183,7 +183,7 @@ public class GuiManager : MonoBehaviour {
 			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
 			break;
 		case Menu.Lobby:
-			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, settingsManager.ServerName);
+			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, settingsManager.DisplayServerName);
 			break;
 		case Menu.Connecting:
 			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
@@ -405,8 +405,8 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
 			//Check for preferred server name
-            if (settingsManager.ServerName == "") {
-                settingsManager.ServerName = settingsManager.PlayerName + "'s Server";
+            if (settingsManager.MyServerName == "") {
+                settingsManager.MyServerName = settingsManager.PlayerName + "'s Server";
 			}
             settingsManager.SaveSettings();
 
@@ -447,7 +447,7 @@ public class GuiManager : MonoBehaviour {
 		GUI.Label(standard, "Server Name");
 		
 		standard.y += 30;
-        settingsManager.ServerName = GUI.TextField(standard, settingsManager.ServerName);
+        settingsManager.MyServerName = GUI.TextField(standard, settingsManager.MyServerName);
 		
 		standard.y += 50;		
 		GUI.Label(standard, "Port Number");
@@ -912,7 +912,7 @@ public class GuiManager : MonoBehaviour {
 		if(gameManager.IsPlayerSpawned()){
             string strReturnToGame = "Return to Game"; if (GameManager.IsTutorialScene()) strReturnToGame = "Return to Simulation";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
-				gameManager.Pause(false);
+				gameManager.SetPlayerMenu(false);
 				gameManager.SetCursorVisibility(false);
 			}
 		}else {

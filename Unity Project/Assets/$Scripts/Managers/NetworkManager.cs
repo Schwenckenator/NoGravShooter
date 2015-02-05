@@ -54,7 +54,7 @@ public class NetworkManager : MonoBehaviour {
     public static void InitialiseServer() {
         if (useNat) useNat = !Network.HavePublicAddress();
         Network.InitializeServer(maxPlayers, portNum, useNat);
-        if (useMasterServer) MasterServer.RegisterHost(GameType, settingsManager.ServerName);
+        if (useMasterServer) MasterServer.RegisterHost(GameType, settingsManager.MyServerName);
     }
 
     public static void Disconnect() {
@@ -126,7 +126,7 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnServerInitialized() {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
-        networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, settingsManager.ServerName);
+        networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, settingsManager.MyServerName);
     }
     void OnConnectedToServer() {
         // Set window to lobby
@@ -141,7 +141,7 @@ public class NetworkManager : MonoBehaviour {
     #region RPC
     [RPC]
     void ChangeServerName(string name) {
-        settingsManager.ServerName = name;
+        settingsManager.DisplayServerName = name;
     }
     [RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {

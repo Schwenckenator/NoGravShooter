@@ -207,7 +207,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		if (grounded) {
 			// Calculate how fast we should be moving
 			Vector3 targetVelocity;
-			if(GameManager.IsPaused()){
+			if(GameManager.IsPlayerMenu()){
 				targetVelocity = Vector3.zero;
 			}else{
                 targetVelocity = new Vector3(horizontal, 0, vertical);
@@ -252,7 +252,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			rigidbody.AddForce(velocityChange, ForceMode.Impulse);
 			
 			// Jump
-			if (canJump && Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) && !GameManager.IsPaused()) {
+			if (canJump && Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) && !GameManager.IsPlayerMenu()) {
 				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
 			}
 		}else if(jetPackOn){
@@ -261,7 +261,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			}
 			//Apply Jetpack force as Acceleration
 			Vector3 force;
-			if(GameManager.IsPaused()){
+			if(GameManager.IsPlayerMenu()){
 				force = Vector3.zero;
 			}else{
 				force = new Vector3(horizontal, jetPackUpDown, vertical);
@@ -270,7 +270,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			force *= speed;
 
 			// If non-zero force, spend fuel
-			if(jetPackInUse && !GameManager.IsPaused()){
+			if(jetPackInUse && !GameManager.IsPlayerMenu()){
 				if(resource.SpendFuel(fuelSpend)){
 					playJetSound = true;
 					rigidbody.AddRelativeForce(force, ForceMode.Force);
@@ -291,7 +291,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
             //transform.Rotate(torque);
 
             Vector3 torque;
-            if (GameManager.IsPaused()) {
+            if (GameManager.IsPlayerMenu()) {
                 torque = Vector3.zero;
             } else {
                 torque = new Vector3(0, 0, roll); // the change wanted

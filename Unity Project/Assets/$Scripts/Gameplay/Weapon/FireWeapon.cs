@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class FireWeapon : MonoBehaviour {
 	public int maxWeapons = 2;
 
-	Transform gun;
+	Transform gunFirePoint;
 	Transform cameraPos;
 	NoGravCharacterMotor motor;
 	
@@ -16,7 +16,7 @@ public class FireWeapon : MonoBehaviour {
 	public static int startingWeapon1 = 99;
 	public static int startingWeapon2 = 99;
 	
-	PlayerResources resource;
+	PlayerResources playerResource;
 
 	GameObject shot;
 
@@ -36,10 +36,10 @@ public class FireWeapon : MonoBehaviour {
 
 		currentInventorySlot = 0;
 		currentWeapon = heldWeapons[0];
-		gun = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
+		gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		cameraPos = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
-		resource = GetComponent<PlayerResources>();
+		playerResource = GetComponent<PlayerResources>();
 		ChangeWeapon(0);
 	}
     void SetWeaponLoadout() {
@@ -115,9 +115,9 @@ public class FireWeapon : MonoBehaviour {
 			}
 		}
 		
-		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && resource.WeaponCanFire() && !GameManager.IsPaused()){
-			resource.WeaponFired(currentWeapon.heatPerShot);
-			audio.PlayOneShot(currentWeapon.fireSound);
+		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu()){
+			playerResource.WeaponFired(currentWeapon.heatPerShot);
+            PlayFireWeaponSound();
 			nextFire = Time.time + currentWeapon.fireDelay;
 
 
@@ -145,23 +145,23 @@ public class FireWeapon : MonoBehaviour {
 					}
 					Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 
-					shot = Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation) as GameObject;
+					shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
 					shot.transform.parent = cameraPos;
 					LineRenderer render = shot.GetComponent<LineRenderer>();
 					
 					
-					render.SetPosition(0, gun.InverseTransformPoint(gun.position));
+					render.SetPosition(0, gunFirePoint.InverseTransformPoint(gunFirePoint.position));
 					render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
 					
 					
 					if(currentWeapon.projectile == GameManager.weapon[0].projectile){
-						networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gun.position, hit.point);
+						networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gunFirePoint.position, hit.point);
 					}else if(currentWeapon.projectile == GameManager.weapon[1].projectile){
-						networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gun.position, hit.point);
+						networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gunFirePoint.position, hit.point);
 					}
 				}
 			}else{
-				shot = Network.Instantiate(currentWeapon.projectile, gun.position, cameraPos.rotation, 0) as GameObject;
+				shot = Network.Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation, 0) as GameObject;
                 shot.GetComponent<ProjectileOwnerName>().ProjectileOwner = Network.player;
 			}
 			
@@ -206,17 +206,17 @@ public class FireWeapon : MonoBehaviour {
 
 	public void ChangeWeapon(int weaponId){
 		currentInventorySlot = weaponId;
-		if(!resource.IsWeaponBusy()){
+		if(!playerResource.IsWeaponBusy()){
 			if(GameManager.testMode){
 				if(weaponId < GameManager.weapon.Count){
 					currentWeapon = GameManager.weapon[weaponId];
-					resource.ChangeWeapon(currentWeapon);
+					playerResource.ChangeWeapon(currentWeapon);
 				}
 			}
 			else{
 				if(weaponId < heldWeapons.Count){
 					currentWeapon = heldWeapons[weaponId];
-					resource.ChangeWeapon(currentWeapon);
+					playerResource.ChangeWeapon(currentWeapon);
 				}
 			}
 
@@ -256,5 +256,10 @@ public class FireWeapon : MonoBehaviour {
 		startingWeapon1 = weapon1;
 		startingWeapon2 = weapon2;
 	}
-	
+
+    void PlayFireWeaponSound() {
+        if (networkView.isMine) {
+            audio.PlayOneShot(currentWeapon.fireSound);
+        }
+    }
 }
