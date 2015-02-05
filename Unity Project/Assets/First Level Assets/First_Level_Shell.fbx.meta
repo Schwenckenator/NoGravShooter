@@ -34,6 +34,9 @@ ModelImporter:
     100056: L_Tunnel_5.001
     100058: L_Tunnel_6.001
     100060: Shorter_L_Tunnel_2.001
+    100062: Cylinder
+    100064: Experiment_Room
+    100066: Experimental_Device
     400000: Box_Room_1
     400002: Box_Room_2
     400004: Box_Room_3
@@ -65,6 +68,9 @@ ModelImporter:
     400056: L_Tunnel_5.001
     400058: L_Tunnel_6.001
     400060: Shorter_L_Tunnel_2.001
+    400062: Cylinder
+    400064: Experiment_Room
+    400066: Experimental_Device
     2300000: Box_Room_1
     2300002: Box_Room_2
     2300004: Box_Room_3
@@ -95,6 +101,9 @@ ModelImporter:
     2300054: L_Tunnel_5.001
     2300056: L_Tunnel_6.001
     2300058: Shorter_L_Tunnel_2.001
+    2300060: Cylinder
+    2300062: Experiment_Room
+    2300064: Experimental_Device
     3300000: Box_Room_1
     3300002: Box_Room_2
     3300004: Box_Room_3
@@ -125,6 +134,9 @@ ModelImporter:
     3300054: L_Tunnel_5.001
     3300056: L_Tunnel_6.001
     3300058: Shorter_L_Tunnel_2.001
+    3300060: Cylinder
+    3300062: Experiment_Room
+    3300064: Experimental_Device
     4300000: Shorter_L_Tunnel_3.001
     4300002: Shorter_L_Tunnel_3
     4300004: Shorter_L_Tunnel_2
@@ -155,6 +167,9 @@ ModelImporter:
     4300054: L_Tunnel_6.001
     4300056: L_Tunnel_5.001
     4300058: Shorter_L_Tunnel_2.001
+    4300060: Experimental_Device
+    4300062: Cylinder
+    4300064: Experiment_Room
     9500000: //RootNode
   materials:
     importMaterials: 1
