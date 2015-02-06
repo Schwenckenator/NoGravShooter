@@ -10,7 +10,7 @@ public class ChatManager : MonoBehaviour {
 
     public static string currentChat;
 
-    private int maxChatLines = 50;
+    private static int maxChatLines = 50;
 
     private static List<string> submittedChatList;
     private static string submittedChat;
@@ -32,16 +32,29 @@ public class ChatManager : MonoBehaviour {
             }
             newChat += input;
 
-            networkView.RPC("UpdateChat", RPCMode.All, newChat);
+            networkView.RPC("UpdateChatRPC", RPCMode.All, newChat);
+        }
+    }
+    /// <summary>
+    /// Only sends the message to the local chat. No RPC
+    /// </summary>
+    /// <param name="input"></param>
+    public static void SubmitTextToLocalChat(string input) {
+        if (input != "") {
+            UpdateChat(input);
         }
     }
     [RPC]
-    private void UpdateChat(string newChat) {
+    private void UpdateChatRPC(string newChat) {
+        UpdateChat(newChat);
+    }
+
+    private static void UpdateChat(string newChat) {
         submittedChatList.Add(newChat);
         PruneChatList(maxChatLines);
         UpdateChatString();
     }
-    private void PruneChatList(int maxLines) {
+    private static void PruneChatList(int maxLines) {
         if (submittedChatList.Count > maxLines) {
             int numToRemove = submittedChatList.Count - maxLines;
             submittedChatList.RemoveRange(0, numToRemove); // Remove from front of list, oldest messages first

@@ -3,12 +3,12 @@ using System.Collections;
 
 public class OnGameOpen : MonoBehaviour {
 
-	public GameObject manager;
+	public GameObject gameManager;
 	public GameObject weaponManager;
 
 	void Awake(){
 		if(GameObject.FindGameObjectsWithTag("GameController").Length == 0){
-			Instantiate(manager);
+			Instantiate(gameManager);
 			Instantiate(weaponManager);
 		}
 		Destroy(gameObject);
