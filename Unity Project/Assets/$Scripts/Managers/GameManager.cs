@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour {
     // ***********************************************************
     #region Variable Declarations
     //Managers
-    private ChatManager chatManager;
     private GuiManager guiManager; 
     private ScoreVictoryManager scoreVictoryManager;
     private SettingsManager settingsManager;
@@ -57,7 +56,6 @@ public class GameManager : MonoBehaviour {
     void Awake(){
 		DontDestroyOnLoad(gameObject);
 
-        chatManager = GetComponent<ChatManager>();
         settingsManager = GetComponent<SettingsManager>();
         guiManager = GetComponent<GuiManager>();
         scoreVictoryManager = GetComponent<ScoreVictoryManager>();
@@ -70,10 +68,6 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new ForceShotgunValues());
 		weapon.Add(new RocketLauncherValues());
 		weapon.Add(new PlasmaBlasterValues());
-	}
-
-	public void AddToChat(string input, bool addPlayerPrefix = true){
-		chatManager.SubmitTextToChat(input, addPlayerPrefix);
 	}
 
 	public static int WeaponClassToWeaponId(WeaponSuperClass input){

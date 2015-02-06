@@ -66,6 +66,11 @@ public class NetworkManager : MonoBehaviour {
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
+
+    public void Destroy(NetworkViewID viewID) {
+        RemoveBufferedInstantiate(viewID);
+        Network.Destroy(viewID);
+    }
     
     #region SetDetails
     public static void SetClientDetails(HostData _masterServerData, bool _useMasterServer, string _ipAddress, int _portNum) {
@@ -93,7 +98,7 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
         string message = NetworkManager.connectedPlayers[disconnectedPlayer] + " has disconnected.";
-        chatManager.SubmitTextToChat(message, false);
+        chatManager.AddToChat(message, false);
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
         networkView.RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
@@ -134,7 +139,7 @@ public class NetworkManager : MonoBehaviour {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
         
         string message = settingsManager.PlayerName + " has connected.";
-        chatManager.SubmitTextToChat(message, false);
+        chatManager.AddToChat(message, false);
     }
     #endregion
 
@@ -157,6 +162,15 @@ public class NetworkManager : MonoBehaviour {
         ScoreVictoryManager.playerScores.Remove(disconnectedPlayer);
 
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+    }
+
+    [RPC]
+    void RemoveBufferedInstantiate(NetworkViewID viewID) {
+        if (Network.isServer) {
+            Network.RemoveRPCs(viewID);
+        } else {
+            networkView.RPC("RemoveBufferedInstantiate", RPCMode.Server, viewID);
+        }
     }
     #endregion
 }

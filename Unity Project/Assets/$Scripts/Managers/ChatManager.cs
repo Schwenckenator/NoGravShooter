@@ -24,7 +24,7 @@ public class ChatManager : MonoBehaviour {
         submittedChatList = new List<string>();
     }
 
-    public void SubmitTextToChat(string input, bool addPlayerPrefix = true) {
+    public void AddToChat(string input, bool addPlayerPrefix = true) {
         if (input != "") {
             string newChat = "";
             if (addPlayerPrefix) {
@@ -39,7 +39,7 @@ public class ChatManager : MonoBehaviour {
     /// Only sends the message to the local chat. No RPC
     /// </summary>
     /// <param name="input"></param>
-    public static void SubmitTextToLocalChat(string input) {
+    public static void AddToLocalChat(string input) {
         if (input != "") {
             UpdateChat(input);
         }
@@ -74,4 +74,10 @@ public class ChatManager : MonoBehaviour {
     public static void ClearCurrentChat() {
         currentChat = "";
     }
+    
+    public static void DebugMessagePrint(string message) {
+        Debug.Log(message);
+        ChatManager.AddToLocalChat(message);
+    }
+
 }

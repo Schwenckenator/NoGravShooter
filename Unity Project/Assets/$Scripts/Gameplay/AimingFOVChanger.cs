@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class AimingFOVChanger : MonoBehaviour {
-    private GameManager gameManager;
-
+    private SettingsManager settingsManager;
+    private GuiManager guiManager;
     private float maxFOV;
 
     [SerializeField]
@@ -15,11 +15,12 @@ public class AimingFOVChanger : MonoBehaviour {
 	
 	private FireWeapon fireWeapon;
 
-    private SettingsManager settingsManager;
+    
 
     void Start() {
-        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
+        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
+        settingsManager = manager.GetComponent<SettingsManager>();
+        guiManager = manager.GetComponent<GuiManager>();
     }
 	
 	void FixedUpdate(){
@@ -68,8 +69,8 @@ public class AimingFOVChanger : MonoBehaviour {
 	public bool showscope = false;
 	void OnGUI(){
 		if(!showscope) return;
-		GUI.DrawTexture(new Rect(0, 0, Screen.width/2 - Screen.height/2, Screen.height), gameManager.GetComponent<GuiManager>().SniperScopeBorder);
-		GUI.DrawTexture(new Rect(Screen.width/2 - Screen.height/2, 0, Screen.height, Screen.height), gameManager.GetComponent<GuiManager>().SniperScope);
-		GUI.DrawTexture(new Rect(Screen.width/2 + Screen.height/2, 0, Screen.width/2 - Screen.height/2, Screen.height), gameManager.GetComponent<GuiManager>().SniperScopeBorder);
+		GUI.DrawTexture(new Rect(0, 0, Screen.width/2 - Screen.height/2, Screen.height), guiManager.SniperScopeBorder);
+        GUI.DrawTexture(new Rect(Screen.width / 2 - Screen.height / 2, 0, Screen.height, Screen.height), guiManager.SniperScope);
+        GUI.DrawTexture(new Rect(Screen.width / 2 + Screen.height / 2, 0, Screen.width / 2 - Screen.height / 2, Screen.height), guiManager.SniperScopeBorder);
 	}
 }

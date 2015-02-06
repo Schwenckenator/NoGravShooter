@@ -162,7 +162,10 @@ public class FireWeapon : MonoBehaviour {
 				}
 			}else{
 				shot = Network.Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation, 0) as GameObject;
+                
+                
                 shot.GetComponent<ProjectileOwnerName>().ProjectileOwner = Network.player;
+
 			}
 			
 
