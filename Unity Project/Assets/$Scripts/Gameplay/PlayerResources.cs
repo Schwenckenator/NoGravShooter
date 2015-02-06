@@ -40,6 +40,7 @@ public class PlayerResources : MonoBehaviour {
 
 	private GameManager gameManager;
     private SettingsManager settingsManager;
+    private ChatManager chatManager;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
 	private AudioSource helmetAudio;
@@ -71,6 +72,7 @@ public class PlayerResources : MonoBehaviour {
         GameObject manager = GameObject.FindGameObjectWithTag("GameController");
 		gameManager = manager.GetComponent<GameManager>();
         settingsManager = manager.GetComponent<SettingsManager>();
+        chatManager = manager.GetComponent<ChatManager>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		helmetAudio = transform.FindChild("HelmetAudio").GetComponent<AudioSource>();
@@ -100,7 +102,7 @@ public class PlayerResources : MonoBehaviour {
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(100, Network.player);
-			gameManager.AddToChat("committed Seppuku!");
+			chatManager.AddToChat("committed Seppuku!");
 		}
 
         WeaponSmokeCheck();
@@ -150,8 +152,15 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	#region Variable Mutators
-	// Checks itself to see if there is fuel available
-	// Returns false if fuel empty
+    
+
+    /// <summary>
+    /// Checks itself to see if there is fuel available
+	/// Returns false if fuel empty
+    /// </summary>
+    /// <param name="spentFuel"></param>
+    /// <param name="forceSpend"></param>
+    /// <returns></returns>
 	public bool SpendFuel(float spentFuel, bool forceSpend = false){
 		isRecharging = true;
 		if(isJetpackDisabled && !forceSpend){
@@ -171,12 +180,12 @@ public class PlayerResources : MonoBehaviour {
 
 	// Checks to see if there is grenades available
 	// Returns false if no grenades
-	public bool ThrowGrenade(){
+	public bool CanThrowGrenade(){
 		
         if(GameManager.testMode) grenades[currentGrenadeType]++;
 
 		if(grenades[currentGrenadeType] > 0){
-			grenades[currentGrenadeType]--;
+            grenades[currentGrenadeType]--;
 			return true;
 		}else{
 			return false;
@@ -260,11 +269,11 @@ public class PlayerResources : MonoBehaviour {
 				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
 					if(fromPlayer != Network.player){
                         string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + settingsManager.PlayerName;
-						gameManager.AddToChat(killMessage, false);
+                        chatManager.AddToChat(killMessage, false);
 						gameManager.GetComponent<ScoreVictoryManager>().KillScored(fromPlayer);
 					} else {
                         string killMessage = NetworkManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
-						gameManager.AddToChat(killMessage, false);
+                        chatManager.AddToChat(killMessage, false);
 					}
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);

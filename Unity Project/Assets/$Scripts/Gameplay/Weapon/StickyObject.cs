@@ -5,6 +5,7 @@ using System.Collections;
 public class StickyObject : MonoBehaviour {
 
 	void OnCollisionEnter(){
-		rigidbody.isKinematic = true;
+        if (DebugManager.IsDebugMode()) ChatManager.DebugMessagePrint(gameObject.ToString() + " freezing all rigidbody axes");
+        rigidbody.constraints = RigidbodyConstraints.FreezeAll;
 	}
 }
