@@ -985,10 +985,10 @@ public class GuiManager : MonoBehaviour {
 	
 	//button prompts
 	string promptText;
-	public int promptShown;
+	private int promptShown;
 	public void ButtonPrompt(string message, int buttonID){
 		promptText = SettingsManager.keyBindings[buttonID].ToString() + "  -  " + message;
-		promptShown = 10;
+		promptShown = 20;
 	}
 	
 	//tutorial prompts tutePromptShown

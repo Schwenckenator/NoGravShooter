@@ -39,6 +39,7 @@ public class AimingFOVChanger : MonoBehaviour {
 					showscope = true;
 				}
 			} else {
+				showscope = false;
 				//bugfix for zooming with sniper then changing weapons
 				if(Camera.main.fieldOfView < minFOV){
 					Camera.main.fieldOfView = minFOV;
