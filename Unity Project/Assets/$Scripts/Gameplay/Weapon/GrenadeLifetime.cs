@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// I think this entire file is useless
+/// </summary>
 public class GrenadeLifetime : MonoBehaviour {
 
 	public float lifeTime;

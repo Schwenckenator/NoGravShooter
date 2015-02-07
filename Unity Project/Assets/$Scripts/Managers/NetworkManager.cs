@@ -66,10 +66,15 @@ public class NetworkManager : MonoBehaviour {
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
-
     public void Destroy(NetworkViewID viewID) {
         RemoveBufferedInstantiate(viewID);
-        Network.Destroy(viewID);
+        NetworkKillObject(viewID);
+    }
+    public void Destroy(GameObject gObject) {
+        if (DebugManager.IsDebugMode()) ChatManager.DebugMessagePrint("Network Destroying: " + gObject.ToString()+ ",\n viewID = " +gObject.networkView.viewID.ToString());
+
+        RemoveBufferedInstantiate(gObject.networkView.viewID);
+        NetworkKillObject(gObject.networkView.viewID);
     }
     
     #region SetDetails
@@ -170,6 +175,14 @@ public class NetworkManager : MonoBehaviour {
             Network.RemoveRPCs(viewID);
         } else {
             networkView.RPC("RemoveBufferedInstantiate", RPCMode.Server, viewID);
+        }
+    }
+    [RPC]
+    void NetworkKillObject(NetworkViewID viewID) {
+        if (Network.isServer) {
+            Network.Destroy(viewID);
+        } else {
+            networkView.RPC("NetworkKillObject", RPCMode.Server, viewID);
         }
     }
     #endregion

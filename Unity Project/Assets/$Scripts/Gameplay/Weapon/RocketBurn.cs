@@ -27,7 +27,7 @@ public class RocketBurn : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		if(Network.isServer){
+        if (networkView.isMine) {
 			Vector3 force = Vector3.forward * rocketAccel;
 			rigidbody.AddRelativeForce(force);
 		}
