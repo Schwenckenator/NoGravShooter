@@ -6,26 +6,11 @@ using System.Collections;
 public class ObjectCleanUp : MonoBehaviour {
     
 	public void KillMe(){
-        KillObject();
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<NetworkManager>().Destroy(gameObject);
 	}
 
-    public void KillMe(bool onlyServerCanKill) {
-        if (onlyServerCanKill) {
-            KillIfServer();
-        } else {
-            KillObject();
-        }
-        
-    }
-    private void KillIfServer() {
-        if (Network.isServer) {
-            KillObject();
-        }
-    }
-    private void KillObject() {
-
-        if (DebugManager.IsDebugMode()) ChatManager.DebugMessagePrint("I will Kill " + gameObject.ToString());
-
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<NetworkManager>().Destroy(gameObject);
+    public void ClientKillMe() {
+        Network.RemoveRPCs(gameObject.networkView.viewID);
+        Network.Destroy(gameObject);
     }
 }

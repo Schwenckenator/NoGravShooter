@@ -122,13 +122,13 @@ public class GameManager : MonoBehaviour {
 	public bool IsPlayerSpawned(){
 		return myPlayerSpawned;
 	}
-	public void Spawn(){
+	public void SpawnPlayer(){
 		myPlayerSpawned = true;
 
 		SetCursorVisibility(false);
 		int point = Random.Range(0, spawnPoints.Length);
 		Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
-		cameraMove.Spawn();
+		cameraMove.PlayerSpawned();
 
 		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
@@ -273,6 +273,7 @@ public class GameManager : MonoBehaviour {
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
         ChatManager.ClearAllChat();
 
+        NetworkManager.DisableRPC();
         Application.LoadLevel(levelName);
     }
 
@@ -288,7 +289,7 @@ public class GameManager : MonoBehaviour {
         LoadLevelTutorial();
 
         yield return new WaitForSeconds(1 / 5f);
-        Spawn();
+        SpawnPlayer();
         guiManager.SetMyPlayerResources();
     }
 

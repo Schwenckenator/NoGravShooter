@@ -4,7 +4,7 @@ using System.Collections;
 public class CameraMove : MonoBehaviour {
 	private Transform myPlayer;
 
-	public void Spawn(){
+	public void PlayerSpawned(){
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in players){
 			if(player.networkView.isMine){

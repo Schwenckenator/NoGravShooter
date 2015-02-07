@@ -71,8 +71,6 @@ public class NetworkManager : MonoBehaviour {
         NetworkKillObject(viewID);
     }
     public void Destroy(GameObject gObject) {
-        if (DebugManager.IsDebugMode()) ChatManager.DebugMessagePrint("Network Destroying: " + gObject.ToString()+ ",\n viewID = " +gObject.networkView.viewID.ToString());
-
         RemoveBufferedInstantiate(gObject.networkView.viewID);
         NetworkKillObject(gObject.networkView.viewID);
     }
@@ -170,7 +168,7 @@ public class NetworkManager : MonoBehaviour {
     }
 
     [RPC]
-    void RemoveBufferedInstantiate(NetworkViewID viewID) {
+    public void RemoveBufferedInstantiate(NetworkViewID viewID) {
         if (Network.isServer) {
             Network.RemoveRPCs(viewID);
         } else {

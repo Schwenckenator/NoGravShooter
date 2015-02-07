@@ -23,14 +23,16 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
 	private List<WeaponSuperClass> heldWeapons;
-	private GameManager gameManager;
+	
+    private GameManager gameManager;
 
 	// Use this for initialization
 	void Awake () {
 
 		heldWeapons = new List<WeaponSuperClass>();
 
-		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
+		gameManager = manager.GetComponent<GameManager>();
         
         SetWeaponLoadout();
 
@@ -161,21 +163,27 @@ public class FireWeapon : MonoBehaviour {
 					}
 				}
 			}else{
-				shot = Network.Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation, 0) as GameObject;
-                
-                
-                shot.GetComponent<ProjectileOwnerName>().ProjectileOwner = Network.player;
-
+                SpawnProjectile(gunFirePoint.position, cameraPos.rotation, Network.player);
 			}
-			
-
-
 			if(currentWeapon.hasRecoil){
 				motor.Recoil(currentWeapon.recoil);
 			}
 			
 		}
 	}
+
+    [RPC]
+    void SpawnProjectile(Vector3 position, Quaternion rotation, NetworkPlayer owner) {
+        if (Network.isServer) {
+            GameObject newObj = Network.Instantiate(currentWeapon.projectile, position, rotation, 0) as GameObject;
+            if (newObj.GetComponent<ProjectileOwnerName>() != null) {
+                newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
+            }
+
+        } else {
+            networkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
+        }
+    }
 
 	[RPC]
 	void MultiplayerLaserRender(Vector3 start, Vector3 end){

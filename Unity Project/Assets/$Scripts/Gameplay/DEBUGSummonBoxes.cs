@@ -5,11 +5,11 @@ public class DEBUGSummonBoxes : MonoBehaviour {
     [SerializeField]
 	private GameObject box;
 
-    private ObjectSpawnManager objectSpawnManager;
+    //private NetworkManager networkManager;
 
-    void Start() {
-        objectSpawnManager = GetComponent<ObjectSpawnManager>();
-    }
+    //void Start() {
+    //    networkManager = GetComponent<NetworkManager>();
+    //}
 
 	// Update is called once per frame
 	void Update () {
@@ -23,7 +23,8 @@ public class DEBUGSummonBoxes : MonoBehaviour {
 			}
 			if(currentPlayer == null) return;
 
-			objectSpawnManager.Spawn(box, currentPlayer.transform.position + currentPlayer.transform.forward*3, Quaternion.identity);
+            Network.Instantiate(box, currentPlayer.transform.position + currentPlayer.transform.forward * 3, Quaternion.identity, 0);
 		}
 	}
+
 }

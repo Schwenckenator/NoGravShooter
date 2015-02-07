@@ -4,8 +4,6 @@ using System.Collections;
 public class ThrowGrenade : MonoBehaviour {
 	public GameObject[] grenade;
 	private Transform grenadeSpawn;
-    [SerializeField]
-    private float grenadeForce = 20f;
 
 	PlayerResources playerResource;
 
@@ -22,12 +20,22 @@ public class ThrowGrenade : MonoBehaviour {
 	void Update () {
         if ((Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade])) && Time.time > nextThrow && networkView.isMine) {
 			if(playerResource.CanThrowGrenade()){
-
-				GameObject newGrenade = Network.Instantiate(grenade[playerResource.GetCurrentGrenadeType()], grenadeSpawn.position, grenadeSpawn.rotation, 0) as GameObject;
-                newGrenade.rigidbody.AddRelativeForce(0, 0, grenadeForce, ForceMode.VelocityChange);
-                newGrenade.GetComponent<ProjectileOwnerName>().ProjectileOwner = Network.player;
+                SpawnGrenade(playerResource.GetCurrentGrenadeType(), grenadeSpawn.position, grenadeSpawn.rotation, Network.player);
 				nextThrow = Time.time + throwDelay;
 			}
 		}
 	}
+
+    [RPC]
+    private void SpawnGrenade(int grenadeID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
+        if (Network.isServer) {
+            GameObject newObj = Network.Instantiate(grenade[grenadeID], position, rotation, 0) as GameObject;
+            if (newObj.GetComponent<ProjectileOwnerName>() != null) {
+                newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
+            }
+
+        } else {
+            networkView.RPC("SpawnGrenade", RPCMode.Server, grenadeID, position, rotation, owner);
+        }
+    }
 }

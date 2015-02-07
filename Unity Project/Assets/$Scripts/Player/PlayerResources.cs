@@ -312,7 +312,7 @@ public class PlayerResources : MonoBehaviour {
 		gameManager.PlayerDied();
 		gameManager.ManagerDetachCamera();
 		gameManager.SetCursorVisibility(true);
-		GetComponent<ObjectCleanUp>().KillMe();
+		GetComponent<ObjectCleanUp>().ClientKillMe();
 	}
 
 	#region Variable Checkers

@@ -9,6 +9,7 @@ public class MineDetonation : MonoBehaviour {
 	public float initialWaitTime;
 	public float tickWaitTime;
 
+
 	// Use this for initialization
 	void Start () {
 		StartCoroutine(CheckForPlayers(initialWaitTime, tickWaitTime));
@@ -34,11 +35,24 @@ public class MineDetonation : MonoBehaviour {
 
 	void Detonate(){
         if(DebugManager.IsDebugMode()) ChatManager.DebugMessagePrint(gameObject.ToString() + " goes boom");
-
-		//Make something depending on what you are
-		GameObject boom = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
-        boom.GetComponent<ProjectileOwnerName>().ProjectileOwner = GetComponent<ProjectileOwnerName>().ProjectileOwner;
+        
+        //Make something depending on what you are
+        SpawnExplosion(transform.position, Quaternion.identity, GetComponent<ProjectileOwnerName>().ProjectileOwner);
+		
 		//Then destroy this
         GetComponent<ObjectCleanUp>().KillMe();
 	}
+
+    [RPC]
+    void SpawnExplosion(Vector3 position, Quaternion rotation, NetworkPlayer owner) {
+        if (Network.isServer) {
+            GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
+            if (newObj.GetComponent<ProjectileOwnerName>() != null) {
+                newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
+            }
+
+        } else {
+            networkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
+        }
+    }
 }

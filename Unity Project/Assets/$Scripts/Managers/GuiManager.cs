@@ -922,7 +922,7 @@ public class GuiManager : MonoBehaviour {
                 GUI.enabled = true;
             } else {
                 if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
-                    gameManager.Spawn();
+                    gameManager.SpawnPlayer();
                     SetMyPlayerResources();
                 }
             }

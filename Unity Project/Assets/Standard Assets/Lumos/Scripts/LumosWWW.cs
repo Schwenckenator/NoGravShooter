@@ -1,4 +1,5 @@
 // Copyright (c) 2012 Rebel Hippo Inc. All rights reserved.  
+#pragma warning disable
 
 using System;
 using System.Collections;
