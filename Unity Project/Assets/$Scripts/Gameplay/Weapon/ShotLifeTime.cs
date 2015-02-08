@@ -15,7 +15,7 @@ public class ShotLifeTime : MonoBehaviour {
 	void Update () {
 		if(Time.time > deathTime){
 			if(GetComponent<ObjectCleanUp>() != null){
-				GetComponent<ObjectCleanUp>().KillMe();
+				GetComponent<ObjectCleanUp>().ServerKillMe();
 			}else{
 				Destroy(gameObject);
 			}

@@ -8,14 +8,11 @@ public class ProjectileOwnerName : MonoBehaviour {
     public NetworkPlayer ProjectileOwner {
         get { return projectileOwner; }
         set {
-            ChatManager.DebugMessagePrint("I am: " + gameObject.ToString());
-            projectileOwner = value;
-            networkView.RPC("SetProjectileOwner", RPCMode.OthersBuffered, value);
+            networkView.RPC("SetProjectileOwner", RPCMode.AllBuffered, value);
         }
     }
     [RPC]
     private void SetProjectileOwner(NetworkPlayer owner) {
-        ChatManager.DebugMessagePrint("In RPC. I am: " + gameObject.ToString());
         projectileOwner = owner;
     }
 }

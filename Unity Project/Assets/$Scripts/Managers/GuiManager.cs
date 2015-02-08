@@ -856,12 +856,12 @@ public class GuiManager : MonoBehaviour {
 		
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			chatManager.AddToChat(ChatManager.currentChat);
+			chatManager.SubmitTextToChat(ChatManager.currentChat);
 			ChatManager.ClearCurrentChat();
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			chatManager.AddToChat(ChatManager.currentChat);
+			chatManager.SubmitTextToChat(ChatManager.currentChat);
 			ChatManager.ClearCurrentChat();
 		}
 	}
@@ -960,13 +960,13 @@ public class GuiManager : MonoBehaviour {
 		// Choo choo, all aboard the dodgy train
 		if(!GameManager.IsTutorialScene()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-				chatManager.AddToChat(ChatManager.currentChat);
+				chatManager.SubmitTextToChat(ChatManager.currentChat);
 				ChatManager.ClearCurrentChat();
 			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			chatManager.AddToChat(ChatManager.currentChat);
+			chatManager.SubmitTextToChat(ChatManager.currentChat);
 			ChatManager.ClearCurrentChat();
 		}
 		

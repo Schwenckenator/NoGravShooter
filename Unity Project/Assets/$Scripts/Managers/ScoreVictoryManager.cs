@@ -8,7 +8,6 @@ public class ScoreVictoryManager : MonoBehaviour {
     private GameManager gameManager;
     private GuiManager guiManager;
     private SettingsManager settingsManager;
-    private ChatManager chatManager;
 	
 	private NetworkPlayer winningPlayer;
     public bool IsVictor { get; set; }
@@ -19,7 +18,6 @@ public class ScoreVictoryManager : MonoBehaviour {
         gameManager = GetComponent<GameManager>();
         guiManager = GetComponent<GuiManager>();
         settingsManager = GetComponent<SettingsManager>();
-        chatManager = GetComponent<ChatManager>();
     }
     public void GameStart() {
         StartCoroutine(CheckForGameEnd());
@@ -41,7 +39,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         foreach (NetworkPlayer player in playerScores.Keys) {
             if (playerScores[player] >= settingsManager.ScoreToWin) {
                 if (Network.isServer) {
-                    chatManager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
+                    gameManager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
                 }
                 gameManager.EndGame(player);
                 break;
@@ -59,8 +57,8 @@ public class ScoreVictoryManager : MonoBehaviour {
             }
         }
         if (Network.isServer) {
-            chatManager.AddToChat("Time is up.", false);
-            chatManager.AddToChat(NetworkManager.connectedPlayers[winningPlayer] + " wins!", false);
+            gameManager.AddToChat("Time is up.", false);
+            gameManager.AddToChat(NetworkManager.connectedPlayers[winningPlayer] + " wins!", false);
         }
         gameManager.EndGame(winningPlayer);
     }
