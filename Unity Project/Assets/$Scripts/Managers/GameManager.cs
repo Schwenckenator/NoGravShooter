@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned) {
             fireWeapon.ChangeWeapon(6);
         }
-        if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch])) {
+        if (InputManager.GetKeyDown(SettingsManager.KeyBind.GrenadeSwitch)) {
             playerResources.ChangeGrenade();
         }
     }

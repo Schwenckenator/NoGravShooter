@@ -93,7 +93,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	void Update () {
-        if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]) && !isReloading) {
+        if (InputManager.GetKeyDown(SettingsManager.KeyBind.Reload) && !isReloading) {
 			StartCoroutine("WeaponReload");
 		}
 		if(isRecharging){

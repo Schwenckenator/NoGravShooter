@@ -18,7 +18,7 @@ public class ThrowGrenade : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if ((Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade])) && Time.time > nextThrow && networkView.isMine) {
+        if (InputManager.GetKeyDown(SettingsManager.KeyBind.Grenade) && Time.time > nextThrow && networkView.isMine) {
 			if(playerResource.CanThrowGrenade()){
                 SpawnGrenade(playerResource.GetCurrentGrenadeType(), grenadeSpawn.position, grenadeSpawn.rotation, Network.player);
 				nextThrow = Time.time + throwDelay;

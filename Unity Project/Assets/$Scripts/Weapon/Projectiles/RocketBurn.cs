@@ -10,6 +10,7 @@ public class RocketBurn : MonoBehaviour {
 	public float rocketAccel;
 	public float startVelocity;
 
+    private bool enabled = true;
 
 	void Start(){
 		if(!Network.isServer) return;
@@ -28,7 +29,7 @@ public class RocketBurn : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-        if (!Network.isServer) return;
+        if (!Network.isServer || !enabled) return;
 
         Rotate();
         Push();
@@ -45,7 +46,9 @@ public class RocketBurn : MonoBehaviour {
         rigidbody.AddRelativeForce(force);
     }
 
-    
+    public void Disable() {
+        enabled = false;
+    }
 
 	
 }

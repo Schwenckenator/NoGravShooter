@@ -16,8 +16,8 @@ public class BonusWeaponPickup : MonoBehaviour {
 	private int currentInventorySlot;
 	private bool playerColliding = false;
 
-    private GameManager gameManager;
     private SettingsManager settingsManager;
+    private GuiManager guiManager;
 
 	void Start(){
 		if(GameManager.testMode){
@@ -27,8 +27,10 @@ public class BonusWeaponPickup : MonoBehaviour {
 			networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
 			UpdateModel();
 		}
-		gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
+        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
+        settingsManager = manager.GetComponent<SettingsManager>();
+        guiManager = manager.GetComponent<GuiManager>();
+
 	}
 
 	//
@@ -88,8 +90,8 @@ public class BonusWeaponPickup : MonoBehaviour {
 				if(weaponcount >= maxweaponcount){
 					if(swapTimeout < Time.time){
 						swapTimeout = weaponSwapCooldown;
-                        gameManager.GetComponent<GuiManager>().ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
-                        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact])) {
+                        guiManager.ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
+                        if (InputManager.GetKeyDown(SettingsManager.KeyBind.Interact)) {
 							for(int i=0; i < 7; i++){
 								if(weapon.IsCurrentWeapon(i)){
 									weapon.removeWeapon(GameManager.weapon[i]);
