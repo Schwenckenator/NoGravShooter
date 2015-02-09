@@ -163,7 +163,7 @@ public class FireWeapon : MonoBehaviour {
 					}
 				}
 			}else{
-                SpawnProjectile(gunFirePoint.position, cameraPos.rotation, Network.player);
+                SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
 			}
 			if(currentWeapon.hasRecoil){
 				motor.Recoil(currentWeapon.recoil);
@@ -173,15 +173,15 @@ public class FireWeapon : MonoBehaviour {
 	}
 
     [RPC]
-    void SpawnProjectile(Vector3 position, Quaternion rotation, NetworkPlayer owner) {
+    void SpawnProjectile(int weaponID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
-            GameObject newObj = Network.Instantiate(currentWeapon.projectile, position, rotation, 0) as GameObject;
+            GameObject newObj = Network.Instantiate(GameManager.weapon[weaponID].projectile, position, rotation, 0) as GameObject;
             if (newObj.GetComponent<ProjectileOwnerName>() != null) {
                 newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
             }
 
         } else {
-            networkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
+            networkView.RPC("SpawnProjectile", RPCMode.Server, weaponID, position, rotation, owner);
         }
     }
 

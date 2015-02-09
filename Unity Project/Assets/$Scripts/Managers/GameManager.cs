@@ -196,7 +196,6 @@ public class GameManager : MonoBehaviour {
             fireWeapon.ChangeWeapon(6);
         }
         if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch])) {
-            Debug.Log("Grenade Switch!");
             playerResources.ChangeGrenade();
         }
     }

@@ -30,10 +30,22 @@ public class RocketBurn : MonoBehaviour {
 	void FixedUpdate(){
         if (!Network.isServer) return;
 
-		Vector3 force = Vector3.forward * rocketAccel;
-		rigidbody.AddRelativeForce(force);
+        Rotate();
+        Push();
 
 	}
+
+    private void Rotate() {
+        Quaternion newRotation = Quaternion.LookRotation(rigidbody.velocity);
+        transform.rotation = newRotation;
+    }
+    private void Push() {
+        if (rocketAccel <= 0) return;
+        Vector3 force = Vector3.forward * rocketAccel;
+        rigidbody.AddRelativeForce(force);
+    }
+
+    
 
 	
 }
