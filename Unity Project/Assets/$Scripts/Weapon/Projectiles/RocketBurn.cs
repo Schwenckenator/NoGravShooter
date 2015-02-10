@@ -22,11 +22,9 @@ public class RocketBurn : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-        if (!Network.isServer || !moving) return;
-
+        if (!Network.isServer || !moving || (rocketAccel <= 0)) return;
         Rotate();
         Push();
-
 	}
 
     private void Rotate() {
@@ -34,7 +32,6 @@ public class RocketBurn : MonoBehaviour {
         transform.rotation = newRotation;
     }
     private void Push() {
-        if (rocketAccel <= 0) return;
         Vector3 force = Vector3.forward * rocketAccel;
         rigidbody.AddRelativeForce(force);
     }
@@ -56,13 +53,18 @@ public class RocketBurn : MonoBehaviour {
     private Vector3 StripXYaxisFromPlayerVelocity(GameObject player) {
         
         Vector3 velocity = player.rigidbody.velocity;
-        velocity = player.transform.InverseTransformVector(velocity);
-        velocity = new Vector3(0, 0, velocity.z);
-        
-        ChatManager.PrintMessageIfDebug("Local Z Velocity: " + velocity.ToString());
 
-        velocity = player.transform.TransformVector(velocity);
+        velocity = player.transform.InverseTransformVector(velocity); // Convert to local space
+        velocity = new Vector3(0, 0, velocity.z);
+
+        if (IsNegativeZVelocity(velocity)) return Vector3.zero; // Don't go backwards
+
+        velocity = player.transform.TransformVector(velocity); // Convert to world space
 
         return velocity;
+    }
+
+    private bool IsNegativeZVelocity(Vector3 value){
+        return (value.z < 0);
     }
 }

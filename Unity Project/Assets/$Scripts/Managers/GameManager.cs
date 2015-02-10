@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour {
 	private FireWeapon fireWeapon;
 	private PlayerResources playerResources;
 
+    private int playerColourIndex = -1;
+
     [SerializeField]
 	private static int maxStartingWeapons = 2;
 	private int[] startingWeapons = new int[maxStartingWeapons];
@@ -38,7 +40,6 @@ public class GameManager : MonoBehaviour {
     public float endTime;
     //public string currentPlayerName;
     public NetworkPlayer currentPlayer;
-
     // For Game Settings
 
     private bool gameInProgress = false;
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour {
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 
 			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
+            ResetColourIndex();
 
 			//
 			if(Network.isServer){
@@ -133,11 +135,13 @@ public class GameManager : MonoBehaviour {
 		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
-				cameraLook = player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
+                cameraLook = GetPlayerCameraMouseLook(player);
 				cameraLook.SetYDirection(settingsManager.MouseYDirection);
 
 				fireWeapon = player.GetComponent<FireWeapon>();
 				playerResources = player.GetComponent<PlayerResources>();
+
+                AssignColour(player);
 			}
 		}
 
@@ -148,6 +152,23 @@ public class GameManager : MonoBehaviour {
 		}
 
 	}
+    private MouseLook GetPlayerCameraMouseLook(GameObject player) {
+        return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
+    }
+    private void AssignColour(GameObject player) {
+        PlayerColourManager colour = player.GetComponent<PlayerColourManager>();
+        if (playerColourIndex < 0) { // Needs picking
+            playerColourIndex = PickColour(colour);
+        }
+        colour.SetPickedColour(playerColourIndex);
+    }
+    private int PickColour(PlayerColourManager colour) {
+        // abstracted for teams later
+        return colour.PickColourRandom();
+    }
+    private void ResetColourIndex() {
+        playerColourIndex = -1;
+    }
 
 	public void PlayerDied(){
 		myPlayerSpawned = false;

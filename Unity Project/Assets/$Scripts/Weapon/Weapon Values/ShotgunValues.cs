@@ -9,7 +9,7 @@ public class ShotgunValues : WeaponSuperClass {
 		this.recoil 				= 5;
 		this.rayNum 				= 30;
 		
-		this.shotSpread 			= 10f;
+		this.shotSpread 			= 5f;
 		this.damagePerShot 			= 5;
 		this.heatPerShot 			= 0;
 		this.fireDelay 				= 0.75f;
