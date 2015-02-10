@@ -34,7 +34,7 @@ public class MineDetonation : MonoBehaviour {
 	}
 
 	void Detonate(){
-        if(DebugManager.IsDebugMode()) ChatManager.DebugMessagePrint(gameObject.ToString() + " goes boom");
+        ChatManager.PrintMessageIfDebug(gameObject.ToString() + " goes boom");
         
         //Make something depending on what you are
         SpawnExplosion(transform.position, Quaternion.identity, GetComponent<ProjectileOwnerName>().ProjectileOwner);

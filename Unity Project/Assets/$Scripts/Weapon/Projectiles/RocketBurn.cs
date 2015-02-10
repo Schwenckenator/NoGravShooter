@@ -10,26 +10,19 @@ public class RocketBurn : MonoBehaviour {
 	public float rocketAccel;
 	public float startVelocity;
 
-    private bool enabled = true;
+    private bool moving = true;
 
 	void Start(){
 		if(!Network.isServer) return;
 
-		Vector3 playerVel = Vector3.zero;
-		foreach(GameObject player in GameObject.FindGameObjectsWithTag("Player")){
-			if(player.networkView.owner == GetComponent<ProjectileOwnerName>().ProjectileOwner){
-				playerVel = player.rigidbody.velocity;
-			}
-		}
-
 		Vector3 vel = transform.forward * startVelocity;
-		vel += playerVel;
+        vel += GetPlayerZVelocity();
 
 		rigidbody.AddForce(vel, ForceMode.VelocityChange);
 	}
 
 	void FixedUpdate(){
-        if (!Network.isServer || !enabled) return;
+        if (!Network.isServer || !moving) return;
 
         Rotate();
         Push();
@@ -47,8 +40,29 @@ public class RocketBurn : MonoBehaviour {
     }
 
     public void Disable() {
-        enabled = false;
+        moving = false;
     }
 
-	
+    private Vector3 GetPlayerZVelocity() {
+        Vector3 playerVel = Vector3.zero;
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+            if (player.networkView.owner == GetComponent<ProjectileOwnerName>().ProjectileOwner) {
+                playerVel = StripXYaxisFromPlayerVelocity(player);
+            }
+        }
+        return playerVel;
+    }
+
+    private Vector3 StripXYaxisFromPlayerVelocity(GameObject player) {
+        
+        Vector3 velocity = player.rigidbody.velocity;
+        velocity = player.transform.InverseTransformVector(velocity);
+        velocity = new Vector3(0, 0, velocity.z);
+        
+        ChatManager.PrintMessageIfDebug("Local Z Velocity: " + velocity.ToString());
+
+        velocity = player.transform.TransformVector(velocity);
+
+        return velocity;
+    }
 }

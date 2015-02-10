@@ -75,7 +75,9 @@ public class ChatManager : MonoBehaviour {
         currentChat = "";
     }
     
-    public static void DebugMessagePrint(string message) {
+    public static void PrintMessageIfDebug(string message) {
+        if (!DebugManager.IsDebugMode()) return;
+
         Debug.Log(message);
         ChatManager.AddToLocalChat(message);
     }

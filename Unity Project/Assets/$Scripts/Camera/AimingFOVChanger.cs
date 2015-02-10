@@ -37,10 +37,10 @@ public class AimingFOVChanger : MonoBehaviour {
 				if(Camera.main.fieldOfView > sniperFOV){
 					Camera.main.fieldOfView -= zoomSpeed;
 				} else {
-					showscope = true;
+					guiManager.showSniperScope = true;
 				}
 			} else {
-				showscope = false;
+				guiManager.showSniperScope = false;
 				//bugfix for zooming with sniper then changing weapons
 				if(Camera.main.fieldOfView < minFOV){
 					Camera.main.fieldOfView = minFOV;
@@ -50,7 +50,7 @@ public class AimingFOVChanger : MonoBehaviour {
 				}
 			}
 		} else {
-			showscope = false;
+			guiManager.showSniperScope = false;
 			//bug fix for changing field of view between games without closing
 			if(Camera.main.fieldOfView > maxFOV){
 				Camera.main.fieldOfView = maxFOV;
@@ -63,14 +63,5 @@ public class AimingFOVChanger : MonoBehaviour {
 	
 	public float zoomRotationRatio(){
 		return Camera.main.fieldOfView/maxFOV;
-	}
-	
-	
-	public bool showscope = false;
-	void OnGUI(){
-		if(!showscope) return;
-		GUI.DrawTexture(new Rect(0, 0, Screen.width/2 - Screen.height/2, Screen.height), guiManager.SniperScopeBorder);
-        GUI.DrawTexture(new Rect(Screen.width / 2 - Screen.height / 2, 0, Screen.height, Screen.height), guiManager.SniperScope);
-        GUI.DrawTexture(new Rect(Screen.width / 2 + Screen.height / 2, 0, Screen.width / 2 - Screen.height / 2, Screen.height), guiManager.SniperScopeBorder);
 	}
 }

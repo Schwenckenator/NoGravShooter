@@ -44,6 +44,7 @@ public class GuiManager : MonoBehaviour {
 	
     public Texture SniperScope;
     public Texture SniperScopeBorder;
+    public bool showSniperScope = false;
 
     [SerializeField]
     private GUIStyle customGui;
@@ -262,10 +263,8 @@ public class GuiManager : MonoBehaviour {
 		GUI.DrawTexture(health, empty);
 		health.xMin = health.xMax - playerResource.GetHealth()*5/2;
 		GUI.DrawTexture(health, fullHealth);
-		
-		Rect rectCrosshair = new Rect(0, 0, 32, 32);
-		rectCrosshair.center = new Vector2(Screen.width/2, Screen.height/2);
-		GUI.DrawTexture(rectCrosshair, crosshair);
+
+        DrawCrosshair();
 
 		//tutorial prompt
 		if(tutePromptShown > 0){
@@ -285,6 +284,18 @@ public class GuiManager : MonoBehaviour {
             ScoreBoard();
         }
 	}
+
+    private void DrawCrosshair() {
+        if (showSniperScope) {
+            GUI.DrawTexture(new Rect(0, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
+            GUI.DrawTexture(new Rect(Screen.width / 2 - Screen.height / 2, 0, Screen.height, Screen.height), SniperScope);
+            GUI.DrawTexture(new Rect(Screen.width / 2 + Screen.height / 2, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
+        }else{
+            Rect rectCrosshair = new Rect(0, 0, 32, 32);
+            rectCrosshair.center = new Vector2(Screen.width / 2, Screen.height / 2);
+            GUI.DrawTexture(rectCrosshair, crosshair);
+        }
+    }
     void Radar() {
         //radar system
         int radarCenter = 110;
