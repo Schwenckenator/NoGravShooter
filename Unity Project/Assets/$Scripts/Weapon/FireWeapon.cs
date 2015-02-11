@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FireWeapon : MonoBehaviour {
-	public int maxWeapons = 2;
+	public int maxHeldWeapons = 2;
 
 	Transform gunFirePoint;
 	Transform cameraPos;
@@ -59,118 +59,95 @@ public class FireWeapon : MonoBehaviour {
             }
         }
     }
-	void FixedUpdate(){
+	void Update(){
 
-		//change weapons by mouse wheel
-		//checks if player has max number of weapons
-		if(GameManager.testMode){
-			if (Input.GetAxis("Mouse ScrollWheel") < 0){
-				currentInventorySlot++;
-				if(NumberWeaponsHeld() < 7){
-					if(currentInventorySlot >= 7){
-						currentInventorySlot = 0;
-					}
-				} else {
-					if(currentInventorySlot >= 7){
-						currentInventorySlot = 0;
-					}
-				}
-				ChangeWeapon(currentInventorySlot);
-			} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
-				currentInventorySlot--;
-				if(NumberWeaponsHeld() < 7){
-					if(currentInventorySlot < 0){
-						currentInventorySlot = 7 - 1;
-					}
-				} else {
-					if(currentInventorySlot < 0){
-						currentInventorySlot = 7 - 1;
-					}
-				}
-				ChangeWeapon(currentInventorySlot);
-			}
-		} else {
-			if (Input.GetAxis("Mouse ScrollWheel") < 0){
-				currentInventorySlot++;
-				if(NumberWeaponsHeld() < maxWeapons){
-					if(currentInventorySlot >= NumberWeaponsHeld()){
-						currentInventorySlot = 0;
-					}
-				} else {
-					if(currentInventorySlot >= maxWeapons){
-						currentInventorySlot = 0;
-					}
-				}
-				ChangeWeapon(currentInventorySlot);
-			} else if (Input.GetAxis("Mouse ScrollWheel") > 0){
-				currentInventorySlot--;
-				if(NumberWeaponsHeld() < maxWeapons){
-					if(currentInventorySlot < 0){
-						currentInventorySlot = NumberWeaponsHeld() - 1;
-					}
-				} else {
-					if(currentInventorySlot < 0){
-						currentInventorySlot = maxWeapons - 1;
-					}
-				}
-				ChangeWeapon(currentInventorySlot);
-			}
-		}
+        MouseWheelWeaponChange();
 		
 		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu()){
-			playerResource.WeaponFired(currentWeapon.heatPerShot);
-            PlayFireWeaponSound();
-			nextFire = Time.time + currentWeapon.fireDelay;
-
-
-			if(currentWeapon.useRay){ //Does this weapon use a ray to hit?
-				RaycastHit hit;
-				for(int i=0; i< currentWeapon.rayNum; i++){
-					//Find direction after shot spread
-					Vector3 shotDir = cameraPos.forward;
-					//Apply two rotations
-					float angle1 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
-					float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
-
-					shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
-
-					Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
-					//Deal with the shot
-					if(hit.collider.CompareTag("Player")){
-						if(!hit.collider.networkView.isMine){
-							hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
-						}
-					}else if(hit.collider.CompareTag("BonusPickup")){
-						hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
-					}else if(hit.collider.CompareTag("GrenadeMine")){
-						hit.collider.GetComponent<MineDetonation>().Shot ();
-					}
-					Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
-
-					shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
-					shot.transform.parent = cameraPos;
-					LineRenderer render = shot.GetComponent<LineRenderer>();
-					
-					
-					render.SetPosition(0, gunFirePoint.InverseTransformPoint(gunFirePoint.position));
-					render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
-					
-					
-					if(currentWeapon.projectile == GameManager.weapon[0].projectile){
-						networkView.RPC("MultiplayerLaserRender", RPCMode.Others, gunFirePoint.position, hit.point);
-					}else if(currentWeapon.projectile == GameManager.weapon[1].projectile){
-						networkView.RPC("MultiplayerSlugRender", RPCMode.Others, gunFirePoint.position, hit.point);
-					}
-				}
-			}else{
-                SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
-			}
-			if(currentWeapon.hasRecoil){
-				motor.Recoil(currentWeapon.recoil);
-			}
-			
+            WeaponFired();
 		}
 	}
+
+    private void WeaponFired() {
+        playerResource.WeaponFired(currentWeapon.heatPerShot);
+        PlayFireWeaponSound();
+        nextFire = Time.time + currentWeapon.fireDelay;
+
+
+        if (currentWeapon.useRay) { //Does this weapon use a ray to hit?
+            RaycastHit hit = new RaycastHit();
+            for (int i = 0; i < currentWeapon.rayNum; i++) {
+                FireRay(hit);
+            }
+        } else {
+            SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
+        }
+        if (currentWeapon.hasRecoil) {
+            motor.Recoil(currentWeapon.recoil);
+        }
+
+    }
+
+    private RaycastHit FireRay(RaycastHit hit) {
+        //Find direction after shot spread
+        Vector3 shotDir = cameraPos.forward;
+        //Apply two rotations
+        float angle1 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+        float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+
+        shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
+
+        Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
+        //Deal with the shot
+        if (hit.collider.CompareTag("Player")) {
+            if (!hit.collider.networkView.isMine) {
+                hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
+            }
+        } else if (hit.collider.CompareTag("BonusPickup")) {
+            hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
+        } else if (hit.collider.CompareTag("GrenadeMine")) {
+            hit.collider.GetComponent<MineDetonation>().ForceDetonate();
+        }
+        Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+
+        shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
+        shot.transform.parent = cameraPos;
+        LineRenderer render = shot.GetComponent<LineRenderer>();
+
+
+        render.SetPosition(0, gunFirePoint.InverseTransformPoint(gunFirePoint.position));
+        render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
+
+        //Render shot everywhere else
+        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, hit.point);
+
+        return hit;
+    }
+
+    private void MouseWheelWeaponChange() {
+        //change weapons by mouse wheel
+        //checks if player has max number of weapons
+        if (playerResource.IsWeaponBusy()) return;
+
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+            currentInventorySlot++;
+            currentInventorySlot %= GetMaxWeapon();
+            ChangeWeapon(currentInventorySlot);
+
+        } else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+            currentInventorySlot--;
+            if (currentInventorySlot < 0) currentInventorySlot += GetMaxWeapon();
+            ChangeWeapon(currentInventorySlot);
+        }
+    }
+
+    private int GetMaxWeapon() {
+        if (GameManager.testMode) {
+            return GameManager.weapon.Count;
+        } else {
+            return NumberWeaponsHeld();
+        }
+    }
 
     [RPC]
     void SpawnProjectile(int weaponID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
@@ -185,35 +162,23 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 
-	[RPC]
-	void MultiplayerLaserRender(Vector3 start, Vector3 end){
+    [RPC]
+    void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
+        WeaponSuperClass weapon = GameManager.weapon[weaponID];
 
-		WeaponSuperClass laser = GameManager.weapon[0];
+        Instantiate(weapon.hitParticle, end, Quaternion.identity);
 
-		Instantiate(laser.hitParticle, end, Quaternion.identity);
-		audio.PlayOneShot(laser.fireSound);
 
-		shot = Instantiate(laser.projectile, start, Quaternion.identity) as GameObject;
-		LineRenderer render = shot.GetComponent<LineRenderer>();
-		render.useWorldSpace = true;
-		render.SetPosition(0, start);
-		render.SetPosition(1, end);
-	}
+        shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
+        LineRenderer render = shot.GetComponent<LineRenderer>();
+        render.useWorldSpace = true;
+        render.SetPosition(0, start);
+        render.SetPosition(1, end);
+    }
 
-	[RPC]
-	void MultiplayerSlugRender(Vector3 start, Vector3 end){
 
-		WeaponSuperClass slug = GameManager.weapon[1];
 
-		Instantiate(slug.hitParticle, end, Quaternion.identity);
-		audio.PlayOneShot(slug.fireSound);
-		
-		shot = Instantiate(slug.projectile, start, Quaternion.identity) as GameObject;
-		LineRenderer render = shot.GetComponent<LineRenderer>();
-		render.useWorldSpace = true;
-		render.SetPosition(0, start);
-		render.SetPosition(1, end);
-	}
+
 
 	public void ChangeWeapon(int weaponId){
 		currentInventorySlot = weaponId;
@@ -251,7 +216,7 @@ public class FireWeapon : MonoBehaviour {
 	}
 	
 	public int WeaponLimit(){
-		return maxWeapons;
+		return maxHeldWeapons;
 	}
 
 	public void AddWeapon(int weaponId){
@@ -271,6 +236,13 @@ public class FireWeapon : MonoBehaviour {
     void PlayFireWeaponSound() {
         if (networkView.isMine) {
             audio.PlayOneShot(currentWeapon.fireSound);
+
+            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon));
         }
+    }
+    [RPC]
+    void RPCPlayFireWeaponSound(int weaponID) {
+        WeaponSuperClass weapon = GameManager.weapon[weaponID];
+        audio.PlayOneShot(weapon.fireSound);
     }
 }

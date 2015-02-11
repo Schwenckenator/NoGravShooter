@@ -35,6 +35,9 @@ public class ExplosionForceDamage : MonoBehaviour {
 			if(hit.CompareTag("BonusPickup")){
 				hit.GetComponent<DestroyOnNextFrame>().DestroyMe();
 			}
+            if (hit.CompareTag("GrenadeMine")) {
+                hit.GetComponent<MineDetonation>().ForceDetonate();
+            }
 
 			if(hit.rigidbody){
 				hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius, 1.0f, ForceMode.Force);

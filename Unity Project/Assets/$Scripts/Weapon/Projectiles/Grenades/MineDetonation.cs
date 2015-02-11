@@ -29,7 +29,7 @@ public class MineDetonation : MonoBehaviour {
 		}
 	}
 
-	public void Shot(){
+	public void ForceDetonate(){
 		Detonate();
 	}
 
