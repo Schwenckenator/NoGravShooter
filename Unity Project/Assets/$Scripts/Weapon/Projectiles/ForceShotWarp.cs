@@ -26,7 +26,7 @@ public class ForceShotWarp : MonoBehaviour {
 		if(input.CompareTag("BonusPickup")){ // If this hits a bonus, kill it
 			input.GetComponent<DestroyOnNextFrame>().DestroyMe();
 		}
-        if (input.CompareTag("MineGrenade")) {
+        if (input.CompareTag("GrenadeMine")) {
             input.GetComponent<MineDetonation>().ForceDetonate();
         }
 
