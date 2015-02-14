@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -11,6 +12,9 @@ public class NetworkManager : MonoBehaviour {
 
     // Use this for initialization
     #region variables
+    /// <summary>
+    /// Holds names of players
+    /// </summary>
     public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
 
     private static string ipAddress;
@@ -32,6 +36,8 @@ public class NetworkManager : MonoBehaviour {
         guiManager = GetComponent<GuiManager>();
         settingsManager = GetComponent<SettingsManager>();
         chatManager = GetComponent<ChatManager>();
+
+
     }
 
     #region Connect To Server
@@ -66,14 +72,7 @@ public class NetworkManager : MonoBehaviour {
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
-    public void Destroy(NetworkViewID viewID) {
-        RemoveBufferedInstantiate(viewID);
-        NetworkKillObject(viewID);
-    }
-    public void Destroy(GameObject gObject) {
-        RemoveBufferedInstantiate(gObject.networkView.viewID);
-        NetworkKillObject(gObject.networkView.viewID);
-    }
+
     
     #region SetDetails
     public static void SetClientDetails(HostData _masterServerData, bool _useMasterServer, string _ipAddress, int _portNum) {
@@ -89,10 +88,6 @@ public class NetworkManager : MonoBehaviour {
         useNat = _useNat;
 
     }
-    #endregion
-
-    #region IsState
-
     #endregion
 
     #region OnEvent
@@ -166,22 +161,8 @@ public class NetworkManager : MonoBehaviour {
 
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
-
-    [RPC]
-    public void RemoveBufferedInstantiate(NetworkViewID viewID) {
-        if (Network.isServer) {
-            Network.RemoveRPCs(viewID);
-        } else {
-            networkView.RPC("RemoveBufferedInstantiate", RPCMode.Server, viewID);
-        }
-    }
-    [RPC]
-    void NetworkKillObject(NetworkViewID viewID) {
-        if (Network.isServer) {
-            Network.Destroy(viewID);
-        } else {
-            networkView.RPC("NetworkKillObject", RPCMode.Server, viewID);
-        }
-    }
+#endregion
+    #region Destroy
+    
     #endregion
 }

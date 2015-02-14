@@ -38,6 +38,7 @@ public class BlackHolePhysics : MonoBehaviour {
 	}
 
 	IEnumerator CheckForNewObjects(){
+        yield return null; // Wait for a frame
 		while(true){
 			Collider[] hits = Physics.OverlapSphere(transform.position, radius);
 			foreach(Collider hit in hits){

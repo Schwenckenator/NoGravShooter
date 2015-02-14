@@ -5,21 +5,24 @@ public class ShotLifeTime : MonoBehaviour {
 
 	public float lifeTime;
 	private float deathTime;
+    private bool cleanUp = false;
+    private bool killed = false;
 
 	// Use this for initialization
 	void Start () {
-		deathTime = Time.time + lifeTime;
+        if (GetComponent<ObjectCleanUp>() != null) {
+            deathTime = Time.time + lifeTime;
+            cleanUp = true;
+        }else{
+            Destroy(gameObject, lifeTime);
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Time.time > deathTime){
-			if(GetComponent<ObjectCleanUp>() != null){
-				GetComponent<ObjectCleanUp>().KillMe();
-			}else{
-				Destroy(gameObject);
-			}
-
-		}
+        if(cleanUp && Time.time > deathTime && !killed){
+            killed = true;
+            GetComponent<ObjectCleanUp>().KillMe();
+        }
 	}
 }

@@ -9,6 +9,8 @@ public class MineDetonation : MonoBehaviour {
 	public float initialWaitTime;
 	public float tickWaitTime;
 
+    private bool detonated;
+
 
 	// Use this for initialization
 	void Start () {
@@ -17,11 +19,11 @@ public class MineDetonation : MonoBehaviour {
 
 	IEnumerator CheckForPlayers(float initWait, float tickWait){
 		yield return new WaitForSeconds(initWait);
-		while(true){
+		while(!detonated){
 			Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius);
 			foreach(Collider hit in hits){
 				if(hit.CompareTag("Player")){
-					Detonate();
+					Detonate(false);
 					break;
 				}
 			}
@@ -30,17 +32,19 @@ public class MineDetonation : MonoBehaviour {
 	}
 
 	public void ForceDetonate(){
-		Detonate();
+		Detonate(true);
 	}
 
-	void Detonate(){
-        ChatManager.PrintMessageIfDebug(gameObject.ToString() + " goes boom");
-        
-        //Make something depending on what you are
-        SpawnExplosion(transform.position, Quaternion.identity, GetComponent<ProjectileOwnerName>().ProjectileOwner);
-		
-		//Then destroy this
-        GetComponent<ObjectCleanUp>().KillMe();
+	void Detonate(bool isForced){
+        if (detonated) return;
+        detonated = true;
+
+        if (isForced || Network.isServer) {
+            ChatManager.PrintMessageIfDebug(NetworkManager.connectedPlayers[Network.player] + " says " + gameObject.ToString() + " goes boom.");
+
+            SpawnExplosion(transform.position, Quaternion.identity, GetComponent<ProjectileOwnerName>().ProjectileOwner);
+            GetComponent<ObjectCleanUp>().KillMe();
+        }
 	}
 
     [RPC]

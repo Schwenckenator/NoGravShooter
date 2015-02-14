@@ -6,11 +6,10 @@ using System.Collections;
 public class ObjectCleanUp : MonoBehaviour {
     
 	public void KillMe(){
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<NetworkManager>().Destroy(gameObject);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<DestroyManager>().CleanUp(gameObject);
 	}
 
     public void ClientKillMe() {
-        Network.RemoveRPCs(gameObject.networkView.viewID);
-        Network.Destroy(gameObject);
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<DestroyManager>().Destroy(gameObject.networkView.viewID);
     }
 }
