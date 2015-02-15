@@ -15,9 +15,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private MouseLook cameraMouseLook;
     private MouseLook characterMouseLook;
 	private Transform cameraTransform;
+    private float colliderHeight;
 
 	private bool jetPackOn;
-	private int magnetPower; // 0-4 is on, 5 is off
+	private int magnetPower; // 1-5 is on, 0 is off
+    private int magnetPowerMax = 5;
 
     [SerializeField]
     private AudioClip[] soundFootsteps;
@@ -87,12 +89,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		rigidbody.freezeRotation = true;
 		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
 		jetPackOn = true;
-		magnetPower = 0;
+		magnetPower = magnetPowerMax;
 
 		resource = GetComponent<PlayerResources>();
 		cameraTransform = transform.GetChild(0);
 		cameraMouseLook = cameraTransform.GetComponent<MouseLook>();
         characterMouseLook = GetComponent<MouseLook>();
+        colliderHeight = GetComponent<CapsuleCollider>().height;
 
 		StartCoroutine("PlayJetpackSound");
 
@@ -113,84 +116,97 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 		jetPackInUse = false;
 
-		// If exclusive input
-		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack]) ){
-			//Move Forward
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward])){
-				if(vertical < 0.0f) vertical = 0.0f;
-				vertical = Mathf.MoveTowards(vertical, 1.0f, 3*Time.deltaTime);
-				jetPackInUse = true;
-			}
-			//Move Back
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack])){
-				if(vertical > 0.0f) vertical = 0.0f;
-				vertical = Mathf.MoveTowards(vertical, -1.0f, 3*Time.deltaTime);
-				jetPackInUse = true;
-			}
-		
-		}else {// If both or neither
-			//Move to rest
-			vertical = Mathf.MoveTowards(vertical, 0.0f, 3*Time.deltaTime);
-		}
+        InputForward();
 
-		// If exclusive input
-		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft]) ){
-			//Move Right
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight])){
-				if(horizontal < 0.0f) horizontal = 0.0f;
-				horizontal = Mathf.MoveTowards(horizontal, 1.0f, 3*Time.deltaTime);
-				jetPackInUse = true;
-			}
-			//Move Left
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft])){
-				if(horizontal > 0.0f) horizontal = 0.0f;
-				horizontal = Mathf.MoveTowards(horizontal, -1.0f, 3*Time.deltaTime);
-				jetPackInUse = true;
-			}
-			
-		}else {// If both or neither
-			//Move to rest
-			horizontal = Mathf.MoveTowards(horizontal, 0.0f, 3*Time.deltaTime);
-		}
+        InputRight();
 
-		// If exclusive input
-		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown]) ){
-			//Move Up
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp])){
-				if(jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
-				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3*Time.deltaTime);
-				jetPackInUse = true;
-			}
-			//Move Down
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])){
-				if(jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
-				jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3*Time.deltaTime);
-				jetPackInUse = true;
-			}
-			
-		}else {// If both or neither
-			//Move to rest
-			jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 0.0f, 3*Time.deltaTime);
-		}
+        InputUp();
 
-		// If exclusive input
-		if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft]) ){
-			//Roll Right
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight])){
-				if(roll > 0.0f) roll = 0.0f;
-				roll = Mathf.MoveTowards(roll, -1.0f, 3*Time.deltaTime);
-			}
-			//Roll Left
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])){
-				if(roll < 0.0f) roll = 0.0f;
-				roll = Mathf.MoveTowards(roll, 1.0f, 3*Time.deltaTime);
-			}
-			
-		}else {// If both or neither
-			//Move to rest
-			roll = Mathf.MoveTowards(roll, 0.0f, 3*Time.deltaTime);
-		}
+        InputRoll();
 	}
+
+    private void InputRoll() {
+        // If exclusive input
+        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])) {
+            //Roll Right
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight])) {
+                if (roll > 0.0f) roll = 0.0f;
+                roll = Mathf.MoveTowards(roll, -1.0f, 3 * Time.deltaTime);
+            }
+            //Roll Left
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])) {
+                if (roll < 0.0f) roll = 0.0f;
+                roll = Mathf.MoveTowards(roll, 1.0f, 3 * Time.deltaTime);
+            }
+
+        } else {// If both or neither
+            //Move to rest
+            roll = Mathf.MoveTowards(roll, 0.0f, 3 * Time.deltaTime);
+        }
+    }
+
+    private void InputUp() {
+        // If exclusive input
+        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])) {
+            jetPackInUse = true;
+            //Move Up
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp])) {
+                if (jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
+                jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3 * Time.deltaTime);
+            }
+            //Move Down
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])) {
+                if (jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
+                jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3 * Time.deltaTime);
+            }
+
+        } else {// If both or neither
+            //Move to rest
+            jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 0.0f, 3 * Time.deltaTime);
+        }
+    }
+
+    private void InputRight() {
+        // If exclusive input
+        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft])) {
+            jetPackInUse = true;
+            //Move Right
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight])) {
+                if (horizontal < 0.0f) horizontal = 0.0f;
+                horizontal = Mathf.MoveTowards(horizontal, 1.0f, 3 * Time.deltaTime);
+            }
+            //Move Left
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft])) {
+                if (horizontal > 0.0f) horizontal = 0.0f;
+                horizontal = Mathf.MoveTowards(horizontal, -1.0f, 3 * Time.deltaTime);
+            }
+
+        } else {// If both or neither
+            //Move to rest
+            horizontal = Mathf.MoveTowards(horizontal, 0.0f, 3 * Time.deltaTime);
+        }
+    }
+
+    private void InputForward() {
+        // If exclusive input
+        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack])) {
+            jetPackInUse = true;
+            //Move Forward
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward])) {
+                if (vertical < 0.0f) vertical = 0.0f;
+                vertical = Mathf.MoveTowards(vertical, 1.0f, 3 * Time.deltaTime);
+            }
+            //Move Back
+            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack])) {
+                if (vertical > 0.0f) vertical = 0.0f;
+                vertical = Mathf.MoveTowards(vertical, -1.0f, 3 * Time.deltaTime);
+            }
+
+        } else {// If both or neither
+            //Move to rest
+            vertical = Mathf.MoveTowards(vertical, 0.0f, 3 * Time.deltaTime);
+        }
+    }
 	#endregion
 	
 	
@@ -205,108 +221,111 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		UpdateInput();
 
 		if (grounded) {
-			// Calculate how fast we should be moving
-			Vector3 targetVelocity;
-			if(GameManager.IsPlayerMenu()){
-				targetVelocity = Vector3.zero;
-			}else{
-                targetVelocity = new Vector3(horizontal, 0, vertical);
-			}
-
-			targetVelocity = Vector3.ClampMagnitude(targetVelocity, 1.0f);
-			targetVelocity = transform.TransformDirection(targetVelocity);
-
-			Vector3 totalPushBackDir = Vector3.zero;
-			//check for edges
-
-			bool sneaking = false;
-			if(Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])){
-                sneaking = true;
-                totalPushBackDir = EdgeDetection();
-			}
-			if(sneaking && totalPushBackDir.sqrMagnitude > 0){
-				totalPushBackDir.Normalize();
-				Debug.DrawRay(transform.position, totalPushBackDir, Color.magenta, 10, false);
-				Debug.Log (totalPushBackDir.ToString("G4"));
-				//Make every value positive
-				totalPushBackDir = new Vector3(1 - Mathf.Abs(totalPushBackDir.x), 1 - Mathf.Abs(totalPushBackDir.y), 1 - Mathf.Abs(totalPushBackDir.z));
-
-				targetVelocity = Vector3.Scale(targetVelocity, totalPushBackDir);
-			}
-			//Multiply by speed
-			targetVelocity *= speed;
-			
-			// Apply a force that attempts to reach our target velocity
-			Vector3 velocity = rigidbody.velocity;
-			Vector3 velocityChange = (targetVelocity - velocity);
-
-			if(rigidbody.velocity.sqrMagnitude > sqrWalkingSoundVelocity){
-				playWalkingSound = true;
-			}
-
-			velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-			velocityChange.y = Mathf.Clamp(velocityChange.y, -maxVelocityChange, maxVelocityChange);
-			velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-
-
-			rigidbody.AddForce(velocityChange, ForceMode.Impulse);
-			
-			// Jump
-			if (canJump && Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) && !GameManager.IsPlayerMenu()) {
-				rigidbody.AddRelativeForce (new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
-			}
+            MovementWalk();
 		}else if(jetPackOn){
-			if(magnetPower < 5 && Physics.Raycast(transform.position, -transform.up, 1.5f)){
-				rigidbody.AddRelativeForce(new Vector3 (0, -1, 0), ForceMode.Impulse);
-			}
-			//Apply Jetpack force as Acceleration
-			Vector3 force;
-			if(GameManager.IsPlayerMenu()){
-				force = Vector3.zero;
-			}else{
-				force = new Vector3(horizontal, jetPackUpDown, vertical);
-				force = Vector3.ClampMagnitude(force, 1.0f);
-			}
-			force *= speed;
-
-			// If non-zero force, spend fuel
-			if(jetPackInUse && !GameManager.IsPlayerMenu()){
-				if(resource.SpendFuel(fuelSpend)){
-					playJetSound = true;
-					rigidbody.AddRelativeForce(force, ForceMode.Force);
-				}else{
-					jetpackSoundWasPlayed = false;
-				}
-			}
-
-			//Rotation
-            //Vector3 torque;
-            //if(GameManager.IsPaused()){
-            //    torque = Vector3.zero;
-            //}else{
-            //    torque = new Vector3(Input.GetAxis("Mouse Y")* airPitchSensitivity * mouseSensitivityY * cameraLook.GetYDirection() * cameraFOV.zoomRotationRatio(), 0, roll); // the change wanted
-            //    Debug.Log("Air: " + Input.GetAxis("Mouse Y").ToString());
-            //}
-            //torque = torque * rollSpeed;
-            //transform.Rotate(torque);
-
-            Vector3 torque;
-            if (GameManager.IsPlayerMenu()) {
-                torque = Vector3.zero;
-            } else {
-                torque = new Vector3(0, 0, roll); // the change wanted
-            }
-            torque = torque * rollSpeed;
-            transform.Rotate(torque);
+            MovementJetpack();
 
 		}
-
 		grounded = false;
-		magnetPower++;
-
-
-
+		magnetPower--;
 	}
+
+    private void MovementJetpack() {
+        if (magnetPower > 0 && Physics.Raycast(transform.position, -transform.up, (colliderHeight * 2 / 3))) {
+            rigidbody.AddRelativeForce(new Vector3(0, -1, 0), ForceMode.Impulse);
+        }
+        //Apply Jetpack force as Acceleration
+        Vector3 force = GetJetpackForce();
+
+        // If non-zero force, spend fuel
+        if (jetPackInUse && !GameManager.IsPlayerMenu()) {
+            if (resource.SpendFuel(fuelSpend)) {
+                playJetSound = true;
+                rigidbody.AddRelativeForce(force, ForceMode.Force);
+            } else {
+                jetpackSoundWasPlayed = false;
+            }
+        }
+
+        Vector3 torque = GetJetpackTorque();
+        transform.Rotate(torque);
+    }
+
+    private Vector3 GetJetpackTorque() {
+        Vector3 torque;
+        if (GameManager.IsPlayerMenu()) {
+            torque = Vector3.zero;
+        } else {
+            torque = new Vector3(0, 0, roll); // the change wanted
+        }
+        torque = torque * rollSpeed;
+        return torque;
+    }
+
+    private Vector3 GetJetpackForce() {
+        Vector3 force;
+        if (GameManager.IsPlayerMenu()) {
+            force = Vector3.zero;
+        } else {
+            force = new Vector3(horizontal, jetPackUpDown, vertical);
+            force = Vector3.ClampMagnitude(force, 1.0f);
+        }
+        force *= speed;
+        return force;
+    }
+
+    private void MovementWalk() {
+        // Calculate how fast we should be moving
+        Vector3 targetVelocity;
+        if (GameManager.IsPlayerMenu()) {
+            targetVelocity = Vector3.zero;
+        } else {
+            targetVelocity = new Vector3(horizontal, 0, vertical);
+        }
+
+        targetVelocity = Vector3.ClampMagnitude(targetVelocity, 1.0f);
+        targetVelocity = transform.TransformDirection(targetVelocity);
+
+        Vector3 totalPushBackDir = Vector3.zero;
+        //check for edges
+
+        bool sneaking = false;
+        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])) {
+            sneaking = true;
+            totalPushBackDir = EdgeDetection();
+        }
+        if (sneaking && totalPushBackDir.sqrMagnitude > 0) {
+            totalPushBackDir.Normalize();
+            Debug.DrawRay(transform.position, totalPushBackDir, Color.magenta, 10, false);
+            Debug.Log(totalPushBackDir.ToString("G4"));
+            //Make every value positive
+            totalPushBackDir = new Vector3(1 - Mathf.Abs(totalPushBackDir.x), 1 - Mathf.Abs(totalPushBackDir.y), 1 - Mathf.Abs(totalPushBackDir.z));
+
+            targetVelocity = Vector3.Scale(targetVelocity, totalPushBackDir);
+        }
+        //Multiply by speed
+        targetVelocity *= speed;
+
+        // Apply a force that attempts to reach our target velocity
+        Vector3 velocity = rigidbody.velocity;
+        Vector3 velocityChange = (targetVelocity - velocity);
+
+        if (rigidbody.velocity.sqrMagnitude > sqrWalkingSoundVelocity) {
+            playWalkingSound = true;
+        }
+
+        velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+        velocityChange.y = Mathf.Clamp(velocityChange.y, -maxVelocityChange, maxVelocityChange);
+        velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+
+
+        rigidbody.AddForce(velocityChange, ForceMode.Impulse);
+
+        // Jump
+        if (canJump && Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) && !GameManager.IsPlayerMenu()) {
+            rigidbody.AddRelativeForce(new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
+        }
+    }
 
     private Vector3 EdgeDetection() {
         Vector3 totalPushBackDir = new Vector3();
@@ -412,22 +431,28 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	// Returns normal of surface
 	Vector3 SurfaceNormal(Collision info){
 		RaycastHit[] hits;
-		Vector3 colObjNorm = Vector3.zero;
-		Vector3 origin = transform.position  - transform.up * .95f; // Make the ray emit from feet
+		Vector3 collisionObjNormal = Vector3.zero;
 
-		Ray r = new Ray(origin, -transform.up);
-		Debug.DrawRay(origin, -transform.up, Color.green, 5.0f, false);
-
-		hits = Physics.RaycastAll(r);
+		hits = Physics.RaycastAll(GeneratePhysicsRay());
 		foreach(RaycastHit hit in hits){
 			if(hit.collider == info.collider){
-				colObjNorm = hit.normal;
+				collisionObjNormal = hit.normal;
 				break;
 			}
 		}
 	
-		return colObjNorm;
+		return collisionObjNormal;
 	}
+
+    Ray GeneratePhysicsRay() {
+        Ray r = new Ray();
+        r.origin = transform.position;
+        r.direction = -transform.up * (colliderHeight *  2/3);
+
+        Debug.DrawRay(r.origin, r.direction, Color.green, 5.0f, false);
+
+        return r;
+    }
     /// <summary>
     /// Does the actual rotation of player
     /// </summary>
@@ -460,41 +485,24 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 
 	#region Collisions
-    //void OnCollisionEnter(Collision info) {
-    //    if (networkView.isMine) {
-    //        if (!info.collider.CompareTag("NonWalkable")) {
-
-    //            Vector3 colObjNorm = SurfaceNormal(info);
-
-    //            float angle = Vector3.Angle(transform.up, colObjNorm);
-
-    //            if (angle < maxLandingAngle) {
-    //                SnapToSurface(colObjNorm);
-
-    //            }
-    //        }
-    //    }
-    //}
-
 	void OnCollisionStay (Collision info) {
-		if(networkView.isMine){
-            if (!info.collider.CompareTag("NonWalkable")) {
-                Vector3 surfaceNorm = SurfaceNormal(info);
-                float angle = Vector3.Angle(transform.up, surfaceNorm);
+		if(!networkView.isMine || info.collider.CompareTag("NonWalkable")) return;
 
-                if (angle > 1f && angle < maxLandingAngle) {
-                    SnapToSurface(surfaceNorm);
-                }
+        Vector3 surfaceNorm = SurfaceNormal(info);
+        float angle = Vector3.Angle(transform.up, surfaceNorm);
 
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, -transform.up, out hit, 1.10f)) {
-                    grounded = true;
-                    magnetPower = 0;
-                } else { // Hit a roof or some shit
-                    rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
-                }
-            }
-		}
+        if (angle > 1f && angle < maxLandingAngle) {
+            SnapToSurface(surfaceNorm);
+        }
+
+        RaycastHit hit;
+        Ray r = new Ray(transform.position, -transform.up);
+        if (Physics.Raycast(r, out hit, (colliderHeight * 2 / 3))){
+            grounded = true;
+            magnetPower = magnetPowerMax;
+        } else { // Hit a roof or some shit
+            rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
+        }
 	}
 	#endregion
 	void LockMouseLook(bool inAir){

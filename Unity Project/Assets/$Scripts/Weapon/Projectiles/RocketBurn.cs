@@ -23,8 +23,8 @@ public class RocketBurn : MonoBehaviour {
 
 	void FixedUpdate(){
         if (!Network.isServer || !moving || (rocketAccel <= 0)) return;
-        Rotate();
         Push();
+        //Rotate();
 	}
 
     private void Rotate() {

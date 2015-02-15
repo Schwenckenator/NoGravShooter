@@ -35,10 +35,9 @@ public class ExplosionForceDamage : MonoBehaviour {
 			if(hit.CompareTag("BonusPickup")){
 				hit.GetComponent<DestroyOnNextFrame>().DestroyMe();
 			}
-            // Had to disable for the moment, frag nades attepmt to re-explode themselves
-            //if (hit.CompareTag("GrenadeMine")) {
-            //    hit.GetComponent<MineDetonation>().ForceDetonate();
-            //}
+            if (hit.CompareTag("GrenadeMine") && Network.isServer) {
+                hit.GetComponent<MineDetonation>().ForceDetonate();
+            }
 
 			if(hit.rigidbody){
 				hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius, 1.0f, ForceMode.Force);
