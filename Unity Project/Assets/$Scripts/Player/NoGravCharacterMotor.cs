@@ -69,19 +69,13 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	private bool ragdoll = false;
 
+    IControllerInput input;
 
-
-	// Input Axes
-	float horizontal = 0.0f;
-	float vertical = 0.0f;
-	float jetPackUpDown = 0.0f;
-	float roll = 0.0f;
-	bool jetPackInUse = false;
-
-	#region Start
 	void Start(){
         GameObject manager = GameObject.FindGameObjectWithTag("GameController");
 		gameManager = manager.GetComponent<GameManager>();
+        
+        input = GetComponent<ControllerInput>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
@@ -97,117 +91,18 @@ public class NoGravCharacterMotor : MonoBehaviour {
         characterMouseLook = GetComponent<MouseLook>();
         colliderHeight = GetComponent<CapsuleCollider>().height;
 
+
 		StartCoroutine("PlayJetpackSound");
 
 		feetAudio.volume = volumeFootsteps;
 		StartCoroutine("PlayFeetSound");
 
 	}
-	#endregion
 
 	void OnGUI(){
 		if(!ragdoll) return;
 		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), gameManager.GetComponent<GuiManager>().bloodyScreen);
 	}
-
-	#region UpdateInput
-	void UpdateInput(){
-		if(ragdoll) return;
-
-		jetPackInUse = false;
-
-        InputForward();
-
-        InputRight();
-
-        InputUp();
-
-        InputRoll();
-	}
-
-    private void InputRoll() {
-        // If exclusive input
-        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])) {
-            //Roll Right
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight])) {
-                if (roll > 0.0f) roll = 0.0f;
-                roll = Mathf.MoveTowards(roll, -1.0f, 3 * Time.deltaTime);
-            }
-            //Roll Left
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])) {
-                if (roll < 0.0f) roll = 0.0f;
-                roll = Mathf.MoveTowards(roll, 1.0f, 3 * Time.deltaTime);
-            }
-
-        } else {// If both or neither
-            //Move to rest
-            roll = Mathf.MoveTowards(roll, 0.0f, 3 * Time.deltaTime);
-        }
-    }
-
-    private void InputUp() {
-        // If exclusive input
-        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])) {
-            jetPackInUse = true;
-            //Move Up
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp])) {
-                if (jetPackUpDown < 0.0f) jetPackUpDown = 0.0f;
-                jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 1.0f, 3 * Time.deltaTime);
-            }
-            //Move Down
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])) {
-                if (jetPackUpDown > 0.0f) jetPackUpDown = 0.0f;
-                jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, -1.0f, 3 * Time.deltaTime);
-            }
-
-        } else {// If both or neither
-            //Move to rest
-            jetPackUpDown = Mathf.MoveTowards(jetPackUpDown, 0.0f, 3 * Time.deltaTime);
-        }
-    }
-
-    private void InputRight() {
-        // If exclusive input
-        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft])) {
-            jetPackInUse = true;
-            //Move Right
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight])) {
-                if (horizontal < 0.0f) horizontal = 0.0f;
-                horizontal = Mathf.MoveTowards(horizontal, 1.0f, 3 * Time.deltaTime);
-            }
-            //Move Left
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft])) {
-                if (horizontal > 0.0f) horizontal = 0.0f;
-                horizontal = Mathf.MoveTowards(horizontal, -1.0f, 3 * Time.deltaTime);
-            }
-
-        } else {// If both or neither
-            //Move to rest
-            horizontal = Mathf.MoveTowards(horizontal, 0.0f, 3 * Time.deltaTime);
-        }
-    }
-
-    private void InputForward() {
-        // If exclusive input
-        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]) ^ Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack])) {
-            jetPackInUse = true;
-            //Move Forward
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward])) {
-                if (vertical < 0.0f) vertical = 0.0f;
-                vertical = Mathf.MoveTowards(vertical, 1.0f, 3 * Time.deltaTime);
-            }
-            //Move Back
-            if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack])) {
-                if (vertical > 0.0f) vertical = 0.0f;
-                vertical = Mathf.MoveTowards(vertical, -1.0f, 3 * Time.deltaTime);
-            }
-
-        } else {// If both or neither
-            //Move to rest
-            vertical = Mathf.MoveTowards(vertical, 0.0f, 3 * Time.deltaTime);
-        }
-    }
-	#endregion
 	
 	
 	#region FixedUpdate
@@ -217,8 +112,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		LockMouseLook(!grounded);
 		playJetSound = false;
 		playWalkingSound = false;
-
-		UpdateInput();
 
 		if (grounded) {
             MovementWalk();
@@ -238,7 +131,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         Vector3 force = GetJetpackForce();
 
         // If non-zero force, spend fuel
-        if (jetPackInUse && !GameManager.IsPlayerMenu()) {
+        if (input.IsMovementKeys() && !GameManager.IsPlayerMenu()) {
             if (resource.SpendFuel(fuelSpend)) {
                 playJetSound = true;
                 rigidbody.AddRelativeForce(force, ForceMode.Force);
@@ -256,7 +149,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         if (GameManager.IsPlayerMenu()) {
             torque = Vector3.zero;
         } else {
-            torque = new Vector3(0, 0, roll); // the change wanted
+            torque = new Vector3(0, 0, input.GetRollMovement()); // the change wanted
         }
         torque = torque * rollSpeed;
         return torque;
@@ -267,7 +160,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         if (GameManager.IsPlayerMenu()) {
             force = Vector3.zero;
         } else {
-            force = new Vector3(horizontal, jetPackUpDown, vertical);
+            force = new Vector3(input.GetXMovement(), input.GetYMovement(), input.GetZMovement());
             force = Vector3.ClampMagnitude(force, 1.0f);
         }
         force *= speed;
@@ -280,7 +173,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         if (GameManager.IsPlayerMenu()) {
             targetVelocity = Vector3.zero;
         } else {
-            targetVelocity = new Vector3(horizontal, 0, vertical);
+            targetVelocity = new Vector3(input.GetXMovement(), 0, input.GetZMovement());
         }
 
         targetVelocity = Vector3.ClampMagnitude(targetVelocity, 1.0f);
