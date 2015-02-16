@@ -19,24 +19,25 @@ public class ForceShotWarp : MonoBehaviour {
 		transform.localScale = new Vector3( transform.localScale.x + (xWarp * Time.deltaTime), transform.localScale.y + (yWarp * Time.deltaTime), transform.localScale.z);
 	}
 
-	void OnTriggerEnter(Collider input){
+	void OnTriggerEnter(Collider hit){
 
 		bool push = true;
 
-		if(input.CompareTag("BonusPickup")){ // If this hits a bonus, kill it
-			input.GetComponent<DestroyOnNextFrame>().DestroyMe();
+		if(hit.CompareTag("BonusPickup")){ // If this hits a bonus, kill it
+			hit.GetComponent<DestroyOnNextFrame>().DestroyMe();
 		}
 
-		if(input.CompareTag("Player")){ // Hit a player!
+		if(hit.CompareTag("Player")){ // Hit a player!
 			//If you hit yourself, don't do anything
-			if(input.networkView.owner == GetComponent<ProjectileOwnerName>().ProjectileOwner){
+			if(hit.networkView.owner == GetComponent<ProjectileOwnerName>().ProjectileOwner){
 				push = false;
 			}else{
-				DamagePlayer(input.GetComponent<PlayerResources>());
+				DamagePlayer(hit.GetComponent<PlayerResources>());
+                hit.GetComponent<NoGravCharacterMotor>().PushOffGround();
 			}
 		}
-		if(input.rigidbody && push){
-			PushObject(input.rigidbody);
+		if(hit.rigidbody && push){
+			PushObject(hit.rigidbody);
 		}
 	}
 

@@ -6,6 +6,8 @@ using System.Collections;
 
 public class NoGravCharacterMotor : MonoBehaviour {
 
+    public bool ForceDisconnectFromGround = false;
+
 	private GameManager gameManager;
 	private AudioSource jetpackAudio;
 	private AudioSource feetAudio;
@@ -119,7 +121,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
             MovementJetpack();
 
 		}
-		grounded = false;
+		//grounded = false;
 		magnetPower--;
 	}
 
@@ -377,7 +379,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		cameraMouseLook.SetX_Rotation(xRot);
 	}
 
-	#region Collisions
 	void OnCollisionStay (Collision info) {
 		if(!networkView.isMine || info.collider.CompareTag("NonWalkable")) return;
 
@@ -397,7 +398,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
             rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
         }
 	}
-	#endregion
+
+    void OnCollisionExit() {
+        grounded = false;
+    }
+
 	void LockMouseLook(bool inAir){
 		if(inAir){
             cameraMouseLook.axes = MouseLook.RotationAxes.MouseNone;
@@ -445,4 +450,16 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		cameraMouseLook.Ragdoll(state);
 		GetComponent<MouseLook>().Ragdoll(state);
 	}
+
+    public float ungroundForceMagnitude;
+    
+    public void PushOffGround() {
+        if (!ForceDisconnectFromGround) return;
+
+        ForceMode mode = ForceMode.VelocityChange;
+        if (grounded) {
+            Debug.Log("Did the thing.");
+            rigidbody.AddRelativeForce(0, ungroundForceMagnitude, 0, mode);
+        }
+    }
 }
