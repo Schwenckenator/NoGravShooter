@@ -34,7 +34,7 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     [RPC]
     private void RPCKillScored(NetworkPlayer player, int score) {
-        NetworkManager.GetPlayer(player).AddScore(1);
+        NetworkManager.GetPlayer(player).AddScore(score);
         CheckForScoreVictory();
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
     }
