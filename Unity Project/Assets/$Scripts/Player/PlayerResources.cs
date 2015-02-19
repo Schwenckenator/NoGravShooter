@@ -93,7 +93,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
 	void Update () {
-        if (InputConverter.GetKeyDown(SettingsManager.KeyBind.Reload) && !isReloading) {
+        if (InputConverter.GetKeyDown(SettingsManager.KeyBind.Reload) && !isReloading && !isWeaponFull()) {
 			StartCoroutine("WeaponReload");
 		}
 		if(isRecharging){
@@ -107,6 +107,10 @@ public class PlayerResources : MonoBehaviour {
 
         WeaponSmokeCheck();
 	}
+
+    private bool isWeaponFull() {
+        return GetCurrentClip() == GetMaxClip();
+    }
 
     private void WeaponSmokeCheck() {
         if (heat > maxHeat) {

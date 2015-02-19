@@ -34,6 +34,8 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     [RPC]
     private void RPCKillScored(NetworkPlayer player, int score) {
+        if (!NetworkManager.DoesPlayerExist(player)) return;
+
         NetworkManager.GetPlayer(player).AddScore(score);
         CheckForScoreVictory();
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
@@ -53,7 +55,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
     Player winningPlayer;
     void TimeVictory() {
-        int maxValue = -1;
+        int maxValue = -999999999; // Very negative number
         foreach (Player player in NetworkManager.connectedPlayers) {
             if (player.Score > maxValue) {
                 maxValue = player.Score;

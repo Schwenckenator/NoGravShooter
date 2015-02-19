@@ -43,6 +43,9 @@ public class NetworkManager : MonoBehaviour {
     public static Player GetPlayer(NetworkPlayer value) {
         return NetworkManager.connectedPlayers.Find(x => x.ID.Equals(value));
     }
+    public static bool DoesPlayerExist(NetworkPlayer value) {
+        return NetworkManager.connectedPlayers.Exists(x => x.ID.Equals(value));
+    }
 
     #region Connect To Server
     public static void ConnectToServer() {
@@ -166,7 +169,4 @@ public class NetworkManager : MonoBehaviour {
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
 #endregion
-    #region Destroy
-    
-    #endregion
 }
