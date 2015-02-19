@@ -15,7 +15,9 @@ public class NetworkManager : MonoBehaviour {
     /// <summary>
     /// Holds names of players
     /// </summary>
-    public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
+    
+    //public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
+    public static List<Player> connectedPlayers = new List<Player>();
 
     private static string ipAddress;
     private static int portNum;
@@ -36,8 +38,10 @@ public class NetworkManager : MonoBehaviour {
         guiManager = GetComponent<GuiManager>();
         settingsManager = GetComponent<SettingsManager>();
         chatManager = GetComponent<ChatManager>();
+    }
 
-
+    public static Player GetPlayer(NetworkPlayer value) {
+        return NetworkManager.connectedPlayers.Find(x => x.ID.Equals(value));
     }
 
     #region Connect To Server
@@ -95,7 +99,10 @@ public class NetworkManager : MonoBehaviour {
         GetComponent<GuiManager>().FailedToConnect();
     }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
-        string message = NetworkManager.connectedPlayers[disconnectedPlayer] + " has disconnected.";
+
+        string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;
+
+        message += " has disconnected.";
         chatManager.AddToChat(message, false);
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
@@ -117,7 +124,6 @@ public class NetworkManager : MonoBehaviour {
         GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.Menu.MainMenu);
 
         NetworkManager.connectedPlayers.Clear();
-        ScoreVictoryManager.playerScores.Clear();
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
@@ -148,16 +154,14 @@ public class NetworkManager : MonoBehaviour {
     }
     [RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
-        NetworkManager.connectedPlayers.Add(newPlayer, newPlayerName);
-        ScoreVictoryManager.playerScores.Add(newPlayer, 0);
+        NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
 
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
 
     [RPC]
     void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
-        NetworkManager.connectedPlayers.Remove(disconnectedPlayer);
-        ScoreVictoryManager.playerScores.Remove(disconnectedPlayer);
+        NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
 
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }

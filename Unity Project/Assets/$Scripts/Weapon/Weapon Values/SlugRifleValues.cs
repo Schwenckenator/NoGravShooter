@@ -10,13 +10,13 @@ public class SlugRifleValues : WeaponSuperClass {
 		this.rayNum 				= 1;
 		
 		this.shotSpread 			= 0.25f;
-		this.damagePerShot 			= 10;
+		this.damagePerShot 			= 15;
 		this.heatPerShot 			= 0;
 		this.fireDelay 				= 0.125f;
 		
 		this.clipSize 				= 30;
 		this.currentClip 			= 30;
-		this.remainingAmmo 			= 30;
+		this.remainingAmmo 			= 90;
 		this.defaultRemainingAmmo 	= this.remainingAmmo;
 		this.reloadTime 			= 1.6f;
 	}

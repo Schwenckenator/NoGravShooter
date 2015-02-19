@@ -3,7 +3,7 @@ using System.Collections;
 
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (NetworkView))]
-[RequireComponent (typeof (ProjectileOwnerName))]
+[RequireComponent (typeof (Owner))]
 
 public class RocketBurn : MonoBehaviour {
 
@@ -43,7 +43,7 @@ public class RocketBurn : MonoBehaviour {
     private Vector3 GetPlayerZVelocity() {
         Vector3 playerVel = Vector3.zero;
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
-            if (player.networkView.owner == GetComponent<ProjectileOwnerName>().ProjectileOwner) {
+            if (player.networkView.owner == GetComponent<Owner>().ID) {
                 playerVel = StripXYaxisFromPlayerVelocity(player);
             }
         }

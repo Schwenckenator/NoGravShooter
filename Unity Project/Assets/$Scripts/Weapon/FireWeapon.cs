@@ -62,11 +62,21 @@ public class FireWeapon : MonoBehaviour {
 	void Update(){
 
         MouseWheelWeaponChange();
-		
-		if((Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu()){
+
+        if (!currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
-		}
+        }
+
 	}
+    void FixedUpdate() {
+        if (currentWeapon.useRay && CanWeaponFire()) {
+            WeaponFired();
+        }
+    }
+
+    private bool CanWeaponFire() {
+        return (Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu();
+    }
 
     private void WeaponFired() {
         playerResource.WeaponFired(currentWeapon.heatPerShot);
@@ -98,6 +108,7 @@ public class FireWeapon : MonoBehaviour {
         shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
 
         Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
+
         //Deal with the shot
         if (hit.collider.CompareTag("Player")) {
             if (!hit.collider.networkView.isMine) {
@@ -113,7 +124,6 @@ public class FireWeapon : MonoBehaviour {
         shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
         shot.transform.parent = cameraPos;
         LineRenderer render = shot.GetComponent<LineRenderer>();
-
 
         render.SetPosition(0, gunFirePoint.InverseTransformPoint(gunFirePoint.position));
         render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
@@ -153,8 +163,8 @@ public class FireWeapon : MonoBehaviour {
     void SpawnProjectile(int weaponID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
             GameObject newObj = Network.Instantiate(GameManager.weapon[weaponID].projectile, position, rotation, 0) as GameObject;
-            if (newObj.GetComponent<ProjectileOwnerName>() != null) {
-                newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
+            if (newObj.GetComponent<Owner>() != null) {
+                newObj.GetComponent<Owner>().ID = owner;
             }
 
         } else {

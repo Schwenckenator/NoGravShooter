@@ -30,8 +30,8 @@ public class ThrowGrenade : MonoBehaviour {
     private void SpawnGrenade(int grenadeID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
             GameObject newObj = Network.Instantiate(grenade[grenadeID], position, rotation, 0) as GameObject;
-            if (newObj.GetComponent<ProjectileOwnerName>() != null) {
-                newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
+            if (newObj.GetComponent<Owner>() != null) {
+                newObj.GetComponent<Owner>().ID = owner;
                 
             }
 

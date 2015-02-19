@@ -4,13 +4,12 @@ using System.Collections.Generic;
 
 public class ScoreVictoryManager : MonoBehaviour {
 
-    public static Dictionary<NetworkPlayer, int> playerScores = new Dictionary<NetworkPlayer, int>();
+    //public static Dictionary<NetworkPlayer, int> playerScores = new Dictionary<NetworkPlayer, int>();
     private GameManager gameManager;
     private GuiManager guiManager;
     private SettingsManager settingsManager;
     private ChatManager chatManager;
 	
-	private NetworkPlayer winningPlayer;
     public bool IsVictor { get; set; }
     public string VictorName { get; set; }
 	
@@ -25,23 +24,26 @@ public class ScoreVictoryManager : MonoBehaviour {
         StartCoroutine(CheckForGameEnd());
     }
 
-    public void KillScored(NetworkPlayer player) {
-        Debug.Log(NetworkManager.connectedPlayers[player] + " kills");
-        networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player);
+    public void PointScored(NetworkPlayer player) {
+        Debug.Log(NetworkManager.GetPlayer(player).Name + " kills");
+        networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player, 1);
+    }
+    public void Suicide(NetworkPlayer player) {
+        networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player, -1);
     }
 
     [RPC]
-    private void RPCKillScored(NetworkPlayer player) {
-        playerScores[player] += 1;
+    private void RPCKillScored(NetworkPlayer player, int score) {
+        NetworkManager.GetPlayer(player).AddScore(1);
         CheckForScoreVictory();
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
     }
 
     void CheckForScoreVictory() {
-        foreach (NetworkPlayer player in playerScores.Keys) {
-            if (playerScores[player] >= settingsManager.ScoreToWin) {
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            if (player.IsScoreEqualOrOver(settingsManager.ScoreToWin)) {
                 if (Network.isServer) {
-                    chatManager.AddToChat(NetworkManager.connectedPlayers[player] + " wins!", false);
+                    chatManager.AddToChat(player.Name + " wins!", false);
                 }
                 gameManager.EndGame(player);
                 break;
@@ -49,18 +51,18 @@ public class ScoreVictoryManager : MonoBehaviour {
 
         }
     }
-
+    Player winningPlayer;
     void TimeVictory() {
         int maxValue = -1;
-        foreach (NetworkPlayer player in playerScores.Keys) {
-            if (playerScores[player] > maxValue) {
-                maxValue = playerScores[player];
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            if (player.Score > maxValue) {
+                maxValue = player.Score;
                 winningPlayer = player;
             }
         }
         if (Network.isServer) {
             chatManager.AddToChat("Time is up.", false);
-            chatManager.AddToChat(NetworkManager.connectedPlayers[winningPlayer] + " wins!", false);
+            chatManager.AddToChat(winningPlayer.Name + " wins!", false);
         }
         gameManager.EndGame(winningPlayer);
     }
@@ -79,24 +81,24 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     public static string UpdateScoreBoard() {
-        List<NetworkPlayer> playerBuffer = new List<NetworkPlayer>();
+        List<Player> playerBuffer = new List<Player>();
         string scoreBoardBuffer = "";
 
         // Sort the players descending score
-        foreach (NetworkPlayer player in NetworkManager.connectedPlayers.Keys) {
-            int score = ScoreVictoryManager.playerScores[player];
-            int i;
-            for (i = 0; i < playerBuffer.Count; i++) {
-                if (score > ScoreVictoryManager.playerScores[playerBuffer[i]]) {
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            int score = player.Score;
+            int i = 0;
+            foreach(Player buffer in playerBuffer) {
+                if (score > buffer.Score) {
                     break;
                 }
-
+                i++;
             }
             playerBuffer.Insert(i, player);
         }
 
-        foreach (NetworkPlayer player in playerBuffer) {
-            scoreBoardBuffer += NetworkManager.connectedPlayers[player] + ": " + ScoreVictoryManager.playerScores[player] + "\n";
+        foreach (Player player in playerBuffer) {
+            scoreBoardBuffer += player.Name + ": " + player.Score + "\n";
         }
 
         return scoreBoardBuffer;

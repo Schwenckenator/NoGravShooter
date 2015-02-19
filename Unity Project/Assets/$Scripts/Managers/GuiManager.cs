@@ -985,8 +985,8 @@ public class GuiManager : MonoBehaviour {
 
     private string PlayerList() {
         string playerNames = "";
-        foreach (NetworkPlayer player in NetworkManager.connectedPlayers.Keys) {
-            playerNames += NetworkManager.connectedPlayers[player] + "\n";
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            playerNames += player.Name + "\n";
         }
         return playerNames;
     }

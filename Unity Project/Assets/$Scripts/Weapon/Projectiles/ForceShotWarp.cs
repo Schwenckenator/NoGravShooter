@@ -29,7 +29,7 @@ public class ForceShotWarp : MonoBehaviour {
 
 		if(hit.CompareTag("Player")){ // Hit a player!
 			//If you hit yourself, don't do anything
-			if(hit.networkView.owner == GetComponent<ProjectileOwnerName>().ProjectileOwner){
+			if(hit.networkView.owner == GetComponent<Owner>().ID){
 				push = false;
 			}else{
 				DamagePlayer(hit.GetComponent<PlayerResources>());
@@ -42,7 +42,7 @@ public class ForceShotWarp : MonoBehaviour {
 	}
 
 	void DamagePlayer(PlayerResources input){
-		input.TakeDamage(damage, GetComponent<ProjectileOwnerName>().ProjectileOwner);
+		input.TakeDamage(damage, GetComponent<Owner>().ID);
 	}
 
 	void PushObject(Rigidbody rigid){

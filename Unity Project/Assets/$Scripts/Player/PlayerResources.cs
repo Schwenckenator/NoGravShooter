@@ -201,7 +201,7 @@ public class PlayerResources : MonoBehaviour {
 	}
 
     private void PlaySoundTakeDamage() {
-        helmetAudio.PlayOneShot(soundTakeDamage);
+        if(networkView.isMine) helmetAudio.PlayOneShot(soundTakeDamage);
     }
 
 	public void RestoreHealth(int restore){
@@ -256,32 +256,37 @@ public class PlayerResources : MonoBehaviour {
 	#region RPC
 
 	[RPC]
-	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponId){
+	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponID){
 
 		if(isDying) return; // Don't bother if you are already dying
         PlaySoundTakeDamage();
         health -= damage;
 		if(health <= minHealth){
-			health = minHealth;
+            Die(NetworkManager.GetPlayer(fromPlayer), weaponID);
+        }
+
+	}
+
+    void Die(Player killer, int weaponID) {
+        			health = minHealth;
 			isDying = true;//You is dead nigs
 
 			if(networkView.isMine){
-				if(NetworkManager.connectedPlayers[fromPlayer] != null && weaponId != -1){
-					if(fromPlayer != Network.player){
-                        string killMessage = NetworkManager.connectedPlayers[fromPlayer] + KillMessageGenerator(weaponId) + settingsManager.PlayerName;
+				if(killer != null && weaponID != -1){
+					if(killer.ID != Network.player){
+                        string killMessage = killer.Name + KillMessageGenerator(weaponID) + settingsManager.PlayerName;
                         chatManager.AddToChat(killMessage, false);
-						gameManager.GetComponent<ScoreVictoryManager>().KillScored(fromPlayer);
+						gameManager.GetComponent<ScoreVictoryManager>().PointScored(killer.ID);
 					} else {
-                        string killMessage = NetworkManager.connectedPlayers[Network.player] + KillMessageGenerator(weaponId) + "themselves.";
+                        string killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
                         chatManager.AddToChat(killMessage, false);
+                        gameManager.GetComponent<ScoreVictoryManager>().Suicide(killer.ID);
 					}
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
 				StartCoroutine(PlayerCleanup());
 			}
-
-		}
-	}
+    }
 	#endregion
 
 	string KillMessageGenerator(int weaponId){

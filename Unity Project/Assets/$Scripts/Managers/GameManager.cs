@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     private GuiManager guiManager; 
     private ScoreVictoryManager scoreVictoryManager;
     private SettingsManager settingsManager;
-
+    private PlayerColourManager playerColourManager;
 
     private static bool playerMenu;
 
@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour {
 	private FireWeapon fireWeapon;
 	private PlayerResources playerResources;
 
-    private int playerColourIndex = -1;
 
     [SerializeField]
 	private static int maxStartingWeapons = 2;
@@ -60,6 +59,7 @@ public class GameManager : MonoBehaviour {
         settingsManager = GetComponent<SettingsManager>();
         guiManager = GetComponent<GuiManager>();
         scoreVictoryManager = GetComponent<ScoreVictoryManager>();
+        playerColourManager = GetComponent<PlayerColourManager>();
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -87,7 +87,6 @@ public class GameManager : MonoBehaviour {
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 
 			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
-            ResetColourIndex();
 
 			//
 			if(Network.isServer){
@@ -141,7 +140,7 @@ public class GameManager : MonoBehaviour {
 				fireWeapon = player.GetComponent<FireWeapon>();
 				playerResources = player.GetComponent<PlayerResources>();
 
-                AssignColour(player);
+                playerColourManager.AssignColour(player);
 			}
 		}
 
@@ -155,20 +154,7 @@ public class GameManager : MonoBehaviour {
     private MouseLook GetPlayerCameraMouseLook(GameObject player) {
         return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
     }
-    private void AssignColour(GameObject player) {
-        PlayerColourManager colour = player.GetComponent<PlayerColourManager>();
-        if (playerColourIndex < 0) { // Needs picking
-            playerColourIndex = PickColour(colour);
-        }
-        colour.SetPickedColour(playerColourIndex);
-    }
-    private int PickColour(PlayerColourManager colour) {
-        // abstracted for teams later
-        return colour.PickColourRandom();
-    }
-    private void ResetColourIndex() {
-        playerColourIndex = -1;
-    }
+    
 
 	public void PlayerDied(){
 		myPlayerSpawned = false;
@@ -244,10 +230,10 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void EndGame(NetworkPlayer winningPlayer) {
+    public void EndGame(Player winningPlayer) {
         scoreVictoryManager.IsVictor = true;
         gameInProgress = false;
-        scoreVictoryManager.VictorName = NetworkManager.connectedPlayers[winningPlayer];
+        scoreVictoryManager.VictorName = winningPlayer.Name;
         SetEndTime(secondsUntilKick);
         if (Network.isServer) {
             StartCoroutine(KickPlayersAfterGameEnd());
@@ -327,11 +313,9 @@ public class GameManager : MonoBehaviour {
         guiManager.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
 
         // Keep the players, but wipe the scores
-        Dictionary<NetworkPlayer, int> buffer = new Dictionary<NetworkPlayer, int>();
-        foreach (NetworkPlayer player in ScoreVictoryManager.playerScores.Keys) {
-            buffer.Add(player, 0);
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            player.ClearScore();
         }
-        ScoreVictoryManager.playerScores = buffer;
 
         //Clear data about a winner, the games over yo
         scoreVictoryManager.ClearWinnerData();

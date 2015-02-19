@@ -16,15 +16,13 @@ public class ExplosionForceDamage : MonoBehaviour {
 
 
 	void Start(){
-		bombAudio = this.GetComponent<AudioSource>();
-		bombAudio.clip = soundExplode;
-		bombAudio.PlayOneShot(soundExplode);
+        PlaySound();
 		Bang ();
 	}
 
 	void Bang(){
 
-        Debug.Log("Explosion. Owner Player Number: " + GetComponent<ProjectileOwnerName>().ProjectileOwner.ToString());
+        ChatManager.DebugMessage("Explosion. Owner Player Number: " + GetComponent<Owner>().ID.ToString());
 
 		Collider[] hits;
 		hits = Physics.OverlapSphere(transform.position, explosionRadius);
@@ -32,16 +30,19 @@ public class ExplosionForceDamage : MonoBehaviour {
 		foreach(Collider hit in hits){
 			if(hit.CompareTag("ForceProjectile")) continue; // Don't touch the force
 
-			if(hit.CompareTag("BonusPickup")){
-				hit.GetComponent<DestroyOnNextFrame>().DestroyMe();
-			}
-            if (hit.CompareTag("GrenadeMine") && Network.isServer) {
-                hit.GetComponent<MineDetonation>().ForceDetonate();
+            if (hit.rigidbody) {
+                hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius);
             }
 
-			if(hit.rigidbody){
-				hit.rigidbody.AddExplosionForce(explosionPower, transform.position, explosionRadius, 1.0f, ForceMode.Force);
+            // Everything else is server only
+            if (Network.isClient) continue;
+            
+            if(hit.CompareTag("BonusPickup")){
+				hit.GetComponent<DestroyOnNextFrame>().DestroyMe();
 			}
+            if (hit.CompareTag("GrenadeMine")) {
+                hit.GetComponent<MineDetonation>().ForceDetonate();
+            }
 
 			if(hit.CompareTag("Player")){
 				//Find distance
@@ -49,8 +50,14 @@ public class ExplosionForceDamage : MonoBehaviour {
 				float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
 
                 hit.GetComponent<NoGravCharacterMotor>().PushOffGround();
-				hit.GetComponent<PlayerResources>().TakeDamage((int)damage, GetComponent<ProjectileOwnerName>().ProjectileOwner, weaponId);
+				hit.GetComponent<PlayerResources>().TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
 			}
 		}
 	}
+
+    void PlaySound() {
+        bombAudio = this.GetComponent<AudioSource>();
+        bombAudio.clip = soundExplode;
+        bombAudio.PlayOneShot(soundExplode);
+    }
 }

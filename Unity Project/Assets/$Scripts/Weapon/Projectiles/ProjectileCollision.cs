@@ -9,7 +9,7 @@ public class ProjectileCollision : MonoBehaviour {
         if (Network.isServer) {
 
             GameObject explosion = Network.Instantiate(rocketBlast, transform.position, Quaternion.identity, 0) as GameObject;
-            explosion.GetComponent<ProjectileOwnerName>().ProjectileOwner = GetComponent<ProjectileOwnerName>().ProjectileOwner;
+            explosion.GetComponent<Owner>().ID = GetComponent<Owner>().ID;
 
             GetComponent<ObjectCleanUp>().KillMe();
         }

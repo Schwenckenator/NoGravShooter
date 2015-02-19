@@ -35,14 +35,20 @@ public class MineDetonation : MonoBehaviour {
 		Detonate(true);
 	}
 
+    public void OnCollisionEnter(Collision info) {
+        if (info.collider.CompareTag("Player")) {
+            Detonate(false);
+        }
+    }
+
 	void Detonate(bool isForced){
         if (detonated) return;
         detonated = true;
 
         if (isForced || Network.isServer) {
-            ChatManager.PrintMessageIfDebug(NetworkManager.connectedPlayers[Network.player] + " says " + gameObject.ToString() + " goes boom.");
+            ChatManager.DebugMessage(NetworkManager.GetPlayer(Network.player).Name + " says " + gameObject.ToString() + " goes boom.");
 
-            SpawnExplosion(transform.position, Quaternion.identity, GetComponent<ProjectileOwnerName>().ProjectileOwner);
+            SpawnExplosion(transform.position, Quaternion.identity, GetComponent<Owner>().ID);
             GetComponent<ObjectCleanUp>().KillMe();
         }
 	}
@@ -51,8 +57,8 @@ public class MineDetonation : MonoBehaviour {
     void SpawnExplosion(Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
             GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
-            if (newObj.GetComponent<ProjectileOwnerName>() != null) {
-                newObj.GetComponent<ProjectileOwnerName>().ProjectileOwner = owner;
+            if (newObj.GetComponent<Owner>() != null) {
+                newObj.GetComponent<Owner>().ID = owner;
             }
 
         } else {

@@ -18,6 +18,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
     private MouseLook characterMouseLook;
 	private Transform cameraTransform;
     private float colliderHeight;
+    private float footRayDistance;
 
 	private bool jetPackOn;
 	private int magnetPower; // 1-5 is on, 0 is off
@@ -85,14 +86,14 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		rigidbody.freezeRotation = true;
 		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
 		jetPackOn = true;
-		magnetPower = magnetPowerMax;
+		magnetPower = 0;
 
 		resource = GetComponent<PlayerResources>();
 		cameraTransform = transform.GetChild(0);
 		cameraMouseLook = cameraTransform.GetComponent<MouseLook>();
         characterMouseLook = GetComponent<MouseLook>();
         colliderHeight = GetComponent<CapsuleCollider>().height;
-
+        footRayDistance = (colliderHeight * 2 / 3);
 
 		StartCoroutine("PlayJetpackSound");
 
@@ -115,18 +116,19 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		playJetSound = false;
 		playWalkingSound = false;
 
-		if (grounded) {
+		if (magnetPower > 0) {
             MovementWalk();
 		}else if(jetPackOn){
             MovementJetpack();
 
 		}
-		//grounded = false;
-		magnetPower--;
+
+        magnetPower = magnetPower > 0 ? magnetPower - 1 : magnetPower;
+        grounded = false;
 	}
 
     private void MovementJetpack() {
-        if (magnetPower > 0 && Physics.Raycast(transform.position, -transform.up, (colliderHeight * 2 / 3))) {
+        if (magnetPower > 0 && Physics.Raycast(transform.position, -transform.up, footRayDistance)) {
             rigidbody.AddRelativeForce(new Vector3(0, -1, 0), ForceMode.Impulse);
         }
         //Apply Jetpack force as Acceleration
@@ -185,7 +187,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         //check for edges
 
         bool sneaking = false;
-        if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown])) {
+        if (InputConverter.GetKey(SettingsManager.KeyBind.JetDown)) {
             sneaking = true;
             totalPushBackDir = EdgeDetection();
         }
@@ -322,44 +324,53 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 	}
 	#endregion
+    Ray RayFromPlayerToDown() {
+        Ray r = new Ray(transform.position, -transform.up);
+        return r;
+    }
 
-	// Returns normal of surface
+    void DrawDebugRay(Ray r, float distance, Color colour, bool depthTest) {
+        //Debug.DrawLine(r.origin, (r.direction * (distance)) + r.origin, colour, 10.0f, depthTest);
+        Debug.DrawRay(r.origin, r.direction * distance, colour, 10.0f, depthTest);
+    }
+	
+    // Returns normal of surface
 	Vector3 SurfaceNormal(Collision info){
 		RaycastHit[] hits;
 		Vector3 collisionObjNormal = Vector3.zero;
-
-		hits = Physics.RaycastAll(GeneratePhysicsRay());
+        hits = Physics.RaycastAll(RayFromPlayerToDown(), footRayDistance);
 		foreach(RaycastHit hit in hits){
 			if(hit.collider == info.collider){
 				collisionObjNormal = hit.normal;
 				break;
 			}
 		}
+        collisionObjNormal = FixVector3FloatErrors(collisionObjNormal);
 	
 		return collisionObjNormal;
 	}
 
-    Ray GeneratePhysicsRay() {
-        Ray r = new Ray();
-        r.origin = transform.position;
-        r.direction = -transform.up * (colliderHeight *  2/3);
-
-        Debug.DrawRay(r.origin, r.direction, Color.green, 5.0f, false);
-
-        return r;
+    Vector3 FixVector3FloatErrors(Vector3 value) {
+        float errorThreshold = 0.001f; // Very small
+        for (int i = 0; i < 3; i++) {
+            if (Mathf.Abs(value[i]) < errorThreshold) value[i] = 0;
+        }
+        return value;
     }
+
+
     /// <summary>
     /// Does the actual rotation of player
     /// </summary>
 	void SnapToSurface(Vector3 colObjNorm){
 		// Preserve camera angle
-		Quaternion curCamRot = cameraTransform.rotation;
+		Quaternion currentCameraRotation = cameraTransform.rotation;
 		
 		transform.rotation = Quaternion.LookRotation(colObjNorm, transform.forward);
 		transform.Rotate(new Vector3(-90, 180, 0));
 		
 		// Rotate Camera
-		cameraTransform.rotation = curCamRot;
+		cameraTransform.rotation = currentCameraRotation;
 		
 		// But the mouse code will overwrite this
 		// Find the local X rot
@@ -379,28 +390,26 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		cameraMouseLook.SetX_Rotation(xRot);
 	}
 
-	void OnCollisionStay (Collision info) {
-		if(!networkView.isMine || info.collider.CompareTag("NonWalkable")) return;
+    void OnCollisionStay(Collision info) {
+        if (!networkView.isMine || info.collider.CompareTag("NonWalkable")) return;
 
         Vector3 surfaceNorm = SurfaceNormal(info);
         float angle = Vector3.Angle(transform.up, surfaceNorm);
 
-        if (angle > 1f && angle < maxLandingAngle) {
+        if (!surfaceNorm.Equals(Vector3.zero) && angle > 0f && angle < maxLandingAngle) {
             SnapToSurface(surfaceNorm);
+
         }
 
         RaycastHit hit;
-        Ray r = new Ray(transform.position, -transform.up);
-        if (Physics.Raycast(r, out hit, (colliderHeight * 2 / 3))){
+        DrawDebugRay(RayFromPlayerToDown(), footRayDistance, Color.red, false);
+        DrawDebugRay(RayFromPlayerToDown(), footRayDistance, Color.green, true);
+        if (Physics.Raycast(RayFromPlayerToDown(), out hit, footRayDistance)) {
             grounded = true;
             magnetPower = magnetPowerMax;
-        } else { // Hit a roof or some shit
+        } else {
             rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
         }
-	}
-
-    void OnCollisionExit() {
-        grounded = false;
     }
 
 	void LockMouseLook(bool inAir){
