@@ -37,6 +37,18 @@ ModelImporter:
     100062: Cylinder
     100064: Experiment_Room
     100066: Experimental_Device
+    100068: Experimental_Device_Ring1
+    100070: Experimental_Device_Ring2
+    100072: Experimental_Device_Ring3
+    100074: Experimental_Device_Ring4
+    100076: L_Tunnel_Cgo_Blu
+    100078: L_Tunnel_Cgo_Grn
+    100080: L_Tunnel_Cgo_Red
+    100082: L_Tunnel_Cgo_Whi
+    100084: L_Tunnel_Exp_Blu
+    100086: L_Tunnel_Exp_Grn
+    100088: L_Tunnel_Exp_Red
+    100090: L_Tunnel_Exp_Whi
     400000: Box_Room_1
     400002: Box_Room_2
     400004: Box_Room_3
@@ -71,6 +83,18 @@ ModelImporter:
     400062: Cylinder
     400064: Experiment_Room
     400066: Experimental_Device
+    400068: Experimental_Device_Ring1
+    400070: Experimental_Device_Ring2
+    400072: Experimental_Device_Ring3
+    400074: Experimental_Device_Ring4
+    400076: L_Tunnel_Cgo_Blu
+    400078: L_Tunnel_Cgo_Grn
+    400080: L_Tunnel_Cgo_Red
+    400082: L_Tunnel_Cgo_Whi
+    400084: L_Tunnel_Exp_Blu
+    400086: L_Tunnel_Exp_Grn
+    400088: L_Tunnel_Exp_Red
+    400090: L_Tunnel_Exp_Whi
     2300000: Box_Room_1
     2300002: Box_Room_2
     2300004: Box_Room_3
@@ -104,6 +128,18 @@ ModelImporter:
     2300060: Cylinder
     2300062: Experiment_Room
     2300064: Experimental_Device
+    2300066: Experimental_Device_Ring1
+    2300068: Experimental_Device_Ring2
+    2300070: Experimental_Device_Ring3
+    2300072: Experimental_Device_Ring4
+    2300074: L_Tunnel_Cgo_Blu
+    2300076: L_Tunnel_Cgo_Grn
+    2300078: L_Tunnel_Cgo_Red
+    2300080: L_Tunnel_Cgo_Whi
+    2300082: L_Tunnel_Exp_Blu
+    2300084: L_Tunnel_Exp_Grn
+    2300086: L_Tunnel_Exp_Red
+    2300088: L_Tunnel_Exp_Whi
     3300000: Box_Room_1
     3300002: Box_Room_2
     3300004: Box_Room_3
@@ -137,6 +173,18 @@ ModelImporter:
     3300060: Cylinder
     3300062: Experiment_Room
     3300064: Experimental_Device
+    3300066: Experimental_Device_Ring1
+    3300068: Experimental_Device_Ring2
+    3300070: Experimental_Device_Ring3
+    3300072: Experimental_Device_Ring4
+    3300074: L_Tunnel_Cgo_Blu
+    3300076: L_Tunnel_Cgo_Grn
+    3300078: L_Tunnel_Cgo_Red
+    3300080: L_Tunnel_Cgo_Whi
+    3300082: L_Tunnel_Exp_Blu
+    3300084: L_Tunnel_Exp_Grn
+    3300086: L_Tunnel_Exp_Red
+    3300088: L_Tunnel_Exp_Whi
     4300000: Shorter_L_Tunnel_3.001
     4300002: Shorter_L_Tunnel_3
     4300004: Shorter_L_Tunnel_2
@@ -170,6 +218,18 @@ ModelImporter:
     4300060: Experimental_Device
     4300062: Cylinder
     4300064: Experiment_Room
+    4300066: Experimental_Device_Ring4
+    4300068: Experimental_Device_Ring3
+    4300070: Experimental_Device_Ring2
+    4300072: Experimental_Device_Ring1
+    4300074: L_Tunnel_Exp_Whi
+    4300076: L_Tunnel_Exp_Red
+    4300078: L_Tunnel_Cgo_Blu
+    4300080: L_Tunnel_Exp_Grn
+    4300082: L_Tunnel_Cgo_Grn
+    4300084: L_Tunnel_Exp_Blu
+    4300086: L_Tunnel_Cgo_Whi
+    4300088: L_Tunnel_Cgo_Red
     9500000: //RootNode
   materials:
     importMaterials: 1
