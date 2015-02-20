@@ -275,6 +275,7 @@ public class GameManager : MonoBehaviour {
             GameInProgress = true;
             GetComponent<ScoreVictoryManager>().GameStart();
             endTime = Time.time + secondsOfGame;
+            ChatManager.ClearAllChat();
         } else {
             GameInProgress = false;
         }
@@ -284,7 +285,7 @@ public class GameManager : MonoBehaviour {
         Network.SetLevelPrefix(levelPrefix);
 
         guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
-        ChatManager.ClearAllChat();
+
 
         NetworkManager.DisableRPC();
         Application.LoadLevel(levelName);

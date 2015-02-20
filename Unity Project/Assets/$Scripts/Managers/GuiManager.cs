@@ -216,6 +216,10 @@ public class GuiManager : MonoBehaviour {
 		style.fontSize = 50;
 		style.alignment = TextAnchor.UpperCenter;
 
+        if (scoreVictoryManager.IsVictor) {
+            GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Winner!\n" + scoreVictoryManager.VictorName, style);
+        }
+
 		string ammoText = playerResource.GetCurrentClip().ToString();
 		if(playerResource.GetRemainingAmmo() > 0){
 			ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
@@ -397,7 +401,6 @@ public class GuiManager : MonoBehaviour {
         if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
         } else {
-            Debug.Log("Displayed the zero-d time area");
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
         }
     }

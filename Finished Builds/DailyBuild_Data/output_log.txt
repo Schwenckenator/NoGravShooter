@@ -1,0 +1,352 @@
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2021 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.106 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\System.dll (this message is harmless)
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+UnloadTime: 1.922448 ms
+System memory in use before: 22.7 MB.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 22.6 MB.
+
+Unloading 17 unused Assets to reduce memory usage. Loaded Objects now: 3813.
+Total: 2.130352 ms (FindLiveObjects: 0.181951 ms CreateObjectMapping: 0.043446 ms MarkObjects: 0.590468 ms  DeleteObjects: 0.044029 ms)
+
+No objects for the given player ID were deleted 1
+UnityEngine.Network:DestroyPlayerObjects(NetworkPlayer)
+NetworkManager:OnPlayerDisconnected(NetworkPlayer) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\NetworkManager.cs:126)
+
+[C:/BuildAgent/work/d63dfc6385190b60/Runtime/Network/NetworkManager.cpp line 1373] 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+(0.9974, -0.07261, 8.093E-08)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NoGravCharacterMotor:MovementWalk() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:197)
+NoGravCharacterMotor:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Player\NoGravCharacterMotor.cs:120)
+ 
+(Filename: C Line: 0)
+
+Already own, adding ammo
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Bonuses\BonusWeaponPickup.cs:87)
+ 
+(Filename: C Line: 0)
+
+No objects for the given player ID were deleted 2
+UnityEngine.Network:DestroyPlayerObjects(NetworkPlayer)
+NetworkManager:OnPlayerDisconnected(NetworkPlayer) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\NetworkManager.cs:126)
+
+[C:/BuildAgent/work/d63dfc6385190b60/Runtime/Network/NetworkManager.cpp line 1373] 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+UnloadTime: 21.895739 ms
+System memory in use before: 22.7 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 20.0 MB.
+
+Unloading 187 unused Assets to reduce memory usage. Loaded Objects now: 839.
+Total: 8.825536 ms (FindLiveObjects: 0.092725 ms CreateObjectMapping: 0.062108 ms MarkObjects: 0.880308 ms  DeleteObjects: 3.420052 ms)
+
+View ID AllocatedID: 408 not found during lookup. Strange behaviour may occur
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Network/NetworkManager.cpp Line: 1681)
+
+Received state update for view id' AllocatedID: 408' but the NetworkView doesn't exist
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Network/NetworkManager.cpp Line: 2474)
+
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+UnloadTime: 0.337952 ms
+System memory in use before: 24.2 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 24.3 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 3819.
+Total: 1.992430 ms (FindLiveObjects: 0.150751 ms CreateObjectMapping: 0.043738 ms MarkObjects: 0.460128 ms  DeleteObjects: 0.069689 ms)
+
+Sniper(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Bonuses\BonusWeaponPickup.cs:46)
+ 
+(Filename: C Line: 0)
+
+LaserRifle(Clone) (UnityEngine.Transform)
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+BonusWeaponPickup:DeleteOldModel() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Bonuses\BonusWeaponPickup.cs:46)
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\Networking.cs:408)
+BonusWeaponPickup:UpdateModel() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Bonuses\BonusWeaponPickup.cs:39)
+BonusWeaponPickup:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Bonuses\BonusWeaponPickup.cs:105)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+Displayed the zero-d time area
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GuiManager:TimerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:400)
+GuiManager:PlayerGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:283)
+GuiManager:OnGUI() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Unity Project\Assets\$Scripts\Managers\GuiManager.cs:161)
+ 
+(Filename: C Line: 0)
+
+UnloadTime: 20.484446 ms
+System memory in use before: 24.2 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 21.6 MB.
+
+Unloading 187 unused Assets to reduce memory usage. Loaded Objects now: 840.
+Total: 3.908172 ms (FindLiveObjects: 0.040822 ms CreateObjectMapping: 0.038198 ms MarkObjects: 0.445257 ms  DeleteObjects: 1.580122 ms)
+
+View ID AllocatedID: 411 not found during lookup. Strange behaviour may occur
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Network/NetworkManager.cpp Line: 1681)
+
+Received state update for view id' AllocatedID: 411' but the NetworkView doesn't exist
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Network/NetworkManager.cpp Line: 2474)
+

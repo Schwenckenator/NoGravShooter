@@ -10,7 +10,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     [SerializeField]
 	private int id;
-	private FireWeapon weapon;
+	private FireWeapon fireWeapon;
 	private int weaponcount;
 	private int maxweaponcount;
 	private int currentInventorySlot;
@@ -62,10 +62,10 @@ public class BonusWeaponPickup : MonoBehaviour {
 		if(info.CompareTag("Player")){
 			if(info.networkView.isMine){
 				playerColliding = true;
-				weapon = info.GetComponent<FireWeapon>();
-				weaponcount = weapon.NumberWeaponsHeld();
+				fireWeapon = info.GetComponent<FireWeapon>();
+				weaponcount = fireWeapon.NumberWeaponsHeld();
 				maxweaponcount = GameManager.GetMaxStartingWeapons();
-				currentInventorySlot = weapon.CurrentWeaponSlot();
+				currentInventorySlot = fireWeapon.CurrentWeaponSlot();
 			}
 		}
 	}
@@ -80,42 +80,63 @@ public class BonusWeaponPickup : MonoBehaviour {
 	
 	public float weaponSwapCooldown = 2f;
 	private float swapTimeout = 2f;
-	void FixedUpdate(){
-		if(playerColliding){
-			if(weapon.IsWeaponHeld(id)){
-				GameManager.weapon[id].remainingAmmo += (GameManager.weapon[id].clipSize + GameManager.weapon[id].defaultRemainingAmmo);
-				Debug.Log ("Already own, adding ammo");
-				GetComponent<ObjectCleanUp>().KillMe();
-			}else{
-				if(weaponcount >= maxweaponcount){
-					if(swapTimeout < Time.time){
-						swapTimeout = weaponSwapCooldown;
-                        guiManager.ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
-                        if (InputConverter.GetKeyDown(SettingsManager.KeyBind.Interact)) {
-							for(int i=0; i < 7; i++){
-								if(weapon.IsCurrentWeapon(i)){
-									weapon.removeWeapon(GameManager.weapon[i]);
-									weapon.AddWeapon(id);
-									weapon.ChangeWeapon(currentInventorySlot);
-									networkView.RPC("ChangeId", RPCMode.AllBuffered, i);
-									swapTimeout = Time.time + weaponSwapCooldown;
-									i = 99;//lol
+	
+    void Update(){
+		if(!playerColliding) return;
 
-									//Change the weapon box model to the new weapon
-									UpdateModel();
-								}
-							}
-						}
-					}
-				}else{
-					weapon.AddWeapon(id);
-					if(settingsManager.AutoPickup == 1){
-						weapon.ChangeWeapon(weaponcount);
-					}
-					Debug.Log ("Not at maximum weapons, auto picking up");
-					GetComponent<ObjectCleanUp>().KillMe();
-				}
+		if(fireWeapon.IsWeaponHeld(id)){
+            AddAmmo();
+		}else{
+			if(weaponcount >= maxweaponcount){
+                WeaponSwapCheck();
+			}else{
+                AddWeapon();
 			}
 		}
 	}
+
+    private void WeaponSwapCheck() {
+        if (swapTimeout > Time.time) return;
+
+        swapTimeout = weaponSwapCooldown;
+        guiManager.ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
+
+        if (InputConverter.GetKeyDown(SettingsManager.KeyBind.Interact)) {
+            SwapWeapon();
+        }
+    }
+
+    private void SwapWeapon() {
+        for (int i = 0; i < 7; i++) {
+            if (fireWeapon.IsCurrentWeapon(i)) {
+                
+                fireWeapon.removeWeapon(GameManager.weapon[i]);
+                fireWeapon.AddWeapon(id, fireWeapon.CurrentWeaponSlot());
+                fireWeapon.ChangeWeapon(currentInventorySlot);
+                
+                networkView.RPC("ChangeId", RPCMode.AllBuffered, i);
+                swapTimeout = Time.time + weaponSwapCooldown;
+
+                //Change the weapon box model to the new weapon
+                UpdateModel();
+
+                break; // Bail out of loop
+            }
+        }
+    }
+
+    private void AddWeapon() {
+        fireWeapon.AddWeapon(id);
+        if (settingsManager.AutoPickup == 1) {
+            fireWeapon.ChangeWeapon(weaponcount);
+        }
+        Debug.Log("Not at maximum weapons, auto picking up");
+        GetComponent<ObjectCleanUp>().KillMe();
+    }
+
+    private void AddAmmo() {
+        GameManager.weapon[id].remainingAmmo += (GameManager.weapon[id].clipSize + GameManager.weapon[id].defaultRemainingAmmo);
+        Debug.Log("Already own, adding ammo");
+        GetComponent<ObjectCleanUp>().KillMe();
+    }
 }

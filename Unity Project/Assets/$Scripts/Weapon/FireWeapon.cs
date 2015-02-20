@@ -232,6 +232,9 @@ public class FireWeapon : MonoBehaviour {
 	public void AddWeapon(int weaponId){
 		heldWeapons.Add(GameManager.weapon[weaponId]);
 	}
+    public void AddWeapon(int weaponId, int index){
+        heldWeapons.Insert(index, GameManager.weapon[weaponId]);
+    }
 
 	public void removeWeapon(WeaponSuperClass item){
 		heldWeapons.Remove(item);
