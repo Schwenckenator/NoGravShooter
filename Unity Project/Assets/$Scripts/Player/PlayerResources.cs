@@ -54,9 +54,9 @@ public class PlayerResources : MonoBehaviour {
 	private float heat;
 	private float rechargeWaitTime;
 
-	private int[] grenades;				// Id is alphabetical
-	private int grenadeTypes = 3; 		// Black Hole, EMP, Frag
-	private int currentGrenadeType = 0;	//      0       1     2
+	private int[] grenades;				        // Id is alphabetical
+	private int grenadeTypes = 3; 		        // Black Hole, EMP, Frag
+	private static int currentGrenadeType = 0;	//      0       1     2
 
 	private bool isRecharging = true;
 	private bool isReloading = false;

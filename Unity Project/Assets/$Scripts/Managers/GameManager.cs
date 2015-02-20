@@ -90,15 +90,22 @@ public class GameManager : MonoBehaviour {
 
 			//
 			if(Network.isServer){
-                startingWeapons[0] = settingsManager.SpawnWeapon1;
-                startingWeapons[1] = settingsManager.SpawnWeapon2;
-				networkView.RPC ("SetStartingWeapons", RPCMode.OthersBuffered, startingWeapons);
+                int[] temp = new int[2];
+
+                temp[0] = settingsManager.SpawnWeapon1;
+                temp[1] = settingsManager.SpawnWeapon2;
+                StartCoroutine(SetStartingWeaponsDelay(temp));
 			}
 		}
 	}
 
+    private IEnumerator SetStartingWeaponsDelay(int[] weapons) {
+        yield return new WaitForSeconds(0.1f); // Small delay
+        networkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
+    }
+
 	[RPC]
-	private void SetStartingWeapons(int[] selection){
+    private void SetStartingWeapons(int[] selection) {
 		startingWeapons = selection;
 	}
 	public int[] GetStartingWeapons(){

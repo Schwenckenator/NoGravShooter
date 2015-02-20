@@ -25,16 +25,27 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     public void PointScored(NetworkPlayer player) {
-        Debug.Log(NetworkManager.GetPlayer(player).Name + " kills");
-        networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player, 1);
+        networkView.RPC("RPCPointScored", RPCMode.All, player, 1);
     }
     public void Suicide(NetworkPlayer player) {
-        networkView.RPC("RPCKillScored", RPCMode.AllBuffered, player, -1);
+        networkView.RPC("RPCPointScored", RPCMode.All, player, -1);
+    }
+
+    void OnPlayerConnected(NetworkPlayer connectingPlayer) {
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            networkView.RPC("RPCPointScored", connectingPlayer, player.ID, player.Score);
+        }
     }
 
     [RPC]
-    private void RPCKillScored(NetworkPlayer player, int score) {
-        if (!NetworkManager.DoesPlayerExist(player)) return;
+    private void RPCPointScored(NetworkPlayer player, int score) {
+        ChatManager.DebugMessage("RPCPointScored called");
+
+        if (!NetworkManager.DoesPlayerExist(player)) {
+            ChatManager.DebugMessage("Can't find Player "+player.ToString());
+        }
+
+        ChatManager.DebugMessage("RPCPointScored Player exists, will add point.");
 
         NetworkManager.GetPlayer(player).AddScore(score);
         CheckForScoreVictory();

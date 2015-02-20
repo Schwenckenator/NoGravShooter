@@ -391,7 +391,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 
     void OnCollisionStay(Collision info) {
-        if (!networkView.isMine || info.collider.CompareTag("NonWalkable")) return;
+        if (!networkView.isMine || !CanWalkOn(info.collider.tag)) return;
 
         Vector3 surfaceNorm = SurfaceNormal(info);
         float angle = Vector3.Angle(transform.up, surfaceNorm);
@@ -410,6 +410,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
         } else {
             rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
         }
+    }
+
+    bool CanWalkOn(string tag) {
+        return (tag != "NonWalkable") && (tag != "Player");
     }
 
 	void LockMouseLook(bool inAir){

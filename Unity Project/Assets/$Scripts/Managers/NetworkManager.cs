@@ -16,7 +16,6 @@ public class NetworkManager : MonoBehaviour {
     /// Holds names of players
     /// </summary>
     
-    //public static Dictionary<NetworkPlayer, string> connectedPlayers = new Dictionary<NetworkPlayer, string>();
     public static List<Player> connectedPlayers = new List<Player>();
 
     private static string ipAddress;
@@ -38,6 +37,14 @@ public class NetworkManager : MonoBehaviour {
         guiManager = GetComponent<GuiManager>();
         settingsManager = GetComponent<SettingsManager>();
         chatManager = GetComponent<ChatManager>();
+    }
+
+    void Update() {
+        if (GameManager.testMode && Input.GetKeyDown(KeyCode.F4)) {
+            foreach (Player player in connectedPlayers) {
+                ChatManager.DebugMessage("Player \"" + player.Name + "\" with ID \"" + player.ID+"\"");
+            }
+        }
     }
 
     public static Player GetPlayer(NetworkPlayer value) {
@@ -75,9 +82,17 @@ public class NetworkManager : MonoBehaviour {
     }
 
     public static void DisableRPC() {
-        Network.SetSendingEnabled(0, false);
+        //Network.SetSendingEnabled(0, false);
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
+    }
+
+    private static IEnumerator EnableRPC(float waitTime) {
+        yield return new WaitForSeconds(waitTime);
+        
+        Network.isMessageQueueRunning = true;
+        //Network.SetSendingEnabled(0, true);
+        rpcDisabled = false;
     }
 
     
@@ -104,11 +119,12 @@ public class NetworkManager : MonoBehaviour {
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
 
         string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;
-
         message += " has disconnected.";
         chatManager.AddToChat(message, false);
+
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
+
         networkView.RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
     }
     void OnApplicationQuit() {
@@ -131,9 +147,7 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {
-            Network.isMessageQueueRunning = true;
-            Network.SetSendingEnabled(0, true);
-            rpcDisabled = false;
+            StartCoroutine(EnableRPC(0.0f));
         }
     }
     void OnServerInitialized() {
