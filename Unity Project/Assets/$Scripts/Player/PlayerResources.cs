@@ -186,7 +186,7 @@ public class PlayerResources : MonoBehaviour {
 	// Returns false if no grenades
 	public bool CanThrowGrenade(){
 		
-        if(GameManager.testMode) grenades[currentGrenadeType]++;
+        if(GameManager.IsAllGrenade()) grenades[currentGrenadeType]++;
 
 		if(grenades[currentGrenadeType] > 0){
             grenades[currentGrenadeType]--;
@@ -320,7 +320,7 @@ public class PlayerResources : MonoBehaviour {
 		yield return new WaitForSeconds(playerDyingTime);
 		gameManager.PlayerDied();
 		gameManager.ManagerDetachCamera();
-		gameManager.SetCursorVisibility(true);
+		GameManager.SetCursorVisibility(true);
 		GetComponent<ObjectCleanUp>().ClientKillMe();
 	}
 
@@ -368,7 +368,7 @@ public class PlayerResources : MonoBehaviour {
 	IEnumerator WeaponReload(){
 		
 		// If no remaining ammo and NOT testmode, don't attempt to reload
-		if(currentWeapon.remainingAmmo <= 0 && !GameManager.testMode){
+		if(currentWeapon.remainingAmmo <= 0 && !GameManager.IsAllWeapon()){
 			if(currentWeapon.currentClip <= 0){
 
 				//GetComponent<FireWeapon>().removeWeapon(currentWeapon);
@@ -392,7 +392,7 @@ public class PlayerResources : MonoBehaviour {
 		}
 		isWeaponBusy = false;
 		int newBullets = currentWeapon.clipSize - currentWeapon.currentClip;
-		if(GameManager.testMode){
+		if(GameManager.IsAllWeapon()){
 			currentWeapon.currentClip = currentWeapon.clipSize;
 		}else{
 			currentWeapon.currentClip = Mathf.Min (currentWeapon.clipSize, currentWeapon.remainingAmmo+currentWeapon.currentClip);

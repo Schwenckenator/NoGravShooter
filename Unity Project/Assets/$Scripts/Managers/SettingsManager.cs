@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class SettingsManager : MonoBehaviour {
-    public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch };
+    public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch, StopMovement };
     public static KeyCode[] keyBindings;
     const int SecondsInMinute = 60;
     
@@ -37,7 +37,8 @@ public class SettingsManager : MonoBehaviour {
     public float yMouseSensitivity { get; set; }
     public int MouseYDirection { get; set; }
     public float FieldOfView { get; set; }
-    public int AutoPickup { get; set; } 
+    private int i_AutoPickup { get; set; }
+    public bool AutoPickup { get; set; }
     #endregion
 
     #region GameSettings
@@ -88,38 +89,6 @@ public class SettingsManager : MonoBehaviour {
     #endregion
 
     #region PlayerPrefsKeys
-    private string bindMoveForward      = "bindMoveForward";
-    private string bindMoveBack         = "bindMoveBack";
-    private string bindMoveLeft         = "bindMoveLeft";
-    private string bindMoveRight        = "bindMoveRight";
-    private string bindRollLeft         = "bindRollLeft";
-    private string bindRollRight        ="bindRollRight";
-    private string bindJetUp            = "bindJetUp";
-    private string bindJetDown          = "bindJetDown";
-    private string bindReload           = "bindReload";
-    private string bindGrenade          = "bindGrenade";
-    private string bindInteract         = "bindInteract";
-    private string bindGrenadeSwitch    = "bindGrenadeSwitch";
-    
-    private string prefKeyServerName            = "ServerName";
-    private string prefKeyPlayerName            = "PlayerName";
-    private string prefKeyPortNumStr            = "PortNumStr";
-    private string prefKeyIpAddress             = "IpAddress";
-    private string prefKeyPassword              = "Password";
-    private string prefKeyxMouseSensitivity     = "xMouseSensitivity";
-    private string prefKeyyMouseSensitivity     = "yMouseSensitivity";
-    private string prefKeyMouseYDirection       = "MouseYDirection";
-    private string prefKeyFieldOfView           = "FieldOfView";
-    private string prefKeyAutoPickup            = "AutoPickup";
-    private string prefKeyLevelIndex            = "LevelIndex";
-    private string prefKeyGameModeIndex         = "GameModeIndex";
-    private string prefKeySpawnWeapon1          = "SpawnWeapon1";
-    private string prefKeySpawnWeapon2          = "SpawnWeapon2";
-    private string prefKeyMedkitCanSpawn        = "MedkitCanSpawn";
-    private string prefKeyGrenadeCanSpawn       = "GrenadeCanSpawn";
-    private string prefKeyWeaponCanSpawn        = "WeaponCanSpawn";
-    private string prefKeyScoreToWin            = "ScoreToWin";
-    private string prefKeyTimeLimitMin          = "TimeLimitMin";
 
     // Default values
     private string defaultPlayerName = "Player";
@@ -129,13 +98,17 @@ public class SettingsManager : MonoBehaviour {
     private float defaultMouseSensitivity   = 0.5f;
     private int defaultMouseYDirection      = -1;
     private float defaultFieldOfView        = 70;
-    private int defaultAutoPickup           = 0;
 
+    private int laserRifleIndex = 0;
+    private int noWeaponIndex = 7;
+
+    private int i_False = 0;
+    private int i_True = 1;
 
     #endregion
 
     void Awake() {
-        GameManager.testMode = false;
+        
 
         RetrieveKeyBinds();
         RetrieveSettings();
@@ -145,38 +118,40 @@ public class SettingsManager : MonoBehaviour {
     void RetrieveKeyBinds() {
         keyBindings = new KeyCode[System.Enum.GetNames(typeof(SettingsManager.KeyBind)).Length];
 
-        keyBindings[(int)SettingsManager.KeyBind.MoveForward]   = (KeyCode)PlayerPrefs.GetInt(bindMoveForward, (int)KeyCode.W);
-        keyBindings[(int)SettingsManager.KeyBind.MoveBack]      = (KeyCode)PlayerPrefs.GetInt(bindMoveBack,       (int)KeyCode.S);
-        keyBindings[(int)SettingsManager.KeyBind.MoveLeft]      = (KeyCode)PlayerPrefs.GetInt(bindMoveLeft,       (int)KeyCode.A);
-        keyBindings[(int)SettingsManager.KeyBind.MoveRight]     = (KeyCode)PlayerPrefs.GetInt(bindMoveRight,      (int)KeyCode.D);
+        keyBindings[(int)SettingsManager.KeyBind.MoveForward]   = (KeyCode)PlayerPrefs.GetInt("bindMoveForward",    (int)KeyCode.W);
+        keyBindings[(int)SettingsManager.KeyBind.MoveBack]      = (KeyCode)PlayerPrefs.GetInt("bindMoveBack",       (int)KeyCode.S);
+        keyBindings[(int)SettingsManager.KeyBind.MoveLeft]      = (KeyCode)PlayerPrefs.GetInt("bindMoveLeft",       (int)KeyCode.A);
+        keyBindings[(int)SettingsManager.KeyBind.MoveRight]     = (KeyCode)PlayerPrefs.GetInt("bindMoveRight",      (int)KeyCode.D);
+        keyBindings[(int)SettingsManager.KeyBind.StopMovement]  = (KeyCode)PlayerPrefs.GetInt("bindStopMovement",   (int)KeyCode.X);
 
-        keyBindings[(int)SettingsManager.KeyBind.RollLeft]      = (KeyCode)PlayerPrefs.GetInt(bindRollLeft,       (int)KeyCode.Q);
-        keyBindings[(int)SettingsManager.KeyBind.RollRight]     = (KeyCode)PlayerPrefs.GetInt(bindRollRight,      (int)KeyCode.E);
-        keyBindings[(int)SettingsManager.KeyBind.JetUp]         = (KeyCode)PlayerPrefs.GetInt(bindJetUp,          (int)KeyCode.Space);
-        keyBindings[(int)SettingsManager.KeyBind.JetDown]       = (KeyCode)PlayerPrefs.GetInt(bindJetDown,        (int)KeyCode.LeftShift);
+        keyBindings[(int)SettingsManager.KeyBind.RollLeft]      = (KeyCode)PlayerPrefs.GetInt("bindRollLeft",       (int)KeyCode.Q);
+        keyBindings[(int)SettingsManager.KeyBind.RollRight]     = (KeyCode)PlayerPrefs.GetInt("bindRollRight",      (int)KeyCode.E);
+        keyBindings[(int)SettingsManager.KeyBind.JetUp]         = (KeyCode)PlayerPrefs.GetInt("bindJetUp",          (int)KeyCode.Space);
+        keyBindings[(int)SettingsManager.KeyBind.JetDown]       = (KeyCode)PlayerPrefs.GetInt("bindJetDown",        (int)KeyCode.LeftShift);
 
-        keyBindings[(int)SettingsManager.KeyBind.Reload]        = (KeyCode)PlayerPrefs.GetInt(bindReload,         (int)KeyCode.R);
-        keyBindings[(int)SettingsManager.KeyBind.Grenade]       = (KeyCode)PlayerPrefs.GetInt(bindGrenade,        (int)KeyCode.G);
-        keyBindings[(int)SettingsManager.KeyBind.Interact]      = (KeyCode)PlayerPrefs.GetInt(bindInteract,       (int)KeyCode.F);
-        keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch] = (KeyCode)PlayerPrefs.GetInt(bindGrenadeSwitch,  (int)KeyCode.H);
+        keyBindings[(int)SettingsManager.KeyBind.Reload]        = (KeyCode)PlayerPrefs.GetInt("bindReload",         (int)KeyCode.R);
+        keyBindings[(int)SettingsManager.KeyBind.Grenade]       = (KeyCode)PlayerPrefs.GetInt("bindGrenade",        (int)KeyCode.G);
+        keyBindings[(int)SettingsManager.KeyBind.Interact]      = (KeyCode)PlayerPrefs.GetInt("bindInteract",       (int)KeyCode.F);
+        keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch] = (KeyCode)PlayerPrefs.GetInt("bindGrenadeSwitch",  (int)KeyCode.H);
+        
     }
 
     public void SaveKeyBinds() {
-        PlayerPrefs.SetInt(bindMoveForward,   (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]);
-        PlayerPrefs.SetInt(bindMoveBack,      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack]);
-        PlayerPrefs.SetInt(bindMoveLeft,      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft]);
-        PlayerPrefs.SetInt(bindMoveRight,     (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]);
+        PlayerPrefs.SetInt("bindMoveForward",   (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]);
+        PlayerPrefs.SetInt("bindMoveBack",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack]);
+        PlayerPrefs.SetInt("bindMoveLeft",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft]);
+        PlayerPrefs.SetInt("bindMoveRight",     (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]);
+        PlayerPrefs.SetInt("bindStopMovement",  (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.StopMovement]);
 
+        PlayerPrefs.SetInt("bindRollLeft",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft]);
+        PlayerPrefs.SetInt("bindRollRight",     (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]);
+        PlayerPrefs.SetInt("bindJetUp",         (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]);
+        PlayerPrefs.SetInt("bindJetDown",       (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown]);
 
-        PlayerPrefs.SetInt(bindRollLeft,      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft]);
-        PlayerPrefs.SetInt(bindRollRight,     (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]);
-        PlayerPrefs.SetInt(bindJetUp,         (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]);
-        PlayerPrefs.SetInt(bindJetDown,       (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown]);
-
-        PlayerPrefs.SetInt(bindReload,        (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]);
-        PlayerPrefs.SetInt(bindGrenade,       (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade]);
-        PlayerPrefs.SetInt(bindInteract,      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact]);
-        PlayerPrefs.SetInt(bindGrenadeSwitch, (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch]);
+        PlayerPrefs.SetInt("bindReload",        (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]);
+        PlayerPrefs.SetInt("bindGrenade",       (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade]);
+        PlayerPrefs.SetInt("bindInteract",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact]);
+        PlayerPrefs.SetInt("bindGrenadeSwitch", (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch]);
     }
 
     /// <summary>
@@ -184,36 +159,41 @@ public class SettingsManager : MonoBehaviour {
     /// </summary>
     void RetrieveSettings() {
         // Network Settings
-        MyServerName = PlayerPrefs.GetString(prefKeyServerName);
-        PlayerName = PlayerPrefs.GetString(prefKeyPlayerName, defaultPlayerName);
-        PortNumStr = PlayerPrefs.GetString(prefKeyPortNumStr, defaultPortNumStr);
-        IpAddress = PlayerPrefs.GetString(prefKeyIpAddress, defaultIpAddress);
-        Password = PlayerPrefs.GetString(prefKeyPassword, "");
+        MyServerName = PlayerPrefs.GetString("ServerName");
+        PlayerName = PlayerPrefs.GetString("PlayerName", defaultPlayerName);
+        PortNumStr = PlayerPrefs.GetString("PortNumStr", defaultPortNumStr);
+        IpAddress = PlayerPrefs.GetString("IpAddress", defaultIpAddress);
+        Password = PlayerPrefs.GetString("Password", "");
 
         //Control Settings
-        xMouseSensitivity = PlayerPrefs.GetFloat(prefKeyxMouseSensitivity, defaultMouseSensitivity);
-        yMouseSensitivity = PlayerPrefs.GetFloat(prefKeyyMouseSensitivity, defaultMouseSensitivity);
-        MouseYDirection = PlayerPrefs.GetInt(prefKeyMouseYDirection, defaultMouseYDirection);
-        FieldOfView = PlayerPrefs.GetFloat(prefKeyFieldOfView, defaultFieldOfView);
-        AutoPickup = PlayerPrefs.GetInt(prefKeyAutoPickup, defaultAutoPickup);
+        xMouseSensitivity = PlayerPrefs.GetFloat("xMouseSensitivity", defaultMouseSensitivity);
+        yMouseSensitivity = PlayerPrefs.GetFloat("yMouseSensitivity", defaultMouseSensitivity);
+        MouseYDirection = PlayerPrefs.GetInt("MouseYDirection", defaultMouseYDirection);
+        FieldOfView = PlayerPrefs.GetFloat("FieldOfView", defaultFieldOfView);
+        i_AutoPickup = PlayerPrefs.GetInt("AutoPickup", i_False);
 
         //Game Settings
-        LevelIndex = PlayerPrefs.GetInt(prefKeyLevelIndex, 0);
-        GameModeIndex = PlayerPrefs.GetInt(prefKeyGameModeIndex, 0);
-        SpawnWeapon1 = PlayerPrefs.GetInt(prefKeySpawnWeapon1, 0);
-        SpawnWeapon2 = PlayerPrefs.GetInt(prefKeySpawnWeapon2, 7);
-        MedkitCanSpawn = PlayerPrefs.GetInt(prefKeyMedkitCanSpawn, 1);
-        GrenadeCanSpawn = PlayerPrefs.GetInt(prefKeyGrenadeCanSpawn, 1);
-        WeaponCanSpawn = PlayerPrefs.GetInt(prefKeyWeaponCanSpawn, 1);
+        LevelIndex = PlayerPrefs.GetInt("LevelIndex", 0);
+        GameModeIndex = PlayerPrefs.GetInt("GameModeIndex", 0);
+        SpawnWeapon1 = PlayerPrefs.GetInt("SpawnWeapon1", laserRifleIndex);
+        SpawnWeapon2 = PlayerPrefs.GetInt("SpawnWeapon2", noWeaponIndex);
+        MedkitCanSpawn = PlayerPrefs.GetInt("MedkitCanSpawn", i_True);
+        GrenadeCanSpawn = PlayerPrefs.GetInt("GrenadeCanSpawn", i_True);
+        WeaponCanSpawn = PlayerPrefs.GetInt("WeaponCanSpawn", i_True);
 
-        ScoreToWin = PlayerPrefs.GetInt(prefKeyScoreToWin, 20);
-        TimeLimitMin = PlayerPrefs.GetInt(prefKeyTimeLimitMin, 15);
+        ScoreToWin = PlayerPrefs.GetInt("ScoreToWin", 20);
+        TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
+
+        ConvertSettingsIntToBool();
     }
     
     /// <summary>
     /// Saves current settings to PlayerPrefs
     /// </summary>
     public void SaveSettings() {
+        
+        ConvertSettingsBoolToInt();
+
         // Network Settings
         PlayerPrefs.SetString("ServerName", MyServerName);
         PlayerPrefs.SetString("PlayerName", PlayerName);
@@ -226,7 +206,7 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetFloat("yMouseSensitivity", yMouseSensitivity);
         PlayerPrefs.SetInt("MouseYDirection", MouseYDirection);
         PlayerPrefs.SetFloat("FieldOfView", FieldOfView);
-        PlayerPrefs.SetInt("AutoPickup", AutoPickup);
+        PlayerPrefs.SetInt("AutoPickup", i_AutoPickup);
         
         //Game Settings
         PlayerPrefs.SetInt("LevelIndex", LevelIndex); 
@@ -256,5 +236,12 @@ public class SettingsManager : MonoBehaviour {
         // Needs order: Medkit, Grenade, weapon
         bool[] temp = {(MedkitCanSpawn == 1),(GrenadeCanSpawn == 1),(WeaponCanSpawn == 1)} ;
         return temp;
+    }
+
+    private void ConvertSettingsIntToBool() {
+        AutoPickup = (i_AutoPickup == 1);
+    }
+    private void ConvertSettingsBoolToInt() {
+        i_AutoPickup = AutoPickup ? 1 : 0;
     }
 }

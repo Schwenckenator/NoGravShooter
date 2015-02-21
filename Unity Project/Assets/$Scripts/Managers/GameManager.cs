@@ -5,8 +5,27 @@ using System.Collections.Generic;
 /// Handles player, level loading and game interacitons
 /// </summary>
 public class GameManager : MonoBehaviour {
-	// *****************Test Mode Variable************************
-	public static bool testMode = true;
+    // *****************Test Mode Variable************************
+    #region testVariables
+    private static bool adminMode = false;
+    private static bool allWeapon = false;
+    private static bool allGrenade = false;
+
+    public static bool IsAllWeapon() {
+        return allWeapon;
+    }
+    public static bool IsAllGrenade() {
+        return allGrenade;
+    }
+    public static bool IsAdminMode() {
+        return adminMode;
+    }
+    private static void ToggleTestMode() {
+        allWeapon   = !allWeapon;
+        allGrenade  = !allGrenade;
+        adminMode   = !adminMode;
+    }
+    #endregion
     // ***********************************************************
     #region Variable Declarations
     //Managers
@@ -37,7 +56,6 @@ public class GameManager : MonoBehaviour {
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
 
     public float endTime;
-    //public string currentPlayerName;
     public NetworkPlayer currentPlayer;
     // For Game Settings
 
@@ -51,6 +69,59 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private int secondsUntilKick = 10;
 
+    #endregion
+
+    #region public static methods
+    public static int WeaponClassToWeaponId(WeaponSuperClass input) {
+        for (int i = 0; i < weapon.Count; i++) {
+            if (input == weapon[i]) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public static bool IsMenuScene() {
+        return Application.loadedLevelName == "MenuScene";
+    }
+    public static bool IsTutorialScene() {
+        return Application.loadedLevelName == "Tutorial";
+    }
+    public static bool IsPlayerMenu() {
+        return playerMenu;
+    }
+    public static int GetMaxStartingWeapons() {
+        return maxStartingWeapons;
+    }
+    public static void SetCursorVisibility(bool visible) {
+        Screen.showCursor = visible;
+        Screen.lockCursor = !visible;
+    }
+    #endregion 
+
+    #region Variable accessors
+    public int[] GetStartingWeapons() {
+        return startingWeapons;
+    }
+    public bool IsPlayerSpawned() {
+        return myPlayerSpawned;
+    }
+    private MouseLook GetPlayerCameraMouseLook(GameObject player) {
+        return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
+    }
+    #endregion
+
+    #region Variable mutators
+    [RPC]
+    private void SetStartingWeapons(int[] selection) {
+        startingWeapons = selection;
+    }
+    [RPC]
+    public void SetEndTime(float remainingSeconds) {
+        endTime = Time.time + remainingSeconds;
+    }
+    public void SetPlayerMenu(bool input) {
+        playerMenu = input;
+    }
     #endregion
 
     void Awake(){
@@ -69,15 +140,6 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new ForceShotgunValues());
 		weapon.Add(new RocketLauncherValues());
 		weapon.Add(new PlasmaBlasterValues());
-	}
-
-	public static int WeaponClassToWeaponId(WeaponSuperClass input){
-		for(int i=0; i<weapon.Count; i++){
-			if(input == weapon[i]){
-				return i;
-			}
-		}
-		return -1;
 	}
 
 	void OnLevelWasLoaded(int level){
@@ -104,32 +166,6 @@ public class GameManager : MonoBehaviour {
         networkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
     }
 
-	[RPC]
-    private void SetStartingWeapons(int[] selection) {
-		startingWeapons = selection;
-	}
-	public int[] GetStartingWeapons(){
-		return startingWeapons;
-	}
-
-    [RPC]
-    public void SetEndTime(float remainingSeconds) {
-        endTime = Time.time + remainingSeconds;
-    }
-
-
-	public static bool IsMenuScene(){
-		return Application.loadedLevelName == "MenuScene";
-	}
-    public static bool IsTutorialScene() {
-        return Application.loadedLevelName == "Tutorial";
-    }
-	public static bool IsPlayerMenu(){
-		return playerMenu;
-	}
-	public bool IsPlayerSpawned(){
-		return myPlayerSpawned;
-	}
 	public void SpawnPlayer(){
 		myPlayerSpawned = true;
 
@@ -158,10 +194,6 @@ public class GameManager : MonoBehaviour {
 		}
 
 	}
-    private MouseLook GetPlayerCameraMouseLook(GameObject player) {
-        return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
-    }
-    
 
 	public void PlayerDied(){
 		myPlayerSpawned = false;
@@ -171,10 +203,10 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.F1)){
-			testMode = !testMode;
+            ToggleTestMode();
 		}
         if (Input.GetKeyDown(KeyCode.F3)) {
-            if (testMode) {
+            if (adminMode) {
                 PlayerPrefs.DeleteAll();
                 Debug.Log("PlayerPrefs Wiped!");
             }
@@ -214,20 +246,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-	public void SetPlayerMenu(bool input){
-		playerMenu = input;
-	}
-	public void SetCursorVisibility(bool visible){
-		Screen.showCursor = visible;
-		Screen.lockCursor = !visible;
-	}
 	public void ManagerDetachCamera(){
 		cameraMove.DetachCamera();
 	}
-
-    public static int GetMaxStartingWeapons() {
-        return maxStartingWeapons;
-    }
 
     // If a player connects mid game,
     // we need to send an updated remaining time
@@ -259,7 +280,7 @@ public class GameManager : MonoBehaviour {
     public void LoadLevel() {
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, settingsManager.LevelName, NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
     }
-    void LoadLevelTutorial() {
+    private void LoadLevelTutorial() {
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
     }
 

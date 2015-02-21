@@ -40,7 +40,7 @@ public class NetworkManager : MonoBehaviour {
     }
 
     void Update() {
-        if (GameManager.testMode && Input.GetKeyDown(KeyCode.F4)) {
+        if (GameManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
             foreach (Player player in connectedPlayers) {
                 ChatManager.DebugMessage("Player \"" + player.Name + "\" with ID \"" + player.ID+"\"");
             }
@@ -135,7 +135,7 @@ public class NetworkManager : MonoBehaviour {
 
     void OnDisconnectedFromServer() {
 
-        GetComponent<GameManager>().SetCursorVisibility(true);
+        GameManager.SetCursorVisibility(true);
         if (!GameManager.IsMenuScene()) {
             Application.LoadLevel("MenuScene");
         }

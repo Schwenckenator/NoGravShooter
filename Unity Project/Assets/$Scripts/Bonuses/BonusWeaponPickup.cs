@@ -20,7 +20,7 @@ public class BonusWeaponPickup : MonoBehaviour {
     private GuiManager guiManager;
 
 	void Start(){
-		if(GameManager.testMode){
+		if(GameManager.IsAllWeapon()){
 			maxweaponcount = 99;
 		}
 		if(Network.isServer){
@@ -127,7 +127,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private void AddWeapon() {
         fireWeapon.AddWeapon(id);
-        if (settingsManager.AutoPickup == 1) {
+        if (settingsManager.AutoPickup) {
             fireWeapon.ChangeWeapon(weaponcount);
         }
         Debug.Log("Not at maximum weapons, auto picking up");

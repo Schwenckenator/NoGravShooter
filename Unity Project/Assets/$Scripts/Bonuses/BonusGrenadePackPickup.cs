@@ -26,7 +26,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 			
 			PlayerResources playerResource = info.collider.GetComponent<PlayerResources>();
 
-			if(settingsManager.AutoPickup == 1){
+			if(settingsManager.AutoPickup){
 				playerResource.ChangeGrenade(grenadeType);
 			}
 			playerResource.PickUpGrenades(amount, grenadeType);

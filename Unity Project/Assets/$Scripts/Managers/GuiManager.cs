@@ -125,7 +125,7 @@ public class GuiManager : MonoBehaviour {
         SetCurrentMenuWindow(Menu.MainMenu);
 
 		mouseInverted = (settingsManager.MouseYDirection == 1);
-        autoPickupEnabled = (settingsManager.AutoPickup == 1);
+        autoPickupEnabled = (settingsManager.AutoPickup);
 		
 		MedkitSpawning = (settingsManager.MedkitCanSpawn == 1);
 		GrenadeSpawning = (settingsManager.GrenadeCanSpawn == 1);
@@ -142,8 +142,8 @@ public class GuiManager : MonoBehaviour {
 		lowerLeftTextAlign.alignment = TextAnchor.LowerLeft;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-		if(GameManager.testMode){
-			GUI.Label(new Rect(10, 10, 100, 20), "TEST MODE");
+		if(GameManager.IsAdminMode()){
+			GUI.Label(new Rect(Screen.width/2, 10, 100, 20), "TEST MODE");
 		}
 
 		if(connectingNow){
@@ -623,19 +623,11 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 
-			if(mouseInverted){
-				settingsManager.MouseYDirection = 1;
-			}else{
-                settingsManager.MouseYDirection = -1;
-			}
-			
-			if(autoPickupEnabled){
-                settingsManager.AutoPickup = 1;
-			}else{
-                settingsManager.AutoPickup = 0;
-			}
+            settingsManager.MouseYDirection = mouseInverted ? 1 : -1;
+            settingsManager.AutoPickup = autoPickupEnabled;
 
             settingsManager.SaveSettings();
+
 			currentWindow =  Menu.MainMenu;
 		}
 	}
@@ -782,6 +774,12 @@ public class GuiManager : MonoBehaviour {
 			editedBinding = SettingsManager.KeyBind.Interact;
 			displayChangeKeybindWindow = true;
 		}
+        standard.y += 30;
+        GUI.Label(standard, "Interact: ");
+        if (GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.StopMovement].ToString())) {
+            editedBinding = SettingsManager.KeyBind.StopMovement;
+            displayChangeKeybindWindow = true;
+        }
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
@@ -927,7 +925,7 @@ public class GuiManager : MonoBehaviour {
             string strReturnToGame = "Return to Game"; if (GameManager.IsTutorialScene()) strReturnToGame = "Return to Simulation";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
 				gameManager.SetPlayerMenu(false);
-				gameManager.SetCursorVisibility(false);
+				GameManager.SetCursorVisibility(false);
 			}
 		}else {
             if (scoreVictoryManager.IsVictor) {
