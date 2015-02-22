@@ -15,12 +15,15 @@ public class AimingFOVChanger : MonoBehaviour {
 	
 	private FireWeapon fireWeapon;
 
+    private Camera myCamera;
+
     
 
     void Start() {
         GameObject manager = GameObject.FindGameObjectWithTag("GameController");
         settingsManager = manager.GetComponent<SettingsManager>();
         guiManager = manager.GetComponent<GuiManager>();
+        myCamera = GetComponent<Camera>();
     }
 	
 	void FixedUpdate(){
@@ -34,34 +37,34 @@ public class AimingFOVChanger : MonoBehaviour {
 		
 		if(Input.GetMouseButton(1)){
 			if (fireWeapon.IsCurrentWeapon(2)){//check if current weapon is sniper
-				if(Camera.main.fieldOfView > sniperFOV){
-					Camera.main.fieldOfView -= zoomSpeed;
+                if (myCamera.fieldOfView > sniperFOV) {
+					myCamera.fieldOfView -= zoomSpeed;
 				} else {
 					guiManager.showSniperScope = true;
 				}
 			} else {
 				guiManager.showSniperScope = false;
 				//bugfix for zooming with sniper then changing weapons
-				if(Camera.main.fieldOfView < minFOV){
-					Camera.main.fieldOfView = minFOV;
+				if(myCamera.fieldOfView < minFOV){
+					myCamera.fieldOfView = minFOV;
 				}
-				if(Camera.main.fieldOfView > minFOV){
-					Camera.main.fieldOfView -= zoomSpeed;
+				if(myCamera.fieldOfView > minFOV){
+					myCamera.fieldOfView -= zoomSpeed;
 				}
 			}
 		} else {
 			guiManager.showSniperScope = false;
 			//bug fix for changing field of view between games without closing
-			if(Camera.main.fieldOfView > maxFOV){
-				Camera.main.fieldOfView = maxFOV;
+			if(myCamera.fieldOfView > maxFOV){
+				myCamera.fieldOfView = maxFOV;
 			}
-			if(Camera.main.fieldOfView < maxFOV){
-				Camera.main.fieldOfView += zoomSpeed;
+			if(myCamera.fieldOfView < maxFOV){
+				myCamera.fieldOfView += zoomSpeed;
 			}
 		}
 	}
 	
 	public float zoomRotationRatio(){
-		return Camera.main.fieldOfView/maxFOV;
+		return myCamera.fieldOfView/maxFOV;
 	}
 }

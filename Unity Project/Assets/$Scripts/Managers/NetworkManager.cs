@@ -82,7 +82,6 @@ public class NetworkManager : MonoBehaviour {
     }
 
     public static void DisableRPC() {
-        //Network.SetSendingEnabled(0, false);
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
@@ -91,11 +90,9 @@ public class NetworkManager : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         
         Network.isMessageQueueRunning = true;
-        //Network.SetSendingEnabled(0, true);
         rpcDisabled = false;
     }
 
-    
     #region SetDetails
     public static void SetClientDetails(HostData _masterServerData, bool _useMasterServer, string _ipAddress, int _portNum) {
         masterServerData = _masterServerData;
@@ -103,12 +100,11 @@ public class NetworkManager : MonoBehaviour {
         ipAddress = _ipAddress;
         portNum = _portNum;
     }
-    public static void SetServerDetails(int _maxPlayers, int _portNum, bool _useMasterServer, bool _useNat = true) {
-        useMasterServer = _useMasterServer;
+    public static void SetServerDetails(int _maxPlayers, int _portNum, bool _useMasterServer) {
         maxPlayers = _maxPlayers;
         portNum = _portNum;
-        useNat = _useNat;
-
+        useMasterServer = _useMasterServer;
+        useNat = _useMasterServer;
     }
     #endregion
 

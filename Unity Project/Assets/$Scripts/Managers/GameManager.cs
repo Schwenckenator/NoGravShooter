@@ -318,7 +318,7 @@ public class GameManager : MonoBehaviour {
         int portNum = 25000; // Dummy values for server creation
         int maxTutorialConnections = 1;
 
-        NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false, false);
+        NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false);
         NetworkManager.InitialiseServer();
 
         LoadLevelTutorial();

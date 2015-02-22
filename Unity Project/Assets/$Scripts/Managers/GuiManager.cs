@@ -143,7 +143,7 @@ public class GuiManager : MonoBehaviour {
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 		if(GameManager.IsAdminMode()){
-			GUI.Label(new Rect(Screen.width/2, 10, 100, 20), "TEST MODE");
+			GUI.Label(new Rect(Screen.width/2, 50, 100, 20), "TEST MODE");
 		}
 
 		if(connectingNow){
@@ -473,17 +473,14 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 30;
         settingsManager.Password = GUI.TextField(standard, settingsManager.Password);
 		
-		standard.y += 50;		
-		useMasterServer = GUI.Toggle(standard, useMasterServer, "Publish Server");
-		
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
-            CreateGame(false);
+            CreateGame(true);
 		}
 
 		standard.y += 50;
         if (GUI.Button(standard, "Create LAN Game")) {
-            CreateGame(true);
+            CreateGame(false);
         }
 		
 		standard.y += 50;
@@ -491,11 +488,11 @@ public class GuiManager : MonoBehaviour {
 			currentWindow =  Menu.MainMenu;
 		}
 	}
-    private void CreateGame(bool isLanGame) {
+    private void CreateGame(bool online) {
         settingsManager.ParsePortNumber();
 
         if (settingsManager.PortNum >= 0) { // Check for error
-            NetworkManager.SetServerDetails(MaxPlayers, settingsManager.PortNum, useMasterServer, !isLanGame);
+            NetworkManager.SetServerDetails(MaxPlayers, settingsManager.PortNum, online);
             NetworkManager.InitialiseServer();
             settingsManager.SaveSettings();
             currentWindow = Menu.Lobby;

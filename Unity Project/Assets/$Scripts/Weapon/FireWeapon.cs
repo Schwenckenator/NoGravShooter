@@ -113,20 +113,24 @@ public class FireWeapon : MonoBehaviour {
         if (hit.collider.CompareTag("Player")) {
             if (!hit.collider.networkView.isMine) {
                 hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
+                Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
             }
         } else if (hit.collider.CompareTag("BonusPickup")) {
             hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
         } else if (hit.collider.CompareTag("GrenadeMine")) {
             hit.collider.GetComponent<MineDetonation>().ForceDetonate();
         }
-        Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+        //Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 
         shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
         shot.transform.parent = cameraPos;
-        LineRenderer render = shot.GetComponent<LineRenderer>();
+        LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
 
-        render.SetPosition(0, gunFirePoint.InverseTransformPoint(gunFirePoint.position));
-        render.SetPosition(1, cameraPos.InverseTransformPoint(hit.point));
+        Vector3 startPoint = gunFirePoint.position;
+        Vector3 endPoint = hit.point;
+
+        lineRenderer.SetPosition(0, cameraPos.InverseTransformPoint(startPoint)); // TODO: Fix this shit somehow
+        lineRenderer.SetPosition(1, cameraPos.InverseTransformPoint(endPoint));
 
         //Render shot everywhere else
         networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, hit.point);

@@ -59,6 +59,8 @@ public class WeaponReloadRotation : MonoBehaviour {
 		}
 		weaponModel = Instantiate(weaponModelList[newModelNum]) as GameObject;
 
+        SetLayers(weaponModel);
+
 		weaponModel.transform.parent = transform;
 
 		weaponModel.transform.localPosition = Vector3.zero;
@@ -69,7 +71,14 @@ public class WeaponReloadRotation : MonoBehaviour {
 		newModel = false;
 	}
 
+    private void SetLayers(GameObject weapon) {
+        string layerName = "GunLayer";
+        Transform[] children = weapon.GetComponentsInChildren<Transform>();
 
+        foreach (Transform child in children) {
+            child.gameObject.layer = LayerMask.NameToLayer(layerName);
+        }
+    }
 
 
 	IEnumerator MoveDown(){ // 0.35
