@@ -57,35 +57,33 @@ public class NetworkManager : MonoBehaviour {
     #region Connect To Server
     public static void ConnectToServer() {
         if (useMasterServer) {
-            ConnectToServer(masterServerData);
+            ConnectToServer(masterServerData, settingsManager.PasswordClient);
         } else {
-            ConnectToServer(ipAddress, portNum);
+            ConnectToServer(ipAddress, portNum, settingsManager.PasswordClient);
         }
     }
 
-    public static void ConnectToServer(HostData hostData) {
-        Network.Connect(hostData);
+    public static void ConnectToServer(HostData hostData, string password) {
+        Network.Connect(hostData, password);
     }
-    public static void ConnectToServer(string ipAddress, int portNum) {
-        Network.Connect(ipAddress, portNum);
+    public static void ConnectToServer(string ipAddress, int portNum, string password) {
+        Network.Connect(ipAddress, portNum, password);
     } 
     #endregion
 
     public static void InitialiseServer() {
         if (useNat) useNat = !Network.HavePublicAddress();
+        Network.incomingPassword = settingsManager.PasswordServer;
         Network.InitializeServer(maxPlayers, portNum, useNat);
         if (useMasterServer) MasterServer.RegisterHost(GameType, settingsManager.MyServerName);
     }
-
     public static void Disconnect() {
         Network.Disconnect();
     }
-
     public static void DisableRPC() {
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
-
     private static IEnumerator EnableRPC(float waitTime) {
         yield return new WaitForSeconds(waitTime);
         
@@ -109,9 +107,6 @@ public class NetworkManager : MonoBehaviour {
     #endregion
 
     #region OnEvent
-    void OnFailedToConnect() {
-        GetComponent<GuiManager>().FailedToConnect();
-    }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
 
         string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;
@@ -128,7 +123,6 @@ public class NetworkManager : MonoBehaviour {
             Network.Disconnect();
         }
     }
-
     void OnDisconnectedFromServer() {
 
         GameManager.SetCursorVisibility(true);
@@ -151,6 +145,9 @@ public class NetworkManager : MonoBehaviour {
         networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, settingsManager.MyServerName);
     }
     void OnConnectedToServer() {
+        
+        settingsManager.ClearPasswordClient();
+
         // Set window to lobby
         guiManager.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);

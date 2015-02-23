@@ -29,7 +29,8 @@ public class SettingsManager : MonoBehaviour {
     public string PortNumStr { get; set; }
     public int PortNum { get; set; }
     public string IpAddress { get; set; }
-    public string Password { get; set; }
+    public string PasswordServer { get; set; }
+    public string PasswordClient { get; set; }
     #endregion
 
     #region PlayerControlSettings
@@ -163,7 +164,8 @@ public class SettingsManager : MonoBehaviour {
         PlayerName = PlayerPrefs.GetString("PlayerName", defaultPlayerName);
         PortNumStr = PlayerPrefs.GetString("PortNumStr", defaultPortNumStr);
         IpAddress = PlayerPrefs.GetString("IpAddress", defaultIpAddress);
-        Password = PlayerPrefs.GetString("Password", "");
+        PasswordServer = PlayerPrefs.GetString("Password", "");
+        PasswordClient = "";
 
         //Control Settings
         xMouseSensitivity = PlayerPrefs.GetFloat("xMouseSensitivity", defaultMouseSensitivity);
@@ -199,7 +201,7 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetString("PlayerName", PlayerName);
         PlayerPrefs.SetString("PortNumStr", PortNumStr);
         PlayerPrefs.SetString("IpAddress", IpAddress);
-        PlayerPrefs.SetString("Password", Password);
+        PlayerPrefs.SetString("Password", PasswordServer);
 
         // Control Settings
         PlayerPrefs.SetFloat("xMouseSensitivity", xMouseSensitivity);
@@ -243,5 +245,9 @@ public class SettingsManager : MonoBehaviour {
     }
     private void ConvertSettingsBoolToInt() {
         i_AutoPickup = AutoPickup ? 1 : 0;
+    }
+
+    public void ClearPasswordClient() {
+        PasswordClient = "";
     }
 }

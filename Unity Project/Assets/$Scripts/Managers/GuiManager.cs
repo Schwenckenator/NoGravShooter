@@ -5,13 +5,7 @@ using System.Collections.Generic;
 /// Manages the GUI and all GUI operations
 /// </summary>
 public class GuiManager : MonoBehaviour {
-    #region ConstantDeclarations
-   
-    const int SecondsInMinute = 5;
-    
-    #endregion
-
-    public enum Menu { MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions }
+    public enum Menu { MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
     public void SetCurrentMenuWindow(Menu newWindow) {
         currentWindow = newWindow;
     }
@@ -70,12 +64,13 @@ public class GuiManager : MonoBehaviour {
 	private bool displayGameSettingsWindow = false;
 	private bool displayJoinByIpWindow = false;
 	private bool displayChangeKeybindWindow = false;
+    private bool displayMasterServerPassword = false;
 
     private Rect largeRect;
     private Rect smallRect;
 	
 	private const string GameType = "NoGravShooter";
-	private const int MaxPlayers = 31;
+	private const int MaxPlayers = 16;
 	
 	private bool useMasterServer = false;
 	private HostData masterServerData;
@@ -88,6 +83,7 @@ public class GuiManager : MonoBehaviour {
 	private bool mouseInverted = false;
 	
 	private bool connectionError = false;
+    private string connectionErrorMessage;
 	private bool connectingNow = false;
 	
 	private bool autoPickupEnabled = false;
@@ -205,6 +201,9 @@ public class GuiManager : MonoBehaviour {
 		if(displayChangeKeybindWindow){
 			GUI.ModalWindow((int) Menu.ChangeKeybind, smallRect, ChangeKeybindWindow, "Press new key");
 		}
+        if (displayMasterServerPassword) {
+            GUI.ModalWindow((int)Menu.PasswordInput, smallRect, PasswordInputWindow, "Password Required!");
+        }
 	}
 	#endregion
 
@@ -471,7 +470,7 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;	
 		GUI.Label(standard, "Password Required");
 		standard.y += 30;
-        settingsManager.Password = GUI.TextField(standard, settingsManager.Password);
+        settingsManager.PasswordServer = GUI.TextField(standard, settingsManager.PasswordServer);
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
@@ -530,7 +529,11 @@ public class GuiManager : MonoBehaviour {
 			if(GUI.Button(rectJoinButton, "Join Game")){
 				masterServerData = servers[i];
 				useMasterServer = true;
-				currentWindow =  Menu.Connecting;
+                if (masterServerData.passwordProtected) {
+                    displayMasterServerPassword = true;
+                } else { 
+                    currentWindow = Menu.Connecting; 
+                }
 			}
 		}
 		
@@ -560,6 +563,11 @@ public class GuiManager : MonoBehaviour {
         settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
 
         standard.y += 50;
+        GUI.Label(standard, "Password");
+        standard.y += 30;
+        settingsManager.PasswordClient = GUI.TextField(standard, settingsManager.PasswordClient);
+
+        standard.y += 50;
         if (GUI.Button(standard, "Join Game")) {
             displayJoinByIpWindow = false;
             settingsManager.ParsePortNumber();
@@ -575,6 +583,25 @@ public class GuiManager : MonoBehaviour {
         standard.y = smallRect.height - 50;
         if (GUI.Button(standard, "Close")) {
             displayJoinByIpWindow = false;
+        }
+    }
+
+    void PasswordInputWindow(int windowId) {
+        Rect standard = new Rect(20, 20, smallRect.width - 40, 30);
+
+        GUI.Label(standard, "Password");
+        standard.y += 30;
+        settingsManager.PasswordClient = GUI.TextField(standard, settingsManager.PasswordClient);
+
+        standard.y += 50;
+        if (GUI.Button(standard, "Submit Password")) {
+            displayMasterServerPassword = false;
+            currentWindow = Menu.Connecting;
+        }
+
+        standard.y = smallRect.height - 50;
+        if (GUI.Button(standard, "Cancel")) {
+            displayMasterServerPassword = false;
         }
     }
 	#endregion
@@ -890,7 +917,7 @@ public class GuiManager : MonoBehaviour {
 		if(!connectionError){
 			GUI.Box (standard, "Connecting....", style);
 		}else{
-			GUI.Box (standard, "An error occured.", style);
+			GUI.Box (standard, "An error occured.\n"+connectionErrorMessage, style);
 			
 			standard.y = smallRect.height-50;
 			standard.height = 30;
@@ -1008,7 +1035,10 @@ public class GuiManager : MonoBehaviour {
 		tutePromptShown = delay;
 	}
 
-	public void FailedToConnect(){
+	void OnFailedToConnect(NetworkConnectionError error){
 		connectionError = true;
+        connectionErrorMessage = error.ToString();
+        
+        settingsManager.ClearPasswordClient();
 	}
 }
