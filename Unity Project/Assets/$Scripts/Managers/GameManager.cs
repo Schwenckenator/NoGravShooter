@@ -36,7 +36,6 @@ public class GameManager : MonoBehaviour {
 
     private static bool playerMenu;
 
-	private MouseLook cameraLook;
 	private CameraMove cameraMove;
 	private FireWeapon fireWeapon;
 	private PlayerResources playerResources;
@@ -177,8 +176,8 @@ public class GameManager : MonoBehaviour {
 		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
-                cameraLook = GetPlayerCameraMouseLook(player);
-				cameraLook.SetYDirection(settingsManager.MouseYDirection);
+                GetPlayerCameraMouseLook(player).SetYDirection(settingsManager.MouseYDirection);
+                player.GetComponent<MouseLook>().SetYDirection(settingsManager.MouseYDirection);
 
 				fireWeapon = player.GetComponent<FireWeapon>();
 				playerResources = player.GetComponent<PlayerResources>();
