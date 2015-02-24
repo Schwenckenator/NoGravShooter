@@ -54,7 +54,7 @@ public class MineDetonation : MonoBehaviour {
         GetComponent<StickyObject>().UnStick();
         Vector3 popUpDir = GetPopUpDirection();
         float popUpDistance = 3f;
-        float boomDelay = 0.5f;
+        float boomDelay = 0.25f;
         float popUpForce = popUpDistance / boomDelay;
 
         rigidbody.AddForce(popUpDir * popUpForce, ForceMode.Impulse);
