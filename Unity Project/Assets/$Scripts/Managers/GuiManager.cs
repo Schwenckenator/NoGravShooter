@@ -912,6 +912,7 @@ public class GuiManager : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
         gameManager.LoadLevel();
+        countdown = false;
     }
 	#endregion
 
@@ -978,26 +979,15 @@ public class GuiManager : MonoBehaviour {
 		}
 
         GUI.Box(new Rect(20, 100, largeRect.width / 3, largeRect.height - 190), PlayerList(), upperLeftTextAlign);
-		
-		if(Network.isServer){
-            if (GameManager.IsTutorialScene()) {
-                if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Simulation")) {
-                    gameManager.BackToMainMenu();
-                }
-            } else {
-                if (GUI.Button(new Rect(20, largeRect.height - 80, largeRect.width / 3, 30), "Return to Lobby")) {
-                    gameManager.ReturnToLobby();
-                }
-                if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), "Shutdown Server")) {
-                    gameManager.BackToMainMenu();
-                }
-            }
 
-		}else{
-			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Disconnect")){
-                gameManager.BackToMainMenu();
-			}
-		}
+        if (!GameManager.IsTutorialScene() && Network.isServer) {
+            if (GUI.Button(new Rect(20, largeRect.height - 80, largeRect.width / 3, 30), "Return to Lobby")) {
+                gameManager.ReturnToLobby();
+            }
+        }
+        if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), DisconnectButtonText())) {
+            gameManager.BackToMainMenu();
+        }
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), ChatManager.SubmittedChat, lowerLeftTextAlign);
 
@@ -1019,6 +1009,16 @@ public class GuiManager : MonoBehaviour {
 		}
 		
 	}
+
+    private string DisconnectButtonText() {
+        string message;
+        if (Network.isServer) {
+            message = GameManager.IsTutorialScene() ? "Shutdown Simulation" : "Shutdown Server";
+        } else {
+            message = "Disconnect";
+        }
+        return message;
+    }
 
     private string PlayerList() {
         string playerNames = "";

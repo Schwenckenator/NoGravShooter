@@ -25,6 +25,7 @@ public class DestroyManager : MonoBehaviour {
         if (Network.isServer) {
             AddToDestroyBufferIfUnique(viewID);
         } else {
+            ChatManager.DebugMessage("I am a client.");
             networkView.RPC("AddToDestroyList", RPCMode.Server, viewID);
         }
 
@@ -34,7 +35,11 @@ public class DestroyManager : MonoBehaviour {
             throw new System.AccessViolationException("Is client when it needs to be server.");
         }
         // Check for uniqueness
-        if (DestroyBuffer.Contains(viewID) || DestroyedObjects.Contains(viewID)) return;
+        if (DestroyBuffer.Contains(viewID) || DestroyedObjects.Contains(viewID)) {
+            ChatManager.DebugMessage("viewID not unique. Not destroying.");
+            return;
+        }
+            
 
         DestroyBuffer.Add(viewID);
         if (!willDestroy) {
@@ -55,6 +60,7 @@ public class DestroyManager : MonoBehaviour {
         yield return new WaitForEndOfFrame();
 
         foreach (NetworkViewID viewID in DestroyBuffer) {
+            ChatManager.DebugMessage("Destroying viewID: "+viewID.ToString());
             DestroyedObjects.Add(viewID);
             this.Destroy(viewID);
         }

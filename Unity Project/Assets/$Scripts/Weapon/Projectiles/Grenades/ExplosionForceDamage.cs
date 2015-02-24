@@ -22,7 +22,7 @@ public class ExplosionForceDamage : MonoBehaviour {
 
 	void Bang(){
 
-        ChatManager.DebugMessage("Explosion. Owner Player Number: " + GetComponent<Owner>().ID.ToString());
+        //ChatManager.DebugMessage("Explosion. Owner Player Number: " + GetComponent<Owner>().ID.ToString());
 
 		Collider[] hits;
 		hits = Physics.OverlapSphere(transform.position, explosionRadius);

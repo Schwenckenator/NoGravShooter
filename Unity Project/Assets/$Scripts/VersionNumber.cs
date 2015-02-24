@@ -25,9 +25,8 @@ public class VersionNumber : MonoBehaviour{
   }
 
   void OnGUI (){
-    if (!ShowVersionInformation) {
-      return;
-    }
+    if (!ShowVersionInformation) return;
+    
     GUI.contentColor = Color.white;
     GUI.Label (position, string.Format ("v{0}", Version));
   }

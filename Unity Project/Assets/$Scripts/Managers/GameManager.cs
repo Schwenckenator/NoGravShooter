@@ -277,6 +277,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void LoadLevel() {
+        if (Network.isClient) {
+            throw new System.AccessViolationException("Is client when it needs to be server.");
+        }
+        GetComponent<DestroyManager>().ClearDestroyLists();
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, settingsManager.LevelName, NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
     }
     private void LoadLevelTutorial() {
@@ -285,7 +289,6 @@ public class GameManager : MonoBehaviour {
 
     [RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame) {
-
 
         //stops tutorial scripts showing after you leave and start a game
         guiManager.TutorialPrompt("", 0);
@@ -296,6 +299,7 @@ public class GameManager : MonoBehaviour {
             GetComponent<ScoreVictoryManager>().GameStart();
             endTime = Time.time + secondsOfGame;
             ChatManager.ClearAllChat();
+
         } else {
             GameInProgress = false;
         }
