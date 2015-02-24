@@ -93,7 +93,7 @@ public class GuiManager : MonoBehaviour {
 	private bool GrenadeSpawning = true;
 	private bool WeaponSpawning = true;
 
-   
+    private bool countdown = false;
 
 	
 	private int chatboxwidth = 500;
@@ -864,9 +864,11 @@ public class GuiManager : MonoBehaviour {
 	#region LobbyWindow
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
+            GUI.enabled = !countdown;
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
-                StartCoroutine(CountdownStartGame());
+                 StartCoroutine("CountdownStartGame");
 			}
+            GUI.enabled = true;
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
 			}
@@ -877,6 +879,8 @@ public class GuiManager : MonoBehaviour {
         string message = Network.isServer ? "Shutdown Server": "Disconnect";
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), message)) {
             NetworkManager.Disconnect();
+            if (countdown) StopCoroutine("CountdownStartGame");
+            countdown = false;
         }
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 20, (largeRect.width*2/3)-60, largeRect.height - 80), ChatManager.SubmittedChat, lowerLeftTextAlign);
@@ -900,6 +904,7 @@ public class GuiManager : MonoBehaviour {
             gameManager.LoadLevel();
             yield break;
         }
+        countdown = true;
         int waitSeconds = 5;
         chatManager.AddToChat("Game starting in...");
         do {
@@ -953,7 +958,7 @@ public class GuiManager : MonoBehaviour {
         }
 
 		if(gameManager.IsPlayerSpawned()){
-            string strReturnToGame = "Return to Game"; if (GameManager.IsTutorialScene()) strReturnToGame = "Return to Simulation";
+            string strReturnToGame = GameManager.IsTutorialScene() ? "Return to Simulation" : "Return to Game";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
 				gameManager.SetPlayerMenu(false);
 				GameManager.SetCursorVisibility(false);
