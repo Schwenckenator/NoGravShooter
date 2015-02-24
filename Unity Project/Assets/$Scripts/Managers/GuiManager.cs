@@ -865,8 +865,7 @@ public class GuiManager : MonoBehaviour {
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
 			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
-                gameManager.LoadLevel();
-                
+                StartCoroutine(CountdownStartGame());
 			}
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
@@ -875,16 +874,10 @@ public class GuiManager : MonoBehaviour {
 		
 
 		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), PlayerList(), upperLeftTextAlign);
-		
-		if(Network.isServer){
-			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Shutdown Server")){
-				NetworkManager.Disconnect();
-			}
-		}else{
-			if(GUI.Button(new Rect(20, largeRect.height-40, largeRect.width/3, 30), "Disconnect")){
-				NetworkManager.Disconnect();
-			}
-		}
+        string message = Network.isServer ? "Shutdown Server": "Disconnect";
+        if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), message)) {
+            NetworkManager.Disconnect();
+        }
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 20, (largeRect.width*2/3)-60, largeRect.height - 80), ChatManager.SubmittedChat, lowerLeftTextAlign);
 		
@@ -892,15 +885,29 @@ public class GuiManager : MonoBehaviour {
 		
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			chatManager.AddToChat(ChatManager.currentChat);
+			chatManager.AddToChat(ChatManager.currentChat, true);
 			ChatManager.ClearCurrentChat();
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			chatManager.AddToChat(ChatManager.currentChat);
+			chatManager.AddToChat(ChatManager.currentChat, true);
 			ChatManager.ClearCurrentChat();
 		}
 	}
+
+    IEnumerator CountdownStartGame() {
+        if (GameManager.IsAdminMode()) {
+            gameManager.LoadLevel();
+            yield break;
+        }
+        int waitSeconds = 5;
+        chatManager.AddToChat("Game starting in...");
+        do {
+            chatManager.AddToChat(waitSeconds.ToString() + "...");
+            yield return new WaitForSeconds(1.0f);
+        } while (waitSeconds-- > 0);
+        gameManager.LoadLevel();
+    }
 	#endregion
 
 	#region ConnectingWindow
@@ -996,13 +1003,13 @@ public class GuiManager : MonoBehaviour {
 		// Choo choo, all aboard the dodgy train
 		if(!GameManager.IsTutorialScene()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-				chatManager.AddToChat(ChatManager.currentChat);
+				chatManager.AddToChat(ChatManager.currentChat, true);
 				ChatManager.ClearCurrentChat();
 			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			chatManager.AddToChat(ChatManager.currentChat);
+			chatManager.AddToChat(ChatManager.currentChat, true);
 			ChatManager.ClearCurrentChat();
 		}
 		

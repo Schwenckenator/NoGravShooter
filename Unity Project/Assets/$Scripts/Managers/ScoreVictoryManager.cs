@@ -56,7 +56,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         foreach (Player player in NetworkManager.connectedPlayers) {
             if (player.IsScoreEqualOrOver(settingsManager.ScoreToWin)) {
                 if (Network.isServer) {
-                    chatManager.AddToChat(player.Name + " wins!", false);
+                    chatManager.AddToChat(player.Name + " wins!");
                 }
                 gameManager.EndGame(player);
                 break;
@@ -74,8 +74,8 @@ public class ScoreVictoryManager : MonoBehaviour {
             }
         }
         if (Network.isServer) {
-            chatManager.AddToChat("Time is up.", false);
-            chatManager.AddToChat(winningPlayer.Name + " wins!", false);
+            chatManager.AddToChat("Time is up.");
+            chatManager.AddToChat(winningPlayer.Name + " wins!");
         }
         gameManager.EndGame(winningPlayer);
     }

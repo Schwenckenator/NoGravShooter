@@ -36,7 +36,7 @@ public class Assassinations : MonoBehaviour {
 						gameManager.GetComponent<GuiManager>().ButtonPrompt("Assassinate", (int)SettingsManager.KeyBind.Interact);
                         if (Input.GetKey(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact])) {
 							Debug.Log("stab stab stab.");
-                            chatManager.AddToChat("Assassinated " + hit.transform.FindChild("NameText").GetComponent<TextMesh>().text + "!");
+                            chatManager.AddToChat("Assassinated " + hit.transform.FindChild("NameText").GetComponent<TextMesh>().text + "!", true);
                             playerResource.TakeDamage(100, Network.player);
 						}
 					}

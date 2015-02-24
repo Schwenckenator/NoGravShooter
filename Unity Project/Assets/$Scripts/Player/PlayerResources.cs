@@ -102,7 +102,7 @@ public class PlayerResources : MonoBehaviour {
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(100, Network.player);
-			chatManager.AddToChat("committed Seppuku!");
+			chatManager.AddToChat("committed Seppuku!", true);
 		}
 
         WeaponSmokeCheck();
@@ -279,11 +279,11 @@ public class PlayerResources : MonoBehaviour {
 				if(killer != null && weaponID != -1){
 					if(killer.ID != Network.player){
                         string killMessage = killer.Name + KillMessageGenerator(weaponID) + settingsManager.PlayerName;
-                        chatManager.AddToChat(killMessage, false);
+                        chatManager.AddToChat(killMessage);
 						gameManager.GetComponent<ScoreVictoryManager>().PointScored(killer.ID);
 					} else {
                         string killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
-                        chatManager.AddToChat(killMessage, false);
+                        chatManager.AddToChat(killMessage);
                         gameManager.GetComponent<ScoreVictoryManager>().Suicide(killer.ID);
 					}
 				}

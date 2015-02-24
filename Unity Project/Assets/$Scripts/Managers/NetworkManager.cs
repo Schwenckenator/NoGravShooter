@@ -111,7 +111,7 @@ public class NetworkManager : MonoBehaviour {
 
         string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;
         message += " has disconnected.";
-        chatManager.AddToChat(message, false);
+        chatManager.AddToChat(message);
 
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
@@ -153,7 +153,7 @@ public class NetworkManager : MonoBehaviour {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
         
         string message = settingsManager.PlayerName + " has connected.";
-        chatManager.AddToChat(message, false);
+        chatManager.AddToChat(message);
     }
     #endregion
 

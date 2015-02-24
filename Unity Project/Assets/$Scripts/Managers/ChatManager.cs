@@ -24,7 +24,7 @@ public class ChatManager : MonoBehaviour {
         submittedChatList = new List<string>();
     }
 
-    public void AddToChat(string input, bool addPlayerPrefix = true) {
+    public void AddToChat(string input, bool addPlayerPrefix = false) {
         if (input != "") {
             string newChat = "";
             if (addPlayerPrefix) {
