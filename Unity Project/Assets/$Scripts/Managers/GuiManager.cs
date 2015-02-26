@@ -392,6 +392,9 @@ public class GuiManager : MonoBehaviour {
         Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
         GUI.Box(scoreBoard, scoreBoardText);
     }
+    bool IsDisplayTimer() {
+        return !GameManager.IsTutorialScene();
+    }
     void TimerGUI() {
 
         float timeLeftMins = Mathf.Floor((gameManager.endTime - Time.time) / 60);
@@ -954,7 +957,7 @@ public class GuiManager : MonoBehaviour {
 
 	#region PauseWindow
 	void PauseWindow(int windowId){
-        if (!GameManager.IsTutorialScene()) {
+        if (IsDisplayTimer()) {
             TimerGUI(); // Display the timer even when paused
         }
 
