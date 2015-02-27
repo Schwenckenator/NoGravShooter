@@ -12,7 +12,7 @@ public class FloatingRotation : MonoBehaviour {
         float delay = Random.Range(0.5f, 1.5f);
         yield return new WaitForSeconds(delay);
 
-        Vector3 random = new Vector3(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1));
+        Vector3 random = new Vector3(Random.Range(-2, 2), Random.Range(-2, 2), Random.Range(-2, 2));
         rigidbody.AddTorque(random);
     }
 }

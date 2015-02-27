@@ -615,27 +615,69 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity X: ");
         settingsManager.xMouseSensitivity = (float)System.Math.Round(settingsManager.xMouseSensitivity, 2);
-        settingsManager.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.xMouseSensitivity.ToString()));
+        settingsManager.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), settingsManager.xMouseSensitivity.ToString()));
 		standard.y += 20;
         settingsManager.xMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.xMouseSensitivity, 0, 1);
 		
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity Y: ");
         settingsManager.yMouseSensitivity = (float)System.Math.Round(settingsManager.yMouseSensitivity, 2);
-        settingsManager.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.yMouseSensitivity.ToString()));
+        settingsManager.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), settingsManager.yMouseSensitivity.ToString()));
 		standard.y += 20;
         settingsManager.yMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.yMouseSensitivity, 0, 1);
 		
 		standard.y += 40;
 		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
-		autoPickupEnabled = GUI.Toggle(new Rect(standard.x+150, standard.y,  300, 30), autoPickupEnabled, "Automatically switch to new weapons");
+		autoPickupEnabled = GUI.Toggle(new Rect(standard.x+100, standard.y,  250, 30), autoPickupEnabled, "Automatically switch to new weapons");
 		
 		standard.y += 50;
 		GUI.Label(standard, "Field Of View: ");
         settingsManager.FieldOfView = (float)System.Math.Round(settingsManager.FieldOfView, 1);
-        settingsManager.FieldOfView = float.Parse(GUI.TextField(new Rect(300, standard.y, 50, 20), settingsManager.FieldOfView.ToString()));
+        settingsManager.FieldOfView = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), settingsManager.FieldOfView.ToString()));
 		standard.y += 20;
         settingsManager.FieldOfView = GUI.HorizontalSlider(standard, settingsManager.FieldOfView, 50, 100);
+		
+		
+		standard.x += standard.width+50;
+		standard.y -= 200;
+		
+		GUI.Label(standard, "Colour (Red): ");
+		standard.x += 20;
+        settingsManager.ColourR = (float)System.Math.Round(settingsManager.ColourR, 2);
+		standard.y += 20;
+        settingsManager.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), settingsManager.ColourR.ToString()));
+		standard.y += 20;
+		standard.x -= 20;
+		settingsManager.ColourR = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), settingsManager.ColourR, 1, 0);
+		
+		standard.y -= 40;
+		standard.x += 100;
+		
+		GUI.Label(standard, "Colour (Green): ");
+		standard.x += 20;
+        settingsManager.ColourG = (float)System.Math.Round(settingsManager.ColourG, 2);
+		standard.y += 20;
+        settingsManager.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), settingsManager.ColourG.ToString()));
+		standard.y += 20;
+		standard.x -= 20;
+		settingsManager.ColourG = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), settingsManager.ColourG, 1, 0);
+		
+		standard.y -= 40;
+		standard.x += 100;
+		
+		GUI.Label(standard, "Colour (Blue): ");
+		standard.x += 20;
+        settingsManager.ColourB = (float)System.Math.Round(settingsManager.ColourB, 2);
+		standard.y += 20;
+        settingsManager.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), settingsManager.ColourB.ToString()));
+		standard.y += 20;
+		standard.x -= 20;
+		settingsManager.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), settingsManager.ColourB, 1, 0);
+		
+		
+		standard.x -= standard.width+250;
+		standard.y += 160;
+		
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Edit Keybinds")){

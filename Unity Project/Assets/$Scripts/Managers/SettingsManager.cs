@@ -87,6 +87,11 @@ public class SettingsManager : MonoBehaviour {
     public int MedkitCanSpawn { get; set; }
     public int GrenadeCanSpawn { get; set; }
     public int WeaponCanSpawn { get; set; } 
+	
+	//Colour setting
+    public float ColourR { get; set; }
+    public float ColourG { get; set; }
+    public float ColourB { get; set; }
     #endregion
 
     #region PlayerPrefsKeys
@@ -182,6 +187,11 @@ public class SettingsManager : MonoBehaviour {
         MedkitCanSpawn = PlayerPrefs.GetInt("MedkitCanSpawn", i_True);
         GrenadeCanSpawn = PlayerPrefs.GetInt("GrenadeCanSpawn", i_True);
         WeaponCanSpawn = PlayerPrefs.GetInt("WeaponCanSpawn", i_True);
+		
+		//Colour setting
+		ColourR = PlayerPrefs.GetFloat("ColourR", 0.6f);
+		ColourG = PlayerPrefs.GetFloat("ColourG", 0.6f);
+		ColourB = PlayerPrefs.GetFloat("ColourB", 0.6f);
 
         ScoreToWin = PlayerPrefs.GetInt("ScoreToWin", 20);
         TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
@@ -218,6 +228,11 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetInt("MedkitCanSpawn", MedkitCanSpawn);
         PlayerPrefs.SetInt("GrenadeCanSpawn", GrenadeCanSpawn);
         PlayerPrefs.SetInt("WeaponCanSpawn", WeaponCanSpawn);
+		
+		//Colour setting
+		PlayerPrefs.SetFloat("ColourR", ColourR);
+		PlayerPrefs.SetFloat("ColourG", ColourG);
+		PlayerPrefs.SetFloat("ColourB", ColourB);
 
         PlayerPrefs.SetInt("ScoreToWin", ScoreToWin);
         PlayerPrefs.SetInt("TimeLimitMin", TimeLimitMin);
