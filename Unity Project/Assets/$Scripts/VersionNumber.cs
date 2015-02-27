@@ -3,31 +3,33 @@ using System.Reflection;
 
 [assembly:AssemblyVersion ("1.0.*")]
 public class VersionNumber : MonoBehaviour{
-  public bool ShowVersionInformation = true;
-  string version;
-  Rect position = new Rect (0, 0, 100, 20);
-  public string Version {
-    get {
-      if (version == null) {
-        version = Assembly.GetExecutingAssembly ().GetName ().Version.ToString ();
-      }
-      return version;
-    }
-  }
+    public bool ShowVersionInformation = true;
 
-  void Start (){
-    DontDestroyOnLoad (this);
-	// Log current version in log file
-    Debug.Log (string.Format ("Currently running version is {0}", Version));
-	position.y = 10f;
-    position.x = Screen.width - position.width - 10f;
-
-  }
-
-  void OnGUI (){
-    if (!ShowVersionInformation) return;
+    Rect position = new Rect (0, 0, 100, 20);
     
-    GUI.contentColor = Color.white;
-    GUI.Label (position, string.Format ("v{0}", Version));
-  }
+    private string version;
+    public string Version {
+        get {
+            if (version == null) {
+                version = Assembly.GetExecutingAssembly ().GetName ().Version.ToString ();
+            }
+            return version;
+        }
+    }
+
+    void Start (){
+        DontDestroyOnLoad (this);
+	    // Log current version in log file
+        Debug.Log (string.Format ("Currently running version is {0}", Version));
+	    position.y = 10f;
+        position.x = Screen.width - position.width - 10f;
+
+    }
+
+    void OnGUI (){
+        if (!ShowVersionInformation) return;
+    
+        GUI.contentColor = Color.white;
+        GUI.Label (position, string.Format ("v{0}", Version));
+    }
 }

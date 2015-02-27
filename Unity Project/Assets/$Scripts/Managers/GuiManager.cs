@@ -909,11 +909,17 @@ public class GuiManager : MonoBehaviour {
 	#region LobbyWindow
 	void LobbyWindow(int windowId){
 		if(Network.isServer){
-            GUI.enabled = !countdown;
-			if(GUI.Button(new Rect(20, 20, largeRect.width/3, 30), "Start Game")){
-                 StartCoroutine("CountdownStartGame");
+            string startGameText = countdown ? "Cancel" : "Start Game";
+
+            if (GUI.Button(new Rect(20, 20, largeRect.width / 3, 30), startGameText)) {
+                if (countdown) {
+                    StopCoroutine("CountdownStartGame");
+                    chatManager.AddToChat("Countdown cancelled.");
+                    countdown = false;
+                } else {
+                    StartCoroutine("CountdownStartGame");
+                }
 			}
-            GUI.enabled = true;
 			if(GUI.Button(new Rect(20, 60, largeRect.width/3, 30), "Settings")){
 				displayGameSettingsWindow = true;
 			}

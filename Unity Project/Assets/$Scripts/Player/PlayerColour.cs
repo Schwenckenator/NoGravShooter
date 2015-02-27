@@ -23,17 +23,13 @@ public class PlayerColour : MonoBehaviour {
         if (pickedColour < 0) { // Need to pick colour
             pickedColour = PickColourRandom();
         }
-        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, pickedColour);
+        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
+
+        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, settingsManager.ColourR, settingsManager.ColourG, settingsManager.ColourB);
     }
 
     [RPC]
-    private void RPCAssignPlayerColour(int colour) {
-        //transform.FindChild(playerGraphicsName).renderer.material = playerColours[colour];
-		GameObject manager = GameObject.FindGameObjectWithTag("GameController");
-		settingsManager = manager.GetComponent<SettingsManager>();
-		RedVal = settingsManager.ColourR;
-		GreenVal = settingsManager.ColourG;
-		BlueVal = settingsManager.ColourB;
+    private void RPCAssignPlayerColour(float RedVal, float GreenVal, float BlueVal) {
 		transform.FindChild(playerGraphicsName).renderer.material.color = new Color(RedVal, GreenVal, BlueVal);
     }
 

@@ -63,6 +63,7 @@ public class PlayerResources : MonoBehaviour {
 	private bool isJetpackDisabled = false;
 	private bool isWeaponBusy = false;
 	private bool isDying = false;
+    private bool isDamageSound = false;
 
 	private WeaponSuperClass currentWeapon;
 	#endregion
@@ -111,7 +112,6 @@ public class PlayerResources : MonoBehaviour {
     private bool isWeaponFull() {
         return GetCurrentClip() == GetMaxClip();
     }
-
     private void WeaponSmokeCheck() {
         if (heat > maxHeat) {
             smokeParticle.emissionRate = 10;
@@ -195,18 +195,12 @@ public class PlayerResources : MonoBehaviour {
 			return false;
 		}
 	}
-
 	public void PickUpGrenades(int amount, int grenadeId){
 		grenades[grenadeId] += amount;
 	}
-	
 	public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1){
 		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
 	}
-
-    private void PlaySoundTakeDamage() {
-        if(networkView.isMine) helmetAudio.PlayOneShot(soundTakeDamage);
-    }
 
 	public void RestoreHealth(int restore){
 		health += restore;
@@ -214,7 +208,6 @@ public class PlayerResources : MonoBehaviour {
 			health = maxHealth;
 		}
 	}
-
 	public void WeaponFired(float addedHeat){
 		StopCoroutine("WeaponReload");
 		audio.Stop();
@@ -256,13 +249,25 @@ public class PlayerResources : MonoBehaviour {
 		}
 	}
 	#endregion
-
+    
+    private void PlaySoundTakeDamage() {
+        if (networkView.isMine && !isDamageSound) {
+            isDamageSound = true;
+            StartCoroutine(PlaySoundTakeDamageCo());
+        }
+    }
+    private IEnumerator PlaySoundTakeDamageCo() {
+        yield return new WaitForEndOfFrame();
+        helmetAudio.PlayOneShot(soundTakeDamage);
+        isDamageSound = false;
+    }
 	#region RPC
 
 	[RPC]
 	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponID){
 
 		if(isDying) return; // Don't bother if you are already dying
+
         PlaySoundTakeDamage();
         health -= damage;
 		if(health <= minHealth){
@@ -272,20 +277,20 @@ public class PlayerResources : MonoBehaviour {
 	}
 
     void Die(Player killer, int weaponID) {
-        			health = minHealth;
+        	health = minHealth;
 			isDying = true;//You is dead nigs
 
 			if(networkView.isMine){
 				if(killer != null && weaponID != -1){
+                    string killMessage;
 					if(killer.ID != Network.player){
-                        string killMessage = killer.Name + KillMessageGenerator(weaponID) + settingsManager.PlayerName;
-                        chatManager.AddToChat(killMessage);
+                        killMessage = killer.Name + KillMessageGenerator(weaponID) + settingsManager.PlayerName;
 						gameManager.GetComponent<ScoreVictoryManager>().PointScored(killer.ID);
 					} else {
-                        string killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
-                        chatManager.AddToChat(killMessage);
+                        killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
                         gameManager.GetComponent<ScoreVictoryManager>().Suicide(killer.ID);
 					}
+                    chatManager.AddToChat(killMessage);
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
 				StartCoroutine(PlayerCleanup());
@@ -402,7 +407,6 @@ public class PlayerResources : MonoBehaviour {
 		currentWeapon.remainingAmmo = Mathf.Max (currentWeapon.remainingAmmo, 0);
 		isReloading = false;
 	}
-
 	IEnumerator WeaponChange(){
 		audio.PlayOneShot(soundChangeWeapon);
 		isWeaponBusy = true;
@@ -411,7 +415,6 @@ public class PlayerResources : MonoBehaviour {
 		yield return new WaitForSeconds(waitTime);
 		isWeaponBusy = false;
 	}
-
 	public void ChangeWeapon(WeaponSuperClass newWeapon){
 		if(!isWeaponBusy){
 			currentWeapon = newWeapon;
@@ -419,17 +422,13 @@ public class PlayerResources : MonoBehaviour {
 			heat = 0;
 		}
 	}
-
 	public void ChangeGrenade(){
 		currentGrenadeType++;
 		currentGrenadeType %= grenadeTypes; // Keep value within range
 	}
-	
 	public void ChangeGrenade(int typeOfGrenade){
 		currentGrenadeType = typeOfGrenade;
 	}
-	
-
 	public int GetCurrentClip(){
 		return currentWeapon.currentClip;
 	}
@@ -439,11 +438,9 @@ public class PlayerResources : MonoBehaviour {
 	public int GetRemainingAmmo(){
 		return currentWeapon.remainingAmmo;
 	}
-
 	public bool IsJetpackDisabled(){
 		return isJetpackDisabled;
 	}
-
 	public bool IsWeaponBusy(){
 		return isWeaponBusy;
 	}
