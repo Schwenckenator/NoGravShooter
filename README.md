@@ -9,6 +9,7 @@ S = Walk/Fly Backwards<br />
 D = Walk/Fly Right<br />
 Space = Jump/Fly Up<br />
 Shift = Crouch/Fly Down<br />
+X = Brake/Slow Down<br />
 Q = Lean/Rotate Left<br />
 E = Lean/Rotate Right
 
@@ -19,17 +20,14 @@ Mousewheeldown = Next Weapon
 
 R = Reload<br />
 G = Grenade<br />
-F = Interact
+F = Interact<br />
+H = Change Grenade
 
-1 = Laser Rifle<br />
-2 = Assault Rifle<br />
-3 = Beam Sniper<br />
-4 = Shotgun<br />
-5 = Force Cannon
-
-6 = Rocket Launcher<br />
-7 = Plasma Blaster
-
-8 = Proximity Mines<br />
-9 = Gravity Wells<br />
-0 = EMP Generators
+1 = Assault Rifle<br />
+2 = Laser Rifle<br />
+3 = Sniper Rifle<br />
+5 = Beam Sniper<br />
+5 = Shotgun<br />
+6 = Force Cannon<br />
+7 = Rocket Launcher<br />
+8 = Plasma Blaster
