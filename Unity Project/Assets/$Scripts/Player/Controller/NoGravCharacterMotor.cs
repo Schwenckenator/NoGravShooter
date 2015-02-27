@@ -187,17 +187,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
     }
 
     private float ClampValue(float value) {
-        float minVelocity = 0.5f;
-
         float normalClamp = 1.0f;
-        float smallClamp = 0.01f;
-
-        if (value < minVelocity && value > -minVelocity) {
-            value = Mathf.Clamp(value, -smallClamp, smallClamp);
-        } else {
-            value = Mathf.Clamp(value, -normalClamp, normalClamp);
-        }
-        
+        value = Mathf.Clamp(value, -normalClamp, normalClamp);
         
         return value;
     }
