@@ -60,6 +60,15 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 	void Update(){
+		if(shot != null){
+			shot.transform.parent = cameraPos;
+			LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
+			gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
+			Vector3 startPoint = gunFirePoint.position;
+			lineRenderer.SetPosition(0, startPoint);
+		}
+		
+	
 
         MouseWheelWeaponChange();
 
@@ -120,7 +129,7 @@ public class FireWeapon : MonoBehaviour {
         } else if (hit.collider.CompareTag("GrenadeMine")) {
             hit.collider.GetComponent<MineDetonation>().ForceDetonate();
         }
-        //Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+        Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 
         shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
         shot.transform.parent = cameraPos;
@@ -129,8 +138,11 @@ public class FireWeapon : MonoBehaviour {
         Vector3 startPoint = gunFirePoint.position;
         Vector3 endPoint = hit.point;
 
-        lineRenderer.SetPosition(0, cameraPos.InverseTransformPoint(startPoint)); // TODO: Fix this shit somehow
-        lineRenderer.SetPosition(1, cameraPos.InverseTransformPoint(endPoint));
+        //lineRenderer.SetPosition(0, cameraPos.InverseTransformPoint(startPoint)); // TODO: Fix this shit somehow
+        //lineRenderer.SetPosition(1, cameraPos.InverseTransformPoint(endPoint));
+		
+        lineRenderer.SetPosition(0, startPoint);
+        lineRenderer.SetPosition(1, endPoint);
 
         //Render shot everywhere else
         networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, hit.point);
