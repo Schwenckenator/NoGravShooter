@@ -61,11 +61,24 @@ public class FireWeapon : MonoBehaviour {
     }
 	void Update(){
 		if(shot != null){
-			shot.transform.parent = cameraPos;
-			LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
-			gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-			Vector3 startPoint = gunFirePoint.position;
-			lineRenderer.SetPosition(0, startPoint);
+			GameObject[] shots = GameObject.FindGameObjectsWithTag("Shot");
+			foreach(GameObject shotRay in shots){
+				Vector3 shotDir = cameraPos.forward;
+				float angle1 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+				float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+				shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
+				shotRay.transform.parent = cameraPos;
+				LineRenderer lineRenderer = shotRay.GetComponent<LineRenderer>();
+				//get updated start point
+				gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
+				Vector3 startPoint = gunFirePoint.position;
+				lineRenderer.SetPosition(0, startPoint);
+				//get updated end point
+				RaycastHit hit;
+				Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
+				Vector3 endPoint = hit.point;
+				lineRenderer.SetPosition(1, endPoint);
+			}
 		}
 		
 	
@@ -102,12 +115,19 @@ public class FireWeapon : MonoBehaviour {
             SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
         }
         if (currentWeapon.hasRecoil) {
-            motor.Recoil(currentWeapon.recoil);
+			StartCoroutine(recoilDelay());
+            //motor.Recoil(currentWeapon.recoil);
         }
 
     }
-
-    private RaycastHit FireRay(RaycastHit hit) {
+	
+	public float shotLifeTime;
+	IEnumerator recoilDelay(){
+		yield return new WaitForSeconds(shotLifeTime);
+		motor.Recoil(currentWeapon.recoil);
+	}
+	
+	private RaycastHit FireRay(RaycastHit hit) {
         //Find direction after shot spread
         Vector3 shotDir = cameraPos.forward;
         //Apply two rotations
@@ -115,7 +135,7 @@ public class FireWeapon : MonoBehaviour {
         float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
 
         shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
-
+		
         Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
 
         //Deal with the shot
@@ -138,7 +158,7 @@ public class FireWeapon : MonoBehaviour {
         Vector3 startPoint = gunFirePoint.position;
         Vector3 endPoint = hit.point;
 
-        //lineRenderer.SetPosition(0, cameraPos.InverseTransformPoint(startPoint)); // TODO: Fix this shit somehow
+        //lineRenderer.SetPosition(0, cameraPos.InverseTransformPoint(startPoint));
         //lineRenderer.SetPosition(1, cameraPos.InverseTransformPoint(endPoint));
 		
         lineRenderer.SetPosition(0, startPoint);
