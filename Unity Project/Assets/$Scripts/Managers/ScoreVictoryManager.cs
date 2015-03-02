@@ -10,15 +10,19 @@ public class ScoreVictoryManager : MonoBehaviour {
     private SettingsManager settingsManager;
     private ChatManager chatManager;
 	
-    public bool IsVictor { get; set; }
+    //public bool IsVictor { get; set; }
     public string VictorName { get; set; }
-	
+    public bool IsVictor() {
+        return VictorName != "";
+    }
 
     void Start() {
         gameManager = GetComponent<GameManager>();
         guiManager = GetComponent<GuiManager>();
         settingsManager = GetComponent<SettingsManager>();
         chatManager = GetComponent<ChatManager>();
+
+        ClearWinnerData(); // Clean Set up
     }
     public void GameStart() {
         StartCoroutine(CheckForGameEnd());
@@ -119,7 +123,6 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     public void ClearWinnerData() {
-        IsVictor = false;
         VictorName = "";
     }
 }

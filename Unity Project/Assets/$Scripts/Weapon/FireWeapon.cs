@@ -60,13 +60,13 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 	void Update(){
-		if(shot != null){
-			shot.transform.parent = cameraPos;
-			LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
-			gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-			Vector3 startPoint = gunFirePoint.position;
-			lineRenderer.SetPosition(0, startPoint);
-		}
+        //if(shot != null){
+        //    shot.transform.parent = cameraPos;
+        //    LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
+        //    gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
+        //    Vector3 startPoint = gunFirePoint.position;
+        //    lineRenderer.SetPosition(0, startPoint);
+        //}
 		
 	
 
@@ -94,9 +94,9 @@ public class FireWeapon : MonoBehaviour {
 
 
         if (currentWeapon.useRay) { //Does this weapon use a ray to hit?
-            RaycastHit hit = new RaycastHit();
+            
             for (int i = 0; i < currentWeapon.rayNum; i++) {
-                FireRay(hit);
+                FireRay();
             }
         } else {
             SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
@@ -107,7 +107,9 @@ public class FireWeapon : MonoBehaviour {
 
     }
 
-    private RaycastHit FireRay(RaycastHit hit) {
+    private void FireRay() {
+        RaycastHit hit = new RaycastHit();
+
         //Find direction after shot spread
         Vector3 shotDir = cameraPos.forward;
         //Apply two rotations
@@ -129,25 +131,15 @@ public class FireWeapon : MonoBehaviour {
         } else if (hit.collider.CompareTag("GrenadeMine")) {
             hit.collider.GetComponent<MineDetonation>().ForceDetonate();
         }
-        Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+        //Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 
-        shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
-        shot.transform.parent = cameraPos;
-        LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
+        Vector3 startPoint = cameraPos.InverseTransformPoint(gunFirePoint.position);
+        Vector3 endPoint = cameraPos.InverseTransformPoint(hit.point);
 
-        Vector3 startPoint = gunFirePoint.position;
-        Vector3 endPoint = hit.point;
-
-        //lineRenderer.SetPosition(0, cameraPos.InverseTransformPoint(startPoint)); // TODO: Fix this shit somehow
-        //lineRenderer.SetPosition(1, cameraPos.InverseTransformPoint(endPoint));
-		
-        lineRenderer.SetPosition(0, startPoint);
-        lineRenderer.SetPosition(1, endPoint);
+        ShotRender(startPoint, endPoint);
 
         //Render shot everywhere else
         networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, hit.point);
-
-        return hit;
     }
 
     private void MouseWheelWeaponChange() {
@@ -202,6 +194,15 @@ public class FireWeapon : MonoBehaviour {
         render.SetPosition(1, end);
     }
 
+    void ShotRender(Vector3 start, Vector3 end){
+        shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
+        shot.transform.parent = cameraPos;
+        LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
+
+        lineRenderer.useWorldSpace = false;
+        lineRenderer.SetPosition(0, start);
+        lineRenderer.SetPosition(1, end);
+    }
 
 
 

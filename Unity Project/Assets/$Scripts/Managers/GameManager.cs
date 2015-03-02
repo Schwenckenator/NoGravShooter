@@ -258,9 +258,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void EndGame(Player winningPlayer) {
-        scoreVictoryManager.IsVictor = true;
+        SetWinner(winningPlayer.Name);
+        
         gameInProgress = false;
-        scoreVictoryManager.VictorName = winningPlayer.Name;
+        
         SetEndTime(secondsUntilKick);
         if (Network.isServer) {
             StartCoroutine(KickPlayersAfterGameEnd());
@@ -268,6 +269,9 @@ public class GameManager : MonoBehaviour {
     }
     public void EndGame() {
         // This method is here for when we enevitably write code for ties/draws
+    }
+    private void SetWinner(string winners) {
+        scoreVictoryManager.VictorName = winners;
     }
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);

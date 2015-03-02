@@ -215,7 +215,7 @@ public class GuiManager : MonoBehaviour {
 		style.fontSize = 50;
 		style.alignment = TextAnchor.UpperCenter;
 
-        if (scoreVictoryManager.IsVictor) {
+        if (scoreVictoryManager.IsVictor()) {
             GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Winner!\n" + scoreVictoryManager.VictorName, style);
         }
 
@@ -1016,7 +1016,7 @@ public class GuiManager : MonoBehaviour {
 				GameManager.SetCursorVisibility(false);
 			}
 		}else {
-            if (scoreVictoryManager.IsVictor) {
+            if (scoreVictoryManager.IsVictor()) {
                 GUI.enabled = false;
                 GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), scoreVictoryManager.VictorName + " has won!");
                 GUI.enabled = true;
