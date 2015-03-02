@@ -28,7 +28,6 @@ public class FireWeapon : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-
 		heldWeapons = new List<WeaponSuperClass>();
 
         GameObject manager = GameObject.FindGameObjectWithTag("GameController");
@@ -60,36 +59,13 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 	void Update(){
-		if(shot != null){
-			GameObject[] shots = GameObject.FindGameObjectsWithTag("Shot");
-			foreach(GameObject shotRay in shots){
-				Vector3 shotDir = cameraPos.forward;
-				float angle1 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
-				float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
-				shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
-				shotRay.transform.parent = cameraPos;
-				LineRenderer lineRenderer = shotRay.GetComponent<LineRenderer>();
-				//get updated start point
-				gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-				Vector3 startPoint = gunFirePoint.position;
-				lineRenderer.SetPosition(0, startPoint);
-				//get updated end point
-				RaycastHit hit;
-				Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
-				Vector3 endPoint = hit.point;
-				lineRenderer.SetPosition(1, endPoint);
-			}
-		}
-		
-	
-
         MouseWheelWeaponChange();
 
         if (!currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
         }
-
 	}
+
     void FixedUpdate() {
         if (currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
@@ -105,7 +81,6 @@ public class FireWeapon : MonoBehaviour {
         PlayFireWeaponSound();
         nextFire = Time.time + currentWeapon.fireDelay;
 
-
         if (currentWeapon.useRay) { //Does this weapon use a ray to hit?
             
             for (int i = 0; i < currentWeapon.rayNum; i++) {
@@ -115,19 +90,13 @@ public class FireWeapon : MonoBehaviour {
             SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
         }
         if (currentWeapon.hasRecoil) {
-			StartCoroutine(recoilDelay());
-            //motor.Recoil(currentWeapon.recoil);
+            motor.Recoil(currentWeapon.recoil);
         }
 
     }
-	public float shotLifeTime;
-	IEnumerator recoilDelay(){
-		yield return new WaitForSeconds(shotLifeTime);
-		motor.Recoil(currentWeapon.recoil);
-	}
 	
-	private RaycastHit FireRay(RaycastHit hit) {
-
+	private void FireRay() {
+        RaycastHit hit = new RaycastHit();
         //Find direction after shot spread
         Vector3 shotDir = cameraPos.forward;
         //Apply two rotations
@@ -151,10 +120,7 @@ public class FireWeapon : MonoBehaviour {
         }
         //Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
 
-        Vector3 startPoint = cameraPos.InverseTransformPoint(gunFirePoint.position);
-        Vector3 endPoint = cameraPos.InverseTransformPoint(hit.point);
-
-        ShotRender(startPoint, endPoint);
+        ShotRender(gunFirePoint.position, hit.point);
 
         //Render shot everywhere else
         networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, hit.point);
@@ -213,17 +179,17 @@ public class FireWeapon : MonoBehaviour {
     }
 
     void ShotRender(Vector3 start, Vector3 end){
-        shot = Instantiate(currentWeapon.projectile, gunFirePoint.position, cameraPos.rotation) as GameObject;
+        shot = Instantiate(currentWeapon.projectile, cameraPos.position, cameraPos.rotation) as GameObject;
         shot.transform.parent = cameraPos;
         LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
+
+        start = cameraPos.InverseTransformPoint(start);
+        end = cameraPos.InverseTransformPoint(end);
 
         lineRenderer.useWorldSpace = false;
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
     }
-
-
-
 
 	public void ChangeWeapon(int weaponId){
 		currentInventorySlot = weaponId;
