@@ -34,31 +34,31 @@ public class ControllerInput : MonoBehaviour, IControllerInput{
     }
 
     public bool IsStopKey() {
-        return IsDown(SettingsManager.KeyBind.StopMovement);
+        return IsDown(KeyBind.StopMovement);
     }
     
     public bool IsMovementKeys() {
-        return IsDown(SettingsManager.KeyBind.MoveRight) ||
-            IsDown(SettingsManager.KeyBind.MoveLeft) ||
+        return IsDown(KeyBind.MoveRight) ||
+            IsDown(KeyBind.MoveLeft) ||
 
-            IsDown(SettingsManager.KeyBind.JetUp) ||
-            IsDown(SettingsManager.KeyBind.JetDown) ||
+            IsDown(KeyBind.JetUp) ||
+            IsDown(KeyBind.JetDown) ||
 
-            IsDown(SettingsManager.KeyBind.MoveForward) ||
-            IsDown(SettingsManager.KeyBind.MoveBack);
+            IsDown(KeyBind.MoveForward) ||
+            IsDown(KeyBind.MoveBack);
     }
-    private bool IsDown(SettingsManager.KeyBind key) {
+    private bool IsDown(KeyBind key) {
         return InputConverter.GetKey(key);
     }
 
     void Update() {
-        rollMovement = UpdateMovement(SettingsManager.KeyBind.RollLeft, SettingsManager.KeyBind.RollRight, rollMovement);
-        xMovement = UpdateMovement(SettingsManager.KeyBind.MoveRight, SettingsManager.KeyBind.MoveLeft, xMovement);
-        yMovement = UpdateMovement(SettingsManager.KeyBind.JetUp, SettingsManager.KeyBind.JetDown, yMovement);
-        zMovement = UpdateMovement(SettingsManager.KeyBind.MoveForward, SettingsManager.KeyBind.MoveBack, zMovement);
+        rollMovement = UpdateMovement(KeyBind.RollLeft, KeyBind.RollRight, rollMovement);
+        xMovement = UpdateMovement(KeyBind.MoveRight, KeyBind.MoveLeft, xMovement);
+        yMovement = UpdateMovement(KeyBind.JetUp, KeyBind.JetDown, yMovement);
+        zMovement = UpdateMovement(KeyBind.MoveForward, KeyBind.MoveBack, zMovement);
     }
 
-    float UpdateMovement(SettingsManager.KeyBind positive, SettingsManager.KeyBind negative, float axis) {
+    float UpdateMovement(KeyBind positive, KeyBind negative, float axis) {
         int direction = 0;
         if (InputConverter.GetKey(positive)) direction++;
         if (InputConverter.GetKey(negative)) direction--;

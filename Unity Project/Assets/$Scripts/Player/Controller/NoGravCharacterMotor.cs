@@ -210,7 +210,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         //check for edges
 
         bool sneaking = false;
-        if (InputConverter.GetKey(SettingsManager.KeyBind.JetDown)) {
+        if (InputConverter.GetKey(KeyBind.JetDown)) {
             sneaking = true;
             totalPushBackDir = EdgeDetection();
         }
@@ -242,7 +242,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         rigidbody.AddForce(velocityChange, ForceMode.Impulse);
 
         // Jump
-        if (canJump && InputConverter.GetKey(SettingsManager.KeyBind.JetUp) && !GameManager.IsPlayerMenu()) {
+        if (canJump && InputConverter.GetKey(KeyBind.JetUp) && !GameManager.IsPlayerMenu()) {
             rigidbody.AddRelativeForce(new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
         }
     }

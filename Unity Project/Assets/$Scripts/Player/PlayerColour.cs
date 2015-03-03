@@ -7,41 +7,43 @@ public class PlayerColour : MonoBehaviour {
     public string playerGraphicsName = "Test_Rig";
 	
 	private SettingsManager settingsManager;
-
-    private int pickedColour = -1;
 	
-	private float RedVal;
-	private float GreenVal;
-	private float BlueVal;
-	
-	
-	/// <summary>
-    /// If colour is not picked, pick colour.
-    /// Apply colour to player
-    /// </summary>
-    private void AssignPlayerColour() {
-        if (pickedColour < 0) { // Need to pick colour
-            pickedColour = PickColourRandom();
+    public void AssignPlayerColour() {
+        Player currentPlayer = NetworkManager.GetPlayer(Network.player);
+        if (currentPlayer.HasNoTeam()) {
+            //Has no team, apply colour from settings
+            ApplySettingsColour();
+        } else {
+            //Has team, apply team colour
+            ApplyTeamColour(currentPlayer.Team);
         }
-        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
 
+    }
+    private void ApplySettingsColour() {
+        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
         networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, settingsManager.ColourR, settingsManager.ColourG, settingsManager.ColourB);
+    }
+    private void ApplyTeamColour(Team team) {
+        float red = 0;
+        float green = 0;
+        float blue = 0;
+        switch (team) {
+            case Team.Red:
+                red = 1;
+                green = 0;
+                blue = 0;
+                break;
+            case Team.Blue:
+                red = 0;
+                green = 0;
+                blue = 1;
+                break;
+        }
+        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, red, green, blue);
     }
 
     [RPC]
     private void RPCAssignPlayerColour(float RedVal, float GreenVal, float BlueVal) {
 		transform.FindChild(playerGraphicsName).renderer.material.color = new Color(RedVal, GreenVal, BlueVal);
-    }
-
-    public void ResetPickedColour() {
-        pickedColour = -1;
-    }
-
-    public int PickColourRandom() {
-        return Random.Range(0, playerColours.Length);
-    }
-    public void SetPickedColour(int value) {
-        pickedColour = value;
-        AssignPlayerColour();
     }
 }

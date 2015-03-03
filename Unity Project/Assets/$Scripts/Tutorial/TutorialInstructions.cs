@@ -34,15 +34,15 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	void Update(){
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]) || Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight])){
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward]) || Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveRight])){
 			moved = true;
 			Debug.Log("Player Moved");
 		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp])){
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetUp])){
 			jumped = true;
 			Debug.Log("Player Jumped");
 		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]) || Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft])){
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollRight]) || Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollLeft])){
 			rolled = true;
 			Debug.Log("Player Rolled");
 		}
@@ -58,11 +58,11 @@ public class TutorialInstructions : MonoBehaviour {
 			changedgun = true;
 			Debug.Log("Player Changed Weapons");
 		}		
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload])){
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.Reload])){
 			reloaded = true;
 			Debug.Log("Player Reloaded");
 		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade])){
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.Grenade])){
 			grenade = true;
 			Debug.Log("Player Threw Mine");
 		}
@@ -110,27 +110,27 @@ public class TutorialInstructions : MonoBehaviour {
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.", 6000);
 		yield return new WaitForSeconds(4);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Move your Mouse to look around.\n\nUse "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward].ToString()+", "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft].ToString()+", "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack].ToString()+" and "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight].ToString()+" to move around.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+", "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+", "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()+" and "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move around.", 99999);
 		yield return new WaitForSeconds(5);
 		step1 = true;
 	}
 	
 	IEnumerator FlightTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp].ToString()+" to boost upwards and "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft].ToString()+" to roll to the left and "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards and "
+            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
+            +SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString()+" to roll to the left and "
+            +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
 		yield return new WaitForSeconds(5);
 		step2 = true;		
 	}
 	
 	IEnumerator GunTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload].ToString()+" to reload your weapon and press "
-            +SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade].ToString()+" to throw a Proximity Mine.\nKeep in mind that without gravity, the mines will fly in a straight line.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload your weapon and press "
+            +SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Mine.\nKeep in mind that without gravity, the mines will fly in a straight line.", 99999);
 		yield return new WaitForSeconds(5);
 		step3 = true;
 	}

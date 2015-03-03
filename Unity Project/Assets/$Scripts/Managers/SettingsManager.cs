@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch, StopMovement };
+
 public class SettingsManager : MonoBehaviour {
-    public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch, StopMovement };
+    
     public static KeyCode[] keyBindings;
     const int SecondsInMinute = 60;
     
@@ -122,42 +124,42 @@ public class SettingsManager : MonoBehaviour {
     }
 
     void RetrieveKeyBinds() {
-        keyBindings = new KeyCode[System.Enum.GetNames(typeof(SettingsManager.KeyBind)).Length];
+        keyBindings = new KeyCode[System.Enum.GetNames(typeof(KeyBind)).Length];
 
-        keyBindings[(int)SettingsManager.KeyBind.MoveForward]   = (KeyCode)PlayerPrefs.GetInt("bindMoveForward",    (int)KeyCode.W);
-        keyBindings[(int)SettingsManager.KeyBind.MoveBack]      = (KeyCode)PlayerPrefs.GetInt("bindMoveBack",       (int)KeyCode.S);
-        keyBindings[(int)SettingsManager.KeyBind.MoveLeft]      = (KeyCode)PlayerPrefs.GetInt("bindMoveLeft",       (int)KeyCode.A);
-        keyBindings[(int)SettingsManager.KeyBind.MoveRight]     = (KeyCode)PlayerPrefs.GetInt("bindMoveRight",      (int)KeyCode.D);
-        keyBindings[(int)SettingsManager.KeyBind.StopMovement]  = (KeyCode)PlayerPrefs.GetInt("bindStopMovement",   (int)KeyCode.X);
+        keyBindings[(int)KeyBind.MoveForward]   = (KeyCode)PlayerPrefs.GetInt("bindMoveForward",    (int)KeyCode.W);
+        keyBindings[(int)KeyBind.MoveBack]      = (KeyCode)PlayerPrefs.GetInt("bindMoveBack",       (int)KeyCode.S);
+        keyBindings[(int)KeyBind.MoveLeft]      = (KeyCode)PlayerPrefs.GetInt("bindMoveLeft",       (int)KeyCode.A);
+        keyBindings[(int)KeyBind.MoveRight]     = (KeyCode)PlayerPrefs.GetInt("bindMoveRight",      (int)KeyCode.D);
+        keyBindings[(int)KeyBind.StopMovement]  = (KeyCode)PlayerPrefs.GetInt("bindStopMovement",   (int)KeyCode.X);
 
-        keyBindings[(int)SettingsManager.KeyBind.RollLeft]      = (KeyCode)PlayerPrefs.GetInt("bindRollLeft",       (int)KeyCode.Q);
-        keyBindings[(int)SettingsManager.KeyBind.RollRight]     = (KeyCode)PlayerPrefs.GetInt("bindRollRight",      (int)KeyCode.E);
-        keyBindings[(int)SettingsManager.KeyBind.JetUp]         = (KeyCode)PlayerPrefs.GetInt("bindJetUp",          (int)KeyCode.Space);
-        keyBindings[(int)SettingsManager.KeyBind.JetDown]       = (KeyCode)PlayerPrefs.GetInt("bindJetDown",        (int)KeyCode.LeftShift);
+        keyBindings[(int)KeyBind.RollLeft]      = (KeyCode)PlayerPrefs.GetInt("bindRollLeft",       (int)KeyCode.Q);
+        keyBindings[(int)KeyBind.RollRight]     = (KeyCode)PlayerPrefs.GetInt("bindRollRight",      (int)KeyCode.E);
+        keyBindings[(int)KeyBind.JetUp]         = (KeyCode)PlayerPrefs.GetInt("bindJetUp",          (int)KeyCode.Space);
+        keyBindings[(int)KeyBind.JetDown]       = (KeyCode)PlayerPrefs.GetInt("bindJetDown",        (int)KeyCode.LeftShift);
 
-        keyBindings[(int)SettingsManager.KeyBind.Reload]        = (KeyCode)PlayerPrefs.GetInt("bindReload",         (int)KeyCode.R);
-        keyBindings[(int)SettingsManager.KeyBind.Grenade]       = (KeyCode)PlayerPrefs.GetInt("bindGrenade",        (int)KeyCode.G);
-        keyBindings[(int)SettingsManager.KeyBind.Interact]      = (KeyCode)PlayerPrefs.GetInt("bindInteract",       (int)KeyCode.F);
-        keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch] = (KeyCode)PlayerPrefs.GetInt("bindGrenadeSwitch",  (int)KeyCode.H);
+        keyBindings[(int)KeyBind.Reload]        = (KeyCode)PlayerPrefs.GetInt("bindReload",         (int)KeyCode.R);
+        keyBindings[(int)KeyBind.Grenade]       = (KeyCode)PlayerPrefs.GetInt("bindGrenade",        (int)KeyCode.G);
+        keyBindings[(int)KeyBind.Interact]      = (KeyCode)PlayerPrefs.GetInt("bindInteract",       (int)KeyCode.F);
+        keyBindings[(int)KeyBind.GrenadeSwitch] = (KeyCode)PlayerPrefs.GetInt("bindGrenadeSwitch",  (int)KeyCode.H);
         
     }
 
     public void SaveKeyBinds() {
-        PlayerPrefs.SetInt("bindMoveForward",   (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward]);
-        PlayerPrefs.SetInt("bindMoveBack",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack]);
-        PlayerPrefs.SetInt("bindMoveLeft",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft]);
-        PlayerPrefs.SetInt("bindMoveRight",     (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight]);
-        PlayerPrefs.SetInt("bindStopMovement",  (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.StopMovement]);
+        PlayerPrefs.SetInt("bindMoveForward",   (int)SettingsManager.keyBindings[(int)KeyBind.MoveForward]);
+        PlayerPrefs.SetInt("bindMoveBack",      (int)SettingsManager.keyBindings[(int)KeyBind.MoveBack]);
+        PlayerPrefs.SetInt("bindMoveLeft",      (int)SettingsManager.keyBindings[(int)KeyBind.MoveLeft]);
+        PlayerPrefs.SetInt("bindMoveRight",     (int)SettingsManager.keyBindings[(int)KeyBind.MoveRight]);
+        PlayerPrefs.SetInt("bindStopMovement",  (int)SettingsManager.keyBindings[(int)KeyBind.StopMovement]);
 
-        PlayerPrefs.SetInt("bindRollLeft",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft]);
-        PlayerPrefs.SetInt("bindRollRight",     (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight]);
-        PlayerPrefs.SetInt("bindJetUp",         (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp]);
-        PlayerPrefs.SetInt("bindJetDown",       (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown]);
+        PlayerPrefs.SetInt("bindRollLeft",      (int)SettingsManager.keyBindings[(int)KeyBind.RollLeft]);
+        PlayerPrefs.SetInt("bindRollRight",     (int)SettingsManager.keyBindings[(int)KeyBind.RollRight]);
+        PlayerPrefs.SetInt("bindJetUp",         (int)SettingsManager.keyBindings[(int)KeyBind.JetUp]);
+        PlayerPrefs.SetInt("bindJetDown",       (int)SettingsManager.keyBindings[(int)KeyBind.JetDown]);
 
-        PlayerPrefs.SetInt("bindReload",        (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload]);
-        PlayerPrefs.SetInt("bindGrenade",       (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade]);
-        PlayerPrefs.SetInt("bindInteract",      (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact]);
-        PlayerPrefs.SetInt("bindGrenadeSwitch", (int)SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch]);
+        PlayerPrefs.SetInt("bindReload",        (int)SettingsManager.keyBindings[(int)KeyBind.Reload]);
+        PlayerPrefs.SetInt("bindGrenade",       (int)SettingsManager.keyBindings[(int)KeyBind.Grenade]);
+        PlayerPrefs.SetInt("bindInteract",      (int)SettingsManager.keyBindings[(int)KeyBind.Interact]);
+        PlayerPrefs.SetInt("bindGrenadeSwitch", (int)SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch]);
     }
 
     /// <summary>

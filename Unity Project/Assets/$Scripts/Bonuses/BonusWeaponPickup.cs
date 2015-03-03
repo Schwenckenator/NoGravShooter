@@ -99,9 +99,9 @@ public class BonusWeaponPickup : MonoBehaviour {
         if (swapTimeout > Time.time) return;
 
         swapTimeout = weaponSwapCooldown;
-        guiManager.ButtonPrompt("Swap Weapons", (int)SettingsManager.KeyBind.Interact);
+        guiManager.ButtonPrompt("Swap Weapons", (int)KeyBind.Interact);
 
-        if (InputConverter.GetKeyDown(SettingsManager.KeyBind.Interact)) {
+        if (InputConverter.GetKeyDown(KeyBind.Interact)) {
             SwapWeapon();
         }
     }

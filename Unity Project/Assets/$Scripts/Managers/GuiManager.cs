@@ -101,7 +101,7 @@ public class GuiManager : MonoBehaviour {
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
 
-    SettingsManager.KeyBind editedBinding;
+    KeyBind editedBinding;
 
 	GUIStyle upperLeftTextAlign;
 	GUIStyle lowerLeftTextAlign;
@@ -763,90 +763,90 @@ public class GuiManager : MonoBehaviour {
 		//Move Forward
 		standard.y += 50;
 		GUI.Label(standard, "Move Forward: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveForward].ToString())){
-			editedBinding = SettingsManager.KeyBind.MoveForward;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString())){
+			editedBinding = KeyBind.MoveForward;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Backward: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveBack].ToString())){
-			editedBinding = SettingsManager.KeyBind.MoveBack;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString())){
+			editedBinding = KeyBind.MoveBack;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Left: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveLeft].ToString())){
-			editedBinding = SettingsManager.KeyBind.MoveLeft;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString())){
+			editedBinding = KeyBind.MoveLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Move Right: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.MoveRight].ToString())){
-			editedBinding = SettingsManager.KeyBind.MoveRight;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString())){
+			editedBinding = KeyBind.MoveRight;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Left: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollLeft].ToString())){
-			editedBinding = SettingsManager.KeyBind.RollLeft;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString())){
+			editedBinding = KeyBind.RollLeft;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Roll Right: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.RollRight].ToString())){
-			editedBinding = SettingsManager.KeyBind.RollRight;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString())){
+			editedBinding = KeyBind.RollRight;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jump / Jetpack Up: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetUp].ToString())){
-			editedBinding = SettingsManager.KeyBind.JetUp;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString())){
+			editedBinding = KeyBind.JetUp;
 			displayChangeKeybindWindow = true;
 		}
 		standard.y += 30;
 		GUI.Label(standard, "Jetpack Down: ");
-		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.JetDown].ToString())){
-			editedBinding = SettingsManager.KeyBind.JetDown;
+		if(GUI.Button(new Rect(140, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString())){
+			editedBinding = KeyBind.JetDown;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y -= 210;
 		standard.x+= 300;
 		GUI.Label(standard, "Reload: ");
-		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Reload].ToString())){
-			editedBinding = SettingsManager.KeyBind.Reload;
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.Reload].ToString())){
+			editedBinding = KeyBind.Reload;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Grenade: ");
-		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Grenade].ToString())){
-			editedBinding = SettingsManager.KeyBind.Grenade;
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString())){
+			editedBinding = KeyBind.Grenade;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Switch Grenade: ");
-		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.GrenadeSwitch].ToString())){
-			editedBinding = SettingsManager.KeyBind.GrenadeSwitch;
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString())){
+			editedBinding = KeyBind.GrenadeSwitch;
 			displayChangeKeybindWindow = true;
 		}
 
 		standard.y += 30;
 		GUI.Label(standard, "Interact: ");
-		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.Interact].ToString())){
-			editedBinding = SettingsManager.KeyBind.Interact;
+		if(GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.Interact].ToString())){
+			editedBinding = KeyBind.Interact;
 			displayChangeKeybindWindow = true;
 		}
         standard.y += 30;
         GUI.Label(standard, "Interact: ");
-        if (GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)SettingsManager.KeyBind.StopMovement].ToString())) {
-            editedBinding = SettingsManager.KeyBind.StopMovement;
+        if (GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString())) {
+            editedBinding = KeyBind.StopMovement;
             displayChangeKeybindWindow = true;
         }
 
@@ -924,9 +924,11 @@ public class GuiManager : MonoBehaviour {
 				displayGameSettingsWindow = true;
 			}
 		}
-		
 
 		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), PlayerList(), upperLeftTextAlign);
+        if (GUI.Button(new Rect(largeRect.width / 3 - 100, 105, 100, 20), "Change Team")) {
+            NetworkManager.GetPlayer(Network.player).IncrementTeam();
+        }
         string message = Network.isServer ? "Shutdown Server": "Disconnect";
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), message)) {
             NetworkManager.Disconnect();
@@ -1074,7 +1076,7 @@ public class GuiManager : MonoBehaviour {
     private string PlayerList() {
         string playerNames = "";
         foreach (Player player in NetworkManager.connectedPlayers) {
-            playerNames += player.Name + "\n";
+            playerNames += player.Name + " " + player.Team.ToString()+ "\n";
         }
         return playerNames;
     }
