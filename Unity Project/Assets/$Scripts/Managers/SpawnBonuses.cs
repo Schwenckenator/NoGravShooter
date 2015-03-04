@@ -16,17 +16,15 @@ public class SpawnBonuses : MonoBehaviour {
 	#endregion
 
 	private GameObject[] bonusSpawnPoints;
-    private GameManager gameManager;
     private List<GameObject> spawnableBonuses;
 
 	// Use this for initialization
 	void Start () {
 		if(Network.isServer){
             //Determine what bonuses are being spawned this game
-            gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
             spawnableBonuses = new List<GameObject>();
 
-            bool[] allowedBonuses = gameManager.GetComponent<SettingsManager>().GetAllowedBonuses();
+            bool[] allowedBonuses = SettingsManager.instance.GetAllowedBonuses();
 
             for (int i = 0; i < allowedBonuses.Length; i++) {
                 if (allowedBonuses[i]) {

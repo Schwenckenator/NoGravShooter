@@ -38,9 +38,7 @@ public class PlayerResources : MonoBehaviour {
     [SerializeField]
     private float heatCooldownWaitTime = 2.0f;
 
-	private GameManager gameManager;
-    private SettingsManager settingsManager;
-    private ChatManager chatManager;
+    private IGameMode gameMode;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
 	private AudioSource helmetAudio;
@@ -70,10 +68,7 @@ public class PlayerResources : MonoBehaviour {
 	
 	#region Start()
 	void Awake () {
-        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
-		gameManager = manager.GetComponent<GameManager>();
-        settingsManager = manager.GetComponent<SettingsManager>();
-        chatManager = manager.GetComponent<ChatManager>();
+        gameMode = GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(IGameMode)) as IGameMode; // Get current game mode
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		helmetAudio = transform.FindChild("HelmetAudio").GetComponent<AudioSource>();
@@ -103,7 +98,7 @@ public class PlayerResources : MonoBehaviour {
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(100, Network.player);
-			chatManager.AddToChat("committed Seppuku!", true);
+			ChatManager.instance.AddToChat("committed Seppuku!", true);
 		}
 
         WeaponSmokeCheck();
@@ -284,13 +279,13 @@ public class PlayerResources : MonoBehaviour {
 				if(killer != null && weaponID != -1){
                     string killMessage;
 					if(killer.ID != Network.player){
-                        killMessage = killer.Name + KillMessageGenerator(weaponID) + settingsManager.PlayerName;
-						gameManager.GetComponent<ScoreVictoryManager>().PointScored(killer.ID);
+                        killMessage = killer.Name + KillMessageGenerator(weaponID) + SettingsManager.instance.PlayerName;
+                        ScoreVictoryManager.instance.PointScored(killer.ID);
 					} else {
                         killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
-                        gameManager.GetComponent<ScoreVictoryManager>().Suicide(killer.ID);
+                        ScoreVictoryManager.instance.PointLost(killer.ID);
 					}
-                    chatManager.AddToChat(killMessage);
+                    ChatManager.instance.AddToChat(killMessage);
 				}
 				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
 				StartCoroutine(PlayerCleanup());
@@ -323,8 +318,8 @@ public class PlayerResources : MonoBehaviour {
 	IEnumerator PlayerCleanup(){
         float playerDyingTime = 3.0f;
 		yield return new WaitForSeconds(playerDyingTime);
-		gameManager.PlayerDied();
-		gameManager.ManagerDetachCamera();
+		GameManager.instance.PlayerDied();
+		GameManager.instance.ManagerDetachCamera();
 		GameManager.SetCursorVisibility(true);
 		GetComponent<ObjectCleanUp>().ClientKillMe();
 	}
@@ -454,9 +449,9 @@ public class PlayerResources : MonoBehaviour {
 		if(!glitched) return;
 		if(!GameManager.IsPlayerMenu() && networkView.isMine){
 			GUI.depth = 0;
-			GUI.DrawTexture(new Rect(20+Random.Range(-10, 11), Screen.height-240+Random.Range(-10, 11), 220, 220), gameManager.GetComponent<GuiManager>().EMPradar[Random.Range(0, 5)]);
-			GUI.DrawTexture(new Rect(Screen.width/2 - 55/2, Screen.height/2 - 45/2, 55, 45), gameManager.GetComponent<GuiManager>().EMPcursor[Random.Range(0, 4)]);
-			GUI.DrawTexture(new Rect(Screen.width-265, Screen.height-235+Random.Range(-5, 6), 265, 235), gameManager.GetComponent<GuiManager>().EMPstats[Random.Range(0, 4)]);
+            GUI.DrawTexture(new Rect(20 + Random.Range(-10, 11), Screen.height - 240 + Random.Range(-10, 11), 220, 220), GuiManager.instance.EMPradar[Random.Range(0, 5)]);
+            GUI.DrawTexture(new Rect(Screen.width / 2 - 55 / 2, Screen.height / 2 - 45 / 2, 55, 45), GuiManager.instance.EMPcursor[Random.Range(0, 4)]);
+            GUI.DrawTexture(new Rect(Screen.width - 265, Screen.height - 235 + Random.Range(-5, 6), 265, 235), GuiManager.instance.EMPstats[Random.Range(0, 4)]);
 		}
 	}
 

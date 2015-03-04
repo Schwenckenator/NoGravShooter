@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class AimingFOVChanger : MonoBehaviour {
-    private SettingsManager settingsManager;
-    private GuiManager guiManager;
     private float maxFOV;
 
     [SerializeField]
@@ -20,14 +18,11 @@ public class AimingFOVChanger : MonoBehaviour {
     
 
     void Start() {
-        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
-        settingsManager = manager.GetComponent<SettingsManager>();
-        guiManager = manager.GetComponent<GuiManager>();
         myCamera = GetComponent<Camera>();
     }
 	
 	void FixedUpdate(){
-	maxFOV = settingsManager.FieldOfView;
+	maxFOV = SettingsManager.instance.FieldOfView;
 	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
@@ -40,10 +35,10 @@ public class AimingFOVChanger : MonoBehaviour {
                 if (myCamera.fieldOfView > sniperFOV) {
 					myCamera.fieldOfView -= zoomSpeed;
 				} else {
-					guiManager.showSniperScope = true;
+					GuiManager.instance.showSniperScope = true;
 				}
 			} else {
-				guiManager.showSniperScope = false;
+				GuiManager.instance.showSniperScope = false;
 				//bugfix for zooming with sniper then changing weapons
 				if(myCamera.fieldOfView < minFOV){
 					myCamera.fieldOfView = minFOV;
@@ -53,7 +48,7 @@ public class AimingFOVChanger : MonoBehaviour {
 				}
 			}
 		} else {
-			guiManager.showSniperScope = false;
+			GuiManager.instance.showSniperScope = false;
 			//bug fix for changing field of view between games without closing
 			if(myCamera.fieldOfView > maxFOV){
 				myCamera.fieldOfView = maxFOV;

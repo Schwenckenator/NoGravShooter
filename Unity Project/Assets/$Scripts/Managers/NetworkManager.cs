@@ -8,6 +8,22 @@ using System.Collections.Generic;
 /// </summary>
 public class NetworkManager : MonoBehaviour {
 
+    #region Instance
+    //Here is a private reference only this class can access
+    private static NetworkManager _instance;
+    //This is the public reference that other classes will use
+    public static NetworkManager instance {
+        get {
+            //If _instance hasn't been set yet, we grab it from the scene!
+            //This will only happen the first time this reference is used.
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<NetworkManager>();
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
     public const string GameType = "NoGravShooter";
 
     // Use this for initialization
@@ -29,16 +45,6 @@ public class NetworkManager : MonoBehaviour {
     public static int lastLevelPrefix = 0;
     #endregion
 
-    private GuiManager guiManager;
-    private static SettingsManager settingsManager;
-    private ChatManager chatManager;
-
-    void Start() {
-        guiManager = GetComponent<GuiManager>();
-        settingsManager = GetComponent<SettingsManager>();
-        chatManager = GetComponent<ChatManager>();
-    }
-
     void Update() {
         if (GameManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
             foreach (Player player in connectedPlayers) {
@@ -57,9 +63,9 @@ public class NetworkManager : MonoBehaviour {
     #region Connect To Server
     public static void ConnectToServer() {
         if (useMasterServer) {
-            ConnectToServer(masterServerData, settingsManager.PasswordClient);
+            ConnectToServer(masterServerData, SettingsManager.instance.PasswordClient);
         } else {
-            ConnectToServer(ipAddress, portNum, settingsManager.PasswordClient);
+            ConnectToServer(ipAddress, portNum, SettingsManager.instance.PasswordClient);
         }
     }
 
@@ -73,9 +79,9 @@ public class NetworkManager : MonoBehaviour {
 
     public static void InitialiseServer() {
         if (useNat) useNat = !Network.HavePublicAddress();
-        Network.incomingPassword = settingsManager.PasswordServer;
+        Network.incomingPassword = SettingsManager.instance.PasswordServer;
         Network.InitializeServer(maxPlayers, portNum, useNat);
-        if (useMasterServer) MasterServer.RegisterHost(GameType, settingsManager.MyServerName);
+        if (useMasterServer) MasterServer.RegisterHost(GameType, SettingsManager.instance.MyServerName);
     }
     public static void Disconnect() {
         Network.Disconnect();
@@ -111,7 +117,7 @@ public class NetworkManager : MonoBehaviour {
 
         string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;
         message += " has disconnected.";
-        chatManager.AddToChat(message);
+        ChatManager.instance.AddToChat(message);
 
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
@@ -141,39 +147,39 @@ public class NetworkManager : MonoBehaviour {
         }
     }
     void OnServerInitialized() {
-        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
-        networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, settingsManager.MyServerName);
+        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+        networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, SettingsManager.instance.MyServerName);
     }
     void OnConnectedToServer() {
         
-        settingsManager.ClearPasswordClient();
+        SettingsManager.instance.ClearPasswordClient();
 
         // Set window to lobby
-        guiManager.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
-        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, settingsManager.PlayerName);
+        GuiManager.instance.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
+        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         
-        string message = settingsManager.PlayerName + " has connected.";
-        chatManager.AddToChat(message);
+        string message = SettingsManager.instance.PlayerName + " has connected.";
+        ChatManager.instance.AddToChat(message);
     }
     #endregion
 
     #region RPC
     [RPC]
     void ChangeServerName(string name) {
-        settingsManager.DisplayServerName = name;
+        SettingsManager.instance.DisplayServerName = name;
     }
     [RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
         NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
 
-        guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
 
     [RPC]
     void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
         NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
 
-        guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
 #endregion
 }

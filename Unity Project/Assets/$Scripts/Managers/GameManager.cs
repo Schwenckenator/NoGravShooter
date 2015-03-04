@@ -5,7 +5,6 @@ using System.Collections.Generic;
 /// Handles player, level loading and game interacitons
 /// </summary>
 public class GameManager : MonoBehaviour {
-    // *****************Test Mode Variable************************
     #region testVariables
     private static bool adminMode = false;
     private static bool allWeapon = false;
@@ -26,13 +25,24 @@ public class GameManager : MonoBehaviour {
         adminMode   = !adminMode;
     }
     #endregion
-    // ***********************************************************
+
+    #region Instance
+    //Here is a private reference only this class can access
+    private static GameManager _instance;
+    //This is the public reference that other classes will use
+    public static GameManager instance {
+        get {
+            //If _instance hasn't been set yet, we grab it from the scene!
+            //This will only happen the first time this reference is used.
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<GameManager>();
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
     #region Variable Declarations
-    //Managers
-    private GuiManager guiManager; 
-    private ScoreVictoryManager scoreVictoryManager;
-    private SettingsManager settingsManager;
-    private PlayerColourManager playerColourManager;
 
     private static bool playerMenu;
 
@@ -126,11 +136,6 @@ public class GameManager : MonoBehaviour {
     void Awake(){
 		DontDestroyOnLoad(gameObject);
 
-        settingsManager = GetComponent<SettingsManager>();
-        guiManager = GetComponent<GuiManager>();
-        scoreVictoryManager = GetComponent<ScoreVictoryManager>();
-        playerColourManager = GetComponent<PlayerColourManager>();
-
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
 		weapon.Add(new SlugRifleValues());
@@ -153,8 +158,8 @@ public class GameManager : MonoBehaviour {
 			if(Network.isServer){
                 int[] temp = new int[2];
 
-                temp[0] = settingsManager.SpawnWeapon1;
-                temp[1] = settingsManager.SpawnWeapon2;
+                temp[0] = SettingsManager.instance.SpawnWeapon1;
+                temp[1] = SettingsManager.instance.SpawnWeapon2;
                 StartCoroutine(SetStartingWeaponsDelay(temp));
 			}
 		}
@@ -176,13 +181,13 @@ public class GameManager : MonoBehaviour {
 		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
-                GetPlayerCameraMouseLook(player).SetYDirection(settingsManager.MouseYDirection);
-                player.GetComponent<MouseLook>().SetYDirection(settingsManager.MouseYDirection);
+                GetPlayerCameraMouseLook(player).SetYDirection(SettingsManager.instance.MouseYDirection);
+                player.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
 
 				fireWeapon = player.GetComponent<FireWeapon>();
 				playerResources = player.GetComponent<PlayerResources>();
 
-                playerColourManager.AssignColour(player);
+                PlayerColourManager.instance.AssignColour(player);
 			}
 		}
 
@@ -271,7 +276,7 @@ public class GameManager : MonoBehaviour {
         // This method is here for when we enevitably write code for ties/draws
     }
     private void SetWinner(string winners) {
-        scoreVictoryManager.VictorName = winners;
+        ScoreVictoryManager.instance.VictorName = winners;
     }
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);
@@ -285,17 +290,17 @@ public class GameManager : MonoBehaviour {
             throw new System.AccessViolationException("Is client when it needs to be server.");
         }
         GetComponent<DestroyManager>().ClearDestroyLists();
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, settingsManager.LevelName, NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, SettingsManager.instance.LevelName, NetworkManager.lastLevelPrefix, SettingsManager.instance.TimeLimitSec);
     }
     private void LoadLevelTutorial() {
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, settingsManager.TimeLimitSec);
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, SettingsManager.instance.TimeLimitSec);
     }
 
     [RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame) {
 
         //stops tutorial scripts showing after you leave and start a game
-        guiManager.TutorialPrompt("", 0);
+        GuiManager.instance.TutorialPrompt("", 0);
 
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
@@ -312,7 +317,7 @@ public class GameManager : MonoBehaviour {
 
         Network.SetLevelPrefix(levelPrefix);
 
-        guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
 
 
         NetworkManager.DisableRPC();
@@ -332,7 +337,7 @@ public class GameManager : MonoBehaviour {
 
         yield return new WaitForSeconds(1 / 5f);
         SpawnPlayer();
-        guiManager.SetMyPlayerResources();
+        GuiManager.instance.SetMyPlayerResources();
     }
 
     public void ReturnToLobby() {
@@ -346,7 +351,7 @@ public class GameManager : MonoBehaviour {
     [RPC]
     void RPCReturnToLobby() {
         //currentWindow = Menu.Lobby;
-        guiManager.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
+        GuiManager.instance.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
 
         // Keep the players, but wipe the scores
         foreach (Player player in NetworkManager.connectedPlayers) {
@@ -354,7 +359,7 @@ public class GameManager : MonoBehaviour {
         }
 
         //Clear data about a winner, the games over yo
-        scoreVictoryManager.ClearWinnerData();
+        ScoreVictoryManager.instance.ClearWinnerData();
     }
 
     public void BackToMainMenu() {
@@ -363,7 +368,7 @@ public class GameManager : MonoBehaviour {
             Network.Disconnect();
         }
 
-        scoreVictoryManager.ClearWinnerData();
+        ScoreVictoryManager.instance.ClearWinnerData();
         Application.LoadLevel("MenuScene");
 
     }

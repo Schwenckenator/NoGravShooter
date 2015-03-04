@@ -4,12 +4,22 @@ using System.Collections.Generic;
 
 public class ScoreVictoryManager : MonoBehaviour {
 
-    //public static Dictionary<NetworkPlayer, int> playerScores = new Dictionary<NetworkPlayer, int>();
-    private GameManager gameManager;
-    private GuiManager guiManager;
-    private SettingsManager settingsManager;
-    private ChatManager chatManager;
-	
+    #region Instance
+    //Here is a private reference only this class can access
+    private static ScoreVictoryManager _instance;
+    //This is the public reference that other classes will use
+    public static ScoreVictoryManager instance {
+        get {
+            //If _instance hasn't been set yet, we grab it from the scene!
+            //This will only happen the first time this reference is used.
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<ScoreVictoryManager>();
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
     //public bool IsVictor { get; set; }
     public string VictorName { get; set; }
     public bool IsVictor() {
@@ -17,11 +27,6 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     void Start() {
-        gameManager = GetComponent<GameManager>();
-        guiManager = GetComponent<GuiManager>();
-        settingsManager = GetComponent<SettingsManager>();
-        chatManager = GetComponent<ChatManager>();
-
         ClearWinnerData(); // Clean Set up
     }
     public void GameStart() {
@@ -31,7 +36,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     public void PointScored(NetworkPlayer player) {
         networkView.RPC("RPCPointScored", RPCMode.All, player, 1);
     }
-    public void Suicide(NetworkPlayer player) {
+    public void PointLost(NetworkPlayer player) {
         networkView.RPC("RPCPointScored", RPCMode.All, player, -1);
     }
 
@@ -53,16 +58,16 @@ public class ScoreVictoryManager : MonoBehaviour {
 
         NetworkManager.GetPlayer(player).AddScore(score);
         CheckForScoreVictory();
-        guiManager.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
+        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
     }
 
     void CheckForScoreVictory() {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            if (player.IsScoreEqualOrOver(settingsManager.ScoreToWin)) {
+            if (player.IsScoreEqualOrOver(SettingsManager.instance.ScoreToWin)) {
                 if (Network.isServer) {
-                    chatManager.AddToChat(player.Name + " wins!");
+                    ChatManager.instance.AddToChat(player.Name + " wins!");
                 }
-                gameManager.EndGame(player);
+                GameManager.instance.EndGame(player);
                 break;
             }
 
@@ -78,18 +83,18 @@ public class ScoreVictoryManager : MonoBehaviour {
             }
         }
         if (Network.isServer) {
-            chatManager.AddToChat("Time is up.");
-            chatManager.AddToChat(winningPlayer.Name + " wins!");
+            ChatManager.instance.AddToChat("Time is up.");
+            ChatManager.instance.AddToChat(winningPlayer.Name + " wins!");
         }
-        gameManager.EndGame(winningPlayer);
+        GameManager.instance.EndGame(winningPlayer);
     }
 
     IEnumerator CheckForGameEnd() {
         float waitTime = 1.0f;
         
-        while(gameManager.GameInProgress){
+        while(GameManager.instance.GameInProgress){
             yield return new WaitForSeconds(waitTime);
-            if (Time.time >= gameManager.endTime && gameManager.GameInProgress) {
+            if (Time.time >= GameManager.instance.endTime && GameManager.instance.GameInProgress) {
                 TimeVictory();
                 break;
             }

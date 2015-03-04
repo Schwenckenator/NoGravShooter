@@ -3,7 +3,6 @@ using System.Collections;
 
 [RequireComponent(typeof(ObjectCleanUp))]
 public class BonusGrenadePackPickup : MonoBehaviour {
-    private SettingsManager settingsManager;
 
     [SerializeField]
 	private int amount;
@@ -11,7 +10,6 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 	private int grenadeType;
 
 	void Start(){
-        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
 
         if (GameManager.IsTutorialScene()) {
             grenadeType = 0;
@@ -26,7 +24,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 			
 			PlayerResources playerResource = info.collider.GetComponent<PlayerResources>();
 
-			if(settingsManager.AutoPickup){
+			if(SettingsManager.instance.AutoPickup){
 				playerResource.ChangeGrenade(grenadeType);
 			}
 			playerResource.PickUpGrenades(amount, grenadeType);

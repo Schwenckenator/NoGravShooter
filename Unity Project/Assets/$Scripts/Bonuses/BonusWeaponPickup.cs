@@ -16,9 +16,6 @@ public class BonusWeaponPickup : MonoBehaviour {
 	private int currentInventorySlot;
 	private bool playerColliding = false;
 
-    private SettingsManager settingsManager;
-    private GuiManager guiManager;
-
 	void Start(){
 		if(GameManager.IsAllWeapon()){
 			maxweaponcount = 99;
@@ -27,9 +24,6 @@ public class BonusWeaponPickup : MonoBehaviour {
 			networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
 			UpdateModel();
 		}
-        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
-        settingsManager = manager.GetComponent<SettingsManager>();
-        guiManager = manager.GetComponent<GuiManager>();
 
 	}
 
@@ -99,7 +93,7 @@ public class BonusWeaponPickup : MonoBehaviour {
         if (swapTimeout > Time.time) return;
 
         swapTimeout = weaponSwapCooldown;
-        guiManager.ButtonPrompt("Swap Weapons", (int)KeyBind.Interact);
+        GuiManager.instance.ButtonPrompt("Swap Weapons", (int)KeyBind.Interact);
 
         if (InputConverter.GetKeyDown(KeyBind.Interact)) {
             SwapWeapon();
@@ -127,7 +121,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private void AddWeapon() {
         fireWeapon.AddWeapon(id);
-        if (settingsManager.AutoPickup) {
+        if (SettingsManager.instance.AutoPickup) {
             fireWeapon.ChangeWeapon(weaponcount);
         }
         Debug.Log("Not at maximum weapons, auto picking up");

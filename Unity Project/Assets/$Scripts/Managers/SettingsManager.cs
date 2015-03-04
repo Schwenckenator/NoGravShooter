@@ -4,7 +4,23 @@ using System.Collections;
 public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, Interact, GrenadeSwitch, StopMovement };
 
 public class SettingsManager : MonoBehaviour {
-    
+
+    #region Instance
+    //Here is a private reference only this class can access
+    private static SettingsManager _instance;
+    //This is the public reference that other classes will use
+    public static SettingsManager instance {
+        get {
+            //If _instance hasn't been set yet, we grab it from the scene!
+            //This will only happen the first time this reference is used.
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<SettingsManager>();
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
     public static KeyCode[] keyBindings;
     const int SecondsInMinute = 60;
     

@@ -6,8 +6,6 @@ public class PlayerColour : MonoBehaviour {
     public Material[] playerColours;
     public string playerGraphicsName = "Test_Rig";
 	
-	private SettingsManager settingsManager;
-	
     public void AssignPlayerColour() {
         Player currentPlayer = NetworkManager.GetPlayer(Network.player);
         if (currentPlayer.HasNoTeam()) {
@@ -20,14 +18,12 @@ public class PlayerColour : MonoBehaviour {
 
     }
     private void ApplySettingsColour() {
-        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
-        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, settingsManager.ColourR, settingsManager.ColourG, settingsManager.ColourB);
+        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, SettingsManager.instance.ColourR, SettingsManager.instance.ColourG, SettingsManager.instance.ColourB);
     }
     private void ApplyTeamColour(Team team) {
-        settingsManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<SettingsManager>();
-        float red = settingsManager.ColourR;
-        float green = settingsManager.ColourG;
-        float blue = settingsManager.ColourB;
+        float red = SettingsManager.instance.ColourR;
+        float green = SettingsManager.instance.ColourG;
+        float blue = SettingsManager.instance.ColourB;
 		//just an idea i had while watching redvsblue, can always take it out later
 		//allows multiple shades while keeping within the general colour pallet of the team
         switch (team) {

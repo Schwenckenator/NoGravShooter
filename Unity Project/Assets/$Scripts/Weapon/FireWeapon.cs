@@ -24,14 +24,11 @@ public class FireWeapon : MonoBehaviour {
 
 	private List<WeaponSuperClass> heldWeapons;
 	
-    private GameManager gameManager;
 
 	// Use this for initialization
 	void Awake () {
 		heldWeapons = new List<WeaponSuperClass>();
 
-        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
-		gameManager = manager.GetComponent<GameManager>();
         
         SetWeaponLoadout();
 
@@ -50,7 +47,7 @@ public class FireWeapon : MonoBehaviour {
             AddWeapon(slugRifle);
             AddWeapon(shotGun);
         } else {
-            int[] temp = gameManager.GetStartingWeapons();
+            int[] temp = GameManager.instance.GetStartingWeapons();
             foreach (int id in temp) {
                 if (id < GameManager.weapon.Count) {
                     AddWeapon(id);

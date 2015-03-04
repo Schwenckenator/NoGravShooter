@@ -5,6 +5,22 @@ using System.Collections.Generic;
 /// Manages the GUI and all GUI operations
 /// </summary>
 public class GuiManager : MonoBehaviour {
+    #region Instance
+    //Here is a private reference only this class can access
+    private static GuiManager _instance;
+    //This is the public reference that other classes will use
+    public static GuiManager instance {
+        get {
+            //If _instance hasn't been set yet, we grab it from the scene!
+            //This will only happen the first time this reference is used.
+            if (_instance == null) {
+                _instance = GameObject.FindObjectOfType<GuiManager>();
+            }
+            return _instance;
+        }
+    }
+    #endregion
+
     public enum Menu { MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
     public void SetCurrentMenuWindow(Menu newWindow) {
         currentWindow = newWindow;
@@ -14,10 +30,6 @@ public class GuiManager : MonoBehaviour {
     }
 
     #region  variable Dec
-    private GameManager gameManager;
-    private ChatManager chatManager;
-    private ScoreVictoryManager scoreVictoryManager;
-    private SettingsManager settingsManager;
 	
     [SerializeField]
 	private Texture empty;
@@ -112,20 +124,15 @@ public class GuiManager : MonoBehaviour {
     void Start(){
 
         ChangeGuiRectSize(); // Do this first
-
-		gameManager = GetComponent<GameManager>();
-        chatManager = GetComponent<ChatManager>();
-        scoreVictoryManager = GetComponent<ScoreVictoryManager>();
-        settingsManager = GetComponent<SettingsManager>();
 		
         SetCurrentMenuWindow(Menu.MainMenu);
 
-		mouseInverted = (settingsManager.MouseYDirection == 1);
-        autoPickupEnabled = (settingsManager.AutoPickup);
+		mouseInverted = (SettingsManager.instance.MouseYDirection == 1);
+        autoPickupEnabled = (SettingsManager.instance.AutoPickup);
 		
-		MedkitSpawning = (settingsManager.MedkitCanSpawn == 1);
-		GrenadeSpawning = (settingsManager.GrenadeCanSpawn == 1);
-		WeaponSpawning = (settingsManager.WeaponCanSpawn == 1);
+		MedkitSpawning = (SettingsManager.instance.MedkitCanSpawn == 1);
+		GrenadeSpawning = (SettingsManager.instance.GrenadeCanSpawn == 1);
+		WeaponSpawning = (SettingsManager.instance.WeaponCanSpawn == 1);
 	}
 	
 	#region OnGUI
@@ -153,11 +160,11 @@ public class GuiManager : MonoBehaviour {
 		}else if(GameManager.IsPlayerMenu()){
 			GUI.Window(0, largeRect, PauseWindow, "MENU");
 			
-		}else if(gameManager.IsPlayerSpawned()){
+		}else if(GameManager.instance.IsPlayerSpawned()){
 			PlayerGUI();
 			
 		}else if(!GameManager.IsMenuScene()){
-			GUI.Window(1, largeRect, PauseWindow, settingsManager.DisplayServerName);
+			GUI.Window(1, largeRect, PauseWindow, SettingsManager.instance.DisplayServerName);
 			
 		}
 	}
@@ -180,7 +187,7 @@ public class GuiManager : MonoBehaviour {
 			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
 			break;
 		case Menu.Lobby:
-			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, settingsManager.DisplayServerName);
+			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, SettingsManager.instance.DisplayServerName);
 			break;
 		case Menu.Connecting:
 			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
@@ -215,8 +222,8 @@ public class GuiManager : MonoBehaviour {
 		style.fontSize = 50;
 		style.alignment = TextAnchor.UpperCenter;
 
-        if (scoreVictoryManager.IsVictor()) {
-            GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Winner!\n" + scoreVictoryManager.VictorName, style);
+        if (ScoreVictoryManager.instance.IsVictor()) {
+            GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Winner!\n" + ScoreVictoryManager.instance.VictorName, style);
         }
 
 		string ammoText = playerResource.GetCurrentClip().ToString();
@@ -397,8 +404,8 @@ public class GuiManager : MonoBehaviour {
     }
     void TimerGUI() {
 
-        float timeLeftMins = Mathf.Floor((gameManager.endTime - Time.time) / 60);
-        float timeLeftSecs = Mathf.Floor((gameManager.endTime - Time.time) - (timeLeftMins * 60));
+        float timeLeftMins = Mathf.Floor((GameManager.instance.endTime - Time.time) / 60);
+        float timeLeftSecs = Mathf.Floor((GameManager.instance.endTime - Time.time) - (timeLeftMins * 60));
 
         if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
             GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
@@ -416,15 +423,15 @@ public class GuiManager : MonoBehaviour {
 		GUI.Label(standard, "Player Name");
 		
 		standard.y += 20;
-        settingsManager.PlayerName = GUI.TextField(standard, settingsManager.PlayerName); 
+        SettingsManager.instance.PlayerName = GUI.TextField(standard, SettingsManager.instance.PlayerName); 
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
 			//Check for preferred server name
-            if (settingsManager.MyServerName == "") {
-                settingsManager.MyServerName = settingsManager.PlayerName + "'s Server";
+            if (SettingsManager.instance.MyServerName == "") {
+                SettingsManager.instance.MyServerName = SettingsManager.instance.PlayerName + "'s Server";
 			}
-            settingsManager.SaveSettings();
+            SettingsManager.instance.SaveSettings();
 
             SetCurrentMenuWindow(Menu.CreateGame);
 		}
@@ -433,14 +440,14 @@ public class GuiManager : MonoBehaviour {
 		if(GUI.Button(standard, "Join Game")){
 			
 			MasterServer.RequestHostList(GameType);
-            settingsManager.SaveSettings();
+            SettingsManager.instance.SaveSettings();
 
             SetCurrentMenuWindow(Menu.JoinGame);
 		}
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Tutorial")){
-			StartCoroutine(gameManager.LoadTutorial());
+			StartCoroutine(GameManager.instance.LoadTutorial());
 		}
 		
 		standard.y += 50;
@@ -463,17 +470,17 @@ public class GuiManager : MonoBehaviour {
 		GUI.Label(standard, "Server Name");
 		
 		standard.y += 30;
-        settingsManager.MyServerName = GUI.TextField(standard, settingsManager.MyServerName);
+        SettingsManager.instance.MyServerName = GUI.TextField(standard, SettingsManager.instance.MyServerName);
 		
 		standard.y += 50;		
 		GUI.Label(standard, "Port Number");
 		standard.y += 30;
-        settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
+        SettingsManager.instance.PortNumStr = GUI.TextField(standard, SettingsManager.instance.PortNumStr);
 		
 		standard.y += 50;	
 		GUI.Label(standard, "Password Required");
 		standard.y += 30;
-        settingsManager.PasswordServer = GUI.TextField(standard, settingsManager.PasswordServer);
+        SettingsManager.instance.PasswordServer = GUI.TextField(standard, SettingsManager.instance.PasswordServer);
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
@@ -491,12 +498,12 @@ public class GuiManager : MonoBehaviour {
 		}
 	}
     private void CreateGame(bool online) {
-        settingsManager.ParsePortNumber();
+        SettingsManager.instance.ParsePortNumber();
 
-        if (settingsManager.PortNum >= 0) { // Check for error
-            NetworkManager.SetServerDetails(MaxPlayers, settingsManager.PortNum, online);
+        if (SettingsManager.instance.PortNum >= 0) { // Check for error
+            NetworkManager.SetServerDetails(MaxPlayers, SettingsManager.instance.PortNum, online);
             NetworkManager.InitialiseServer();
-            settingsManager.SaveSettings();
+            SettingsManager.instance.SaveSettings();
             currentWindow = Menu.Lobby;
         }
     }
@@ -557,26 +564,26 @@ public class GuiManager : MonoBehaviour {
 
         GUI.Label(standard, "Server IP Address");
         standard.y += 30;
-        settingsManager.IpAddress = GUI.TextField(standard, settingsManager.IpAddress);
+        SettingsManager.instance.IpAddress = GUI.TextField(standard, SettingsManager.instance.IpAddress);
 
 
         standard.y += 50;
         GUI.Label(standard, "Port Number");
         standard.y += 30;
-        settingsManager.PortNumStr = GUI.TextField(standard, settingsManager.PortNumStr);
+        SettingsManager.instance.PortNumStr = GUI.TextField(standard, SettingsManager.instance.PortNumStr);
 
         standard.y += 50;
         GUI.Label(standard, "Password");
         standard.y += 30;
-        settingsManager.PasswordClient = GUI.TextField(standard, settingsManager.PasswordClient);
+        SettingsManager.instance.PasswordClient = GUI.TextField(standard, SettingsManager.instance.PasswordClient);
 
         standard.y += 50;
         if (GUI.Button(standard, "Join Game")) {
             displayJoinByIpWindow = false;
-            settingsManager.ParsePortNumber();
+            SettingsManager.instance.ParsePortNumber();
 
-            if (settingsManager.PortNum >= 0) { // Check for error
-                settingsManager.SaveSettings();
+            if (SettingsManager.instance.PortNum >= 0) { // Check for error
+                SettingsManager.instance.SaveSettings();
                 useMasterServer = false;
                 currentWindow = Menu.Connecting;
             }
@@ -594,7 +601,7 @@ public class GuiManager : MonoBehaviour {
 
         GUI.Label(standard, "Password");
         standard.y += 30;
-        settingsManager.PasswordClient = GUI.TextField(standard, settingsManager.PasswordClient);
+        SettingsManager.instance.PasswordClient = GUI.TextField(standard, SettingsManager.instance.PasswordClient);
 
         standard.y += 50;
         if (GUI.Button(standard, "Submit Password")) {
@@ -614,17 +621,17 @@ public class GuiManager : MonoBehaviour {
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity X: ");
-        settingsManager.xMouseSensitivity = (float)System.Math.Round(settingsManager.xMouseSensitivity, 2);
-        settingsManager.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), settingsManager.xMouseSensitivity.ToString()));
+        SettingsManager.instance.xMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.xMouseSensitivity, 2);
+        SettingsManager.instance.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), SettingsManager.instance.xMouseSensitivity.ToString()));
 		standard.y += 20;
-        settingsManager.xMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.xMouseSensitivity, 0, 1);
+        SettingsManager.instance.xMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.xMouseSensitivity, 0, 1);
 		
 		standard.y += 50;
 		GUI.Label(standard, "Mouse Sensitivity Y: ");
-        settingsManager.yMouseSensitivity = (float)System.Math.Round(settingsManager.yMouseSensitivity, 2);
-        settingsManager.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), settingsManager.yMouseSensitivity.ToString()));
+        SettingsManager.instance.yMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.yMouseSensitivity, 2);
+        SettingsManager.instance.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), SettingsManager.instance.yMouseSensitivity.ToString()));
 		standard.y += 20;
-        settingsManager.yMouseSensitivity = GUI.HorizontalSlider(standard, settingsManager.yMouseSensitivity, 0, 1);
+        SettingsManager.instance.yMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.yMouseSensitivity, 0, 1);
 		
 		standard.y += 40;
 		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
@@ -632,10 +639,10 @@ public class GuiManager : MonoBehaviour {
 		
 		standard.y += 50;
 		GUI.Label(standard, "Field Of View: ");
-        settingsManager.FieldOfView = (float)System.Math.Round(settingsManager.FieldOfView, 1);
-        settingsManager.FieldOfView = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), settingsManager.FieldOfView.ToString()));
+        SettingsManager.instance.FieldOfView = (float)System.Math.Round(SettingsManager.instance.FieldOfView, 1);
+        SettingsManager.instance.FieldOfView = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), SettingsManager.instance.FieldOfView.ToString()));
 		standard.y += 20;
-        settingsManager.FieldOfView = GUI.HorizontalSlider(standard, settingsManager.FieldOfView, 50, 100);
+        SettingsManager.instance.FieldOfView = GUI.HorizontalSlider(standard, SettingsManager.instance.FieldOfView, 50, 100);
 		
 		
 		standard.x += standard.width+50;
@@ -643,36 +650,36 @@ public class GuiManager : MonoBehaviour {
 		
 		GUI.Label(standard, "Colour (Red): ");
 		standard.x += 20;
-        settingsManager.ColourR = (float)System.Math.Round(settingsManager.ColourR, 2);
+        SettingsManager.instance.ColourR = (float)System.Math.Round(SettingsManager.instance.ColourR, 2);
 		standard.y += 20;
-        settingsManager.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), settingsManager.ColourR.ToString()));
+        SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
 		standard.y += 20;
 		standard.x -= 20;
-		settingsManager.ColourR = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), settingsManager.ColourR, 1, 0);
+		SettingsManager.instance.ColourR = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourR, 1, 0);
 		
 		standard.y -= 40;
 		standard.x += 100;
 		
 		GUI.Label(standard, "Colour (Green): ");
 		standard.x += 20;
-        settingsManager.ColourG = (float)System.Math.Round(settingsManager.ColourG, 2);
+        SettingsManager.instance.ColourG = (float)System.Math.Round(SettingsManager.instance.ColourG, 2);
 		standard.y += 20;
-        settingsManager.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), settingsManager.ColourG.ToString()));
+        SettingsManager.instance.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourG.ToString()));
 		standard.y += 20;
 		standard.x -= 20;
-		settingsManager.ColourG = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), settingsManager.ColourG, 1, 0);
+		SettingsManager.instance.ColourG = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourG, 1, 0);
 		
 		standard.y -= 40;
 		standard.x += 100;
 		
 		GUI.Label(standard, "Colour (Blue): ");
 		standard.x += 20;
-        settingsManager.ColourB = (float)System.Math.Round(settingsManager.ColourB, 2);
+        SettingsManager.instance.ColourB = (float)System.Math.Round(SettingsManager.instance.ColourB, 2);
 		standard.y += 20;
-        settingsManager.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), settingsManager.ColourB.ToString()));
+        SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
 		standard.y += 20;
 		standard.x -= 20;
-		settingsManager.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), settingsManager.ColourB, 1, 0);
+		SettingsManager.instance.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourB, 1, 0);
 		
 		
 		standard.x -= standard.width+250;
@@ -692,10 +699,10 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 
-            settingsManager.MouseYDirection = mouseInverted ? 1 : -1;
-            settingsManager.AutoPickup = autoPickupEnabled;
+            SettingsManager.instance.MouseYDirection = mouseInverted ? 1 : -1;
+            SettingsManager.instance.AutoPickup = autoPickupEnabled;
 
-            settingsManager.SaveSettings();
+            SettingsManager.instance.SaveSettings();
 
 			currentWindow =  Menu.MainMenu;
 		}
@@ -853,7 +860,7 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
 			// Save Configuation-
-            settingsManager.SaveKeyBinds();
+            SettingsManager.instance.SaveKeyBinds();
 
 			currentWindow =  Menu.Options;
 		}
@@ -879,13 +886,13 @@ public class GuiManager : MonoBehaviour {
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
 		GUI.Label(new Rect(20, 10, 100, 30), "Game Mode");
-        settingsManager.GameModeIndex = GUI.Toolbar(new Rect(20, 30, smallRect.width - 40, 30), settingsManager.GameModeIndex, settingsManager.GameModeList);
+        SettingsManager.instance.GameModeIndex = GUI.Toolbar(new Rect(20, 30, smallRect.width - 40, 30), SettingsManager.instance.GameModeIndex, SettingsManager.instance.GameModeList);
 
 		GUI.Label(new Rect(20, 65, 100, 30), "Score Limit");
-        settingsManager.ScoreToWin = int.Parse(GUI.TextField(new Rect(95, 65, 50, 20), settingsManager.ScoreToWin.ToString()));
+        SettingsManager.instance.ScoreToWin = int.Parse(GUI.TextField(new Rect(95, 65, 50, 20), SettingsManager.instance.ScoreToWin.ToString()));
 
 		GUI.Label(new Rect(160, 65, 120, 30), "Time Limit (mins)");
-        settingsManager.TimeLimitMin = int.Parse(GUI.TextField(new Rect(275, 65, 50, 20), settingsManager.TimeLimitMin.ToString()));
+        SettingsManager.instance.TimeLimitMin = int.Parse(GUI.TextField(new Rect(275, 65, 50, 20), SettingsManager.instance.TimeLimitMin.ToString()));
 
 		GUI.Label(new Rect(20, 90, 90, 30), "Item Spawning");
 		MedkitSpawning = GUI.Toggle(new Rect(115, 90,  80, 30), MedkitSpawning, "Medkits");
@@ -893,14 +900,14 @@ public class GuiManager : MonoBehaviour {
 		WeaponSpawning = GUI.Toggle(new Rect(265, 90,  80, 30), WeaponSpawning, "Weapons");
 		
 		GUI.Label(new Rect(20, 110, smallRect.width-40, 30), "Map");
-        settingsManager.LevelIndex = GUI.Toolbar(new Rect(20, 130, smallRect.width - 40, 30), settingsManager.LevelIndex, settingsManager.LevelList);
+        SettingsManager.instance.LevelIndex = GUI.Toolbar(new Rect(20, 130, smallRect.width - 40, 30), SettingsManager.instance.LevelIndex, SettingsManager.instance.LevelList);
 
 		GUI.Label(new Rect(20, 165, smallRect.width-40, 30), "Starting Weapons");
-        settingsManager.SpawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width - 40, 30), settingsManager.SpawnWeapon1, weaponlist);
-        settingsManager.SpawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width - 40, 30), settingsManager.SpawnWeapon2, weaponlist2);
+        SettingsManager.instance.SpawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width - 40, 30), SettingsManager.instance.SpawnWeapon1, weaponlist);
+        SettingsManager.instance.SpawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width - 40, 30), SettingsManager.instance.SpawnWeapon2, weaponlist2);
 
         if(GUI.Button(new Rect(20, smallRect.height-45, smallRect.width-40, 30), "Close")){
-            settingsManager.SaveSettings();
+            SettingsManager.instance.SaveSettings();
 			displayGameSettingsWindow = false;
 		}
 	}
@@ -914,7 +921,7 @@ public class GuiManager : MonoBehaviour {
             if (GUI.Button(new Rect(20, 20, largeRect.width / 3, 30), startGameText)) {
                 if (countdown) {
                     StopCoroutine("CountdownStartGame");
-                    chatManager.AddToChat("Countdown cancelled.");
+                    ChatManager.instance.AddToChat("Countdown cancelled.");
                     countdown = false;
                 } else {
                     StartCoroutine("CountdownStartGame");
@@ -942,29 +949,29 @@ public class GuiManager : MonoBehaviour {
 		
 		// Choo choo, all aboard the dodgy train
 		if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-			chatManager.AddToChat(ChatManager.currentChat, true);
+			ChatManager.instance.AddToChat(ChatManager.currentChat, true);
 			ChatManager.ClearCurrentChat();
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			chatManager.AddToChat(ChatManager.currentChat, true);
+			ChatManager.instance.AddToChat(ChatManager.currentChat, true);
 			ChatManager.ClearCurrentChat();
 		}
 	}
 
     IEnumerator CountdownStartGame() {
         if (GameManager.IsAdminMode()) {
-            gameManager.LoadLevel();
+            GameManager.instance.LoadLevel();
             yield break;
         }
         countdown = true;
         int waitSeconds = 5;
-        chatManager.AddToChat("Game starting in...");
+        ChatManager.instance.AddToChat("Game starting in...");
         do {
-            chatManager.AddToChat(waitSeconds.ToString() + "...");
+            ChatManager.instance.AddToChat(waitSeconds.ToString() + "...");
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
-        gameManager.LoadLevel();
+        GameManager.instance.LoadLevel();
         countdown = false;
     }
 	#endregion
@@ -977,7 +984,7 @@ public class GuiManager : MonoBehaviour {
 		
 		if(!connectingNow){
 			connectingNow = true;
-            NetworkManager.SetClientDetails(masterServerData, useMasterServer, settingsManager.IpAddress, int.Parse(settingsManager.PortNumStr));
+            NetworkManager.SetClientDetails(masterServerData, useMasterServer, SettingsManager.instance.IpAddress, int.Parse(SettingsManager.instance.PortNumStr));
             NetworkManager.ConnectToServer();
 		}
 		if(!connectionError){
@@ -1011,20 +1018,20 @@ public class GuiManager : MonoBehaviour {
             TimerGUI(); // Display the timer even when paused
         }
 
-		if(gameManager.IsPlayerSpawned()){
+		if(GameManager.instance.IsPlayerSpawned()){
             string strReturnToGame = GameManager.IsTutorialScene() ? "Return to Simulation" : "Return to Game";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
-				gameManager.SetPlayerMenu(false);
+				GameManager.instance.SetPlayerMenu(false);
 				GameManager.SetCursorVisibility(false);
 			}
 		}else {
-            if (scoreVictoryManager.IsVictor()) {
+            if (ScoreVictoryManager.instance.IsVictor()) {
                 GUI.enabled = false;
-                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), scoreVictoryManager.VictorName + " has won!");
+                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), ScoreVictoryManager.instance.VictorName + " has won!");
                 GUI.enabled = true;
             } else {
                 if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
-                    gameManager.SpawnPlayer();
+                    GameManager.instance.SpawnPlayer();
                     SetMyPlayerResources();
                 }
             }
@@ -1035,11 +1042,11 @@ public class GuiManager : MonoBehaviour {
 
         if (!GameManager.IsTutorialScene() && Network.isServer) {
             if (GUI.Button(new Rect(20, largeRect.height - 80, largeRect.width / 3, 30), "Return to Lobby")) {
-                gameManager.ReturnToLobby();
+                GameManager.instance.ReturnToLobby();
             }
         }
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), DisconnectButtonText())) {
-            gameManager.BackToMainMenu();
+            GameManager.instance.BackToMainMenu();
         }
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), ChatManager.SubmittedChat, lowerLeftTextAlign);
@@ -1051,13 +1058,13 @@ public class GuiManager : MonoBehaviour {
 		// Choo choo, all aboard the dodgy train
 		if(!GameManager.IsTutorialScene()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
-				chatManager.AddToChat(ChatManager.currentChat, true);
+				ChatManager.instance.AddToChat(ChatManager.currentChat, true);
 				ChatManager.ClearCurrentChat();
 			}
 		}
 		
 		if(Event.current.type == EventType.KeyUp && Event.current.keyCode == KeyCode.Return){
-			chatManager.AddToChat(ChatManager.currentChat, true);
+			ChatManager.instance.AddToChat(ChatManager.currentChat, true);
 			ChatManager.ClearCurrentChat();
 		}
 		
@@ -1104,6 +1111,6 @@ public class GuiManager : MonoBehaviour {
 		connectionError = true;
         connectionErrorMessage = error.ToString();
         
-        settingsManager.ClearPasswordClient();
+        SettingsManager.instance.ClearPasswordClient();
 	}
 }

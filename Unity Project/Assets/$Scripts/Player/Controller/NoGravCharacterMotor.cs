@@ -8,7 +8,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
     public bool ForceDisconnectFromGround = false;
 
-	private GameManager gameManager;
 	private AudioSource jetpackAudio;
 	private AudioSource feetAudio;
 
@@ -74,8 +73,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
     IControllerInput input;
 
 	void Start(){
-        GameObject manager = GameObject.FindGameObjectWithTag("GameController");
-		gameManager = manager.GetComponent<GameManager>();
         
         input = GetComponent<ControllerInput>();
 
@@ -103,7 +100,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void OnGUI(){
 		if(!ragdoll) return;
-		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), gameManager.GetComponent<GuiManager>().bloodyScreen);
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), GuiManager.instance.bloodyScreen);
 	}
 	
 	
