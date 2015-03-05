@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerColour : MonoBehaviour {
 
-    public Material[] playerColours;
     public string playerGraphicsName = "Test_Rig";
 	
     public void AssignPlayerColour() {
@@ -29,15 +28,15 @@ public class PlayerColour : MonoBehaviour {
         switch (team) {
             case Team.Red:
 				//limits colours to red(duh), light red, dark red, pink and orange
-				if(red < 0.85f){red = 0.85f;}
-				if(green > 0.5f){green = 0.5f;}
-				if(blue > 0.75f){blue = 0.75f;}
+				if(red < GuiManager.instance.RedTeamRedLimit){red = GuiManager.instance.RedTeamRedLimit;}
+				if(green > GuiManager.instance.RedTeamGreenLimit){green = GuiManager.instance.RedTeamGreenLimit;}
+				if(blue > GuiManager.instance.RedTeamBlueLimit){blue = GuiManager.instance.RedTeamBlueLimit;}
                 break;
             case Team.Blue:
 				//limits colours to blue(duh), light blue, dark blue, purple and teal
-				if(red > 0.5f){red = 0.5f;}
-				if(green > 0.75f){green = 0.75f;}
-				if(blue < 0.85){blue = 0.85f;}
+				if(red > GuiManager.instance.BlueTeamRedLimit){red = GuiManager.instance.BlueTeamRedLimit;}
+				if(green > GuiManager.instance.BlueTeamGreenLimit){green = GuiManager.instance.BlueTeamGreenLimit;}
+				if(blue < GuiManager.instance.BlueTeamBlueLimit){blue = GuiManager.instance.BlueTeamBlueLimit;}
                 break;
         }
         networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, red, green, blue);

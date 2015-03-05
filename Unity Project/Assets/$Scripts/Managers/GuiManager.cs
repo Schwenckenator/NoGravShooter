@@ -70,6 +70,13 @@ public class GuiManager : MonoBehaviour {
     [SerializeField]
     private bool detectItems;
 	
+	public float RedTeamRedLimit;
+	public float RedTeamGreenLimit;
+	public float RedTeamBlueLimit;
+	public float BlueTeamRedLimit;
+	public float BlueTeamGreenLimit;
+	public float BlueTeamBlueLimit;
+	
 	private PlayerResources playerResource;
 	
 	private Menu currentWindow = 0;
@@ -117,6 +124,9 @@ public class GuiManager : MonoBehaviour {
 
 	GUIStyle upperLeftTextAlign;
 	GUIStyle lowerLeftTextAlign;
+	
+	private Color playercol;
+	private Texture2D coltexture;
 
     #endregion
 
@@ -143,6 +153,12 @@ public class GuiManager : MonoBehaviour {
 
 		lowerLeftTextAlign = new GUIStyle(GUI.skin.box);
 		lowerLeftTextAlign.alignment = TextAnchor.LowerLeft;
+		
+		playercol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
+		coltexture = new Texture2D(1, 1);
+		coltexture.SetPixel(0,0,playercol);
+		coltexture.Apply();
+		GUI.skin.box.normal.background = coltexture;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 		if(GameManager.IsAdminMode()){
@@ -656,11 +672,11 @@ public class GuiManager : MonoBehaviour {
 		float RED = SettingsManager.instance.ColourR;
 		float GREEN = SettingsManager.instance.ColourG;
 		float BLUE = SettingsManager.instance.ColourB;
-		if(RED < 0.85f){RED = 0.85f;}
-		if(GREEN > 0.5f){GREEN = 0.5f;}
-		if(BLUE > 0.75f){BLUE = 0.75f;}
-		Color playercol = new Color (RED, GREEN, BLUE, 1);
-		Texture2D coltexture = new Texture2D(1, 1);
+		if(RED < RedTeamRedLimit){RED = RedTeamRedLimit;}
+		if(GREEN > RedTeamGreenLimit){GREEN = RedTeamGreenLimit;}
+		if(BLUE > RedTeamBlueLimit){BLUE = RedTeamBlueLimit;}
+		playercol = new Color (RED, GREEN, BLUE, 1);
+		coltexture = new Texture2D(1, 1);
 		coltexture.SetPixel(0,0,playercol);
 		coltexture.Apply();
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Red Team");
@@ -703,9 +719,9 @@ public class GuiManager : MonoBehaviour {
 		RED = SettingsManager.instance.ColourR;
 		GREEN = SettingsManager.instance.ColourG;
 		BLUE = SettingsManager.instance.ColourB;
-		if(RED > 0.5f){RED = 0.5f;}
-		if(GREEN > 0.75f){GREEN = 0.75f;}
-		if(BLUE < 0.85){BLUE = 0.85f;}
+		if(RED > BlueTeamRedLimit){RED = BlueTeamRedLimit;}
+		if(GREEN > BlueTeamGreenLimit){GREEN = BlueTeamGreenLimit;}
+		if(BLUE < BlueTeamBlueLimit){BLUE = BlueTeamBlueLimit;}
 		playercol = new Color (RED, GREEN, BLUE, 1);
 		coltexture = new Texture2D(1, 1);
 		coltexture.SetPixel(0,0,playercol);
@@ -716,6 +732,11 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
 		standard.x -= 20;
 		SettingsManager.instance.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourB, 1, 0);
+		playercol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
+		coltexture = new Texture2D(1, 1);
+		coltexture.SetPixel(0,0,playercol);
+		coltexture.Apply();
+		GUI.skin.box.normal.background = coltexture;
 		
 		
 		standard.x -= standard.width+250;
