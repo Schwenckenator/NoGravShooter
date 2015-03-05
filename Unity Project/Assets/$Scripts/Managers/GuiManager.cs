@@ -70,12 +70,7 @@ public class GuiManager : MonoBehaviour {
     [SerializeField]
     private bool detectItems;
 	
-	public float RedTeamRedLimit;
-	public float RedTeamGreenLimit;
-	public float RedTeamBlueLimit;
-	public float BlueTeamRedLimit;
-	public float BlueTeamGreenLimit;
-	public float BlueTeamBlueLimit;
+
 	
 	private PlayerResources playerResource;
 	
@@ -510,7 +505,7 @@ public class GuiManager : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-			currentWindow =  Menu.MainMenu;
+            SetCurrentMenuWindow(Menu.MainMenu);
 		}
 	}
     private void CreateGame(bool online) {
@@ -520,7 +515,7 @@ public class GuiManager : MonoBehaviour {
             NetworkManager.SetServerDetails(MaxPlayers, SettingsManager.instance.PortNum, online);
             NetworkManager.InitialiseServer();
             SettingsManager.instance.SaveSettings();
-            currentWindow = Menu.Lobby;
+            SetCurrentMenuWindow(Menu.Lobby);
         }
     }
 
@@ -558,7 +553,7 @@ public class GuiManager : MonoBehaviour {
                 if (masterServerData.passwordProtected) {
                     displayMasterServerPassword = true;
                 } else { 
-                    currentWindow = Menu.Connecting; 
+                    SetCurrentMenuWindow(Menu.Connecting); 
                 }
 			}
 		}
@@ -570,7 +565,7 @@ public class GuiManager : MonoBehaviour {
 			displayJoinByIpWindow = true;
 		}
 		if(GUI.Button (new Rect(largeRect.width/2+20, largeRect.height-70, largeRect.width/5, 30), "Back")){
-			currentWindow =  Menu.MainMenu;
+			SetCurrentMenuWindow( Menu.MainMenu);
 		}
 		
 	}
@@ -601,7 +596,7 @@ public class GuiManager : MonoBehaviour {
             if (SettingsManager.instance.PortNum >= 0) { // Check for error
                 SettingsManager.instance.SaveSettings();
                 useMasterServer = false;
-                currentWindow = Menu.Connecting;
+                SetCurrentMenuWindow(Menu.Connecting);
             }
 
         }
@@ -622,7 +617,7 @@ public class GuiManager : MonoBehaviour {
         standard.y += 50;
         if (GUI.Button(standard, "Submit Password")) {
             displayMasterServerPassword = false;
-            currentWindow = Menu.Connecting;
+            SetCurrentMenuWindow(Menu.Connecting);
         }
 
         standard.y = smallRect.height - 50;
@@ -635,52 +630,24 @@ public class GuiManager : MonoBehaviour {
 	#region OptionsWindow
 	void OptionsWindow(int windowId){
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
-		standard.y += 50;
-		GUI.Label(standard, "Mouse Sensitivity X: ");
-        SettingsManager.instance.xMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.xMouseSensitivity, 2);
-        SettingsManager.instance.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), SettingsManager.instance.xMouseSensitivity.ToString()));
-		standard.y += 20;
-        SettingsManager.instance.xMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.xMouseSensitivity, 0, 1);
-		
-		standard.y += 50;
-		GUI.Label(standard, "Mouse Sensitivity Y: ");
-        SettingsManager.instance.yMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.yMouseSensitivity, 2);
-        SettingsManager.instance.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), SettingsManager.instance.yMouseSensitivity.ToString()));
-		standard.y += 20;
-        SettingsManager.instance.yMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.yMouseSensitivity, 0, 1);
-		
-		standard.y += 40;
-		mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y,  100, 30), mouseInverted, "Invert Y Axis");
-		autoPickupEnabled = GUI.Toggle(new Rect(standard.x+100, standard.y,  250, 30), autoPickupEnabled, "Automatically switch to new weapons");
-		
-		standard.y += 50;
-		GUI.Label(standard, "Field Of View: ");
-        SettingsManager.instance.FieldOfView = (float)System.Math.Round(SettingsManager.instance.FieldOfView, 1);
-        SettingsManager.instance.FieldOfView = float.Parse(GUI.TextField(new Rect(standard.width-60, standard.y, 50, 20), SettingsManager.instance.FieldOfView.ToString()));
-		standard.y += 20;
-        SettingsManager.instance.FieldOfView = GUI.HorizontalSlider(standard, SettingsManager.instance.FieldOfView, 50, 100);
-		
-		
-		standard.x += standard.width+50;
-		standard.y -= 200;
+        standard = DisplayGeneralSettings(standard);
+
 		
 		GUI.Label(standard, "Colour (Red): ");
 		standard.x += 20;
         SettingsManager.instance.ColourR = (float)System.Math.Round(SettingsManager.instance.ColourR, 2);
 		standard.y += 20;
         SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
-		float RED = SettingsManager.instance.ColourR;
-		float GREEN = SettingsManager.instance.ColourG;
-		float BLUE = SettingsManager.instance.ColourB;
-		if(RED < RedTeamRedLimit){RED = RedTeamRedLimit;}
-		if(GREEN > RedTeamGreenLimit){GREEN = RedTeamGreenLimit;}
-		if(BLUE > RedTeamBlueLimit){BLUE = RedTeamBlueLimit;}
-		playercol = new Color (RED, GREEN, BLUE, 1);
-		coltexture = new Texture2D(1, 1);
-		coltexture.SetPixel(0,0,playercol);
-		coltexture.Apply();
+
+        // Display Red team Preview
+        Color redTeamColour = SettingsManager.instance.GetPlayerColour();
+        redTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Red, redTeamColour);
+		Texture2D redTeamTexture = new Texture2D(1, 1);
+        redTeamTexture.SetPixel(0, 0, redTeamColour);
+        redTeamTexture.Apply();
+
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Red Team");
-		GUI.skin.box.normal.background = coltexture;
+        GUI.skin.box.normal.background = redTeamTexture;
 		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
         SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
 		standard.x -= 20;
@@ -694,13 +661,14 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourG = (float)System.Math.Round(SettingsManager.instance.ColourG, 2);
 		standard.y += 20;
         SettingsManager.instance.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourG.ToString()));
-		RED = SettingsManager.instance.ColourR;
-		GREEN = SettingsManager.instance.ColourG;
-		BLUE = SettingsManager.instance.ColourB;
-		playercol = new Color (RED, GREEN, BLUE, 1);
+
+        //Display No team Preview
+        playercol = SettingsManager.instance.GetPlayerColour();
+        playercol = PlayerColourManager.instance.LimitTeamColour(Team.None, playercol);
 		coltexture = new Texture2D(1, 1);
 		coltexture.SetPixel(0,0,playercol);
 		coltexture.Apply();
+
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Default");
 		GUI.skin.box.normal.background = coltexture;
 		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
@@ -716,23 +684,22 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourB = (float)System.Math.Round(SettingsManager.instance.ColourB, 2);
 		standard.y += 20;
         SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
-		RED = SettingsManager.instance.ColourR;
-		GREEN = SettingsManager.instance.ColourG;
-		BLUE = SettingsManager.instance.ColourB;
-		if(RED > BlueTeamRedLimit){RED = BlueTeamRedLimit;}
-		if(GREEN > BlueTeamGreenLimit){GREEN = BlueTeamGreenLimit;}
-		if(BLUE < BlueTeamBlueLimit){BLUE = BlueTeamBlueLimit;}
-		playercol = new Color (RED, GREEN, BLUE, 1);
-		coltexture = new Texture2D(1, 1);
-		coltexture.SetPixel(0,0,playercol);
-		coltexture.Apply();
+		
+        // Display Blue team Preview
+        Color blueTeamColour = SettingsManager.instance.GetPlayerColour();
+        blueTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Blue, blueTeamColour);
+
+		Texture2D blueTeamTexture = new Texture2D(1, 1);
+        blueTeamTexture.SetPixel(0, 0, blueTeamColour);
+        blueTeamTexture.Apply();
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Blue Team");
-		GUI.skin.box.normal.background = coltexture;
+        GUI.skin.box.normal.background = blueTeamTexture;
 		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
         SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
 		standard.x -= 20;
 		SettingsManager.instance.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourB, 1, 0);
-		playercol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
+		
+        playercol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
 		coltexture = new Texture2D(1, 1);
 		coltexture.SetPixel(0,0,playercol);
 		coltexture.Apply();
@@ -745,25 +712,55 @@ public class GuiManager : MonoBehaviour {
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Edit Keybinds")){
-			currentWindow = Menu.Keybind;
+			SetCurrentMenuWindow(Menu.Keybind);
 		}
 
         if (GUI.Button(new Rect(standard.width+50, standard.y, standard.width, standard.height), "Graphics Settings")) {
             GraphicsOptionsSetup();
-            currentWindow = Menu.GraphicsOptions;
+            SetCurrentMenuWindow(Menu.GraphicsOptions);
         }
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-
             SettingsManager.instance.MouseYDirection = mouseInverted ? 1 : -1;
             SettingsManager.instance.AutoPickup = autoPickupEnabled;
-
             SettingsManager.instance.SaveSettings();
 
-			currentWindow =  Menu.MainMenu;
+			SetCurrentMenuWindow( Menu.MainMenu);
 		}
 	}
+
+    private Rect DisplayGeneralSettings(Rect standard) {
+        standard.y += 50;
+        GUI.Label(standard, "Mouse Sensitivity X: ");
+        SettingsManager.instance.xMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.xMouseSensitivity, 2);
+        SettingsManager.instance.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.xMouseSensitivity.ToString()));
+        standard.y += 20;
+        SettingsManager.instance.xMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.xMouseSensitivity, 0, 1);
+
+        standard.y += 50;
+        GUI.Label(standard, "Mouse Sensitivity Y: ");
+        SettingsManager.instance.yMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.yMouseSensitivity, 2);
+        SettingsManager.instance.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.yMouseSensitivity.ToString()));
+        standard.y += 20;
+        SettingsManager.instance.yMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.yMouseSensitivity, 0, 1);
+
+        standard.y += 40;
+        mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y, 100, 30), mouseInverted, "Invert Y Axis");
+        autoPickupEnabled = GUI.Toggle(new Rect(standard.x + 100, standard.y, 250, 30), autoPickupEnabled, "Automatically switch to new weapons");
+
+        standard.y += 50;
+        GUI.Label(standard, "Field Of View: ");
+        SettingsManager.instance.FieldOfView = (float)System.Math.Round(SettingsManager.instance.FieldOfView, 1);
+        SettingsManager.instance.FieldOfView = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.FieldOfView.ToString()));
+        standard.y += 20;
+        SettingsManager.instance.FieldOfView = GUI.HorizontalSlider(standard, SettingsManager.instance.FieldOfView, 50, 100);
+
+
+        standard.x += standard.width + 50;
+        standard.y -= 200;
+        return standard;
+    }
 	#endregion
 
     #region GraphicsOptionsWindow
@@ -791,11 +788,11 @@ public class GuiManager : MonoBehaviour {
             Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
             StartCoroutine(WaitForGUIRectResize());
 
-            currentWindow = Menu.Options;
+            SetCurrentMenuWindow(Menu.Options);
         }
         standard.y += 50;
         if (GUI.Button(standard, "Cancel")) {
-            currentWindow = Menu.Options;
+            SetCurrentMenuWindow(Menu.Options);
         }
     }
 
@@ -919,7 +916,7 @@ public class GuiManager : MonoBehaviour {
 			// Save Configuation-
             SettingsManager.instance.SaveKeyBinds();
 
-			currentWindow =  Menu.Options;
+			SetCurrentMenuWindow( Menu.Options);
 		}
 	}
 	#endregion
@@ -1054,7 +1051,7 @@ public class GuiManager : MonoBehaviour {
 			
 			if(GUI.Button(standard, "Back")){
 				connectionError = false;
-				currentWindow =  Menu.JoinGame;
+				SetCurrentMenuWindow( Menu.JoinGame);
 			}
 		}
 	}

@@ -283,4 +283,8 @@ public class SettingsManager : MonoBehaviour {
     public void ClearPasswordClient() {
         PasswordClient = "";
     }
+
+    public Color GetPlayerColour() {
+        return new Color(ColourR, ColourG, ColourB, 1);
+    }
 }
