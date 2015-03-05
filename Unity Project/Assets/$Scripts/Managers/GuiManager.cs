@@ -658,7 +658,7 @@ public class GuiManager : MonoBehaviour {
 		float BLUE = SettingsManager.instance.ColourB;
 		if(RED < 0.85f){RED = 0.85f;}
 		if(GREEN > 0.5f){GREEN = 0.5f;}
-		if(BLUE > 0.5f){BLUE = 0.5f;}
+		if(BLUE > 0.75f){BLUE = 0.75f;}
 		Color playercol = new Color (RED, GREEN, BLUE, 1);
 		Texture2D coltexture = new Texture2D(1, 1);
 		coltexture.SetPixel(0,0,playercol);

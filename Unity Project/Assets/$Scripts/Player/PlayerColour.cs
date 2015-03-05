@@ -31,7 +31,7 @@ public class PlayerColour : MonoBehaviour {
 				//limits colours to red(duh), light red, dark red, pink and orange
 				if(red < 0.85f){red = 0.85f;}
 				if(green > 0.5f){green = 0.5f;}
-				if(blue > 0.5f){blue = 0.5f;}
+				if(blue > 0.75f){blue = 0.75f;}
                 break;
             case Team.Blue:
 				//limits colours to blue(duh), light blue, dark blue, purple and teal
