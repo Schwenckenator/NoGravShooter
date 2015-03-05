@@ -108,7 +108,7 @@ public class GuiManager : MonoBehaviour {
 	private bool WeaponSpawning = true;
 
     private bool countdown = false;
-
+    private string menuText = "";
 	
 	private int chatboxwidth = 500;
 
@@ -156,6 +156,8 @@ public class GuiManager : MonoBehaviour {
 		GUI.skin.box.normal.background = coltexture;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+        menuText = SettingsManager.instance.DisplayServerName + ", " + SettingsManager.instance.GameModeName;
+
 		if(GameManager.IsAdminMode()){
 			GUI.Label(new Rect(Screen.width/2, 50, 100, 20), "TEST MODE");
 		}
@@ -169,13 +171,13 @@ public class GuiManager : MonoBehaviour {
 			ChooseMenuWindow();
 
 		}else if(GameManager.IsPlayerMenu()){
-			GUI.Window(0, largeRect, PauseWindow, "MENU");
+            GUI.Window(0, largeRect, PauseWindow, menuText);
 			
 		}else if(GameManager.instance.IsPlayerSpawned()){
 			PlayerGUI();
 			
 		}else if(!GameManager.IsMenuScene()){
-			GUI.Window(1, largeRect, PauseWindow, SettingsManager.instance.DisplayServerName);
+            GUI.Window(1, largeRect, PauseWindow, menuText);
 			
 		}
 	}
@@ -198,7 +200,7 @@ public class GuiManager : MonoBehaviour {
 			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
 			break;
 		case Menu.Lobby:
-			GUI.Window ((int) Menu.Lobby, largeRect, LobbyWindow, SettingsManager.instance.DisplayServerName);
+            GUI.Window((int)Menu.Lobby, largeRect, LobbyWindow, menuText);
 			break;
 		case Menu.Connecting:
 			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
@@ -1095,6 +1097,12 @@ public class GuiManager : MonoBehaviour {
             }
 
 		}
+
+        if (!GameManager.instance.IsPlayerSpawned()) {
+            if (GUI.Button(new Rect(largeRect.width / 3 - 100, 105, 100, 20), "Change Team")) {
+                NetworkManager.MyPlayer().IncrementTeam();
+            }
+        }
 
         GUI.Box(new Rect(20, 100, largeRect.width / 3, largeRect.height - 190), PlayerList(), upperLeftTextAlign);
 
