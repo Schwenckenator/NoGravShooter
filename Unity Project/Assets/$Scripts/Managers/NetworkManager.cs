@@ -56,10 +56,20 @@ public class NetworkManager : MonoBehaviour {
     public static Player GetPlayer(NetworkPlayer value) {
         return NetworkManager.connectedPlayers.Find(x => x.ID.Equals(value));
     }
+    public static Player MyPlayer() {
+        return GetPlayer(Network.player);
+    }
     public static bool DoesPlayerExist(NetworkPlayer value) {
         return NetworkManager.connectedPlayers.Exists(x => x.ID.Equals(value));
     }
-
+    
+    public void PlayerChangedTeam(Player player, Team newTeam) {
+        networkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
+    }
+    [RPC]
+    private void RPCPlayerChangedTeam(NetworkPlayer player, int newTeam) {
+        GetPlayer(player).ChangeTeam((Team)newTeam, false);
+    }
     #region Connect To Server
     public static void ConnectToServer() {
         if (useMasterServer) {
@@ -113,6 +123,11 @@ public class NetworkManager : MonoBehaviour {
     #endregion
 
     #region OnEvent
+    void OnPlayerConnected(NetworkPlayer connectedPlayer) {
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            networkView.RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
+        }
+    }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
 
         string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;

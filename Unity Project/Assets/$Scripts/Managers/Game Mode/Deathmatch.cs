@@ -3,32 +3,21 @@ using System.Collections;
 
 namespace GameMode {
     public class Deathmatch : MonoBehaviour, IGameMode {
-        
-        // Use this for initialization
-        void Start() {
 
+        public void Kill(Player killer, Player corpse) {
+            ScoreVictoryManager.instance.PointScored(killer.ID);
         }
 
-        // Update is called once per frame
-        void Update() {
-
-        }
-
-        public void KillScored(Player killer) {
-            throw new System.NotImplementedException();
+        public void Suicide(Player player) {
+            ScoreVictoryManager.instance.PointLost(player.ID);
         }
 
         public void PlayerDied(Player player) {
-            throw new System.NotImplementedException();
+            // Do Nothing
         }
 
         public void ObjectiveScored(Player player) {
-            throw new System.NotImplementedException();
-        }
-
-
-        public void FriendlyKill(Player killer) {
-            throw new System.NotImplementedException();
+            // Do Nothing
         }
     }
 }

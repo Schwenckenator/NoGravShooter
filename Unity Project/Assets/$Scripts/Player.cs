@@ -37,13 +37,21 @@ public class Player {
     }
 
     // Team
-    public void ChangeTeam(Team newTeam) {
+    public void ChangeTeam(Team newTeam, bool sendRPC = true) {
         this.Team = newTeam;
+
+        if (sendRPC) { // Sends RPC by default
+            NetworkManager.instance.PlayerChangedTeam(this, newTeam);
+        }
     }
-    public void IncrementTeam() {
+    public void IncrementTeam(bool sendRPC = true) {
         int numOfTeams = 2;
         this.Team++;
         if ((int)this.Team > numOfTeams) this.Team = 0;
+
+        if (sendRPC) { // Sends RPC by default
+            NetworkManager.instance.PlayerChangedTeam(this, this.Team);
+        }
     }
     /// <summary>
     /// Returns false if this.Team = Team.None

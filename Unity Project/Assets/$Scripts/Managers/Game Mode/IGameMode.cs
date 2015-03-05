@@ -2,8 +2,8 @@
 using System.Collections;
 
 public interface IGameMode{
-    void KillScored(Player killer);
-    void FriendlyKill(Player killer);
+    void Kill(Player killer, Player corpse);
+    void Suicide(Player player);
     void PlayerDied(Player player);
     void ObjectiveScored(Player player);
 }

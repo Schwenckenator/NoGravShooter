@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    public static IGameMode gameMode;
+    public GameObject[] gameModes;
     #region Variable Declarations
 
     private static bool playerMenu;
@@ -290,14 +292,19 @@ public class GameManager : MonoBehaviour {
             throw new System.AccessViolationException("Is client when it needs to be server.");
         }
         GetComponent<DestroyManager>().ClearDestroyLists();
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, SettingsManager.instance.LevelName, NetworkManager.lastLevelPrefix, SettingsManager.instance.TimeLimitSec);
+        
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, 
+            SettingsManager.instance.LevelName, 
+            NetworkManager.lastLevelPrefix, 
+            SettingsManager.instance.TimeLimitSec, 
+            SettingsManager.instance.GameModeIndex);
     }
     private void LoadLevelTutorial() {
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, SettingsManager.instance.TimeLimitSec);
     }
 
     [RPC]
-    private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame) {
+    private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
 
         //stops tutorial scripts showing after you leave and start a game
         GuiManager.instance.TutorialPrompt("", 0);
@@ -305,10 +312,11 @@ public class GameManager : MonoBehaviour {
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
-            GetComponent<ScoreVictoryManager>().GameStart();
+            ScoreVictoryManager.instance.GameStart();
             endTime = Time.time + secondsOfGame;
             ChatManager.ClearAllChat();
-
+            GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
+            gameMode = temp.GetComponent(typeof(IGameMode)) as IGameMode;
         } else {
             GameInProgress = false;
         }

@@ -3,30 +3,33 @@ using System.Collections;
 
 namespace GameMode {
     public class TeamDeathmatch : MonoBehaviour, IGameMode {
-        // Use this for initialization
-        void Start() {
+
+        public void Kill(Player killer, Player corpse) {
+            // Check if legit kill or friendly fire
+            if (killer.IsOnTeam(corpse.Team)) {
+                FriendlyKill(killer);
+            } else {
+                LegitKill(killer);
+            }
         }
 
-        // Update is called once per frame
-        void Update() {
-
+        private void LegitKill(Player killer) {
+            ScoreVictoryManager.instance.PointScored(killer.ID);
+        }
+        private void FriendlyKill(Player killer) {
+            ScoreVictoryManager.instance.PointLost(killer.ID);
         }
 
-        public void KillScored(Player killer) {
-            throw new System.NotImplementedException();
+        public void Suicide(Player player) {
+            ScoreVictoryManager.instance.PointLost(player.ID);
         }
 
         public void PlayerDied(Player player) {
-            throw new System.NotImplementedException();
+            // Do nothing
         }
 
         public void ObjectiveScored(Player player) {
-            throw new System.NotImplementedException();
-        }
-
-
-        public void FriendlyKill(Player killer) {
-            throw new System.NotImplementedException();
+            // Do nothing
         }
     }
 }

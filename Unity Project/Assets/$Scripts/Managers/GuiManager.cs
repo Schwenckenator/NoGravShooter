@@ -356,8 +356,12 @@ public class GuiManager : MonoBehaviour {
                     dotx[index] = posDiff.x / detectionRadius * radarDotArea;
                     doty[index] = -posDiff.z / detectionRadius * radarDotArea;
                     dotsize[index] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
-                    //If (on same team) dottype[i] = "Ally", else "Enemy"
-                    dottype[index] = "Enemy";
+
+                    if (NetworkManager.GetPlayer(player.networkView.owner).IsOnTeam(NetworkManager.MyPlayer().Team)) {
+                        dottype[index] = "Ally";
+                    } else {
+                        dottype[index] = "Enemy";
+                    }
                     index++;
                 }
             }
@@ -988,7 +992,7 @@ public class GuiManager : MonoBehaviour {
 
 		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), PlayerList(), upperLeftTextAlign);
         if (GUI.Button(new Rect(largeRect.width / 3 - 100, 105, 100, 20), "Change Team")) {
-            NetworkManager.GetPlayer(Network.player).IncrementTeam();
+            NetworkManager.MyPlayer().IncrementTeam();
         }
         string message = Network.isServer ? "Shutdown Server": "Disconnect";
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), message)) {

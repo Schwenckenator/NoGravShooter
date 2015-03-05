@@ -6,7 +6,7 @@ public class PlayerColour : MonoBehaviour {
     public string playerGraphicsName = "Test_Rig";
 	
     public void AssignPlayerColour() {
-        Player currentPlayer = NetworkManager.GetPlayer(Network.player);
+        Player currentPlayer = NetworkManager.MyPlayer();
         
         // No need to check for team
         ApplyColour(currentPlayer.Team);

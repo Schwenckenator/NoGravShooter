@@ -93,7 +93,7 @@ public class MineDetonation : MonoBehaviour {
         activated = true;
 
         if (isForced || Network.isServer) {
-            ChatManager.DebugMessage(NetworkManager.GetPlayer(Network.player).Name + " says " + gameObject.ToString() + " goes boom.");
+            ChatManager.DebugMessage(NetworkManager.MyPlayer().Name + " says " + gameObject.ToString() + " goes boom.");
 
             SpawnExplosion(transform.position, Quaternion.identity, GetComponent<Owner>().ID);
             GetComponent<ObjectCleanUp>().KillMe();

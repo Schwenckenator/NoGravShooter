@@ -38,7 +38,6 @@ public class PlayerResources : MonoBehaviour {
     [SerializeField]
     private float heatCooldownWaitTime = 2.0f;
 
-    private IGameMode gameMode;
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
 	private AudioSource helmetAudio;
@@ -68,7 +67,6 @@ public class PlayerResources : MonoBehaviour {
 	
 	#region Start()
 	void Awake () {
-        gameMode = GameObject.FindGameObjectWithTag("GameController").GetComponent(typeof(IGameMode)) as IGameMode; // Get current game mode
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		helmetAudio = transform.FindChild("HelmetAudio").GetComponent<AudioSource>();
@@ -279,11 +277,24 @@ public class PlayerResources : MonoBehaviour {
 				if(killer != null && weaponID != -1){
                     string killMessage;
 					if(killer.ID != Network.player){
-                        killMessage = killer.Name + KillMessageGenerator(weaponID) + SettingsManager.instance.PlayerName;
-                        ScoreVictoryManager.instance.PointScored(killer.ID);
+                        GameManager.gameMode.Kill(killer, NetworkManager.MyPlayer());
+                        GameManager.gameMode.PlayerDied(NetworkManager.MyPlayer());
+
+                        killMessage = killer.Name;
+
+                        if (killer.IsOnTeam(NetworkManager.MyPlayer().Team)) {
+                            
+                            killMessage += KillMessageGenerator(teamKillID);
+                        } else {
+                            killMessage += KillMessageGenerator(weaponID);
+                        }
+                        killMessage += SettingsManager.instance.PlayerName;
+
+                        
 					} else {
                         killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
-                        ScoreVictoryManager.instance.PointLost(killer.ID);
+                        GameManager.gameMode.Suicide(killer);
+                        
 					}
                     ChatManager.instance.AddToChat(killMessage);
 				}
@@ -292,23 +303,25 @@ public class PlayerResources : MonoBehaviour {
 			}
     }
 	#endregion
-
+    const int teamKillID = 100;
 	string KillMessageGenerator(int weaponId){
 		switch(weaponId){
-		case 0:
-			return " lasered ";
-		case 1:
-			return " shot ";
-		case 2:
-			return " sniped ";
-		case 3:
-			return " shotgunned ";
-		case 4:
-			return " forced ";
-		case 5:
-			return " exploded ";
-		case 6:
-			return " plasmered ";
+		    case 0:
+			    return " lasered ";
+		    case 1:
+			    return " shot ";
+		    case 2:
+			    return " sniped ";
+		    case 3:
+			    return " shotgunned ";
+		    case 4:
+			    return " forced ";
+		    case 5:
+			    return " exploded ";
+		    case 6:
+			    return " plasmered ";
+            case teamKillID:
+                return " betrayed ";
 		}
 
 		return " killed ";
