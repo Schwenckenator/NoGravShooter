@@ -359,7 +359,7 @@ public class GuiManager : MonoBehaviour {
                     doty[index] = -posDiff.z / detectionRadius * radarDotArea;
                     dotsize[index] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
 
-                    if (NetworkManager.GetPlayer(player.networkView.owner).IsOnTeam(NetworkManager.MyPlayer().Team)) {
+                    if (NetworkManager.MyPlayer().IsOnTeam(NetworkManager.GetPlayer(player.networkView.owner).Team)) {
                         dottype[index] = "Ally";
                     } else {
                         dottype[index] = "Enemy";
