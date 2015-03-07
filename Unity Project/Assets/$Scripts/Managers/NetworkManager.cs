@@ -33,6 +33,7 @@ public class NetworkManager : MonoBehaviour {
     /// </summary>
     
     public static List<Player> connectedPlayers = new List<Player>();
+    private static Player myPlayer;
 
     private static string ipAddress;
     private static int portNum;
@@ -57,7 +58,10 @@ public class NetworkManager : MonoBehaviour {
         return NetworkManager.connectedPlayers.Find(x => x.ID.Equals(value));
     }
     public static Player MyPlayer() {
-        return GetPlayer(Network.player);
+        if (myPlayer == null) {
+            myPlayer = GetPlayer(Network.player);
+        }
+        return myPlayer;
     }
     public static bool DoesPlayerExist(NetworkPlayer value) {
         return NetworkManager.connectedPlayers.Exists(x => x.ID.Equals(value));
@@ -154,6 +158,7 @@ public class NetworkManager : MonoBehaviour {
         GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.Menu.MainMenu);
 
         NetworkManager.connectedPlayers.Clear();
+        NetworkManager.myPlayer = null;
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {

@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour {
         networkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
     }
 
-	public void SpawnPlayer(){
+	public void SpawnActor(){
 		myPlayerSpawned = true;
 
 		SetCursorVisibility(false);
@@ -181,15 +181,17 @@ public class GameManager : MonoBehaviour {
 		cameraMove.PlayerSpawned();
 
 		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject player in list){
-			if(player.networkView.isMine){
-                GetPlayerCameraMouseLook(player).SetYDirection(SettingsManager.instance.MouseYDirection);
-                player.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
+		foreach(GameObject actor in list){
+			if(actor.networkView.isMine){
+                GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.instance.MouseYDirection);
+                actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
+                
+                actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
-				fireWeapon = player.GetComponent<FireWeapon>();
-				playerResources = player.GetComponent<PlayerResources>();
+				fireWeapon = actor.GetComponent<FireWeapon>();
+				playerResources = actor.GetComponent<PlayerResources>();
 
-                PlayerColourManager.instance.AssignColour(player);
+                PlayerColourManager.instance.AssignColour(actor);
 			}
 		}
 
@@ -215,6 +217,13 @@ public class GameManager : MonoBehaviour {
             if (adminMode) {
                 PlayerPrefs.DeleteAll();
                 Debug.Log("PlayerPrefs Wiped!");
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.F6)) {
+            GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
+            
+            foreach (GameObject actor in actors) {
+                ChatManager.DebugMessage(actor.GetComponent<ActorTeam>().GetTeam().ToString());
             }
         }
 		if(!GameManager.IsMenuScene()){
@@ -344,7 +353,7 @@ public class GameManager : MonoBehaviour {
         LoadLevelTutorial();
 
         yield return new WaitForSeconds(1 / 5f);
-        SpawnPlayer();
+        SpawnActor();
         GuiManager.instance.SetMyPlayerResources();
     }
 

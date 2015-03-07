@@ -139,7 +139,16 @@ public class GuiManager : MonoBehaviour {
 		GrenadeSpawning = (SettingsManager.instance.GrenadeCanSpawn == 1);
 		WeaponSpawning = (SettingsManager.instance.WeaponCanSpawn == 1);
 	}
-	
+    public static bool printTeamsKeyPressed = false;
+    
+    // TODO: Delete when debugging is finished
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.F5)) {
+            printTeamsKeyPressed = true;
+        }
+    }
+
+
 	#region OnGUI
 	void OnGUI(){
 		// Sets GUI styles
@@ -326,75 +335,75 @@ public class GuiManager : MonoBehaviour {
         int radarDotArea = 95;
         int defaultdotsize = 30;
         Transform myTransform = null;
-        int index = 0;
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        int radarDotCount = 0;
+        GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
         GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");
-        foreach (GameObject player in players) {
+        foreach (GameObject player in actors) {
             if (player.networkView.isMine) {
                 myTransform = player.transform;
             } else {
-                index++;
+                radarDotCount++;
             }
         }
         if (detectItems) {
             for(int i=0; i<items.Length; i++){
-                index++;
+                radarDotCount++;
             }
                 
         }
-        float[] dotx = new float[index];
-        float[] doty = new float[index];
-        float[] dotsize = new float[index];
-        string[] dottype = new string[index];
-        index = 0;
+        float[] dotx = new float[radarDotCount];
+        float[] doty = new float[radarDotCount];
+        float[] dotsize = new float[radarDotCount];
+        string[] dottype = new string[radarDotCount];
+        radarDotCount = 0;
 
-        foreach (GameObject player in players) {
-            if (!player.networkView.isMine) {
+        foreach (GameObject actor in actors) {
+            if (actor.networkView.isMine) continue; // Escape if mine
 
-                Vector3 posDiff = myTransform.InverseTransformPoint(player.transform.position); // Inverse is world space -> local space
-                float sqrRadius = posDiff.sqrMagnitude;
 
-                if (sqrRadius <= detectionRadius * detectionRadius) {
-                    dotx[index] = posDiff.x / detectionRadius * radarDotArea;
-                    doty[index] = -posDiff.z / detectionRadius * radarDotArea;
-                    dotsize[index] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
+            Vector3 posDiff = myTransform.InverseTransformPoint(actor.transform.position); // Inverse is world space -> local space
+            float sqrRadius = posDiff.sqrMagnitude;
 
-                    if (NetworkManager.MyPlayer().IsOnTeam(NetworkManager.GetPlayer(player.networkView.owner).Team)) {
-                        dottype[index] = "Ally";
-                    } else {
-                        dottype[index] = "Enemy";
-                    }
-                    index++;
+            if (sqrRadius <= detectionRadius * detectionRadius) {
+                dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
+                doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
+                dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
+
+                if (NetworkManager.MyPlayer().IsOnTeam(actor.GetComponent<ActorTeam>().GetTeam())) { // GetComponent<>() is slow, will need to be fixed
+                    dottype[radarDotCount] = "Ally";
+                } else {
+                    dottype[radarDotCount] = "Enemy";
                 }
+                radarDotCount++;
             }
+            
         }
+        printTeamsKeyPressed = false; // For debug
         if (detectItems) {
             foreach (GameObject bonus in items) {
                 Vector3 posDiff = myTransform.InverseTransformPoint(bonus.transform.position); // Inverse is world space -> local space
                 float sqrRadius = posDiff.sqrMagnitude;
 
                 if (sqrRadius <= detectionRadius * detectionRadius) {
-                    dotx[index] = posDiff.x / detectionRadius * radarDotArea;
-                    doty[index] = -posDiff.z / detectionRadius * radarDotArea;
-                    dotsize[index] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
-                    dottype[index] = "Item";
-                    index++;
+                    dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
+                    doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
+                    dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
+                    dottype[radarDotCount] = "Item";
+                    radarDotCount++;
                 }
             }
         }
-        index = 0;
+        radarDotCount = 0;
 
         GUI.Box(new Rect(radarPadding, Screen.height - (radarCenter * 2 + radarPadding), radarCenter * 2, radarCenter * 2), radar, customGui);
 
+        Texture2D icon = null;
+
         for (int i = 0; i < dotx.Length; i++) {
             if (dotsize[i] < defaultdotsize) {
-                if (dottype[i] == "Enemy") {
-                    GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), enemyicon, customGui);
-                } else if (dottype[i] == "Item") {
-                    GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), itemicon, customGui);
-                } else {
-                    GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), allyicon, customGui);
-                }
+
+                icon = GetIconType(dottype[i]);
+                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
             }
         }
 
@@ -402,16 +411,21 @@ public class GuiManager : MonoBehaviour {
 
         for (int i = 0; i < dotx.Length; i++) {
             if (dotsize[i] >= defaultdotsize) {
-                if (dottype[i] == "Enemy") {
-                    GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), enemyicon, customGui);
-                } else if (dottype[i] == "Item") {
-                    GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), itemicon, customGui);
-                } else {
-                    GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), allyicon, customGui);
-                }
+                icon = GetIconType(dottype[i]);
+                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
             }
         }
     }
+    Texture2D GetIconType(string type) {
+        if (type == "Enemy") {
+            return enemyicon;
+        } else if (type == "Item") {
+            return itemicon;
+        } else {
+            return allyicon;
+        }
+    }
+
     void ScoreBoard() {
         Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
         GUI.Box(scoreBoard, scoreBoardText);
@@ -1091,7 +1105,7 @@ public class GuiManager : MonoBehaviour {
                 GUI.enabled = true;
             } else {
                 if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
-                    GameManager.instance.SpawnPlayer();
+                    GameManager.instance.SpawnActor();
                     SetMyPlayerResources();
                 }
             }
