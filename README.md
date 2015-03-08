@@ -30,4 +30,10 @@ H = Change Grenade
 5 = Shotgun<br />
 6 = Force Cannon<br />
 7 = Rocket Launcher<br />
-8 = Plasma Blaster
+8 = Plasma Blaster<br/>
+
+Terminology<br/>
+
+Player: The information held in Player.cs<br/>
+Actor: The character the player controls<br/>
+Grenade: Any thrown projectile.<br/>
