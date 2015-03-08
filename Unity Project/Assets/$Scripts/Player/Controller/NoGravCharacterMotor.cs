@@ -74,7 +74,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void Start(){
         
-        input = GetComponent<ControllerInput>();
+        input = GetComponent<KeyboardInput>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
