@@ -139,9 +139,10 @@ public class GuiManager : MonoBehaviour {
 		GrenadeSpawning = (SettingsManager.instance.GrenadeCanSpawn == 1);
 		WeaponSpawning = (SettingsManager.instance.WeaponCanSpawn == 1);
 	}
-    public static bool printTeamsKeyPressed = false;
+    
     
     // TODO: Delete when debugging is finished
+    public static bool printTeamsKeyPressed = false;
     void Update() {
         if (Input.GetKeyDown(KeyCode.F5)) {
             printTeamsKeyPressed = true;
@@ -176,7 +177,7 @@ public class GuiManager : MonoBehaviour {
 				connectingNow = false;
 			}
 		}
-		if(GameManager.IsMenuScene()){
+		if(GameManager.IsSceneMenu()){
 			ChooseMenuWindow();
 
 		}else if(GameManager.IsPlayerMenu()){
@@ -185,7 +186,7 @@ public class GuiManager : MonoBehaviour {
 		}else if(GameManager.instance.IsPlayerSpawned()){
 			PlayerGUI();
 			
-		}else if(!GameManager.IsMenuScene()){
+		}else if(!GameManager.IsSceneMenu()){
             GUI.Window(1, largeRect, PauseWindow, menuText);
 			
 		}
@@ -236,219 +237,12 @@ public class GuiManager : MonoBehaviour {
 	}
 	#endregion
 
-	#region PlayerGUI
-	void PlayerGUI(){
+	
 
+    #region MenuWindows
 
-		GUIStyle style = new GUIStyle("label");
-		style.fontSize = 50;
-		style.alignment = TextAnchor.UpperCenter;
-
-        if (ScoreVictoryManager.instance.IsVictor()) {
-            GUI.Label(new Rect(Screen.width/4, Screen.height/4, Screen.width/2, Screen.height/2), "Winner!\n" + ScoreVictoryManager.instance.VictorName, style);
-        }
-
-		string ammoText = playerResource.GetCurrentClip().ToString();
-		if(playerResource.GetRemainingAmmo() > 0){
-			ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
-		}
-
-		Rect grenadeTypeLabel = new Rect(Screen.width-300, Screen.height-250, 300, 100);
-		string grenadeTypeString = "";
-		switch(playerResource.GetCurrentGrenadeType()){
-			case 0: // Black hole
-				grenadeTypeString = "BH";
-				break;
-			case 1:
-				grenadeTypeString = "EMP";
-				break;
-			case 2:
-				grenadeTypeString = "Frag";
-				break;
-		}
-		GUI.Label(grenadeTypeLabel, grenadeTypeString, style);
-		GUI.Label(new Rect(Screen.width-200, Screen.height-250, 300, 100), playerResource.GetCurrentGrenadeCount().ToString(), style);
-		GUI.Label(new Rect(Screen.width-250, Screen.height-175, 300, 100), ammoText, style);
-
-		if(Screen.width - 550 < 500){
-			chatboxwidth = Screen.width - 550;
-		} else {
-			chatboxwidth = 500;
-		}
-
-        if (!GameManager.IsTutorialScene()) {
-            Rect combatLogRect = new Rect(Screen.width / 2 - chatboxwidth / 2, Screen.height - 120, chatboxwidth, 100);
-            GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
-        }
-		
-		Rect fuel = new Rect(Screen.width-260, Screen.height-100, 250, 40);
-		if(playerResource.IsJetpackDisabled()){
-			GUI.DrawTexture(fuel, fullHeat);
-		}else{
-			GUI.DrawTexture(fuel, empty);
-		}
-
-		fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel())*250;
-		GUI.DrawTexture(fuel, fullFuel);
-		
-		Rect health = new Rect(Screen.width-260, Screen.height-50, 250, 40);
-		GUI.DrawTexture(health, empty);
-		health.xMin = health.xMax - playerResource.GetHealth()*5/2;
-		GUI.DrawTexture(health, fullHealth);
-
-        DrawCrosshair();
-
-		//tutorial prompt
-		if(tutePromptShown > 0){
-			GUI.Box(new Rect(Screen.width/2 - chatboxwidth/2, Screen.height - 120, chatboxwidth, 100), tutePromptText);
-			tutePromptShown--;
-		}
-		
-		//button prompt
-		if(promptShown > 0){
-			GUI.Box(new Rect(Screen.width - 160, Screen.height/2, 150, 30), promptText);
-			promptShown--;
-		}
-
-        Radar();
-        if (!GameManager.IsTutorialScene()) {
-            TimerGUI();
-            ScoreBoard();
-        }
-	}
-
-    private void DrawCrosshair() {
-        if (showSniperScope) {
-            GUI.DrawTexture(new Rect(0, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
-            GUI.DrawTexture(new Rect(Screen.width / 2 - Screen.height / 2, 0, Screen.height, Screen.height), SniperScope);
-            GUI.DrawTexture(new Rect(Screen.width / 2 + Screen.height / 2, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
-        }else{
-            Rect rectCrosshair = new Rect(0, 0, 32, 32);
-            rectCrosshair.center = new Vector2(Screen.width / 2, Screen.height / 2);
-            GUI.DrawTexture(rectCrosshair, crosshair);
-        }
-    }
-    void Radar() {
-        //radar system
-        int radarCenter = 110;
-        int radarPadding = 20;
-        int radarDotArea = 95;
-        int defaultdotsize = 30;
-        Transform myTransform = null;
-        int radarDotCount = 0;
-        GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
-        GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");
-        foreach (GameObject player in actors) {
-            if (player.networkView.isMine) {
-                myTransform = player.transform;
-            } else {
-                radarDotCount++;
-            }
-        }
-        if (detectItems) {
-            for(int i=0; i<items.Length; i++){
-                radarDotCount++;
-            }
-                
-        }
-        float[] dotx = new float[radarDotCount];
-        float[] doty = new float[radarDotCount];
-        float[] dotsize = new float[radarDotCount];
-        string[] dottype = new string[radarDotCount];
-        radarDotCount = 0;
-
-        foreach (GameObject actor in actors) {
-            if (actor.networkView.isMine) continue; // Escape if mine
-
-
-            Vector3 posDiff = myTransform.InverseTransformPoint(actor.transform.position); // Inverse is world space -> local space
-            float sqrRadius = posDiff.sqrMagnitude;
-
-            if (sqrRadius <= detectionRadius * detectionRadius) {
-                dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
-                doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
-                dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
-
-                if (NetworkManager.MyPlayer().IsOnTeam(actor.GetComponent<ActorTeam>().GetTeam())) { // GetComponent<>() is slow, will need to be fixed
-                    dottype[radarDotCount] = "Ally";
-                } else {
-                    dottype[radarDotCount] = "Enemy";
-                }
-                radarDotCount++;
-            }
-            
-        }
-        printTeamsKeyPressed = false; // For debug
-        if (detectItems) {
-            foreach (GameObject bonus in items) {
-                Vector3 posDiff = myTransform.InverseTransformPoint(bonus.transform.position); // Inverse is world space -> local space
-                float sqrRadius = posDiff.sqrMagnitude;
-
-                if (sqrRadius <= detectionRadius * detectionRadius) {
-                    dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
-                    doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
-                    dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
-                    dottype[radarDotCount] = "Item";
-                    radarDotCount++;
-                }
-            }
-        }
-        radarDotCount = 0;
-
-        GUI.Box(new Rect(radarPadding, Screen.height - (radarCenter * 2 + radarPadding), radarCenter * 2, radarCenter * 2), radar, customGui);
-
-        Texture2D icon = null;
-
-        for (int i = 0; i < dotx.Length; i++) {
-            if (dotsize[i] < defaultdotsize) {
-
-                icon = GetIconType(dottype[i]);
-                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
-            }
-        }
-
-        GUI.Box(new Rect(radarCenter + radarPadding - (defaultdotsize / 2), Screen.height - (radarCenter + radarPadding + (defaultdotsize / 2)), defaultdotsize, defaultdotsize), playericon, customGui);
-
-        for (int i = 0; i < dotx.Length; i++) {
-            if (dotsize[i] >= defaultdotsize) {
-                icon = GetIconType(dottype[i]);
-                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
-            }
-        }
-    }
-    Texture2D GetIconType(string type) {
-        if (type == "Enemy") {
-            return enemyicon;
-        } else if (type == "Item") {
-            return itemicon;
-        } else {
-            return allyicon;
-        }
-    }
-
-    void ScoreBoard() {
-        Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
-        GUI.Box(scoreBoard, scoreBoardText);
-    }
-    bool IsDisplayTimer() {
-        return !GameManager.IsTutorialScene();
-    }
-    void TimerGUI() {
-
-        float timeLeftMins = Mathf.Floor((GameManager.instance.endTime - Time.time) / 60);
-        float timeLeftSecs = Mathf.Floor((GameManager.instance.endTime - Time.time) - (timeLeftMins * 60));
-
-        if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
-            GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
-        } else {
-            GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
-        }
-    }
-    
-	#endregion
-
-	#region MainMenuWindow
-	void MainMenuWindow(int windowId){
+    #region MainMenuWindow
+    void MainMenuWindow(int windowId){
 		Rect standard = new Rect(largeRect.width/4, 20, largeRect.width/2, 30);
 		
 		GUI.Label(standard, "Player Name");
@@ -466,7 +260,6 @@ public class GuiManager : MonoBehaviour {
 
             SetCurrentMenuWindow(Menu.CreateGame);
 		}
-		
 		standard.y += 50;
 		if(GUI.Button(standard, "Join Game")){
 			
@@ -1077,6 +870,8 @@ public class GuiManager : MonoBehaviour {
 	}
 	#endregion
 
+    #endregion
+
     public void SetMyPlayerResources() {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in players) {
@@ -1093,7 +888,7 @@ public class GuiManager : MonoBehaviour {
         }
 
 		if(GameManager.instance.IsPlayerSpawned()){
-            string strReturnToGame = GameManager.IsTutorialScene() ? "Return to Simulation" : "Return to Game";
+            string strReturnToGame = GameManager.IsSceneTutorial() ? "Return to Simulation" : "Return to Game";
 			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
 				GameManager.instance.SetPlayerMenu(false);
 				GameManager.SetCursorVisibility(false);
@@ -1120,7 +915,7 @@ public class GuiManager : MonoBehaviour {
 
         GUI.Box(new Rect(20, 100, largeRect.width / 3, largeRect.height - 190), PlayerList(), upperLeftTextAlign);
 
-        if (!GameManager.IsTutorialScene() && Network.isServer) {
+        if (!GameManager.IsSceneTutorial() && Network.isServer) {
             if (GUI.Button(new Rect(20, largeRect.height - 80, largeRect.width / 3, 30), "Return to Lobby")) {
                 GameManager.instance.ReturnToLobby();
             }
@@ -1131,12 +926,12 @@ public class GuiManager : MonoBehaviour {
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), ChatManager.SubmittedChat, lowerLeftTextAlign);
 
-        if (!GameManager.IsTutorialScene()) {
+        if (!GameManager.IsSceneTutorial()) {
 			ChatManager.currentChat = GUI.TextField(new Rect( (largeRect.width/3) + 40, largeRect.height - 40 , (largeRect.width*2/3)-160, 20), ChatManager.currentChat);
 		}
 		
 		// Choo choo, all aboard the dodgy train
-		if(!GameManager.IsTutorialScene()){
+		if(!GameManager.IsSceneTutorial()){
 			if(GUI.Button(new Rect(largeRect.width-100, largeRect.height - 40, 80, 20), "Enter")){
 				ChatManager.instance.AddToChat(ChatManager.currentChat, true);
 				ChatManager.ClearCurrentChat();
@@ -1153,7 +948,7 @@ public class GuiManager : MonoBehaviour {
     private string DisconnectButtonText() {
         string message;
         if (Network.isServer) {
-            message = GameManager.IsTutorialScene() ? "Shutdown Simulation" : "Shutdown Server";
+            message = GameManager.IsSceneTutorial() ? "Shutdown Simulation" : "Shutdown Server";
         } else {
             message = "Disconnect";
         }
@@ -1169,7 +964,235 @@ public class GuiManager : MonoBehaviour {
     }
 	#endregion
 
+    #region PlayerGUI
+    void PlayerGUI() {
 
+
+        GUIStyle style = new GUIStyle("label");
+        style.fontSize = 50;
+        style.alignment = TextAnchor.UpperCenter;
+
+        if (ScoreVictoryManager.instance.IsVictor()) {
+            DisplayWinnerText(style);
+        }
+
+        DisplayAmmoData(style);
+
+        if (!GameManager.IsSceneTutorial()) {
+            AdjustChatBoxWidth();
+            DisplayChatBox();
+        }
+
+        Rect fuel = new Rect(Screen.width - 260, Screen.height - 100, 250, 40);
+        DrawFuelMeterBackground(fuel);
+
+        fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel()) * 250;
+        GUI.DrawTexture(fuel, fullFuel);
+
+        Rect health = new Rect(Screen.width - 260, Screen.height - 50, 250, 40);
+        GUI.DrawTexture(health, empty);
+        health.xMin = health.xMax - playerResource.GetHealth() * 5 / 2;
+        GUI.DrawTexture(health, fullHealth);
+
+        DrawCrosshair();
+
+        //tutorial prompt
+        if (tutePromptShown > 0) {
+            GUI.Box(new Rect(Screen.width / 2 - chatboxwidth / 2, Screen.height - 120, chatboxwidth, 100), tutePromptText);
+            tutePromptShown--;
+        }
+
+        //button prompt
+        if (promptShown > 0) {
+            GUI.Box(new Rect(Screen.width - 160, Screen.height / 2, 150, 30), promptText);
+            promptShown--;
+        }
+
+        Radar();
+        if (!GameManager.IsSceneTutorial()) {
+            TimerGUI();
+            ScoreBoard();
+        }
+    }
+
+    private void DrawFuelMeterBackground(Rect fuel) {
+        if (playerResource.IsJetpackDisabled()) {
+            GUI.DrawTexture(fuel, fullHeat);
+        } else {
+            GUI.DrawTexture(fuel, empty);
+        }
+    }
+
+    private void DisplayChatBox() {
+        Rect combatLogRect = new Rect(Screen.width / 2 - chatboxwidth / 2, Screen.height - 120, chatboxwidth, 100);
+        GUI.Box(combatLogRect, ChatManager.SubmittedChat, lowerLeftTextAlign);
+    }
+
+    private void AdjustChatBoxWidth() {
+        if (Screen.width - 550 < 500) {
+            chatboxwidth = Screen.width - 550;
+        } else {
+            chatboxwidth = 500;
+        }
+    }
+
+    private void DisplayAmmoData(GUIStyle style) {
+        string ammoText = playerResource.GetCurrentClip().ToString();
+        if (playerResource.GetRemainingAmmo() > 0) {
+            ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
+        }
+
+        Rect grenadeTypeLabel = new Rect(Screen.width - 300, Screen.height - 250, 300, 100);
+        string grenadeTypeString = "";
+        switch (playerResource.GetCurrentGrenadeType()) {
+            case 0: // Black hole
+                grenadeTypeString = "BH";
+                break;
+            case 1:
+                grenadeTypeString = "EMP";
+                break;
+            case 2:
+                grenadeTypeString = "Frag";
+                break;
+        }
+        GUI.Label(grenadeTypeLabel, grenadeTypeString, style);
+        GUI.Label(new Rect(Screen.width - 200, Screen.height - 250, 300, 100), playerResource.GetCurrentGrenadeCount().ToString(), style);
+        GUI.Label(new Rect(Screen.width - 250, Screen.height - 175, 300, 100), ammoText, style);
+    }
+
+    private static void DisplayWinnerText(GUIStyle style) {
+        GUI.Label(new Rect(Screen.width / 4, Screen.height / 4, Screen.width / 2, Screen.height / 2), "Winner!\n" + ScoreVictoryManager.instance.VictorName, style);
+    }
+
+    private void DrawCrosshair() {
+        if (showSniperScope) {
+            GUI.DrawTexture(new Rect(0, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
+            GUI.DrawTexture(new Rect(Screen.width / 2 - Screen.height / 2, 0, Screen.height, Screen.height), SniperScope);
+            GUI.DrawTexture(new Rect(Screen.width / 2 + Screen.height / 2, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
+        } else {
+            Rect rectCrosshair = new Rect(0, 0, 32, 32);
+            rectCrosshair.center = new Vector2(Screen.width / 2, Screen.height / 2);
+            GUI.DrawTexture(rectCrosshair, crosshair);
+        }
+    }
+    void Radar() {
+        //radar system
+        int radarCenter = 110;
+        int radarPadding = 20;
+        int radarDotArea = 95;
+        int defaultdotsize = 30;
+        Transform myTransform = null;
+        int radarDotCount = 0;
+        GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");
+        foreach (GameObject player in actors) {
+            if (player.networkView.isMine) {
+                myTransform = player.transform;
+            } else {
+                radarDotCount++;
+            }
+        }
+        if (detectItems) {
+            for (int i = 0; i < items.Length; i++) {
+                radarDotCount++;
+            }
+
+        }
+        float[] dotx = new float[radarDotCount];
+        float[] doty = new float[radarDotCount];
+        float[] dotsize = new float[radarDotCount];
+        string[] dottype = new string[radarDotCount];
+        radarDotCount = 0;
+
+        foreach (GameObject actor in actors) {
+            if (actor.networkView.isMine) continue; // Escape if mine
+
+
+            Vector3 posDiff = myTransform.InverseTransformPoint(actor.transform.position); // Inverse is world space -> local space
+            float sqrRadius = posDiff.sqrMagnitude;
+
+            if (sqrRadius <= detectionRadius * detectionRadius) {
+                dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
+                doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
+                dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
+
+                if (NetworkManager.MyPlayer().IsOnTeam(actor.GetComponent<ActorTeam>().GetTeam())) { // GetComponent<>() is slow, will need to be fixed
+                    dottype[radarDotCount] = "Ally";
+                } else {
+                    dottype[radarDotCount] = "Enemy";
+                }
+                radarDotCount++;
+            }
+
+        }
+        printTeamsKeyPressed = false; // For debug
+        if (detectItems) {
+            foreach (GameObject bonus in items) {
+                Vector3 posDiff = myTransform.InverseTransformPoint(bonus.transform.position); // Inverse is world space -> local space
+                float sqrRadius = posDiff.sqrMagnitude;
+
+                if (sqrRadius <= detectionRadius * detectionRadius) {
+                    dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
+                    doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
+                    dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
+                    dottype[radarDotCount] = "Item";
+                    radarDotCount++;
+                }
+            }
+        }
+        radarDotCount = 0;
+
+        GUI.Box(new Rect(radarPadding, Screen.height - (radarCenter * 2 + radarPadding), radarCenter * 2, radarCenter * 2), radar, customGui);
+
+        Texture2D icon = null;
+
+        for (int i = 0; i < dotx.Length; i++) {
+            if (dotsize[i] < defaultdotsize) {
+
+                icon = GetIconType(dottype[i]);
+                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
+            }
+        }
+
+        GUI.Box(new Rect(radarCenter + radarPadding - (defaultdotsize / 2), Screen.height - (radarCenter + radarPadding + (defaultdotsize / 2)), defaultdotsize, defaultdotsize), playericon, customGui);
+
+        for (int i = 0; i < dotx.Length; i++) {
+            if (dotsize[i] >= defaultdotsize) {
+                icon = GetIconType(dottype[i]);
+                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
+            }
+        }
+    }
+    Texture2D GetIconType(string type) {
+        if (type == "Enemy") {
+            return enemyicon;
+        } else if (type == "Item") {
+            return itemicon;
+        } else {
+            return allyicon;
+        }
+    }
+
+    void ScoreBoard() {
+        Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
+        GUI.Box(scoreBoard, scoreBoardText);
+    }
+    bool IsDisplayTimer() {
+        return !GameManager.IsSceneTutorial();
+    }
+    void TimerGUI() {
+
+        float timeLeftMins = Mathf.Floor((GameManager.instance.endTime - Time.time) / 60);
+        float timeLeftSecs = Mathf.Floor((GameManager.instance.endTime - Time.time) - (timeLeftMins * 60));
+
+        if (timeLeftMins >= 0 && timeLeftSecs >= 0) {
+            GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), timeLeftMins.ToString("00") + ":" + timeLeftSecs.ToString("00"));
+        } else {
+            GUI.Box(new Rect(Screen.width / 2 - 35, 10, 70, 23), "00:00");
+        }
+    }
+
+    #endregion
 	
 	//button prompts
 	string promptText;

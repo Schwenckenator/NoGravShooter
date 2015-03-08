@@ -151,7 +151,7 @@ public class NetworkManager : MonoBehaviour {
     void OnDisconnectedFromServer() {
 
         GameManager.SetCursorVisibility(true);
-        if (!GameManager.IsMenuScene()) {
+        if (!GameManager.IsSceneMenu()) {
             Application.LoadLevel("MenuScene");
         }
 

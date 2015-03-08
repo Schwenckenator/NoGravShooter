@@ -91,10 +91,10 @@ public class GameManager : MonoBehaviour {
         }
         return -1;
     }
-    public static bool IsMenuScene() {
+    public static bool IsSceneMenu() {
         return Application.loadedLevelName == "MenuScene";
     }
-    public static bool IsTutorialScene() {
+    public static bool IsSceneTutorial() {
         return Application.loadedLevelName == "Tutorial";
     }
     public static bool IsPlayerMenu() {
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
-		if(!GameManager.IsMenuScene()){
+		if(!GameManager.IsSceneMenu()){
 			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 
@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour {
                 ChatManager.DebugMessage(actor.GetComponent<ActorTeam>().GetTeam().ToString());
             }
         }
-		if(!GameManager.IsMenuScene()){
+		if(!GameManager.IsSceneMenu()){
             GetKeyStrokes();
 		}
 	}
@@ -291,7 +291,7 @@ public class GameManager : MonoBehaviour {
     }
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);
-        if (!gameInProgress && !IsMenuScene()) {
+        if (!gameInProgress && !IsSceneMenu()) {
             ReturnToLobby();
         }
     }

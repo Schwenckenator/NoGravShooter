@@ -11,7 +11,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 
 	void Start(){
 
-        if (GameManager.IsTutorialScene()) {
+        if (GameManager.IsSceneTutorial()) {
             grenadeType = 0;
         } else {
             //Randomise here, just for now

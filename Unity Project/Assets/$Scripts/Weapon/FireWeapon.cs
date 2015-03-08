@@ -41,7 +41,7 @@ public class FireWeapon : MonoBehaviour {
 		ChangeWeapon(0);
 	}
     void SetWeaponLoadout() {
-        if (GameManager.IsTutorialScene()) {
+        if (GameManager.IsSceneTutorial()) {
             int slugRifle = 1;
             int shotGun = 3;
             AddWeapon(slugRifle);
