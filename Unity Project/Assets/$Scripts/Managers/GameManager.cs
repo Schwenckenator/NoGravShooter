@@ -201,6 +201,8 @@ public class GameManager : MonoBehaviour {
 			weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
 		}
 
+        GuiManager.instance.ActorsChanged();
+
 	}
 
 	public void PlayerDied(){

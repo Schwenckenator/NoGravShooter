@@ -139,16 +139,6 @@ public class GuiManager : MonoBehaviour {
 		GrenadeSpawning = (SettingsManager.instance.GrenadeCanSpawn == 1);
 		WeaponSpawning = (SettingsManager.instance.WeaponCanSpawn == 1);
 	}
-    
-    
-    // TODO: Delete when debugging is finished
-    public static bool printTeamsKeyPressed = false;
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.F5)) {
-            printTeamsKeyPressed = true;
-        }
-    }
-
 
 	#region OnGUI
 	void OnGUI(){
@@ -884,7 +874,7 @@ public class GuiManager : MonoBehaviour {
 	#region PauseWindow
 	void PauseWindow(int windowId){
         if (IsDisplayTimer()) {
-            TimerGUI(); // Display the timer even when paused
+            DisplayTimer(); // Display the timer even when paused
         }
 
 		if(GameManager.instance.IsPlayerSpawned()){
@@ -966,8 +956,6 @@ public class GuiManager : MonoBehaviour {
 
     #region PlayerGUI
     void PlayerGUI() {
-
-
         GUIStyle style = new GUIStyle("label");
         style.fontSize = 50;
         style.alignment = TextAnchor.UpperCenter;
@@ -975,52 +963,55 @@ public class GuiManager : MonoBehaviour {
         if (ScoreVictoryManager.instance.IsVictor()) {
             DisplayWinnerText(style);
         }
-
         DisplayAmmoData(style);
 
         if (!GameManager.IsSceneTutorial()) {
             AdjustChatBoxWidth();
             DisplayChatBox();
         }
-
-        Rect fuel = new Rect(Screen.width - 260, Screen.height - 100, 250, 40);
-        DrawFuelMeterBackground(fuel);
-
-        fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel()) * 250;
-        GUI.DrawTexture(fuel, fullFuel);
-
-        Rect health = new Rect(Screen.width - 260, Screen.height - 50, 250, 40);
-        GUI.DrawTexture(health, empty);
-        health.xMin = health.xMax - playerResource.GetHealth() * 5 / 2;
-        GUI.DrawTexture(health, fullHealth);
-
+        DrawFuelMeter();
+        DrawHealthMeter();
         DrawCrosshair();
-
-        //tutorial prompt
-        if (tutePromptShown > 0) {
-            GUI.Box(new Rect(Screen.width / 2 - chatboxwidth / 2, Screen.height - 120, chatboxwidth, 100), tutePromptText);
-            tutePromptShown--;
+        DisplayTutorialPrompt();
+        DisplayButtonPrompt();
+        DrawRadar();
+        if (!GameManager.IsSceneTutorial()) {
+            DisplayTimer();
+            DisplayScoreBoard();
         }
+    }
 
-        //button prompt
+    private void DisplayButtonPrompt() {
         if (promptShown > 0) {
             GUI.Box(new Rect(Screen.width - 160, Screen.height / 2, 150, 30), promptText);
             promptShown--;
         }
+    }
 
-        Radar();
-        if (!GameManager.IsSceneTutorial()) {
-            TimerGUI();
-            ScoreBoard();
+    private void DisplayTutorialPrompt() {
+        if (tutePromptShown > 0) {
+            GUI.Box(new Rect(Screen.width / 2 - chatboxwidth / 2, Screen.height - 120, chatboxwidth, 100), tutePromptText);
+            tutePromptShown--;
         }
     }
 
-    private void DrawFuelMeterBackground(Rect fuel) {
+    private void DrawHealthMeter() {
+        Rect health = new Rect(Screen.width - 260, Screen.height - 50, 250, 40);
+        GUI.DrawTexture(health, empty);
+        health.xMin = health.xMax - playerResource.GetHealth() * 5 / 2;
+        GUI.DrawTexture(health, fullHealth);
+    }
+
+    private void DrawFuelMeter() {
+        Rect fuel = new Rect(Screen.width - 260, Screen.height - 100, 250, 40);
         if (playerResource.IsJetpackDisabled()) {
             GUI.DrawTexture(fuel, fullHeat);
         } else {
             GUI.DrawTexture(fuel, empty);
         }
+
+        fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel()) * 250;
+        GUI.DrawTexture(fuel, fullFuel);
     }
 
     private void DisplayChatBox() {
@@ -1075,112 +1066,117 @@ public class GuiManager : MonoBehaviour {
             GUI.DrawTexture(rectCrosshair, crosshair);
         }
     }
-    void Radar() {
-        //radar system
-        int radarCenter = 110;
-        int radarPadding = 20;
-        int radarDotArea = 95;
-        int defaultdotsize = 30;
-        Transform myTransform = null;
-        int radarDotCount = 0;
+
+    
+    List<RadarDot> dots = new List<RadarDot>();
+    List<RadarDot> deadDots = new List<RadarDot>();
+
+    public void ActorsChanged() {
+        networkView.RPC("GatherDots", RPCMode.All);
+    }
+    [RPC]
+    void GatherDots() {
+        dots.Clear();
+        ChatManager.DebugMessage("Gathering Dots.");
         GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
-        GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");
-        foreach (GameObject player in actors) {
-            if (player.networkView.isMine) {
-                myTransform = player.transform;
+        foreach (GameObject obj in actors) {
+            if (obj.networkView.isMine) {
+                RadarDot.myTransform = obj.transform;
+                RadarDot newDot = new RadarDot(obj, "Me");
+                dots.Add(newDot);
             } else {
-                radarDotCount++;
+                string dotType = RadarDot.DotType(obj.tag, obj.GetComponent<ActorTeam>().GetTeam());
+                RadarDot newDot = new RadarDot(obj, dotType);
+                dots.Add(newDot);
             }
         }
-        if (detectItems) {
-            for (int i = 0; i < items.Length; i++) {
-                radarDotCount++;
-            }
-
+        if (!detectItems) return;
+        GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");
+        foreach (GameObject obj in items) {
+            string dotType = RadarDot.DotType(obj.tag);
+            RadarDot newDot = new RadarDot(obj, dotType);
+            dots.Add(newDot);
         }
-        float[] dotx = new float[radarDotCount];
-        float[] doty = new float[radarDotCount];
-        float[] dotsize = new float[radarDotCount];
-        string[] dottype = new string[radarDotCount];
-        radarDotCount = 0;
+        SortDots();
+    }
+    void SortDots() {
+        // Sort by size, smallest to largest
+        //dots.Sort();
+        
+    }
 
-        foreach (GameObject actor in actors) {
-            if (actor.networkView.isMine) continue; // Escape if mine
+    void DrawRadar() {
+        GUI.Box(new Rect(
+            RadarDot.radarPadding, //Left
+            Screen.height - (RadarDot.radarCenter * 2 + RadarDot.radarPadding), //Top
+            RadarDot.radarCenter * 2, //width
+            RadarDot.radarCenter * 2), // height
+            radar, customGui);
 
+        List<RadarDot> before = new List<RadarDot>();
+        RadarDot player = null;
+        List<RadarDot> after = new List<RadarDot>();
 
-            Vector3 posDiff = myTransform.InverseTransformPoint(actor.transform.position); // Inverse is world space -> local space
-            float sqrRadius = posDiff.sqrMagnitude;
+        foreach(RadarDot dot in dots) {
+            if (dot.Actor == null) {
+                // If dead add to list for removal
+                deadDots.Add(dot);
+                continue;
+            }
+            dot.UpdatePosition();
+            if (!dot.CanDisplay) continue;
 
-            if (sqrRadius <= detectionRadius * detectionRadius) {
-                dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
-                doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
-                dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
-
-                if (NetworkManager.MyPlayer().IsOnTeam(actor.GetComponent<ActorTeam>().GetTeam())) { // GetComponent<>() is slow, will need to be fixed
-                    dottype[radarDotCount] = "Ally";
+            if (dot.Type == "Me") {
+                player = dot;
+            } else {
+                if (RadarDot.IsBelowDefault(dot)) {
+                    before.Add(dot);
                 } else {
-                    dottype[radarDotCount] = "Enemy";
-                }
-                radarDotCount++;
-            }
-
-        }
-        printTeamsKeyPressed = false; // For debug
-        if (detectItems) {
-            foreach (GameObject bonus in items) {
-                Vector3 posDiff = myTransform.InverseTransformPoint(bonus.transform.position); // Inverse is world space -> local space
-                float sqrRadius = posDiff.sqrMagnitude;
-
-                if (sqrRadius <= detectionRadius * detectionRadius) {
-                    dotx[radarDotCount] = posDiff.x / detectionRadius * radarDotArea;
-                    doty[radarDotCount] = -posDiff.z / detectionRadius * radarDotArea;
-                    dotsize[radarDotCount] = (posDiff.y / detectionRadius * defaultdotsize) + defaultdotsize;
-                    dottype[radarDotCount] = "Item";
-                    radarDotCount++;
+                    after.Add(dot);
                 }
             }
         }
-        radarDotCount = 0;
-
-        GUI.Box(new Rect(radarPadding, Screen.height - (radarCenter * 2 + radarPadding), radarCenter * 2, radarCenter * 2), radar, customGui);
-
-        Texture2D icon = null;
-
-        for (int i = 0; i < dotx.Length; i++) {
-            if (dotsize[i] < defaultdotsize) {
-
-                icon = GetIconType(dottype[i]);
-                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
-            }
+        foreach (RadarDot dot in before) {
+            DrawDot(dot);
+        }
+        DrawDot(player);
+        foreach (RadarDot dot in after) {
+            DrawDot(dot);
         }
 
-        GUI.Box(new Rect(radarCenter + radarPadding - (defaultdotsize / 2), Screen.height - (radarCenter + radarPadding + (defaultdotsize / 2)), defaultdotsize, defaultdotsize), playericon, customGui);
 
-        for (int i = 0; i < dotx.Length; i++) {
-            if (dotsize[i] >= defaultdotsize) {
-                icon = GetIconType(dottype[i]);
-                GUI.Box(new Rect(radarCenter + radarPadding + dotx[i] - dotsize[i] / 2, Screen.height - (radarCenter + radarPadding) + doty[i] - dotsize[i] / 2, dotsize[i], dotsize[i]), icon, customGui);
-            }
+        //Remove dead dots
+        foreach (RadarDot dot in deadDots) {
+            dots.Remove(dot);
         }
+    }
+
+    private void DrawDot(RadarDot dot) {
+        Texture2D icon = GetIconType(dot.Type);
+
+        GUI.Box(new Rect(RadarDot.radarCenter + RadarDot.radarPadding + dot.Position.x - dot.Position.y / 2, Screen.height - (RadarDot.radarCenter + RadarDot.radarPadding) + dot.Position.z - dot.Position.y / 2, dot.Position.y, dot.Position.y), icon, customGui);
     }
     Texture2D GetIconType(string type) {
-        if (type == "Enemy") {
-            return enemyicon;
-        } else if (type == "Item") {
-            return itemicon;
-        } else {
-            return allyicon;
+        switch (type) {
+            case "Enemy":
+                return enemyicon;
+            case "Item":
+                return itemicon;
+            case "Ally":
+                return allyicon;
+            default:
+                return playericon;
         }
     }
 
-    void ScoreBoard() {
+    void DisplayScoreBoard() {
         Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
         GUI.Box(scoreBoard, scoreBoardText);
     }
     bool IsDisplayTimer() {
         return !GameManager.IsSceneTutorial();
     }
-    void TimerGUI() {
+    void DisplayTimer() {
 
         float timeLeftMins = Mathf.Floor((GameManager.instance.endTime - Time.time) / 60);
         float timeLeftSecs = Mathf.Floor((GameManager.instance.endTime - Time.time) - (timeLeftMins * 60));
