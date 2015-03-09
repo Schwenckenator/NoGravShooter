@@ -6,7 +6,7 @@ using System.Collections;
 public class StickyObject : MonoBehaviour {
 
 	void OnCollisionEnter(Collision info){
-        if(info.collider.CompareTag("Player") || info.collider.CompareTag("GrenadeMine")) return;
+        if(info.collider.CompareTag("Player") || info.collider.CompareTag("Grenade")) return;
 
         Freeze();
 	}

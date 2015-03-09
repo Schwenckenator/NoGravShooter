@@ -27,21 +27,19 @@ public class ControllerInput : MonoBehaviour, IControllerInput {
 
 
     public float GetRollMovement() {
-
-        
-        throw new System.NotImplementedException();
+        return rollMovement;
     }
 
     public float GetXMovement() {
-        throw new System.NotImplementedException();
+        return xMovement;
     }
 
     public float GetYMovement() {
-        throw new System.NotImplementedException();
+        return yMovement;
     }
 
     public float GetZMovement() {
-        throw new System.NotImplementedException();
+        return zMovement;
     }
 
     public bool IsMovementKeys() {

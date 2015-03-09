@@ -536,17 +536,17 @@ public class GuiManager : MonoBehaviour {
     private Rect DisplayGeneralSettings(Rect standard) {
         standard.y += 50;
         GUI.Label(standard, "Mouse Sensitivity X: ");
-        SettingsManager.instance.xMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.xMouseSensitivity, 2);
-        SettingsManager.instance.xMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.xMouseSensitivity.ToString()));
+        SettingsManager.instance.MouseSensitivityX = (float)System.Math.Round(SettingsManager.instance.MouseSensitivityX, 2);
+        SettingsManager.instance.MouseSensitivityX = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.MouseSensitivityX.ToString()));
         standard.y += 20;
-        SettingsManager.instance.xMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.xMouseSensitivity, 0, 1);
+        SettingsManager.instance.MouseSensitivityX = GUI.HorizontalSlider(standard, SettingsManager.instance.MouseSensitivityX, 0, 1);
 
         standard.y += 50;
         GUI.Label(standard, "Mouse Sensitivity Y: ");
-        SettingsManager.instance.yMouseSensitivity = (float)System.Math.Round(SettingsManager.instance.yMouseSensitivity, 2);
-        SettingsManager.instance.yMouseSensitivity = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.yMouseSensitivity.ToString()));
+        SettingsManager.instance.MouseSensitivityY = (float)System.Math.Round(SettingsManager.instance.MouseSensitivityY, 2);
+        SettingsManager.instance.MouseSensitivityY = float.Parse(GUI.TextField(new Rect(standard.width - 60, standard.y, 50, 20), SettingsManager.instance.MouseSensitivityY.ToString()));
         standard.y += 20;
-        SettingsManager.instance.yMouseSensitivity = GUI.HorizontalSlider(standard, SettingsManager.instance.yMouseSensitivity, 0, 1);
+        SettingsManager.instance.MouseSensitivityY = GUI.HorizontalSlider(standard, SettingsManager.instance.MouseSensitivityY, 0, 1);
 
         standard.y += 40;
         mouseInverted = GUI.Toggle(new Rect(standard.x, standard.y, 100, 30), mouseInverted, "Invert Y Axis");
@@ -765,6 +765,7 @@ public class GuiManager : MonoBehaviour {
 
         if(GUI.Button(new Rect(20, smallRect.height-45, smallRect.width-40, 30), "Close")){
             SettingsManager.instance.SaveSettings();
+            NetworkManager.instance.ChangeGameModeIndex();
 			displayGameSettingsWindow = false;
 		}
 	}

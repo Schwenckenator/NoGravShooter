@@ -45,9 +45,12 @@ public class Player {
         }
     }
     public void IncrementTeam(bool sendRPC = true) {
-        int numOfTeams = 2;
-        this.Team++;
-        if ((int)this.Team > numOfTeams) this.Team = 0;
+        if (SettingsManager.instance.IsTeamGameMode()) {
+            if (this.Team == Team.Red) this.Team = Team.Blue;
+            else this.Team = Team.Red;
+        } else {
+            this.Team = Team.None;
+        }
 
         if (sendRPC) { // Sends RPC by default
             NetworkManager.instance.PlayerChangedTeam(this, this.Team);

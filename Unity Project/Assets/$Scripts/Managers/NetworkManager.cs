@@ -183,10 +183,17 @@ public class NetworkManager : MonoBehaviour {
     }
     #endregion
 
+    public void ChangeGameModeIndex() {
+        networkView.RPC("ChangeGameMode", RPCMode.OthersBuffered, SettingsManager.instance.GameModeIndex);
+    }
     #region RPC
     [RPC]
     void ChangeServerName(string name) {
         SettingsManager.instance.DisplayServerName = name;
+    }
+    [RPC]
+    void ChangeGameMode(int index) {
+        SettingsManager.instance.GameModeIndexDisplay = index;
     }
     [RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
@@ -194,7 +201,6 @@ public class NetworkManager : MonoBehaviour {
 
         GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
-
     [RPC]
     void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
         NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));

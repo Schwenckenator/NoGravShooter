@@ -52,11 +52,11 @@ public class SettingsManager : MonoBehaviour {
     #endregion
 
     #region PlayerControlSettings
-    public float xMouseSensitivity { get; set; }
-    public float yMouseSensitivity { get; set; }
+    public float MouseSensitivityX { get; set; }
+    public float MouseSensitivityY { get; set; }
     public int MouseYDirection { get; set; }
     public float FieldOfView { get; set; }
-    private int i_AutoPickup { get; set; }
+    private int i_AutoPickup { get; set; } // Deal with the hungarian
     public bool AutoPickup { get; set; }
     #endregion
 
@@ -80,10 +80,19 @@ public class SettingsManager : MonoBehaviour {
         }
         set {
             gameModeIndex = value;
+            GameModeIndexDisplay = value;
+        }
+    }
+    private int gameModeIndexDisplay;
+    public int GameModeIndexDisplay {
+        get { return gameModeIndexDisplay; }
+        set {
+            gameModeIndexDisplay = value;
             GameModeName = GameModeList[value];
         }
     }
     public string GameModeName { get; set; }
+
     public int SpawnWeapon1 { get; set; }
     public int SpawnWeapon2 { get; set; }
 
@@ -132,11 +141,8 @@ public class SettingsManager : MonoBehaviour {
     #endregion
 
     void Awake() {
-        
-
         RetrieveKeyBinds();
         RetrieveSettings();
-        
     }
 
     void RetrieveKeyBinds() {
@@ -191,8 +197,8 @@ public class SettingsManager : MonoBehaviour {
         PasswordClient = "";
 
         //Control Settings
-        xMouseSensitivity = PlayerPrefs.GetFloat("xMouseSensitivity", defaultMouseSensitivity);
-        yMouseSensitivity = PlayerPrefs.GetFloat("yMouseSensitivity", defaultMouseSensitivity);
+        MouseSensitivityX = PlayerPrefs.GetFloat("xMouseSensitivity", defaultMouseSensitivity);
+        MouseSensitivityY = PlayerPrefs.GetFloat("yMouseSensitivity", defaultMouseSensitivity);
         MouseYDirection = PlayerPrefs.GetInt("MouseYDirection", defaultMouseYDirection);
         FieldOfView = PlayerPrefs.GetFloat("FieldOfView", defaultFieldOfView);
         i_AutoPickup = PlayerPrefs.GetInt("AutoPickup", i_False);
@@ -232,8 +238,8 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetString("Password", PasswordServer);
 
         // Control Settings
-        PlayerPrefs.SetFloat("xMouseSensitivity", xMouseSensitivity);
-        PlayerPrefs.SetFloat("yMouseSensitivity", yMouseSensitivity);
+        PlayerPrefs.SetFloat("xMouseSensitivity", MouseSensitivityX);
+        PlayerPrefs.SetFloat("yMouseSensitivity", MouseSensitivityY);
         PlayerPrefs.SetInt("MouseYDirection", MouseYDirection);
         PlayerPrefs.SetFloat("FieldOfView", FieldOfView);
         PlayerPrefs.SetInt("AutoPickup", i_AutoPickup);
@@ -286,5 +292,11 @@ public class SettingsManager : MonoBehaviour {
 
     public Color GetPlayerColour() {
         return new Color(ColourR, ColourG, ColourB, 1);
+    }
+
+    public bool IsTeamGameMode() {
+        // Team : Team Deathmatch, Capture the Flag, Extraction, Team Skirmish
+        // No Team: Deathmatch, Skirmish, Elimination, Infection <- There are teams but no choice.
+        return (GameModeIndexDisplay == 1 || GameModeIndexDisplay == 2 || GameModeIndexDisplay == 3 || GameModeIndexDisplay == 5);
     }
 }

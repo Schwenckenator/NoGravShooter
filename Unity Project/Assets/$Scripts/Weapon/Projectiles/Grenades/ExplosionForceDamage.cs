@@ -40,7 +40,7 @@ public class ExplosionForceDamage : MonoBehaviour {
             if(hit.CompareTag("BonusPickup")){
 				hit.GetComponent<DestroyOnNextFrame>().DestroyMe();
 			}
-            if (hit.CompareTag("GrenadeMine")) {
+            if (hit.CompareTag("Grenade")) {
                 hit.GetComponent<MineDetonation>().ForceDetonate();
             }
 
