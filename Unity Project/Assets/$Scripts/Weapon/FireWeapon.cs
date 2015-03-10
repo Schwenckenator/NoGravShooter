@@ -28,8 +28,6 @@ public class FireWeapon : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
 		heldWeapons = new List<WeaponSuperClass>();
-
-        
         SetWeaponLoadout();
 
 		currentInventorySlot = 0;
@@ -38,7 +36,11 @@ public class FireWeapon : MonoBehaviour {
 		cameraPos = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
 		playerResource = GetComponent<PlayerResources>();
-		ChangeWeapon(0);
+        
+        if (networkView.isMine) {
+            ChangeWeapon(0);
+        }
+		
 	}
     void SetWeaponLoadout() {
         if (GameManager.IsSceneTutorial()) {

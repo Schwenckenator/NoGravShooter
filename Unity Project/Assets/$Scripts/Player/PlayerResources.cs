@@ -63,13 +63,16 @@ public class PlayerResources : MonoBehaviour {
     private bool isDamageSound = false;
 
 	private WeaponSuperClass currentWeapon;
+    private WeaponReloadRotation weaponReloadRotation;
 	#endregion
 	
 	#region Start()
 	void Awake () {
+        
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		helmetAudio = transform.FindChild("HelmetAudio").GetComponent<AudioSource>();
+        weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
 		smokeParticle = GetComponentInChildren<ParticleSystem>();
 		smokeParticle.emissionRate = 0;
 		smokeParticle.Play();
@@ -393,7 +396,7 @@ public class PlayerResources : MonoBehaviour {
 
         isReloading = true;
 		if(currentWeapon.reloadTime > 1.0f){
-			GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(currentWeapon.reloadTime);
+            weaponReloadRotation.ReloadRotation(currentWeapon.reloadTime);
 		}
 		isWeaponBusy = true;
 		audio.clip = currentWeapon.reloadSound;
@@ -419,10 +422,15 @@ public class PlayerResources : MonoBehaviour {
 		audio.PlayOneShot(soundChangeWeapon);
 		isWeaponBusy = true;
 		float waitTime = 1.0f;
-		GetComponentInChildren<WeaponReloadRotation>().ReloadRotation(waitTime, currentWeapon);
+        weaponReloadRotation.ReloadRotation(waitTime, currentWeapon);
+        networkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, GameManager.WeaponClassToWeaponId(currentWeapon));
 		yield return new WaitForSeconds(waitTime);
 		isWeaponBusy = false;
 	}
+    [RPC]
+    void NetworkWeaponChange(float waitTime, int currentWeaponID) {
+        weaponReloadRotation.ReloadRotation(waitTime, GameManager.weapon[currentWeaponID]);
+    }
 	public void ChangeWeapon(WeaponSuperClass newWeapon){
 		if(!isWeaponBusy){
 			currentWeapon = newWeapon;
