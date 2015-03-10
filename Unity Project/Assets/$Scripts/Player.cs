@@ -44,10 +44,9 @@ public class Player {
             NetworkManager.instance.PlayerChangedTeam(this, newTeam);
         }
     }
-    public void IncrementTeam(bool sendRPC = true) {
+    public void ChangeTeam(bool sendRPC = true) {
         if (SettingsManager.instance.IsTeamGameMode()) {
-            if (this.Team == Team.Red) this.Team = Team.Blue;
-            else this.Team = Team.Red;
+            SwapTeam();
         } else {
             this.Team = Team.None;
         }
@@ -55,6 +54,10 @@ public class Player {
         if (sendRPC) { // Sends RPC by default
             NetworkManager.instance.PlayerChangedTeam(this, this.Team);
         }
+    }
+    private void SwapTeam() {
+        if (this.Team == Team.Red) this.Team = Team.Blue;
+        else this.Team = Team.Red;
     }
     /// <summary>
     /// Returns false if this.Team = Team.None
