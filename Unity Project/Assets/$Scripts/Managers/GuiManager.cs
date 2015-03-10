@@ -120,8 +120,14 @@ public class GuiManager : MonoBehaviour {
 	GUIStyle upperLeftTextAlign;
 	GUIStyle lowerLeftTextAlign;
 	
-	private Color playercol;
+	private Color defaultcol;
 	private Texture2D coltexture;
+	private Color playercol;
+	private Texture2D playertexture;
+	private Color redTeamColour;
+	private Texture2D redTeamTexture;
+	private Color blueTeamColour;
+	private Texture2D blueTeamTexture;
 
     #endregion
 
@@ -149,9 +155,9 @@ public class GuiManager : MonoBehaviour {
 		lowerLeftTextAlign = new GUIStyle(GUI.skin.box);
 		lowerLeftTextAlign.alignment = TextAnchor.LowerLeft;
 		
-		playercol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
+		defaultcol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
 		coltexture = new Texture2D(1, 1);
-		coltexture.SetPixel(0,0,playercol);
+		coltexture.SetPixel(0,0,defaultcol);
 		coltexture.Apply();
 		GUI.skin.box.normal.background = coltexture;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -429,7 +435,35 @@ public class GuiManager : MonoBehaviour {
         }
     }
 	#endregion
-
+	
+	private float red = -99;
+	private float green = -99;
+	private float blue = -99;
+	void updateCustomColours(int colour){
+		if(colour == 0){
+			redTeamColour = SettingsManager.instance.GetPlayerColour();
+			redTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Red, redTeamColour);
+			redTeamTexture = new Texture2D(1, 1);
+			redTeamTexture.SetPixel(0, 0, redTeamColour);
+			redTeamTexture.Apply();
+			red = SettingsManager.instance.ColourR;
+		} else if(colour == 1){
+			playercol = SettingsManager.instance.GetPlayerColour();
+			playercol = PlayerColourManager.instance.LimitTeamColour(Team.None, playercol);
+			playertexture = new Texture2D(1, 1);
+			playertexture.SetPixel(0,0,playercol);
+			playertexture.Apply();
+			green = SettingsManager.instance.ColourG;
+		} else {
+			blueTeamColour = SettingsManager.instance.GetPlayerColour();
+			blueTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Blue, blueTeamColour);
+			blueTeamTexture = new Texture2D(1, 1);
+			blueTeamTexture.SetPixel(0, 0, blueTeamColour);
+			blueTeamTexture.Apply();
+			blue = SettingsManager.instance.ColourB;
+		}
+	}
+	
 	#region OptionsWindow
 	void OptionsWindow(int windowId){
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
@@ -442,18 +476,15 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 20;
         SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
 
-        // Display Red team Preview
-        Color redTeamColour = SettingsManager.instance.GetPlayerColour();
-        redTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Red, redTeamColour);
-		Texture2D redTeamTexture = new Texture2D(1, 1);
-        redTeamTexture.SetPixel(0, 0, redTeamColour);
-        redTeamTexture.Apply();
-
+		// Display Red team Preview
+		if(red != SettingsManager.instance.ColourR || green != SettingsManager.instance.ColourG || blue != SettingsManager.instance.ColourB){
+			updateCustomColours(0);
+		}
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Red Team");
         GUI.skin.box.normal.background = redTeamTexture;
 		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
         SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
-		standard.x -= 20;
+        standard.x -= 20;
 		SettingsManager.instance.ColourR = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourR, 1, 0);
 		
 		standard.y -= 20;
@@ -466,16 +497,18 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourG.ToString()));
 
         //Display No team Preview
-        playercol = SettingsManager.instance.GetPlayerColour();
-        playercol = PlayerColourManager.instance.LimitTeamColour(Team.None, playercol);
-		coltexture = new Texture2D(1, 1);
-		coltexture.SetPixel(0,0,playercol);
-		coltexture.Apply();
-
+		if(red != SettingsManager.instance.ColourR || green != SettingsManager.instance.ColourG || blue != SettingsManager.instance.ColourB){
+			updateCustomColours(1);
+		}
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Default");
-		GUI.skin.box.normal.background = coltexture;
+		GUI.skin.box.normal.background = playertexture;
 		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
         SettingsManager.instance.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourG.ToString()));
+		if(GUI.Button(new Rect(standard.x, standard.y+100, 70, 30), "Random")){
+			SettingsManager.instance.ColourR = Random.Range(0f, 1f);
+			SettingsManager.instance.ColourG = Random.Range(0f, 1f);;
+			SettingsManager.instance.ColourB = Random.Range(0f, 1f);;
+		}
 		standard.x -= 20;
 		SettingsManager.instance.ColourG = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourG, 1, 0);
 		
@@ -489,12 +522,9 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
 		
         // Display Blue team Preview
-        Color blueTeamColour = SettingsManager.instance.GetPlayerColour();
-        blueTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Blue, blueTeamColour);
-
-		Texture2D blueTeamTexture = new Texture2D(1, 1);
-        blueTeamTexture.SetPixel(0, 0, blueTeamColour);
-        blueTeamTexture.Apply();
+		if(red != SettingsManager.instance.ColourR || green != SettingsManager.instance.ColourG || blue != SettingsManager.instance.ColourB){
+			updateCustomColours(2);
+		}		
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Blue Team");
         GUI.skin.box.normal.background = blueTeamTexture;
 		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
@@ -502,12 +532,7 @@ public class GuiManager : MonoBehaviour {
 		standard.x -= 20;
 		SettingsManager.instance.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourB, 1, 0);
 		
-        playercol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
-		coltexture = new Texture2D(1, 1);
-		coltexture.SetPixel(0,0,playercol);
-		coltexture.Apply();
-		GUI.skin.box.normal.background = coltexture;
-		
+        GUI.skin.box.normal.background = coltexture;
 		
 		standard.x -= standard.width+250;
 		standard.y += 160;
