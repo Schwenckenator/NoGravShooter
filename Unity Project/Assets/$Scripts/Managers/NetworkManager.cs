@@ -169,6 +169,7 @@ public class NetworkManager : MonoBehaviour {
     void OnServerInitialized() {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, SettingsManager.instance.MyServerName);
+        AssignToTeam();
     }
     void OnConnectedToServer() {
         
@@ -180,11 +181,12 @@ public class NetworkManager : MonoBehaviour {
         
         string message = SettingsManager.instance.PlayerName + " has connected.";
         ChatManager.instance.AddToChat(message);
+        AssignToTeam();
     }
     #endregion
 
     public void ChangeGameModeIndex() {
-        networkView.RPC("ChangeGameMode", RPCMode.OthersBuffered, SettingsManager.instance.GameModeIndex);
+        networkView.RPC("ChangeGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndex);
     }
     #region RPC
     [RPC]
@@ -194,6 +196,13 @@ public class NetworkManager : MonoBehaviour {
     [RPC]
     void ChangeGameMode(int index) {
         SettingsManager.instance.GameModeIndexDisplay = index;
+        AssignToTeam();
+    }
+
+    private static void AssignToTeam() {
+        if (SettingsManager.instance.IsTeamGameMode() == NetworkManager.MyPlayer().HasNoTeam()) {
+            NetworkManager.MyPlayer().ChangeTeam();
+        }
     }
     [RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {

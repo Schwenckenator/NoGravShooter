@@ -792,7 +792,7 @@ public class GuiManager : MonoBehaviour {
 
 		GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-150), PlayerList(), upperLeftTextAlign);
         if (GUI.Button(new Rect(largeRect.width / 3 - 100, 105, 100, 20), "Change Team")) {
-            NetworkManager.MyPlayer().IncrementTeam();
+            NetworkManager.MyPlayer().ChangeTeam();
         }
         string message = Network.isServer ? "Shutdown Server": "Disconnect";
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), message)) {
@@ -900,7 +900,7 @@ public class GuiManager : MonoBehaviour {
 
         if (!GameManager.instance.IsPlayerSpawned()) {
             if (GUI.Button(new Rect(largeRect.width / 3 - 100, 105, 100, 20), "Change Team")) {
-                NetworkManager.MyPlayer().IncrementTeam();
+                NetworkManager.MyPlayer().ChangeTeam();
             }
         }
 
