@@ -363,8 +363,8 @@ public class GameManager : MonoBehaviour {
 
         networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
 
-        int dummy = 0;
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy);
+        int dummy = 0; // Dummy is just to keep the code happy. Has no effect
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
     }
 
     [RPC]
