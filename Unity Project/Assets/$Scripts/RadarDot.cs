@@ -24,7 +24,7 @@ public class RadarDot{
         this.Position = Vector3.zero;
         this.CanDisplay = false;
     }
-    public static string DotType(string tag, Team team = Team.None) {
+    public static string DotType(string tag, TeamColour team = TeamColour.None) {
         if (tag == "BonusPickup") {
             return "Item";
         }

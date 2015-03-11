@@ -2,42 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Team {
-    None,
-    Red,
-    Blue
-}
-//Add new colours if needed.
+
 
 public class Player {
     public NetworkPlayer ID { get; protected set; }
     public string Name { get; protected set; }
     public int Score { get; protected set; }
-    public Team Team { get; protected set; }
+    public TeamColour Team { get; protected set; }
 
     public Player(NetworkPlayer id, string name) {
         this.ID = id;
         this.Name = name;
         this.Score = 0;
-        this.Team = Team.None;
+        this.Team = TeamColour.None;
+    }
+    public Player() {
+        this.Name = "";
+        this.Score = 0;
+        this.Team = TeamColour.None;
     }
 
-    // Score
-    public bool IsScoreEqualOrOver(int value) {
-        return (this.Score >= value);
+    #region Score
+    public bool IsScoreEqualOrOverAmount(int amount) {
+        return (this.Score >= amount);
     }
-    public void AddScore(int value) {
-        this.Score += value;
+    public void AddScore(int addAmount) {
+        this.Score += addAmount;
     }
-    public void MinusScore(int value) {
-        this.Score -= value;
+    public void MinusScore(int minusAmount) {
+        this.Score -= minusAmount;
     }
     public void ClearScore() {
         this.Score = 0;
     }
+    #endregion
 
-    // Team
-    public void ChangeTeam(Team newTeam, bool sendRPC = true) {
+    #region Team
+    public void ChangeTeam(TeamColour newTeam, bool sendRPC = true) {
         this.Team = newTeam;
 
         if (sendRPC) { // Sends RPC by default
@@ -48,7 +49,7 @@ public class Player {
         if (SettingsManager.instance.IsTeamGameMode()) {
             SwapTeam();
         } else {
-            this.Team = Team.None;
+            this.Team = TeamColour.None;
         }
 
         if (sendRPC) { // Sends RPC by default
@@ -56,18 +57,19 @@ public class Player {
         }
     }
     private void SwapTeam() {
-        if (this.Team == Team.Red) this.Team = Team.Blue;
-        else this.Team = Team.Red;
+        if (this.Team == TeamColour.Red) this.Team = TeamColour.Blue;
+        else this.Team = TeamColour.Red;
     }
     /// <summary>
     /// Returns false if this.Team = Team.None
     /// </summary>
     /// <param name="team"></param>
-    /// <returns></returns>
-    public bool IsOnTeam(Team team) {
-        return this.Team != Team.None && this.Team == team;
+    /// <returns>If team == this.team true</returns>
+    public bool IsOnTeam(TeamColour team) {
+        return this.Team != TeamColour.None && this.Team == team;
     }
     public bool HasNoTeam() {
-        return this.Team == Team.None;
+        return this.Team == TeamColour.None;
     }
+    #endregion
 }

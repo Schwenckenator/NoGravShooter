@@ -12,7 +12,7 @@ public class PlayerColour : MonoBehaviour {
         ApplyColour(currentPlayer.Team);
 
     }
-    private void ApplyColour(Team team) {
+    private void ApplyColour(TeamColour team) {
 		//just an idea i had while watching redvsblue, can always take it out later
 		//allows multiple shades while keeping within the general colour pallet of the team
 

@@ -442,21 +442,21 @@ public class GuiManager : MonoBehaviour {
 	void updateCustomColours(int colour){
 		if(colour == 0){
 			redTeamColour = SettingsManager.instance.GetPlayerColour();
-			redTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Red, redTeamColour);
+			redTeamColour = PlayerColourManager.instance.LimitTeamColour(TeamColour.Red, redTeamColour);
 			redTeamTexture = new Texture2D(1, 1);
 			redTeamTexture.SetPixel(0, 0, redTeamColour);
 			redTeamTexture.Apply();
 			red = SettingsManager.instance.ColourR;
 		} else if(colour == 1){
 			playercol = SettingsManager.instance.GetPlayerColour();
-			playercol = PlayerColourManager.instance.LimitTeamColour(Team.None, playercol);
+			playercol = PlayerColourManager.instance.LimitTeamColour(TeamColour.None, playercol);
 			playertexture = new Texture2D(1, 1);
 			playertexture.SetPixel(0,0,playercol);
 			playertexture.Apply();
 			green = SettingsManager.instance.ColourG;
 		} else {
 			blueTeamColour = SettingsManager.instance.GetPlayerColour();
-			blueTeamColour = PlayerColourManager.instance.LimitTeamColour(Team.Blue, blueTeamColour);
+			blueTeamColour = PlayerColourManager.instance.LimitTeamColour(TeamColour.Blue, blueTeamColour);
 			blueTeamTexture = new Texture2D(1, 1);
 			blueTeamTexture.SetPixel(0, 0, blueTeamColour);
 			blueTeamTexture.Apply();
@@ -1123,12 +1123,6 @@ public class GuiManager : MonoBehaviour {
             RadarDot newDot = new RadarDot(obj, dotType);
             dots.Add(newDot);
         }
-        SortDots();
-    }
-    void SortDots() {
-        // Sort by size, smallest to largest
-        //dots.Sort();
-        
     }
 
     void DrawRadar() {
@@ -1196,7 +1190,7 @@ public class GuiManager : MonoBehaviour {
     }
 
     void DisplayScoreBoard() {
-        Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20);
+        Rect scoreBoard = new Rect(10, 10, 300, NetworkManager.connectedPlayers.Count * 20 + 20*2);
         GUI.Box(scoreBoard, scoreBoardText);
     }
     bool IsDisplayTimer() {

@@ -67,12 +67,12 @@ public class NetworkManager : MonoBehaviour {
         return NetworkManager.connectedPlayers.Exists(x => x.ID.Equals(value));
     }
     
-    public void PlayerChangedTeam(Player player, Team newTeam) {
+    public void PlayerChangedTeam(Player player, TeamColour newTeam) {
         networkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
     [RPC]
     private void RPCPlayerChangedTeam(NetworkPlayer player, int newTeam) {
-        GetPlayer(player).ChangeTeam((Team)newTeam, false);
+        GetPlayer(player).ChangeTeam((TeamColour)newTeam, false);
     }
     #region Connect To Server
     public static void ConnectToServer() {

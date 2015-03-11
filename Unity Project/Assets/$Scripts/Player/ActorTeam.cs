@@ -6,17 +6,17 @@ using System.Collections;
 /// </summary>
 public class ActorTeam : MonoBehaviour {
 
-    private Team team;
+    private TeamColour team;
 
-    public Team GetTeam(){
+    public TeamColour GetTeam(){
         return team;
     }
-    public void SetTeam(Team newTeam) {
+    public void SetTeam(TeamColour newTeam) {
         team = newTeam;
         networkView.RPC("RPCSetTeam", RPCMode.OthersBuffered, (int)newTeam);
     }
     [RPC]
     private void RPCSetTeam(int newTeam) {
-        team = (Team)newTeam;
+        team = (TeamColour)newTeam;
     }
 }

@@ -275,21 +275,13 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void EndGame(Player winningPlayer) {
-        SetWinner(winningPlayer.Name);
-        
+    public void EndGame() {
         gameInProgress = false;
         
         SetEndTime(secondsUntilKick);
         if (Network.isServer) {
             StartCoroutine(KickPlayersAfterGameEnd());
         }
-    }
-    public void EndGame() {
-        // This method is here for when we enevitably write code for ties/draws
-    }
-    private void SetWinner(string winners) {
-        ScoreVictoryManager.instance.VictorName = winners;
     }
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);
@@ -372,13 +364,8 @@ public class GameManager : MonoBehaviour {
         //currentWindow = Menu.Lobby;
         GuiManager.instance.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
 
-        // Keep the players, but wipe the scores
-        foreach (Player player in NetworkManager.connectedPlayers) {
-            player.ClearScore();
-        }
-
         //Clear data about a winner, the games over yo
-        ScoreVictoryManager.instance.ClearWinnerData();
+        ScoreVictoryManager.instance.ClearScoreData();
     }
 
     public void BackToMainMenu() {
@@ -387,7 +374,7 @@ public class GameManager : MonoBehaviour {
             Network.Disconnect();
         }
 
-        ScoreVictoryManager.instance.ClearWinnerData();
+        ScoreVictoryManager.instance.ClearScoreData();
         Application.LoadLevel("MenuScene");
 
     }

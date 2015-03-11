@@ -34,10 +34,10 @@ public class PlayerColourManager : MonoBehaviour {
     /// <param name="team"></param>
     /// <param name="input"></param>
     /// <returns></returns>
-    public Color LimitTeamColour(Team team, Color input) {
-        if (team == Team.Red) 
+    public Color LimitTeamColour(TeamColour team, Color input) {
+        if (team == TeamColour.Red) 
             return LimitRedTeamColour(input);
-        if (team == Team.Blue) 
+        if (team == TeamColour.Blue) 
             return LimitBlueTeamColour(input);
         return input;
     }
