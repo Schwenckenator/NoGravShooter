@@ -292,7 +292,7 @@ public class GameManager : MonoBehaviour {
 
     public void LoadLevel() {
         if (Network.isClient) {
-            throw new System.AccessViolationException("Is client when it needs to be server.");
+            throw new ClientRunningServerCodeException("Thrown in GameManager.");
         }
         GetComponent<DestroyManager>().ClearDestroyLists();
         

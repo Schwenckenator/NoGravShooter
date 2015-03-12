@@ -194,9 +194,7 @@ public class PlayerResources : MonoBehaviour {
 	public void PickUpGrenades(int amount, int grenadeId){
 		grenades[grenadeId] += amount;
 	}
-	public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1){
-		networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
-	}
+
 
 	public void RestoreHealth(int restore){
 		health += restore;
@@ -258,7 +256,9 @@ public class PlayerResources : MonoBehaviour {
         isDamageSound = false;
     }
 	#region RPC
-
+    public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1) {
+        networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
+    }
 	[RPC]
 	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponID){
 
@@ -277,7 +277,7 @@ public class PlayerResources : MonoBehaviour {
 			isDying = true;//You is dead nigs
 
 			if(networkView.isMine){
-				if(killer != null && weaponID != -1){
+				if(killer != null){
                     string killMessage;
 					if(killer.ID != Network.player){
                         GameManager.gameMode.Kill(killer, NetworkManager.MyPlayer());
@@ -307,6 +307,7 @@ public class PlayerResources : MonoBehaviour {
     }
 	#endregion
     const int teamKillID = 100;
+    const int assassinated = 200;
 	string KillMessageGenerator(int weaponId){
 		switch(weaponId){
 		    case 0:
@@ -325,6 +326,8 @@ public class PlayerResources : MonoBehaviour {
 			    return " plasmered ";
             case teamKillID:
                 return " betrayed ";
+            case assassinated:
+                return " assassinated ";
 		}
 
 		return " killed ";

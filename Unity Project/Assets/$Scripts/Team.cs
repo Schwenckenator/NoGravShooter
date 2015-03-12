@@ -16,7 +16,7 @@ public class Team {
 
     public Team(TeamColour team) {
         if (team == TeamColour.None) {
-            throw new System.ArgumentException("None is not a valid team type");
+            throw new InvalidTeamColourException("None is not a valid team type");
         }
         Type = team;
         this.Name = "Team " + this.Type.ToString();

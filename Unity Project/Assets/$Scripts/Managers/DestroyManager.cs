@@ -48,7 +48,7 @@ public class DestroyManager : MonoBehaviour {
     }
     void AddToDestroyBufferIfUnique(NetworkViewID viewID) {
         if (Network.isClient) {
-            throw new System.AccessViolationException("Is client when it needs to be server.");
+            throw new ClientRunningServerCodeException("Thrown in DestroyManager.");
         }
         // Check for uniqueness
         if (DestroyBuffer.Contains(viewID) || DestroyedObjects.Contains(viewID)) {
