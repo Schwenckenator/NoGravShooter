@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour {
 	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
 
     public float endTime;
+    public bool IsUseTimer { get; private set; }
     public NetworkPlayer currentPlayer;
     // For Game Settings
 
@@ -270,7 +271,7 @@ public class GameManager : MonoBehaviour {
     // If a player connects mid game,
     // we need to send an updated remaining time
     void OnPlayerConnected(NetworkPlayer player) {
-        if (GameInProgress) {
+        if (GameInProgress && IsUseTimer) {
             networkView.RPC("SetEndTime", player, endTime - Time.time);
         }
     }
@@ -315,8 +316,15 @@ public class GameManager : MonoBehaviour {
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
-            ScoreVictoryManager.instance.GameStart();
-            endTime = Time.time + secondsOfGame;
+            
+            if (secondsOfGame > 0) {
+                endTime = Time.time + secondsOfGame;
+                ScoreVictoryManager.instance.StartTimer();
+                this.IsUseTimer = true;
+            } else {
+                this.IsUseTimer = false;
+            }
+            
             ChatManager.ClearAllChat();
             GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
             gameMode = temp.GetComponent(typeof(IGameMode)) as IGameMode;

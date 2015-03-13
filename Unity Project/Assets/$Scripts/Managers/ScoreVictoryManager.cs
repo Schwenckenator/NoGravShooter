@@ -35,7 +35,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         Teams.Add(new Team(TeamColour.Red));
         Teams.Add(new Team(TeamColour.Blue));
     }
-    public void GameStart() {
+    public void StartTimer() {
         StartCoroutine(CheckForGameEnd());
     }
 
