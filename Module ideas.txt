@@ -1,46 +1,39 @@
-Default Passive Ability:
-Radar/Sonar/Motion Detector
-shows location of other players
-display is relative to players 'upwards' direction (eg if an enemy is ahead of the player that enemies icon will display above the players icon)
-the size of an enemies icon is defined by their 'height' relative to the player
-enemies above the player will have larger icons, while enemies below will have smaller icons
-the icons will be somewhat transparent to account for overlaps
-
-
 1 Module may be equipped as an active, 2 modules may be equipped as passives
 the module equipped as an active cannot be equipped as a passive
-all active modules need a cool-down/warm-up time
+All active modules need a cool-down/warm-up time
+ALL features of an active module are temporary
 
 
 Module1:
-Active: Dash/Blink/Short range teleport
+Active: Dash
 player instantly rushes forwards a set distance, regardless of current speed & direction
-after use speed & direction would return to the what they were before use
-module would detect if anything solid is in front of the player and cut the distance so the player stops just before the object
+after use speed/momentum/direction would return to the what they were before use
+(module would detect if anything solid is in front of the player and cut the distance short
+that way the player stops just before the object and cant go phasing through walls)
 
-Passive: Movement Speed/Acceleration
+Passive: Speed Boost
 player walks faster
-player can speed up and change direction faster when floating
+player accelerates/decelerates faster when floating
 
 
 Module2:
-Active: Invulnerability/Invincibility
+Active: Invulnerability
 temporarily become unable to take damage
 
-Passive: More Health/Stronger
-player has more health/stronger armour and takes more damage to kill
-a bit more mass so a little slower at walking and accelerating/changing direction when floating
-(equipping module1 as another passive can cancel out the slowness)
+Passive: Strength Boost
+player has more health/stronger armour and therefore takes more damage to kill
+a bit more mass so a little slower at walking and accelerating/decelerating when floating
+(equipping module1 as another passive cancels out the difference resulting in default speeed)
 
 
 Module3:
-Active: Invisibility/Cloaking
-temporarily become invisible
-also not show up on radar?
-perhaps not completely invisible, just mostly, so people still have a chance to notice
+Active: Invisibility
+temporarily become invisible and not show on enemy players radars
+(perhaps not completely invisible, maybe like 90% transparent, so people still have a chance to notice)
 
-Passive: scan-proof
-player is not shown on enemy radars while standing/walking (campers yolo420swagMLGpro)
+Passive: Radar-Proof
+player is not shown on enemy radars while standing/walking
+(campers yolo420swagMLGpro)
 
 
 Module4:
@@ -49,17 +42,29 @@ player uses suit power to recharge energy weapon
 temporarily disables flight controls
 doesnt work if a slug weapon is equipped
 gives the weapon an extra ammo with amount depending on weapon type
-(eg laserrifle gets 30, shock-cannon gets 12, plasma blaster gets 4)
+(eg laserrifle gets 30, shock-cannon gets 12, plasma blaster gets 4, basically one 'clip')
 
 Passive: Gradual Charge
 equipped energy weapons gradually gain ammo over time
-(relative to clip size, so you arent gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
+(relative to 'clip' size, so you arent gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
 
 
 Module5:
 Active: Energy Pulse
 effectively a force-cannon blast except its a sphere expanding around the player
-has slightly less 'push' as force-cannon and does much less damage
+has slightly less 'push' as force-cannon and does less damage
 
 Passive: Energy Shield
 player takes less damage from energy weapons
+
+
+Module6:
+Active: Scanner
+Radar decetion distance doubles
+Any player that appears on radar but cant be seen is given a coloured overlay/silhouette that goes 'above' everything
+(like nametags used to)
+this allows you to 'see' players through walls
+invisible players will also be given an overlay if they are in line of sight
+
+Passive: Radar Boost
+Radar detection distance * 1.5
