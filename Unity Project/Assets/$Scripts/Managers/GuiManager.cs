@@ -176,7 +176,7 @@ public class GuiManager : MonoBehaviour {
 
         menuText = SettingsManager.instance.DisplayServerName + ", " + SettingsManager.instance.GameModeName;
 
-		if(GameManager.IsAdminMode()){
+        if (DebugManager.IsAdminMode()) {
 			GUI.Label(new Rect(Screen.width/2, 50, 100, 20), "TEST MODE");
 		}
 
@@ -865,7 +865,7 @@ public class GuiManager : MonoBehaviour {
 	}
 
     IEnumerator CountdownStartGame() {
-        if (GameManager.IsAdminMode()) {
+        if (DebugManager.IsAdminMode()) {
             GameManager.instance.LoadLevel();
             yield break;
         }

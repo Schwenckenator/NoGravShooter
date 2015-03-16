@@ -47,7 +47,7 @@ public class NetworkManager : MonoBehaviour {
     #endregion
 
     void Update() {
-        if (GameManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
+        if (DebugManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
             foreach (Player player in connectedPlayers) {
                 ChatManager.DebugMessage("Player \"" + player.Name + "\" with ID \"" + player.ID+"\"");
             }

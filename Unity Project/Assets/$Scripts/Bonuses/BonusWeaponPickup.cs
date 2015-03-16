@@ -17,7 +17,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 	private bool playerColliding = false;
 
 	void Start(){
-		if(GameManager.IsAllWeapon()){
+        if (DebugManager.IsAllWeapon()) {
 			maxweaponcount = 99;
 		}
 		if(Network.isServer){

@@ -143,7 +143,7 @@ public class FireWeapon : MonoBehaviour {
     }
 
     private int GetMaxWeapon() {
-        if (GameManager.IsAllWeapon()) {
+        if (DebugManager.IsAllWeapon()) {
             return GameManager.weapon.Count;
         } else {
             return NumberWeaponsHeld();
@@ -193,7 +193,7 @@ public class FireWeapon : MonoBehaviour {
 	public void ChangeWeapon(int weaponId){
 		currentInventorySlot = weaponId;
 		if(!playerResource.IsWeaponBusy()){
-			if(GameManager.IsAllWeapon()){
+            if (DebugManager.IsAllWeapon()) {
 				if(weaponId < GameManager.weapon.Count){
 					currentWeapon = GameManager.weapon[weaponId];
 					playerResource.ChangeWeapon(currentWeapon);

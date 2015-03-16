@@ -5,26 +5,6 @@ using System.Collections.Generic;
 /// Handles player, level loading and game interacitons
 /// </summary>
 public class GameManager : MonoBehaviour {
-    #region testVariables
-    private static bool adminMode = false;
-    private static bool allWeapon = false;
-    private static bool allGrenade = false;
-
-    public static bool IsAllWeapon() {
-        return allWeapon;
-    }
-    public static bool IsAllGrenade() {
-        return allGrenade;
-    }
-    public static bool IsAdminMode() {
-        return adminMode;
-    }
-    private static void ToggleTestMode() {
-        allWeapon   = !allWeapon;
-        allGrenade  = !allGrenade;
-        adminMode   = !adminMode;
-    }
-    #endregion
 
     #region Instance
     //Here is a private reference only this class can access
@@ -213,26 +193,33 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.F1)){
-            ToggleTestMode();
+        GetDebugKeyStrokes();
+		if(!GameManager.IsSceneMenu()){
+            GetKeyStrokes();
 		}
+	}
+
+    private static void GetDebugKeyStrokes() {
+        if (Input.GetKeyDown(KeyCode.F1)) {
+            DebugManager.ToggleTestMode();
+        }
         if (Input.GetKeyDown(KeyCode.F3)) {
-            if (adminMode) {
+            if (DebugManager.IsAdminMode()) {
                 PlayerPrefs.DeleteAll();
                 Debug.Log("PlayerPrefs Wiped!");
             }
         }
         if (Input.GetKeyDown(KeyCode.F6)) {
             GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
-            
+
             foreach (GameObject actor in actors) {
                 ChatManager.DebugMessage(actor.GetComponent<ActorTeam>().GetTeam().ToString());
             }
         }
-		if(!GameManager.IsSceneMenu()){
-            GetKeyStrokes();
-		}
-	}
+        if (Input.GetKeyDown(KeyCode.F8)) {
+            DebugManager.ToggleDebugMode();
+        }
+    }
     void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             SetCursorVisibility(!playerMenu);

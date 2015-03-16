@@ -2,14 +2,33 @@
 using System.Collections;
 
 static class DebugManager {
-    private static bool debugMode = true;
+    
+    private static bool debugMode = false;
+    private static bool adminMode = false;
+    private static bool allWeapon = false;
+    private static bool allGrenade = false;
 
-
-
+    public static bool IsAllWeapon() {
+        return allWeapon;
+    }
+    public static bool IsAllGrenade() {
+        return allGrenade;
+    }
+    public static bool IsAdminMode() {
+        return adminMode;
+    }
     public static bool IsDebugMode() {
         return debugMode;
     }
-
+    
+    public static void ToggleTestMode() {
+        allWeapon = !allWeapon;
+        allGrenade = !allGrenade;
+        adminMode = !adminMode;
+    }
+    public static void ToggleDebugMode() {
+        debugMode = !debugMode;
+    }
     /// <summary>
     /// Draws line in colour with depth test, but also draws line in red without.
     /// Effect is dual coloured line, to see what is obscured
