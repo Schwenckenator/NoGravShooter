@@ -441,8 +441,8 @@ public class GuiManager : MonoBehaviour {
         }
     }
 	#endregion
-	
-	
+
+    #region OptionsWindow
     private float red = -99;
     private float green = -99;
     private float blue = -99;
@@ -465,8 +465,6 @@ public class GuiManager : MonoBehaviour {
         return (red != SettingsManager.instance.ColourR || green != SettingsManager.instance.ColourG || blue != SettingsManager.instance.ColourB);
     }
 	
-
-	#region OptionsWindow
 	void OptionsWindow(int windowId){
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
         standard = DisplayGeneralSettings(standard);

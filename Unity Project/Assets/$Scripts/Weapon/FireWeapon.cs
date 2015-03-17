@@ -62,12 +62,16 @@ public class FireWeapon : MonoBehaviour {
 
         if (!currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
+        } else if (!CanWeaponFire()) {
+            playerResource.SafeStartReload();
         }
 	}
 
     void FixedUpdate() {
         if (currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
+        } else if (!CanWeaponFire()) {
+            playerResource.SafeStartReload();
         }
     }
 

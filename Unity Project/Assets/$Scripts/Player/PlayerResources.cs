@@ -91,7 +91,7 @@ public class PlayerResources : MonoBehaviour {
 
 	void Update () {
         if (InputConverter.GetKeyDown(KeyBind.Reload) && !isReloading && !isWeaponFull()) {
-			StartCoroutine("WeaponReload");
+            StartCoroutine("WeaponReload");
 		}
 		if(isRecharging){
 			RechargeFuel(fuelRecharge);
@@ -214,7 +214,7 @@ public class PlayerResources : MonoBehaviour {
 			heat = maxHeat + (heatOverheat * heatCooldownWaitTime);
 		}
 		if(currentWeapon.currentClip <= 0){
-			StartCoroutine("WeaponReload");
+            StartCoroutine("WeaponReload");
 		}
 	}
 	#endregion
@@ -383,6 +383,12 @@ public class PlayerResources : MonoBehaviour {
 		}
 	}
 	#endregion
+
+    public void SafeStartReload() {
+        if (!isWeaponBusy && !isReloading && !isWeaponFull() && !isDying) {
+            StartCoroutine("WeaponReload");
+        }
+    }
 
 	IEnumerator WeaponReload(){
 		
