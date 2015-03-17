@@ -774,10 +774,15 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.GameModeIndex = GUI.Toolbar(new Rect(20, 30, smallRect.width - 40, 30), SettingsManager.instance.GameModeIndex, SettingsManager.instance.GameModeList);
 
 		GUI.Label(new Rect(20, 65, 100, 30), "Score Limit");
-        SettingsManager.instance.ScoreToWin = int.Parse(GUI.TextField(new Rect(95, 65, 50, 20), SettingsManager.instance.ScoreToWin.ToString()));
+        int outScore;
+        int.TryParse(GUI.TextField(new Rect(95, 65, 50, 20), SettingsManager.instance.ScoreToWin.ToString()), out outScore);
+        SettingsManager.instance.ScoreToWin = outScore;
+            
 
 		GUI.Label(new Rect(160, 65, 120, 30), "Time Limit (mins)");
-        SettingsManager.instance.TimeLimitMin = int.Parse(GUI.TextField(new Rect(275, 65, 50, 20), SettingsManager.instance.TimeLimitMin.ToString()));
+        int outTimeLimit;
+        int.TryParse(GUI.TextField(new Rect(275, 65, 50, 20), SettingsManager.instance.TimeLimitMin.ToString()), out outTimeLimit);
+        SettingsManager.instance.TimeLimitMin = outTimeLimit; // If tryParse fails, return 0
 
 		GUI.Label(new Rect(20, 90, 90, 30), "Item Spawning");
 		MedkitSpawning = GUI.Toggle(new Rect(115, 90,  80, 30), MedkitSpawning, "Medkits");

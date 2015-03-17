@@ -96,19 +96,29 @@ public class SettingsManager : MonoBehaviour {
     public int SpawnWeapon1 { get; set; }
     public int SpawnWeapon2 { get; set; }
 
-    private int timeLimitMin;
+    private int _timeLimitMin;
     public int TimeLimitMin {
         get {
-            return timeLimitMin;
+            return _timeLimitMin;
         }
         set {
-            timeLimitMin = value;
+            value = Mathf.Max(value, 0);
+            _timeLimitMin = value;
             TimeLimitSec = value * SecondsInMinute;
         }
     }
     public int TimeLimitSec { get; protected set;}
 
-    public int ScoreToWin { get; set; }
+    private int _scoreToWin;
+    public int ScoreToWin {
+        get {
+            return _scoreToWin;
+        }
+        set {
+            value = Mathf.Max(value, 0);
+            _scoreToWin = value;
+        }
+    }
 
     // Bonus spawning
     public int MedkitCanSpawn { get; set; }
