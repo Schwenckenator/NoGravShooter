@@ -62,7 +62,7 @@ public class FireWeapon : MonoBehaviour {
 
         if (!currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
-        } else if (!CanWeaponFire()) {
+        } else if (playerResource.GetCurrentClip() == 0) {
             playerResource.SafeStartReload();
         }
 	}
@@ -70,7 +70,7 @@ public class FireWeapon : MonoBehaviour {
     void FixedUpdate() {
         if (currentWeapon.useRay && CanWeaponFire()) {
             WeaponFired();
-        } else if (!CanWeaponFire()) {
+        } else if (playerResource.GetCurrentClip() == 0) {
             playerResource.SafeStartReload();
         }
     }
