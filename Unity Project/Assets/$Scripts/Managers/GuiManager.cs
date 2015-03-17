@@ -53,7 +53,7 @@ public class GuiManager : MonoBehaviour {
     public bool showSniperScope = false;
 
     [SerializeField]
-    private GUIStyle customGui;
+    private GUIStyle radarGui;
     [SerializeField]
     private Texture2D radar;
     [SerializeField]
@@ -69,6 +69,10 @@ public class GuiManager : MonoBehaviour {
     private int detectionRadius;
     [SerializeField]
     private bool detectItems;
+	
+	
+    [SerializeField]
+    private GUIStyle colorPreviewGui;
 	
 
 	
@@ -123,14 +127,10 @@ public class GuiManager : MonoBehaviour {
 	GUIStyle RedTeamFont;
 	GUIStyle BlueTeamFont;
 	
-    //private Color defaultcol;
-    //private Texture2D coltexture;
-    //private Color playercol;
-    //private Texture2D playertexture;
-    //private Color redTeamColour;
-    //private Texture2D redTeamTexture;
-    //private Color blueTeamColour;
-    //private Texture2D blueTeamTexture;
+    private Color defaultcol;
+    private Color playercol;
+    private Color redTeamColour;
+    private Color blueTeamColour;
 
     #endregion
 
@@ -161,17 +161,11 @@ public class GuiManager : MonoBehaviour {
 		RedTeamFont = new GUIStyle(GUI.skin.box);
 		RedTeamFont.normal.textColor = Color.red;
 		RedTeamFont.alignment = TextAnchor.UpperLeft;
-		RedTeamFont.fontSize = 16;
+		RedTeamFont.fontSize = 15;
 		BlueTeamFont = new GUIStyle(GUI.skin.box);
 		BlueTeamFont.normal.textColor = new Color (0.3f, 0.3f, 1f, 1f);
 		BlueTeamFont.alignment = TextAnchor.UpperLeft;
-		BlueTeamFont.fontSize = 16;
-		
-        //defaultcol = new Color (0.1f, 0.1f, 0.1f, 0.5f);
-        //coltexture = new Texture2D(1, 1);
-        //coltexture.SetPixel(0,0,defaultcol);
-        //coltexture.Apply();
-        //GUI.skin.box.normal.background = coltexture;
+		BlueTeamFont.fontSize = 15;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
         menuText = SettingsManager.instance.DisplayServerName + ", " + SettingsManager.instance.GameModeName;
@@ -448,39 +442,31 @@ public class GuiManager : MonoBehaviour {
     }
 	#endregion
 	
-
-	#region OptionsWindow
+	
     private float red = -99;
     private float green = -99;
     private float blue = -99;
-    //void UpdateCustomColours(int colour) {
-    //    if (colour == 0) {
-    //        redTeamColour = SettingsManager.instance.GetPlayerColour();
-    //        redTeamColour = PlayerColourManager.instance.LimitTeamColour(TeamColour.Red, redTeamColour);
-    //        redTeamTexture = new Texture2D(1, 1);
-    //        redTeamTexture.SetPixel(0, 0, redTeamColour);
-    //        redTeamTexture.Apply();
-    //        red = SettingsManager.instance.ColourR;
-    //    } else if (colour == 1) {
-    //        playercol = SettingsManager.instance.GetPlayerColour();
-    //        playercol = PlayerColourManager.instance.LimitTeamColour(TeamColour.None, playercol);
-    //        playertexture = new Texture2D(1, 1);
-    //        playertexture.SetPixel(0, 0, playercol);
-    //        playertexture.Apply();
-    //        green = SettingsManager.instance.ColourG;
-    //    } else {
-    //        blueTeamColour = SettingsManager.instance.GetPlayerColour();
-    //        blueTeamColour = PlayerColourManager.instance.LimitTeamColour(TeamColour.Blue, blueTeamColour);
-    //        blueTeamTexture = new Texture2D(1, 1);
-    //        blueTeamTexture.SetPixel(0, 0, blueTeamColour);
-    //        blueTeamTexture.Apply();
-    //        blue = SettingsManager.instance.ColourB;
-    //    }
-    //}
-    //bool ColoursChanged() {
-    //    return (red != SettingsManager.instance.ColourR || green != SettingsManager.instance.ColourG || blue != SettingsManager.instance.ColourB);
-    //}
+    void UpdateCustomColours(int colour) {
+        if (colour == 0) {
+            redTeamColour = SettingsManager.instance.GetPlayerColour();
+            redTeamColour = PlayerColourManager.instance.LimitTeamColour(TeamColour.Red, redTeamColour);
+            red = SettingsManager.instance.ColourR;
+        } else if (colour == 1) {
+            playercol = SettingsManager.instance.GetPlayerColour();
+            playercol = PlayerColourManager.instance.LimitTeamColour(TeamColour.None, playercol);
+            green = SettingsManager.instance.ColourG;
+        } else {
+            blueTeamColour = SettingsManager.instance.GetPlayerColour();
+            blueTeamColour = PlayerColourManager.instance.LimitTeamColour(TeamColour.Blue, blueTeamColour);
+            blue = SettingsManager.instance.ColourB;
+        }
+    }
+    bool ColoursChanged() {
+        return (red != SettingsManager.instance.ColourR || green != SettingsManager.instance.ColourG || blue != SettingsManager.instance.ColourB);
+    }
+	
 
+	#region OptionsWindow
 	void OptionsWindow(int windowId){
 		Rect standard = new Rect(20, 20, -40+Screen.width/3, 30);
         standard = DisplayGeneralSettings(standard);
@@ -491,14 +477,17 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourR = (float)System.Math.Round(SettingsManager.instance.ColourR, 2);
 		standard.y += 20;
         SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
-
+		
+		defaultcol = GUI.backgroundColor;
+		
 		// Display Red team Preview
-        //if(ColoursChanged()){
-        //    UpdateCustomColours(0);
-        //}
+        if(ColoursChanged()){
+            UpdateCustomColours(0);
+        }
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Red Team");
-        //GUI.skin.box.normal.background = redTeamTexture;
-		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
+		GUI.backgroundColor = redTeamColour;
+		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none, colorPreviewGui);
+		GUI.backgroundColor = defaultcol;
         SettingsManager.instance.ColourR = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourR.ToString()));
         standard.x -= 20;
 		SettingsManager.instance.ColourR = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourR, 1, 0);
@@ -513,12 +502,13 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourG.ToString()));
 
         ////Display No team Preview
-        //if (ColoursChanged()) {
-        //    UpdateCustomColours(1);
-        //}
+        if (ColoursChanged()) {
+            UpdateCustomColours(1);
+        }
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Default");
-        //GUI.skin.box.normal.background = playertexture;
-		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
+		GUI.backgroundColor = playercol;
+		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none, colorPreviewGui);
+		GUI.backgroundColor = defaultcol;
         SettingsManager.instance.ColourG = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourG.ToString()));
 		if(GUI.Button(new Rect(standard.x, standard.y+100, 70, 30), "Random")){
 			SettingsManager.instance.ColourR = Random.Range(0f, 1f);
@@ -538,19 +528,18 @@ public class GuiManager : MonoBehaviour {
         SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
 		
         // Display Blue team Preview
-        //if (ColoursChanged()) {
-        //    UpdateCustomColours(2);
-        //}		
+        if (ColoursChanged()) {
+            UpdateCustomColours(2);
+        }		
 		GUI.Label(new Rect(standard.x, standard.y+30, 70, 20), "Blue Team");
-        //GUI.skin.box.normal.background = blueTeamTexture;
-		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none);
+		GUI.backgroundColor = blueTeamColour;
+		GUI.Box(new Rect(standard.x, standard.y+60, 50, 30), GUIContent.none, colorPreviewGui);
+		GUI.backgroundColor = defaultcol;
         SettingsManager.instance.ColourB = float.Parse(GUI.TextField(new Rect(standard.x, standard.y, 50, 20), SettingsManager.instance.ColourB.ToString()));
 		standard.x -= 20;
 		SettingsManager.instance.ColourB = GUI.VerticalSlider(new Rect(standard.x, standard.y, 20, 200), SettingsManager.instance.ColourB, 1, 0);
 		
-        //GUI.skin.box.normal.background = coltexture;
-		
-		standard.x -= standard.width+250;
+        standard.x -= standard.width+250;
 		standard.y += 160;
 		
 
@@ -831,10 +820,15 @@ public class GuiManager : MonoBehaviour {
 			}
 		}
 		if(SettingsManager.instance.IsTeamGameMode()){
+			GUI.Box(new Rect(20, 130, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(), upperLeftTextAlign);
+			defaultcol = GUI.backgroundColor;
+			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Box(new Rect(20, 130, largeRect.width/6, 30), "Red Team:", RedTeamFont);
-			GUI.Box(new Rect(20, 160, largeRect.width/6, largeRect.height-220), RedPlayerList(), upperLeftTextAlign);
-			GUI.Box(new Rect(20+(largeRect.width/6), 130, largeRect.width/6, 30), "Blue Team:", BlueTeamFont);
-			GUI.Box(new Rect(20+(largeRect.width/6), 160, largeRect.width/6, largeRect.height-220), BluePlayerList(), upperLeftTextAlign);
+			GUI.backgroundColor = defaultcol;
+			GUI.Box(new Rect(25+(largeRect.width/6), 130, (largeRect.width/6)-5, largeRect.height-190), BluePlayerList(), upperLeftTextAlign);
+			GUI.backgroundColor = new Color(0,0,0,0);
+			GUI.Box(new Rect(25+(largeRect.width/6), 130, largeRect.width/6, 30), "Blue Team:", BlueTeamFont);
+			GUI.backgroundColor = defaultcol;
 			if (GUI.Button(new Rect(largeRect.width / 6 - 30, 100, 100, 20), "Change Team")) {
 				NetworkManager.MyPlayer().ChangeTeam();
 			}
@@ -946,10 +940,15 @@ public class GuiManager : MonoBehaviour {
 		}
 
         if(SettingsManager.instance.IsTeamGameMode()){
+			GUI.Box(new Rect(20, 100, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(), upperLeftTextAlign);
+			defaultcol = GUI.backgroundColor;
+			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Box(new Rect(20, 100, largeRect.width/6, 30), "Red Team:", RedTeamFont);
-			GUI.Box(new Rect(20, 130, largeRect.width/6, largeRect.height-220), RedPlayerList(), upperLeftTextAlign);
-			GUI.Box(new Rect(20+(largeRect.width/6), 100, largeRect.width/6, 30), "Blue Team:", BlueTeamFont);
-			GUI.Box(new Rect(20+(largeRect.width/6), 130, largeRect.width/6, largeRect.height-220), BluePlayerList(), upperLeftTextAlign);
+			GUI.backgroundColor = defaultcol;
+			GUI.Box(new Rect(25+(largeRect.width/6), 100, (largeRect.width/6)-5, largeRect.height-190), BluePlayerList(), upperLeftTextAlign);
+			GUI.backgroundColor = new Color(0,0,0,0);
+			GUI.Box(new Rect(25+(largeRect.width/6), 100, largeRect.width/6, 30), "Blue Team:", BlueTeamFont);
+			GUI.backgroundColor = defaultcol;
 			/*if (!GameManager.instance.IsPlayerSpawned()) {
 				if (GUI.Button(new Rect(largeRect.width / 6 - 30, 100, 100, 20), "Change Team")) {
 					NetworkManager.MyPlayer().ChangeTeam();
@@ -1007,7 +1006,7 @@ public class GuiManager : MonoBehaviour {
         return playerNames;
     }
     private string RedPlayerList() {
-        string playerNames = "";
+        string playerNames = "\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
 			if(player.Team.ToString() == "Red"){
 				playerNames += player.Name + "\n";
@@ -1016,7 +1015,7 @@ public class GuiManager : MonoBehaviour {
         return playerNames;
     }
     private string BluePlayerList() {
-        string playerNames = "";
+        string playerNames = "\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
 			if(player.Team.ToString() == "Blue"){
 				playerNames += player.Name + "\n";
@@ -1178,7 +1177,7 @@ public class GuiManager : MonoBehaviour {
             Screen.height - (RadarDot.radarCenter * 2 + RadarDot.radarPadding), //Top
             RadarDot.radarCenter * 2, //width
             RadarDot.radarCenter * 2), // height
-            radar, customGui);
+            radar, radarGui);
 
         List<RadarDot> before = new List<RadarDot>();
         RadarDot player = null;
@@ -1221,7 +1220,7 @@ public class GuiManager : MonoBehaviour {
     private void DrawDot(RadarDot dot) {
         Texture2D icon = GetIconType(dot.Type);
 
-        GUI.Box(new Rect(RadarDot.radarCenter + RadarDot.radarPadding + dot.Position.x - dot.Position.y / 2, Screen.height - (RadarDot.radarCenter + RadarDot.radarPadding) + dot.Position.z - dot.Position.y / 2, dot.Position.y, dot.Position.y), icon, customGui);
+        GUI.Box(new Rect(RadarDot.radarCenter + RadarDot.radarPadding + dot.Position.x - dot.Position.y / 2, Screen.height - (RadarDot.radarCenter + RadarDot.radarPadding) + dot.Position.z - dot.Position.y / 2, dot.Position.y, dot.Position.y), icon, radarGui);
     }
     Texture2D GetIconType(string type) {
         switch (type) {
