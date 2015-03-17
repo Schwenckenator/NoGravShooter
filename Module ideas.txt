@@ -1,70 +1,70 @@
-1 Module may be equipped as an active, 2 modules may be equipped as passives
-the module equipped as an active cannot be equipped as a passive
-All active modules need a cool-down/warm-up time
-ALL features of an active module are temporary
+MODULE SYSTEM
+
+The player has 3 module slots, 1 Active and 2 Passive.
+Only 1 module may be equipped in a slot, 1 module may not be equipped into multiple slots.
+All active modules need a cool-down/warm-up time.
+ALL features of an active module are temporary.
 
 
 Module1:
 Active: Dash
-player instantly rushes forwards a set distance, regardless of current speed & direction
-after use speed/momentum/direction would return to the what they were before use
-(module would detect if anything solid is in front of the player and cut the distance short
+The player instantly rushes forwards a set distance, ignoring current speed & direction.
+After the dash the players speed and direction return to the what they were originally.
+(module would detect if anything solid is in front of the player and cut the distance short,
 that way the player stops just before the object and cant go phasing through walls)
 
 Passive: Speed Boost
-player walks faster
-player accelerates/decelerates faster when floating
+The player walks and accelerates/decelerates while floating more quickly.
 
 
 Module2:
 Active: Invulnerability
-temporarily become unable to take damage
+The player temporarily becomes unable to take damage.
 
 Passive: Strength Boost
-player has more health/stronger armour and therefore takes more damage to kill
-a bit more mass so a little slower at walking and accelerating/decelerating when floating
+The player has stronger armour (more health) and therefore takes more damage to kill.
+However the player is also heavier and is a little slower at walking and accelerating/decelerating while floating.
 (equipping module1 as another passive cancels out the difference resulting in default speeed)
 
 
 Module3:
 Active: Invisibility
-temporarily become invisible and not show on enemy players radars
+The player temporarily becomes invisible and will not show on enemy players radars.
 (perhaps not completely invisible, maybe like 90% transparent, so people still have a chance to notice)
 
 Passive: Radar-Proof
-player is not shown on enemy radars while standing/walking
+The player is not shown on enemy radars while not using fuel.
 (campers yolo420swagMLGpro)
 
 
 Module4:
 Active: Weapon Recharge
-player uses suit power to recharge energy weapon
-temporarily disables flight controls
-doesnt work if a slug weapon is equipped
-gives the weapon an extra ammo with amount depending on weapon type
+The player uses their suits power to recharge their equipped energy weapon.
+This temporarily disables flight controls due to lack of power.
+This should not work if a slug weapon is equipped.
+This gives the weapon extra ammo with an amount depending on the type of weapon.
 (eg laserrifle gets 30, shock-cannon gets 12, plasma blaster gets 4, basically one 'clip')
 
 Passive: Gradual Charge
-equipped energy weapons gradually gain ammo over time
+The players equipped energy weapons gradually gain ammo over time.
 (relative to 'clip' size, so you arent gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
 
 
 Module5:
 Active: Energy Pulse
-effectively a force-cannon blast except its a sphere expanding around the player
-has slightly less 'push' as force-cannon and does less damage
+The player releases a sphererical shock-wave that expands around the player, pushing other players away.
+Not as strong as a shock-cannon but hits in all directions.
 
 Passive: Energy Shield
-player takes less damage from energy weapons
+The player takes less damage from energy weapons.
 
 
 Module6:
 Active: Scanner
-Radar decetion distance doubles
-Any player that appears on radar but cant be seen is given a coloured overlay/silhouette that goes 'above' everything
-(like nametags used to)
-this allows you to 'see' players through walls
-invisible players will also be given an overlay if they are in line of sight
+The players radar decetion distance doubles.
+Any players that appear on radar but can't be seen are given a coloured overlay/silhouette.
+The overlay goes 'above' everything(like nametags used to), allowing the player to see others through walls.
+Invisible players will also be given an overlay if they are in the players line of sight.
 
 Passive: Radar Boost
-Radar detection distance * 1.5
+The players radar detection distance is increased by 50%.
