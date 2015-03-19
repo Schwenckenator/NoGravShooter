@@ -18,7 +18,7 @@ public class PlasmaBlasterValues : WeaponSuperClass {
 		this.currentClip 			= 1000;
 		this.remainingAmmo 			= 5;
 		this.defaultRemainingAmmo 	= this.remainingAmmo;
-		this.reloadTime 			= 0.1f;
+		this.reloadTime 			= 4f;
 	}
 	
 }
