@@ -84,7 +84,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     // Bad bad code duplication. Bad Matt! *smack*
     void TeamCheckForScoreVictory() {
         foreach (Team team in Teams) {
-            if (team.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWin)) {
+            if (team.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWinClient)) {
                 if (Network.isServer) {
                     ChatManager.instance.AddToChat(team.Name + " wins!");
                 }
@@ -96,7 +96,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
     void FFACheckForScoreVictory() {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            if (player.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWin)) {
+            if (player.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWinClient)) {
                 if (Network.isServer) {
                     ChatManager.instance.AddToChat(player.Name + " wins!");
                 }

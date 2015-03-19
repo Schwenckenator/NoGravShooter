@@ -31,18 +31,25 @@ public class SettingsManager : MonoBehaviour {
     public string[] LevelList { get { return levelList; } }
     public string[] GameModeList { get { return gameModeList; } }
 
+    // Seting ~~Server is the version saved in PlayerPrefs
+    // Setting ~~Client is the version used for game logic, and displayed
+    // Changing ~~Server automatically changed ~~Client for some properties
+
     #region Networking Settings
-    private string myServerName;
-    public string MyServerName {
+    #region ServerName
+    private string serverNameServer;
+    public string ServerNameServer {
         get {
-            return myServerName;
+            return serverNameServer;
         }
         set {
-            myServerName = value;
-            DisplayServerName = value;
+            serverNameServer = value;
+            ServerNameClient = value;
         }
     }
-    public string DisplayServerName { get; set; }
+    public string ServerNameClient { get; set; }
+    #endregion
+
     public string PlayerName { get; set; }
     public string PortNumStr { get; set; }
     public int PortNum { get; set; }
@@ -61,6 +68,7 @@ public class SettingsManager : MonoBehaviour {
     #endregion
 
     #region GameSettings
+    #region LevelIndex
     private int levelIndex;
     public int LevelIndex {
         get {
@@ -72,27 +80,29 @@ public class SettingsManager : MonoBehaviour {
         }
     }
     public string LevelName { get; set; }
-
+    #endregion
+    #region GameMode
     private int gameModeIndex;
-    public int GameModeIndex {
+    public int GameModeIndexServer {
         get {
             return gameModeIndex;
         }
         set {
             gameModeIndex = value;
-            GameModeIndexDisplay = value;
+            GameModeIndexClient = value;
         }
     }
-    private int gameModeIndexDisplay;
-    public int GameModeIndexDisplay {
-        get { return gameModeIndexDisplay; }
+
+    private int gameModeIndexClient;
+    public int GameModeIndexClient {
+        get { return gameModeIndexClient; }
         set {
-            gameModeIndexDisplay = value;
+            gameModeIndexClient = value;
             GameModeName = GameModeList[value];
         }
     }
     public string GameModeName { get; set; }
-
+    #endregion
     public int SpawnWeapon1 { get; set; }
     public int SpawnWeapon2 { get; set; }
 
@@ -110,15 +120,17 @@ public class SettingsManager : MonoBehaviour {
     public int TimeLimitSec { get; protected set;}
 
     private int _scoreToWin;
-    public int ScoreToWin {
+    public int ScoreToWinServer {
         get {
             return _scoreToWin;
         }
         set {
             value = Mathf.Max(value, 0);
             _scoreToWin = value;
+            ScoreToWinClient = value;
         }
     }
+    public int ScoreToWinClient { get; set; }
 
     // Bonus spawning
     public int MedkitCanSpawn { get; set; }
@@ -199,7 +211,7 @@ public class SettingsManager : MonoBehaviour {
     /// </summary>
     void RetrieveSettings() {
         // Network Settings
-        MyServerName = PlayerPrefs.GetString("ServerName");
+        ServerNameServer = PlayerPrefs.GetString("ServerName");
         PlayerName = PlayerPrefs.GetString("PlayerName", defaultPlayerName);
         PortNumStr = PlayerPrefs.GetString("PortNumStr", defaultPortNumStr);
         IpAddress = PlayerPrefs.GetString("IpAddress", defaultIpAddress);
@@ -215,7 +227,7 @@ public class SettingsManager : MonoBehaviour {
 
         //Game Settings
         LevelIndex = PlayerPrefs.GetInt("LevelIndex", 0);
-        GameModeIndex = PlayerPrefs.GetInt("GameModeIndex", 0);
+        GameModeIndexServer = PlayerPrefs.GetInt("GameModeIndex", 0);
         SpawnWeapon1 = PlayerPrefs.GetInt("SpawnWeapon1", laserRifleIndex);
         SpawnWeapon2 = PlayerPrefs.GetInt("SpawnWeapon2", noWeaponIndex);
         MedkitCanSpawn = PlayerPrefs.GetInt("MedkitCanSpawn", i_True);
@@ -227,7 +239,7 @@ public class SettingsManager : MonoBehaviour {
 		ColourG = PlayerPrefs.GetFloat("ColourG", 0.6f);
 		ColourB = PlayerPrefs.GetFloat("ColourB", 0.6f);
 
-        ScoreToWin = PlayerPrefs.GetInt("ScoreToWin", 20);
+        ScoreToWinServer = PlayerPrefs.GetInt("ScoreToWin", 20);
         TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
 
         ConvertSettingsIntToBool();
@@ -241,7 +253,7 @@ public class SettingsManager : MonoBehaviour {
         ConvertSettingsBoolToInt();
 
         // Network Settings
-        PlayerPrefs.SetString("ServerName", MyServerName);
+        PlayerPrefs.SetString("ServerName", ServerNameServer);
         PlayerPrefs.SetString("PlayerName", PlayerName);
         PlayerPrefs.SetString("PortNumStr", PortNumStr);
         PlayerPrefs.SetString("IpAddress", IpAddress);
@@ -256,7 +268,7 @@ public class SettingsManager : MonoBehaviour {
         
         //Game Settings
         PlayerPrefs.SetInt("LevelIndex", LevelIndex); 
-        PlayerPrefs.SetInt("GameModeIndex", GameModeIndex);
+        PlayerPrefs.SetInt("GameModeIndex", GameModeIndexServer);
         PlayerPrefs.SetInt("SpawnWeapon1", SpawnWeapon1);
         PlayerPrefs.SetInt("SpawnWeapon2", SpawnWeapon2);
         PlayerPrefs.SetInt("MedkitCanSpawn", MedkitCanSpawn);
@@ -268,7 +280,7 @@ public class SettingsManager : MonoBehaviour {
 		PlayerPrefs.SetFloat("ColourG", ColourG);
 		PlayerPrefs.SetFloat("ColourB", ColourB);
 
-        PlayerPrefs.SetInt("ScoreToWin", ScoreToWin);
+        PlayerPrefs.SetInt("ScoreToWin", ScoreToWinServer);
         PlayerPrefs.SetInt("TimeLimitMin", TimeLimitMin);
     }
 
@@ -282,31 +294,56 @@ public class SettingsManager : MonoBehaviour {
             PortNum = -1;
         }
     }
-
     public bool[] GetAllowedBonuses() {
         // Needs order: Medkit, Grenade, weapon
         bool[] temp = {(MedkitCanSpawn == 1),(GrenadeCanSpawn == 1),(WeaponCanSpawn == 1)} ;
         return temp;
     }
-
     private void ConvertSettingsIntToBool() {
-        AutoPickup = (i_AutoPickup == 1);
+        AutoPickup = (i_AutoPickup == i_True);
     }
     private void ConvertSettingsBoolToInt() {
-        i_AutoPickup = AutoPickup ? 1 : 0;
+        i_AutoPickup = AutoPickup ? i_True : i_False;
     }
 
     public void ClearPasswordClient() {
         PasswordClient = "";
     }
-
     public Color GetPlayerColour() {
         return new Color(ColourR, ColourG, ColourB, 1);
     }
-
     public bool IsTeamGameMode() {
         // Team : Team Deathmatch, Capture the Flag, Extraction, Team Skirmish
         // No Team: Deathmatch, Skirmish, Elimination, Infection <- There are teams but no choice.
-        return (GameModeIndexDisplay == 1 || GameModeIndexDisplay == 2 || GameModeIndexDisplay == 3 || GameModeIndexDisplay == 5);
+        return (GameModeIndexClient == 1 || GameModeIndexClient == 2 || GameModeIndexClient == 3 || GameModeIndexClient == 5);
     }
+
+    #region RPCSettings
+    public void RelayServerName() {
+        networkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
+    }
+    [RPC]
+    private void RPC_RelayServerName(string inServerName) {
+        this.ServerNameClient = inServerName;
+    }
+
+    public void RelayScoreToWin() {
+        networkView.RPC("RPC_RelayScoreToWin", RPCMode.OthersBuffered, this.ScoreToWinServer);
+    }
+    [RPC]
+    private void RPC_RelayScoreToWin(int inScoreToWin) {
+        this.ScoreToWinClient = inScoreToWin;
+    }
+    
+    public void RelayGameMode() {
+        networkView.RPC("RPC_RelayGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndexServer);
+    }
+    [RPC]
+    void RPC_RelayGameMode(int index) {
+        SettingsManager.instance.GameModeIndexClient = index;
+        NetworkManager.AssignMyPlayerToTeam();
+    }
+
+
+    #endregion
 }

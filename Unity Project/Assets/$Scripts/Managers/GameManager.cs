@@ -288,12 +288,13 @@ public class GameManager : MonoBehaviour {
             throw new ClientRunningServerCodeException("Thrown in GameManager.");
         }
         GetComponent<DestroyManager>().ClearDestroyLists();
-        
+        SettingsManager.instance.RelayScoreToWin();
+
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, 
             SettingsManager.instance.LevelName, 
             NetworkManager.lastLevelPrefix, 
             SettingsManager.instance.TimeLimitSec, 
-            SettingsManager.instance.GameModeIndex);
+            SettingsManager.instance.GameModeIndexServer);
     }
     private void LoadLevelTutorial() {
         networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, SettingsManager.instance.TimeLimitSec);

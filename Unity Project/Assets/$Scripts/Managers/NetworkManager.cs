@@ -95,7 +95,7 @@ public class NetworkManager : MonoBehaviour {
         if (useNat) useNat = !Network.HavePublicAddress();
         Network.incomingPassword = SettingsManager.instance.PasswordServer;
         Network.InitializeServer(maxPlayers, portNum, useNat);
-        if (useMasterServer) MasterServer.RegisterHost(GameType, SettingsManager.instance.MyServerName);
+        if (useMasterServer) MasterServer.RegisterHost(GameType, SettingsManager.instance.ServerNameServer);
     }
     public static void Disconnect() {
         Network.Disconnect();
@@ -168,8 +168,8 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnServerInitialized() {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
-        networkView.RPC("ChangeServerName", RPCMode.OthersBuffered, SettingsManager.instance.MyServerName);
-        AssignToTeam();
+        SettingsManager.instance.RelayServerName();
+        AssignMyPlayerToTeam();
     }
     void OnConnectedToServer() {
         
@@ -181,29 +181,17 @@ public class NetworkManager : MonoBehaviour {
         
         string message = SettingsManager.instance.PlayerName + " has connected.";
         ChatManager.instance.AddToChat(message);
-        AssignToTeam();
+        AssignMyPlayerToTeam();
     }
     #endregion
-
-    public void ChangeGameModeIndex() {
-        networkView.RPC("ChangeGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndex);
-    }
-    #region RPC
-    [RPC]
-    void ChangeServerName(string name) {
-        SettingsManager.instance.DisplayServerName = name;
-    }
-    [RPC]
-    void ChangeGameMode(int index) {
-        SettingsManager.instance.GameModeIndexDisplay = index;
-        AssignToTeam();
-    }
-
-    private static void AssignToTeam() {
+    
+    public static void AssignMyPlayerToTeam() {
         if (SettingsManager.instance.IsTeamGameMode() == NetworkManager.MyPlayer().HasNoTeam()) {
             NetworkManager.MyPlayer().ChangeTeam();
         }
     }
+
+    #region RPC
     [RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
         NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
@@ -216,5 +204,5 @@ public class NetworkManager : MonoBehaviour {
 
         GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
     }
-#endregion
+    #endregion
 }

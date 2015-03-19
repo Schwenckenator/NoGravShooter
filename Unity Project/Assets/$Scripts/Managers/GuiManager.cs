@@ -168,7 +168,7 @@ public class GuiManager : MonoBehaviour {
 		BlueTeamFont.fontSize = 15;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        menuText = SettingsManager.instance.DisplayServerName + ", " + SettingsManager.instance.GameModeName;
+        menuText = SettingsManager.instance.ServerNameClient + ", " + SettingsManager.instance.GameModeName;
 
         if (DebugManager.IsAdminMode()) {
 			GUI.Label(new Rect(Screen.width/2, 50, 100, 20), "TEST MODE");
@@ -255,8 +255,8 @@ public class GuiManager : MonoBehaviour {
 		standard.y += 50;
 		if(GUI.Button(standard, "Create Game")){
 			//Check for preferred server name
-            if (SettingsManager.instance.MyServerName == "") {
-                SettingsManager.instance.MyServerName = SettingsManager.instance.PlayerName + "'s Server";
+            if (SettingsManager.instance.ServerNameServer == "") {
+                SettingsManager.instance.ServerNameServer = SettingsManager.instance.PlayerName + "'s Server";
 			}
             SettingsManager.instance.SaveSettings();
 
@@ -296,7 +296,7 @@ public class GuiManager : MonoBehaviour {
 		GUI.Label(standard, "Server Name");
 		
 		standard.y += 30;
-        SettingsManager.instance.MyServerName = GUI.TextField(standard, SettingsManager.instance.MyServerName);
+        SettingsManager.instance.ServerNameServer = GUI.TextField(standard, SettingsManager.instance.ServerNameServer);
 		
 		standard.y += 50;		
 		GUI.Label(standard, "Port Number");
@@ -771,12 +771,12 @@ public class GuiManager : MonoBehaviour {
 	#region GameSettingsWindow
 	void GameSettingsWindow(int windowId){
 		GUI.Label(new Rect(20, 10, 100, 30), "Game Mode");
-        SettingsManager.instance.GameModeIndex = GUI.Toolbar(new Rect(20, 30, smallRect.width - 40, 30), SettingsManager.instance.GameModeIndex, SettingsManager.instance.GameModeList);
+        SettingsManager.instance.GameModeIndexServer = GUI.Toolbar(new Rect(20, 30, smallRect.width - 40, 30), SettingsManager.instance.GameModeIndexServer, SettingsManager.instance.GameModeList);
 
 		GUI.Label(new Rect(20, 65, 100, 30), "Score Limit");
         int outScore;
-        int.TryParse(GUI.TextField(new Rect(95, 65, 50, 20), SettingsManager.instance.ScoreToWin.ToString()), out outScore);
-        SettingsManager.instance.ScoreToWin = outScore;
+        int.TryParse(GUI.TextField(new Rect(95, 65, 50, 20), SettingsManager.instance.ScoreToWinServer.ToString()), out outScore);
+        SettingsManager.instance.ScoreToWinServer = outScore;
             
 
 		GUI.Label(new Rect(160, 65, 120, 30), "Time Limit (mins)");
@@ -798,7 +798,7 @@ public class GuiManager : MonoBehaviour {
 
         if(GUI.Button(new Rect(20, smallRect.height-45, smallRect.width-40, 30), "Close")){
             SettingsManager.instance.SaveSettings();
-            NetworkManager.instance.ChangeGameModeIndex();
+            SettingsManager.instance.RelayGameMode();
 			displayGameSettingsWindow = false;
 		}
 	}
