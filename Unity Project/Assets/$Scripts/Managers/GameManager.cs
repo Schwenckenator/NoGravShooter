@@ -178,8 +178,13 @@ public class GameManager : MonoBehaviour {
 
 		//Reload all weapons
 		for(int i=0; i< weapon.Count; i++){
-			weapon[i].currentClip = weapon[i].clipSize;
-			weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
+			if(weapon[i].isEnergy){
+				weapon[i].currentClip = weapon[i].defaultRemainingAmmo;
+				weapon[i].remainingAmmo = 0;
+			} else {
+				weapon[i].currentClip = weapon[i].clipSize;
+				weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
+			}
 		}
 
         GuiManager.instance.ActorsChanged();

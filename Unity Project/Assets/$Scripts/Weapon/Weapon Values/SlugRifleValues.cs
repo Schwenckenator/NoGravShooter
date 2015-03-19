@@ -6,6 +6,7 @@ public class SlugRifleValues : WeaponSuperClass {
 	public SlugRifleValues(){
 		this.useRay 				= true;
 		this.hasRecoil 				= true;
+		this.isEnergy 				= false;
 		this.recoil 				= 1;
 		this.rayNum 				= 1;
 		

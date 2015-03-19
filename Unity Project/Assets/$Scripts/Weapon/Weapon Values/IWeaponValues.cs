@@ -11,6 +11,10 @@ public interface IWeaponValues{
 		get;
 		set;
 	}
+	bool isEnergy{
+		get;
+		set;
+	}
 	float recoil{
 		get;
 		set;

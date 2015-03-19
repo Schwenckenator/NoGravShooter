@@ -129,7 +129,11 @@ public class BonusWeaponPickup : MonoBehaviour {
     }
 
     private void AddAmmo() {
-        GameManager.weapon[id].remainingAmmo += (GameManager.weapon[id].clipSize + GameManager.weapon[id].defaultRemainingAmmo);
+		if(GameManager.weapon[id].isEnergy){
+			GameManager.weapon[id].currentClip += (GameManager.weapon[id].defaultRemainingAmmo);
+		} else {
+			GameManager.weapon[id].remainingAmmo += (GameManager.weapon[id].clipSize + GameManager.weapon[id].defaultRemainingAmmo);
+		}
         Debug.Log("Already own, adding ammo");
         GetComponent<ObjectCleanUp>().KillMe();
     }

@@ -6,6 +6,7 @@ public class ShotgunValues : WeaponSuperClass {
 	public ShotgunValues(){
 		this.useRay 				= true;
 		this.hasRecoil 				= true;
+		this.isEnergy 				= false;
 		this.recoil 				= 5;
 		this.rayNum 				= 30;
 		

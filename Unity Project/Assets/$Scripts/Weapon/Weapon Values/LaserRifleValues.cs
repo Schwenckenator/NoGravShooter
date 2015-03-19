@@ -7,6 +7,7 @@ public class LaserRifleValues : WeaponSuperClass {
 	public LaserRifleValues(){
 		this.useRay 				= true;
 		this.hasRecoil 				= false;
+		this.isEnergy 				= true;
 		this.recoil 				= 0;
 		this.rayNum 				= 1;
 		
@@ -15,9 +16,9 @@ public class LaserRifleValues : WeaponSuperClass {
 		this.heatPerShot 			= 15;
 		this.fireDelay 				= 0.2f;
 		
-		this.clipSize 				= 100;
-		this.currentClip 			= 100;
-		this.remainingAmmo 			= 0;
+		this.clipSize 				= 1000;
+		this.currentClip 			= 1000;
+		this.remainingAmmo 			= 100;
 		this.defaultRemainingAmmo 	= this.remainingAmmo;
 		this.reloadTime 			= 0.1f;
 	}

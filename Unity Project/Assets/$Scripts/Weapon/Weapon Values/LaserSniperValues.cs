@@ -7,6 +7,7 @@ public class LaserSniperValues : WeaponSuperClass {
 	public LaserSniperValues(){
 		this.useRay 				= true;
 		this.hasRecoil 				= false;
+		this.isEnergy 				= true;
 		this.recoil 				= 0;
 		this.rayNum 				= 1;
 		
@@ -15,9 +16,9 @@ public class LaserSniperValues : WeaponSuperClass {
 		this.heatPerShot 			= 70;
 		this.fireDelay 				= 2f;
 		
-		this.clipSize 				= 100;
-		this.currentClip 			= 100;
-		this.remainingAmmo 			= 0;
+		this.clipSize 				= 1000;
+		this.currentClip 			= 1000;
+		this.remainingAmmo 			= 20;
 		this.defaultRemainingAmmo 	= this.remainingAmmo;
 		this.reloadTime 			= 0.1f;
 	}

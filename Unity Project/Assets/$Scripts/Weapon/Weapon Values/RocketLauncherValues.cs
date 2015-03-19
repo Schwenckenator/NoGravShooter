@@ -7,6 +7,7 @@ public class RocketLauncherValues : WeaponSuperClass {
 	public RocketLauncherValues(){
 		this.useRay 				= false;
 		this.hasRecoil 				= false;
+		this.isEnergy 				= false;
 		this.recoil 				= 0;
 		this.rayNum 				= 0;
 		

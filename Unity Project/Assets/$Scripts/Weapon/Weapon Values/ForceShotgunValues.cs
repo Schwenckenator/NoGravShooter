@@ -7,6 +7,7 @@ public class ForceShotgunValues : WeaponSuperClass {
 
 		this.useRay 				= false;
 		this.hasRecoil 				= false;
+		this.isEnergy 				= true;
 		this.recoil 				= 0;
 		this.rayNum 				= 0;
 
@@ -15,11 +16,11 @@ public class ForceShotgunValues : WeaponSuperClass {
 		this.heatPerShot 			= 0;
 		this.fireDelay 				= 0.75f;
 		
-		this.clipSize 				= 6;
-		this.currentClip 			= 6;
-		this.remainingAmmo 			= 12;
+		this.clipSize 				= 1000;
+		this.currentClip 			= 1000;
+		this.remainingAmmo 			= 20;
 		this.defaultRemainingAmmo 	= this.remainingAmmo;
-		this.reloadTime 			= 2f;
+		this.reloadTime 			= 0.1f;
 	}
 	
 }

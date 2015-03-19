@@ -6,6 +6,7 @@ public class WeaponSuperClass{
 	#region Private Declarations
 	private bool _useRay;
 	private bool _hasRecoil;
+	private bool _isEnergy;
 	private float _recoil;
 	private int _rayNum;
 	private float _shotSpread;
@@ -54,6 +55,14 @@ public class WeaponSuperClass{
 		}
 		set{
 			_rayNum = value;
+		}
+	}
+	public bool isEnergy{
+		get{
+			return _isEnergy;
+		}
+		set{
+			_isEnergy = value;
 		}
 	}
 	public float shotSpread{
