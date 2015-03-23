@@ -9,18 +9,19 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool step1 = false;
 	
 	private bool jumped = false;
-	private bool rolled = false;
 	private bool step2 = false;
+	private bool rolled = false;
+	private bool step3 = false;
 	
 	private bool shot = false;
 	private bool aimed = false;
 	private bool changedgun = false;
 	private bool reloaded = false;
 	private bool grenade = false;
-	private bool step3 = false;
+	private bool step4 = false;
 	
 	private bool items = false;
-	private bool step4 = false;
+	private bool step5 = false;
 	
 	public GameObject[] bonuses;
 	private GameObject[] bonusSpawnPoints;
@@ -78,21 +79,27 @@ public class TutorialInstructions : MonoBehaviour {
 			step1 = false;
 			StartCoroutine(FlightTutorial());
 		}
-		if (jumped && rolled && step2){
+		if (jumped && step2){
 			step2 = false;
+			StartCoroutine(FlightTutorial2());
+		}
+		if (rolled && step3){
+			step3 = false;
 			StartCoroutine(GunTutorial());
 		}
-		if (shot && aimed && changedgun && reloaded && grenade && step3){
-			step3 = false;
+		if (shot && aimed && changedgun && reloaded && grenade && step4){
+			step4 = false;
 			StartCoroutine(ItemTutorial());
 		}
-		if (items && step4){
-			step4 = false;
+		if (items && step5){
+			step5 = false;
 			StartCoroutine(FinalTutorial());
 		}
 	}
 	
 	IEnumerator MovementTutorial(){
+		//black out screen
+		GuiManager.instance.blackOutScreen = true;
 		//give player mines
 		Network.Instantiate(bonuses[2], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
@@ -107,6 +114,7 @@ public class TutorialInstructions : MonoBehaviour {
 		yield return new WaitForSeconds(1);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.", 6000);
 		yield return new WaitForSeconds(2);
+		GuiManager.instance.blackOutScreen = false;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.", 6000);
 		yield return new WaitForSeconds(4);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Move your Mouse to look around.\n\nUse "
@@ -120,11 +128,16 @@ public class TutorialInstructions : MonoBehaviour {
 	
 	IEnumerator FlightTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards and "
-            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
+            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.", 99999);
+		yield return new WaitForSeconds(5);
+		step2 = true;		
+	}
+	IEnumerator FlightTutorial2(){
+		manager.GetComponent<GuiManager>().TutorialPrompt("Use "
             +SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString()+" to roll to the left and "
             +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
 		yield return new WaitForSeconds(5);
-		step2 = true;		
+		step3 = true;		
 	}
 	
 	IEnumerator GunTutorial(){
@@ -132,7 +145,7 @@ public class TutorialInstructions : MonoBehaviour {
             +SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload your weapon and press "
             +SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Mine.\nKeep in mind that without gravity, the mines will fly in a straight line.", 99999);
 		yield return new WaitForSeconds(5);
-		step3 = true;
+		step4 = true;
 	}
 	
 	IEnumerator ItemTutorial(){
@@ -142,14 +155,14 @@ public class TutorialInstructions : MonoBehaviour {
 		Network.Instantiate(bonuses[1], bonusSpawnPoints[1].transform.position, bonusSpawnPoints[1].transform.rotation, 0);
 		Network.Instantiate(bonuses[2], bonusSpawnPoints[0].transform.position, bonusSpawnPoints[0].transform.rotation, 0);
 		yield return new WaitForSeconds(5);
-		step4 = true;
+		step5 = true;
 	}
 	
 	IEnumerator FinalTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nThis suit uses air as fuel, if you run low on air the suit will\nautomatically disable boosting temporarily while it generates more.", 5000);
-		yield return new WaitForSeconds(40);
-		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 6000);
-		yield return new WaitForSeconds(50);
+		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nThis suit uses air as fuel, if you run low on air the suit will\nautomatically disable boosting temporarily while it generates more.", 99999);
+		yield return new WaitForSeconds(60);
+		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
+		yield return new WaitForSeconds(60);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Try exploring the virtual space.", 99999);
 	}
 }

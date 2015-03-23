@@ -51,6 +51,8 @@ public class GuiManager : MonoBehaviour {
     public Texture SniperScope;
     public Texture SniperScopeBorder;
     public bool showSniperScope = false;
+	
+    public bool blackOutScreen = false;
 
     [SerializeField]
     private GUIStyle radarGui;
@@ -736,7 +738,7 @@ public class GuiManager : MonoBehaviour {
 			displayChangeKeybindWindow = true;
 		}
         standard.y += 30;
-        GUI.Label(standard, "Interact: ");
+        GUI.Label(standard, "Brake: ");
         if (GUI.Button(new Rect(420, standard.y, 150, 20), SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString())) {
             editedBinding = KeyBind.StopMovement;
             displayChangeKeybindWindow = true;
@@ -1131,7 +1133,9 @@ public class GuiManager : MonoBehaviour {
     }
 
     private void DrawCrosshair() {
-        if (showSniperScope) {
+        if(blackOutScreen){
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), SniperScopeBorder);
+		} else if (showSniperScope) {
             GUI.DrawTexture(new Rect(0, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
             GUI.DrawTexture(new Rect(Screen.width / 2 - Screen.height / 2, 0, Screen.height, Screen.height), SniperScope);
             GUI.DrawTexture(new Rect(Screen.width / 2 + Screen.height / 2, 0, Screen.width / 2 - Screen.height / 2, Screen.height), SniperScopeBorder);
