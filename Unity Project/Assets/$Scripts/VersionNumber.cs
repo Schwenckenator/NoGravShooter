@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Reflection;
 
-[assembly:AssemblyVersion ("1.0.*")]
+[assembly:AssemblyVersion ("0.1.*")]
 public class VersionNumber : MonoBehaviour{
     public bool ShowVersionInformation = true;
 
