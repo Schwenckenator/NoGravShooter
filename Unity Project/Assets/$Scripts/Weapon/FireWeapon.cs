@@ -60,23 +60,27 @@ public class FireWeapon : MonoBehaviour {
 	void Update(){
         MouseWheelWeaponChange();
 
-        if (!currentWeapon.useRay && CanWeaponFire()) {
+        if (!currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
             WeaponFired();
-        } else if (playerResource.GetCurrentClip() == 0) {
+        }
+
+        // Check for dry fire
+        if (IsWeaponFire() && playerResource.GetCurrentClip() == 0) {
             playerResource.SafeStartReload();
         }
 	}
 
     void FixedUpdate() {
-        if (currentWeapon.useRay && CanWeaponFire()) {
+        if (currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
             WeaponFired();
-        } else if (playerResource.GetCurrentClip() == 0) {
-            playerResource.SafeStartReload();
-        }
+        } 
     }
 
+    private bool IsWeaponFire() {
+        return (Input.GetAxisRaw("Fire1") > 0);
+    }
     private bool CanWeaponFire() {
-        return (Input.GetAxisRaw("Fire1") > 0) && (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu();
+        return (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu();
     }
 
     private void WeaponFired() {

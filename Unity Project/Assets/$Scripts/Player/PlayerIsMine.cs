@@ -10,6 +10,7 @@ public class PlayerIsMine : MonoBehaviour {
 			transform.FindChild("CameraPos").GetComponent<MouseLook>().enabled = false;
 			GetComponentInChildren<FireWeapon>().enabled = false;
             GetComponent<Assassinations>().enabled = false;
+            GetComponent<PlayerResources>().enabled = false;
 		}
 	}
 }
