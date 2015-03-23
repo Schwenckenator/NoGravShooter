@@ -297,7 +297,12 @@ public class GameManager : MonoBehaviour {
             SettingsManager.instance.GameModeIndexServer);
     }
     private void LoadLevelTutorial() {
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "Tutorial", NetworkManager.lastLevelPrefix, SettingsManager.instance.TimeLimitSec);
+        int dummyValue = 0; // Just to keep the method happy
+        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, 
+            "Tutorial", 
+            NetworkManager.lastLevelPrefix, 
+            dummyValue,
+            dummyValue);
     }
 
     [RPC]
