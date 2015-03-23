@@ -5,23 +5,31 @@ public class TutorialInstructions : MonoBehaviour {
 	private GameManager manager;
 	private PlayerResources playerRes;
 	
-	private bool moved = false;
+	private bool F = false;
+	private bool B = false;
+	private bool L = false;
+	private bool R = false;
 	private bool step1 = false;
 	
-	private bool jumped = false;
+	private bool U = false;
+	private bool D = false;
 	private bool step2 = false;
-	private bool rolled = false;
+	private bool RL = false;
+	private bool RR = false;
 	private bool step3 = false;
 	
 	private bool shot = false;
 	private bool aimed = false;
 	private bool changedgun = false;
-	private bool reloaded = false;
-	private bool grenade = false;
 	private bool step4 = false;
 	
-	private bool items = false;
+	private bool reloaded = false;
+	private bool grenade = false;
 	private bool step5 = false;
+	
+	private bool checkingitems = false;
+	private bool items = false;
+	private bool step6 = false;
 	
 	public GameObject[] bonuses;
 	private GameObject[] bonusSpawnPoints;
@@ -35,17 +43,37 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	void Update(){
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward]) || Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveRight])){
-			moved = true;
-			Debug.Log("Player Moved");
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward])){
+			F = true;
+			Debug.Log("Player Moved Forwards");
+		}
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveRight])){
+			R = true;
+			Debug.Log("Player Moved Right");
+		}
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveBack])){
+			B = true;
+			Debug.Log("Player Moved Backwards");
+		}
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveLeft])){
+			L = true;
+			Debug.Log("Player Moved Left");
 		}
 		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetUp])){
-			jumped = true;
-			Debug.Log("Player Jumped");
+			U = true;
+			Debug.Log("Player Flew Up");
 		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollRight]) || Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollLeft])){
-			rolled = true;
-			Debug.Log("Player Rolled");
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetDown])){
+			D = true;
+			Debug.Log("Player Flew Down");
+		}
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollLeft])){
+			RL = true;
+			Debug.Log("Player Rolled Left");
+		}
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollRight])){
+			RR = true;
+			Debug.Log("Player Rolled Right");
 		}
 		if (Input.GetMouseButtonDown(0)){
 			shot = true;
@@ -67,32 +95,39 @@ public class TutorialInstructions : MonoBehaviour {
 			grenade = true;
 			Debug.Log("Player Threw Mine");
 		}
-		if(step4){
+		if(checkingitems){
 			bonusItems = GameObject.FindGameObjectsWithTag("BonusPickup");
 			if(bonusItems.Length == 0){
 				items = true;
+			} else {
+				items = false;
 			}
 		}
 
 
-		if (moved && step1){
+		if (F && B && L && R && step1){
 			step1 = false;
 			StartCoroutine(FlightTutorial());
 		}
-		if (jumped && step2){
+		if (U && D && step2){
 			step2 = false;
 			StartCoroutine(FlightTutorial2());
 		}
-		if (rolled && step3){
+		if (RL && RR && step3){
 			step3 = false;
 			StartCoroutine(GunTutorial());
 		}
-		if (shot && aimed && changedgun && reloaded && grenade && step4){
+		if (shot && aimed && changedgun && step4){
 			step4 = false;
+			StartCoroutine(GunTutorial2());
+		}
+		if (reloaded && grenade && step5){
+			step5 = false;
 			StartCoroutine(ItemTutorial());
 		}
-		if (items && step5){
-			step5 = false;
+		if (items && step6){
+			checkingitems = false;
+			step6 = false;
 			StartCoroutine(FinalTutorial());
 		}
 	}
@@ -127,7 +162,7 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	IEnumerator FlightTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards and "
+		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards.\n\nUse "
             +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.", 99999);
 		yield return new WaitForSeconds(5);
 		step2 = true;		
@@ -141,21 +176,27 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	IEnumerator GunTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
-            +SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload your weapon and press "
-            +SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Mine.\nKeep in mind that without gravity, the mines will fly in a straight line.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.", 99999);
 		yield return new WaitForSeconds(5);
 		step4 = true;
 	}
+	IEnumerator GunTutorial2(){
+		manager.GetComponent<GuiManager>().TutorialPrompt("Press "
+			+SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload your weapon and press "
+			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
+		yield return new WaitForSeconds(5);
+		step5 = true;
+	}
 	
 	IEnumerator ItemTutorial(){
+		checkingitems = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt(
-            "Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Mine box.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
+            "Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Grenade box.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
 		Network.Instantiate(bonuses[0], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
 		Network.Instantiate(bonuses[1], bonusSpawnPoints[1].transform.position, bonusSpawnPoints[1].transform.rotation, 0);
 		Network.Instantiate(bonuses[2], bonusSpawnPoints[0].transform.position, bonusSpawnPoints[0].transform.rotation, 0);
 		yield return new WaitForSeconds(5);
-		step5 = true;
+		step6 = true;
 	}
 	
 	IEnumerator FinalTutorial(){
@@ -163,6 +204,6 @@ public class TutorialInstructions : MonoBehaviour {
 		yield return new WaitForSeconds(60);
 		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
 		yield return new WaitForSeconds(60);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Try exploring the virtual space.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("Try exploring the virtual space until you get the hang of it.", 99999);
 	}
 }

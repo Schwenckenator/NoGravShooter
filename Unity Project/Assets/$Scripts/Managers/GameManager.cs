@@ -352,7 +352,7 @@ public class GameManager : MonoBehaviour {
 
         LoadLevelTutorial();
 
-        yield return new WaitForSeconds(1 / 5f);
+        yield return new WaitForSeconds(1 / 500f);
         SpawnActor();
         GuiManager.instance.SetMyPlayerResources();
     }
