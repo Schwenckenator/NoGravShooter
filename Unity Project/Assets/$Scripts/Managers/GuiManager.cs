@@ -170,7 +170,7 @@ public class GuiManager : MonoBehaviour {
 		BlueTeamFont.fontSize = 15;
 		//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-        menuText = SettingsManager.instance.ServerNameClient + ", " + SettingsManager.instance.GameModeName;
+        menuText = GameManager.IsSceneTutorial() ? "Simulation" : SettingsManager.instance.ServerNameClient + ", " + SettingsManager.instance.GameModeName;
 
         if (DebugManager.IsAdminMode()) {
 			GUI.Label(new Rect(Screen.width/2, 50, 100, 20), "TEST MODE");
@@ -944,7 +944,7 @@ public class GuiManager : MonoBehaviour {
 
 		}
 
-        if(SettingsManager.instance.IsTeamGameMode()){
+        if(SettingsManager.instance.IsTeamGameMode() && !GameManager.IsSceneTutorial()){
 			GUI.Box(new Rect(20, 100, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(), upperLeftTextAlign);
 			defaultcol = GUI.backgroundColor;
 			GUI.backgroundColor = new Color(0,0,0,0);

@@ -302,7 +302,7 @@ public class GameManager : MonoBehaviour {
             "Tutorial", 
             NetworkManager.lastLevelPrefix, 
             dummyValue,
-            dummyValue);
+            SettingsManager.instance.GameModeIndexServer);
     }
 
     [RPC]
@@ -311,6 +311,7 @@ public class GameManager : MonoBehaviour {
         //stops tutorial scripts showing after you leave and start a game
         GuiManager.instance.TutorialPrompt("", 0);
 
+        SettingsManager.instance.GameModeIndexClient = gameModeIndex;
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
