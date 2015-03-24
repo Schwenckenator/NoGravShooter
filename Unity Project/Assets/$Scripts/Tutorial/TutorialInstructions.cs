@@ -31,6 +31,18 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool items = false;
 	private bool step6 = false;
 	
+	public int landedPlatforms = 0;
+	private bool platforms = false;
+	private bool step7 = false;
+	
+	private GameObject bonus1;
+	private GameObject bonus2;
+	private GameObject bonus3;
+	
+	private GameObject platform1;
+	private GameObject platform2;
+	private GameObject platform3;
+	
 	public GameObject[] bonuses;
 	private GameObject[] bonusSpawnPoints;
 	private GameObject[] bonusItems;
@@ -97,11 +109,15 @@ public class TutorialInstructions : MonoBehaviour {
 		}
 		if(checkingitems){
 			bonusItems = GameObject.FindGameObjectsWithTag("BonusPickup");
-			if(bonusItems.Length == 0){
-				items = true;
-			} else {
+			if(bonusItems.Length > 3){
 				items = false;
+			} else {
+				items = true;
 			}
+		}
+		if (landedPlatforms > 2){
+			platforms = true;
+			Debug.Log("Player landed on all platforms");
 		}
 
 
@@ -128,6 +144,10 @@ public class TutorialInstructions : MonoBehaviour {
 		if (items && step6){
 			checkingitems = false;
 			step6 = false;
+			StartCoroutine(NavigationTutorial());
+		}
+		if (platforms && step7){
+			step7 = false;
 			StartCoroutine(FinalTutorial());
 		}
 	}
@@ -192,18 +212,33 @@ public class TutorialInstructions : MonoBehaviour {
 		checkingitems = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt(
             "Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Grenade box.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
-		Network.Instantiate(bonuses[0], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
-		Network.Instantiate(bonuses[1], bonusSpawnPoints[1].transform.position, bonusSpawnPoints[1].transform.rotation, 0);
-		Network.Instantiate(bonuses[2], bonusSpawnPoints[0].transform.position, bonusSpawnPoints[0].transform.rotation, 0);
+		bonus1 = GameObject.Find("TutorialBonusGrenadePack");
+		bonus2 = GameObject.Find("TutorialBonusWeaponPickup");
+		bonus3 = GameObject.Find("TutorialBonusHealthPack");
+		bonus1.transform.position = new Vector3(0,-8,8); 
+		bonus2.transform.position = new Vector3(0,-8,0); 
+		bonus3.transform.position = new Vector3(0,-8,-8);
 		yield return new WaitForSeconds(5);
 		step6 = true;
 	}
 	
+	IEnumerator NavigationTutorial(){
+		platform1 = GameObject.Find("LandingPlatform1");
+		platform2 = GameObject.Find("LandingPlatform2");
+		platform3 = GameObject.Find("LandingPlatform3");
+		platform1.transform.position = new Vector3(platform1.transform.position.x,0,platform1.transform.position.z); 
+		platform2.transform.position = new Vector3(platform2.transform.position.x,0,platform2.transform.position.z); 
+		platform3.transform.position = new Vector3(platform3.transform.position.x,0,platform3.transform.position.z); 
+		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nTry to land on these platforms.", 99999);
+		yield return new WaitForSeconds(5);
+		step7 = true;
+	}
+	
 	IEnumerator FinalTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nThis suit uses air as fuel, if you run low on air the suit will\nautomatically disable boosting temporarily while it generates more.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("Keep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.", 99999);
 		yield return new WaitForSeconds(60);
 		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
 		yield return new WaitForSeconds(60);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Try exploring the virtual space until you get the hang of it.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("Try exploring the virtual space until you get the hang of the controls.", 99999);
 	}
 }
