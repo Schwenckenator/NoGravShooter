@@ -13,6 +13,7 @@ public class TutorialInstructions : MonoBehaviour {
 	
 	private bool U = false;
 	private bool D = false;
+	private bool X = false;
 	private bool step2 = false;
 	private bool RL = false;
 	private bool RR = false;
@@ -35,6 +36,8 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool platforms = false;
 	private bool step7 = false;
 	
+	private GameObject initialGrenades;
+	
 	private GameObject bonus1;
 	private GameObject bonus2;
 	private GameObject bonus3;
@@ -43,14 +46,11 @@ public class TutorialInstructions : MonoBehaviour {
 	private GameObject platform2;
 	private GameObject platform3;
 	
-	public GameObject[] bonuses;
-	private GameObject[] bonusSpawnPoints;
 	private GameObject[] bonusItems;
 	
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-		bonusSpawnPoints = GameObject.FindGameObjectsWithTag("BonusSpawnPoint");
 		StartCoroutine(MovementTutorial());
 	}
 	
@@ -71,6 +71,7 @@ public class TutorialInstructions : MonoBehaviour {
 			L = true;
 			Debug.Log("Player Moved Left");
 		}
+		
 		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetUp])){
 			U = true;
 			Debug.Log("Player Flew Up");
@@ -79,6 +80,11 @@ public class TutorialInstructions : MonoBehaviour {
 			D = true;
 			Debug.Log("Player Flew Down");
 		}
+		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.StopMovement])){
+			X = true;
+			Debug.Log("Player Braked");
+		}
+		
 		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollLeft])){
 			RL = true;
 			Debug.Log("Player Rolled Left");
@@ -87,6 +93,7 @@ public class TutorialInstructions : MonoBehaviour {
 			RR = true;
 			Debug.Log("Player Rolled Right");
 		}
+		
 		if (Input.GetMouseButtonDown(0)){
 			shot = true;
 			Debug.Log("Player Shot");
@@ -98,7 +105,8 @@ public class TutorialInstructions : MonoBehaviour {
 		if (Input.GetKeyDown("2") || Input.GetKeyDown("3") || Input.GetKeyDown("4") || Input.GetKeyDown("5") || Input.GetKeyDown("6") || Input.GetKeyDown("7") || Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0){
 			changedgun = true;
 			Debug.Log("Player Changed Weapons");
-		}		
+		}
+		
 		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.Reload])){
 			reloaded = true;
 			Debug.Log("Player Reloaded");
@@ -107,6 +115,7 @@ public class TutorialInstructions : MonoBehaviour {
 			grenade = true;
 			Debug.Log("Player Threw Mine");
 		}
+		
 		if(checkingitems){
 			bonusItems = GameObject.FindGameObjectsWithTag("BonusPickup");
 			if(bonusItems.Length > 3){
@@ -115,17 +124,19 @@ public class TutorialInstructions : MonoBehaviour {
 				items = true;
 			}
 		}
+		
 		if (landedPlatforms > 2){
 			platforms = true;
 			Debug.Log("Player landed on all platforms");
 		}
 
 
+		
 		if (F && B && L && R && step1){
 			step1 = false;
 			StartCoroutine(FlightTutorial());
 		}
-		if (U && D && step2){
+		if (U && D && X && step2){
 			step2 = false;
 			StartCoroutine(FlightTutorial2());
 		}
@@ -155,14 +166,17 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator MovementTutorial(){
 		//black out screen
 		GuiManager.instance.blackOutScreen = true;
-		//give player mines
-		Network.Instantiate(bonuses[2], bonusSpawnPoints[2].transform.position, bonusSpawnPoints[2].transform.rotation, 0);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
 		yield return new WaitForSeconds(1);
 		//damage player so they can pick up Medikit
 		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10, Network.player);
+		//give player mines
+		initialGrenades = GameObject.Find("InitialGrenadePack");
+		//initialGrenades.transform.position = new Vector3(0,-32,0); 
+		initialGrenades.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
 		yield return new WaitForSeconds(1);
+		Destroy(initialGrenades);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating...", 6000);
 		yield return new WaitForSeconds(1);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating....", 6000);
@@ -183,7 +197,8 @@ public class TutorialInstructions : MonoBehaviour {
 	
 	IEnumerator FlightTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards.\n\nUse "
-            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
+			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.", 99999);
 		yield return new WaitForSeconds(5);
 		step2 = true;		
 	}
@@ -211,13 +226,13 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator ItemTutorial(){
 		checkingitems = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt(
-            "Some items have been spawned on one of the platforms.\n\nThese are a Weapon pickup, a Medikit and a Proximity Grenade box.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
+            "Some items have been spawned on the green floor.\n\nThese are a Weapon pickup, a Medikit and a Proximity Grenade box.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
 		bonus1 = GameObject.Find("TutorialBonusGrenadePack");
 		bonus2 = GameObject.Find("TutorialBonusWeaponPickup");
 		bonus3 = GameObject.Find("TutorialBonusHealthPack");
-		bonus1.transform.position = new Vector3(0,-8,8); 
-		bonus2.transform.position = new Vector3(0,-8,0); 
-		bonus3.transform.position = new Vector3(0,-8,-8);
+		bonus1.transform.position = new Vector3(0,-32,8); 
+		bonus2.transform.position = new Vector3(0,-32,0); 
+		bonus3.transform.position = new Vector3(0,-32,-8);
 		yield return new WaitForSeconds(5);
 		step6 = true;
 	}
