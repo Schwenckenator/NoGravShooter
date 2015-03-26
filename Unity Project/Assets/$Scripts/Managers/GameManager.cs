@@ -262,9 +262,15 @@ public class GameManager : MonoBehaviour {
 
     // If a player connects mid game,
     // we need to send an updated remaining time
-    void OnPlayerConnected(NetworkPlayer player) {
+    void OnPlayerConnected(NetworkPlayer connectingPlayer) {
         if (GameInProgress && IsUseTimer) {
-            networkView.RPC("SetEndTime", player, endTime - Time.time);
+            networkView.RPC("RPCLoadLevel", connectingPlayer,
+                SettingsManager.instance.LevelName,
+                NetworkManager.lastLevelPrefix,
+                SettingsManager.instance.TimeLimitSec,
+                SettingsManager.instance.GameModeIndexServer);
+
+            networkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
         }
     }
 
@@ -287,10 +293,10 @@ public class GameManager : MonoBehaviour {
         if (Network.isClient) {
             throw new ClientRunningServerCodeException("Thrown in GameManager.");
         }
-        GetComponent<DestroyManager>().ClearDestroyLists();
+        DestroyManager.instance.ClearDestroyLists();
         SettingsManager.instance.RelayScoreToWin();
 
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, 
+        networkView.RPC("RPCLoadLevel", RPCMode.All, 
             SettingsManager.instance.LevelName, 
             NetworkManager.lastLevelPrefix, 
             SettingsManager.instance.TimeLimitSec, 
@@ -298,7 +304,7 @@ public class GameManager : MonoBehaviour {
     }
     private void LoadLevelTutorial() {
         int dummyValue = 0; // Just to keep the method happy
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, 
+        networkView.RPC("RPCLoadLevel", RPCMode.All, 
             "Tutorial", 
             NetworkManager.lastLevelPrefix, 
             dummyValue,
@@ -360,10 +366,10 @@ public class GameManager : MonoBehaviour {
 
     public void ReturnToLobby() {
 
-        networkView.RPC("RPCReturnToLobby", RPCMode.AllBuffered);
+        networkView.RPC("RPCReturnToLobby", RPCMode.All);
 
         int dummy = 0; // Dummy is just to keep the code happy. Has no effect
-        networkView.RPC("RPCLoadLevel", RPCMode.AllBuffered, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
+        networkView.RPC("RPCLoadLevel", RPCMode.All, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
     }
 
     [RPC]
