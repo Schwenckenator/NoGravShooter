@@ -7,6 +7,7 @@ public interface IControllerInput {
     float GetXMovement();
     float GetYMovement();
     float GetZMovement();
+
     bool IsMovementKeys();
     bool IsStopKey();
 
@@ -20,6 +21,12 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
 
     int changeRate = 3; // * deltaTime
 
+    // Movement restriction Flags
+    // For tutorial Only
+    public bool canWalk = true;
+    public bool canJump = true;
+
+    #region ExternalAccessors
     public float GetRollMovement() {
         return rollMovement;
     }
@@ -51,11 +58,16 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
         return InputConverter.GetKey(key);
     }
 
+    #endregion
+
+    #region Internal Logic
     void Update() {
         rollMovement = UpdateMovement(KeyBind.RollLeft, KeyBind.RollRight, rollMovement);
         xMovement = UpdateMovement(KeyBind.MoveRight, KeyBind.MoveLeft, xMovement);
         yMovement = UpdateMovement(KeyBind.JetUp, KeyBind.JetDown, yMovement);
         zMovement = UpdateMovement(KeyBind.MoveForward, KeyBind.MoveBack, zMovement);
+
+        RestrictMovement();
     }
 
     float UpdateMovement(KeyBind positive, KeyBind negative, float axis) {
@@ -77,4 +89,14 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
         }
         return axis;
     }
+    void RestrictMovement() {
+        if (!canWalk) {
+            xMovement = 0;
+            zMovement = 0;
+        }
+        if (!canJump) {
+            yMovement = 0;
+        }
+    }
+    #endregion
 }
