@@ -31,7 +31,7 @@ public class FireWeapon : MonoBehaviour {
         SetWeaponLoadout();
 
 		currentInventorySlot = 0;
-		currentWeapon = heldWeapons[0];
+        currentWeapon = heldWeapons.Count > 0 ? heldWeapons[0] : null;
 		gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		cameraPos = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
@@ -43,12 +43,7 @@ public class FireWeapon : MonoBehaviour {
 		
 	}
     void SetWeaponLoadout() {
-        if (GameManager.IsSceneTutorial()) {
-            int slugRifle = 1;
-            int shotGun = 3;
-            AddWeapon(slugRifle);
-            AddWeapon(shotGun);
-        } else {
+        if (!GameManager.IsSceneTutorial()) {
             int[] temp = GameManager.instance.GetStartingWeapons();
             foreach (int id in temp) {
                 if (id < GameManager.weapon.Count) {
@@ -58,6 +53,8 @@ public class FireWeapon : MonoBehaviour {
         }
     }
 	void Update(){
+        if (HasNoWeapons()) return;
+
         MouseWheelWeaponChange();
 
         if (!currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
@@ -71,6 +68,7 @@ public class FireWeapon : MonoBehaviour {
 	}
 
     void FixedUpdate() {
+        if (HasNoWeapons()) return;
         if (currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
             WeaponFired();
         } 
@@ -232,28 +230,33 @@ public class FireWeapon : MonoBehaviour {
 	public int NumberWeaponsHeld(){
 		return heldWeapons.Count;
 	}
+    private bool HasNoWeapons() {
+        return heldWeapons.Count == 0;
+    }
 	
 	public int WeaponLimit(){
 		return maxHeldWeapons;
 	}
 
 	public void AddWeapon(int weaponId){
+        bool hadNoWeapons = HasNoWeapons();
 		heldWeapons.Add(GameManager.weapon[weaponId]);
+        if (hadNoWeapons) {
+            ChangeWeapon(0);
+        }
 	}
     public void AddWeapon(int weaponId, int index){
+        bool hadNoWeapons = HasNoWeapons();
         heldWeapons.Insert(index, GameManager.weapon[weaponId]);
+        if (hadNoWeapons) {
+            ChangeWeapon(0);
+        }
     }
 
 	public void removeWeapon(WeaponSuperClass item){
 		heldWeapons.Remove(item);
 	}
 	
-	[RPC]
-	void setWeapons(int weapon1, int weapon2){
-		startingWeapon1 = weapon1;
-		startingWeapon2 = weapon2;
-	}
-
     void PlayFireWeaponSound() {
         if (networkView.isMine) {
             audio.PlayOneShot(currentWeapon.fireSound);

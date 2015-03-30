@@ -118,8 +118,8 @@ public class GuiManager : MonoBehaviour {
 	
 	private int chatboxwidth = 500;
 
-	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
-	string[] weaponlist2 = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
+	//string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
+	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
 
     KeyBind editedBinding;
 
@@ -192,7 +192,6 @@ public class GuiManager : MonoBehaviour {
 			
 		}else if(!GameManager.IsSceneMenu()){
             GUI.Window(1, largeRect, PauseWindow, menuText);
-			
 		}
 	}
 	#endregion
@@ -796,7 +795,7 @@ public class GuiManager : MonoBehaviour {
 
 		GUI.Label(new Rect(20, 165, smallRect.width-40, 30), "Starting Weapons");
         SettingsManager.instance.SpawnWeapon1 = GUI.Toolbar(new Rect(20, 185, smallRect.width - 40, 30), SettingsManager.instance.SpawnWeapon1, weaponlist);
-        SettingsManager.instance.SpawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width - 40, 30), SettingsManager.instance.SpawnWeapon2, weaponlist2);
+        SettingsManager.instance.SpawnWeapon2 = GUI.Toolbar(new Rect(20, 220, smallRect.width - 40, 30), SettingsManager.instance.SpawnWeapon2, weaponlist);
 
         if(GUI.Button(new Rect(20, smallRect.height-45, smallRect.width-40, 30), "Close")){
             SettingsManager.instance.SaveSettings();
@@ -1105,9 +1104,12 @@ public class GuiManager : MonoBehaviour {
     }
 
     private void DisplayAmmoData(GUIStyle style) {
-        string ammoText = playerResource.GetCurrentClip().ToString();
-        if (playerResource.GetRemainingAmmo() > 0) {
-            ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
+        string ammoText = "";
+        if (playerResource.IsHoldingWeapon()) {
+            ammoText = playerResource.GetCurrentClip().ToString();
+            if (playerResource.GetRemainingAmmo() > 0) {
+                ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
+            }
         }
 
         Rect grenadeTypeLabel = new Rect(Screen.width - 300, Screen.height - 250, 300, 100);

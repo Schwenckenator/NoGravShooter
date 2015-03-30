@@ -441,6 +441,10 @@ public class PlayerResources : MonoBehaviour {
         weaponReloadRotation.ReloadRotation(waitTime, GameManager.weapon[currentWeaponID]);
     }
 	public void ChangeWeapon(WeaponSuperClass newWeapon){
+        if (newWeapon == null) {
+            currentWeapon = null;
+            return;
+        }
 		if(!isWeaponBusy){
 			currentWeapon = newWeapon;
 			StartCoroutine(WeaponChange());
@@ -469,7 +473,9 @@ public class PlayerResources : MonoBehaviour {
 	public bool IsWeaponBusy(){
 		return isWeaponBusy;
 	}
-
+    public bool IsHoldingWeapon() {
+        return currentWeapon != null;
+    }
 	
 	public void EMPglitch(){
 		glitched = true;
