@@ -11,34 +11,42 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool R = false;
 	private bool step1 = false;
 	
+	public bool Floor1 = false;
+	public bool Floor2 = false;
+	public bool Floor3 = false;
+	private bool openroom2 = false;
+	private bool step2 = false;
+	
 	private bool shot = false;
 	private bool aimed = false;
 	private bool changedgun = false;
 	private bool reloaded = false;
-	private bool step2 = false;
+	private bool step3 = false;
 	
 	private bool checkingtargets = false;
 	private int remainingtargets;
 	private bool shotAllTargets = false;
-	private bool step3 = false;
+	private bool step4 = false;
 	
 	private bool U = false;
 	private bool D = false;
 	private bool X = false;
-	private bool step4 = false;
+	private bool step5 = false;
+	
 	private bool RL = false;
 	private bool RR = false;
-	private bool step5 = false;
+	private bool step6 = false;
 	
 	public int landedPlatforms = 0;
 	private bool platforms = false;
-	private bool step6 = false;
+	private bool step7 = false;
 	
 	private bool grenade = false;
-	private bool step7 = false;
+	private bool step8 = false;
+	
 	private bool checkingitems = false;
 	private bool items = false;
-	private bool step8 = false;
+	private bool step9 = false;
 	
 	private GameObject initialGrenades;
 	
@@ -46,14 +54,14 @@ public class TutorialInstructions : MonoBehaviour {
 	private GameObject bonus2;
 	private GameObject bonus3;
 	
+	private GameObject litfloorpanel;
+	
 	private GameObject platform1;
 	private GameObject platform2;
 	private GameObject platform3;
 	
-	//private GameObject room1exit;
-	//private GameObject room2entrance;
+	private GameObject room1exit;
 	private GameObject room2exit;
-	//private GameObject room3entrance;
 	private GameObject room3exit;
 	
 	private GameObject[] bonusItems;
@@ -157,19 +165,42 @@ public class TutorialInstructions : MonoBehaviour {
 		}
 
 
-		
 		if (F && B && L && R && step1){
 			step1 = false;
+			StartCoroutine(MovementTutorial2());
+		}
+		if (Floor1){
+			litfloorpanel.transform.renderer.material.color = new Color(0, 0, 1);
+			litfloorpanel = GameObject.Find("walkhere2");
+			litfloorpanel.transform.renderer.material.color = new Color(0, 1, 0);
+		}
+		if (Floor2){
+			litfloorpanel.transform.renderer.material.color = new Color(0, 0, 1);
+			litfloorpanel = GameObject.Find("walkhere3");
+			litfloorpanel.transform.renderer.material.color = new Color(0, 1, 0);
+		}
+		if (Floor3){
+			litfloorpanel.transform.renderer.material.color = new Color(0, 0, 1);
+		}
+		if (Floor1 && Floor2 && Floor3 && step2){
+			step2 = false;
+			openroom2 = true;
 			StartCoroutine(GunTutorial());
 		}
+		if (openroom2){
+			room1exit = GameObject.Find("WalkRoomExit");
+			if(room1exit.transform.position.y > -30){
+				room1exit.transform.position = new Vector3(room1exit.transform.position.x,room1exit.transform.position.y-0.05f,room1exit.transform.position.z); 
+			}
+		}
 		
-		if (shot && aimed && reloaded && changedgun && step2){
-			step2 = false;
+		if (shot && aimed && reloaded && changedgun && step3){
+			step3 = false;
 			StartCoroutine(GunTutorial2());
 		}
 		
-		if (shotAllTargets && step3){
-			step3 = false;
+		if (shotAllTargets && step4){
+			step4 = false;
 			checkingtargets = false;
 			StartCoroutine(FlightTutorial());
 		}
@@ -180,17 +211,17 @@ public class TutorialInstructions : MonoBehaviour {
 			}
 		}
 		
-		if (U && D && X && step4){
-			step4 = false;
+		if (U && D && X && step5){
+			step5 = false;
 			StartCoroutine(FlightTutorial2());
 		}
-		if (RL && RR && step5){
-			step5 = false;
+		if (RL && RR && step6){
+			step6 = false;
 			StartCoroutine(NavigationTutorial());
 		}
 		
-		if (platforms && step6){
-			step6 = false;
+		if (platforms && step7){
+			step7 = false;
 			StartCoroutine(GrenadeTutorial());
 		}
 		if (platforms){
@@ -200,14 +231,14 @@ public class TutorialInstructions : MonoBehaviour {
 			}
 		}
 		
-		if (grenade && step7){
-			step7 = false;
+		if (grenade && step8){
+			step8 = false;
 			StartCoroutine(ItemTutorial());
 		}
 		
-		if (items && step8){
+		if (items && step9){
 			checkingitems = false;
-			step8 = false;
+			step9 = false;
 			StartCoroutine(FinalTutorial());
 		}
 	}
@@ -243,8 +274,17 @@ public class TutorialInstructions : MonoBehaviour {
 		yield return new WaitForSeconds(5);
 		step1 = true;
 	}
+	IEnumerator MovementTutorial2(){
+		litfloorpanel = GameObject.Find("walkhere1");
+		litfloorpanel.transform.renderer.material.color = new Color(0, 1, 0);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nWalk onto the green square.", 99999);
+		yield return new WaitForSeconds(5);
+		step2 = true;
+	}
 	
 	IEnumerator GunTutorial(){
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
+		yield return new WaitForSeconds(7);
 		bonus2 = GameObject.Find("TutorialBonusWeaponPickup");
 		bonus2.transform.position = new Vector3(0,-32,0);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Some guns have been spawned, to pick up a gun simply walk over it.\n\nIf you already have 2 guns you can opt to swap the gun you are currently holding.", 99999);
@@ -252,14 +292,14 @@ public class TutorialInstructions : MonoBehaviour {
 		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
 		+SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload.", 99999);
 		yield return new WaitForSeconds(5);
-		step2 = true;
+		step3 = true;
 	}
 	
 	IEnumerator GunTutorial2(){
 		checkingtargets = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nTry to shoot all the targets.", 99999);
 		yield return new WaitForSeconds(5);
-		step3 = true;
+		step4 = true;
 	}
 	
 	IEnumerator FlightTutorial(){
@@ -269,14 +309,14 @@ public class TutorialInstructions : MonoBehaviour {
             +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
 			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.", 99999);
 		yield return new WaitForSeconds(5);
-		step4 = true;		
+		step5 = true;		
 	}
 	IEnumerator FlightTutorial2(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("Use "
             +SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString()+" to roll to the left and "
             +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
 		yield return new WaitForSeconds(5);
-		step5 = true;		
+		step6 = true;		
 	}
 	
 	IEnumerator NavigationTutorial(){
@@ -288,7 +328,7 @@ public class TutorialInstructions : MonoBehaviour {
 		platform3.transform.position = new Vector3(platform3.transform.position.x,0,platform3.transform.position.z); 
 		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nTry to land on these platforms.", 99999);
 		yield return new WaitForSeconds(5);
-		step6 = true;
+		step7 = true;
 	}
 	
 	IEnumerator GrenadeTutorial(){
@@ -299,7 +339,7 @@ public class TutorialInstructions : MonoBehaviour {
 		manager.GetComponent<GuiManager>().TutorialPrompt("Some grenade boxes have been spawned.\n\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
 			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
 		yield return new WaitForSeconds(5);
-		step7 = true;
+		step8 = true;
 	}
 	
 	IEnumerator ItemTutorial(){
@@ -309,7 +349,7 @@ public class TutorialInstructions : MonoBehaviour {
 		bonus3 = GameObject.Find("TutorialBonusHealthPack");
 		bonus3.transform.position = new Vector3(0,-32,0);
 		yield return new WaitForSeconds(5);
-		step8 = true;
+		step9 = true;
 	}
 	
 	IEnumerator FinalTutorial(){
