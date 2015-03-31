@@ -239,7 +239,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         rigidbody.AddForce(velocityChange, ForceMode.Impulse);
 
         // Jump
-        if (canJump && InputConverter.GetKey(KeyBind.JetUp) && !GameManager.IsPlayerMenu()) {
+        if (canJump && input.GetYMovement() > 0 && !GameManager.IsPlayerMenu()) {
             rigidbody.AddRelativeForce(new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
         }
     }
