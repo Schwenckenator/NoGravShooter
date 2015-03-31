@@ -10,6 +10,8 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     [SerializeField]
 	private int id;
+    [SerializeField]
+	private bool randomid;
 	private FireWeapon fireWeapon;
 	private int weaponcount;
 	private int maxweaponcount;
@@ -21,7 +23,11 @@ public class BonusWeaponPickup : MonoBehaviour {
 			maxweaponcount = 99;
 		}
 		if(Network.isServer){
-			networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
+			if(randomid){
+				networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
+			} else {
+				networkView.RPC("ChangeId", RPCMode.AllBuffered, id);
+			}
 			UpdateModel();
 		}
 

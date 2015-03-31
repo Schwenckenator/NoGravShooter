@@ -8,6 +8,8 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 	private int amount;
     [SerializeField]
 	private int grenadeType;
+    [SerializeField]
+	private bool randomtype;
 
 	void Start(){
 
@@ -15,7 +17,9 @@ public class BonusGrenadePackPickup : MonoBehaviour {
             grenadeType = 0;
         } else {
             //Randomise here, just for now
-            grenadeType = Random.Range(0, 3);
+            if(randomtype){
+				grenadeType = Random.Range(0, 3);
+			}
         }
 	}
 

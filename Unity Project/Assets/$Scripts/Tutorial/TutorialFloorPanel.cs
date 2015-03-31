@@ -13,15 +13,21 @@ public class TutorialFloorPanel : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other) {
 		if(other.tag == "Player") {
-			if(landed == false){
+			if(landed == false && tuteManager.GetComponent<TutorialInstructions>().checkingfloortiles){
 				if(tileID == 1){
 					tuteManager.GetComponent<TutorialInstructions>().Floor1 = true;
+					landed = true;
 				} else if(tileID == 2){
-					tuteManager.GetComponent<TutorialInstructions>().Floor2 = true;
+					if(tuteManager.GetComponent<TutorialInstructions>().Floor1){
+						tuteManager.GetComponent<TutorialInstructions>().Floor2 = true;
+						landed = true;
+					}
 				} else {
-					tuteManager.GetComponent<TutorialInstructions>().Floor3 = true;
+					if(tuteManager.GetComponent<TutorialInstructions>().Floor2){
+						tuteManager.GetComponent<TutorialInstructions>().Floor3 = true;
+						landed = true;
+					}
 				}
-				landed = true;
 			}
 		}
 	}

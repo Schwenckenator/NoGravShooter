@@ -4,6 +4,7 @@ using System.Collections;
 public class TutorialInstructions : MonoBehaviour {
 	private GameManager manager;
 	private PlayerResources playerRes;
+	private GameObject player;
 	
 	private bool F = false;
 	private bool B = false;
@@ -11,6 +12,7 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool R = false;
 	private bool step1 = false;
 	
+	public bool checkingfloortiles = false;
 	public bool Floor1 = false;
 	public bool Floor2 = false;
 	public bool Floor3 = false;
@@ -247,13 +249,16 @@ public class TutorialInstructions : MonoBehaviour {
 		//black out screen
 		GuiManager.instance.blackOutScreen = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
+		yield return new WaitForSeconds(.1f);
+		player = GameObject.Find("NoGravPlayer(Clone)");
+		player.GetComponent<KeyboardInput>().canWalk = false;
+		player.GetComponent<KeyboardInput>().canJump = false;
 		yield return new WaitForSeconds(1);
 		//damage player so they can pick up Medikit
-		GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10, Network.player);
+		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10, Network.player);
 		//give player mines
 		initialGrenades = GameObject.Find("InitialGrenadePack");
-		//initialGrenades.transform.position = new Vector3(0,-32,0); 
-		initialGrenades.transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+		//initialGrenades.transform.position = new Vector3(0,-32,0);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
 		yield return new WaitForSeconds(1);
 		Destroy(initialGrenades);
@@ -266,7 +271,10 @@ public class TutorialInstructions : MonoBehaviour {
 		GuiManager.instance.blackOutScreen = false;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.", 6000);
 		yield return new WaitForSeconds(4);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Move your Mouse to look around.\n\nUse "
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nMove your Mouse to look around.", 99999);
+		yield return new WaitForSeconds(5);
+		player.GetComponent<KeyboardInput>().canWalk = true;
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nUse "
             +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+", "
             +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+", "
             +SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()+" and "
@@ -275,6 +283,7 @@ public class TutorialInstructions : MonoBehaviour {
 		step1 = true;
 	}
 	IEnumerator MovementTutorial2(){
+		checkingfloortiles = true;
 		litfloorpanel = GameObject.Find("walkhere1");
 		litfloorpanel.transform.renderer.material.color = new Color(0, 1, 0);
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWalk onto the green square.", 99999);
@@ -285,8 +294,12 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator GunTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
-		bonus2 = GameObject.Find("TutorialBonusWeaponPickup");
-		bonus2.transform.position = new Vector3(0,-32,0);
+		bonus2 = GameObject.Find("TutorialBonusWeaponPickup1");
+		bonus2.transform.position = new Vector3(-168,-12,12);
+		bonus2 = GameObject.Find("TutorialBonusWeaponPickup2");
+		bonus2.transform.position = new Vector3(-160,-12,12);
+		bonus2 = GameObject.Find("TutorialBonusWeaponPickup3");
+		bonus2.transform.position = new Vector3(-152,-12,12);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Some guns have been spawned, to pick up a gun simply walk over it.\n\nIf you already have 2 guns you can opt to swap the gun you are currently holding.", 99999);
 		yield return new WaitForSeconds(7);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
@@ -305,6 +318,9 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator FlightTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
+		player.GetComponent<KeyboardInput>().canJump = true;
+		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.", 99999);
+		yield return new WaitForSeconds(5);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards.\n\nUse "
             +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
 			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.", 99999);
@@ -326,7 +342,7 @@ public class TutorialInstructions : MonoBehaviour {
 		platform1.transform.position = new Vector3(platform1.transform.position.x,0,platform1.transform.position.z); 
 		platform2.transform.position = new Vector3(platform2.transform.position.x,0,platform2.transform.position.z); 
 		platform3.transform.position = new Vector3(platform3.transform.position.x,0,platform3.transform.position.z); 
-		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nTry to land on these platforms.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nTry to land on these platforms.", 99999);
 		yield return new WaitForSeconds(5);
 		step7 = true;
 	}
