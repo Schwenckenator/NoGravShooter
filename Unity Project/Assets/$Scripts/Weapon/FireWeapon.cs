@@ -23,28 +23,33 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
 	private List<WeaponSuperClass> heldWeapons;
+    private bool initialised = false;
 	
 
 	// Use this for initialization
 	void Awake () {
 		heldWeapons = new List<WeaponSuperClass>();
         SetWeaponLoadout();
-
-		currentInventorySlot = 0;
-        currentWeapon = heldWeapons.Count > 0 ? heldWeapons[0] : null;
+        
+        playerResource = GetComponent<PlayerResources>();
+		currentInventorySlot = -1; // Bad value, will change
+        currentWeapon = null;
 		gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		cameraPos = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
-		playerResource = GetComponent<PlayerResources>();
-        
+		
+	}
+    void Start() {
         if (networkView.isMine) {
             ChangeWeapon(0);
         }
-		
-	}
+        initialised = true;
+    }
+
     void SetWeaponLoadout() {
         if (!GameManager.IsSceneTutorial()) {
             int[] temp = GameManager.instance.GetStartingWeapons();
+
             foreach (int id in temp) {
                 if (id < GameManager.weapon.Count) {
                     AddWeapon(id);
@@ -54,7 +59,8 @@ public class FireWeapon : MonoBehaviour {
     }
 	void Update(){
         if (HasNoWeapons()) return;
-
+        
+        GetKeyStrokes();
         MouseWheelWeaponChange();
 
         if (!currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
@@ -134,17 +140,16 @@ public class FireWeapon : MonoBehaviour {
     private void MouseWheelWeaponChange() {
         //change weapons by mouse wheel
         //checks if player has max number of weapons
-        if (playerResource.IsWeaponBusy()) return;
-
+        int newSlot = currentInventorySlot;
         if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            currentInventorySlot++;
-            currentInventorySlot %= GetMaxWeapon();
-            ChangeWeapon(currentInventorySlot);
+            newSlot++;
+            newSlot %= GetMaxWeapon();
+            ChangeWeapon(newSlot);
 
         } else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-            currentInventorySlot--;
-            if (currentInventorySlot < 0) currentInventorySlot += GetMaxWeapon();
-            ChangeWeapon(currentInventorySlot);
+            newSlot--;
+            if (newSlot < 0) newSlot += GetMaxWeapon();
+            ChangeWeapon(newSlot);
         }
     }
 
@@ -197,21 +202,23 @@ public class FireWeapon : MonoBehaviour {
     }
 
 	public void ChangeWeapon(int weaponId){
-		currentInventorySlot = weaponId;
+        if (currentInventorySlot == weaponId) { return; } // If you're already here, do nothing
+
 		if(!playerResource.IsWeaponBusy()){
             if (DebugManager.IsAllWeapon()) {
 				if(weaponId < GameManager.weapon.Count){
+                    currentInventorySlot = weaponId;
 					currentWeapon = GameManager.weapon[weaponId];
 					playerResource.ChangeWeapon(currentWeapon);
 				}
 			}
 			else{
 				if(weaponId < heldWeapons.Count){
+                    currentInventorySlot = weaponId;
 					currentWeapon = heldWeapons[weaponId];
 					playerResource.ChangeWeapon(currentWeapon);
 				}
 			}
-
 		}
 	}
 
@@ -231,7 +238,8 @@ public class FireWeapon : MonoBehaviour {
 		return heldWeapons.Count;
 	}
     private bool HasNoWeapons() {
-        return heldWeapons.Count == 0;
+        // Don't count it if not initialised yet
+        return heldWeapons.Count == 0 && initialised;
     }
 	
 	public int WeaponLimit(){
@@ -268,5 +276,29 @@ public class FireWeapon : MonoBehaviour {
     void RPCPlayFireWeaponSound(int weaponID) {
         WeaponSuperClass weapon = GameManager.weapon[weaponID];
         audio.PlayOneShot(weapon.fireSound);
+    }
+
+    void GetKeyStrokes() {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            ChangeWeapon(0);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            ChangeWeapon(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            ChangeWeapon(2);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            ChangeWeapon(3);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            ChangeWeapon(4);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6)) {
+            ChangeWeapon(5);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7)) {
+            ChangeWeapon(6);
+        }
     }
 }

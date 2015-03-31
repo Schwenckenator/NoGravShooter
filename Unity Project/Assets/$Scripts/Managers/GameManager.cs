@@ -230,28 +230,8 @@ public class GameManager : MonoBehaviour {
             SetCursorVisibility(!playerMenu);
             SetPlayerMenu(!playerMenu); // Toggle Pause
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(4);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(5);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7) && myPlayerSpawned) {
-            fireWeapon.ChangeWeapon(6);
-        }
-        if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch)) {
+
+        if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch) && myPlayerSpawned) {
             playerResources.ChangeGrenade();
         }
     }

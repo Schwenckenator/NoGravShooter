@@ -175,6 +175,9 @@ public class GuiManager : MonoBehaviour {
         if (DebugManager.IsAdminMode()) {
 			GUI.Label(new Rect(Screen.width/2, 50, 100, 20), "TEST MODE");
 		}
+        if (DebugManager.IsDebugMode()) {
+            GUI.Label(new Rect(Screen.width / 2, 70, 100, 20), "DEBUG: On");
+        }
 
 		if(connectingNow){
 			if(!IsCurrentWindow(Menu.Connecting)){
