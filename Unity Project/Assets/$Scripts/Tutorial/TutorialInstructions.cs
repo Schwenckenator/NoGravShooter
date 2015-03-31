@@ -6,6 +6,10 @@ public class TutorialInstructions : MonoBehaviour {
 	private PlayerResources playerRes;
 	private GameObject player;
 	
+	private int dotLooks = 0;
+	private GameObject lookingDot;
+	private bool step0 = false;
+	
 	private bool F = false;
 	private bool B = false;
 	private bool L = false;
@@ -71,10 +75,28 @@ public class TutorialInstructions : MonoBehaviour {
 
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-		StartCoroutine(MovementTutorial());
+		lookingDot = GameObject.Find("LookAtDot");
+		StartCoroutine(LookTutorial());
 	}
 	
 	void Update(){
+	    float minangle = .75f;
+		if (Vector3.Angle(player.transform.FindChild("CameraPos").forward, lookingDot.transform.position - player.transform.position) < minangle) {
+			Debug.Log("Player Looked at Dot");
+			dotLooks++;
+		}
+		if (dotLooks == 1){
+			lookingDot.transform.position = new Vector3(-358f,-10.6f,-3f);
+		}
+		if (dotLooks == 2){
+			lookingDot.transform.position = new Vector3(-358f,-7.6f,0f);
+		}
+		if (dotLooks == 3){
+			lookingDot.transform.position = new Vector3(-358f,-10.6f,3f);
+		}
+		if (dotLooks == 4){
+			lookingDot.transform.position = new Vector3(-358f,-13.6f,0f);
+		}
 		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward])){
 			F = true;
 			Debug.Log("Player Moved Forwards");
@@ -167,6 +189,11 @@ public class TutorialInstructions : MonoBehaviour {
 		}
 
 
+		if (dotLooks > 4 && step0){
+			lookingDot.transform.position = new Vector3(-358f,-120f,0f);
+			step0 = false;
+			StartCoroutine(MovementTutorial());
+		}
 		if (F && B && L && R && step1){
 			step1 = false;
 			StartCoroutine(MovementTutorial2());
@@ -245,7 +272,7 @@ public class TutorialInstructions : MonoBehaviour {
 		}
 	}
 	
-	IEnumerator MovementTutorial(){
+	IEnumerator LookTutorial(){
 		//black out screen
 		GuiManager.instance.blackOutScreen = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
@@ -254,8 +281,6 @@ public class TutorialInstructions : MonoBehaviour {
 		player.GetComponent<KeyboardInput>().canWalk = false;
 		player.GetComponent<KeyboardInput>().canJump = false;
 		yield return new WaitForSeconds(1);
-		//damage player so they can pick up Medikit
-		//GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerResources>().TakeDamage(10, Network.player);
 		//give player mines
 		initialGrenades = GameObject.Find("InitialGrenadePack");
 		//initialGrenades.transform.position = new Vector3(0,-32,0);
@@ -271,22 +296,39 @@ public class TutorialInstructions : MonoBehaviour {
 		GuiManager.instance.blackOutScreen = false;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.", 6000);
 		yield return new WaitForSeconds(4);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nMove your Mouse to look around.", 99999);
+		lookingDot.transform.FindChild("DotMesh").renderer.material.color = new Color(0, 200, 0, 200);
+		lookingDot.transform.position = new Vector3(-358f,-10.6f,0f);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nMove your Mouse to look around.\n\nPlease look at the green dot.", 99999);
 		yield return new WaitForSeconds(5);
+		step0 = true;
+	}
+	IEnumerator MovementTutorial(){
 		player.GetComponent<KeyboardInput>().canWalk = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nUse "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+", "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+", "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()+" and "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move around.", 99999);
-		yield return new WaitForSeconds(5);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.", 99999);
+		yield return new WaitForSeconds(4);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.", 99999);
+		yield return new WaitForSeconds(4);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move Right.", 99999);
+		yield return new WaitForSeconds(4);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move Right.\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()+" to move Backwards.", 99999);
+		yield return new WaitForSeconds(4);
 		step1 = true;
 	}
 	IEnumerator MovementTutorial2(){
 		checkingfloortiles = true;
 		litfloorpanel = GameObject.Find("walkhere1");
 		litfloorpanel.transform.renderer.material.color = new Color(0, 1, 0);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nWalk onto the green square.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nWalk onto the green squares.", 99999);
 		yield return new WaitForSeconds(5);
 		step2 = true;
 	}
@@ -300,8 +342,8 @@ public class TutorialInstructions : MonoBehaviour {
 		bonus2.transform.position = new Vector3(-160,-12,12);
 		bonus2 = GameObject.Find("TutorialBonusWeaponPickup3");
 		bonus2.transform.position = new Vector3(-152,-12,12);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Some guns have been spawned, to pick up a gun simply walk over it.\n\nIf you already have 2 guns you can opt to swap the gun you are currently holding.", 99999);
-		yield return new WaitForSeconds(7);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nSome guns have been spawned, to pick up a gun simply walk over it.\n\nIf you already have 2 guns you can opt to swap the gun you are currently holding.", 99999);
+		yield return new WaitForSeconds(10);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
 		+SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload.", 99999);
 		yield return new WaitForSeconds(5);
@@ -319,16 +361,16 @@ public class TutorialInstructions : MonoBehaviour {
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
 		player.GetComponent<KeyboardInput>().canJump = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.", 99999);
-		yield return new WaitForSeconds(5);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Use "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost upwards.\n\nUse "
-            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nUse "
+		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to jump and boost upwards.", 99999);
+		yield return new WaitForSeconds(10);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nPress "
 			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.", 99999);
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(8);
 		step5 = true;		
 	}
 	IEnumerator FlightTutorial2(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("Use "
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString()+" to roll to the left and "
             +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
 		yield return new WaitForSeconds(5);
@@ -354,7 +396,7 @@ public class TutorialInstructions : MonoBehaviour {
 		bonus1.transform.position = new Vector3(0,-32,0); 
 		manager.GetComponent<GuiManager>().TutorialPrompt("Some grenade boxes have been spawned.\n\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
 			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(8);
 		step8 = true;
 	}
 	
@@ -364,7 +406,7 @@ public class TutorialInstructions : MonoBehaviour {
             "This green box is a Medikit, it will restore any damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
 		bonus3 = GameObject.Find("TutorialBonusHealthPack");
 		bonus3.transform.position = new Vector3(0,-32,0);
-		yield return new WaitForSeconds(5);
+		yield return new WaitForSeconds(8);
 		step9 = true;
 	}
 	
@@ -373,6 +415,6 @@ public class TutorialInstructions : MonoBehaviour {
 		yield return new WaitForSeconds(60);
 		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
 		yield return new WaitForSeconds(60);
-		manager.GetComponent<GuiManager>().TutorialPrompt("When you're ready to end the simulation, press Escape.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nWhen you're ready to end the simulation, press Escape.", 99999);
 	}
 }
