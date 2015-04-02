@@ -10,6 +10,7 @@ public class TutorialInstructions : MonoBehaviour {
 	private GameObject lookingDot;
 	private bool step0 = false;
 	
+	private bool check1 = false;
 	private bool F = false;
 	private bool B = false;
 	private bool L = false;
@@ -23,10 +24,10 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool openroom2 = false;
 	private bool step2 = false;
 	
+	private bool check3 = false;
 	private bool shot = false;
 	private bool aimed = false;
 	private bool changedgun = false;
-	private bool reloaded = false;
 	private bool step3 = false;
 	
 	private bool checkingtargets = false;
@@ -34,11 +35,13 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool shotAllTargets = false;
 	private bool step4 = false;
 	
+	private bool check5 = false;
 	private bool U = false;
 	private bool D = false;
 	private bool X = false;
 	private bool step5 = false;
 	
+	private bool check6 = false;
 	private bool RL = false;
 	private bool RR = false;
 	private bool step6 = false;
@@ -47,18 +50,13 @@ public class TutorialInstructions : MonoBehaviour {
 	private bool platforms = false;
 	private bool step7 = false;
 	
+	private bool check8 = false;
 	private bool grenade = false;
 	private bool step8 = false;
 	
 	private bool checkingitems = false;
 	private bool items = false;
 	private bool step9 = false;
-	
-	private GameObject initialGrenades;
-	
-	private GameObject bonus1;
-	private GameObject bonus2;
-	private GameObject bonus3;
 	
 	private GameObject litfloorpanel;
 	
@@ -97,65 +95,72 @@ public class TutorialInstructions : MonoBehaviour {
 		if (dotLooks == 4){
 			lookingDot.transform.position = new Vector3(-358f,-13.6f,0f);
 		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward])){
-			F = true;
-			Debug.Log("Player Moved Forwards");
-		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveRight])){
-			R = true;
-			Debug.Log("Player Moved Right");
-		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveBack])){
-			B = true;
-			Debug.Log("Player Moved Backwards");
-		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveLeft])){
-			L = true;
-			Debug.Log("Player Moved Left");
+		
+		if(check1){
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward])){
+				F = true;
+				Debug.Log("Player Moved Forwards");
+			}
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveRight])){
+				R = true;
+				Debug.Log("Player Moved Right");
+			}
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveBack])){
+				B = true;
+				Debug.Log("Player Moved Backwards");
+			}
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveLeft])){
+				L = true;
+				Debug.Log("Player Moved Left");
+			}
 		}
 		
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetUp])){
-			U = true;
-			Debug.Log("Player Flew Up");
-		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetDown])){
-			D = true;
-			Debug.Log("Player Flew Down");
-		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.StopMovement])){
-			X = true;
-			Debug.Log("Player Braked");
-		}
-		
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollLeft])){
-			RL = true;
-			Debug.Log("Player Rolled Left");
-		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollRight])){
-			RR = true;
-			Debug.Log("Player Rolled Right");
+		if(check3){
+			if (Input.GetMouseButtonDown(0)){
+				shot = true;
+				Debug.Log("Player Shot");
+			}
+			if (Input.GetMouseButtonDown(1)){
+				aimed = true;
+				Debug.Log("Player Aimed");
+			}
+			if (Input.GetKeyDown("2") || Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0){
+				changedgun = true;
+				Debug.Log("Player Changed Weapons");
+			}
 		}
 		
-		if (Input.GetMouseButtonDown(0)){
-			shot = true;
-			Debug.Log("Player Shot");
-		}
-		if (Input.GetMouseButtonDown(1)){
-			aimed = true;
-			Debug.Log("Player Aimed");
-		}
-		if (Input.GetKeyDown("2") || Input.GetKeyDown("3") || Input.GetKeyDown("4") || Input.GetKeyDown("5") || Input.GetKeyDown("6") || Input.GetKeyDown("7") || Input.GetAxis("Mouse ScrollWheel") < 0 || Input.GetAxis("Mouse ScrollWheel") > 0){
-			changedgun = true;
-			Debug.Log("Player Changed Weapons");
+		if(check5){
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetUp])){
+				U = true;
+				Debug.Log("Player Flew Up");
+			}
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.JetDown])){
+				D = true;
+				Debug.Log("Player Flew Down");
+			}
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.StopMovement])){
+				X = true;
+				Debug.Log("Player Braked");
+			}
 		}
 		
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.Reload])){
-			reloaded = true;
-			Debug.Log("Player Reloaded");
+		if(check6){
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollLeft])){
+				RL = true;
+				Debug.Log("Player Rolled Left");
+			}
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.RollRight])){
+				RR = true;
+				Debug.Log("Player Rolled Right");
+			}
 		}
-		if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.Grenade])){
-			grenade = true;
-			Debug.Log("Player Threw Grenade");
+		
+		if(check8){
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.Grenade])){
+				grenade = true;
+				Debug.Log("Player Threw Grenade");
+			}
 		}
 		
 		if(checkingitems){
@@ -171,7 +176,7 @@ public class TutorialInstructions : MonoBehaviour {
 			bonusItems = GameObject.FindGameObjectsWithTag("BonusPickup");
 			remainingtargets = 0;
 			foreach(GameObject objecttest in bonusItems){
-				if(objecttest.name == "Target"){
+				if(objecttest.name == "Target" || objecttest.name == "movingTarget1" || objecttest.name == "movingTarget2"){
 					remainingtargets ++;
 				}
 			}
@@ -219,11 +224,11 @@ public class TutorialInstructions : MonoBehaviour {
 		if (openroom2){
 			room1exit = GameObject.Find("WalkRoomExit");
 			if(room1exit.transform.position.y > -30){
-				room1exit.transform.position = new Vector3(room1exit.transform.position.x,room1exit.transform.position.y-0.05f,room1exit.transform.position.z); 
+				room1exit.transform.position = new Vector3(room1exit.transform.position.x,room1exit.transform.position.y-0.07f,room1exit.transform.position.z); 
 			}
 		}
 		
-		if (shot && aimed && reloaded && changedgun && step3){
+		if (shot && aimed && changedgun && step3){
 			step3 = false;
 			StartCoroutine(GunTutorial2());
 		}
@@ -236,7 +241,7 @@ public class TutorialInstructions : MonoBehaviour {
 		if (shotAllTargets){
 			room2exit = GameObject.Find("GunRoomExit");
 			if(room2exit.transform.position.y > -30){
-				room2exit.transform.position = new Vector3(room2exit.transform.position.x,room2exit.transform.position.y-0.05f,room2exit.transform.position.z); 
+				room2exit.transform.position = new Vector3(room2exit.transform.position.x,room2exit.transform.position.y-0.07f,room2exit.transform.position.z); 
 			}
 		}
 		
@@ -256,7 +261,7 @@ public class TutorialInstructions : MonoBehaviour {
 		if (platforms){
 			room3exit = GameObject.Find("FlightRoomExit");
 			if(room3exit.transform.position.y > -30){
-				room3exit.transform.position = new Vector3(room3exit.transform.position.x,room3exit.transform.position.y-0.05f,room3exit.transform.position.z); 
+				room3exit.transform.position = new Vector3(room3exit.transform.position.x,room3exit.transform.position.y-0.07f,room3exit.transform.position.z); 
 			}
 		}
 		
@@ -281,12 +286,8 @@ public class TutorialInstructions : MonoBehaviour {
 		player.GetComponent<KeyboardInput>().canWalk = false;
 		player.GetComponent<KeyboardInput>().canJump = false;
 		yield return new WaitForSeconds(1);
-		//give player mines
-		initialGrenades = GameObject.Find("InitialGrenadePack");
-		//initialGrenades.transform.position = new Vector3(0,-32,0);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
 		yield return new WaitForSeconds(1);
-		Destroy(initialGrenades);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating...", 6000);
 		yield return new WaitForSeconds(1);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating....", 6000);
@@ -296,13 +297,14 @@ public class TutorialInstructions : MonoBehaviour {
 		GuiManager.instance.blackOutScreen = false;
 		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.", 6000);
 		yield return new WaitForSeconds(4);
-		lookingDot.transform.FindChild("DotMesh").renderer.material.color = new Color(0, 200, 0, 200);
+		lookingDot.transform.FindChild("DotMesh").renderer.material.color = new Color(0, 0, 200, 200);
 		lookingDot.transform.position = new Vector3(-358f,-10.6f,0f);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nMove your Mouse to look around.\n\nPlease look at the green dot.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nMove your Mouse to look around.\n\nPlease look at the blue dot.", 99999);
 		yield return new WaitForSeconds(5);
 		step0 = true;
 	}
 	IEnumerator MovementTutorial(){
+		check1 = true;
 		player.GetComponent<KeyboardInput>().canWalk = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.", 99999);
@@ -336,13 +338,8 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator GunTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
-		bonus2 = GameObject.Find("TutorialBonusWeaponPickup1");
-		bonus2.transform.position = new Vector3(-168,-12,12);
-		bonus2 = GameObject.Find("TutorialBonusWeaponPickup2");
-		bonus2.transform.position = new Vector3(-160,-12,12);
-		bonus2 = GameObject.Find("TutorialBonusWeaponPickup3");
-		bonus2.transform.position = new Vector3(-152,-12,12);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nSome guns have been spawned, to pick up a gun simply walk over it.\n\nIf you already have 2 guns you can opt to swap the gun you are currently holding.", 99999);
+		check3 = true;
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nTo pick up a gun simply walk over it.\n\nIf you already have 2 guns you can swap out the gun you are currently holding.", 99999);
 		yield return new WaitForSeconds(10);
 		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
 		+SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload.", 99999);
@@ -360,6 +357,7 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator FlightTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
+		check5 = true;
 		player.GetComponent<KeyboardInput>().canJump = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to jump and boost upwards.", 99999);
 		yield return new WaitForSeconds(10);
@@ -370,6 +368,7 @@ public class TutorialInstructions : MonoBehaviour {
 		step5 = true;		
 	}
 	IEnumerator FlightTutorial2(){
+		check6 = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString()+" to roll to the left and "
             +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
@@ -392,9 +391,8 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator GrenadeTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
-		bonus1 = GameObject.Find("TutorialBonusGrenadePack");
-		bonus1.transform.position = new Vector3(0,-32,0); 
-		manager.GetComponent<GuiManager>().TutorialPrompt("Some grenade boxes have been spawned.\n\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
+		check8 = true;
+		manager.GetComponent<GuiManager>().TutorialPrompt("The purple boxes contain grenades.\n\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
 			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
 		yield return new WaitForSeconds(8);
 		step8 = true;
@@ -403,16 +401,14 @@ public class TutorialInstructions : MonoBehaviour {
 	IEnumerator ItemTutorial(){
 		checkingitems = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt(
-            "This green box is a Medikit, it will restore any damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 9999);
-		bonus3 = GameObject.Find("TutorialBonusHealthPack");
-		bonus3.transform.position = new Vector3(0,-32,0);
+            "\nThe green box is a Medikit, it will restore damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 99999);
 		yield return new WaitForSeconds(8);
 		step9 = true;
 	}
 	
 	IEnumerator FinalTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("Keep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.", 99999);
-		yield return new WaitForSeconds(60);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.", 99999);
+		yield return new WaitForSeconds(40);
 		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
 		yield return new WaitForSeconds(60);
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWhen you're ready to end the simulation, press Escape.", 99999);

@@ -12,15 +12,10 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 	private bool randomtype;
 
 	void Start(){
-
-        if (GameManager.IsSceneTutorial()) {
-            grenadeType = 0;
-        } else {
-            //Randomise here, just for now
-            if(randomtype){
-				grenadeType = Random.Range(0, 3);
-			}
-        }
+        //Randomise here, just for now
+        if(randomtype){
+			grenadeType = Random.Range(0, 3);
+		}
 	}
 
 	void OnTriggerEnter(Collider info){
