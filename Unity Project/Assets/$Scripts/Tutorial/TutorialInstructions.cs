@@ -52,11 +52,10 @@ public class TutorialInstructions : MonoBehaviour {
 	
 	private bool check8 = false;
 	private bool grenade = false;
+	private bool changedgrenade = false;
 	private bool step8 = false;
 	
-	private bool checkingitems = false;
-	private bool items = false;
-	private bool step9 = false;
+	private GameObject healthpack;
 	
 	private GameObject litfloorpanel;
 	
@@ -161,14 +160,9 @@ public class TutorialInstructions : MonoBehaviour {
 				grenade = true;
 				Debug.Log("Player Threw Grenade");
 			}
-		}
-		
-		if(checkingitems){
-			bonusItems = GameObject.FindGameObjectsWithTag("BonusPickup");
-			if(bonusItems.Length > 3){
-				items = false;
-			} else {
-				items = true;
+			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch])){
+				changedgrenade = true;
+				Debug.Log("Player Changed Grenade-type");
 			}
 		}
 		
@@ -265,15 +259,9 @@ public class TutorialInstructions : MonoBehaviour {
 			}
 		}
 		
-		if (grenade && step8){
+		if (grenade && changedgrenade && step8){
 			step8 = false;
 			StartCoroutine(ItemTutorial());
-		}
-		
-		if (items && step9){
-			checkingitems = false;
-			step9 = false;
-			StartCoroutine(FinalTutorial());
 		}
 	}
 	
@@ -383,7 +371,7 @@ public class TutorialInstructions : MonoBehaviour {
 		platform1.transform.position = new Vector3(platform1.transform.position.x,0,platform1.transform.position.z); 
 		platform2.transform.position = new Vector3(platform2.transform.position.x,0,platform2.transform.position.z); 
 		platform3.transform.position = new Vector3(platform3.transform.position.x,0,platform3.transform.position.z); 
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nTry to land on these platforms.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("\nTry to land on these platforms.\n\nRemember to 'look up' before you crash so you land feet first.", 99999);
 		yield return new WaitForSeconds(5);
 		step7 = true;
 	}
@@ -392,24 +380,30 @@ public class TutorialInstructions : MonoBehaviour {
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
 		yield return new WaitForSeconds(7);
 		check8 = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("The purple boxes contain grenades.\n\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
-			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
+		manager.GetComponent<GuiManager>().TutorialPrompt("The purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
+			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\nPress "+SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString()+" to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
 		yield return new WaitForSeconds(8);
 		step8 = true;
 	}
 	
 	IEnumerator ItemTutorial(){
-		checkingitems = true;
 		manager.GetComponent<GuiManager>().TutorialPrompt(
-            "\nThe green box is a Medikit, it will restore damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot items to stop others from getting them.", 99999);
+            "\nIf a grenade hits a person it will detonate instantly.\n\nYou can also set off grenades by shooting them.", 99999);
 		yield return new WaitForSeconds(8);
-		step9 = true;
+		healthpack = GameObject.Find("TutorialBonusHealthPack");
+		healthpack.transform.position = new Vector3(142.22f,13.45f,-0.17f);
+		manager.GetComponent<GuiManager>().TutorialPrompt(
+            "\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot them to destroy them and stop others from using them.", 99999);
+		yield return new WaitForSeconds(10);
+		StartCoroutine(FinalTutorial());
 	}
 	
 	IEnumerator FinalTutorial(){
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.", 99999);
-		yield return new WaitForSeconds(40);
-		manager.GetComponent<GuiManager>().TutorialPrompt("At the right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
+		yield return new WaitForSeconds(30);
+		manager.GetComponent<GuiManager>().TutorialPrompt("At the bottom left of your HUD the suit displays a radar.\nThis shows you the locations of items and other players.\n\nThe green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are\nabove you their dot is larger than yours, when they are below you their dot is smaller.", 99999);
+		yield return new WaitForSeconds(30);
+		manager.GetComponent<GuiManager>().TutorialPrompt("At the bottom right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
 		yield return new WaitForSeconds(60);
 		manager.GetComponent<GuiManager>().TutorialPrompt("\nWhen you're ready to end the simulation, press Escape.", 99999);
 	}
