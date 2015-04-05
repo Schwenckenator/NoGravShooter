@@ -35,9 +35,9 @@ public class PlayerColourManager : MonoBehaviour {
     /// <param name="input"></param>
     /// <returns></returns>
     public Color LimitTeamColour(TeamColour team, Color input) {
-        if (team == TeamColour.Red) 
+        if (team == TeamColour.Red && !GameManager.IsSceneTutorial()) 
             return LimitRedTeamColour(input);
-        if (team == TeamColour.Blue) 
+        if (team == TeamColour.Blue && !GameManager.IsSceneTutorial()) 
             return LimitBlueTeamColour(input);
         return input;
     }
