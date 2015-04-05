@@ -827,12 +827,12 @@ public class GuiManager : MonoBehaviour {
 			}
 		}
 		if(SettingsManager.instance.IsTeamGameMode()){
-			GUI.Box(new Rect(20, 130, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(), upperLeftTextAlign);
+			GUI.Box(new Rect(20, 130, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(false), upperLeftTextAlign);
 			defaultcol = GUI.backgroundColor;
 			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Box(new Rect(20, 130, largeRect.width/6, 30), "Red Team:", RedTeamFont);
 			GUI.backgroundColor = defaultcol;
-			GUI.Box(new Rect(25+(largeRect.width/6), 130, (largeRect.width/6)-5, largeRect.height-190), BluePlayerList(), upperLeftTextAlign);
+			GUI.Box(new Rect(25+(largeRect.width/6), 130, (largeRect.width/6)-5, largeRect.height-190), BluePlayerList(false), upperLeftTextAlign);
 			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Box(new Rect(25+(largeRect.width/6), 130, largeRect.width/6, 30), "Blue Team:", BlueTeamFont);
 			GUI.backgroundColor = defaultcol;
@@ -840,7 +840,7 @@ public class GuiManager : MonoBehaviour {
 				NetworkManager.MyPlayer().ChangeTeam();
 			}
 		} else {
-			GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-160), PlayerList(), upperLeftTextAlign);
+			GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-160), PlayerList(false), upperLeftTextAlign);
 		}
         string message = Network.isServer ? "Shutdown Server": "Disconnect";
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), message)) {
@@ -947,12 +947,12 @@ public class GuiManager : MonoBehaviour {
 		}
 
         if(SettingsManager.instance.IsTeamGameMode() && !GameManager.IsSceneTutorial()){
-			GUI.Box(new Rect(20, 100, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(), upperLeftTextAlign);
+			GUI.Box(new Rect(20, 100, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(true), upperLeftTextAlign);
 			defaultcol = GUI.backgroundColor;
 			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Box(new Rect(20, 100, largeRect.width/6, 30), "Red Team:", RedTeamFont);
 			GUI.backgroundColor = defaultcol;
-			GUI.Box(new Rect(25+(largeRect.width/6), 100, (largeRect.width/6)-5, largeRect.height-190), BluePlayerList(), upperLeftTextAlign);
+			GUI.Box(new Rect(25+(largeRect.width/6), 100, (largeRect.width/6)-5, largeRect.height-190), BluePlayerList(true), upperLeftTextAlign);
 			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Box(new Rect(25+(largeRect.width/6), 100, largeRect.width/6, 30), "Blue Team:", BlueTeamFont);
 			GUI.backgroundColor = defaultcol;
@@ -962,7 +962,7 @@ public class GuiManager : MonoBehaviour {
 				}
 			}*/
 		} else {
-			GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-190), PlayerList(), upperLeftTextAlign);
+			GUI.Box(new Rect(20, 100, largeRect.width/3, largeRect.height-190), PlayerList(true), upperLeftTextAlign);
 		}
 
         if (!GameManager.IsSceneTutorial() && Network.isServer) {
@@ -1005,27 +1005,39 @@ public class GuiManager : MonoBehaviour {
         return message;
     }
 
-    private string PlayerList() {
+    private string PlayerList(bool showscores) {
         string playerNames = "Players:\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
-            playerNames += player.Name + "\n";
+            playerNames += player.Name;
+			if(showscores){
+				playerNames += " " + player.Score;
+			}
+			playerNames += "\n";
         }
         return playerNames;
     }
-    private string RedPlayerList() {
+    private string RedPlayerList(bool showscores) {
         string playerNames = "\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
 			if(player.Team.ToString() == "Red"){
-				playerNames += player.Name + "\n";
+				playerNames += player.Name;
+				if(showscores){
+					playerNames += " " + player.Score;
+				}
+				playerNames += "\n";
 			}
         }
         return playerNames;
     }
-    private string BluePlayerList() {
+    private string BluePlayerList(bool showscores) {
         string playerNames = "\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
 			if(player.Team.ToString() == "Blue"){
-				playerNames += player.Name + "\n";
+				playerNames += player.Name;
+				if(showscores){
+					playerNames += " " + player.Score;
+				}
+				playerNames += "\n";
 			}
         }
         return playerNames;
