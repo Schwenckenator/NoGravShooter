@@ -21,11 +21,11 @@ public class UIManager : MonoBehaviour {
 
     public enum Menu { MainMenu = 0, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
     public GameObject[] menus; // Only for initialisation
-    private static List<Canvas> window;
+    private static List<Canvas> windows;
     private static int currentWindow;
 
     void Start() {
-        window = new List<Canvas>();
+        windows = new List<Canvas>();
 
         SetCurrentWindow(Menu.MainMenu);
 
@@ -34,10 +34,10 @@ public class UIManager : MonoBehaviour {
             GameObject newMenu = Instantiate(menu) as GameObject;
             Canvas newCanvas = newMenu.GetComponent<Canvas>();
             newCanvas.enabled = false;
-            window.Add(newCanvas);
+            windows.Add(newCanvas);
         }
         //Enable Main menu
-        window[0].enabled = true;
+        windows[0].enabled = true;
     }
     #region SetWindow
     private static void SetCurrentWindow(Menu menu){
@@ -48,8 +48,8 @@ public class UIManager : MonoBehaviour {
         SetMenuWindow((int)newWindow);
     }
     public void SetMenuWindow(int newWindow) {
-        window[currentWindow].enabled = false;
-        window[newWindow].enabled = true;
+        windows[currentWindow].enabled = false;
+        windows[newWindow].enabled = true;
 
         currentWindow = newWindow;
     }
@@ -58,6 +58,12 @@ public class UIManager : MonoBehaviour {
     public void QuitGame() {
         if (!Application.isWebPlayer && !Application.isEditor) {
             Application.Quit();
+        } else {
+            // If editor, clear instantiated windows
+            // Because I want to look at something I made.
+            foreach (Canvas canvas in windows) {
+                canvas.enabled = false;
+            }
         }
     }
 }
