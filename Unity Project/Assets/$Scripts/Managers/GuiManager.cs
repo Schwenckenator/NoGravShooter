@@ -118,7 +118,6 @@ public class GuiManager : MonoBehaviour {
 	
 	private int chatboxwidth = 500;
 
-	//string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster"};
 	string[] weaponlist = {"Laser Rifle","Assault Rifle","Beam Sniper","Shotgun","Force Cannon","Rocket Launcher","Plasma Blaster","None"};
 
     KeyBind editedBinding;
@@ -134,6 +133,7 @@ public class GuiManager : MonoBehaviour {
     private Color redTeamColour;
     private Color blueTeamColour;
 
+    private List<Resolution> resolutions;
     #endregion
 
     
@@ -149,6 +149,8 @@ public class GuiManager : MonoBehaviour {
 		MedkitSpawning = (SettingsManager.instance.MedkitCanSpawn == 1);
 		GrenadeSpawning = (SettingsManager.instance.GrenadeCanSpawn == 1);
 		WeaponSpawning = (SettingsManager.instance.WeaponCanSpawn == 1);
+
+        resolutions = ResolutionListPrune();
 	}
 
 	#region OnGUI
@@ -604,8 +606,7 @@ public class GuiManager : MonoBehaviour {
 
     void GraphicsOptionsWindow(int windowId) {
         Rect standard = new Rect(20, 20, -40 + Screen.width / 3, 30);
-        Resolution[] resolutions = Screen.resolutions;
-        int maxIndex = resolutions.Length;
+        int maxIndex = resolutions.Count;
 
         standard.y += 50;
         GUI.Label(standard, "Resolution: ");
@@ -631,14 +632,27 @@ public class GuiManager : MonoBehaviour {
         }
     }
 
-    void GraphicsOptionsSetup() {
+    public int resolutionMinWidth = 800;
+    public int resolutionMinHeight = 600;
+    List<Resolution> ResolutionListPrune() {
+        List<Resolution> resList = new List<Resolution>();
         Resolution[] resolutions = Screen.resolutions;
-        int maxIndex = resolutions.Length;
+
+        foreach (Resolution res in resolutions) {
+            if (res.width >= resolutionMinWidth && res.height >= resolutionMinHeight) {
+                resList.Add(res);
+            }
+        }
+
+        return resList;
+    }
+
+    void GraphicsOptionsSetup() {
+        int maxIndex = resolutions.Count;
         for (int i = 0; i < maxIndex; i++) {
             if (Screen.height == resolutions[i].height && Screen.width == resolutions[i].width) {
                 resolutionIndex = i;
             }
-
         }
     }
 
