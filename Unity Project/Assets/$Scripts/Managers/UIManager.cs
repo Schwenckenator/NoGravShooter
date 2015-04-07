@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour {
     }
     #endregion
 
-    public enum Menu { MainMenu = 0, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
+    public enum Menu { MainMenu = 0, CreateGame, JoinGame, Options, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
     public GameObject[] menus; // Only for initialisation
     private static List<Canvas> windows;
     private static int currentWindow;
@@ -38,6 +38,11 @@ public class UIManager : MonoBehaviour {
         }
         //Enable Main menu
         windows[0].enabled = true;
+    }
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            RemoveAllGUI();
+        }
     }
     #region SetWindow
     private static void SetCurrentWindow(Menu menu){
@@ -59,11 +64,15 @@ public class UIManager : MonoBehaviour {
         if (!Application.isWebPlayer && !Application.isEditor) {
             Application.Quit();
         } else {
-            // If editor, clear instantiated windows
-            // Because I want to look at something I made.
-            foreach (Canvas canvas in windows) {
-                canvas.enabled = false;
-            }
+            RemoveAllGUI();
+        }
+    }
+
+    private static void RemoveAllGUI() {
+        // If editor, clear instantiated windows
+        // Because I want to look at something I made.
+        foreach (Canvas canvas in windows) {
+            canvas.enabled = false;
         }
     }
 }
