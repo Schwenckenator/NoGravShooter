@@ -358,7 +358,7 @@ public class GameManager : MonoBehaviour {
     [RPC]
     void RPCReturnToLobby() {
         //currentWindow = Menu.Lobby;
-        GuiManager.instance.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
+        GuiManager.instance.SetCurrentMenuWindow(GuiManager.OLD_Menu.Lobby);
 
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.instance.ClearScoreData();

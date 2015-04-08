@@ -24,9 +24,18 @@ public class UIManager : MonoBehaviour {
     public GameObject[] menus; // Only for initialisation
     private static List<Canvas> windows;
     private static int currentWindow = 0;
+    private static List<Text> keybindButtonText;
+    private static int editedBinding = 0;
+    
+    // Option
+    private static InputField[] optionInputFields;
+    private static Slider[] optionSliders;
+    private static OptionColourBox[] optionPlayerColours;
+
 
     void Start() {
         windows = new List<Canvas>();
+        keybindButtonText = new List<Text>();
 
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
@@ -37,14 +46,21 @@ public class UIManager : MonoBehaviour {
         }
         //Enable Main menu
         SetMenuWindow(Menu.MainMenu);
-        ShowMenuWindow(Menu.Debug, true);
+        windows[(int)Menu.Debug].enabled = true;
         MenuWindowInit();
+    }
+    void OnGUI() { // Dirty old system, but I can't see a way around it
+        if (windows[(int)Menu.ChangeKeybind].enabled) {
+            ChangeKeybindUpdate();
+        }
     }
 
     #region MenuWindowInit
     void MenuWindowInit() {
         MainMenuInit();
         CreateGameInit();
+        EditKeybindInit();
+        OptionsInit();
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
@@ -58,7 +74,42 @@ public class UIManager : MonoBehaviour {
         inputs[1].text = SettingsManager.instance.PortNumStr;
         inputs[2].text = SettingsManager.instance.PasswordServer;
     }
+    void EditKeybindInit() {
+        Canvas editKeybind = GetCanvas(Menu.EditKeybind);
+        Button[] buttons = editKeybind.gameObject.GetComponentsInChildren<Button>(true);
+        foreach (Button button in buttons) {
+            Text butText = button.GetComponentInChildren<Text>();
+            if (butText.text == "Back") continue;
+            keybindButtonText.Add(butText);
+        }
+        EditKeybindTextRefresh();
+    }
+    void OptionsInit() {
+        Canvas options = GetCanvas(Menu.Options);
+        optionSliders = options.gameObject.GetComponentsInChildren<Slider>(true);
+        optionInputFields = options.gameObject.GetComponentsInChildren<InputField>(true);
+        optionPlayerColours = options.gameObject.GetComponentsInChildren<OptionColourBox>(true);
+        // Order
+        /* Mouse sen X
+         * Mouse sen Y
+         * Fov
+         * Colour Red
+         * Colour Green
+         * Colour Blue
+         */
+
+        OptionsSliderUpdate();
+        OptionsInputFieldUpdate();
+        OptionsColoursUpdate();
+}
+
     #endregion
+
+    void EditKeybindTextRefresh() {
+        for (int i = 0; i < keybindButtonText.Count; i++) {
+            keybindButtonText[i].text = SettingsManager.keyBindings[i].ToString();
+        }
+    }
 
     #region SetWindow
     public void SetMenuWindow(Menu newWindow) {
@@ -68,21 +119,27 @@ public class UIManager : MonoBehaviour {
         ShowMenuWindow((int)newWindow, show);
     }
     
-    public void SetMenuWindow(int newWindow) {
+    private void SetMenuWindow(int newWindow) {
         windows[currentWindow].enabled = false;
         windows[newWindow].enabled = true;
 
         currentWindow = newWindow;
     }
-    public void ShowMenuWindow(int newWindow, bool show) {
+    private void ShowMenuWindow(int newWindow, bool show) {
         windows[newWindow].enabled = show;
+        windows[currentWindow].GetComponent<CanvasGroup>().interactable = !show;
     }
     #endregion
 
     #region MenuWindowMethods
-    public void GoChangeKeybind(bool value) {
-        ShowMenuWindow(Menu.ChangeKeybind, value);
+    public void OpenChangeKeybind(int key) {
+        editedBinding = key;
+        ShowMenuWindow(Menu.ChangeKeybind, true);
     }
+    public void CloseChangeKeybind() {
+        ShowMenuWindow(Menu.ChangeKeybind, false);
+    }
+
     public void GoConnecting() {
         SetMenuWindow(Menu.Connecting);
     }
@@ -126,6 +183,91 @@ public class UIManager : MonoBehaviour {
         SetMenuWindow(Menu.PlayerHUD);
     }
     #endregion
+
+    #region SaveSettings
+    public void SaveGraphicsSettings() {
+        // Save settings logic
+        SetMenuWindow(Menu.Options);
+    }
+    public void SaveKeybinds() {
+        SettingsManager.instance.SaveKeyBinds();
+        SetMenuWindow(Menu.Options);
+    }
+    public void SaveOptions() {
+        SettingsManager.instance.SaveSettings();
+        SetMenuWindow(Menu.MainMenu);
+    }
+    #endregion
+
+    #region Options
+
+    private void OptionsInputFieldUpdate() {
+        optionInputFields[0].text = SettingsManager.instance.MouseSensitivityX.ToString();
+        optionInputFields[1].text = SettingsManager.instance.MouseSensitivityY.ToString();
+        optionInputFields[2].text = SettingsManager.instance.FieldOfView.ToString();
+        optionInputFields[3].text = SettingsManager.instance.ColourR.ToString();
+        optionInputFields[4].text = SettingsManager.instance.ColourG.ToString();
+        optionInputFields[5].text = SettingsManager.instance.ColourB.ToString();
+    }
+    private void OptionsSliderUpdate() {
+        optionSliders[0].value = SettingsManager.instance.MouseSensitivityX * 100;
+        optionSliders[1].value = SettingsManager.instance.MouseSensitivityY * 100;
+        optionSliders[2].value = SettingsManager.instance.FieldOfView * 10;
+        optionSliders[3].value = SettingsManager.instance.ColourR * 100;
+        optionSliders[4].value = SettingsManager.instance.ColourG * 100;
+        optionSliders[5].value = SettingsManager.instance.ColourB * 100;
+    }
+    private void OptionsColoursUpdate() {
+        optionPlayerColours[0].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.Red, SettingsManager.instance.GetPlayerColour()));
+        optionPlayerColours[1].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.None, SettingsManager.instance.GetPlayerColour()));
+        optionPlayerColours[2].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.Blue, SettingsManager.instance.GetPlayerColour()));
+    }
+
+    public void MouseSenXSliderUpdate(float value) {
+        SettingsManager.instance.MouseSensitivityX = value / 100f;
+        OptionsInputFieldUpdate();
+    }
+    public void MouseSenYSliderUpdate(float value) {
+        SettingsManager.instance.MouseSensitivityY = value / 100f;
+        OptionsInputFieldUpdate();
+    }
+    public void FOVSliderUpdate(float value) {
+        SettingsManager.instance.FieldOfView = value / 10f;
+        OptionsInputFieldUpdate();
+    }
+    public void ColourRSliderUpdate(float value) {
+        SettingsManager.instance.ColourR = value / 100f;
+        OptionsInputFieldUpdate();
+        OptionsColoursUpdate();
+    }
+    public void ColourGSliderUpdate(float value) {
+        SettingsManager.instance.ColourG = value / 100f;
+        OptionsInputFieldUpdate();
+        OptionsColoursUpdate();
+    }
+    public void ColourBSliderUpdate(float value) {
+        SettingsManager.instance.ColourB = value / 100f;
+        OptionsInputFieldUpdate();
+        OptionsColoursUpdate();
+    }
+    #endregion
+    void ChangeKeybindUpdate() {
+        bool done = false;
+        if (Event.current.isKey) {
+            if (Event.current.keyCode != KeyCode.Escape) {
+                SettingsManager.keyBindings[editedBinding] = Event.current.keyCode;
+            }
+            done = true;
+        } else if (Event.current.shift) {
+            SettingsManager.keyBindings[editedBinding] = KeyCode.LeftShift;
+            done = true;
+        }
+
+        if (done) {
+            EditKeybindTextRefresh();
+            ShowMenuWindow(Menu.ChangeKeybind, false);
+        }
+    }
 
     public Canvas GetCanvas(Menu value) {
         return windows[(int)value];

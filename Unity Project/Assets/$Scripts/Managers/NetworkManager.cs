@@ -155,7 +155,7 @@ public class NetworkManager : MonoBehaviour {
             Application.LoadLevel("MenuScene");
         }
 
-        GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.Menu.MainMenu);
+        GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.OLD_Menu.MainMenu);
 
         NetworkManager.connectedPlayers.Clear();
         NetworkManager.myPlayer = null;
@@ -176,7 +176,7 @@ public class NetworkManager : MonoBehaviour {
         SettingsManager.instance.ClearPasswordClient();
 
         // Set window to lobby
-        GuiManager.instance.SetCurrentMenuWindow(GuiManager.Menu.Lobby);
+        GuiManager.instance.SetCurrentMenuWindow(GuiManager.OLD_Menu.Lobby);
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         
         string message = SettingsManager.instance.PlayerName + " has connected.";

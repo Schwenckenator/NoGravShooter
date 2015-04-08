@@ -21,11 +21,11 @@ public class GuiManager : MonoBehaviour {
     }
     #endregion
 
-    public enum Menu { MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
-    public void SetCurrentMenuWindow(Menu newWindow) {
+    public enum OLD_Menu { MainMenu, CreateGame, JoinGame, Options, Quit, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
+    public void SetCurrentMenuWindow(OLD_Menu newWindow) {
         currentWindow = newWindow;
     }
-    public bool IsCurrentWindow(Menu window) {
+    public bool IsCurrentWindow(OLD_Menu window) {
         return window == currentWindow;
     }
 
@@ -80,7 +80,7 @@ public class GuiManager : MonoBehaviour {
 	
 	private PlayerResources playerResource;
 	
-	private Menu currentWindow = 0;
+	private OLD_Menu currentWindow = 0;
 	private bool displayGameSettingsWindow = false;
 	private bool displayJoinByIpWindow = false;
 	private bool displayChangeKeybindWindow = false;
@@ -141,7 +141,7 @@ public class GuiManager : MonoBehaviour {
 
         ChangeGuiRectSize(); // Do this first
 		
-        SetCurrentMenuWindow(Menu.MainMenu);
+        SetCurrentMenuWindow(OLD_Menu.MainMenu);
 
 		mouseInverted = (SettingsManager.instance.MouseYDirection == 1);
         autoPickupEnabled = (SettingsManager.instance.AutoPickup);
@@ -182,7 +182,7 @@ public class GuiManager : MonoBehaviour {
         }
 
 		if(connectingNow){
-			if(!IsCurrentWindow(Menu.Connecting)){
+			if(!IsCurrentWindow(OLD_Menu.Connecting)){
 				connectingNow = false;
 			}
 		}
@@ -205,42 +205,42 @@ public class GuiManager : MonoBehaviour {
 	void ChooseMenuWindow(){
 		switch(currentWindow){
 			
-		case Menu.MainMenu:
-			GUI.Window ((int) Menu.MainMenu, largeRect, MainMenuWindow, "Main Menu");
+		case OLD_Menu.MainMenu:
+			GUI.Window ((int) OLD_Menu.MainMenu, largeRect, MainMenuWindow, "Main Menu");
 			break;
-		case Menu.CreateGame:
-			GUI.Window ((int) Menu.CreateGame, largeRect, CreateGameWindow, "Create Game");
+		case OLD_Menu.CreateGame:
+			GUI.Window ((int) OLD_Menu.CreateGame, largeRect, CreateGameWindow, "Create Game");
 			break;
-		case Menu.JoinGame:
-			GUI.Window ((int) Menu.JoinGame, largeRect, JoinGameWindow, "Join Game");
+		case OLD_Menu.JoinGame:
+			GUI.Window ((int) OLD_Menu.JoinGame, largeRect, JoinGameWindow, "Join Game");
 			break;
-		case Menu.Options:
-			GUI.Window ((int) Menu.Options, largeRect, OptionsWindow, "Options");
+		case OLD_Menu.Options:
+			GUI.Window ((int) OLD_Menu.Options, largeRect, OptionsWindow, "Options");
 			break;
-		case Menu.Lobby:
-            GUI.Window((int)Menu.Lobby, largeRect, LobbyWindow, menuText);
+		case OLD_Menu.Lobby:
+            GUI.Window((int)OLD_Menu.Lobby, largeRect, LobbyWindow, menuText);
 			break;
-		case Menu.Connecting:
-			GUI.Window ((int) Menu.Connecting, smallRect, ConnectingWindow, "");
+		case OLD_Menu.Connecting:
+			GUI.Window ((int) OLD_Menu.Connecting, smallRect, ConnectingWindow, "");
 			break;
-		case Menu.Keybind:
-			GUI.Window ((int) Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
+		case OLD_Menu.Keybind:
+			GUI.Window ((int) OLD_Menu.Keybind, largeRect, KeyBindWindow, "Edit Keybindings");
 			break;
-        case Menu.GraphicsOptions:
-            GUI.Window ((int)Menu.GraphicsOptions, largeRect, GraphicsOptionsWindow, "Graphics Options");
+        case OLD_Menu.GraphicsOptions:
+            GUI.Window ((int)OLD_Menu.GraphicsOptions, largeRect, GraphicsOptionsWindow, "Graphics Options");
             break;
 		}
 		if(displayGameSettingsWindow){
-			GUI.ModalWindow((int) Menu.GameSettings, smallRect, GameSettingsWindow, "Settings");
+			GUI.ModalWindow((int) OLD_Menu.GameSettings, smallRect, GameSettingsWindow, "Settings");
 		}
 		if(displayJoinByIpWindow){
-			GUI.ModalWindow((int) Menu.JoinByIP, smallRect, JoinByIpWindow, "Join By IP");
+			GUI.ModalWindow((int) OLD_Menu.JoinByIP, smallRect, JoinByIpWindow, "Join By IP");
 		}
 		if(displayChangeKeybindWindow){
-			GUI.ModalWindow((int) Menu.ChangeKeybind, smallRect, ChangeKeybindWindow, "Press new key");
+			GUI.ModalWindow((int) OLD_Menu.ChangeKeybind, smallRect, ChangeKeybindWindow, "Press new key");
 		}
         if (displayMasterServerPassword) {
-            GUI.ModalWindow((int)Menu.PasswordInput, smallRect, PasswordInputWindow, "Password Required!");
+            GUI.ModalWindow((int)OLD_Menu.PasswordInput, smallRect, PasswordInputWindow, "Password Required!");
         }
 	}
 	#endregion
@@ -266,7 +266,7 @@ public class GuiManager : MonoBehaviour {
 			}
             SettingsManager.instance.SaveSettings();
 
-            SetCurrentMenuWindow(Menu.CreateGame);
+            SetCurrentMenuWindow(OLD_Menu.CreateGame);
 		}
 		standard.y += 50;
 		if(GUI.Button(standard, "Join Game")){
@@ -274,7 +274,7 @@ public class GuiManager : MonoBehaviour {
 			MasterServer.RequestHostList(GameType);
             SettingsManager.instance.SaveSettings();
 
-            SetCurrentMenuWindow(Menu.JoinGame);
+            SetCurrentMenuWindow(OLD_Menu.JoinGame);
 		}
 		
 		standard.y += 50;
@@ -284,7 +284,7 @@ public class GuiManager : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Options")){
-            SetCurrentMenuWindow(Menu.Options);
+            SetCurrentMenuWindow(OLD_Menu.Options);
 		}
 		if(!Application.isWebPlayer && !Application.isEditor){
 			standard.y += 50;
@@ -326,7 +326,7 @@ public class GuiManager : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Back")){
-            SetCurrentMenuWindow(Menu.MainMenu);
+            SetCurrentMenuWindow(OLD_Menu.MainMenu);
 		}
 	}
     private void CreateGame(bool online) {
@@ -336,7 +336,7 @@ public class GuiManager : MonoBehaviour {
             NetworkManager.SetServerDetails(MaxPlayers, SettingsManager.instance.PortNum, online);
             NetworkManager.InitialiseServer();
             SettingsManager.instance.SaveSettings();
-            SetCurrentMenuWindow(Menu.Lobby);
+            SetCurrentMenuWindow(OLD_Menu.Lobby);
         }
     }
 
@@ -374,7 +374,7 @@ public class GuiManager : MonoBehaviour {
                 if (masterServerData.passwordProtected) {
                     displayMasterServerPassword = true;
                 } else { 
-                    SetCurrentMenuWindow(Menu.Connecting); 
+                    SetCurrentMenuWindow(OLD_Menu.Connecting); 
                 }
 			}
 		}
@@ -386,7 +386,7 @@ public class GuiManager : MonoBehaviour {
 			displayJoinByIpWindow = true;
 		}
 		if(GUI.Button (new Rect(largeRect.width/2+20, largeRect.height-70, largeRect.width/5, 30), "Back")){
-			SetCurrentMenuWindow( Menu.MainMenu);
+			SetCurrentMenuWindow( OLD_Menu.MainMenu);
 		}
 		
 	}
@@ -417,7 +417,7 @@ public class GuiManager : MonoBehaviour {
             if (SettingsManager.instance.PortNum >= 0) { // Check for error
                 SettingsManager.instance.SaveSettings();
                 useMasterServer = false;
-                SetCurrentMenuWindow(Menu.Connecting);
+                SetCurrentMenuWindow(OLD_Menu.Connecting);
             }
 
         }
@@ -438,7 +438,7 @@ public class GuiManager : MonoBehaviour {
         standard.y += 50;
         if (GUI.Button(standard, "Submit Password")) {
             displayMasterServerPassword = false;
-            SetCurrentMenuWindow(Menu.Connecting);
+            SetCurrentMenuWindow(OLD_Menu.Connecting);
         }
 
         standard.y = smallRect.height - 50;
@@ -549,12 +549,12 @@ public class GuiManager : MonoBehaviour {
 
 		standard.y += 50;
 		if(GUI.Button(standard, "Edit Keybinds")){
-			SetCurrentMenuWindow(Menu.Keybind);
+			SetCurrentMenuWindow(OLD_Menu.Keybind);
 		}
 
         if (GUI.Button(new Rect(standard.width+50, standard.y, standard.width, standard.height), "Graphics Settings")) {
             GraphicsOptionsSetup();
-            SetCurrentMenuWindow(Menu.GraphicsOptions);
+            SetCurrentMenuWindow(OLD_Menu.GraphicsOptions);
         }
 
 		standard.y += 50;
@@ -563,7 +563,7 @@ public class GuiManager : MonoBehaviour {
             SettingsManager.instance.AutoPickup = autoPickupEnabled;
             SettingsManager.instance.SaveSettings();
 
-			SetCurrentMenuWindow( Menu.MainMenu);
+			SetCurrentMenuWindow( OLD_Menu.MainMenu);
 		}
 	}
 
@@ -624,11 +624,11 @@ public class GuiManager : MonoBehaviour {
             Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
             StartCoroutine(WaitForGUIRectResize());
 
-            SetCurrentMenuWindow(Menu.Options);
+            SetCurrentMenuWindow(OLD_Menu.Options);
         }
         standard.y += 50;
         if (GUI.Button(standard, "Cancel")) {
-            SetCurrentMenuWindow(Menu.Options);
+            SetCurrentMenuWindow(OLD_Menu.Options);
         }
     }
 
@@ -765,7 +765,7 @@ public class GuiManager : MonoBehaviour {
 			// Save Configuation-
             SettingsManager.instance.SaveKeyBinds();
 
-			SetCurrentMenuWindow( Menu.Options);
+			SetCurrentMenuWindow( OLD_Menu.Options);
 		}
 	}
 	#endregion
@@ -917,7 +917,7 @@ public class GuiManager : MonoBehaviour {
 			
 			if(GUI.Button(standard, "Back")){
 				connectionError = false;
-				SetCurrentMenuWindow( Menu.JoinGame);
+				SetCurrentMenuWindow( OLD_Menu.JoinGame);
 			}
 		}
 	}
