@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
     #region Instance
@@ -19,15 +20,13 @@ public class UIManager : MonoBehaviour {
     }
     #endregion
 
-    public enum Menu { MainMenu = 0, CreateGame, JoinGame, Options, Lobby, GameSettings, JoinByIP, Connecting, Keybind, ChangeKeybind, GraphicsOptions, PasswordInput }
+    public enum Menu { ChangeKeybind, Connecting, CreateGame, Debug, EditKeybind, GameSettings, GraphicsSettings, JoinByIP, JoinGame, Lobby, MainMenu, Options, PasswordInput, PauseMenu, PlayerHUD }
     public GameObject[] menus; // Only for initialisation
     private static List<Canvas> windows;
-    private static int currentWindow;
+    private static int currentWindow = 0;
 
     void Start() {
         windows = new List<Canvas>();
-
-        SetCurrentWindow(0); // Main Menu
 
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
@@ -37,29 +36,103 @@ public class UIManager : MonoBehaviour {
             windows.Add(newCanvas);
         }
         //Enable Main menu
-        windows[0].enabled = true;
+        SetMenuWindow(Menu.MainMenu);
+        ShowMenuWindow(Menu.Debug, true);
+        MenuWindowInit();
     }
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            RemoveAllGUI();
-        }
+
+    #region MenuWindowInit
+    void MenuWindowInit() {
+        MainMenuInit();
+        CreateGameInit();
     }
+    void MainMenuInit() {
+        Canvas mainMenu = GetCanvas(Menu.MainMenu);
+        InputField playerName = mainMenu.gameObject.GetComponentInChildren<InputField>();
+        playerName.text = SettingsManager.instance.PlayerName;
+    }
+    void CreateGameInit() {
+        Canvas createGame = GetCanvas(Menu.CreateGame);
+        InputField[] inputs = createGame.gameObject.GetComponentsInChildren<InputField>(true);
+        inputs[0].text = SettingsManager.instance.ServerNameServer;
+        inputs[1].text = SettingsManager.instance.PortNumStr;
+        inputs[2].text = SettingsManager.instance.PasswordServer;
+    }
+    #endregion
+
     #region SetWindow
-    private static void SetCurrentWindow(Menu menu){
-        // Only changes currentWindow
-        currentWindow = (int)menu;
-    }
     public void SetMenuWindow(Menu newWindow) {
         SetMenuWindow((int)newWindow);
     }
+    public void ShowMenuWindow(Menu newWindow, bool show) {
+        ShowMenuWindow((int)newWindow, show);
+    }
+    
     public void SetMenuWindow(int newWindow) {
         windows[currentWindow].enabled = false;
         windows[newWindow].enabled = true;
 
         currentWindow = newWindow;
     }
+    public void ShowMenuWindow(int newWindow, bool show) {
+        windows[newWindow].enabled = show;
+    }
     #endregion
 
+    #region MenuWindowMethods
+    public void GoChangeKeybind(bool value) {
+        ShowMenuWindow(Menu.ChangeKeybind, value);
+    }
+    public void GoConnecting() {
+        SetMenuWindow(Menu.Connecting);
+    }
+    public void GoCreateGame() {
+        SetMenuWindow(Menu.CreateGame);
+    }
+    public void GoDebug(bool value) {
+        ShowMenuWindow(Menu.Debug, value);
+    }
+    public void GoEditKeybind() {
+        SetMenuWindow(Menu.EditKeybind);
+    }
+    public void GoGameSettings(bool value) {
+        ShowMenuWindow(Menu.GameSettings, value);
+    }
+    public void GoGraphicsSettings() {
+        SetMenuWindow(Menu.GraphicsSettings);
+    }
+    public void GoJoinByIP(bool value) {
+        ShowMenuWindow(Menu.JoinByIP, value);
+    }
+    public void GoJoinGame() {
+        SetMenuWindow(Menu.JoinGame);
+    }
+    public void GoLobby() {
+        SetMenuWindow(Menu.Lobby);
+    }
+    public void GoMainMenu() {
+        SetMenuWindow(Menu.MainMenu);
+    }
+    public void GoOptions() {
+        SetMenuWindow(Menu.Options);
+    }
+    public void GoPasswordInput(bool value) {
+        ShowMenuWindow(Menu.PasswordInput, value);
+    }
+    public void GoPauseMenu() {
+        SetMenuWindow(Menu.PauseMenu);
+    }
+    public void GoPlayerHUD() {
+        SetMenuWindow(Menu.PlayerHUD);
+    }
+    #endregion
+
+    public Canvas GetCanvas(Menu value) {
+        return windows[(int)value];
+    }
+    public void LoadTutorial() {
+        GameManager.instance.LoadTutorial();
+    }
     public void QuitGame() {
         if (!Application.isWebPlayer && !Application.isEditor) {
             Application.Quit();

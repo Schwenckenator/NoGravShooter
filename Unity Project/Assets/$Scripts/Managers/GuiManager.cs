@@ -279,7 +279,7 @@ public class GuiManager : MonoBehaviour {
 		
 		standard.y += 50;
 		if(GUI.Button(standard, "Tutorial")){
-			StartCoroutine(GameManager.instance.LoadTutorial());
+			StartCoroutine(GameManager.instance.LoadTutorialCoRoutine());
 		}
 		
 		standard.y += 50;

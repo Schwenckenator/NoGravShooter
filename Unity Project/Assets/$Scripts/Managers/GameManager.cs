@@ -329,7 +329,7 @@ public class GameManager : MonoBehaviour {
     }
 
     //load the tutorial level
-    public IEnumerator LoadTutorial() {
+    public IEnumerator LoadTutorialCoRoutine() {
 
         int portNum = 25000; // Dummy values for server creation
         int maxTutorialConnections = 1;
@@ -342,6 +342,9 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(1 / 500f);
         SpawnActor();
         GuiManager.instance.SetMyPlayerResources();
+    }
+    public void LoadTutorial() {
+        StartCoroutine(LoadTutorialCoRoutine());
     }
 
     public void ReturnToLobby() {
