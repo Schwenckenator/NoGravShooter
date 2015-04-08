@@ -27,7 +27,7 @@ public class UIManager : MonoBehaviour {
     void Start() {
         windows = new List<Canvas>();
 
-        SetCurrentWindow(Menu.MainMenu);
+        SetCurrentWindow(0); // Main Menu
 
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
