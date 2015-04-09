@@ -116,6 +116,8 @@ public class GameManager : MonoBehaviour {
     }
     #endregion
 
+    public const int MaxPlayers = 16;
+
     void Awake(){
 		DontDestroyOnLoad(gameObject);
 

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+public enum Menu { ChangeKeybind, Connecting, CreateGame, Debug, EditKeybind, GameSettings, GraphicsSettings, JoinByIP, JoinGame, Lobby, MainMenu, Options, PasswordInput, PauseMenu, PlayerHUD }
+
 public class UIManager : MonoBehaviour {
     #region Instance
     //Here is a private reference only this class can access
@@ -20,17 +22,14 @@ public class UIManager : MonoBehaviour {
     }
     #endregion
 
-    public enum Menu { ChangeKeybind, Connecting, CreateGame, Debug, EditKeybind, GameSettings, GraphicsSettings, JoinByIP, JoinGame, Lobby, MainMenu, Options, PasswordInput, PauseMenu, PlayerHUD }
+    
     public GameObject[] menus; // Only for initialisation
     private static List<Canvas> windows;
     private static int currentWindow = 0;
     private static List<Text> keybindButtonText;
     private static int editedBinding = 0;
     
-    // Option
-    private static InputField[] optionInputFields;
-    private static Slider[] optionSliders;
-    private static OptionColourBox[] optionPlayerColours;
+
 
 
     void Start() {
@@ -46,7 +45,7 @@ public class UIManager : MonoBehaviour {
         }
         //Enable Main menu
         SetMenuWindow(Menu.MainMenu);
-        windows[(int)Menu.Debug].enabled = true;
+        windows[(int)Menu.Debug].enabled = false; // Don't show debug
         MenuWindowInit();
     }
     void OnGUI() { // Dirty old system, but I can't see a way around it
@@ -60,7 +59,6 @@ public class UIManager : MonoBehaviour {
         MainMenuInit();
         CreateGameInit();
         EditKeybindInit();
-        OptionsInit();
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
@@ -84,24 +82,7 @@ public class UIManager : MonoBehaviour {
         }
         EditKeybindTextRefresh();
     }
-    void OptionsInit() {
-        Canvas options = GetCanvas(Menu.Options);
-        optionSliders = options.gameObject.GetComponentsInChildren<Slider>(true);
-        optionInputFields = options.gameObject.GetComponentsInChildren<InputField>(true);
-        optionPlayerColours = options.gameObject.GetComponentsInChildren<OptionColourBox>(true);
-        // Order
-        /* Mouse sen X
-         * Mouse sen Y
-         * Fov
-         * Colour Red
-         * Colour Green
-         * Colour Blue
-         */
 
-        OptionsSliderUpdate();
-        OptionsInputFieldUpdate();
-        OptionsColoursUpdate();
-}
 
     #endregion
 
@@ -193,64 +174,10 @@ public class UIManager : MonoBehaviour {
         SettingsManager.instance.SaveKeyBinds();
         SetMenuWindow(Menu.Options);
     }
-    public void SaveOptions() {
-        SettingsManager.instance.SaveSettings();
-        SetMenuWindow(Menu.MainMenu);
-    }
+
     #endregion
 
-    #region Options
-
-    private void OptionsInputFieldUpdate() {
-        optionInputFields[0].text = SettingsManager.instance.MouseSensitivityX.ToString();
-        optionInputFields[1].text = SettingsManager.instance.MouseSensitivityY.ToString();
-        optionInputFields[2].text = SettingsManager.instance.FieldOfView.ToString();
-        optionInputFields[3].text = SettingsManager.instance.ColourR.ToString();
-        optionInputFields[4].text = SettingsManager.instance.ColourG.ToString();
-        optionInputFields[5].text = SettingsManager.instance.ColourB.ToString();
-    }
-    private void OptionsSliderUpdate() {
-        optionSliders[0].value = SettingsManager.instance.MouseSensitivityX * 100;
-        optionSliders[1].value = SettingsManager.instance.MouseSensitivityY * 100;
-        optionSliders[2].value = SettingsManager.instance.FieldOfView * 10;
-        optionSliders[3].value = SettingsManager.instance.ColourR * 100;
-        optionSliders[4].value = SettingsManager.instance.ColourG * 100;
-        optionSliders[5].value = SettingsManager.instance.ColourB * 100;
-    }
-    private void OptionsColoursUpdate() {
-        optionPlayerColours[0].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.Red, SettingsManager.instance.GetPlayerColour()));
-        optionPlayerColours[1].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.None, SettingsManager.instance.GetPlayerColour()));
-        optionPlayerColours[2].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.Blue, SettingsManager.instance.GetPlayerColour()));
-    }
-
-    public void MouseSenXSliderUpdate(float value) {
-        SettingsManager.instance.MouseSensitivityX = value / 100f;
-        OptionsInputFieldUpdate();
-    }
-    public void MouseSenYSliderUpdate(float value) {
-        SettingsManager.instance.MouseSensitivityY = value / 100f;
-        OptionsInputFieldUpdate();
-    }
-    public void FOVSliderUpdate(float value) {
-        SettingsManager.instance.FieldOfView = value / 10f;
-        OptionsInputFieldUpdate();
-    }
-    public void ColourRSliderUpdate(float value) {
-        SettingsManager.instance.ColourR = value / 100f;
-        OptionsInputFieldUpdate();
-        OptionsColoursUpdate();
-    }
-    public void ColourGSliderUpdate(float value) {
-        SettingsManager.instance.ColourG = value / 100f;
-        OptionsInputFieldUpdate();
-        OptionsColoursUpdate();
-    }
-    public void ColourBSliderUpdate(float value) {
-        SettingsManager.instance.ColourB = value / 100f;
-        OptionsInputFieldUpdate();
-        OptionsColoursUpdate();
-    }
-    #endregion
+    
     void ChangeKeybindUpdate() {
         bool done = false;
         if (Event.current.isKey) {
@@ -269,7 +196,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    public Canvas GetCanvas(Menu value) {
+    public static Canvas GetCanvas(Menu value) {
         return windows[(int)value];
     }
     public void LoadTutorial() {
@@ -288,6 +215,17 @@ public class UIManager : MonoBehaviour {
         // Because I want to look at something I made.
         foreach (Canvas canvas in windows) {
             canvas.enabled = false;
+        }
+    }
+
+    public void CreateGame(bool online) {
+        SettingsManager.instance.ParsePortNumber();
+
+        if (SettingsManager.instance.PortNum >= 0) { // Check for error
+            NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.instance.PortNum, online);
+            NetworkManager.InitialiseServer();
+            SettingsManager.instance.SaveSettings();
+            SetMenuWindow(Menu.Lobby);
         }
     }
 }

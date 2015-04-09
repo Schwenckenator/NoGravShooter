@@ -287,9 +287,10 @@ public class SettingsManager : MonoBehaviour {
     ///  Returns -1 on error
     /// </summary>
     public void ParsePortNumber() {
-        try {
-            PortNum = int.Parse(PortNumStr);
-        } catch {
+        int temp = 0;
+        if (int.TryParse(PortNumStr, out temp)) {
+            PortNum = temp;
+        } else {
             PortNum = -1;
         }
     }
