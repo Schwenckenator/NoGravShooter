@@ -26,15 +26,23 @@ public class UIManager : MonoBehaviour {
     public GameObject[] menus; // Only for initialisation
     private static List<Canvas> windows;
     private static int currentWindow = 0;
+    
+    // Keybinds
     private static List<Text> keybindButtonText;
     private static int editedBinding = 0;
+
+    //Graphics
+    private static List<Resolution> resolutions;
+    private Text btnResolutionText;
+
+    private static int resolutionIndex = 0;
+    public int resolutionMinWidth = 800;
+    public int resolutionMinHeight = 600;
     
-
-
-
     void Start() {
         windows = new List<Canvas>();
         keybindButtonText = new List<Text>();
+        resolutions = ResolutionListPrune();
 
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
@@ -59,6 +67,7 @@ public class UIManager : MonoBehaviour {
         MainMenuInit();
         CreateGameInit();
         EditKeybindInit();
+        GraphicsOptionsInit();
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
@@ -82,7 +91,19 @@ public class UIManager : MonoBehaviour {
         }
         EditKeybindTextRefresh();
     }
-
+    void GraphicsOptionsInit() {
+        int maxIndex = resolutions.Count;
+        for (int i = 0; i < maxIndex; i++) {
+            if (Screen.height == resolutions[i].height && Screen.width == resolutions[i].width) {
+                resolutionIndex = i;
+            }
+        }
+        fullscreen = Screen.fullScreen;
+        Canvas canvas = GetCanvas(Menu.GraphicsSettings);
+        Button[] buttons = canvas.GetComponentsInChildren<Button>(true);
+        btnResolutionText = buttons[0].GetComponentInChildren<Text>();
+        GraphicsOptionsButtonRefresh();
+    }
 
     #endregion
 
@@ -90,6 +111,13 @@ public class UIManager : MonoBehaviour {
         for (int i = 0; i < keybindButtonText.Count; i++) {
             keybindButtonText[i].text = SettingsManager.keyBindings[i].ToString();
         }
+    }
+    void GraphicsOptionsButtonRefresh() {
+        btnResolutionText.text = resolutions[resolutionIndex].width.ToString() + " x " + resolutions[resolutionIndex].height.ToString();
+    }
+    public void ResolutionChange() {
+        resolutionIndex++;
+        GraphicsOptionsButtonRefresh();
     }
 
     #region SetWindow
@@ -166,8 +194,10 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     #region SaveSettings
+    public bool fullscreen = false;
     public void SaveGraphicsSettings() {
         // Save settings logic
+        Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
         SetMenuWindow(Menu.Options);
     }
     public void SaveKeybinds() {
@@ -177,7 +207,21 @@ public class UIManager : MonoBehaviour {
 
     #endregion
 
-    
+    List<Resolution> ResolutionListPrune() {
+        List<Resolution> resList = new List<Resolution>();
+        Resolution[] resTemp = Screen.resolutions;
+
+        foreach (Resolution res in resTemp) {
+            if (res.width >= resolutionMinWidth && res.height >= resolutionMinHeight) {
+                resList.Add(res);
+            }
+        }
+
+        return resList;
+    }
+
+
+
     void ChangeKeybindUpdate() {
         bool done = false;
         if (Event.current.isKey) {
