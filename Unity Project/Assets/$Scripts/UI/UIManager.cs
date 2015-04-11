@@ -33,7 +33,7 @@ public class UIManager : MonoBehaviour {
 
     //Graphics
     private static List<Resolution> resolutions;
-    private Text btnResolutionText;
+    private static Text btnResolutionText;
 
     private static int resolutionIndex = 0;
     public int resolutionMinWidth = 800;
@@ -117,6 +117,7 @@ public class UIManager : MonoBehaviour {
     }
     public void ResolutionChange() {
         resolutionIndex++;
+        resolutionIndex %= resolutions.Count;
         GraphicsOptionsButtonRefresh();
     }
 
@@ -194,11 +195,13 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     #region SaveSettings
-    public bool fullscreen = false;
+    private static bool fullscreen = false;
+    public void SetFullscreen(bool value) {
+        fullscreen = value;
+    }
     public void SaveGraphicsSettings() {
         // Save settings logic
         Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
-        SetMenuWindow(Menu.Options);
     }
     public void SaveKeybinds() {
         SettingsManager.instance.SaveKeyBinds();
