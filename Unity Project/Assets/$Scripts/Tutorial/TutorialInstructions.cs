@@ -48,6 +48,7 @@ public class TutorialInstructions : MonoBehaviour {
 	
 	public int landedPlatforms = 0;
 	private bool platforms = false;
+	private GameObject platform;
 	private bool step7 = false;
 	
 	private bool check8 = false;
@@ -73,6 +74,12 @@ public class TutorialInstructions : MonoBehaviour {
 	void Start(){
 		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		lookingDot = GameObject.Find("LookAtDot");
+		platform = GameObject.Find("PlatformFront1");
+		platform.transform.renderer.material.color = new Color(0, 1, 0);
+		platform = GameObject.Find("PlatformFront2");
+		platform.transform.renderer.material.color = new Color(0, 1, 0);
+		platform = GameObject.Find("PlatformFront3");
+		platform.transform.renderer.material.color = new Color(0, 1, 0);
 		StartCoroutine(LookTutorial());
 	}
 	
