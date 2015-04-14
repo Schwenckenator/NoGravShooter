@@ -42,15 +42,29 @@ public class UIManager : MonoBehaviour {
         MenuWindowInit();
     }
 
+    public static bool IsChangeKeybindWindow() {
+        return windows[(int)Menu.ChangeKeybind].enabled;
+    }
+
+    public static Canvas GetCanvas(Menu value) {
+        return windows[(int)value];
+    }
 
     #region MenuWindowInit
     void MenuWindowInit() {
         MainMenuInit();
+        ChatInit();
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
         InputField playerName = mainMenu.gameObject.GetComponentInChildren<InputField>();
         playerName.text = SettingsManager.instance.PlayerName;
+    }
+    void ChatInit() {
+        ChatManager.FindChatBoxes();
+    }
+    public void SetPlayerName(string value) {
+        SettingsManager.instance.PlayerName = value;
     }
     #endregion
 
@@ -132,13 +146,7 @@ public class UIManager : MonoBehaviour {
     }
     #endregion
 
-    public static bool IsChangeKeybindWindow() {
-        return windows[(int)Menu.ChangeKeybind].enabled;
-    }
 
-    public static Canvas GetCanvas(Menu value) {
-        return windows[(int)value];
-    }
     private static void RemoveAllGUI() {
         // If editor, clear instantiated windows
         // Because I want to look at something I made.

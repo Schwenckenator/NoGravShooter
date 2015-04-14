@@ -28,8 +28,6 @@ public class UIOptions : MonoBehaviour {
         ToggleUpdate();
     }
 
-    #region Options
-
     private void InputFieldUpdate() {
         inputFields[0].text = SettingsManager.instance.MouseSensitivityX.ToString();
         inputFields[1].text = SettingsManager.instance.MouseSensitivityY.ToString();
@@ -64,6 +62,7 @@ public class UIOptions : MonoBehaviour {
         toggles[1].isOn = SettingsManager.instance.AutoPickup;
     }
 
+    #region DynamicUpdates
     public void MouseSenXSliderUpdate(float value) {
         SettingsManager.instance.MouseSensitivityX = value / 100f;
         InputFieldUpdate();

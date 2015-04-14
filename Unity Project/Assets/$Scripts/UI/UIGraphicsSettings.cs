@@ -16,7 +16,7 @@ public class UIGraphicsSettings : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         resolutions = ResolutionListPrune();
-
+        GraphicsOptionsInit();
 	}
 
     void GraphicsOptionsInit() {

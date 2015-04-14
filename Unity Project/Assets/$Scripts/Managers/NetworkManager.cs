@@ -155,7 +155,7 @@ public class NetworkManager : MonoBehaviour {
             Application.LoadLevel("MenuScene");
         }
 
-        GetComponent<GuiManager>().SetCurrentMenuWindow(GuiManager.OLD_Menu.MainMenu);
+        UIManager.instance.SetMenuWindow(Menu.MainMenu);
 
         NetworkManager.connectedPlayers.Clear();
         NetworkManager.myPlayer = null;
