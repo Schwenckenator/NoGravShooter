@@ -26,7 +26,7 @@ public class ChatManager : MonoBehaviour {
 
     private static int maxChatLines = 50;
 
-    private static ChatBox[] chatBoxes;
+
 
     private static List<string> submittedChatList;
     private static string submittedChat;
@@ -39,15 +39,6 @@ public class ChatManager : MonoBehaviour {
         submittedChatList = new List<string>();
     }
 
-    public static void FindChatBoxes() {
-        chatBoxes = GameObject.FindObjectsOfType<ChatBox>();
-        UpdateChatBoxes();
-    }
-    private static void UpdateChatBoxes() {
-        foreach (ChatBox chatBox in chatBoxes) {
-            chatBox.UpdateChatText(SubmittedChat);
-        }
-    }
 
     public void AddToChat(string input, bool addPlayerPrefix = false) {
         if (input != "") {
@@ -90,7 +81,7 @@ public class ChatManager : MonoBehaviour {
         foreach (string line in submittedChatList) {
             submittedChat += line + "\n";
         }
-        UpdateChatBoxes();
+        UIChat.UpdateChatBoxes();
     }
     public static void ClearAllChat() {
         submittedChat = "";

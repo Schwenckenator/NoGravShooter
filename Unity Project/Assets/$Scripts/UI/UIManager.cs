@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour {
         playerName.text = SettingsManager.instance.PlayerName;
     }
     void ChatInit() {
-        ChatManager.FindChatBoxes();
+        UIChat.FindChatBoxes();
     }
     public void SetPlayerName(string value) {
         SettingsManager.instance.PlayerName = value;

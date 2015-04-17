@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
     private static bool playerMenu;
 
 	private CameraMove cameraMove;
-	private FireWeapon fireWeapon;
+//	private FireWeapon fireWeapon;
 	private PlayerResources playerResources;
 
 
@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour {
                 
                 actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
-				fireWeapon = actor.GetComponent<FireWeapon>();
+//				fireWeapon = actor.GetComponent<FireWeapon>();
 				playerResources = actor.GetComponent<PlayerResources>();
 
                 PlayerColourManager.instance.AssignColour(actor);
