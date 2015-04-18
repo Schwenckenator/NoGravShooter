@@ -1022,10 +1022,10 @@ public class GuiManager : MonoBehaviour {
     private string PlayerList(bool showscores) {
         string playerNames = "Players:\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
-            playerNames += player.Name;
 			if(showscores){
-				playerNames += " " + player.Score;
+				playerNames += player.Score + " ";
 			}
+            playerNames += player.Name;
 			playerNames += "\n";
         }
         return playerNames;
@@ -1034,10 +1034,10 @@ public class GuiManager : MonoBehaviour {
         string playerNames = "\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
 			if(player.Team.ToString() == "Red"){
-				playerNames += player.Name;
 				if(showscores){
-					playerNames += " " + player.Score;
+					playerNames += player.Score + " ";
 				}
+				playerNames += player.Name;
 				playerNames += "\n";
 			}
         }
@@ -1047,10 +1047,10 @@ public class GuiManager : MonoBehaviour {
         string playerNames = "\n";
         foreach (Player player in NetworkManager.connectedPlayers) {
 			if(player.Team.ToString() == "Blue"){
-				playerNames += player.Name;
 				if(showscores){
-					playerNames += " " + player.Score;
+					playerNames += player.Score + " ";
 				}
+				playerNames += player.Name;
 				playerNames += "\n";
 			}
         }
