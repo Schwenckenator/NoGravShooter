@@ -50,6 +50,7 @@ public class UILobby : MonoBehaviour {
         } else {
             StartCoroutine("CountdownStartGame");
         }
+        ChangeButtonText(countdown);
     }
     IEnumerator CountdownStartGame() {
         if (DebugManager.IsAdminMode()) {
