@@ -23,6 +23,8 @@ public class UILobby : MonoBehaviour {
     public static Text playerList;
     public static ChatBox chat;
     private static Text startButtonText;
+    private static Text disconnectButtonText;
+    private static Button[] buttons;
 
     private static bool countdown = false;
 
@@ -34,9 +36,9 @@ public class UILobby : MonoBehaviour {
     void LobbyInit() {
         Canvas lobby = UIManager.GetCanvas(Menu.Lobby);
         chat = lobby.GetComponentInChildren<ChatBox>();
-        Button[] buttons = lobby.GetComponentsInChildren<Button>();
+        buttons = lobby.GetComponentsInChildren<Button>();
         startButtonText = buttons[0].GetComponentInChildren<Text>();
-
+        disconnectButtonText = buttons[2].GetComponentInChildren<Text>();
     }
     #region StartGame
     public void StartCountdown() {
@@ -69,8 +71,22 @@ public class UILobby : MonoBehaviour {
     }
     #endregion
 
+    private void ModifyLobby() {
+        ChangeButtonText(countdown);
+        ChangeDisconnectButtonText();
+    }
+
     private void ChangeButtonText(bool count) {
         startButtonText.text = count ? "Cancel" : "Start Game";
+    }
+    private void ChangeDisconnectButtonText() {
+        disconnectButtonText.text = Network.isServer ? "Shutdown Server" : "Disconnect";
+    }
+    public void ShowHideButtons() {
+        bool show = Network.isServer;
+        buttons[0].enabled = show;
+        buttons[1].enabled = show;
+        
     }
 
     public void Disconnect() {
