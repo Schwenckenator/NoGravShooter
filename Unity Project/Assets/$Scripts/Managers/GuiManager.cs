@@ -904,7 +904,7 @@ public class GuiManager : MonoBehaviour {
 		
 		if(!connectingNow){
 			connectingNow = true;
-            NetworkManager.SetClientDetails(masterServerData, useMasterServer, SettingsManager.instance.IpAddress, int.Parse(SettingsManager.instance.PortNumStr));
+            //NetworkManager.SetClientDetails(masterServerData, useMasterServer, SettingsManager.instance.IpAddress, int.Parse(SettingsManager.instance.PortNumStr));
             NetworkManager.ConnectToServer();
 		}
 		if(!connectionError){

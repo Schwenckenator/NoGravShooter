@@ -25,7 +25,6 @@ public class UIJoinGame : MonoBehaviour {
     private static List<ServerListEntry> serverList;
     private static ServerListManager listManager;
 
-    private bool useMasterServer = false;
     private HostData masterServerData;
 
 	// Use this for initialization
@@ -62,9 +61,8 @@ public class UIJoinGame : MonoBehaviour {
         for (int i = 0; i < serverList.Count; i++) {
             if (serverList[i].IsPressed()) {
                 masterServerData = serverList[i].hostData;
-                useMasterServer = true;
                 
-                NetworkManager.SetClientDetails(masterServerData, useMasterServer, SettingsManager.instance.IpAddress, int.Parse(SettingsManager.instance.PortNumStr));
+                NetworkManager.SetClientDetailsMasterServer(masterServerData);
                 NetworkManager.ConnectToServer();
             }
         }

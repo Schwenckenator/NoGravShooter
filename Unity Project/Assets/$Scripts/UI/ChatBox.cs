@@ -14,4 +14,8 @@ public class ChatBox : MonoBehaviour, ITextBox {
     public void SetText(string newText) {
         myText.text = newText;
     }
+
+    public string GetTextType() {
+        return textType;
+    }
 }

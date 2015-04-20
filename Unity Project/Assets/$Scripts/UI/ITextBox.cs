@@ -4,4 +4,5 @@ using System.Collections;
 public interface ITextBox {
 
     void SetText(string newText);
+    string GetTextType();
 }

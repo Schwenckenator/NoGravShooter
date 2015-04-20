@@ -112,11 +112,15 @@ public class NetworkManager : MonoBehaviour {
     }
 
     #region SetDetails
-    public static void SetClientDetails(HostData _masterServerData, bool _useMasterServer, string _ipAddress, int _portNum) {
-        masterServerData = _masterServerData;
-        useMasterServer = _useMasterServer;
+    public static void SetClientDetails(string _ipAddress, int _portNum) {
         ipAddress = _ipAddress;
         portNum = _portNum;
+
+        useMasterServer = false;
+    }
+    public static void SetClientDetailsMasterServer(HostData _masterServerData) {
+        masterServerData = _masterServerData;
+        useMasterServer = true;
     }
     public static void SetServerDetails(int _maxPlayers, int _portNum, bool _useMasterServer) {
         maxPlayers = _maxPlayers;
@@ -197,13 +201,12 @@ public class NetworkManager : MonoBehaviour {
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
         NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
 
-        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        UIChat.UpdatePlayerLists();
     }
     [RPC]
     void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
         NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
-
-        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        UIChat.UpdatePlayerLists();
     }
     #endregion
 }
