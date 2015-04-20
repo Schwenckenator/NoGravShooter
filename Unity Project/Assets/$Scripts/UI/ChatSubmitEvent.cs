@@ -6,7 +6,7 @@ public class ChatSubmitEvent : MonoBehaviour {
 
     [SerializeField]
     private InputField chatInputField = null;
-    private Button chatEnterButton = null;
+    //private Button chatEnterButton = null;
 
     void Start() {
         InputField.SubmitEvent submitEvent = new InputField.SubmitEvent();

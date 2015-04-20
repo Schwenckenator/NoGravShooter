@@ -12,7 +12,7 @@ public class UIChat : MonoBehaviour {
     }
     public static void UpdateChatBoxes() {
         foreach (ChatBox chatBox in chatBoxes) {
-            chatBox.UpdateChatText(ChatManager.SubmittedChat);
+            chatBox.SetText(ChatManager.SubmittedChat);
         }
     }
 

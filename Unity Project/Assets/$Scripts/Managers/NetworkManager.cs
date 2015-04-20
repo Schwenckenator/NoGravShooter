@@ -176,7 +176,8 @@ public class NetworkManager : MonoBehaviour {
         SettingsManager.instance.ClearPasswordClient();
 
         // Set window to lobby
-        GuiManager.instance.SetCurrentMenuWindow(GuiManager.OLD_Menu.Lobby);
+        //GuiManager.instance.SetCurrentMenuWindow(GuiManager.OLD_Menu.Lobby);
+        UIManager.instance.SetMenuWindow(Menu.Lobby);
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         
         string message = SettingsManager.instance.PlayerName + " has connected.";
