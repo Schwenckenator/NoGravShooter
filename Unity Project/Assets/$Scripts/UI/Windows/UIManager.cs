@@ -45,6 +45,18 @@ public class UIManager : MonoBehaviour {
         MenuWindowInit();
     }
 
+    void Update() {
+        GetKeyStrokes();
+    }
+
+    private void GetKeyStrokes() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (GameManager.instance.IsPlayerSpawned()) {
+
+            }
+        }
+    }
+
     public static bool IsChangeKeybindWindow() {
         return windows[(int)Menu.ChangeKeybind].enabled;
     }
@@ -53,11 +65,16 @@ public class UIManager : MonoBehaviour {
         return windows[(int)value];
     }
 
+    public static bool IsCurrentMenuWindow(Menu value) {
+        return currentWindow == (int)value;
+    }
+
     #region MenuWindowInit
     void MenuWindowInit() {
         MainMenuInit();
         ChatInit();
         ListInit();
+        PauseMenuInit();
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
@@ -70,6 +87,9 @@ public class UIManager : MonoBehaviour {
     void ListInit() {
         textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
         buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
+    }
+    void PauseMenuInit() {
+        UIPauseSpawn.Init();
     }
     #endregion
 

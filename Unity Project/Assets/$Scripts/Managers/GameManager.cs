@@ -230,7 +230,7 @@ public class GameManager : MonoBehaviour {
     void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             SetCursorVisibility(!playerMenu);
-            SetPlayerMenu(!playerMenu); // Toggle Pause
+            //SetPlayerMenu(!playerMenu); // Toggle Pause
         }
 
         if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch) && myPlayerSpawned) {
@@ -323,7 +323,8 @@ public class GameManager : MonoBehaviour {
 
         Network.SetLevelPrefix(levelPrefix);
 
-        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        //GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
+        UIManager.instance.SetMenuWindow(Menu.PauseMenu);
 
 
         NetworkManager.DisableRPC();
