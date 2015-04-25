@@ -29,12 +29,17 @@ public class UIManager : MonoBehaviour {
 
     private static TextChangeFromConnectionType[] textChangers;
     private static SelectableHideFromConnectionType[] buttonHiders;
-    
+
+    void Awake() {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start() {
         windows = new List<Canvas>();
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
             GameObject newMenu = Instantiate(menu) as GameObject;
+            DontDestroyOnLoad(newMenu);
             Canvas newCanvas = newMenu.GetComponent<Canvas>();
             newCanvas.enabled = false;
             windows.Add(newCanvas);
@@ -52,7 +57,7 @@ public class UIManager : MonoBehaviour {
     private void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (GameManager.instance.IsPlayerSpawned()) {
-
+                UIPauseSpawn.PauseMenuSwitch();
             }
         }
     }

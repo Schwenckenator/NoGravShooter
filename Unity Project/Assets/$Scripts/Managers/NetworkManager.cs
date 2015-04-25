@@ -175,6 +175,8 @@ public class NetworkManager : MonoBehaviour {
         SettingsManager.instance.RelayServerName();
         AssignMyPlayerToTeam();
         UILobby.instance.ShowHideButtons();
+
+        UIManager.instance.UpdateArraysFromNetworkConnection();
     }
     void OnConnectedToServer() {
         
@@ -188,6 +190,8 @@ public class NetworkManager : MonoBehaviour {
         string message = SettingsManager.instance.PlayerName + " has connected.";
         ChatManager.instance.AddToChat(message);
         AssignMyPlayerToTeam();
+
+        UIManager.instance.UpdateArraysFromNetworkConnection();
     }
     #endregion
     

@@ -47,9 +47,11 @@ public class UIPauseSpawn : MonoBehaviour {
 
     private static void ReturnToGame() {
         UIManager.instance.SetMenuWindow(Menu.PlayerHUD);
+        GameManager.SetCursorVisibility(false);
     }
     private static void PauseMenu() {
         UIManager.instance.SetMenuWindow(Menu.PauseMenu);
+        GameManager.SetCursorVisibility(true);
     }
 
     /// <summary>
@@ -63,11 +65,15 @@ public class UIPauseSpawn : MonoBehaviour {
         }
     }
 
-    public static void PauseSpawnPress() {
+    public void PauseSpawnPress() {
+        Debug.Log("Spawn button pressed");
         if (GameManager.instance.IsPlayerSpawned()) {
             PauseMenuSwitch();
         } else {
             GameManager.instance.SpawnActor();
         }
+    }
+    public void ReturnToLobbyPress() {
+        GameManager.instance.ReturnToLobby();
     }
 }

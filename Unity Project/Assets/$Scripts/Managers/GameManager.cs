@@ -139,6 +139,7 @@ public class GameManager : MonoBehaviour {
 
 			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
 
+            UIManager.instance.SetMenuWindow(Menu.PauseMenu);
 			//
 			if(Network.isServer){
                 int[] temp = new int[2];
@@ -190,11 +191,13 @@ public class GameManager : MonoBehaviour {
 		}
 
         GuiManager.instance.ActorsChanged();
+        UIPauseSpawn.PlayerSpawned();
 
 	}
 
 	public void PlayerDied(){
 		myPlayerSpawned = false;
+        UIPauseSpawn.PlayerDied();
         SetPlayerMenu(false);
 	}
 	
@@ -230,7 +233,7 @@ public class GameManager : MonoBehaviour {
     void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             SetCursorVisibility(!playerMenu);
-            //SetPlayerMenu(!playerMenu); // Toggle Pause
+            SetPlayerMenu(!playerMenu); // Toggle Pause
         }
 
         if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch) && myPlayerSpawned) {
@@ -324,7 +327,7 @@ public class GameManager : MonoBehaviour {
         Network.SetLevelPrefix(levelPrefix);
 
         //GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
-        UIManager.instance.SetMenuWindow(Menu.PauseMenu);
+        
 
 
         NetworkManager.DisableRPC();
