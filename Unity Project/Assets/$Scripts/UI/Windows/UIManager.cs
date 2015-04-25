@@ -26,6 +26,9 @@ public class UIManager : MonoBehaviour {
     public GameObject[] menus; // Only for initialisation
     private static List<Canvas> windows;
     private static int currentWindow = 0;
+
+    private static TextChangeFromConnectionType[] textChangers;
+    private static SelectableHideFromConnectionType[] buttonHiders;
     
     void Start() {
         windows = new List<Canvas>();
@@ -54,6 +57,7 @@ public class UIManager : MonoBehaviour {
     void MenuWindowInit() {
         MainMenuInit();
         ChatInit();
+        ListInit();
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
@@ -63,8 +67,9 @@ public class UIManager : MonoBehaviour {
     void ChatInit() {
         UIChat.FindChatBoxes();
     }
-    public void SetPlayerName(string value) {
-        SettingsManager.instance.PlayerName = value;
+    void ListInit() {
+        textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
+        buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
     }
     #endregion
 
@@ -146,6 +151,20 @@ public class UIManager : MonoBehaviour {
     }
     #endregion
 
+    public void SetPlayerName(string value) {
+        SettingsManager.instance.PlayerName = value;
+    }
+    /// <summary>
+    /// For the arrays with changing text based of network connection type, loop through and update the text for all.
+    /// </summary>
+    public void UpdateArraysFromNetworkConnection() {
+        foreach (var text in textChangers) {
+            text.UpdateText();
+        }
+        foreach (var hider in buttonHiders) {
+            hider.UpdateVisibility();
+        }
+    }
 
     private static void RemoveAllGUI() {
         // If editor, clear instantiated windows

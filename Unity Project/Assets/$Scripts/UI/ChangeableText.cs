@@ -2,13 +2,16 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ChatBox : MonoBehaviour, ITextBox {
-
+public class ChangeableText : MonoBehaviour, ITextBox {
+    /// <summary>
+    /// The type of text this control holds. Used for sorting.
+    /// </summary>
     public string textType;
+
     private Text myText;
 
     void Awake() {
-        myText = GetComponent<Text>();
+        myText = GetComponentInChildren<Text>();
     }
 
     public void SetText(string newText) {

@@ -20,8 +20,6 @@ public class UILobby : MonoBehaviour {
     }
     #endregion
 
-    public static Text playerList;
-    public static ChatBox chat;
     private static Text startButtonText;
     private static Text disconnectButtonText;
     private static Button[] buttons;
@@ -35,7 +33,6 @@ public class UILobby : MonoBehaviour {
 
     void LobbyInit() {
         Canvas lobby = UIManager.GetCanvas(Menu.Lobby);
-        chat = lobby.GetComponentInChildren<ChatBox>();
         buttons = lobby.GetComponentsInChildren<Button>();
         startButtonText = buttons[0].GetComponentInChildren<Text>();
         disconnectButtonText = buttons[2].GetComponentInChildren<Text>();
@@ -86,7 +83,6 @@ public class UILobby : MonoBehaviour {
         bool show = Network.isServer;
         buttons[0].enabled = show;
         buttons[1].enabled = show;
-        
     }
 
     public void Disconnect() {

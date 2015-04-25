@@ -13,7 +13,7 @@ public class UIChat : MonoBehaviour {
         chatBoxes = new List<ITextBox>();
         playerLists = new List<ITextBox>();
 
-        textBoxes = GameObject.FindObjectsOfType<ChatBox>();
+        textBoxes = GameObject.FindObjectsOfType<ChangeableText>();
 
         foreach (ITextBox textBox in textBoxes) {
             if (textBox.GetTextType() == "chat") {
