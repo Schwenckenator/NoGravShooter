@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour {
 
 //				fireWeapon = actor.GetComponent<FireWeapon>();
 				playerResources = actor.GetComponent<PlayerResources>();
+                UIPlayerHUD.SetPlayerResource(playerResources);
 
                 PlayerColourManager.instance.AssignColour(actor);
 			}

@@ -36,6 +36,7 @@ public class UIPauseSpawn : MonoBehaviour {
 
     public static void PlayerSpawned() {
         spawnButton.SetText(unpause);
+        ReturnToGame();
     }
     public static void PlayerDied() {
         spawnButton.SetText(spawn);

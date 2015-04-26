@@ -23,9 +23,9 @@ public class PlayerResources : MonoBehaviour {
     private float volumeJetpackShutoff;
 
     [SerializeField]
-    private int maxFuel = 150;
+    private static int maxFuel = 150;
     [SerializeField]
-    private int maxHealth = 100;
+    private static int maxHealth = 100;
     [SerializeField]
     private int maxHeat = 100;
 
@@ -98,7 +98,7 @@ public class PlayerResources : MonoBehaviour {
 		}
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
-			TakeDamage(100, Network.player);
+			TakeDamage(10, Network.player);
 			ChatManager.instance.AddToChat("committed Seppuku!", true);
 		}
 
@@ -128,10 +128,13 @@ public class PlayerResources : MonoBehaviour {
     }
 
 	#region Variable Accessors
+    public static int GetMaxHealth() {
+        return maxHealth;
+    }
 	public int GetHealth(){
 		return health;
 	}
-	public float GetMaxFuel(){
+	public static float GetMaxFuel(){
 		return maxFuel;
 	}
 	public float GetFuel(){

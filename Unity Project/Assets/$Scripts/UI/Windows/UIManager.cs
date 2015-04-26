@@ -65,11 +65,9 @@ public class UIManager : MonoBehaviour {
     public static bool IsChangeKeybindWindow() {
         return windows[(int)Menu.ChangeKeybind].enabled;
     }
-
     public static Canvas GetCanvas(Menu value) {
         return windows[(int)value];
     }
-
     public static bool IsCurrentMenuWindow(Menu value) {
         return currentWindow == (int)value;
     }

@@ -1115,7 +1115,7 @@ public class GuiManager : MonoBehaviour {
             GUI.DrawTexture(fuel, empty);
         }
 
-        fuel.xMin = fuel.xMax - (playerResource.GetFuel() / playerResource.GetMaxFuel()) * 250;
+        fuel.xMin = fuel.xMax - (playerResource.GetFuel() / PlayerResources.GetMaxFuel()) * 250;
         GUI.DrawTexture(fuel, fullFuel);
     }
 
