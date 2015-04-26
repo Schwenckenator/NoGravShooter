@@ -97,7 +97,7 @@ public class PlayerResources : MonoBehaviour {
 			RechargeFuel(fuelRecharge);
 		}
 		RechargeWeapon(heatOverheat);
-		if(Input.GetKeyDown(KeyCode.K) && networkView.isMine){ //K is for kill! // This is for testing purposes only
+		if(Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine){ //K is for kill! // This is for testing purposes only
 			TakeDamage(10, Network.player);
 			ChatManager.instance.AddToChat("committed Seppuku!", true);
 		}

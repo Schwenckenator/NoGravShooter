@@ -232,10 +232,10 @@ public class GameManager : MonoBehaviour {
         }
     }
     void GetKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            SetCursorVisibility(!playerMenu);
-            SetPlayerMenu(!playerMenu); // Toggle Pause
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape)) {
+        //    SetCursorVisibility(!playerMenu);
+        //    SetPlayerMenu(!playerMenu); // Toggle Pause
+        //}
 
         if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch) && myPlayerSpawned) {
             playerResources.ChangeGrenade();

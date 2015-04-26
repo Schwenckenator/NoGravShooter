@@ -49,10 +49,12 @@ public class UIPauseSpawn : MonoBehaviour {
     private static void ReturnToGame() {
         UIManager.instance.SetMenuWindow(Menu.PlayerHUD);
         GameManager.SetCursorVisibility(false);
+        GameManager.instance.SetPlayerMenu(false);
     }
     private static void PauseMenu() {
         UIManager.instance.SetMenuWindow(Menu.PauseMenu);
         GameManager.SetCursorVisibility(true);
+        GameManager.instance.SetPlayerMenu(true);
     }
 
     /// <summary>
