@@ -7,10 +7,10 @@ public class SelectableHideFromConnectionType : MonoBehaviour {
     public bool hideFromClient;
     public bool hideFromServer;
 
-    private Selectable myButton;
+    private Selectable mySelectable;
 
     void Awake() {
-        myButton = GetComponent<Selectable>();
+        mySelectable = GetComponent<Selectable>();
     }
 
     public void UpdateVisibility() {
@@ -19,7 +19,7 @@ public class SelectableHideFromConnectionType : MonoBehaviour {
     }
 
     private void SetVisibility(bool hidden) {
-        myButton.enabled = !hidden;
+        mySelectable.gameObject.SetActive(!hidden);
     }
 
 }
