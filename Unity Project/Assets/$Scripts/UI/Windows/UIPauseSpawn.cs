@@ -25,9 +25,9 @@ public class UIPauseSpawn : MonoBehaviour {
         ChangeableText[] texts = canvas.GetComponentsInChildren<ChangeableText>();
 
         foreach (ChangeableText text in texts) {
-            if (text.GetTextType() == "spawnButton") {
+            if (text.IsType("spawnButton")) {
                 spawnButton = text;
-            } else if (text.GetTextType() == "serverName") {
+            } else if (text.IsType("serverName")) {
                 serverName = text;
             }
         }
@@ -36,10 +36,13 @@ public class UIPauseSpawn : MonoBehaviour {
 
     public static void PlayerSpawned() {
         spawnButton.SetText(unpause);
-        ReturnToGame();
+        if (GameManager.instance.GameInProgress)
+            ReturnToGame();
     }
     public static void PlayerDied() {
         spawnButton.SetText(spawn);
+        if (GameManager.instance.GameInProgress)
+            PauseMenu();
     }
 
     public static void SetServerNameText(string newText) {
@@ -78,5 +81,6 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     public void ReturnToLobbyPress() {
         GameManager.instance.ReturnToLobby();
+        UIManager.instance.SetMenuWindow(Menu.Lobby);
     }
 }

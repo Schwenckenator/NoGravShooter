@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 public class UIChat : MonoBehaviour {
 
-    private static ITextBox[] textBoxes;
-    private static List<ITextBox> chatBoxes;
-    private static List<ITextBox> playerLists;
+    private static ChangeableText[] textBoxes;
+    private static List<ChangeableText> chatBoxes;
+    private static List<ChangeableText> playerLists;
 
     public static void FindChatBoxes() {
-        chatBoxes = new List<ITextBox>();
-        playerLists = new List<ITextBox>();
+        chatBoxes = new List<ChangeableText>();
+        playerLists = new List<ChangeableText>();
 
         textBoxes = GameObject.FindObjectsOfType<ChangeableText>();
 
-        foreach (ITextBox textBox in textBoxes) {
-            if (textBox.GetTextType() == "chat") {
+        foreach (ChangeableText textBox in textBoxes) {
+            if (textBox.IsType("chat")) {
                 chatBoxes.Add(textBox);
-            } else if (textBox.GetTextType() == "playerList") {
+            } else if (textBox.IsType("playerList")) {
                 playerLists.Add(textBox);
             }
         }
@@ -26,12 +26,12 @@ public class UIChat : MonoBehaviour {
         UpdatePlayerLists();
     }
     public static void UpdateChatBoxes() {
-        foreach (ITextBox chatBox in chatBoxes) {
+        foreach (ChangeableText chatBox in chatBoxes) {
             chatBox.SetText(ChatManager.SubmittedChat);
         }
     }
     public static void UpdatePlayerLists() {
-        foreach (ITextBox playerListBox in playerLists) {
+        foreach (ChangeableText playerListBox in playerLists) {
             playerListBox.SetText(ScoreVictoryManager.UpdateScoreBoard());
         }
     }

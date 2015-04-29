@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovingBar : MonoBehaviour {
+public class MovingBar : MonoBehaviour, IChangeable {
     public enum Anchor { Right, Left}
 
     public Anchor anchorSide;
@@ -15,14 +15,18 @@ public class MovingBar : MonoBehaviour {
     private float width;
     private float height;
 
+    // Interface
+    public bool IsType(string otherType) {
+        return barType == otherType;
+    }
+    // Interface End
+
     void Awake() {
         myTransform = GetComponent<RectTransform>();
         width = myTransform.rect.width;
         height = myTransform.rect.height;
     }
-    public string GetBarType() {
-        return barType;
-    }
+
     public void SetMaxValue(float max) {
         maxValue = max;
     }
@@ -42,6 +46,7 @@ public class MovingBar : MonoBehaviour {
         if(anchorSide == Anchor.Right)
             myTransform.anchoredPosition = new Vector2(-BarXValue(currentValue), 0);
     }
-
-
+    public string type {
+        get { return barType; }
+    }
 }

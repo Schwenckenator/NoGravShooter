@@ -98,7 +98,7 @@ public class PlayerResources : MonoBehaviour {
 		}
 		RechargeWeapon(heatOverheat);
 		if(Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine){ //K is for kill! // This is for testing purposes only
-			TakeDamage(10, Network.player);
+			TakeDamage(100, Network.player);
 			ChatManager.instance.AddToChat("committed Seppuku!", true);
 		}
 
@@ -112,14 +112,10 @@ public class PlayerResources : MonoBehaviour {
         if (heat > maxHeat) {
             smokeParticle.emissionRate = 10;
             smokeParticle.startColor = Color.black;
-
-
         } else if (heat > maxHeat * 2 / 3) {
-
             smokeParticle.emissionRate = 10;
             smokeParticle.GetComponent<ParticleSystem>().startColor = Color.grey;
         } else if (heat > maxHeat * 1 / 3) {
-
             smokeParticle.emissionRate = 10;
             smokeParticle.GetComponent<ParticleSystem>().startColor = Color.white;
         } else {

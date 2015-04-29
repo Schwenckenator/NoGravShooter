@@ -53,6 +53,14 @@ public class UIManager : MonoBehaviour {
     void Update() {
         GetKeyStrokes();
     }
+    void OnGUI() {
+        if (DebugManager.IsAdminMode()) {
+            GUI.Label(new Rect(Screen.width / 2, 50, 100, 20), "TEST MODE");
+        }
+        if (DebugManager.IsDebugMode()) {
+            GUI.Label(new Rect(Screen.width / 2, 70, 100, 20), "DEBUG: On");
+        }
+    }
 
     private void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
