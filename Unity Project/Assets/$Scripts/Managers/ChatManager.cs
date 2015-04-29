@@ -87,6 +87,7 @@ public class ChatManager : MonoBehaviour {
         submittedChat = "";
         currentChat = "";
         submittedChatList.Clear();
+        UIChat.UpdateChatBoxes();
     }
     public static void ClearCurrentChat() {
         currentChat = "";

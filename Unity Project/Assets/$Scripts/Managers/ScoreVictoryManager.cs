@@ -71,7 +71,7 @@ public class ScoreVictoryManager : MonoBehaviour {
             CheckForScoreVictory();
         }
 
-        GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard()); 
+        UIChat.UpdatePlayerLists();
     }
 
     void CheckForScoreVictory() {

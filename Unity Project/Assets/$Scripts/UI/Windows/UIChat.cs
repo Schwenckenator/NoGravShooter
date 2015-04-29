@@ -32,22 +32,8 @@ public class UIChat : MonoBehaviour {
     }
     public static void UpdatePlayerLists() {
         foreach (ITextBox playerListBox in playerLists) {
-            playerListBox.SetText(PlayerListText());
+            playerListBox.SetText(ScoreVictoryManager.UpdateScoreBoard());
         }
-    }
-
-    private static string PlayerListText() {
-        bool showScores = GameManager.instance.GameInProgress;
-
-        string playerNames = "Players:\n";
-        foreach (Player player in NetworkManager.connectedPlayers) {
-            playerNames += player.Name;
-            if (showScores) {
-                playerNames += " " + player.Score;
-            }
-            playerNames += "\n";
-        }
-        return playerNames;
     }
 
     public void SubmitChat(string newChat) {

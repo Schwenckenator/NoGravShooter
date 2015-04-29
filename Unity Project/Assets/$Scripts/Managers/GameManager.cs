@@ -307,7 +307,7 @@ public class GameManager : MonoBehaviour {
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
-            
+            UIChat.UpdatePlayerLists();
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
                 ScoreVictoryManager.instance.StartTimer();
