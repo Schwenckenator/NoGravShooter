@@ -174,7 +174,6 @@ public class NetworkManager : MonoBehaviour {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         SettingsManager.instance.RelayServerName();
         AssignMyPlayerToTeam();
-        UILobby.instance.ShowHideButtons();
 
         UIManager.instance.UpdateArraysFromNetworkConnection();
     }
@@ -183,7 +182,6 @@ public class NetworkManager : MonoBehaviour {
         SettingsManager.instance.ClearPasswordClient();
 
         // Set window to lobby
-        UILobby.instance.ShowHideButtons();
         UIManager.instance.SetMenuWindow(Menu.Lobby);
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         

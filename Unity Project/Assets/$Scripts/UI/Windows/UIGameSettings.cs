@@ -63,6 +63,9 @@ public class UIGameSettings : MonoBehaviour {
         medkitSpawn = toggles[0];
         grenadeSpawn = toggles[1];
         weaponSpawn = toggles[2];
+        medkitSpawn.isOn = (SettingsManager.instance.MedkitCanSpawn == 1);
+        grenadeSpawn.isOn = (SettingsManager.instance.GrenadeCanSpawn == 1);
+        weaponSpawn.isOn = (SettingsManager.instance.WeaponCanSpawn == 1);
     }
     #endregion
     #region ButtonPushes
@@ -93,7 +96,7 @@ public class UIGameSettings : MonoBehaviour {
         }
     }
     public void MedkitToggle(bool value) {
-        SettingsManager.instance.MedkitCanSpawn = value ? 1 : 0;;
+        SettingsManager.instance.MedkitCanSpawn = value ? 1 : 0;
     }
     public void GrenadeToggle(bool value) {
         SettingsManager.instance.GrenadeCanSpawn = value ? 1 : 0;

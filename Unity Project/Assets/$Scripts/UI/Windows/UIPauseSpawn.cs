@@ -45,7 +45,9 @@ public class UIPauseSpawn : MonoBehaviour {
             PauseMenu();
     }
 
-    public static void SetServerNameText(string newText) {
+    public static void SetServerNameText() {
+        string newText = SettingsManager.instance.ServerNameClient;
+        newText += ", " + SettingsManager.instance.GameModeName;
         serverName.SetText(newText);
     }
 

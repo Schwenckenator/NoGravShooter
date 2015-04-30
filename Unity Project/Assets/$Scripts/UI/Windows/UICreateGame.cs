@@ -26,4 +26,14 @@ public class UICreateGame : MonoBehaviour {
             UIManager.instance.SetMenuWindow(Menu.Lobby);
         }
     }
+
+    public void SetServerName(string value) {
+        SettingsManager.instance.ServerNameServer = value;
+    }
+    public void SetPortNum(string value) {
+        SettingsManager.instance.PortNumStr = value;
+    }
+    public void SetPassword(string value) {
+        SettingsManager.instance.PasswordServer = value;
+    }
 }

@@ -21,7 +21,7 @@ public class UILobby : MonoBehaviour {
     #endregion
 
     private static Text startButtonText;
-    private static Text disconnectButtonText;
+    private static ChangeableText serverNameText;
     private static Button[] buttons;
 
     private static bool countdown = false;
@@ -35,7 +35,11 @@ public class UILobby : MonoBehaviour {
         Canvas lobby = UIManager.GetCanvas(Menu.Lobby);
         buttons = lobby.GetComponentsInChildren<Button>();
         startButtonText = buttons[0].GetComponentInChildren<Text>();
-        disconnectButtonText = buttons[2].GetComponentInChildren<Text>();
+
+        ChangeableText[] texts = lobby.GetComponentsInChildren<ChangeableText>();
+        foreach (var text in texts) {
+            if (text.IsType("serverName")) serverNameText = text;
+        }
     }
     #region StartGame
     public void StartCountdown() {
@@ -54,6 +58,7 @@ public class UILobby : MonoBehaviour {
     IEnumerator CountdownStartGame() {
         if (DebugManager.IsAdminMode()) {
             GameManager.instance.LoadLevel();
+            UIPauseSpawn.SetServerNameText();
             yield break;
         }
         countdown = true;
@@ -64,25 +69,14 @@ public class UILobby : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
         GameManager.instance.LoadLevel();
+        UIPauseSpawn.SetServerNameText();
         countdown = false;
+        ChangeButtonText(countdown);
     }
     #endregion
 
-    private void ModifyLobby() {
-        ChangeButtonText(countdown);
-        ChangeDisconnectButtonText();
-    }
-
     private void ChangeButtonText(bool count) {
         startButtonText.text = count ? "Cancel" : "Start Game";
-    }
-    private void ChangeDisconnectButtonText() {
-        disconnectButtonText.text = Network.isServer ? "Shutdown Server" : "Disconnect";
-    }
-    public void ShowHideButtons() {
-        bool show = Network.isServer;
-        buttons[0].enabled = show;
-        buttons[1].enabled = show;
     }
 
     public void Disconnect() {
@@ -92,5 +86,16 @@ public class UILobby : MonoBehaviour {
         NetworkManager.Disconnect();
         if (countdown) StopCoroutine("CountdownStartGame");
         countdown = false;
+    }
+
+    void SetServerName() {
+        serverNameText.SetText(SettingsManager.instance.ServerNameClient);
+    }
+    void OnConnectedToServer() {
+        // Is client
+        SetServerName();
+    }
+    void OnServerInitialized() {
+        SetServerName();
     }
 }
