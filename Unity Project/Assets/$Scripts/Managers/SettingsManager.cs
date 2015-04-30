@@ -27,9 +27,11 @@ public class SettingsManager : MonoBehaviour {
 
     private string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
     private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Extraction", "Skirmish", "Team Skirmish", "Elimination", "Infection" };
+    private string[] weaponlist = { "Laser Rifle", "Assault Rifle", "Beam Sniper", "Shotgun", "Force Cannon", "Rocket Launcher", "Plasma Blaster", "None" };
 
     public string[] LevelList { get { return levelList; } }
     public string[] GameModeList { get { return gameModeList; } }
+    public string[] WeaponList { get { return weaponlist; } }
 
     // Seting ~~Server is the version saved in PlayerPrefs
     // Setting ~~Client is the version used for game logic, and displayed
