@@ -8,8 +8,15 @@ public class UIPlayerHUD : MonoBehaviour {
     static MovingBar fuel;
     static ChangeableText ammo;
     static ChangeableText grenade;
+    
+    static ChangeableImage crosshair;
+    static ChangeableImage sniperScope;
+    static ChangeableImage sniperBackground;
 
     static PlayerResources playerResource;
+
+    static CanvasGroup playerUI;
+    static CanvasGroup sniperUI;
 
 
     void Start() {
@@ -17,8 +24,7 @@ public class UIPlayerHUD : MonoBehaviour {
     }
     public static void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.PlayerHUD);
-
-        List<IChangeable> changers = FindChangeables(canvas);
+        List<IChangeable> changers = UIManager.FindChangeables(canvas);
         
         foreach (IChangeable changer in changers) {
             if (changer.IsType("fuel")) fuel = changer as MovingBar;
@@ -27,18 +33,18 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("grenade")) grenade = changer as ChangeableText;
         }
 
+        CanvasGroup[] canvasGroups = canvas.GetComponentsInChildren<CanvasGroup>();
+        playerUI = canvasGroups[0];
+        sniperUI = canvasGroups[1];
+
         health.SetMaxValue(PlayerResources.GetMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
+        SetCrosshairImage(false); // Set to default
     }
 
-    private static List<IChangeable> FindChangeables(Canvas canvas) {
-        List<IChangeable> changers = new List<IChangeable>();
-        MovingBar[] bars = canvas.GetComponentsInChildren<MovingBar>();
-        changers.AddRange(bars);
-        ChangeableText[] texts = canvas.GetComponentsInChildren<ChangeableText>();
-        changers.AddRange(texts);
-
-        return changers;
+    public static void SetCrosshairImage(bool showSniper) {
+        playerUI.alpha = showSniper ? 0 : 1;
+        sniperUI.alpha = showSniper ? 1 : 0;
     }
 
     public static void SetPlayerResource(PlayerResources res) {

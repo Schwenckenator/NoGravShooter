@@ -9,12 +9,16 @@ public class ChangeableText : MonoBehaviour, IChangeable {
     public string textType;
 
     private Text myText;
+    private string currentText;
 
     void Awake() {
         myText = GetComponentInChildren<Text>();
     }
 
     public void SetText(string newText) {
+        if (currentText == newText) return;
+
+        currentText = newText;
         myText.text = newText;
     }
 

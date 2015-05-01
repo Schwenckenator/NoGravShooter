@@ -79,6 +79,18 @@ public class UIManager : MonoBehaviour {
     public static bool IsCurrentMenuWindow(Menu value) {
         return currentWindow == (int)value;
     }
+    public static List<IChangeable> FindChangeables(Canvas canvas) {
+        List<IChangeable> changers = new List<IChangeable>();
+        MovingBar[] bars = canvas.GetComponentsInChildren<MovingBar>();
+        changers.AddRange(bars);
+        ChangeableText[] texts = canvas.GetComponentsInChildren<ChangeableText>();
+        changers.AddRange(texts);
+        ChangeableImage[] images = canvas.GetComponentsInChildren<ChangeableImage>();
+        changers.AddRange(images);
+        ChangeableInputField[] fields = canvas.GetComponentsInChildren<ChangeableInputField>();
+        changers.AddRange(fields);
+        return changers;
+    }
 
     #region MenuWindowInit
     void MenuWindowInit() {
