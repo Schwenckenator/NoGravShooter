@@ -38,23 +38,40 @@ public class UIJoinGame : MonoBehaviour {
     void JoinGameInit() {
         Canvas canvas = UIManager.GetCanvas(Menu.JoinGame);
         listManager = canvas.GetComponentInChildren<ServerListManager>();
+        RefreshPress();
     }
 	
-    public void RefreshServerList() {
+    public void RefreshPress() {
+        Debug.Log("Refresh Press");
+        UIJoinGame.instance.StartRefresh();
+    }
+    public void StartRefresh() {
+        StartCoroutine(PollServerList());
+    }
+    IEnumerator PollServerList() {
+        float waitTime = 0.5f;
         ClearServerList();
-
+        //Debug.Log("Request Host list");
+        
         MasterServer.RequestHostList(GameType);
-
+        yield return new WaitForSeconds(waitTime);
+        RefreshServerList();
+    }
+    private static void RefreshServerList() {
         HostData[] servers = MasterServer.PollHostList();
+        Debug.Log("Server list has length: "+ servers.Length.ToString());
         foreach (HostData server in servers) {
+            Debug.Log("Create Server object");
             ServerListEntry newServer = listManager.AddServer(server.gameName, server.comment, server.connectedPlayers + "/" + server.playerLimit);
             newServer.hostData = server;
             serverList.Add(newServer);
         }
+        MasterServer.ClearHostList();
     }
 
-    public void ClearServerList() {
+    public static void ClearServerList() {
         foreach (ServerListEntry server in serverList) {
+            Debug.Log("Destroy a server");
             Destroy(server.gameObject);
         }
         serverList.Clear();

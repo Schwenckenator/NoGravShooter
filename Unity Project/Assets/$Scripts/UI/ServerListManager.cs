@@ -7,7 +7,7 @@ public class ServerListManager : MonoBehaviour {
 
     public ServerListEntry AddServer(string name, string status, string player) {
         GameObject newServerObj = Instantiate(serverListObj) as GameObject;
-        newServerObj.transform.parent = this.transform; // Become child of this
+        newServerObj.transform.SetParent(this.transform); // Become child of this
         
         ServerListEntry newServer = newServerObj.GetComponent<ServerListEntry>();
         newServer.Name.text = name;

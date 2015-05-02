@@ -132,6 +132,9 @@ public class UIManager : MonoBehaviour {
     #region SetWindow
     public void SetMenuWindow(Menu newWindow) {
         SetMenuWindow((int)newWindow);
+        if (newWindow == Menu.JoinGame) {
+            UIJoinGame.instance.StartRefresh();
+        }
     }
     public void ShowMenuWindow(Menu newWindow, bool show) {
         ShowMenuWindow((int)newWindow, show);
