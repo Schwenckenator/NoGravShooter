@@ -192,6 +192,7 @@ public class GameManager : MonoBehaviour {
 		}
 
         GuiManager.instance.ActorsChanged();
+        Radar.instance.ActorsChanged();
         UIPauseSpawn.PlayerSpawned();
 
 	}

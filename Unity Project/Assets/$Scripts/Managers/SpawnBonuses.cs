@@ -69,6 +69,7 @@ public class SpawnBonuses : MonoBehaviour {
 				if(picked){
 					Network.Instantiate(spawnableBonuses[Random.Range(0, spawnableBonuses.Count)], point.transform.position, point.transform.rotation, 0);
                     GuiManager.instance.ActorsChanged();
+                    Radar.instance.ActorsChanged();
 				}
 			}
 			yield return new WaitForSeconds(bonusSpawnDelay);
