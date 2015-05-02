@@ -25,7 +25,10 @@ public class UIJoinGame : MonoBehaviour {
     private static List<ServerListEntry> serverList;
     private static ServerListManager listManager;
 
-    private HostData masterServerData;
+    private static HostData masterServerData;
+
+    //private bool connectionError = false;
+    //private string connectionErrorMessage;
 
 	// Use this for initialization
 	void Start () {
@@ -61,10 +64,31 @@ public class UIJoinGame : MonoBehaviour {
         for (int i = 0; i < serverList.Count; i++) {
             if (serverList[i].IsPressed()) {
                 masterServerData = serverList[i].hostData;
-                
-                NetworkManager.SetClientDetailsMasterServer(masterServerData);
-                NetworkManager.ConnectToServer();
+                if (masterServerData.passwordProtected) {
+                    // Need password
+                    UIManager.instance.ShowMenuWindow(Menu.PasswordInput, true);
+                } else {
+                    // Ready to connect
+                    ConnectToServer();
+                }
             }
         }
     }
+    private void ConnectToServer() {
+        NetworkManager.SetClientDetailsMasterServer(masterServerData);
+        NetworkManager.ConnectToServer();
+    }
+    public void PasswordEndEdit(string value) {
+        SettingsManager.instance.PasswordClient = value;
+    }
+    public void SubmitPassword() {
+        UIManager.instance.ShowMenuWindow(Menu.PasswordInput, false);
+        ConnectToServer();
+    }
+    //void OnFailedToConnect(NetworkConnectionError error) {
+    //    connectionError = true;
+    //    connectionErrorMessage = error.ToString();
+
+    //    SettingsManager.instance.ClearPasswordClient();
+    //}
 }
