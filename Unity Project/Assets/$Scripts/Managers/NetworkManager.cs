@@ -68,11 +68,13 @@ public class NetworkManager : MonoBehaviour {
     }
     
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
+        UIChat.UpdatePlayerLists();
         networkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
     [RPC]
     private void RPCPlayerChangedTeam(NetworkPlayer player, int newTeam) {
         GetPlayer(player).ChangeTeam((TeamColour)newTeam, false);
+        UIChat.UpdatePlayerLists();
     }
     #region Connect To Server
     public static void ConnectToServer() {

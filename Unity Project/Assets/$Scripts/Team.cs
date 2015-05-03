@@ -14,6 +14,7 @@ public class Team {
     public string Name { get; private set; }
     public int Score { get; private set; }
 
+
     public Team(TeamColour team) {
         if (team == TeamColour.None) {
             throw new InvalidTeamColourException("None is not a valid team type");
@@ -37,5 +38,17 @@ public class Team {
     }
     public void ClearScore() {
         this.Score = 0;
+    }
+
+    public static string ColourTag(TeamColour col) {
+        if (col == TeamColour.Red) {
+            return "<color=#ff5555ff>";
+        } else if (col == TeamColour.Blue) {
+            return "<color=#0099ffff>";
+        }
+        return "<color=white>";
+    }
+    public static string ColourEnd() {
+        return "</color>";
     }
 }

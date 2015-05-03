@@ -42,7 +42,6 @@ public class UIJoinGame : MonoBehaviour {
     }
 	
     public void RefreshPress() {
-        Debug.Log("Refresh Press");
         UIJoinGame.instance.StartRefresh();
     }
     public void StartRefresh() {
@@ -59,9 +58,7 @@ public class UIJoinGame : MonoBehaviour {
     }
     private static void RefreshServerList() {
         HostData[] servers = MasterServer.PollHostList();
-        Debug.Log("Server list has length: "+ servers.Length.ToString());
         foreach (HostData server in servers) {
-            Debug.Log("Create Server object");
             ServerListEntry newServer = listManager.AddServer(server.gameName, server.comment, server.connectedPlayers + "/" + server.playerLimit);
             newServer.hostData = server;
             serverList.Add(newServer);
@@ -71,7 +68,6 @@ public class UIJoinGame : MonoBehaviour {
 
     public static void ClearServerList() {
         foreach (ServerListEntry server in serverList) {
-            Debug.Log("Destroy a server");
             Destroy(server.gameObject);
         }
         serverList.Clear();

@@ -168,11 +168,11 @@ public class ScoreVictoryManager : MonoBehaviour {
 
         if (SettingsManager.instance.IsTeamGameMode()) {
             foreach (Team team in teamBuffer) {
-                scoreBoardBuffer += "Team "+ team.Type.ToString() + ": " + team.Score + "\n";
+                scoreBoardBuffer += Team.ColourTag(team.Type) + team.Name + ": " + Team.ColourEnd() + team.Score + "\n";
             }
         }
         foreach (Player player in playerBuffer) {
-            scoreBoardBuffer += player.Name + ": " + player.Score + "\n";
+            scoreBoardBuffer += Team.ColourTag(player.Team) + player.Name + ": " +Team.ColourEnd() + player.Score + "\n";
         }
 
         return scoreBoardBuffer;

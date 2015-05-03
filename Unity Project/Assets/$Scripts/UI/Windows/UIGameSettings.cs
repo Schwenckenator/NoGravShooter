@@ -69,6 +69,10 @@ public class UIGameSettings : MonoBehaviour {
     }
     #endregion
     #region ButtonPushes
+    public void SaveSettings() {
+        SettingsManager.instance.SaveSettings();
+        SettingsManager.instance.RelayGameMode();
+    }
     public void GameModeSelect(int id) {
         SettingsManager.instance.GameModeIndexServer = id;
         gameMode.SetText(SettingsManager.instance.GameModeList[id]);

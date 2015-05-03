@@ -23,23 +23,37 @@ public class UILobby : MonoBehaviour {
     private static Text startButtonText;
     private static ChangeableText serverNameText;
     private static Button[] buttons;
+    private static Button changeTeamButton;
 
     private static bool countdown = false;
+
+    private static bool teamGame = false;
 
 	// Use this for initialization
 	void Start () {
         LobbyInit();
 	}
+    void Update() {
+        if (teamGame != SettingsManager.instance.IsTeamGameMode()) {
+            ShowChangeTeamButton(SettingsManager.instance.IsTeamGameMode());
+        }
+    }
+    
+    void ShowChangeTeamButton(bool show) {
+        teamGame = show;
+        changeTeamButton.gameObject.SetActive(show);
+    }
 
     void LobbyInit() {
         Canvas lobby = UIManager.GetCanvas(Menu.Lobby);
         buttons = lobby.GetComponentsInChildren<Button>();
         startButtonText = buttons[0].GetComponentInChildren<Text>();
-
+        changeTeamButton = buttons[2];
         ChangeableText[] texts = lobby.GetComponentsInChildren<ChangeableText>();
         foreach (var text in texts) {
             if (text.IsType("serverName")) serverNameText = text;
         }
+        ShowChangeTeamButton(false);
     }
     #region StartGame
     public void StartCountdown() {
@@ -78,10 +92,13 @@ public class UILobby : MonoBehaviour {
     private void ChangeButtonText(bool count) {
         startButtonText.text = count ? "Cancel" : "Start Game";
     }
-
+    public void ChangeTeam() {
+        NetworkManager.MyPlayer().ChangeTeam();
+    }
     public void Disconnect() {
         UILobby.instance.DisconnectStatic();
     }
+    
     private void DisconnectStatic() {
         NetworkManager.Disconnect();
         if (countdown) StopCoroutine("CountdownStartGame");
