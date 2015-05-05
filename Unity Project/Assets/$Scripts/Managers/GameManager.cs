@@ -115,6 +115,7 @@ public class GameManager : MonoBehaviour {
         playerMenu = input;
     }
     #endregion
+	
 
     public const int MaxPlayers = 16;
 
@@ -145,7 +146,12 @@ public class GameManager : MonoBehaviour {
                 int[] temp = new int[2];
 
                 temp[0] = SettingsManager.instance.SpawnWeapon1;
-                temp[1] = SettingsManager.instance.SpawnWeapon2;
+				if(SettingsManager.instance.SpawnWeapon1 == SettingsManager.instance.SpawnWeapon2){
+					Debug.Log("same weapon twice");
+					temp[1] = 99;
+				} else {
+					temp[1] = SettingsManager.instance.SpawnWeapon2;
+				}
                 StartCoroutine(SetStartingWeaponsDelay(temp));
 			}
 		}
@@ -179,15 +185,21 @@ public class GameManager : MonoBehaviour {
                 PlayerColourManager.instance.AssignColour(actor);
 			}
 		}
-
 		//Reload all weapons
 		for(int i=0; i< weapon.Count; i++){
 			if(weapon[i].isEnergy){
 				weapon[i].currentClip = weapon[i].defaultRemainingAmmo;
 				weapon[i].remainingAmmo = 0;
+				if(i == startingWeapons[0]){
+					weapon[i].currentClip += weapon[i].defaultRemainingAmmo;
+				}
 			} else {
 				weapon[i].currentClip = weapon[i].clipSize;
 				weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
+				if(i == startingWeapons[0]){
+					weapon[i].remainingAmmo += weapon[i].clipSize;
+					weapon[i].remainingAmmo += weapon[i].defaultRemainingAmmo;
+				}
 			}
 		}
 

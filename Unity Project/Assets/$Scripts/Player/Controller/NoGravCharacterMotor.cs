@@ -131,14 +131,16 @@ public class NoGravCharacterMotor : MonoBehaviour {
         Vector3 force = GetJetpackForce();
 
         // If non-zero force, spend fuel
-        if ((input.IsMovementKeys() || input.IsStopKey()) && !GameManager.IsPlayerMenu()) {
-            if (resource.SpendFuel(fuelSpend)) {
-                playJetSound = true;
-                rigidbody.AddRelativeForce(force, ForceMode.Force);
-            } else {
-                jetpackSoundWasPlayed = false;
-            }
-        }
+		if(force.x != 0 || force.y != 0 || force.z != 0){
+			if ((input.IsMovementKeys() || input.IsStopKey()) && !GameManager.IsPlayerMenu()) {
+				if (resource.SpendFuel(fuelSpend)) {
+					playJetSound = true;
+					rigidbody.AddRelativeForce(force, ForceMode.Force);
+				} else {
+					jetpackSoundWasPlayed = false;
+				}
+			}
+		}
 
         Vector3 torque = GetJetpackTorque();
         transform.Rotate(torque);
@@ -164,7 +166,12 @@ public class NoGravCharacterMotor : MonoBehaviour {
             force = new Vector3(input.GetXMovement(), input.GetYMovement(), input.GetZMovement());
             force = Vector3.ClampMagnitude(force, 1.0f);
         } else if (input.IsStopKey()) {
-            force = StopJetpackMovementForce(transform.InverseTransformDirection(rigidbody.velocity));
+			if(rigidbody.velocity.x*rigidbody.velocity.x < 0.00001 && rigidbody.velocity.y*rigidbody.velocity.y < 0.00001 && rigidbody.velocity.z*rigidbody.velocity.z < 0.00001 ){
+				force = new Vector3(0,0,0);
+				rigidbody.velocity = new Vector3(0,0,0);
+			} else {
+				force = StopJetpackMovementForce(transform.InverseTransformDirection(rigidbody.velocity));
+			}
         }
 
         force *= speed;

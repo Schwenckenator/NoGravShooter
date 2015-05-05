@@ -452,7 +452,13 @@ public class PlayerResources : MonoBehaviour {
 	}
 	public void ChangeGrenade(){
 		currentGrenadeType++;
-		currentGrenadeType %= grenadeTypes; // Keep value within range
+		currentGrenadeType %= grenadeTypes;
+		for(int i = 0; i < grenadeTypes; i++){
+			if(grenades[currentGrenadeType] == 0){
+				currentGrenadeType++;
+				currentGrenadeType %= grenadeTypes;
+			}
+		}
 	}
 	public void ChangeGrenade(int typeOfGrenade){
 		currentGrenadeType = typeOfGrenade;
