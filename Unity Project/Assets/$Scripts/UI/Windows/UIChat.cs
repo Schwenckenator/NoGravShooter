@@ -26,6 +26,7 @@ public class UIChat : MonoBehaviour {
         UpdatePlayerLists();
     }
     public static void UpdateChatBoxes() {
+        Debug.Log("Chat boxes updated.");
         foreach (ChangeableText chatBox in chatBoxes) {
             chatBox.SetText(ChatManager.SubmittedChat);
         }
