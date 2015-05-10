@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputConverter : MonoBehaviour {
+public class InputConverter {
 
     public static bool GetKeyDown(KeyBind input) {
         return Input.GetKeyDown(SettingsManager.keyBindings[(int)input]);
@@ -11,4 +11,7 @@ public class InputConverter : MonoBehaviour {
         return Input.GetKey(SettingsManager.keyBindings[(int)input]);
     }
 
+    public static string GeyKeyName(KeyBind input) {
+        return SettingsManager.keyBindings[(int)input].ToString();
+    }
 }

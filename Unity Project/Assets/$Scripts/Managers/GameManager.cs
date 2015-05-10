@@ -359,8 +359,7 @@ public class GameManager : MonoBehaviour {
         LoadLevelTutorial();
 
         yield return new WaitForSeconds(1f);
-        SpawnActor();
-        GuiManager.instance.SetMyPlayerResources();
+        
     }
     public void LoadTutorial() {
         StartCoroutine(LoadTutorialCoRoutine());

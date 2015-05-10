@@ -4,27 +4,27 @@ using System.Collections;
 public class TutorialFloorPanel : MonoBehaviour {
 
 	private bool landed = false;
-	private GameObject tuteManager;
+	private TutorialInstructions tuteManager;
 	public int tileID;
 	
 	void Start(){
-		tuteManager = GameObject.Find("TutorialChecker");
+        tuteManager = GameObject.Find("TutorialChecker").GetComponent<TutorialInstructions>();
 	}
 	
 	void OnTriggerEnter(Collider other) {
 		if(other.tag == "Player") {
-			if(landed == false && tuteManager.GetComponent<TutorialInstructions>().checkingfloortiles){
+			if(landed == false && tuteManager.checkingfloortiles){
 				if(tileID == 1){
-					tuteManager.GetComponent<TutorialInstructions>().Floor1 = true;
+					tuteManager.Floor1 = true;
 					landed = true;
 				} else if(tileID == 2){
-					if(tuteManager.GetComponent<TutorialInstructions>().Floor1){
-						tuteManager.GetComponent<TutorialInstructions>().Floor2 = true;
+					if(tuteManager.Floor1){
+						tuteManager.Floor2 = true;
 						landed = true;
 					}
 				} else {
-					if(tuteManager.GetComponent<TutorialInstructions>().Floor2){
-						tuteManager.GetComponent<TutorialInstructions>().Floor3 = true;
+					if(tuteManager.Floor2){
+						tuteManager.Floor3 = true;
 						landed = true;
 					}
 				}
