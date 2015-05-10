@@ -203,7 +203,6 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 
-        GuiManager.instance.ActorsChanged();
         Radar.instance.ActorsChanged();
         UIPauseSpawn.PlayerSpawned();
 
@@ -307,7 +306,7 @@ public class GameManager : MonoBehaviour {
             "Tutorial", 
             NetworkManager.lastLevelPrefix, 
             dummyValue,
-            SettingsManager.instance.GameModeIndexServer);
+            dummyValue);
     }
 
     [RPC]
@@ -359,7 +358,7 @@ public class GameManager : MonoBehaviour {
 
         LoadLevelTutorial();
 
-        yield return new WaitForSeconds(1 / 500f);
+        yield return new WaitForSeconds(1f);
         SpawnActor();
         GuiManager.instance.SetMyPlayerResources();
     }

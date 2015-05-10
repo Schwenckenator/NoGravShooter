@@ -2,9 +2,9 @@ using UnityEngine;
 using System.Collections;
      
 public class TutorialInstructions : MonoBehaviour {
-	private GameManager manager;
 	private PlayerResources playerRes;
 	private GameObject player;
+    private IControllerInput playerInput;
 	
 	private int dotLooks = 0;
 	private GameObject lookingDot;
@@ -72,7 +72,6 @@ public class TutorialInstructions : MonoBehaviour {
 	
 
 	void Start(){
-		manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
 		lookingDot = GameObject.Find("LookAtDot");
 		platform = GameObject.Find("PlatformFront1");
 		platform.transform.renderer.material.color = new Color(0, 1, 0);
@@ -84,23 +83,11 @@ public class TutorialInstructions : MonoBehaviour {
 	}
 	
 	void Update(){
-	    float minangle = .75f;
-		if (Vector3.Angle(player.transform.FindChild("CameraPos").forward, lookingDot.transform.position - player.transform.position) < minangle) {
-			Debug.Log("Player Looked at Dot");
-			dotLooks++;
-		}
-		if (dotLooks == 1){
-			lookingDot.transform.position = new Vector3(-358f,-10.6f,-3f);
-		}
-		if (dotLooks == 2){
-			lookingDot.transform.position = new Vector3(-358f,-7.6f,0f);
-		}
-		if (dotLooks == 3){
-			lookingDot.transform.position = new Vector3(-358f,-10.6f,3f);
-		}
-		if (dotLooks == 4){
-			lookingDot.transform.position = new Vector3(-358f,-13.6f,0f);
-		}
+        if (player == null) {
+            SearchForPlayer();
+            return;
+        } 
+        LookAtDots();
 		
 		if(check1){
 			if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward])){
@@ -271,53 +258,85 @@ public class TutorialInstructions : MonoBehaviour {
 			StartCoroutine(ItemTutorial());
 		}
 	}
+
+    private void SearchForPlayer() {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    private void LookAtDots() {
+        float minangle = .75f;
+        if (Vector3.Angle(player.transform.FindChild("CameraPos").forward, lookingDot.transform.position - player.transform.position) < minangle) {
+            Debug.Log("Player Looked at Dot");
+            dotLooks++;
+        }
+        if (dotLooks == 1) {
+            lookingDot.transform.position = new Vector3(-358f, -10.6f, -3f);
+        }
+        if (dotLooks == 2) {
+            lookingDot.transform.position = new Vector3(-358f, -7.6f, 0f);
+        }
+        if (dotLooks == 3) {
+            lookingDot.transform.position = new Vector3(-358f, -10.6f, 3f);
+        }
+        if (dotLooks == 4) {
+            lookingDot.transform.position = new Vector3(-358f, -13.6f, 0f);
+        }
+    }
 	
 	IEnumerator LookTutorial(){
 		//black out screen
+        
 		GuiManager.instance.blackOutScreen = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating.", 6000);
-		yield return new WaitForSeconds(.1f);
-		player = GameObject.Find("NoGravPlayer(Clone)");
-		player.GetComponent<KeyboardInput>().canWalk = false;
-		player.GetComponent<KeyboardInput>().canJump = false;
+		ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nCalibrating.");
+        while (player == null) {
+            yield return new WaitForSeconds(.1f);
+        }
+        playerInput = player.GetComponent(typeof(IControllerInput)) as IControllerInput;
+        playerInput.canWalk = false;
+        playerInput.canJump = false;
+        for (int i = 0; i < 4; i++) {
+            yield return new WaitForSeconds(1);
+            string message = "Welcome to the SC1830 Utility Suit.\n\nCalibrating.";
+            ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nCalibrating..");
+        }
+            
+        ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nCalibrating..");
 		yield return new WaitForSeconds(1);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating..", 6000);
+        ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nCalibrating...");
 		yield return new WaitForSeconds(1);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating...", 6000);
+		ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nCalibrating....");
 		yield return new WaitForSeconds(1);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nCalibrating....", 6000);
-		yield return new WaitForSeconds(1);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.", 6000);
+		ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.");
 		yield return new WaitForSeconds(2);
 		GuiManager.instance.blackOutScreen = false;
-		manager.GetComponent<GuiManager>().TutorialPrompt("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.", 6000);
+		ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.\n\nRunning Tutorial Simulation.");
 		yield return new WaitForSeconds(4);
 		lookingDot.transform.FindChild("DotMesh").renderer.material.color = new Color(0, 0, 200, 200);
 		lookingDot.transform.position = new Vector3(-358f,-10.6f,0f);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nMove your Mouse to look around.\n\nPlease look at the blue dot.", 99999);
+		ChatManager.TutorialChat("\nMove your Mouse to look around.\n\nPlease look at the blue dot.");
 		yield return new WaitForSeconds(5);
 		step0 = true;
 	}
 	IEnumerator MovementTutorial(){
 		check1 = true;
 		player.GetComponent<KeyboardInput>().canWalk = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.", 99999);
+		ChatManager.TutorialChat("\nPress "
+            +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.");
 		yield return new WaitForSeconds(4);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+		ChatManager.TutorialChat("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.\nPress "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.");
 		yield return new WaitForSeconds(4);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+		ChatManager.TutorialChat("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.\nPress "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move Right.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move Right.");
 		yield return new WaitForSeconds(4);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+		ChatManager.TutorialChat("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString()+" to move forwards.\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()+" to move Left.\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString()+" to move Right.\nPress "
-            +SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()+" to move Backwards.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()+" to move Backwards.");
 		yield return new WaitForSeconds(4);
 		step1 = true;
 	}
@@ -325,48 +344,48 @@ public class TutorialInstructions : MonoBehaviour {
 		checkingfloortiles = true;
 		litfloorpanel = GameObject.Find("walkhere1");
 		litfloorpanel.transform.renderer.material.color = new Color(0, 1, 0);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nWalk onto the green squares.", 99999);
+		ChatManager.TutorialChat("\nWalk onto the green squares.");
 		yield return new WaitForSeconds(5);
 		step2 = true;
 	}
 	
 	IEnumerator GunTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
+		ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
 		yield return new WaitForSeconds(7);
 		check3 = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nTo pick up a gun simply walk over it.\n\nIf you already have 2 guns you can swap out the gun you are currently holding.", 99999);
+		ChatManager.TutorialChat("\nTo pick up a gun simply walk over it.\n\nIf you already have 2 guns you can swap out the gun you are currently holding.");
 		yield return new WaitForSeconds(10);
-		manager.GetComponent<GuiManager>().TutorialPrompt("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
-		+SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload.", 99999);
+		ChatManager.TutorialChat("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
+		+SettingsManager.keyBindings[(int)KeyBind.Reload].ToString()+" to reload.");
 		yield return new WaitForSeconds(5);
 		step3 = true;
 	}
 	
 	IEnumerator GunTutorial2(){
 		checkingtargets = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nTry to shoot all the targets.", 99999);
+		ChatManager.TutorialChat("\nTry to shoot all the targets.");
 		yield return new WaitForSeconds(5);
 		step4 = true;
 	}
 	
 	IEnumerator FlightTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
+		ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
 		yield return new WaitForSeconds(7);
 		check5 = true;
 		player.GetComponent<KeyboardInput>().canJump = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to jump and boost upwards.", 99999);
+		ChatManager.TutorialChat("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to jump and boost upwards.");
 		yield return new WaitForSeconds(10);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+		ChatManager.TutorialChat("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()+" to boost downwards.\n\nPress "
-			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.", 99999);
+			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.");
 		yield return new WaitForSeconds(8);
 		step5 = true;		
 	}
 	IEnumerator FlightTutorial2(){
 		check6 = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nPress "
+		ChatManager.TutorialChat("\nPress "
             +SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString()+" to roll to the left and "
-            +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.", 99999);
+            +SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString()+" to roll to the right.\n\nYou can also rotate by moving the mouse while floating.");
 		yield return new WaitForSeconds(5);
 		step6 = true;		
 	}
@@ -378,40 +397,40 @@ public class TutorialInstructions : MonoBehaviour {
 		platform1.transform.position = new Vector3(platform1.transform.position.x,0,platform1.transform.position.z); 
 		platform2.transform.position = new Vector3(platform2.transform.position.x,0,platform2.transform.position.z); 
 		platform3.transform.position = new Vector3(platform3.transform.position.x,0,platform3.transform.position.z); 
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nTry to land on these platforms.\n\nRemember to 'look up' before you crash so you land feet first.", 99999);
+		ChatManager.TutorialChat("\nTry to land on these platforms.\n\nRemember to 'look up' before you crash so you land feet first.");
 		yield return new WaitForSeconds(5);
 		step7 = true;
 	}
 	
 	IEnumerator GrenadeTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nWell done!\n\nPlease proceed to the next room.", 99999);
+		ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
 		yield return new WaitForSeconds(7);
 		check8 = true;
-		manager.GetComponent<GuiManager>().TutorialPrompt("The purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
-			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\nPress "+SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString()+" to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.", 99999);
+		ChatManager.TutorialChat("The purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
+			+SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString()+" to throw a Proximity Grenade.\nPress "+SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString()+" to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.");
 		yield return new WaitForSeconds(8);
 		step8 = true;
 	}
 	
 	IEnumerator ItemTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt(
-            "\nIf a grenade hits a person it will detonate instantly.\n\nYou can also set off grenades by shooting them.", 99999);
+		ChatManager.TutorialChat(
+            "\nIf a grenade hits a person it will detonate instantly.\n\nYou can also set off grenades by shooting them.");
 		yield return new WaitForSeconds(8);
 		healthpack = GameObject.Find("TutorialBonusHealthPack");
 		healthpack.transform.position = new Vector3(142.22f,13.45f,-0.17f);
-		manager.GetComponent<GuiManager>().TutorialPrompt(
-            "\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot them to destroy them and stop others from using them.", 99999);
+		ChatManager.TutorialChat(
+            "\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot them to destroy them and stop others from using them.");
 		yield return new WaitForSeconds(10);
 		StartCoroutine(FinalTutorial());
 	}
 	
 	IEnumerator FinalTutorial(){
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.", 99999);
+		ChatManager.TutorialChat("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.");
 		yield return new WaitForSeconds(30);
-		manager.GetComponent<GuiManager>().TutorialPrompt("At the bottom left of your HUD the suit displays a radar.\nThis shows you the locations of items and other players.\n\nThe green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are\nabove you their dot is larger than yours, when they are below you their dot is smaller.", 99999);
+		ChatManager.TutorialChat("At the bottom left of your HUD the suit displays a radar.\nThis shows you the locations of items and other players.\n\nThe green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are\nabove you their dot is larger than yours, when they are below you their dot is smaller.");
 		yield return new WaitForSeconds(30);
-		manager.GetComponent<GuiManager>().TutorialPrompt("At the bottom right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.", 99999);
+		ChatManager.TutorialChat("At the bottom right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.");
 		yield return new WaitForSeconds(60);
-		manager.GetComponent<GuiManager>().TutorialPrompt("\nWhen you're ready to end the simulation, press Escape.", 99999);
+		ChatManager.TutorialChat("\nWhen you're ready to end the simulation, press Escape.");
 	}
 }

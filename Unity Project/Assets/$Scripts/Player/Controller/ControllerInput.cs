@@ -9,7 +9,10 @@ public class ControllerInput : MonoBehaviour, IControllerInput {
     float rollMovement = 0;
 
     int changeRate = 3; // * deltaTime
-	
+
+    public bool canWalk { get; set; }
+    public bool canJump { get; set; }
+
 	// Update is called once per frame
 	void Update () {
         UpdateRollMovement();
@@ -57,4 +60,6 @@ public class ControllerInput : MonoBehaviour, IControllerInput {
         }
         return axis;
     }
+
+
 }

@@ -37,7 +37,7 @@ public class UIChat : MonoBehaviour {
         }
     }
 
-    public void SubmitChat(string newChat) {
+    public void SubmitMessage(string newChat) {
         if(newChat != "" && Input.GetButtonDown("Submit")){
             ChatManager.instance.AddToChat(newChat, true);
         }
@@ -47,8 +47,5 @@ public class UIChat : MonoBehaviour {
             value.text = "";
             value.ActivateInputField();
         }
-    }
-    public void SubmitChat() {
-
     }
 }

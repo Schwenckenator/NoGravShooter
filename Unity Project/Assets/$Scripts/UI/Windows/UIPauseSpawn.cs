@@ -36,12 +36,12 @@ public class UIPauseSpawn : MonoBehaviour {
 
     public static void PlayerSpawned() {
         spawnButton.SetText(unpause);
-        if (GameManager.instance.GameInProgress)
+        if (GameManager.instance.GameInProgress || GameManager.IsSceneTutorial())
             ReturnToGame();
     }
     public static void PlayerDied() {
         spawnButton.SetText(spawn);
-        if (GameManager.instance.GameInProgress)
+        if (GameManager.instance.GameInProgress || GameManager.IsSceneTutorial())
             PauseMenu();
     }
 

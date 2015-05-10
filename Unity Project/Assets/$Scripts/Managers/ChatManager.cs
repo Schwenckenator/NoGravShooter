@@ -51,6 +51,12 @@ public class ChatManager : MonoBehaviour {
             networkView.RPC("UpdateChatRPC", RPCMode.All, newChat);
         }
     }
+    public static void TutorialChat(string input) {
+        if (input == "") return;
+
+        ClearAllChat();
+        UpdateChat(input);
+    }
     /// <summary>
     /// Only sends the message to the local chat. No RPC
     /// </summary>

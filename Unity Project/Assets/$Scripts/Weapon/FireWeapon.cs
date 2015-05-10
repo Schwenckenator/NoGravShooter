@@ -47,13 +47,13 @@ public class FireWeapon : MonoBehaviour {
     }
 
     void SetWeaponLoadout() {
-        if (!GameManager.IsSceneTutorial()) {
-            int[] temp = GameManager.instance.GetStartingWeapons();
+        if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
 
-            foreach (int id in temp) {
-                if (id < GameManager.weapon.Count) {
-                    AddWeapon(id);
-                }
+        int[] temp = GameManager.instance.GetStartingWeapons();
+
+        foreach (int id in temp) {
+            if (id < GameManager.weapon.Count) {
+                AddWeapon(id);
             }
         }
     }

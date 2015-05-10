@@ -2,6 +2,8 @@
 using System.Collections;
 
 public interface IControllerInput {
+    bool canWalk { get; set; }
+    bool canJump { get; set; }
 
     float GetRollMovement();
     float GetXMovement();
@@ -23,8 +25,8 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
 
     // Movement restriction Flags
     // For tutorial Only
-    public bool canWalk = true;
-    public bool canJump = true;
+    public bool canWalk { get; set; }
+    public bool canJump { get; set; }
 
     #region ExternalAccessors
     public float GetRollMovement() {
