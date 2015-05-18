@@ -65,6 +65,7 @@ The players radar decetion distance doubles.
 Any players that appear on radar but can't be seen are given a coloured overlay/silhouette.
 The overlay goes 'above' everything(like nametags used to), allowing the player to see others through walls.
 Invisible players will also be given an overlay if they are in the players line of sight.
+(as in there are no objects between the scanning player and the invisible player)
 
 Passive: Radar Boost
 The players radar detection distance is increased by 50%.
