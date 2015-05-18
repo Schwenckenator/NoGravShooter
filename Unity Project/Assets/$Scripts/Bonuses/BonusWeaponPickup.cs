@@ -112,7 +112,7 @@ public class BonusWeaponPickup : MonoBehaviour {
                 
                 fireWeapon.removeWeapon(GameManager.weapon[i]);
                 fireWeapon.AddWeapon(id, fireWeapon.CurrentWeaponSlot());
-                fireWeapon.ChangeWeapon(currentInventorySlot);
+                fireWeapon.ChangeWeapon(currentInventorySlot, true);
                 
                 networkView.RPC("ChangeId", RPCMode.AllBuffered, i);
                 swapTimeout = Time.time + weaponSwapCooldown;

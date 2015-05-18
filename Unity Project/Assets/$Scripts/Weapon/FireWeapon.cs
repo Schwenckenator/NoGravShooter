@@ -119,15 +119,9 @@ public class FireWeapon : MonoBehaviour {
         Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
 
         //Deal with the shot
-        //if (hit.collider.CompareTag("Player")) {
-        //    if (!hit.collider.networkView.isMine) {
-        //        hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
-        //        Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
-        //    }
-        //} 
         Collider col = hit.collider;
         if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
-            IDamageable damageable = hit.collider.GetComponent(typeof(IDamageable)) as IDamageable;
+            IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
             if (damageable != null) {
                 damageable.TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
             }
@@ -208,8 +202,8 @@ public class FireWeapon : MonoBehaviour {
         lineRenderer.SetPosition(1, end);
     }
 
-	public void ChangeWeapon(int weaponId){
-        if (currentInventorySlot == weaponId) { return; } // If you're already here, do nothing
+	public void ChangeWeapon(int weaponId, bool force = false){
+        if (currentInventorySlot == weaponId && !force) { return; } // If you're already here, do nothing
 
 		if(!playerResource.IsWeaponBusy()){
             if (DebugManager.IsAllWeapon()) {
