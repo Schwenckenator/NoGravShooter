@@ -11,7 +11,7 @@ public class ActorModules : MonoBehaviour {
     private IActorStats stats;
 
     void Start() {
-        stats = GetComponent(typeof(IActorStats)) as IActorStats;
+        stats = gameObject.GetInterface<IActorStats>();
     }
     /// <summary>
     /// Should be set after spawning

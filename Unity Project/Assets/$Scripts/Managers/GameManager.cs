@@ -29,9 +29,6 @@ public class GameManager : MonoBehaviour {
     private static bool playerMenu;
 
 	private CameraMove cameraMove;
-//	private FireWeapon fireWeapon;
-	private PlayerResources playerResources;
-
 
     [SerializeField]
 	private static int maxStartingWeapons = 2;
@@ -178,9 +175,7 @@ public class GameManager : MonoBehaviour {
                 
                 actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
-//				fireWeapon = actor.GetComponent<FireWeapon>();
-				playerResources = actor.GetComponent<PlayerResources>();
-                UIPlayerHUD.SetPlayerResource(playerResources);
+                UIPlayerHUD.SetupPlayer(actor);
 
                 PlayerColourManager.instance.AssignColour(actor);
 			}
@@ -190,16 +185,9 @@ public class GameManager : MonoBehaviour {
 			if(weapon[i].isEnergy){
 				weapon[i].currentClip = weapon[i].defaultRemainingAmmo;
 				weapon[i].remainingAmmo = 0;
-				if(i == startingWeapons[0]){
-					weapon[i].currentClip += weapon[i].defaultRemainingAmmo;
-				}
 			} else {
 				weapon[i].currentClip = weapon[i].clipSize;
 				weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
-				if(i == startingWeapons[0]){
-					weapon[i].remainingAmmo += weapon[i].clipSize;
-					weapon[i].remainingAmmo += weapon[i].defaultRemainingAmmo;
-				}
 			}
 		}
 
@@ -217,9 +205,6 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         GetDebugKeyStrokes();
-		if(!GameManager.IsSceneMenu()){
-            GetKeyStrokes();
-		}
 	}
 
     private static void GetDebugKeyStrokes() {
@@ -241,16 +226,6 @@ public class GameManager : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.F8)) {
             DebugManager.ToggleDebugMode();
-        }
-    }
-    void GetKeyStrokes() {
-        //if (Input.GetKeyDown(KeyCode.Escape)) {
-        //    SetCursorVisibility(!playerMenu);
-        //    SetPlayerMenu(!playerMenu); // Toggle Pause
-        //}
-
-        if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch) && myPlayerSpawned) {
-            playerResources.ChangeGrenade();
         }
     }
 
@@ -330,7 +305,7 @@ public class GameManager : MonoBehaviour {
             
             ChatManager.ClearAllChat();
             GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
-            gameMode = temp.GetComponent(typeof(IGameMode)) as IGameMode;
+            gameMode = temp.GetInterface<IGameMode>();
         } else {
             GameInProgress = false;
         }
@@ -338,10 +313,6 @@ public class GameManager : MonoBehaviour {
         NetworkManager.lastLevelPrefix = levelPrefix;
 
         Network.SetLevelPrefix(levelPrefix);
-
-        //GuiManager.instance.SetScoreBoardText(ScoreVictoryManager.UpdateScoreBoard());
-        
-
 
         NetworkManager.DisableRPC();
         Application.LoadLevel(levelName);

@@ -9,10 +9,10 @@ public class BonusHealthPackPickup : MonoBehaviour {
 	void OnTriggerEnter(Collider info){
 		if(info.CompareTag("Player")){
 			
-			PlayerResources res = info.collider.GetComponent<PlayerResources>();
-			
-			if(!res.IsFullHealth()){
-				res.RestoreHealth(healStrength);
+            IDamageable health = info.collider.gameObject.GetInterface<IDamageable>();
+
+            if (!health.IsFullHealth()) {
+                health.RestoreHealth(healStrength);
 				GetComponent<ObjectCleanUp>().KillMe();
 			}
 		}

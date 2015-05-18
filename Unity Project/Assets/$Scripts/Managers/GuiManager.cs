@@ -1069,7 +1069,7 @@ public class GuiManager : MonoBehaviour {
         }
         DisplayAmmoData(style);
         DrawFuelMeter();
-        DrawHealthMeter();
+       // DrawHealthMeter();
         DrawCrosshair();
         DisplayButtonPrompt();
         DrawRadar();
@@ -1100,12 +1100,12 @@ public class GuiManager : MonoBehaviour {
         }
     }
 
-    private void DrawHealthMeter() {
-        Rect health = new Rect(Screen.width - 260, Screen.height - 50, 250, 40);
-        GUI.DrawTexture(health, empty);
-        health.xMin = health.xMax - playerResource.GetHealth() * 5 / 2;
-        GUI.DrawTexture(health, fullHealth);
-    }
+    //private void DrawHealthMeter() {
+    //    Rect health = new Rect(Screen.width - 260, Screen.height - 50, 250, 40);
+    //    GUI.DrawTexture(health, empty);
+    //    health.xMin = health.xMax - playerResource.GetHealth() * 5 / 2;
+    //    GUI.DrawTexture(health, fullHealth);
+    //}
 
     private void DrawFuelMeter() {
         Rect fuel = new Rect(Screen.width - 260, Screen.height - 100, 250, 40);

@@ -50,7 +50,8 @@ public class ExplosionForceDamage : MonoBehaviour {
 				float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
 
                 hit.GetComponent<NoGravCharacterMotor>().PushOffGround();
-				hit.GetComponent<PlayerResources>().TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
+                IDamageable damageable = hit.GetComponent(typeof(IDamageable)) as IDamageable;
+				damageable.TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
 			}
 		}
 	}

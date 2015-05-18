@@ -14,6 +14,8 @@ public class UIPlayerHUD : MonoBehaviour {
     static ChangeableImage sniperBackground;
 
     static PlayerResources playerResource;
+    static IDamageable playerHealth;
+    static IActorStats ActorStats;
 
     static CanvasGroup playerUI;
     static CanvasGroup sniperUI;
@@ -37,7 +39,7 @@ public class UIPlayerHUD : MonoBehaviour {
         playerUI = canvasGroups[0];
         sniperUI = canvasGroups[1];
 
-        health.SetMaxValue(PlayerResources.GetMaxHealth());
+        health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
         SetCrosshairImage(false); // Set to default
     }
@@ -47,13 +49,16 @@ public class UIPlayerHUD : MonoBehaviour {
         sniperUI.alpha = showSniper ? 1 : 0;
     }
 
-    public static void SetPlayerResource(PlayerResources res) {
-        playerResource = res;
+    public static void SetupPlayer(GameObject actor) {
+        playerResource = actor.GetComponent<PlayerResources>();
+        playerHealth = actor.GetInterface<IDamageable>();
+
+        health.SetMaxValue(playerHealth.GetMaxHealth());
     }
 
     void Update() {
         if(GameManager.instance.IsPlayerSpawned()){
-            float temp = playerResource.GetHealth();
+            float temp = playerHealth.GetHealth();
             health.SetValue(temp);
             fuel.SetValue(playerResource.GetFuel());
 

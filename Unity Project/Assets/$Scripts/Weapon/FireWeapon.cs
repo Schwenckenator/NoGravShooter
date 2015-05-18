@@ -119,17 +119,24 @@ public class FireWeapon : MonoBehaviour {
         Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
 
         //Deal with the shot
-        if (hit.collider.CompareTag("Player")) {
-            if (!hit.collider.networkView.isMine) {
-                hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
-                Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+        //if (hit.collider.CompareTag("Player")) {
+        //    if (!hit.collider.networkView.isMine) {
+        //        hit.collider.GetComponent<PlayerResources>().TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
+        //        Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+        //    }
+        //} 
+        Collider col = hit.collider;
+        if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
+            IDamageable damageable = hit.collider.GetComponent(typeof(IDamageable)) as IDamageable;
+            if (damageable != null) {
+                damageable.TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
             }
-        } else if (hit.collider.CompareTag("BonusPickup")) {
+        }else if (hit.collider.CompareTag("BonusPickup")) {
             hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
         } else if (hit.collider.CompareTag("Grenade")) {
             hit.collider.GetComponent<MineDetonation>().ForceDetonate();
         }
-        //Instantiate(currentWeapon.hitParticle, hit.point, Quaternion.identity);
+
 
         ShotRender(gunFirePoint.position, hit.point);
 

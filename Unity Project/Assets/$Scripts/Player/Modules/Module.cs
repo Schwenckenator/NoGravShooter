@@ -6,10 +6,6 @@ using System.Collections;
 /// </summary>
 public abstract class Module {
 
-    public Module() {
-
-    }
-
     public abstract void ModifyActive(IActorStats stats);
     public abstract void ModifyPassive(IActorStats stats);
 }

@@ -4,4 +4,5 @@ using System.Collections;
 public interface IActorStats {
 
     float speed { get; set; }
+    int maxHealth { get; set; }
 }

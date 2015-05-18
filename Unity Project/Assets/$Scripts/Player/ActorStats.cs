@@ -8,4 +8,14 @@ public class ActorStats : MonoBehaviour, IActorStats {
         get;
         set;
     }
+
+    public int maxHealth {
+        get;
+        set;
+    }
+
+    void Awake() {
+        // Default values
+        maxHealth = 100;
+    }
 }

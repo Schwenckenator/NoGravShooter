@@ -25,8 +25,6 @@ public class PlayerResources : MonoBehaviour {
     [SerializeField]
     private static int maxFuel = 150;
     [SerializeField]
-    private static int maxHealth = 100;
-    [SerializeField]
     private int maxHeat = 100;
 
     [SerializeField]
@@ -40,14 +38,11 @@ public class PlayerResources : MonoBehaviour {
 
 	private ParticleSystem smokeParticle;
 	private AudioSource jetpackAudio;
-	private AudioSource helmetAudio;
 
 	private int minFuel = 0;
-	private int minHealth = 0;
 	private int minHeat = 0;
 	
 	private float fuel;
-	private int health;
 	private float heat;
 	private float rechargeWaitTime;
 
@@ -59,8 +54,6 @@ public class PlayerResources : MonoBehaviour {
 	private bool isReloading = false;
 	private bool isJetpackDisabled = false;
 	private bool isWeaponBusy = false;
-	private bool isDying = false;
-    private bool isDamageSound = false;
 
 	private WeaponSuperClass currentWeapon;
     private WeaponReloadRotation weaponReloadRotation;
@@ -68,17 +61,13 @@ public class PlayerResources : MonoBehaviour {
 	
 	#region Start()
 	void Awake () {
-        
-
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
-		helmetAudio = transform.FindChild("HelmetAudio").GetComponent<AudioSource>();
         weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
 		smokeParticle = GetComponentInChildren<ParticleSystem>();
 		smokeParticle.emissionRate = 0;
 		smokeParticle.Play();
 
 		fuel = maxFuel;
-		health = maxHealth;
 		rechargeWaitTime = 0;
 
 
@@ -93,14 +82,13 @@ public class PlayerResources : MonoBehaviour {
         if (InputConverter.GetKeyDown(KeyBind.Reload) && !isReloading && !isWeaponFull()){
             StartCoroutine("WeaponReload");
 		}
+        if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch)) {
+            ChangeGrenade();
+        }
 		if(isRecharging){
 			RechargeFuel(fuelRecharge);
 		}
 		RechargeWeapon(heatOverheat);
-		if(Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine){ //K is for kill! // This is for testing purposes only
-			TakeDamage(100, Network.player);
-			ChatManager.instance.AddToChat("committed Seppuku!", true);
-		}
 
         WeaponSmokeCheck();
 	}
@@ -124,12 +112,6 @@ public class PlayerResources : MonoBehaviour {
     }
 
 	#region Variable Accessors
-    public static int GetMaxHealth() {
-        return maxHealth;
-    }
-	public int GetHealth(){
-		return health;
-	}
 	public static float GetMaxFuel(){
 		return maxFuel;
 	}
@@ -194,13 +176,6 @@ public class PlayerResources : MonoBehaviour {
 		grenades[grenadeId] += amount;
 	}
 
-
-	public void RestoreHealth(int restore){
-		health += restore;
-		if(health > maxHealth){
-			health = maxHealth;
-		}
-	}
 	public void WeaponFired(float addedHeat){
 		StopCoroutine("WeaponReload");
 		audio.Stop();
@@ -243,109 +218,8 @@ public class PlayerResources : MonoBehaviour {
 	}
 	#endregion
     
-    private void PlaySoundTakeDamage() {
-        if (networkView.isMine && !isDamageSound) {
-            isDamageSound = true;
-            StartCoroutine(PlaySoundTakeDamageCo());
-        }
-    }
-    private IEnumerator PlaySoundTakeDamageCo() {
-        yield return new WaitForEndOfFrame();
-        helmetAudio.PlayOneShot(soundTakeDamage);
-        isDamageSound = false;
-    }
-	#region RPC
-    public void TakeDamage(int damage, NetworkPlayer fromPlayer, int weaponId = -1) {
-        networkView.RPC("TakeDamageRPC", RPCMode.All, damage, fromPlayer, weaponId);
-    }
-	[RPC]
-	void TakeDamageRPC(int damage, NetworkPlayer fromPlayer, int weaponID){
-
-		if(isDying) return; // Don't bother if you are already dying
-
-        PlaySoundTakeDamage();
-        health -= damage;
-		if(health <= minHealth){
-            Die(NetworkManager.GetPlayer(fromPlayer), weaponID);
-        }
-
-	}
-
-    void Die(Player killer, int weaponID) {
-        	health = minHealth;
-			isDying = true;//You is dead nigs
-
-			if(networkView.isMine){
-				if(killer != null){
-                    string killMessage;
-					if(killer.ID != Network.player){
-                        GameManager.gameMode.Kill(killer, NetworkManager.MyPlayer());
-                        GameManager.gameMode.PlayerDied(NetworkManager.MyPlayer());
-
-                        killMessage = killer.Name;
-
-                        if (killer.IsOnTeam(NetworkManager.MyPlayer().Team)) {
-                            
-                            killMessage += KillMessageGenerator(teamKillID);
-                        } else {
-                            killMessage += KillMessageGenerator(weaponID);
-                        }
-                        killMessage += SettingsManager.instance.PlayerName;
-
-                        
-					} else {
-                        killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
-                        GameManager.gameMode.Suicide(killer);
-                        
-					}
-                    ChatManager.instance.AddToChat(killMessage);
-				}
-				GetComponent<NoGravCharacterMotor>().Ragdoll(true);
-				StartCoroutine(PlayerCleanup());
-			}
-    }
-	#endregion
-    const int teamKillID = 100;
-    const int assassinated = 200;
-	string KillMessageGenerator(int weaponId){
-		switch(weaponId){
-		    case 0:
-			    return " lasered ";
-		    case 1:
-			    return " shot ";
-		    case 2:
-			    return " sniped ";
-		    case 3:
-			    return " shotgunned ";
-		    case 4:
-			    return " forced ";
-		    case 5:
-			    return " exploded ";
-		    case 6:
-			    return " plasmered ";
-            case teamKillID:
-                return " betrayed ";
-            case assassinated:
-                return " assassinated ";
-		}
-
-		return " killed ";
-
-	}
-
-	IEnumerator PlayerCleanup(){
-        float playerDyingTime = 3.0f;
-		yield return new WaitForSeconds(playerDyingTime);
-		GameManager.instance.PlayerDied();
-		GameManager.instance.ManagerDetachCamera();
-		GameManager.SetCursorVisibility(true);
-		GetComponent<ObjectCleanUp>().ClientKillMe();
-	}
 
 	#region Variable Checkers
-	public bool IsFullHealth(){
-		return health == maxHealth;
-	}
 
 	public bool WeaponCanFire(){
 		return (heat < maxHeat) && (currentWeapon.currentClip > 0) && !isWeaponBusy;
@@ -384,7 +258,7 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 
     public void SafeStartReload() {
-        if (!isWeaponBusy && !isReloading && !isWeaponFull() && !isDying) {
+        if (!isWeaponBusy && !isReloading && !isWeaponFull()) {
             StartCoroutine("WeaponReload");
         }
     }

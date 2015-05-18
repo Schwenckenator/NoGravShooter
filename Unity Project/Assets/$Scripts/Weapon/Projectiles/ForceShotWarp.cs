@@ -32,7 +32,7 @@ public class ForceShotWarp : MonoBehaviour {
 			if(hit.networkView.owner == GetComponent<Owner>().ID){
 				push = false;
 			}else{
-				DamagePlayer(hit.GetComponent<PlayerResources>());
+				DamagePlayer(hit.GetComponent(typeof(IDamageable)) as IDamageable);
                 hit.GetComponent<NoGravCharacterMotor>().PushOffGround();
 			}
 		}
@@ -41,7 +41,7 @@ public class ForceShotWarp : MonoBehaviour {
 		}
 	}
 
-	void DamagePlayer(PlayerResources input){
+	void DamagePlayer(IDamageable input){
 		input.TakeDamage(damage, GetComponent<Owner>().ID);
 	}
 
