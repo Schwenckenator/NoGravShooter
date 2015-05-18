@@ -63,6 +63,10 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
     #endregion
 
     #region Internal Logic
+    void Awake() {
+        canWalk = true;
+        canJump = true;
+    }
     void Update() {
         rollMovement = UpdateMovement(KeyBind.RollLeft, KeyBind.RollRight, rollMovement);
         xMovement = UpdateMovement(KeyBind.MoveRight, KeyBind.MoveLeft, xMovement);
