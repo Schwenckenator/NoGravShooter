@@ -69,6 +69,14 @@ public class UILobby : MonoBehaviour {
         }
         ChangeButtonText(countdown);
     }
+    private void StopCountdown() {
+        if (countdown) {
+            StopCoroutine("CountdownStartGame");
+            ChatManager.instance.AddToChat("Countdown cancelled.");
+            countdown = false;
+        }
+        ChangeButtonText(countdown);
+    }
     IEnumerator CountdownStartGame() {
         if (DebugManager.IsAdminMode()) {
             GameManager.instance.LoadLevel();
@@ -98,11 +106,16 @@ public class UILobby : MonoBehaviour {
     public void Disconnect() {
         UILobby.instance.DisconnectStatic();
     }
+    public void GoGameSettings() {
+        UIManager.instance.GoGameSettings(true);
+        UILobby.instance.StopCountdown();
+    }
+
+
     
     private void DisconnectStatic() {
         NetworkManager.Disconnect();
-        if (countdown) StopCoroutine("CountdownStartGame");
-        countdown = false;
+        StopCountdown();
     }
 
     void SetServerName() {
