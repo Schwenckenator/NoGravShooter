@@ -3,7 +3,7 @@ using System.Collections;
 using System.Linq;
 [RequireComponent(typeof(ObjectCleanUp))]
 [RequireComponent(typeof(StickyObject))]
-public class MineDetonation : MonoBehaviour {
+public class MineDetonation : MonoBehaviour, IDamageable {
 
 	public float detectionRadius; 
 	public GameObject explosion;
@@ -111,5 +111,25 @@ public class MineDetonation : MonoBehaviour {
         } else {
             networkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
         }
+    }
+
+    public int GetHealth() {
+        return 1;
+    }
+
+    public int GetMaxHealth() {
+        return 1;
+    }
+
+    public bool IsFullHealth() {
+        return true;
+    }
+
+    public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
+        ForceDetonate();
+    }
+
+    public void RestoreHealth(int restore) {
+        // Do nothing
     }
 }

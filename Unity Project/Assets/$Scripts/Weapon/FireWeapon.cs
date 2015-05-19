@@ -125,10 +125,6 @@ public class FireWeapon : MonoBehaviour {
             if (damageable != null) {
                 damageable.TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
             }
-        }else if (hit.collider.CompareTag("BonusPickup")) {
-            hit.collider.GetComponent<DestroyOnNextFrame>().DestroyMe();
-        } else if (hit.collider.CompareTag("Grenade")) {
-            hit.collider.GetComponent<MineDetonation>().ForceDetonate();
         }
 
 
