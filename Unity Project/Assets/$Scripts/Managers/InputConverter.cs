@@ -11,7 +11,7 @@ public class InputConverter {
         return Input.GetKey(SettingsManager.keyBindings[(int)input]);
     }
 
-    public static string GeyKeyName(KeyBind input) {
+    public static string GetKeyName(KeyBind input) {
         return SettingsManager.keyBindings[(int)input].ToString();
     }
 }

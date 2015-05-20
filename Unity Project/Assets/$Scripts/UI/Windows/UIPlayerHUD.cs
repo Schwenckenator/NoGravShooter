@@ -8,6 +8,7 @@ public class UIPlayerHUD : MonoBehaviour {
     static MovingBar fuel;
     static ChangeableText ammo;
     static ChangeableText grenade;
+    static ChangeableText prompt;
     
     static ChangeableImage crosshair;
     static ChangeableImage sniperScope;
@@ -19,6 +20,7 @@ public class UIPlayerHUD : MonoBehaviour {
 
     static CanvasGroup playerUI;
     static CanvasGroup sniperUI;
+    static CanvasGroup promptUI;
 
 
     void Start() {
@@ -33,11 +35,13 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("health")) health = changer as MovingBar;
             else if (changer.IsType("ammo")) ammo = changer as ChangeableText;
             else if (changer.IsType("grenade")) grenade = changer as ChangeableText;
+            else if (changer.IsType("prompt")) prompt = changer as ChangeableText;
         }
 
         CanvasGroup[] canvasGroups = canvas.GetComponentsInChildren<CanvasGroup>();
         playerUI = canvasGroups[0];
-        sniperUI = canvasGroups[1];
+        promptUI = canvasGroups[1];
+        sniperUI = canvasGroups[2];
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
@@ -67,6 +71,15 @@ public class UIPlayerHUD : MonoBehaviour {
         }
     }
 
+    void FixedUpdate() {
+        if (promptTimer > 1) {
+            promptTimer--;
+        } else if (promptTimer == 1) {
+            RemovePrompt();
+            promptTimer--;
+        }
+    }
+
     private string MakeGrenadeString() {
         string grenadeText = "";
         switch (playerResource.GetCurrentGrenadeType()) {
@@ -93,5 +106,22 @@ public class UIPlayerHUD : MonoBehaviour {
             }
         }
         return ammoText;
+    }
+
+    static string lastPrompt = "";
+    static int promptTimer = 0;
+    public static void Prompt(string input) {
+        if (input != lastPrompt) {
+            prompt.SetText(input);
+            lastPrompt = input;
+        }
+        promptUI.alpha = 1;
+        promptTimer = 10;
+    }
+    public static bool IsPrompt() {
+        return promptUI.alpha == 1;
+    }
+    public static void RemovePrompt() {
+        promptUI.alpha = 0;
     }
 }

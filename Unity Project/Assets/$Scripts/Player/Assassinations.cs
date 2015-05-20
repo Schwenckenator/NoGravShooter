@@ -37,7 +37,8 @@ public class Assassinations : MonoBehaviour {
         playerResource = hit.gameObject.GetInterface<IDamageable>();
         //checks if the player is actually facing the player they want to assassinate
         if (Vector3.Dot(toPlayer, target.forward) > 0.75 && playerResource.GetHealth() > 0) {
-            GuiManager.instance.ButtonPrompt("Assassinate", (int)KeyBind.Interact);
+            //GuiManager.instance.ButtonPrompt("Assassinate", (int)KeyBind.Interact);
+            UIPlayerHUD.Prompt(InputConverter.GetKeyName(KeyBind.Interact) + " - Assassinate");
             Assassinate();
         }
     }
