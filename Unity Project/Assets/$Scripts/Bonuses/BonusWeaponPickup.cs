@@ -18,6 +18,8 @@ public class BonusWeaponPickup : MonoBehaviour {
 	private int currentInventorySlot;
 	private bool playerColliding = false;
 
+    private bool hasAmmo = true;
+
 	void Start(){
         if (DebugManager.IsAllWeapon()) {
 			maxweaponcount = 99;
@@ -126,15 +128,18 @@ public class BonusWeaponPickup : MonoBehaviour {
     }
 
     private void AddWeapon() {
+        if (!hasAmmo) return;
         fireWeapon.AddWeapon(id);
         if (SettingsManager.instance.AutoPickup) {
             fireWeapon.ChangeWeapon(weaponcount);
         }
         Debug.Log("Not at maximum weapons, auto picking up");
         GetComponent<ObjectCleanUp>().KillMe();
+        hasAmmo = false;
     }
 
     private void AddAmmo() {
+        if (!hasAmmo) return;
 		if(GameManager.weapon[id].isEnergy){
 			GameManager.weapon[id].currentClip += (GameManager.weapon[id].defaultRemainingAmmo);
 		} else {
@@ -142,5 +147,6 @@ public class BonusWeaponPickup : MonoBehaviour {
 		}
         Debug.Log("Already own, adding ammo");
         GetComponent<ObjectCleanUp>().KillMe();
+        hasAmmo = false;
     }
 }
