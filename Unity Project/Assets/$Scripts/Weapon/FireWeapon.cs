@@ -37,7 +37,7 @@ public class FireWeapon : MonoBehaviour {
 		gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		cameraPos = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
-		
+
 	}
     void Start() {
         if (networkView.isMine) {

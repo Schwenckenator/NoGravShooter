@@ -24,7 +24,7 @@ The player temporarily becomes unable to take damage.
 Passive: Strength Boost
 The player has stronger armour (more health) and therefore takes more damage to kill.
 However the player is also heavier and is a little slower at walking and accelerating/decelerating while floating.
-(equipping module1 as another passive cancels out the difference resulting in default speeed)
+(equipping module1 as another passive cancels out the difference resulting in default speed)
 
 
 Module3:
