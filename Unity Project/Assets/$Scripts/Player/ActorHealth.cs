@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ActorHealth : MonoBehaviour, IDamageable {
 
-    public AudioClip soundTakeDamage;
+    public AudioClip SoundTakeDamage;
     public AudioSource helmetAudio;
 
     int maxHealth = 100;
@@ -99,7 +99,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 
     IEnumerator PlaySoundTakeDamage() {
         yield return new WaitForEndOfFrame();
-        helmetAudio.PlayOneShot(soundTakeDamage);
+        helmetAudio.PlayOneShot(SoundTakeDamage);
         isDamageSound = false;
     }
 

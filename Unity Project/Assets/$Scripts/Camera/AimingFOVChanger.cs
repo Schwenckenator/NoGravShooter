@@ -11,7 +11,7 @@ public class AimingFOVChanger : MonoBehaviour {
     [SerializeField]
     private float sniperFOV;
 	
-	private FireWeapon fireWeapon;
+	private WeaponInventory inventory;
 
     private Camera myCamera;
 
@@ -26,12 +26,12 @@ public class AimingFOVChanger : MonoBehaviour {
 	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
 			if(player.networkView.isMine){
-				fireWeapon = player.GetComponent<FireWeapon>();
+				inventory = player.GetComponent<WeaponInventory>();
 			}
 		}
 		
 		if(Input.GetMouseButton(1)){
-			if (fireWeapon.IsCurrentWeapon(2)){//check if current weapon is sniper
+			if (inventory.IsCurrentWeapon(2)){//check if current weapon is sniper
                 if (myCamera.fieldOfView > sniperFOV) {
 					myCamera.fieldOfView -= zoomSpeed;
 				} else {

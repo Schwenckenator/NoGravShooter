@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class TutorialInstructions : MonoBehaviour {
-    private GameManager manager;
     private PlayerResources playerRes;
     private GameObject player;
 
@@ -73,7 +72,6 @@ public class TutorialInstructions : MonoBehaviour {
 
     void Start() {
         GameManager.instance.SpawnActor();
-        manager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         lookingDot = GameObject.Find("LookAtDot");
         platform = GameObject.Find("PlatformFront1");
         platform.transform.renderer.material.color = new Color(0, 1, 0);

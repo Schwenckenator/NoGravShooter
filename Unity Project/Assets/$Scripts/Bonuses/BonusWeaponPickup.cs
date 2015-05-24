@@ -12,7 +12,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 	private int id;
     [SerializeField]
 	private bool randomid;
-	private FireWeapon fireWeapon;
+	private WeaponInventory inventory;
 	private int weaponcount;
 	private int maxweaponcount;
 	private int currentInventorySlot;
@@ -64,10 +64,10 @@ public class BonusWeaponPickup : MonoBehaviour {
 		if(info.CompareTag("Player")){
 			if(info.networkView.isMine){
 				playerColliding = true;
-				fireWeapon = info.GetComponent<FireWeapon>();
-				weaponcount = fireWeapon.NumberWeaponsHeld();
+                inventory = info.GetComponent<WeaponInventory>();
+                weaponcount = inventory.NumWeaponsHeld();
 				maxweaponcount = GameManager.GetMaxStartingWeapons();
-				currentInventorySlot = fireWeapon.CurrentWeaponSlot();
+				currentInventorySlot = inventory.currentInventorySlot;
 			}
 		}
 	}
@@ -86,7 +86,7 @@ public class BonusWeaponPickup : MonoBehaviour {
     void Update(){
 		if(!playerColliding) return;
 
-		if(fireWeapon.IsWeaponHeld(id)){
+		if(inventory.IsWeaponHeld(id)){
             AddAmmo();
 		}else{
 			if(weaponcount >= maxweaponcount){
@@ -111,11 +111,11 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private void SwapWeapon() {
         for (int i = 0; i < 7; i++) {
-            if (fireWeapon.IsCurrentWeapon(i)) {
+            if (inventory.IsCurrentWeapon(i)) {
                 
-                fireWeapon.removeWeapon(GameManager.weapon[i]);
-                fireWeapon.AddWeapon(id, fireWeapon.CurrentWeaponSlot());
-                fireWeapon.ChangeWeapon(currentInventorySlot, true);
+                inventory.RemoveWeapon(GameManager.weapon[i]);
+                inventory.AddWeapon(id, inventory.currentInventorySlot);
+                inventory.ChangeWeapon(currentInventorySlot, true);
                 
                 networkView.RPC("ChangeId", RPCMode.AllBuffered, i);
                 swapTimeout = Time.time + weaponSwapCooldown;
@@ -130,9 +130,9 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private void AddWeapon() {
         if (!hasAmmo) return;
-        fireWeapon.AddWeapon(id);
+        inventory.AddWeapon(id);
         if (SettingsManager.instance.AutoPickup) {
-            fireWeapon.ChangeWeapon(weaponcount);
+            inventory.ChangeWeapon(weaponcount);
         }
         Debug.Log("Not at maximum weapons, auto picking up");
         GetComponent<ObjectCleanUp>().KillMe();

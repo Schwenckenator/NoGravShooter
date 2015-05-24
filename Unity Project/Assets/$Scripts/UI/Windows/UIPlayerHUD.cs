@@ -15,6 +15,7 @@ public class UIPlayerHUD : MonoBehaviour {
     static ChangeableImage sniperBackground;
 
     static PlayerResources playerResource;
+    static WeaponInventory weaponInventory;
     static IDamageable playerHealth;
     static IActorStats ActorStats;
 
@@ -56,6 +57,7 @@ public class UIPlayerHUD : MonoBehaviour {
     public static void SetupPlayer(GameObject actor) {
         playerResource = actor.GetComponent<PlayerResources>();
         playerHealth = actor.GetInterface<IDamageable>();
+        weaponInventory = actor.GetComponent<WeaponInventory>();
 
         health.SetMaxValue(playerHealth.GetMaxHealth());
     }
@@ -99,10 +101,10 @@ public class UIPlayerHUD : MonoBehaviour {
 
     string MakeAmmoString() {
         string ammoText = "";
-        if (playerResource.IsHoldingWeapon()) {
-            ammoText = playerResource.GetCurrentClip().ToString();
-            if (playerResource.GetRemainingAmmo() > 0) {
-                ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
+        if (weaponInventory.currentWeapon != null) {
+            ammoText = weaponInventory.currentWeapon.currentClip.ToString();
+            if (weaponInventory.currentWeapon.remainingAmmo > 0) {
+                ammoText += "/" + weaponInventory.currentWeapon.remainingAmmo.ToString();
             }
         }
         return ammoText;

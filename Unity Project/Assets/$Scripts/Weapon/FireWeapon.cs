@@ -3,105 +3,66 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FireWeapon : MonoBehaviour {
-	public int maxHeldWeapons = 2;
-
 	Transform gunFirePoint;
 	Transform cameraPos;
 	NoGravCharacterMotor motor;
 	
-	private WeaponSuperClass currentWeapon;
-	
-	private int currentInventorySlot;
-	
-	public static int startingWeapon1 = 99;
-	public static int startingWeapon2 = 99;
-	
-	PlayerResources playerResource;
-
+    WeaponInventory inventory;
+    WeaponResources weaponResources;
 	GameObject shot;
 
 	float nextFire = 0;
-
-	private List<WeaponSuperClass> heldWeapons;
-    private bool initialised = false;
-	
-
 	// Use this for initialization
 	void Awake () {
-		heldWeapons = new List<WeaponSuperClass>();
-        SetWeaponLoadout();
-        
-        playerResource = GetComponent<PlayerResources>();
-		currentInventorySlot = -1; // Bad value, will change
-        currentWeapon = null;
 		gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		cameraPos = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
-
+        inventory = GetComponent<WeaponInventory>();
+        weaponResources = GetComponent<WeaponResources>();
 	}
-    void Start() {
-        if (networkView.isMine) {
-            ChangeWeapon(0);
-        }
-        initialised = true;
-    }
-
-    void SetWeaponLoadout() {
-        if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
-
-        int[] temp = GameManager.instance.GetStartingWeapons();
-
-        foreach (int id in temp) {
-            if (id < GameManager.weapon.Count) {
-                AddWeapon(id);
-            }
-        }
-    }
 	void Update(){
-        if (HasNoWeapons()) return;
+        if (inventory.HasNoWeapons()) return;
         
-        GetKeyStrokes();
-        MouseWheelWeaponChange();
 
-        if (!currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
+        if (!inventory.currentWeapon.useRay && IsWeaponFiring() && CanWeaponFire()) {
             WeaponFired();
         }
 
         // Check for dry fire
-        if (IsWeaponFire() && playerResource.GetCurrentClip() == 0) {
-            playerResource.SafeStartReload();
+        if (IsWeaponFiring() && weaponResources.isWeaponEmpty()) {
+           weaponResources.SafeStartReload();
         }
 	}
 
     void FixedUpdate() {
-        if (HasNoWeapons()) return;
-        if (currentWeapon.useRay && IsWeaponFire() && CanWeaponFire()) {
+        if (inventory.HasNoWeapons()) return;
+        if (inventory.currentWeapon.useRay && IsWeaponFiring() && CanWeaponFire()) {
             WeaponFired();
         } 
     }
 
-    private bool IsWeaponFire() {
+    private bool IsWeaponFiring() {
         return (Input.GetAxisRaw("Fire1") > 0);
     }
     private bool CanWeaponFire() {
-        return (Time.time > nextFire) && playerResource.WeaponCanFire() && !GameManager.IsPlayerMenu();
+        return (Time.time > nextFire) && weaponResources.WeaponCanFire() && !GameManager.IsPlayerMenu();
     }
 
     private void WeaponFired() {
-        playerResource.WeaponFired(currentWeapon.heatPerShot);
+        weaponResources.WeaponFired(inventory.currentWeapon.heatPerShot);
         PlayFireWeaponSound();
-        nextFire = Time.time + currentWeapon.fireDelay;
+        nextFire = Time.time + inventory.currentWeapon.fireDelay;
 
-        if (currentWeapon.useRay) { //Does this weapon use a ray to hit?
-            
-            for (int i = 0; i < currentWeapon.rayNum; i++) {
+        if (inventory.currentWeapon.useRay) { //Does this weapon use a ray to hit?
+
+            for (int i = 0; i < inventory.currentWeapon.rayNum; i++) {
                 FireRay();
             }
         } else {
-            SpawnProjectile(GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
+            SpawnProjectile(GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
         }
-        if (currentWeapon.hasRecoil) {
-            motor.Recoil(currentWeapon.recoil);
+        if (inventory.currentWeapon.hasRecoil) {
+            motor.Recoil(inventory.currentWeapon.recoil);
         }
 
     }
@@ -111,8 +72,8 @@ public class FireWeapon : MonoBehaviour {
         //Find direction after shot spread
         Vector3 shotDir = cameraPos.forward;
         //Apply two rotations
-        float angle1 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
-        float angle2 = Random.Range(-currentWeapon.shotSpread, currentWeapon.shotSpread);
+        float angle1 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
+        float angle2 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
 
         shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
 		
@@ -123,7 +84,7 @@ public class FireWeapon : MonoBehaviour {
         if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
             IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
             if (damageable != null) {
-                damageable.TakeDamage(currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(currentWeapon));
+                damageable.TakeDamage(inventory.currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
             }
         }
 
@@ -131,31 +92,7 @@ public class FireWeapon : MonoBehaviour {
         ShotRender(gunFirePoint.position, hit.point);
 
         //Render shot everywhere else
-        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon), gunFirePoint.position, hit.point);
-    }
-
-    private void MouseWheelWeaponChange() {
-        //change weapons by mouse wheel
-        //checks if player has max number of weapons
-        int newSlot = currentInventorySlot;
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-            newSlot++;
-            newSlot %= GetMaxWeapon();
-            ChangeWeapon(newSlot);
-
-        } else if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-            newSlot--;
-            if (newSlot < 0) newSlot += GetMaxWeapon();
-            ChangeWeapon(newSlot);
-        }
-    }
-
-    private int GetMaxWeapon() {
-        if (DebugManager.IsAllWeapon()) {
-            return GameManager.weapon.Count;
-        } else {
-            return NumberWeaponsHeld();
-        }
+        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, hit.point);
     }
 
     [RPC]
@@ -186,7 +123,7 @@ public class FireWeapon : MonoBehaviour {
     }
 
     void ShotRender(Vector3 start, Vector3 end){
-        shot = Instantiate(currentWeapon.projectile, cameraPos.position, cameraPos.rotation) as GameObject;
+        shot = Instantiate(inventory.currentWeapon.projectile, cameraPos.position, cameraPos.rotation) as GameObject;
         shot.transform.parent = cameraPos;
         LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
 
@@ -198,104 +135,18 @@ public class FireWeapon : MonoBehaviour {
         lineRenderer.SetPosition(1, end);
     }
 
-	public void ChangeWeapon(int weaponId, bool force = false){
-        if (currentInventorySlot == weaponId && !force) { return; } // If you're already here, do nothing
-
-		if(!playerResource.IsWeaponBusy()){
-            if (DebugManager.IsAllWeapon()) {
-				if(weaponId < GameManager.weapon.Count){
-                    currentInventorySlot = weaponId;
-					currentWeapon = GameManager.weapon[weaponId];
-					playerResource.ChangeWeapon(currentWeapon);
-				}
-			}
-			else{
-				if(weaponId < heldWeapons.Count){
-                    currentInventorySlot = weaponId;
-					currentWeapon = heldWeapons[weaponId];
-					playerResource.ChangeWeapon(currentWeapon);
-				}
-			}
-		}
-	}
-
-	public bool IsWeaponHeld(int weaponId){
-		return heldWeapons.Contains(GameManager.weapon[weaponId]);
-	}
 	
-	public bool IsCurrentWeapon(int weaponId){
-		return currentWeapon == GameManager.weapon[weaponId];
-	}
-	
-	public int CurrentWeaponSlot(){
-		return currentInventorySlot;
-	}
-	
-	public int NumberWeaponsHeld(){
-		return heldWeapons.Count;
-	}
-    private bool HasNoWeapons() {
-        // Don't count it if not initialised yet
-        return heldWeapons.Count == 0 && initialised;
-    }
-	
-	public int WeaponLimit(){
-		return maxHeldWeapons;
-	}
-
-	public void AddWeapon(int weaponId){
-        bool hadNoWeapons = HasNoWeapons();
-		heldWeapons.Add(GameManager.weapon[weaponId]);
-        if (hadNoWeapons) {
-            ChangeWeapon(0);
-        }
-	}
-    public void AddWeapon(int weaponId, int index){
-        bool hadNoWeapons = HasNoWeapons();
-        heldWeapons.Insert(index, GameManager.weapon[weaponId]);
-        if (hadNoWeapons) {
-            ChangeWeapon(0);
-        }
-    }
-
-	public void removeWeapon(WeaponSuperClass item){
-		heldWeapons.Remove(item);
-	}
 	
     void PlayFireWeaponSound() {
         if (networkView.isMine) {
-            audio.PlayOneShot(currentWeapon.fireSound);
+            audio.PlayOneShot(inventory.currentWeapon.fireSound);
 
-            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(currentWeapon));
+            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
         }
     }
     [RPC]
     void RPCPlayFireWeaponSound(int weaponID) {
         WeaponSuperClass weapon = GameManager.weapon[weaponID];
         audio.PlayOneShot(weapon.fireSound);
-    }
-
-    void GetKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            ChangeWeapon(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            ChangeWeapon(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            ChangeWeapon(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            ChangeWeapon(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) {
-            ChangeWeapon(4);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) {
-            ChangeWeapon(5);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7)) {
-            ChangeWeapon(6);
-        }
     }
 }

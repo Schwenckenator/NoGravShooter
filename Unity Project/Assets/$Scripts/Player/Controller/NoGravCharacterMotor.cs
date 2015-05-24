@@ -98,10 +98,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	}
 
-	void OnGUI(){
-		if(!ragdoll) return;
-		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), GuiManager.instance.bloodyScreen);
-	}
+    //void OnGUI(){
+    //    if(!ragdoll) return;
+    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), GuiManager.instance.bloodyScreen);
+    //}
 	
 	
 	#region FixedUpdate

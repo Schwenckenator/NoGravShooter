@@ -92,7 +92,6 @@ public class GuiManager : MonoBehaviour {
 	private const string GameType = "NoGravShooter";
 	private const int MaxPlayers = 16;
 	
-	private bool useMasterServer = false;
 	private HostData masterServerData;
 	
     private string scoreBoardText = "";
@@ -370,7 +369,6 @@ public class GuiManager : MonoBehaviour {
 			GUI.Label(rectPlayers, servers[i].connectedPlayers+"/"+servers[i].playerLimit);
 			if(GUI.Button(rectJoinButton, "Join Game")){
 				masterServerData = servers[i];
-				useMasterServer = true;
                 if (masterServerData.passwordProtected) {
                     displayMasterServerPassword = true;
                 } else { 
@@ -416,7 +414,6 @@ public class GuiManager : MonoBehaviour {
 
             if (SettingsManager.instance.PortNum >= 0) { // Check for error
                 SettingsManager.instance.SaveSettings();
-                useMasterServer = false;
                 SetCurrentMenuWindow(OLD_Menu.Connecting);
             }
 
@@ -1134,12 +1131,12 @@ public class GuiManager : MonoBehaviour {
 
     private void DisplayAmmoData(GUIStyle style) {
         string ammoText = "";
-        if (playerResource.IsHoldingWeapon()) {
-            ammoText = playerResource.GetCurrentClip().ToString();
-            if (playerResource.GetRemainingAmmo() > 0) {
-                ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
-            }
-        }
+        //if (weaponResource.IsHoldingWeapon()) {
+        //    ammoText = playerResource.GetCurrentClip().ToString();
+        //    if (playerResource.GetRemainingAmmo() > 0) {
+        //        ammoText += "/" + playerResource.GetRemainingAmmo().ToString();
+        //    }
+        //}
 
         Rect grenadeTypeLabel = new Rect(Screen.width - 300, Screen.height - 250, 300, 100);
         string grenadeTypeString = "";

@@ -287,9 +287,6 @@ public class GameManager : MonoBehaviour {
     [RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
 
-        //stops tutorial scripts showing after you leave and start a game
-        GuiManager.instance.TutorialPrompt("", 0);
-
         SettingsManager.instance.GameModeIndexClient = gameModeIndex;
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
@@ -346,9 +343,6 @@ public class GameManager : MonoBehaviour {
 
     [RPC]
     void RPCReturnToLobby() {
-        //currentWindow = Menu.Lobby;
-        GuiManager.instance.SetCurrentMenuWindow(GuiManager.OLD_Menu.Lobby);
-
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.instance.ClearScoreData();
     }
