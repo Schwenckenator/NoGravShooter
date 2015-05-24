@@ -367,7 +367,7 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(7);
         check5 = true;
         player.GetComponent<KeyboardInput>().canJump = true;
-        ChatManager.TutorialChat("This suit comes equipped with Electro-Gravitational Boots.\n\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress " +
+        ChatManager.TutorialChat("This suit comes equipped with Electro-Gravitational Boots.\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress " +
             SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString() + " to jump and boost upwards.");
         yield return new WaitForSeconds(10);
         ChatManager.TutorialChat("\nPress "
@@ -392,7 +392,7 @@ public class TutorialInstructions : MonoBehaviour {
         platform1.transform.position = new Vector3(platform1.transform.position.x, 0, platform1.transform.position.z);
         platform2.transform.position = new Vector3(platform2.transform.position.x, 0, platform2.transform.position.z);
         platform3.transform.position = new Vector3(platform3.transform.position.x, 0, platform3.transform.position.z);
-        ChatManager.TutorialChat("\nTry to land on these platforms.\n\nRemember to 'look up' before you crash so you land feet first.");
+        ChatManager.TutorialChat("\nTry to land on the green platforms.\n\nRemember to 'look up' before you crash so you land feet first.");
         yield return new WaitForSeconds(5);
         step7 = true;
     }
@@ -420,11 +420,13 @@ public class TutorialInstructions : MonoBehaviour {
     }
 
     IEnumerator FinalTutorial() {
-        ChatManager.TutorialChat("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically\ndisable boosting temporarily while it generates more.");
+        ChatManager.TutorialChat("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically disable boosting temporarily while it generates more.");
         yield return new WaitForSeconds(30);
-        ChatManager.TutorialChat("At the bottom left of your HUD the suit displays a radar.\nThis shows you the locations of items and other players.\n\nThe green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are\nabove you their dot is larger than yours, when they are below you their dot is smaller.");
+        ChatManager.TutorialChat("\nAt the bottom left of your HUD the suit displays a radar.\n\nThis shows you the locations of items and other players.");
         yield return new WaitForSeconds(30);
-        ChatManager.TutorialChat("At the bottom right of your HUD the suit displays important information including:\n\nmine count, ammo count, remaining air and suit structural integrity.\n\nIf the structural integrity of the suit is compromised you will lose\nboth pressurization and air supply, resulting in death.");
+        ChatManager.TutorialChat("The green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are above you their dot is larger than yours, when they are below you their dot is smaller.");
+        yield return new WaitForSeconds(30);
+        ChatManager.TutorialChat("At the bottom right of your HUD the suit displays important information including:\nmine count, ammo count, remaining air and suit structural integrity.\nIf the structural integrity of the suit is compromised you will lose both pressurization and air supply, resulting in death.");
         yield return new WaitForSeconds(60);
         ChatManager.TutorialChat("\nWhen you're ready to end the simulation, press Escape.");
     }
