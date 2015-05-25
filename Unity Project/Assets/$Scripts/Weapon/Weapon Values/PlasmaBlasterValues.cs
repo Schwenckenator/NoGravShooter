@@ -11,7 +11,7 @@ public class PlasmaBlasterValues : WeaponSuperClass {
 		
 		this.shotSpread 			= 0;
 		this.damagePerShot 			= 0;
-		this.heatPerShot 			= 0;
+		this.heatPerShot 			= 50;
 		this.fireDelay 				= 1.5f;
 		
 		this.clipSize 				= 1000;

@@ -5,11 +5,13 @@ public class WeaponResources : MonoBehaviour {
     public static bool isWeaponBusy = false;
     public AudioClip soundOverheat;
 
-    public int maxHeat = 100;
-    public float coolRate = 30;
-    public float heatCooldownWaitTime = 3.0f;
+    // Set in editor
+    public int maxHeat;
+    public float coolRate;
+    public float overheatWaitTime;
 
     private float heat;
+    private float coolTime;
 
     private ParticleSystem smoke;
 
@@ -37,11 +39,19 @@ public class WeaponResources : MonoBehaviour {
         if (InputConverter.GetKeyDown(KeyBind.Reload) && !isReloading && !isWeaponFull()) {
             StartCoroutine("WeaponReload");
         }
-        CoolWeapon(coolRate);
+        CoolWeapon();
         WeaponSmokeCheck();
 	}
+    void OnGUI() {
+        if (DebugManager.IsDebugMode()) {
+            GUI.Label(new Rect(Screen.width - 200, 150, 180, 20), "Weapon Heat: " + heat.ToString());
+            GUI.Label(new Rect(Screen.width - 200, 170, 180, 20), "Cool Time: " + coolTime.ToString());
+            GUI.Label(new Rect(Screen.width - 200, 190, 180, 20), "Time: " + Time.time.ToString());
+        }
+    }
 
-    private void CoolWeapon(float coolRate) {
+    private void CoolWeapon() {
+        if (heat <= 0 || Time.time < coolTime) return;
         heat -= coolRate * Time.deltaTime;
         if (heat < 0) {
             heat = 0;
@@ -58,26 +68,31 @@ public class WeaponResources : MonoBehaviour {
         return inventory.currentWeapon.currentClip == 0;
     }
     public bool isWeaponOverheated() {
-        return heat > maxHeat;
+        return heat >= maxHeat;
     }
 
     public void WeaponFired(float addedHeat) {
         StopCoroutine("WeaponReload");
         audio.Stop();
         heat += addedHeat;
+        // Add the fire delay as a cooldown time
+        // Sustained fire will quickly heat up your weapon, but taking small breaks will help it cool
+        coolTime = Time.time + inventory.currentWeapon.fireDelay + 0.1f; // Just a little bit extra
         inventory.currentWeapon.currentClip--;
-        if (heat > maxHeat) {
+        if (isWeaponOverheated()) {
             //Gun overheated
             audio.PlayOneShot(soundOverheat);
+            heat = maxHeat;
 
-            heat = maxHeat + (coolRate * heatCooldownWaitTime);
+            //When overheating, delay cooling
+            coolTime += overheatWaitTime;
         }
         if (inventory.currentWeapon.currentClip <= 0) {
             StartCoroutine("WeaponReload");
         }
     }
     private void WeaponSmokeCheck() {
-        if (heat > maxHeat) {
+        if (isWeaponOverheated()) {
             smoke.emissionRate = 10;
             smoke.startColor = Color.black;
         } else if (heat > maxHeat * 2 / 3) {

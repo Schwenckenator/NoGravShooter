@@ -13,7 +13,7 @@ public class LaserSniperValues : WeaponSuperClass {
 		
 		this.shotSpread 			= 0.0f;
 		this.damagePerShot 			= 50;
-		this.heatPerShot 			= 70;
+		this.heatPerShot 			= 34;
 		this.fireDelay 				= 2f;
 		
 		this.clipSize 				= 1000;

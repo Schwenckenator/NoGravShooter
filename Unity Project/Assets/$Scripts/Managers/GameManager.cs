@@ -201,33 +201,6 @@ public class GameManager : MonoBehaviour {
         UIPauseSpawn.PlayerDied();
         SetPlayerMenu(false);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        GetDebugKeyStrokes();
-	}
-
-    private static void GetDebugKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.F1)) {
-            DebugManager.ToggleTestMode();
-        }
-        if (Input.GetKeyDown(KeyCode.F3)) {
-            if (DebugManager.IsAdminMode()) {
-                PlayerPrefs.DeleteAll();
-                Debug.Log("PlayerPrefs Wiped!");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.F6)) {
-            GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
-
-            foreach (GameObject actor in actors) {
-                ChatManager.DebugMessage(actor.GetComponent<ActorTeam>().GetTeam().ToString());
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.F8)) {
-            DebugManager.ToggleDebugMode();
-        }
-    }
 
 	public void ManagerDetachCamera(){
 		cameraMove.DetachCamera();

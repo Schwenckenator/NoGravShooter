@@ -13,7 +13,7 @@ public class DEBUGSummonBoxes : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetKeyDown(KeyCode.F2)){
+		if(Input.GetKeyDown(KeyCode.F4)){
 			GameObject currentPlayer = null;
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 			foreach(GameObject player in players){

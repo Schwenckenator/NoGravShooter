@@ -13,7 +13,7 @@ public class LaserRifleValues : WeaponSuperClass {
 		
 		this.shotSpread 			= 0.2f;
 		this.damagePerShot 			= 10;
-		this.heatPerShot 			= 15;
+		this.heatPerShot 			= 10;
 		this.fireDelay 				= 0.2f;
 		
 		this.clipSize 				= 1000;

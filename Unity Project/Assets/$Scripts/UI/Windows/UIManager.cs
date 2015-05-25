@@ -52,6 +52,7 @@ public class UIManager : MonoBehaviour {
 
     void Update() {
         GetKeyStrokes();
+        GetDebugKeyStrokes();
     }
     void OnGUI() {
         if (DebugManager.IsAdminMode()) {
@@ -61,7 +62,21 @@ public class UIManager : MonoBehaviour {
             GUI.Label(new Rect(Screen.width -100, 100, 100, 20), "DEBUG: On");
         }
     }
+    private static void GetDebugKeyStrokes() {
+        if (Input.GetKeyDown(KeyCode.F1)) {
+            DebugManager.ToggleTestMode();
+        }
+        if (Input.GetKeyDown(KeyCode.F2)) {
+            DebugManager.ToggleDebugMode();
+        }
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            if (DebugManager.IsAdminMode()) {
+                PlayerPrefs.DeleteAll();
+                Debug.Log("PlayerPrefs Wiped!");
+            }
+        }
 
+    }
     private void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (GameManager.instance.IsPlayerSpawned()) {

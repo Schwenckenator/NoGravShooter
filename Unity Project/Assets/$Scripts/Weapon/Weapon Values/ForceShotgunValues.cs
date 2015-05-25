@@ -13,7 +13,7 @@ public class ForceShotgunValues : WeaponSuperClass {
 
 		this.shotSpread 			= 0;
 		this.damagePerShot 			= 0;
-		this.heatPerShot 			= 0;
+		this.heatPerShot 			= 30;
 		this.fireDelay 				= 0.75f;
 		
 		this.clipSize 				= 1000;
