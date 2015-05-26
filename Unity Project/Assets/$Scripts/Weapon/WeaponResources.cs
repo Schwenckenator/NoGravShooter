@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class WeaponResources : MonoBehaviour {
-    public static bool isWeaponBusy = false;
+    
+    public static bool isReloading = false;
+
     public AudioClip soundOverheat;
 
     // Set in editor
@@ -14,9 +16,6 @@ public class WeaponResources : MonoBehaviour {
     private float coolTime;
 
     private ParticleSystem smoke;
-
-    private bool isReloading;
-
 
     private WeaponReloadRotation weaponReloadRotation;
     private WeaponInventory inventory;
@@ -36,7 +35,7 @@ public class WeaponResources : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (InputConverter.GetKeyDown(KeyBind.Reload) && !isReloading && !isWeaponFull()) {
+        if (InputConverter.GetKeyDown(KeyBind.Reload) && !WeaponInventory.isChanging && !isReloading && !isWeaponFull()) {
             StartCoroutine("WeaponReload");
         }
         CoolWeapon();
@@ -110,9 +109,7 @@ public class WeaponResources : MonoBehaviour {
         // If no remaining ammo and NOT testmode, don't attempt to reload
         if (inventory.currentWeapon.remainingAmmo <= 0 && !DebugManager.IsAllAmmo()) {
             if (inventory.currentWeapon.currentClip <= 0) {
-
-                //GetComponent<FireWeapon>().removeWeapon(currentWeapon);
-                //GetComponent<FireWeapon>().ChangeWeapon(0);
+                // Remove weapon?
             }
 
             yield break;
@@ -122,7 +119,6 @@ public class WeaponResources : MonoBehaviour {
         if (inventory.currentWeapon.reloadTime > 1.0f) {
             weaponReloadRotation.ReloadRotation(inventory.currentWeapon.reloadTime);
         }
-        isWeaponBusy = true;
         audio.clip = inventory.currentWeapon.reloadSound;
         audio.Play();
         float wait = 0;
@@ -130,7 +126,6 @@ public class WeaponResources : MonoBehaviour {
             wait += Time.deltaTime;
             yield return null;
         }
-        isWeaponBusy = false;
         int newBullets = inventory.currentWeapon.clipSize - inventory.currentWeapon.currentClip;
         if (DebugManager.IsAllAmmo()) {
             inventory.currentWeapon.currentClip = inventory.currentWeapon.clipSize;
@@ -143,8 +138,15 @@ public class WeaponResources : MonoBehaviour {
         isReloading = false;
     }
     public void SafeStartReload() {
-        if (!isWeaponBusy && !isReloading && !isWeaponFull()) {
+        if (!WeaponInventory.isChanging && !isReloading && !isWeaponFull()) {
             StartCoroutine("WeaponReload");
         }
+    }
+
+    void WeaponChanged() {
+        // Clear heat and stop reload
+        heat = 0;
+        StopCoroutine("WeaponReload");
+        isReloading = false;
     }
 }

@@ -10,6 +10,8 @@ public class WeaponInventory : MonoBehaviour {
     public WeaponSuperClass currentWeapon {get; set;}
     public int currentInventorySlot {get; private set;}
     public AudioClip soundChangeWeapon;
+
+    public static bool isChanging = false;
     
     private bool initialised = false;
     private List<WeaponSuperClass> heldWeapons;
@@ -144,13 +146,14 @@ public class WeaponInventory : MonoBehaviour {
     }
 
     IEnumerator WeaponChange() {
+        isChanging = true;
+        gameObject.SendMessage("WeaponChanged");
         audio.PlayOneShot(soundChangeWeapon);
-        WeaponResources.isWeaponBusy = true;
         float waitTime = 1.0f;
         weaponReloadRotation.ReloadRotation(waitTime, currentWeapon);
         networkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, GameManager.WeaponClassToWeaponId(currentWeapon));
         yield return new WaitForSeconds(waitTime);
-        WeaponResources.isWeaponBusy = false;
+        isChanging = false;
     }
     [RPC]
     void NetworkWeaponChange(float waitTime, int currentWeaponID) {

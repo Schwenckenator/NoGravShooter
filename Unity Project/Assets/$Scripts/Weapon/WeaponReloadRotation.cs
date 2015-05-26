@@ -19,13 +19,13 @@ public class WeaponReloadRotation : MonoBehaviour {
 	private bool newModel = false;
 	private int newModelNum = -1;
 
-	void Start(){
+	void Awake(){
 		oldPosition = transform.localPosition;
 		firePoint = transform.FindChild("FirePoint");
 	}
 
 	public void ReloadRotation(float reloadTime, WeaponSuperClass newWeapon = null){
-
+        StopAllCoroutines();
 
 		downTime = reloadTime*0.35f;
 		holdTime = reloadTime*0.3f;
@@ -33,15 +33,10 @@ public class WeaponReloadRotation : MonoBehaviour {
 
 		if(newWeapon != null) NewModelPrep(newWeapon);
 
-		StartCoroutine(MoveDown());
+		StartCoroutine("MoveDown");
 	}
 
-
-
-
 	private void NewModelPrep(WeaponSuperClass newWeapon){
-
-
 		for(int i=0; i < GameManager.weapon.Count; i++){
 			if(GameManager.weapon[i].Equals(newWeapon)){
 				newModelNum = i;
@@ -51,9 +46,6 @@ public class WeaponReloadRotation : MonoBehaviour {
 	}
 
 	private void ChangeModel(){
-
-
-
 		if(weaponModel != null){
 			Destroy(weaponModel);
 		}
@@ -64,10 +56,10 @@ public class WeaponReloadRotation : MonoBehaviour {
 
 		weaponModel.transform.parent = transform;
 
-		weaponModel.transform.localPosition = Vector3.zero;
+		weaponModel.transform.localPosition = new Vector3(0, 0, 0.5f);
 		weaponModel.transform.localEulerAngles = new Vector3(0, 270, 0);
 
-		firePoint.localPosition = new Vector3(0, 0, firePointZPosition[newModelNum]);
+		firePoint.localPosition = new Vector3(0, 0, firePointZPosition[newModelNum] + 0.5f);
 
 		newModel = false;
 	}
@@ -83,35 +75,49 @@ public class WeaponReloadRotation : MonoBehaviour {
 
 
 	IEnumerator MoveDown(){ // 0.35
-		float currentTime = Time.time;
-		float endTime = currentTime + downTime;
-		while (currentTime < endTime){
-			transform.RotateAround(transform.TransformPoint(0, 0, -0.5f), transform.TransformDirection(1, 0, 0), (90/downTime)*Time.deltaTime);
-			currentTime += Time.deltaTime;
+        float endTime = Time.time + downTime;
+        float t = 0;
+        float startAngle = transform.localEulerAngles.x;
+        float endAngle = 90f; // -90 as a positive rotation
+
+		while (Time.time < endTime){
+            transform.localEulerAngles = new Vector3(Mathf.LerpAngle(startAngle, endAngle, (t / upTime)), 0, 0);
+            t += Time.deltaTime;
+            LogRotation();
 			yield return null;
 		}
-		StartCoroutine(HoldStill());
+		StartCoroutine("HoldStill");
 	}
 
 	IEnumerator HoldStill(){ // 0.3
-
 		if(newModel){
 			ChangeModel();
 		}
-
 		yield return new WaitForSeconds(holdTime);
-		StartCoroutine(MoveUp());
+		StartCoroutine("MoveUp");
 	}
 
 	IEnumerator MoveUp(){ // 0.35
-		float currentTime = Time.time;
-		float endTime = currentTime + upTime;
-		while (currentTime < endTime){
-			transform.RotateAround(transform.TransformPoint(0, 0, -0.5f), transform.TransformDirection(1, 0, 0), -(90/upTime)*Time.deltaTime);
-			currentTime += Time.deltaTime;
+		float endTime = Time.time + upTime;
+        float t = 0;
+        float startAngle = transform.localEulerAngles.x;
+        float endAngle = 0f;
+
+        while (Time.time < endTime) {
+            transform.localEulerAngles = new Vector3(Mathf.LerpAngle(startAngle, endAngle, (t / upTime)), 0, 0);
+            t += Time.deltaTime;
+            LogRotation();
 			yield return null;
 		}
 		transform.localPosition = oldPosition;
 		transform.localEulerAngles = Vector3.zero;
-	}
+    }
+
+    void LogRotation() {
+        if (DebugManager.IsDebugMode()) {
+            Debug.Log(transform.localEulerAngles);
+        }
+    }
+
+
 }
