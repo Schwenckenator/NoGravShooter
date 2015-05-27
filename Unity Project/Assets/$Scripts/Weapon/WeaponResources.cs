@@ -57,7 +57,7 @@ public class WeaponResources : MonoBehaviour {
         }
     }
     public bool WeaponCanFire() {
-        return !( isWeaponEmpty() || isWeaponOverheated() );
+        return !( isWeaponEmpty() || isWeaponOverheated() || isReloading);
     }
 
     public bool isWeaponFull() {

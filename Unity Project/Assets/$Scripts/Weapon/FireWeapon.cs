@@ -45,7 +45,7 @@ public class FireWeapon : MonoBehaviour {
         return (Input.GetAxisRaw("Fire1") > 0);
     }
     private bool CanWeaponFire() {
-        return (Time.time > nextFire) && weaponResources.WeaponCanFire() && !GameManager.IsPlayerMenu();
+        return (Time.time > nextFire) && weaponResources.WeaponCanFire() && !WeaponInventory.isChanging && !GameManager.IsPlayerMenu();
     }
 
     private void WeaponFired() {
