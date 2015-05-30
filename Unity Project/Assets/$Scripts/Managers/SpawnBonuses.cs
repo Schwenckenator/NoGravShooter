@@ -16,7 +16,7 @@ public class SpawnBonuses : MonoBehaviour {
 	#endregion
 
 	private GameObject[] bonusSpawnPoints;
-    private List<GameObject> spawnableBonuses;
+    private static List<GameObject> spawnableBonuses;
 
 	// Use this for initialization
 	void Start () {
@@ -34,12 +34,12 @@ public class SpawnBonuses : MonoBehaviour {
 
             bonusSpawnPoints = GameObject.FindGameObjectsWithTag("BonusSpawnPoint");
             if (spawnableBonuses.Count > 0) {
-                StartCoroutine("SpawnBonus");
+                StartCoroutine("SpawnBonusLoop");
             }
 		}
 	}
 
-	IEnumerator SpawnBonus(){
+	IEnumerator SpawnBonusLoop(){
 		while(true){
 			GameObject[] aliveBonuses = GameObject.FindGameObjectsWithTag("BonusPickup");
 
@@ -67,11 +67,22 @@ public class SpawnBonuses : MonoBehaviour {
 					}
 				}
 				if(picked){
-					Network.Instantiate(spawnableBonuses[Random.Range(0, spawnableBonuses.Count)], point.transform.position, point.transform.rotation, 0);
-                    Radar.instance.ActorsChanged();
+                    SpawnBonus(spawnableBonuses[Random.Range(0, spawnableBonuses.Count)], point.transform.position, point.transform.rotation);
 				}
 			}
 			yield return new WaitForSeconds(bonusSpawnDelay);
 		}
 	}
+
+    private static void SpawnBonus(GameObject bonus, Vector3 position, Quaternion rotation) {
+        Network.Instantiate(bonus, position, rotation, 0);
+        Radar.instance.ActorsChanged();
+    }
+    public static void SpawnRandomBonus(Vector3 position, Quaternion rotation) {
+        if (spawnableBonuses.Count == 0) {
+            print("No bonus can be spawned!");
+            return;
+        }
+        SpawnBonus(spawnableBonuses[Random.Range(0, spawnableBonuses.Count)], position, rotation);
+    }
 }

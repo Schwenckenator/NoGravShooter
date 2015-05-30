@@ -2,14 +2,8 @@
 using System.Collections;
 
 public class DEBUGSummonBoxes : MonoBehaviour {
-    [SerializeField]
-	private GameObject box;
 
-    //private NetworkManager networkManager;
-
-    //void Start() {
-    //    networkManager = GetComponent<NetworkManager>();
-    //}
+    private bool[] allowedBonuses;
 
 	// Update is called once per frame
 	void Update () {
@@ -23,7 +17,7 @@ public class DEBUGSummonBoxes : MonoBehaviour {
 			}
 			if(currentPlayer == null) return;
 
-            Network.Instantiate(box, currentPlayer.transform.position + currentPlayer.transform.forward * 3, Quaternion.identity, 0);
+            SpawnBonuses.SpawnRandomBonus(currentPlayer.transform.position + currentPlayer.transform.forward * 3, Quaternion.identity);
 		}
 	}
 
