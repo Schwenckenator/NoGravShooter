@@ -31,7 +31,6 @@ public class SpawnBonuses : MonoBehaviour {
                     spawnableBonuses.Add(bonuses[i]);
                 }
             }
-
             bonusSpawnPoints = GameObject.FindGameObjectsWithTag("BonusSpawnPoint");
             if (spawnableBonuses.Count > 0) {
                 StartCoroutine("SpawnBonusLoop");

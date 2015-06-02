@@ -35,10 +35,10 @@ public class AimingFOVChanger : MonoBehaviour {
                 if (myCamera.fieldOfView > sniperFOV) {
 					myCamera.fieldOfView -= zoomSpeed;
 				} else {
-                    UIPlayerHUD.SetCrosshairImage(true);
+                    UIPlayerHUD.ShowSniperScope(true);
 				}
 			} else {
-                UIPlayerHUD.SetCrosshairImage(false);
+                UIPlayerHUD.ShowSniperScope(false);
 				//bugfix for zooming with sniper then changing weapons
 				if(myCamera.fieldOfView < minFOV){
 					myCamera.fieldOfView = minFOV;
@@ -48,7 +48,7 @@ public class AimingFOVChanger : MonoBehaviour {
 				}
 			}
 		} else {
-            UIPlayerHUD.SetCrosshairImage(false);
+            UIPlayerHUD.ShowSniperScope(false);
 			//bug fix for changing field of view between games without closing
 			if(myCamera.fieldOfView > maxFOV){
 				myCamera.fieldOfView = maxFOV;

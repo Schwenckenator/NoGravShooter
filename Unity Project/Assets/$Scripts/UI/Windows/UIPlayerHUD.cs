@@ -8,7 +8,8 @@ public class UIPlayerHUD : MonoBehaviour {
     static MovingBar fuel;
     static ChangeableText ammo;
     static ChangeableText grenade;
-    static ChangeableText prompt;
+    static ChangeableText promptText;
+    static ChangeableText tutorialPromptText;
     
     static ChangeableImage crosshair;
     static ChangeableImage sniperScope;
@@ -19,9 +20,10 @@ public class UIPlayerHUD : MonoBehaviour {
     static IDamageable playerHealth;
     static IActorStats ActorStats;
 
-    static CanvasGroup playerUI;
-    static CanvasGroup sniperUI;
-    static CanvasGroup promptUI;
+    static IHideable playerUI;
+    static IHideable sniperUI;
+    static IHideable promptUI;
+    static IHideable tutorialPromptUI;
 
 
     void Start() {
@@ -29,29 +31,30 @@ public class UIPlayerHUD : MonoBehaviour {
     }
     public static void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.PlayerHUD);
-        List<IChangeable> changers = UIManager.FindChangeables(canvas);
+        //List<IChangeable> changers = UIManager.FindChangeables(canvas);
+        IChangeable[] changers = canvas.gameObject.GetInterfacesInChildren<IChangeable>();
         
         foreach (IChangeable changer in changers) {
             if (changer.IsType("fuel")) fuel = changer as MovingBar;
             else if (changer.IsType("health")) health = changer as MovingBar;
             else if (changer.IsType("ammo")) ammo = changer as ChangeableText;
             else if (changer.IsType("grenade")) grenade = changer as ChangeableText;
-            else if (changer.IsType("prompt")) prompt = changer as ChangeableText;
+            else if (changer.IsType("promptText")) promptText = changer as ChangeableText;
+            else if (changer.IsType("promptHide")) promptUI = changer as HideableUI;
+            else if (changer.IsType("playerUI")) playerUI = changer as HideableUI;
+            else if (changer.IsType("sniperUI")) sniperUI = changer as HideableUI;
+            else if (changer.IsType("tutorialPromptText")) tutorialPromptText = changer as ChangeableText;
+            else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
         }
-
-        CanvasGroup[] canvasGroups = canvas.GetComponentsInChildren<CanvasGroup>();
-        playerUI = canvasGroups[0];
-        promptUI = canvasGroups[1];
-        sniperUI = canvasGroups[2];
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
-        SetCrosshairImage(false); // Set to default
+        ShowSniperScope(false); // Set to default
     }
 
-    public static void SetCrosshairImage(bool showSniper) {
-        playerUI.alpha = showSniper ? 0 : 1;
-        sniperUI.alpha = showSniper ? 1 : 0;
+    public static void ShowSniperScope(bool showSniper) {
+        playerUI.Show(!showSniper);
+        sniperUI.Show(showSniper);
     }
 
     public static void SetupPlayer(GameObject actor) {
@@ -70,6 +73,11 @@ public class UIPlayerHUD : MonoBehaviour {
 
             ammo.SetText(MakeAmmoString());
             grenade.SetText(MakeGrenadeString());
+        }
+        if (Input.GetKeyDown(KeyCode.F5)) {
+            TutorialPrompt("This is a test prompt.");
+        } else if (Input.GetKeyDown(KeyCode.F6)) {
+            RemoveTutorialPrompt();
         }
     }
 
@@ -114,16 +122,37 @@ public class UIPlayerHUD : MonoBehaviour {
     static int promptTimer = 0;
     public static void Prompt(string input) {
         if (input != lastPrompt) {
-            prompt.SetText(input);
+            promptText.SetText(input);
             lastPrompt = input;
         }
-        promptUI.alpha = 1;
+        promptUI.Show(true);
         promptTimer = 10;
     }
     public static bool IsPrompt() {
-        return promptUI.alpha == 1;
+        return promptUI.IsVisible();
     }
     public static void RemovePrompt() {
-        promptUI.alpha = 0;
+        promptUI.Show(false);
+    }
+
+    /// <summary>
+    /// Displays prompt until player removes it.
+    /// Pauses time, so this cannot be used for multiplayer
+    /// </summary>
+    /// <param name="input"></param>
+    public static void TutorialPrompt(string input) {
+        // If not tutorial, this is not allowed. Throw exception!
+        if (!GameManager.IsSceneTutorial()) throw new TutorialCodeRunningInMultiplayerException();
+
+        tutorialPromptText.SetText(input);
+        tutorialPromptUI.Show(true);
+        Time.timeScale = 0;
+    }
+    public static void RemoveTutorialPrompt() {
+        // If not tutorial, this is not allowed. Throw exception!
+        if (!GameManager.IsSceneTutorial()) throw new TutorialCodeRunningInMultiplayerException();
+
+        tutorialPromptUI.Show(false);
+        Time.timeScale = 1;
     }
 }
