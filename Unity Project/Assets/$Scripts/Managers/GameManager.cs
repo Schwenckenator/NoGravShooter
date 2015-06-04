@@ -264,6 +264,7 @@ public class GameManager : MonoBehaviour {
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
+            UIPauseSpawn.TutorialModeActive(false);
             UIChat.UpdatePlayerLists();
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
@@ -278,6 +279,9 @@ public class GameManager : MonoBehaviour {
             gameMode = temp.GetInterface<IGameMode>();
         } else {
             GameInProgress = false;
+            if (levelName == "Tutorial") {
+                UIPauseSpawn.TutorialModeActive(true);
+            }
         }
 
         NetworkManager.lastLevelPrefix = levelPrefix;

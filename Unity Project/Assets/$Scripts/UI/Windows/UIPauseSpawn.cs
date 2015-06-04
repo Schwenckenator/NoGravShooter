@@ -10,9 +10,13 @@ public class UIPauseSpawn : MonoBehaviour {
 
     private static ChangeableText serverName;
 
+    private static IHideable playerList;
+    private static IHideable returnToLobby;
+
     public static void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.PauseMenu);
         FindTexts(canvas);
+        FindHideables(canvas);
         
         PlayerDied(); // Initialises button text
     }
@@ -29,6 +33,18 @@ public class UIPauseSpawn : MonoBehaviour {
                 spawnButton = text;
             } else if (text.IsType("serverName")) {
                 serverName = text;
+            }
+        }
+    }
+
+    private static void FindHideables(Canvas canvas) {
+        IChangeable[] changeables = canvas.gameObject.GetInterfacesInChildren<IChangeable>();
+
+        foreach (IChangeable changer in changeables) {
+            if (changer.IsType("playerListHide")) {
+                playerList = changer as IHideable;
+            } else if (changer.IsType("returnToLobby")) {
+                returnToLobby = changer as IHideable;
             }
         }
     }
@@ -50,7 +66,10 @@ public class UIPauseSpawn : MonoBehaviour {
         newText += ", " + SettingsManager.instance.GameModeName;
         serverName.SetText(newText);
     }
-
+    public static void TutorialModeActive(bool isTutorial) {
+        playerList.Show(!isTutorial);
+        returnToLobby.Show(!isTutorial);
+    }
     private static void ReturnToGame() {
         UIManager.instance.SetMenuWindow(Menu.PlayerHUD);
         GameManager.SetCursorVisibility(false);
