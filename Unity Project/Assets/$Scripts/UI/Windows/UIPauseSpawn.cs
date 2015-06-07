@@ -75,8 +75,9 @@ public class UIPauseSpawn : MonoBehaviour {
         GameManager.SetCursorVisibility(false);
         GameManager.instance.SetPlayerMenu(false);
     }
-    private static void PauseMenu() {
-        UIManager.instance.SetMenuWindow(Menu.PauseMenu);
+    private static void PauseMenu(bool isTutorial = false) {
+        Menu window = isTutorial ? Menu.TutorialMenu : Menu.PauseMenu;
+        UIManager.instance.SetMenuWindow(window);
         GameManager.SetCursorVisibility(true);
         GameManager.instance.SetPlayerMenu(true);
     }
@@ -85,15 +86,14 @@ public class UIPauseSpawn : MonoBehaviour {
     /// Switches between paused and not paused, based on state
     /// </summary>
     public static void PauseMenuSwitch() {
-        if(UIManager.IsCurrentMenuWindow(Menu.PauseMenu)){
-            ReturnToGame();
+        if(UIManager.IsCurrentMenuWindow(Menu.PlayerHUD)){
+            PauseMenu(GameManager.IsSceneTutorial()); 
         } else {
-            PauseMenu();
+            ReturnToGame();
         }
     }
 
     public void PauseSpawnPress() {
-        Debug.Log("Spawn button pressed");
         if (GameManager.instance.IsPlayerSpawned()) {
             PauseMenuSwitch();
         } else {
