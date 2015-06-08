@@ -16,6 +16,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private MouseLook cameraMouseLook;
     private MouseLook characterMouseLook;
 	private Transform cameraTransform;
+    private CameraMove cameraMove;
     private float footRayDistance;
 
 	private bool jetPackOn;
@@ -73,7 +74,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
     IControllerInput input;
 
 	void Start(){
-        
+
+        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         input = GetComponent<KeyboardInput>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
@@ -98,12 +100,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	}
 
-    //void OnGUI(){
-    //    if(!ragdoll) return;
-    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), GuiManager.instance.bloodyScreen);
-    //}
-	
-	
 	#region FixedUpdate
 	void FixedUpdate () {
 		if(ragdoll) return;
@@ -390,6 +386,9 @@ public class NoGravCharacterMotor : MonoBehaviour {
     /// Does the actual rotation of player
     /// </summary>
 	void SnapToSurface(Vector3 colObjNorm){
+        // Detach camera
+        cameraMove.AdjustSmooth();
+
 		// Preserve camera angle
 		Quaternion currentCameraRotation = cameraTransform.rotation;
 		
