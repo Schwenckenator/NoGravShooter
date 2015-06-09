@@ -387,7 +387,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
     /// </summary>
 	void SnapToSurface(Vector3 colObjNorm){
         // Detach camera
-        cameraMove.AdjustSmooth();
+        cameraMove.PrepareAdjust();
 
 		// Preserve camera angle
 		Quaternion currentCameraRotation = cameraTransform.rotation;
@@ -414,6 +414,9 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		}
 		
 		cameraMouseLook.SetX_Rotation(xRot);
+
+        //Adjust Camera
+        cameraMove.SmoothAdjust();
 	}
 
     void OnCollisionStay(Collision info) {
