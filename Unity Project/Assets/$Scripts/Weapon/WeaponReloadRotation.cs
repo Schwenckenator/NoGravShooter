@@ -51,7 +51,7 @@ public class WeaponReloadRotation : MonoBehaviour {
 		}
 		weaponModel = Instantiate(weaponModelList[newModelNum]) as GameObject;
         
-        if(transform.parent.parent.networkView.isMine)
+        if(transform.root.networkView.isMine)
             SetLayers(weaponModel);
 
 		weaponModel.transform.parent = transform;

@@ -16,7 +16,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	private MouseLook cameraMouseLook;
     private MouseLook characterMouseLook;
 	private Transform cameraTransform;
-    private CameraMove cameraMove;
+    private CameraSmoothMove cameraSmoothMove;
     private float footRayDistance;
 
 	private bool jetPackOn;
@@ -75,7 +75,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
 	void Start(){
 
-        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+        cameraSmoothMove = GetComponentInChildren<CameraSmoothMove>();
         input = GetComponent<KeyboardInput>();
 
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
@@ -387,7 +387,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
     /// </summary>
 	void SnapToSurface(Vector3 colObjNorm){
         // Detach camera
-        cameraMove.PrepareAdjust();
+        cameraSmoothMove.PrepareAdjust();
 
 		// Preserve camera angle
 		Quaternion currentCameraRotation = cameraTransform.rotation;
@@ -416,7 +416,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		cameraMouseLook.SetX_Rotation(xRot);
 
         //Adjust Camera
-        cameraMove.SmoothAdjust();
+        cameraSmoothMove.SmoothAdjust();
 	}
 
     void OnCollisionStay(Collision info) {

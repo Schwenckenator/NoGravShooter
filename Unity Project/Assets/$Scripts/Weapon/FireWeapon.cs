@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FireWeapon : MonoBehaviour {
-	Transform gunFirePoint;
-	Transform cameraPos;
+	public Transform gunFirePoint;
+	public Transform cameraAnchor;
 	NoGravCharacterMotor motor;
 	
     WeaponInventory inventory;
@@ -14,8 +14,8 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 	// Use this for initialization
 	void Awake () {
-		gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-		cameraPos = transform.FindChild("CameraPos");
+		//gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
+		//cameraAnchor = transform.FindChild("CameraPos");
 		motor = GetComponent<NoGravCharacterMotor>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
@@ -59,7 +59,7 @@ public class FireWeapon : MonoBehaviour {
                 FireRay();
             }
         } else {
-            SpawnProjectile(GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, cameraPos.rotation, Network.player);
+            SpawnProjectile(GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, cameraAnchor.rotation, Network.player);
         }
         if (inventory.currentWeapon.hasRecoil) {
             motor.Recoil(inventory.currentWeapon.recoil);
@@ -70,14 +70,14 @@ public class FireWeapon : MonoBehaviour {
 	private void FireRay() {
         RaycastHit hit = new RaycastHit();
         //Find direction after shot spread
-        Vector3 shotDir = cameraPos.forward;
+        Vector3 shotDir = cameraAnchor.forward;
         //Apply two rotations
         float angle1 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
         float angle2 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
 
-        shotDir = Quaternion.AngleAxis(angle1, cameraPos.up) * Quaternion.AngleAxis(angle2, cameraPos.right) * shotDir;
+        shotDir = Quaternion.AngleAxis(angle1, cameraAnchor.up) * Quaternion.AngleAxis(angle2, cameraAnchor.right) * shotDir;
 		
-        Physics.Raycast(cameraPos.position, shotDir, out hit, Mathf.Infinity);
+        Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
 
         //Deal with the shot
         Collider col = hit.collider;
@@ -123,12 +123,12 @@ public class FireWeapon : MonoBehaviour {
     }
 
     void ShotRender(Vector3 start, Vector3 end){
-        shot = Instantiate(inventory.currentWeapon.projectile, cameraPos.position, cameraPos.rotation) as GameObject;
-        shot.transform.parent = cameraPos;
+        shot = Instantiate(inventory.currentWeapon.projectile, cameraAnchor.position, cameraAnchor.rotation) as GameObject;
+        shot.transform.parent = cameraAnchor;
         LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
 
-        start = cameraPos.InverseTransformPoint(start);
-        end = cameraPos.InverseTransformPoint(end);
+        start = cameraAnchor.InverseTransformPoint(start);
+        end = cameraAnchor.InverseTransformPoint(end);
 
         lineRenderer.useWorldSpace = false;
         lineRenderer.SetPosition(0, start);
