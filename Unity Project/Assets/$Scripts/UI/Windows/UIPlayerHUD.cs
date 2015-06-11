@@ -25,6 +25,7 @@ public class UIPlayerHUD : MonoBehaviour {
     static IHideable promptUI;
     static IHideable tutorialPromptUI;
 
+    static bool tutorialPromptActive = false;
 
     void Start() {
         Init();
@@ -50,6 +51,7 @@ public class UIPlayerHUD : MonoBehaviour {
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
         ShowSniperScope(false); // Set to default
+        RemoveTutorialPrompt();
     }
 
     public static void ShowSniperScope(bool showSniper) {
@@ -74,9 +76,13 @@ public class UIPlayerHUD : MonoBehaviour {
             ammo.SetText(MakeAmmoString());
             grenade.SetText(MakeGrenadeString());
         }
+
+        // TEST
         if (Input.GetKeyDown(KeyCode.F5)) {
             TutorialPrompt("This is a test prompt.");
-        } else if (Input.GetKeyDown(KeyCode.F6)) {
+        }
+
+        if (tutorialPromptActive && (Input.GetAxisRaw("Submit") > 0)) {
             RemoveTutorialPrompt();
         }
     }
@@ -147,12 +153,11 @@ public class UIPlayerHUD : MonoBehaviour {
         tutorialPromptText.SetText(input);
         tutorialPromptUI.Show(true);
         Time.timeScale = 0;
+        tutorialPromptActive = true;
     }
     public static void RemoveTutorialPrompt() {
-        // If not tutorial, this is not allowed. Throw exception!
-        if (!GameManager.IsSceneTutorial()) throw new TutorialCodeRunningInMultiplayerException();
-
         tutorialPromptUI.Show(false);
         Time.timeScale = 1;
+        tutorialPromptActive = false;
     }
 }
