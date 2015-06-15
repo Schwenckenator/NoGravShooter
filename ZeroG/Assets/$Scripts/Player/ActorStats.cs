@@ -14,8 +14,14 @@ public class ActorStats : MonoBehaviour, IActorStats {
         set;
     }
 
+    public float fuelSpend {
+        get;
+        set;
+    }
+
     void Awake() {
         // Default values
         maxHealth = 100;
+        fuelSpend = 0.5f;
     }
 }
