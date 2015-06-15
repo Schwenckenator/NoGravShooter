@@ -30,7 +30,7 @@ public class UILobby : MonoBehaviour {
     private static bool teamGame = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         LobbyInit();
 	}
     void Update() {

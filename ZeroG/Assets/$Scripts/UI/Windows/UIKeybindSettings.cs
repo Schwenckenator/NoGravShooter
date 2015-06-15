@@ -9,7 +9,7 @@ public class UIKeybindSettings : MonoBehaviour {
     private static int editedBinding = 0;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         keybindButtonText = new List<Text>();
         EditKeybindInit();
 	}

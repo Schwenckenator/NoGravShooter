@@ -27,7 +27,7 @@ public class UIPlayerHUD : MonoBehaviour {
 
     static bool tutorialPromptActive = false;
 
-    void Start() {
+    void Awake() {
         Init();
     }
     public static void Init() {

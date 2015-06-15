@@ -17,7 +17,7 @@ public class UIGameSettings : MonoBehaviour {
     static Toggle weaponSpawn;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         Init();
 	}
     void Init() {
