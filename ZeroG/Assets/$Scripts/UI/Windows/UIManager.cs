@@ -166,15 +166,10 @@ public class UIManager : MonoBehaviour {
     }
     
     private void SetMenuWindow(int newWindow) {
-        Debug.Log("Current window = " + currentWindow);
-        Debug.Log("New window = " + newWindow);
-
         windows[currentWindow].gameObject.SetActive(false);
         windows[newWindow].gameObject.SetActive(true);
 
         currentWindow = newWindow;
-
-        Debug.Log("Window active: "+ windows[currentWindow].gameObject.activeInHierarchy.ToString());
     }
     private void ShowMenuWindow(int newWindow, bool show) {
         windows[newWindow].gameObject.SetActive(show);

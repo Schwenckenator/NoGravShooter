@@ -73,7 +73,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
     IControllerInput input;
 
+    Rigidbody rigidbody;
+
 	void Start(){
+
+        rigidbody = GetComponent<Rigidbody>();
 
         cameraSmoothMove = GetComponentInChildren<CameraSmoothMove>();
         input = GetComponent<KeyboardInput>();
@@ -81,8 +85,8 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 		feetAudio = transform.FindChild("FeetAudio").GetComponent<AudioSource>();
 
-		GetComponent<Rigidbody>().freezeRotation = true;
-		GetComponent<Rigidbody>().AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
+		rigidbody.freezeRotation = true;
+		rigidbody.AddRelativeForce(new Vector3 (0, -jumpForce*4, 0), ForceMode.Force);
 		jetPackOn = true;
 		magnetPower = 0;
 
@@ -121,7 +125,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 
     private void MovementJetpack() {
         if (magnetPower > 0 && Physics.Raycast(transform.position, -transform.up, footRayDistance)) {
-            GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, -1, 0), ForceMode.Impulse);
+            rigidbody.AddRelativeForce(new Vector3(0, -1, 0), ForceMode.Impulse);
         }
         //Apply Jetpack force as Acceleration
         Vector3 force = GetJetpackForce();
@@ -131,7 +135,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 			if ((input.IsMovementKeys() || input.IsStopKey()) && !GameManager.IsPlayerMenu()) {
 				if (resource.SpendFuel(fuelSpend)) {
 					playJetSound = true;
-					GetComponent<Rigidbody>().AddRelativeForce(force, ForceMode.Force);
+					rigidbody.AddRelativeForce(force, ForceMode.Force);
 				} else {
 					jetpackSoundWasPlayed = false;
 				}
@@ -162,11 +166,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
             force = new Vector3(input.GetXMovement(), input.GetYMovement(), input.GetZMovement());
             force = Vector3.ClampMagnitude(force, 1.0f);
         } else if (input.IsStopKey()) {
-			if(GetComponent<Rigidbody>().velocity.x*GetComponent<Rigidbody>().velocity.x < 0.00001 && GetComponent<Rigidbody>().velocity.y*GetComponent<Rigidbody>().velocity.y < 0.00001 && GetComponent<Rigidbody>().velocity.z*GetComponent<Rigidbody>().velocity.z < 0.00001 ){
+			if(rigidbody.velocity.x*rigidbody.velocity.x < 0.00001 && rigidbody.velocity.y*rigidbody.velocity.y < 0.00001 && rigidbody.velocity.z*rigidbody.velocity.z < 0.00001 ){
 				force = new Vector3(0,0,0);
-				GetComponent<Rigidbody>().velocity = new Vector3(0,0,0);
+				rigidbody.velocity = new Vector3(0,0,0);
 			} else {
-				force = StopJetpackMovementForce(transform.InverseTransformDirection(GetComponent<Rigidbody>().velocity));
+				force = StopJetpackMovementForce(transform.InverseTransformDirection(rigidbody.velocity));
 			}
         }
 
@@ -227,10 +231,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
         targetVelocity *= speed;
 
         // Apply a force that attempts to reach our target velocity
-        Vector3 velocity = GetComponent<Rigidbody>().velocity;
+        Vector3 velocity = rigidbody.velocity;
         Vector3 velocityChange = (targetVelocity - velocity);
 
-        if (GetComponent<Rigidbody>().velocity.sqrMagnitude > sqrWalkingSoundVelocity) {
+        if (rigidbody.velocity.sqrMagnitude > sqrWalkingSoundVelocity) {
             playWalkingSound = true;
         }
 
@@ -239,11 +243,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
         velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
 
 
-        GetComponent<Rigidbody>().AddForce(velocityChange, ForceMode.Impulse);
+        rigidbody.AddForce(velocityChange, ForceMode.Impulse);
 
         // Jump
         if (canJump && input.GetYMovement() > 0 && !GameManager.IsPlayerMenu()) {
-            GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
+            rigidbody.AddRelativeForce(new Vector3(0, CalculateJumpVerticalSpeed(), 0), ForceMode.Impulse);
         }
     }
 
@@ -437,7 +441,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
             grounded = true;
             magnetPower = magnetPowerMax;
         } else {
-            GetComponent<Rigidbody>().AddForce(info.contacts[0].normal, ForceMode.Impulse);
+            rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
         }
     }
 
@@ -484,10 +488,10 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	public void Ragdoll(bool state){
 		ragdoll = state;
 		if(ragdoll){
-			GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-			GetComponent<Rigidbody>().AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
+			rigidbody.constraints = RigidbodyConstraints.None;
+			rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
 		}else{
-			GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 		}
 		cameraMouseLook.Ragdoll(state);
 		GetComponent<MouseLook>().Ragdoll(state);
@@ -501,7 +505,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
         ForceMode mode = ForceMode.VelocityChange;
         if (grounded) {
             Debug.Log("Did the thing.");
-            GetComponent<Rigidbody>().AddRelativeForce(0, ungroundForceMagnitude, 0, mode);
+            rigidbody.AddRelativeForce(0, ungroundForceMagnitude, 0, mode);
         }
     }
 }
