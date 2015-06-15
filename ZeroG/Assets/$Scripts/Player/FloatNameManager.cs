@@ -1,0 +1,31 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class FloatNameManager : MonoBehaviour {
+
+	void Start(){
+		if(GetComponent<NetworkView>().isMine){
+            GetComponent<NetworkView>().RPC("SetName", RPCMode.AllBuffered, SettingsManager.instance.PlayerName);
+			StartCoroutine(SelfNameDelete());
+		}
+	}
+
+	IEnumerator SelfNameDelete(){
+		yield return new WaitForSeconds(0.5f);
+		transform.FindChild("NameText").GetComponent<TextMesh>().text = "";
+	}
+
+	void Update(){
+		if(GetComponent<NetworkView>().isMine){
+			return;
+		}
+		// This code now messes with the floating text names of other players
+		// We will now set the rotation of the text toward the current player.
+		transform.FindChild("NameText").transform.LookAt(Camera.main.transform, Camera.main.transform.up);
+	}
+
+	[RPC]
+	void SetName(string newName){
+		transform.FindChild("NameText").GetComponent<TextMesh>().text = newName;
+	}
+}

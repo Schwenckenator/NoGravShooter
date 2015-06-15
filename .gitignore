@@ -1,23 +1,25 @@
-Unity Project/Library/
-/Unity Project/obj
-/Unity Project/Temp
-/Unity Project/UnityVS.Unity Project.CSharp.csproj
-/Unity Project/UnityVS.Unity Project.CSharp.Editor.csproj
-/Unity Project/UnityVS.Unity Project.CSharp.Plugins.csproj
-/Unity Project/UnityVS.Unity Project.sln
-/Unity Project/obj/Debug/Assembly-CSharp-firstpass.pdb
-/Unity Project/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-/Unity Project/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
-/Unity Project/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
-/Unity Project/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
-/Unity Project/obj/Debug/UnityVS.Unity Project.CSharp.csproj.FileListAbsolute.txt
-/Unity Project/obj/Debug/UnityVS.Unity Project.CSharp.csprojResolveAssemblyReference.cache
-/Unity Project/obj/Debug/UnityVS.Unity Project.CSharp.Plugins.csproj.FileListAbsolute.txt
-/Unity Project/obj/Debug/UnityVS.Unity Project.CSharp.Plugins.csprojResolveAssemblyReference.cache
-/Unity Project/obj/Debug/Assembly-CSharp-firstpass.dll
+ZeroG/Library/
+/ZeroG/obj
+/ZeroG/Temp
+/ZeroG/UnityVS.Unity Project.CSharp.csproj
+/ZeroG/UnityVS.Unity Project.CSharp.Editor.csproj
+/ZeroG/UnityVS.Unity Project.CSharp.Plugins.csproj
+/ZeroG/UnityVS.Unity Project.sln
+/ZeroG/obj/Debug/Assembly-CSharp-firstpass.pdb
+/ZeroG/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/ZeroG/obj/Debug/TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs
+/ZeroG/obj/Debug/TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs
+/ZeroG/obj/Debug/TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs
+/ZeroG/obj/Debug/UnityVS.Unity Project.CSharp.csproj.FileListAbsolute.txt
+/ZeroG/obj/Debug/UnityVS.Unity Project.CSharp.csprojResolveAssemblyReference.cache
+/ZeroG/obj/Debug/UnityVS.Unity Project.CSharp.Plugins.csproj.FileListAbsolute.txt
+/ZeroG/obj/Debug/UnityVS.Unity Project.CSharp.Plugins.csprojResolveAssemblyReference.cache
+/ZeroG/obj/Debug/Assembly-CSharp-firstpass.dll
 
-Unity Project/UnityVS.Unity Project.v12.suo
+ZeroG/UnityVS.Unity Project.v12.suo
 /Finished Builds/Build Archive
-/Unity Project/UnityVS.Unity Project.CSharp.Editor.csproj
+/ZeroG/UnityVS.Unity Project.CSharp.Editor.csproj
 
-/Unity Project/Assets/UnityVs/Editor/
+/ZeroG/Assets/UnityVs/Editor/
+/ZeroG/*.csproj
+/ZeroG/*.sln
