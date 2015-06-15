@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ThrowGrenade : MonoBehaviour {
 	public GameObject[] grenade;
-	private Transform grenadeSpawn;
+	public Transform grenadeSpawn;
 
 	PlayerResources playerResource;
 
@@ -13,7 +13,6 @@ public class ThrowGrenade : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		playerResource = GetComponent<PlayerResources>();
-		grenadeSpawn = transform.FindChild("CameraPos").FindChild("GrenadeSpawn");
 	}
 
 	// Update is called once per frame
