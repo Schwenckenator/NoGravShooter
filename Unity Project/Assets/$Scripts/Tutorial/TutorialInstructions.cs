@@ -305,30 +305,21 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(4);
         lookingDot.transform.FindChild("DotMesh").renderer.material.color = new Color(0, 0, 200, 200);
         lookingDot.transform.position = new Vector3(-358f, -10.6f, 0f);
-        ChatManager.TutorialChat("\nMove your Mouse to look around.\n\nPlease look at the blue dot.");
+        ChatManager.TutorialChat("\nPlease look at the blue dot.");
+		UIPlayerHUD.TutorialPrompt("\nMove your Mouse to look around.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(5);
         step0 = true;
     }
     IEnumerator MovementTutorial() {
         check1 = true;
         player.GetComponent<KeyboardInput>().canWalk = true;
-        ChatManager.TutorialChat("\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.");
-        yield return new WaitForSeconds(4);
-        ChatManager.TutorialChat("\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString() + " to move Left.");
-        yield return new WaitForSeconds(4);
-        ChatManager.TutorialChat("\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString() + " to move Left.\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move Right.");
-        yield return new WaitForSeconds(4);
-        ChatManager.TutorialChat("\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString() + " to move Left.\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move Right.\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString() + " to move Backwards.");
+        ChatManager.TutorialChat("Use "+ SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()
+		 + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()  + " & " + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move around.");
+		UIPlayerHUD.TutorialPrompt("\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.\n\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString() + " to move Left.\n\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move Right.\n\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString() + " to move Backwards.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(4);
         step1 = true;
     }
@@ -347,8 +338,8 @@ public class TutorialInstructions : MonoBehaviour {
         check3 = true;
         ChatManager.TutorialChat("\nTo pick up a gun simply walk over it.\n\nIf you already have 2 guns you can swap out the gun you are currently holding.");
         yield return new WaitForSeconds(10);
-        ChatManager.TutorialChat("Click the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
-        + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.");
+        UIPlayerHUD.TutorialPrompt("\nClick the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
+        + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(5);
         step3 = true;
     }
@@ -365,20 +356,23 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(7);
         check5 = true;
         player.GetComponent<KeyboardInput>().canJump = true;
-        ChatManager.TutorialChat("This suit comes equipped with Electro-Gravitational Boots.\nTo land on a surface you must rotate yourself so you hit the surface feet first.\n\nPress " +
-            SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString() + " to jump and boost upwards.");
+        ChatManager.TutorialChat("This suit comes equipped with Electro-Gravitational Boots.\nTo land on a surface you must rotate yourself so you hit the surface feet first.\nPress " +
+            SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString() + " & " + SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString() + " to boost up & down.\nPress "
+			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.");
+        UIPlayerHUD.TutorialPrompt("\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost up.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()
+		+" to boost down.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(10);
-        ChatManager.TutorialChat("\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString() + " to boost downwards.\n\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString() + " to brake.");
-        yield return new WaitForSeconds(8);
         step5 = true;
     }
     IEnumerator FlightTutorial2() {
         check6 = true;
         ChatManager.TutorialChat("\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString() + " & "
+            + SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString() + " to roll to the left & right.\n\nYou can also rotate by moving the mouse while floating.");
+		UIPlayerHUD.TutorialPrompt("\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString() + " to roll to the left and "
-            + SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString() + " to roll to the right.\n\nYou can also rotate by moving the mouse while floating.");
+            + SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString() + " to roll to the right.\n\n"
+			+ "You can also rotate by moving the mouse while floating.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(5);
         step6 = true;
     }
@@ -391,6 +385,7 @@ public class TutorialInstructions : MonoBehaviour {
         platform2.transform.position = new Vector3(platform2.transform.position.x, 0, platform2.transform.position.z);
         platform3.transform.position = new Vector3(platform3.transform.position.x, 0, platform3.transform.position.z);
         ChatManager.TutorialChat("\nTry to land on the green platforms.\n\nRemember to 'look up' before you crash so you land feet first.");
+        UIPlayerHUD.TutorialPrompt("\nTry to land on the green platforms.\n\nRemember to 'look up' before you crash so you land feet first.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(5);
         step7 = true;
     }
@@ -399,8 +394,14 @@ public class TutorialInstructions : MonoBehaviour {
         ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
         yield return new WaitForSeconds(7);
         check8 = true;
-        ChatManager.TutorialChat("The purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString() + " to throw a Proximity Grenade.\nPress " + SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString() + " to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.");
+        ChatManager.TutorialChat("Purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString() + " to throw a Proximity Grenade.\nPress " 
+			+ SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString() 
+			+ " to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.");
+        UIPlayerHUD.TutorialPrompt("Purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
+            + SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString() + " to throw a Proximity Grenade.\n\nPress " 
+			+ SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString() 
+			+ " to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(8);
         step8 = true;
     }
@@ -411,8 +412,10 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(8);
         healthpack = GameObject.Find("TutorialBonusHealthPack");
         healthpack.transform.position = new Vector3(142.22f, 13.45f, -0.17f);
-        ChatManager.TutorialChat(
-            "\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them.\nYou can also shoot them to destroy them and stop others from using them.");
+        ChatManager.TutorialChat("\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them."
+			+ "\nYou can also shoot them to destroy them and stop others from using them.");
+        UIPlayerHUD.TutorialPrompt("\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them."
+			+ "\n\nYou can also shoot them to destroy them and stop others from using them.\n\n\n\n\nPress Space to continue.");
         yield return new WaitForSeconds(10);
         StartCoroutine(FinalTutorial());
     }
