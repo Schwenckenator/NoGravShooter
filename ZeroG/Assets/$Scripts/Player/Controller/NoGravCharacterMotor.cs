@@ -166,6 +166,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
             force = new Vector3(input.GetXMovement(), input.GetYMovement(), input.GetZMovement());
             force = Vector3.ClampMagnitude(force, 1.0f);
         } else if (input.IsStopKey()) {
+            // Why did I do it like this? What's wrong with sqrMagnitude?
 			if(rigidbody.velocity.x*rigidbody.velocity.x < 0.00001 && rigidbody.velocity.y*rigidbody.velocity.y < 0.00001 && rigidbody.velocity.z*rigidbody.velocity.z < 0.00001 ){
 				force = new Vector3(0,0,0);
 				rigidbody.velocity = new Vector3(0,0,0);
@@ -180,8 +181,6 @@ public class NoGravCharacterMotor : MonoBehaviour {
     }
 
     private Vector3 StopJetpackMovementForce(Vector3 velocity) {
-        // Always leave a little velocity behind
-
         Vector3 velocityChange = -velocity;
 
         velocityChange = new Vector3(ClampValue(velocityChange.x), ClampValue(velocityChange.y), ClampValue(velocityChange.z));
@@ -424,25 +423,25 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 
     void OnCollisionStay(Collision info) {
-        if (!GetComponent<NetworkView>().isMine || !CanWalkOn(info.collider.tag)) return;
+        //if (!GetComponent<NetworkView>().isMine || !CanWalkOn(info.collider.tag)) return;
 
-        Vector3 surfaceNorm = SurfaceNormal(info);
-        float angle = Vector3.Angle(transform.up, surfaceNorm);
+        //Vector3 surfaceNorm = SurfaceNormal(info);
+        //float angle = Vector3.Angle(transform.up, surfaceNorm);
 
-        if (!surfaceNorm.Equals(Vector3.zero) && angle > 0f && angle < maxLandingAngle) {
-            SnapToSurface(surfaceNorm);
+        //if (!surfaceNorm.Equals(Vector3.zero) && angle > 0f && angle < maxLandingAngle) {
+        //    SnapToSurface(surfaceNorm);
 
-        }
+        //}
 
-        RaycastHit hit;
-        DrawDebugRay(RayFromPlayerToDown(), footRayDistance, Color.red, false);
-        DrawDebugRay(RayFromPlayerToDown(), footRayDistance, Color.green, true);
-        if (Physics.Raycast(RayFromPlayerToDown(), out hit, footRayDistance)) {
-            grounded = true;
-            magnetPower = magnetPowerMax;
-        } else {
-            rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
-        }
+        //RaycastHit hit;
+        //DrawDebugRay(RayFromPlayerToDown(), footRayDistance, Color.red, false);
+        //DrawDebugRay(RayFromPlayerToDown(), footRayDistance, Color.green, true);
+        //if (Physics.Raycast(RayFromPlayerToDown(), out hit, footRayDistance)) {
+        //    grounded = true;
+        //    magnetPower = magnetPowerMax;
+        //} else {
+        //    rigidbody.AddForce(info.contacts[0].normal, ForceMode.Impulse);
+        //}
     }
 
     bool CanWalkOn(string tag) {
