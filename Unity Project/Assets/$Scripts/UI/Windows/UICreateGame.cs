@@ -6,15 +6,14 @@ public class UICreateGame : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        CreateGameInit();
-	}
-    void CreateGameInit() {
         Canvas createGame = UIManager.GetCanvas(Menu.CreateGame);
         InputField[] inputs = createGame.gameObject.GetComponentsInChildren<InputField>(true);
         inputs[0].text = SettingsManager.instance.ServerNameServer;
         inputs[1].text = SettingsManager.instance.PortNumStr;
         inputs[2].text = SettingsManager.instance.PasswordServer;
-    }
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+	}
 
     public void CreateGame(bool online) {
         SettingsManager.instance.ParsePortNumber();

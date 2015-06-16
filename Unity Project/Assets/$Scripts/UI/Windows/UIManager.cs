@@ -32,21 +32,18 @@ public class UIManager : MonoBehaviour {
 
     void Awake() {
         DontDestroyOnLoad(gameObject);
-    }
 
-    void Start() {
         windows = new List<Canvas>();
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
             GameObject newMenu = Instantiate(menu) as GameObject;
             DontDestroyOnLoad(newMenu);
             Canvas newCanvas = newMenu.GetComponent<Canvas>();
-            newCanvas.enabled = false;
             windows.Add(newCanvas);
         }
-        //Enable Main menu
-        SetMenuWindow(Menu.MainMenu);
-        windows[(int)Menu.Debug].enabled = false; // Don't show debug
+    }
+
+    void Start() {
         MenuWindowInit();
     }
 
@@ -86,7 +83,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public static bool IsChangeKeybindWindow() {
-        return windows[(int)Menu.ChangeKeybind].enabled;
+        return windows[(int)Menu.ChangeKeybind].gameObject.activeInHierarchy;
     }
     public static Canvas GetCanvas(Menu value) {
         return windows[(int)value];
@@ -110,24 +107,26 @@ public class UIManager : MonoBehaviour {
     #region MenuWindowInit
     void MenuWindowInit() {
         MainMenuInit();
-        ChatInit();
+        UIChat.FindChatBoxes();
         ListInit();
-        PauseMenuInit();
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);
         InputField playerName = mainMenu.gameObject.GetComponentInChildren<InputField>();
         playerName.text = SettingsManager.instance.PlayerName;
     }
-    void ChatInit() {
-        UIChat.FindChatBoxes();
-    }
     void ListInit() {
         textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
         buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
     }
-    void PauseMenuInit() {
-        UIPauseSpawn.Init();
+    void HideWindows() {
+        foreach (Canvas window in windows) {
+            window.gameObject.SetActive(false);
+        }
+        //Enable Main menu
+        SetMenuWindow(Menu.MainMenu);
     }
     #endregion
 
@@ -156,13 +155,13 @@ public class UIManager : MonoBehaviour {
     }
     
     private void SetMenuWindow(int newWindow) {
-        windows[currentWindow].enabled = false;
-        windows[newWindow].enabled = true;
+        windows[currentWindow].gameObject.SetActive(false);
+        windows[newWindow].gameObject.SetActive(true);
 
         currentWindow = newWindow;
     }
     private void ShowMenuWindow(int newWindow, bool show) {
-        windows[newWindow].enabled = show;
+        windows[newWindow].gameObject.SetActive(show);
         windows[currentWindow].GetComponent<CanvasGroup>().interactable = !show;
     }
     #endregion
@@ -231,7 +230,17 @@ public class UIManager : MonoBehaviour {
         // If editor, clear instantiated windows
         // Because I want to look at something I made.
         foreach (Canvas canvas in windows) {
-            canvas.enabled = false;
+            canvas.gameObject.SetActive(false);
+        }
+    }
+
+    int windowInitNum = 0;
+    int windowInitGoal = 11; // There is eleven scripts to initialise
+    public void UIWindowInitialised() {
+        windowInitNum++;
+        Debug.Log(windowInitNum);
+        if (windowInitNum >= windowInitGoal) {
+            HideWindows();
         }
     }
 }

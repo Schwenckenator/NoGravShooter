@@ -10,6 +10,8 @@ public class UIJoinByIP : MonoBehaviour {
 
         fields[0].text = SettingsManager.instance.IpAddress;
         fields[1].text = SettingsManager.instance.PortNumStr;
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
     }
 
     public void SetIPAddress(string value) {

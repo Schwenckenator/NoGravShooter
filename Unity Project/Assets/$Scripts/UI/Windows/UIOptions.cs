@@ -13,6 +13,8 @@ public class UIOptions : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         OptionsInit();
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
 	
     void OptionsInit() {

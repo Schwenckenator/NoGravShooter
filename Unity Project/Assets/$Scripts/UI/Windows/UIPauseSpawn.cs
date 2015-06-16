@@ -13,6 +13,12 @@ public class UIPauseSpawn : MonoBehaviour {
     private static IHideable playerList;
     private static IHideable returnToLobby;
 
+    void Start() {
+        Init();
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+    }
+
     public static void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.PauseMenu);
         FindTexts(canvas);

@@ -12,6 +12,8 @@ public class UIKeybindSettings : MonoBehaviour {
 	void Start () {
         keybindButtonText = new List<Text>();
         EditKeybindInit();
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
 
     void OnGUI() { // Dirty old system, but I can't see a way around it

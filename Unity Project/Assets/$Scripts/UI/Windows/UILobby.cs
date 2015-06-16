@@ -32,6 +32,8 @@ public class UILobby : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         LobbyInit();
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
     void Update() {
         if (teamGame != SettingsManager.instance.IsTeamGameMode()) {

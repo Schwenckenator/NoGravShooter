@@ -18,15 +18,14 @@ public class UIGameSettings : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        Init();
-	}
-    void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.GameSettings);
 
         TextSetup(canvas);
         InputSetup(canvas);
         ToggleSetup(canvas);
-    }
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+	}
 
 
     #region Setup

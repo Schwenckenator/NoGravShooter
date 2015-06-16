@@ -17,6 +17,8 @@ public class UIGraphicsSettings : MonoBehaviour {
 	void Start () {
         resolutions = ResolutionListPrune();
         GraphicsOptionsInit();
+
+        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
 
     void GraphicsOptionsInit() {
