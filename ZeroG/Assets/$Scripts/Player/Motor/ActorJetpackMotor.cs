@@ -43,10 +43,8 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
 	// Update is called once per frame
 	void FixedUpdate () {
         playJetSound = false;
-        JetpackMovement();
 	}
-
-    private void JetpackMovement() {
+    public void Movement() {
         Vector3 torque = GetJetpackTorque();
         transform.Rotate(torque);
 
@@ -129,4 +127,6 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
         }
 
     }
+
+
 }

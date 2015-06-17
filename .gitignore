@@ -24,3 +24,6 @@ ZeroG/UnityVS.Unity Project.v12.suo
 /ZeroG/*.csproj
 /ZeroG/*.sln
 /Unity Project
+/ZeroG/Assets/UnityTestTools
+ZeroG/Assets/UnityTestTools.meta
+ZeroG/UnityVS.ZeroG.v12.suo
