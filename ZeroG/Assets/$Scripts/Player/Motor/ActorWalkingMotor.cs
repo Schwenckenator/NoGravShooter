@@ -10,8 +10,11 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
     public AudioClip[] soundFootsteps;
     public float volumeFootsteps;
     public float maxVelocityChange = 10.0f;
-    public float sqrWalkingSoundVelocity;
+    public float walkingSoundVelocity;
+    public float jumpForce;
 
+    Vector3 jumpVector;
+    float sqrWalkingSoundVelocity;
     bool playWalkingSound;
     IActorStats stats;
     Rigidbody rigidbody;
@@ -22,14 +25,16 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
         rigidbody = GetComponent<Rigidbody>();
         stats = gameObject.GetInterface<IActorStats>();
         input = gameObject.GetInterface<IControllerInput>();
+        sqrWalkingSoundVelocity = walkingSoundVelocity * walkingSoundVelocity;
+        jumpVector = new Vector3(0, jumpForce, 0);
 
         StartCoroutine(PlayFeetSound());
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-        playWalkingSound = false;
-	}
+    //void FixedUpdate () {
+    //    playWalkingSound = true;
+    //}
 
     public void Movement() {
         Vector3 targetVelocity;
@@ -50,9 +55,21 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
 
         if (velocity.sqrMagnitude > sqrWalkingSoundVelocity) {
             playWalkingSound = true;
+        } else {
+            playWalkingSound = false;
         }
+
         Vector3.ClampMagnitude(velocityChange, maxVelocityChange);
         rigidbody.AddForce(velocityChange, ForceMode.Impulse);
+
+        // Jump if wanted
+        Jump();
+    }
+
+    void Jump() {
+        if (input.GetYMovement() > 0 && !GameManager.IsPlayerMenu()) {
+            rigidbody.AddRelativeForce(jumpVector, ForceMode.Impulse);
+        }
     }
 
     /// <summary>
@@ -146,12 +163,16 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
                 feetAudio.clip = soundFootsteps[stepKind];
                 feetAudio.Play();
                 yield return new WaitForSeconds(soundFootsteps[stepKind].length);
-                stepKind = (stepKind + 1) % 2;
+                stepKind = (++stepKind) % soundFootsteps.Length; //
             } else {
                 stepKind = 0;
                 feetAudio.Stop();
             }
             yield return null;
         }
+    }
+
+    public void OnDeactivate() {
+        playWalkingSound = false;
     }
 }

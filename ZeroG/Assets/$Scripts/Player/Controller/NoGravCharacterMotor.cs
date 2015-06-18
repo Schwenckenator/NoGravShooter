@@ -477,11 +477,11 @@ public class NoGravCharacterMotor : MonoBehaviour {
 		return Mathf.Sqrt(jumpForce);
 	}
 	public void Recoil(float recoil){
-		if(inAirFlag){
-			transform.Rotate(-recoil, 0, 0);
-		}else{
-			cameraMouseLook.AddX_Rotation(recoil);
-		}
+        //if(inAirFlag){
+        //    transform.Rotate(-recoil, 0, 0);
+        //}else{
+        //    cameraMouseLook.AddX_Rotation(recoil);
+        //}
 	}
 
 	public void Ragdoll(bool state){

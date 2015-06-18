@@ -128,5 +128,7 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
 
     }
 
-
+    public void OnDeactivate() {
+        // Nothing
+    }
 }
