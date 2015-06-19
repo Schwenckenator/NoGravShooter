@@ -15,9 +15,10 @@ public class MineDetonation : MonoBehaviour, IDamageable {
     private bool detonated;
     private bool activated;
 
-
+    NetworkView networkView;
 	// Use this for initialization
 	void Start () {
+        networkView = GetComponent<NetworkView>();
 		StartCoroutine(CheckForPlayers(initialWaitTime, tickWaitTime));
 	}
 
@@ -109,7 +110,7 @@ public class MineDetonation : MonoBehaviour, IDamageable {
             }
 
         } else {
-            GetComponent<NetworkView>().RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
+            networkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
         }
     }
 

@@ -30,7 +30,9 @@ public class ScoreVictoryManager : MonoBehaviour {
         return Teams.Find(x => x.Type.Equals(colour));
     }
 
+    NetworkView networkView;
     void Start() {
+        networkView = GetComponent<NetworkView>();
         ClearScoreData(); // Clean Set up
         Teams.Add(new Team(TeamColour.Red));
         Teams.Add(new Team(TeamColour.Blue));
@@ -40,15 +42,15 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     public void PointScored(NetworkPlayer player) {
-        GetComponent<NetworkView>().RPC("RPCPointScored", RPCMode.All, player, 1);
+        networkView.RPC("RPCPointScored", RPCMode.All, player, 1);
     }
     public void PointLost(NetworkPlayer player) {
-        GetComponent<NetworkView>().RPC("RPCPointScored", RPCMode.All, player, -1);
+        networkView.RPC("RPCPointScored", RPCMode.All, player, -1);
     }
 
     void OnPlayerConnected(NetworkPlayer connectingPlayer) {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            GetComponent<NetworkView>().RPC("RPCPointScored", connectingPlayer, player.ID, player.Score);
+            networkView.RPC("RPCPointScored", connectingPlayer, player.ID, player.Score);
         }
     }
 

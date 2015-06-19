@@ -17,8 +17,10 @@ public class WeaponInventory : MonoBehaviour {
     private List<WeaponSuperClass> heldWeapons;
     private WeaponReloadRotation weaponReloadRotation;
 
+    NetworkView networkView;
 	// Use this for initialization
 	void Awake () {
+        networkView = GetComponent<NetworkView>();
         heldWeapons = new List<WeaponSuperClass>();
         SetWeaponLoadout();
         currentInventorySlot = -1; // Bad value, will change
@@ -26,7 +28,7 @@ public class WeaponInventory : MonoBehaviour {
         weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
 	}
     void Start() {
-        if (GetComponent<NetworkView>().isMine) {
+        if (networkView.isMine) {
             ChangeWeapon(0);
         }
         initialised = true;
@@ -151,7 +153,7 @@ public class WeaponInventory : MonoBehaviour {
         GetComponent<AudioSource>().PlayOneShot(soundChangeWeapon);
         float waitTime = 1.0f;
         weaponReloadRotation.ReloadRotation(waitTime, currentWeapon);
-        GetComponent<NetworkView>().RPC("NetworkWeaponChange", RPCMode.Others, waitTime, GameManager.WeaponClassToWeaponId(currentWeapon));
+        networkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, GameManager.WeaponClassToWeaponId(currentWeapon));
         yield return new WaitForSeconds(waitTime);
         isChanging = false;
     }

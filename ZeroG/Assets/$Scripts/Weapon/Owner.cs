@@ -9,8 +9,13 @@ public class Owner : MonoBehaviour {
         get { return id; }
         set {
             id = value;
-            GetComponent<NetworkView>().RPC("SetProjectileOwner", RPCMode.OthersBuffered, value);
+            networkView.RPC("SetProjectileOwner", RPCMode.OthersBuffered, value);
         }
+    }
+
+    NetworkView networkView;
+    void Start() {
+        networkView = GetComponent<NetworkView>();
     }
     [RPC]
     private void SetProjectileOwner(NetworkPlayer value) {

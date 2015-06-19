@@ -22,10 +22,12 @@ public class AimingFOVChanger : MonoBehaviour {
     }
 	
 	void FixedUpdate(){
-	maxFOV = SettingsManager.instance.FieldOfView;
-	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
+        // What is all this doing in an update loop?
+        // TODO: Cache the results
+	    maxFOV = SettingsManager.instance.FieldOfView;
+	    GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
-			if(player.GetComponent<NetworkView>().isMine){
+            if (player.GetComponent<NetworkView>().isMine) {
 				inventory = player.GetComponent<WeaponInventory>();
 			}
 		}

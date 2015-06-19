@@ -6,12 +6,12 @@ using System.Collections;
 public class ObjectCleanUp : MonoBehaviour {
     
 	public void KillMe(){
-        ChatManager.DebugMessage("KillMe() called on " + gameObject.ToString() + ", view ID: "+ gameObject.GetComponent<NetworkView>().viewID.ToString());
+        ChatManager.DebugMessage("KillMe() called on " + gameObject.ToString() + ", view ID: " + gameObject.GetComponent<NetworkView>().viewID.ToString());
         DestroyManager.instance.CleanUp(gameObject);
 	}
 
     public void ClientKillMe() {
-        ChatManager.DebugMessage("ClientKillMe() called on " + gameObject.ToString() + ", view ID: "+ gameObject.GetComponent<NetworkView>().viewID.ToString());
+        ChatManager.DebugMessage("ClientKillMe() called on " + gameObject.ToString() + ", view ID: " + gameObject.GetComponent<NetworkView>().viewID.ToString());
         DestroyManager.instance.Destroy(gameObject.GetComponent<NetworkView>().viewID);
     }
 }

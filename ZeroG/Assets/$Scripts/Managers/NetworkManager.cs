@@ -45,7 +45,10 @@ public class NetworkManager : MonoBehaviour {
     private static bool rpcDisabled;
     public static int lastLevelPrefix = 0;
     #endregion
-
+    NetworkView networkView;
+    void Start() {
+        networkView = GetComponent<NetworkView>();
+    }
     void Update() {
         if (DebugManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
             foreach (Player player in connectedPlayers) {
@@ -69,7 +72,7 @@ public class NetworkManager : MonoBehaviour {
     
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
         UIChat.UpdatePlayerLists();
-        GetComponent<NetworkView>().RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
+        networkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
     [RPC]
     private void RPCPlayerChangedTeam(NetworkPlayer player, int newTeam) {
@@ -135,7 +138,7 @@ public class NetworkManager : MonoBehaviour {
     #region OnEvent
     void OnPlayerConnected(NetworkPlayer connectedPlayer) {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            GetComponent<NetworkView>().RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
+            networkView.RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
         }
     }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
@@ -147,7 +150,7 @@ public class NetworkManager : MonoBehaviour {
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
 
-        GetComponent<NetworkView>().RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
+        networkView.RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
     }
     void OnApplicationQuit() {
         if (Network.isClient || Network.isServer) {
@@ -173,7 +176,7 @@ public class NetworkManager : MonoBehaviour {
         }
     }
     void OnServerInitialized() {
-        GetComponent<NetworkView>().RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         SettingsManager.instance.RelayServerName();
         AssignMyPlayerToTeam();
 
@@ -185,7 +188,7 @@ public class NetworkManager : MonoBehaviour {
 
         // Set window to lobby
         UIManager.instance.SetMenuWindow(Menu.Lobby);
-        GetComponent<NetworkView>().RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         
         string message = SettingsManager.instance.PlayerName + " has connected.";
         ChatManager.instance.AddToChat(message);

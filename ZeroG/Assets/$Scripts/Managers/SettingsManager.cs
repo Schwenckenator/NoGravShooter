@@ -164,7 +164,9 @@ public class SettingsManager : MonoBehaviour {
 
     #endregion
 
+    NetworkView networkView;
     void Awake() {
+        networkView = GetComponent<NetworkView>();
         RetrieveKeyBinds();
         RetrieveSettings();
     }
@@ -322,7 +324,7 @@ public class SettingsManager : MonoBehaviour {
 
     #region RPCSettings
     public void RelayServerName() {
-        GetComponent<NetworkView>().RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
+        networkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
     }
     [RPC]
     private void RPC_RelayServerName(string inServerName) {
@@ -330,7 +332,7 @@ public class SettingsManager : MonoBehaviour {
     }
 
     public void RelayScoreToWin() {
-        GetComponent<NetworkView>().RPC("RPC_RelayScoreToWin", RPCMode.OthersBuffered, this.ScoreToWinServer);
+        networkView.RPC("RPC_RelayScoreToWin", RPCMode.OthersBuffered, this.ScoreToWinServer);
     }
     [RPC]
     private void RPC_RelayScoreToWin(int inScoreToWin) {
@@ -338,7 +340,7 @@ public class SettingsManager : MonoBehaviour {
     }
     
     public void RelayGameMode() {
-        GetComponent<NetworkView>().RPC("RPC_RelayGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndexServer);
+        networkView.RPC("RPC_RelayGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndexServer);
     }
     [RPC]
     void RPC_RelayGameMode(int index) {

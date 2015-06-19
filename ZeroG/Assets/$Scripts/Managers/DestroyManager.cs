@@ -24,7 +24,9 @@ public class DestroyManager : MonoBehaviour {
     private List<NetworkViewID> DestroyedObjects;
     private bool willDestroy = false;
 
+    NetworkView networkView;
     void Start() {
+        networkView = GetComponent<NetworkView>();
         DestroyBuffer = new List<NetworkViewID>();
         DestroyedObjects = new List<NetworkViewID>();
     }
@@ -42,7 +44,7 @@ public class DestroyManager : MonoBehaviour {
             AddToDestroyBufferIfUnique(viewID);
         } else {
             ChatManager.DebugMessage("I am a client.");
-            GetComponent<NetworkView>().RPC("AddToDestroyList", RPCMode.Server, viewID);
+            networkView.RPC("AddToDestroyList", RPCMode.Server, viewID);
         }
 
     }

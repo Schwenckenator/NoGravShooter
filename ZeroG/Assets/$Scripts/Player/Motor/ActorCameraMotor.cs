@@ -72,4 +72,9 @@ public class ActorCameraMotor : MonoBehaviour {
         //Adjust Camera
         smoothMove.SmoothAdjust();
     }
+
+    void OnDeath() {
+        cameraMouseLook.Ragdoll(true);
+        characterMouseLook.Ragdoll(true);
+    }
 }

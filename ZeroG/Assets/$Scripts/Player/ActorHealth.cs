@@ -12,22 +12,23 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     bool isDamageSound = false;
     bool isDying = false;
 
-
+    private NetworkView networkView;
 
 	// Use this for initialization
 	void Start () {
         IActorStats stats = gameObject.GetInterface<IActorStats>();
+        networkView = GetComponent<NetworkView>();
         maxHealth = stats.maxHealth;
         health = maxHealth;
 	}
     void Update() {
-        if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && GetComponent<NetworkView>().isMine) { //K is for kill! // This is for testing purposes only
+        if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine) { //K is for kill! // This is for testing purposes only
             TakeDamage(100, Network.player);
         }
     }
     // Interface Implementation
     public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
-        GetComponent<NetworkView>().RPC("Damage", RPCMode.All, damage, from, weaponId);
+        networkView.RPC("Damage", RPCMode.All, damage, from, weaponId);
     }
     public void RestoreHealth(int restore) {
         health += restore;
@@ -60,7 +61,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         health = 0;
 		isDying = true;//You is dead nigs
 
-		if(GetComponent<NetworkView>().isMine){
+        if (networkView.isMine) {
 			if(killer != null){
                 string killMessage;
 				if(killer.ID != Network.player){
@@ -85,13 +86,13 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 				}
                 ChatManager.instance.AddToChat(killMessage);
 			}
-			GetComponent<NoGravCharacterMotor>().Ragdoll(true);
+            gameObject.SendMessage("OnDeath");
 			StartCoroutine(PlayerCleanup());
 		}
     }
 
     void WillPlayTakeDamageSound() {
-        if (GetComponent<NetworkView>().isMine && !isDamageSound) {
+        if (networkView.isMine && !isDamageSound) {
             isDamageSound = true;
             StartCoroutine(PlaySoundTakeDamage());
         }

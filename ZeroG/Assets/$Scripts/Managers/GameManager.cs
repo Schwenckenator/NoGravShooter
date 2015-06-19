@@ -116,8 +116,13 @@ public class GameManager : MonoBehaviour {
 
     public const int MaxPlayers = 16;
 
+    NetworkView networkView;
+
     void Awake(){
+
 		DontDestroyOnLoad(gameObject);
+
+        networkView = GetComponent<NetworkView>();
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -156,7 +161,7 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator SetStartingWeaponsDelay(int[] weapons) {
         yield return new WaitForSeconds(0.1f); // Small delay
-        GetComponent<NetworkView>().RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
+        networkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
     }
 
 	public void SpawnActor(){
@@ -169,7 +174,7 @@ public class GameManager : MonoBehaviour {
 
 		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject actor in list){
-			if(actor.GetComponent<NetworkView>().isMine){
+            if (actor.GetComponent<NetworkView>().isMine) {
                 GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.instance.MouseYDirection);
                 actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
                 
@@ -210,13 +215,13 @@ public class GameManager : MonoBehaviour {
     // we need to send an updated remaining time
     void OnPlayerConnected(NetworkPlayer connectingPlayer) {
         if (GameInProgress && IsUseTimer) {
-            GetComponent<NetworkView>().RPC("RPCLoadLevel", connectingPlayer,
+            networkView.RPC("RPCLoadLevel", connectingPlayer,
                 SettingsManager.instance.LevelName,
                 NetworkManager.lastLevelPrefix,
                 SettingsManager.instance.TimeLimitSec,
                 SettingsManager.instance.GameModeIndexServer);
 
-            GetComponent<NetworkView>().RPC("SetEndTime", connectingPlayer, endTime - Time.time);
+            networkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
         }
     }
 
@@ -242,7 +247,7 @@ public class GameManager : MonoBehaviour {
         DestroyManager.instance.ClearDestroyLists();
         SettingsManager.instance.RelayScoreToWin();
 
-        GetComponent<NetworkView>().RPC("RPCLoadLevel", RPCMode.All, 
+        networkView.RPC("RPCLoadLevel", RPCMode.All, 
             SettingsManager.instance.LevelName, 
             NetworkManager.lastLevelPrefix, 
             SettingsManager.instance.TimeLimitSec, 
@@ -250,7 +255,7 @@ public class GameManager : MonoBehaviour {
     }
     private void LoadLevelTutorial() {
         int dummyValue = 0; // Just to keep the method happy
-        GetComponent<NetworkView>().RPC("RPCLoadLevel", RPCMode.All, 
+        networkView.RPC("RPCLoadLevel", RPCMode.All, 
             "Tutorial", 
             NetworkManager.lastLevelPrefix, 
             dummyValue,
@@ -312,10 +317,10 @@ public class GameManager : MonoBehaviour {
 
     public void ReturnToLobby() {
 
-        GetComponent<NetworkView>().RPC("RPCReturnToLobby", RPCMode.All);
+        networkView.RPC("RPCReturnToLobby", RPCMode.All);
 
         int dummy = 0; // Dummy is just to keep the code happy. Has no effect
-        GetComponent<NetworkView>().RPC("RPCLoadLevel", RPCMode.All, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
+        networkView.RPC("RPCLoadLevel", RPCMode.All, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
     }
 
     [RPC]

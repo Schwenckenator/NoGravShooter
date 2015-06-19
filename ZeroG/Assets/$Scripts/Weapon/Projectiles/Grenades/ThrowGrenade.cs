@@ -10,14 +10,16 @@ public class ThrowGrenade : MonoBehaviour {
 	float nextThrow = 0;
 	float throwDelay = 1.5f;
 
+    NetworkView networkView;
 	// Use this for initialization
 	void Start () {
+        networkView = GetComponent<NetworkView>();
 		playerResource = GetComponent<PlayerResources>();
 	}
 
 	// Update is called once per frame
 	void Update () {
-        if (InputConverter.GetKeyDown(KeyBind.Grenade) && !GameManager.IsPlayerMenu() && Time.time > nextThrow && GetComponent<NetworkView>().isMine) {
+        if (InputConverter.GetKeyDown(KeyBind.Grenade) && !GameManager.IsPlayerMenu() && Time.time > nextThrow && networkView.isMine) {
 			if(playerResource.CanThrowGrenade()){
                 SpawnGrenade(playerResource.GetCurrentGrenadeType(), grenadeSpawn.position, grenadeSpawn.rotation, Network.player);
 				nextThrow = Time.time + throwDelay;
@@ -35,7 +37,7 @@ public class ThrowGrenade : MonoBehaviour {
             }
 
         } else {
-            GetComponent<NetworkView>().RPC("SpawnGrenade", RPCMode.Server, grenadeID, position, rotation, owner);
+            networkView.RPC("SpawnGrenade", RPCMode.Server, grenadeID, position, rotation, owner);
         }
     }
 }

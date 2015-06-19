@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerIsMine : MonoBehaviour {
 	
 	void Awake(){
-		if(!GetComponent<NetworkView>().isMine){
+        if (!GetComponent<NetworkView>().isMine) {
 			GetComponent<NoGravCharacterMotor>().enabled = false;
 			GetComponent<MouseLook>().enabled = false;
 			transform.FindChild("CameraPos").GetComponent<MouseLook>().enabled = false;

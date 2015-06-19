@@ -40,7 +40,10 @@ public class PlayerResources : MonoBehaviour {
 	#endregion
 	
 	#region Start()
+    NetworkView networkView;
 	void Awake () {
+
+        networkView = GetComponent<NetworkView>();
 		jetpackAudio = transform.FindChild("JetpackAudio").GetComponent<AudioSource>();
 
 		fuel = maxFuel;
@@ -195,7 +198,7 @@ public class PlayerResources : MonoBehaviour {
 	private bool glitched = false;
 	void OnGUI(){
 		if(!glitched) return;
-		if(!GameManager.IsPlayerMenu() && GetComponent<NetworkView>().isMine){
+		if(!GameManager.IsPlayerMenu() && networkView.isMine){
 			GUI.depth = 0;
             GUI.DrawTexture(new Rect(20 + Random.Range(-10, 11), Screen.height - 240 + Random.Range(-10, 11), 220, 220), GuiManager.instance.EMPradar[Random.Range(0, 5)]);
             GUI.DrawTexture(new Rect(Screen.width / 2 - 55 / 2, Screen.height / 2 - 45 / 2, 55, 45), GuiManager.instance.EMPcursor[Random.Range(0, 4)]);

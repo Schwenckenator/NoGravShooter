@@ -12,6 +12,8 @@ public class FireWeapon : MonoBehaviour {
 	GameObject shot;
 
 	float nextFire = 0;
+
+    NetworkView networkView;
 	// Use this for initialization
 	void Awake () {
 		//gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
@@ -19,6 +21,7 @@ public class FireWeapon : MonoBehaviour {
 		motor = GetComponent<NoGravCharacterMotor>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
+        networkView = GetComponent<NetworkView>();
 	}
 	void Update(){
         if (inventory.HasNoWeapons()) return;
@@ -92,7 +95,7 @@ public class FireWeapon : MonoBehaviour {
         ShotRender(gunFirePoint.position, hit.point);
 
         //Render shot everywhere else
-        GetComponent<NetworkView>().RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, hit.point);
+        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, hit.point);
     }
 
     [RPC]
@@ -104,7 +107,7 @@ public class FireWeapon : MonoBehaviour {
             }
 
         } else {
-            GetComponent<NetworkView>().RPC("SpawnProjectile", RPCMode.Server, weaponID, position, rotation, owner);
+            networkView.RPC("SpawnProjectile", RPCMode.Server, weaponID, position, rotation, owner);
         }
     }
 
@@ -134,14 +137,12 @@ public class FireWeapon : MonoBehaviour {
         lineRenderer.SetPosition(0, start);
         lineRenderer.SetPosition(1, end);
     }
-
-	
 	
     void PlayFireWeaponSound() {
-        if (GetComponent<NetworkView>().isMine) {
+        if (networkView.isMine) {
             GetComponent<AudioSource>().PlayOneShot(inventory.currentWeapon.fireSound);
 
-            GetComponent<NetworkView>().RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
+            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
         }
     }
     [RPC]

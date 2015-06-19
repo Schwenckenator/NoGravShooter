@@ -14,7 +14,7 @@ public class Assassinations : MonoBehaviour {
 	void Update () {
 		Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius);
 		foreach(Collider hit in hits){
-			if(hit.CompareTag("Player") && !hit.GetComponent<NetworkView>().isMine){
+            if (hit.CompareTag("Player") && !hit.GetComponent<NetworkView>().isMine) { // Don't like the GetComponent in Update()
 
                 AssassinateTargetInRange(hit);
 			}

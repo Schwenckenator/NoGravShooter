@@ -2,10 +2,11 @@
 using System.Collections;
 
 public class FloatNameManager : MonoBehaviour {
-
+    NetworkView networkView;
 	void Start(){
-		if(GetComponent<NetworkView>().isMine){
-            GetComponent<NetworkView>().RPC("SetName", RPCMode.AllBuffered, SettingsManager.instance.PlayerName);
+        networkView = GetComponent<NetworkView>();
+		if(networkView.isMine){
+            networkView.RPC("SetName", RPCMode.AllBuffered, SettingsManager.instance.PlayerName);
 			StartCoroutine(SelfNameDelete());
 		}
 	}
@@ -16,7 +17,7 @@ public class FloatNameManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if(GetComponent<NetworkView>().isMine){
+		if(networkView.isMine){
 			return;
 		}
 		// This code now messes with the floating text names of other players

@@ -20,15 +20,17 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private bool hasAmmo = true;
 
+    NetworkView networkView;
 	void Start(){
+        networkView = GetComponent<NetworkView>();
         if (DebugManager.IsAllWeapon()) {
 			maxweaponcount = 99;
 		}
 		if(Network.isServer){
 			if(randomid){
-				GetComponent<NetworkView>().RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
+				networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
 			} else {
-				GetComponent<NetworkView>().RPC("ChangeId", RPCMode.AllBuffered, id);
+				networkView.RPC("ChangeId", RPCMode.AllBuffered, id);
 			}
 			UpdateModel();
 		}
@@ -38,9 +40,9 @@ public class BonusWeaponPickup : MonoBehaviour {
 	//
 	void UpdateModel(){
 		if(currentWeaponModel != null){
-			GetComponent<NetworkView>().RPC("DeleteOldModel", RPCMode.AllBuffered);
+			networkView.RPC("DeleteOldModel", RPCMode.AllBuffered);
 		}
-		GetComponent<NetworkView>().RPC ("CreateNewModel", RPCMode.AllBuffered);
+		networkView.RPC ("CreateNewModel", RPCMode.AllBuffered);
 	}
 
 	[RPC]
@@ -62,7 +64,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider info){
 		if(info.CompareTag("Player")){
-			if(info.GetComponent<NetworkView>().isMine){
+            if (info.GetComponent<NetworkView>().isMine) {
 				playerColliding = true;
                 inventory = info.GetComponent<WeaponInventory>();
                 weaponcount = inventory.NumWeaponsHeld();
@@ -74,7 +76,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 	
 	void OnTriggerExit(Collider info){
 		if(info.CompareTag("Player")){
-			if(info.GetComponent<NetworkView>().isMine){
+            if (info.GetComponent<NetworkView>().isMine) {
 				playerColliding = false;
 			}
 		}
@@ -117,7 +119,7 @@ public class BonusWeaponPickup : MonoBehaviour {
                 inventory.AddWeapon(id, inventory.currentInventorySlot);
                 inventory.ChangeWeapon(currentInventorySlot, true);
                 
-                GetComponent<NetworkView>().RPC("ChangeId", RPCMode.AllBuffered, i);
+                networkView.RPC("ChangeId", RPCMode.AllBuffered, i);
                 swapTimeout = Time.time + weaponSwapCooldown;
 
                 //Change the weapon box model to the new weapon

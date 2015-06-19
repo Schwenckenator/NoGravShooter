@@ -135,9 +135,9 @@ public class GuiManager : MonoBehaviour {
     private List<Resolution> resolutions;
     #endregion
 
-    
+    NetworkView networkView;
     void Start(){
-
+        networkView = GetComponent<NetworkView>();
         ChangeGuiRectSize(); // Do this first
 		
         SetCurrentMenuWindow(OLD_Menu.MainMenu);
@@ -1179,7 +1179,7 @@ public class GuiManager : MonoBehaviour {
     List<RadarDot> deadDots = new List<RadarDot>();
 
     public void ActorsChanged() {
-        GetComponent<NetworkView>().RPC("GatherDots", RPCMode.All);
+        networkView.RPC("GatherDots", RPCMode.All);
     }
     [RPC]
     void GatherDots() {

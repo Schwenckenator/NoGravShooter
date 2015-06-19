@@ -131,4 +131,11 @@ public class ActorMotorManager : MonoBehaviour {
 
         return (angle > 0f && angle < maxLandingAngle);
     }
+
+    void OnDeath() {
+        // Ragdoll the actor
+        InAir();
+        rigidbody.constraints = RigidbodyConstraints.None;
+        rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
+    }
 }

@@ -4,6 +4,11 @@ using System.Collections;
 public class PlayerColour : MonoBehaviour {
 
     public string playerGraphicsName = "Test_Rig";
+
+    NetworkView networkView;
+    void Start() {
+        networkView = GetComponent<NetworkView>();
+    }
 	
     public void AssignPlayerColour() {
         Player currentPlayer = NetworkManager.MyPlayer();
@@ -18,7 +23,7 @@ public class PlayerColour : MonoBehaviour {
 
         Color newColour = PlayerColourManager.instance.LimitTeamColour(team, SettingsManager.instance.GetPlayerColour());
 
-        GetComponent<NetworkView>().RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, newColour.r, newColour.g, newColour.b);
+        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, newColour.r, newColour.g, newColour.b);
     }
 
     [RPC]

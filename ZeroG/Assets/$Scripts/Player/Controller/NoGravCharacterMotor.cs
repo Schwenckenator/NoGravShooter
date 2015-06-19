@@ -423,7 +423,7 @@ public class NoGravCharacterMotor : MonoBehaviour {
 	}
 
     void OnCollisionStay(Collision info) {
-        //if (!GetComponent<NetworkView>().isMine || !CanWalkOn(info.collider.tag)) return;
+        //if (!networkView.isMine || !CanWalkOn(info.collider.tag)) return;
 
         //Vector3 surfaceNorm = SurfaceNormal(info);
         //float angle = Vector3.Angle(transform.up, surfaceNorm);

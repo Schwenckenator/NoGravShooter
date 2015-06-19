@@ -34,7 +34,9 @@ public class ChatManager : MonoBehaviour {
         get { return ChatManager.submittedChat; }
     }
 
+    NetworkView networkView;
     void Start() {
+        networkView = GetComponent<NetworkView>();
         currentChat = "";
         submittedChatList = new List<string>();
     }
@@ -48,7 +50,7 @@ public class ChatManager : MonoBehaviour {
             }
             newChat += input;
 
-            GetComponent<NetworkView>().RPC("UpdateChatRPC", RPCMode.All, newChat);
+            networkView.RPC("UpdateChatRPC", RPCMode.All, newChat);
         }
     }
     public static void TutorialChat(string input) {

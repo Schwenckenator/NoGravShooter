@@ -32,6 +32,11 @@ public class Radar : MonoBehaviour {
     List<RadarDot> dots = new List<RadarDot>();
     List<RadarDot> deadDots = new List<RadarDot>();
 
+    NetworkView networkView;
+    void Start() {
+        networkView = GetComponent<NetworkView>();
+    }
+
     void OnGUI() {
         if (UIManager.IsCurrentMenuWindow(Menu.PlayerHUD)) {
             DrawRadar();
@@ -39,7 +44,7 @@ public class Radar : MonoBehaviour {
     }
 
     public void ActorsChanged() {
-        GetComponent<NetworkView>().RPC("GatherDots", RPCMode.Others);
+        networkView.RPC("GatherDots", RPCMode.Others);
         GatherDots();
     }
     [RPC]
