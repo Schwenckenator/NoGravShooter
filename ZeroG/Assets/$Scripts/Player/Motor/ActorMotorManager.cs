@@ -31,7 +31,12 @@ public class ActorMotorManager : MonoBehaviour {
         currentMotor = jetpackMotor;
         cameraMotor.LockMouseLook(true);
         StartCoroutine(MagnetBoots());
+        SpawnMove();
 	}
+
+    void SpawnMove() {
+        rigidbody.AddRelativeForce(Vector3.down * 1, ForceMode.Impulse);
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -137,5 +142,13 @@ public class ActorMotorManager : MonoBehaviour {
         InAir();
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
+    }
+
+    public void Recoil(float angle) {
+        if (grounded) {
+            cameraMotor.Recoil(angle);
+        } else {
+            transform.Rotate(-angle, 0, 0);
+        }
     }
 }

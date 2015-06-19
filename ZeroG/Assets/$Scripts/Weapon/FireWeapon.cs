@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class FireWeapon : MonoBehaviour {
 	public Transform gunFirePoint;
 	public Transform cameraAnchor;
-	NoGravCharacterMotor motor;
+	ActorMotorManager motor;
 	
     WeaponInventory inventory;
     WeaponResources weaponResources;
@@ -18,7 +18,7 @@ public class FireWeapon : MonoBehaviour {
 	void Awake () {
 		//gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
 		//cameraAnchor = transform.FindChild("CameraPos");
-		motor = GetComponent<NoGravCharacterMotor>();
+		motor = GetComponent<ActorMotorManager>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
         networkView = GetComponent<NetworkView>();

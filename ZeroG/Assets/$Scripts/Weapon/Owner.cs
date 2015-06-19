@@ -14,7 +14,7 @@ public class Owner : MonoBehaviour {
     }
 
     NetworkView networkView;
-    void Start() {
+    void Awake() {
         networkView = GetComponent<NetworkView>();
     }
     [RPC]

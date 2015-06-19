@@ -17,10 +17,6 @@ public class ActorCameraMotor : MonoBehaviour {
         LockMouseLook(true); // Actor starts in air
 	}
 
-    public void AdjustCamera(bool inAir) {
-
-    }
-
     public void LockMouseLook(bool inAir) {
         if (inAir) {
             cameraMouseLook.axes = MouseLook.RotationAxes.MouseNone;
@@ -76,5 +72,10 @@ public class ActorCameraMotor : MonoBehaviour {
     void OnDeath() {
         cameraMouseLook.Ragdoll(true);
         characterMouseLook.Ragdoll(true);
+    }
+
+    public void Recoil(float angle) {
+        // If here, actor is grounded
+        cameraMouseLook.AddX_Rotation(angle);
     }
 }
