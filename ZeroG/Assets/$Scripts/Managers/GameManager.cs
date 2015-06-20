@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour {
     [RPC]
     public void SetEndTime(float remainingSeconds) {
         endTime = Time.time + remainingSeconds;
+        GameClock.SetEndTime(endTime);
     }
     public void SetPlayerMenu(bool input) {
         playerMenu = input;
@@ -273,6 +274,7 @@ public class GameManager : MonoBehaviour {
             UIChat.UpdatePlayerLists();
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
+                GameClock.SetEndTime(endTime);
                 ScoreVictoryManager.instance.StartTimer();
                 this.IsUseTimer = true;
             } else {
