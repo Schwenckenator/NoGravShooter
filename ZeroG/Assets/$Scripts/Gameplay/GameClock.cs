@@ -22,6 +22,7 @@ public class GameClock : MonoBehaviour {
     }
     
     public static void SetEndTime(float endTime) {
+        _instance.StopAllCoroutines();
         Debug.Log("End time set");
         GameClock.endTime = endTime;
         minsLeft = Mathf.FloorToInt((endTime - Time.time) / 60);

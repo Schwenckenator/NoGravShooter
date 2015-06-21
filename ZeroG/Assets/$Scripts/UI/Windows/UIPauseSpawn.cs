@@ -102,6 +102,5 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     public void ReturnToLobbyPress() {
         GameManager.instance.ReturnToLobby();
-        UIManager.instance.SetMenuWindow(Menu.Lobby);
     }
 }

@@ -329,6 +329,7 @@ public class GameManager : MonoBehaviour {
     void RPCReturnToLobby() {
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.instance.ClearScoreData();
+        UIManager.instance.SetMenuWindow(Menu.Lobby);
     }
 
     public void BackToMainMenu() {
