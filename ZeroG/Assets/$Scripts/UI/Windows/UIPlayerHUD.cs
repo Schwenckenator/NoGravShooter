@@ -33,7 +33,7 @@ public class UIPlayerHUD : MonoBehaviour {
     public static void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.PlayerHUD);
         IChangeable[] changers = canvas.gameObject.GetInterfacesInChildren<IChangeable>();
-        
+
         foreach (IChangeable changer in changers) {
             if (changer.IsType("fuel")) fuel = changer as MovingBar;
             else if (changer.IsType("health")) health = changer as MovingBar;
@@ -49,6 +49,8 @@ public class UIPlayerHUD : MonoBehaviour {
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
+    }
+    void Start() {
         ShowSniperScope(false); // Set to default
         RemoveTutorialPrompt();
         RemovePrompt();
@@ -56,6 +58,7 @@ public class UIPlayerHUD : MonoBehaviour {
 
     public static void ShowSniperScope(bool showSniper) {
         playerUI.Show(!showSniper);
+        GameClock.ShowClock(!showSniper);
         sniperUI.Show(showSniper);
     }
 

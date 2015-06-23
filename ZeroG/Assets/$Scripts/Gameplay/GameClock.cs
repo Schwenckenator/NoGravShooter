@@ -13,17 +13,19 @@ public class GameClock : MonoBehaviour {
 
     static GameClock _instance;
 
-    void Start() {
+    void Awake() {
         DontDestroyOnLoad(this);
         _instance = this;
         clockText = GetComponentInChildren<ChangeableText>();
         myCanvas = GetComponent<Canvas>();
-        myCanvas.enabled = false; // Disable for the menu
+    }
+    void Start() {
+        ShowClock(false);
     }
     
     public static void SetEndTime(float endTime) {
+        _instance.gameObject.SetActive(true);
         _instance.StopAllCoroutines();
-        Debug.Log("End time set");
         GameClock.endTime = endTime;
         minsLeft = Mathf.FloorToInt((endTime - Time.time) / 60);
         secsLeft = Mathf.FloorToInt((endTime - Time.time) - (minsLeft * 60));
@@ -33,7 +35,6 @@ public class GameClock : MonoBehaviour {
     }
 
     static IEnumerator DecrementTimer() {
-        Debug.Log("Coroutine!");
         while (enabled) {
             Debug.Log("Tick");
             UpdateText();
@@ -67,5 +68,9 @@ public class GameClock : MonoBehaviour {
         if (hideClock) {
             StopAllCoroutines();
         }
+    }
+
+    public static void ShowClock(bool show) {
+        myCanvas.enabled = show;
     }
 }
