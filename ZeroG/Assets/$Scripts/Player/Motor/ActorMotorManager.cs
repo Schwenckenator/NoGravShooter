@@ -35,7 +35,7 @@ public class ActorMotorManager : MonoBehaviour {
 	}
 
     void SpawnMove() {
-        rigidbody.AddRelativeForce(Vector3.down * 1, ForceMode.Impulse);
+        rigidbody.AddRelativeForce(Vector3.down * 2, ForceMode.Impulse);
     }
 	
 	// Update is called once per frame

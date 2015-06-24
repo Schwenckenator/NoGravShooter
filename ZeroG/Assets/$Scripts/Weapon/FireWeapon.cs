@@ -14,6 +14,7 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
     NetworkView networkView;
+    AudioSource audioSource;
 	// Use this for initialization
 	void Awake () {
 		//gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
@@ -22,6 +23,7 @@ public class FireWeapon : MonoBehaviour {
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
         networkView = GetComponent<NetworkView>();
+        audioSource = GetComponent<AudioSource>();
 	}
 	void Update(){
         if (inventory.HasNoWeapons()) return;
@@ -140,7 +142,7 @@ public class FireWeapon : MonoBehaviour {
 	
     void PlayFireWeaponSound() {
         if (networkView.isMine) {
-            GetComponent<AudioSource>().PlayOneShot(inventory.currentWeapon.fireSound);
+            audioSource.PlayOneShot(inventory.currentWeapon.fireSound);
 
             networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
         }
@@ -148,6 +150,6 @@ public class FireWeapon : MonoBehaviour {
     [RPC]
     void RPCPlayFireWeaponSound(int weaponID) {
         WeaponSuperClass weapon = GameManager.weapon[weaponID];
-        GetComponent<AudioSource>().PlayOneShot(weapon.fireSound);
+        audioSource.PlayOneShot(weapon.fireSound);
     }
 }

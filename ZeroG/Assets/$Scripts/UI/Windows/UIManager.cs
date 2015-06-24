@@ -237,7 +237,7 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    private static void RemoveAllGUI() {
+    public static void RemoveAllGUI() {
         // If editor, clear instantiated windows
         // Because I want to look at something I made.
         foreach (Canvas canvas in windows) {

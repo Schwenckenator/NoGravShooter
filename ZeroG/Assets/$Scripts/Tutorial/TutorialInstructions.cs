@@ -71,7 +71,7 @@ public class TutorialInstructions : MonoBehaviour {
 
 
     void Start() {
-        GameManager.instance.SpawnActor();
+        UIManager.RemoveAllGUI(); // Hide the main menu while the player loads
         lookingDot = GameObject.Find("LookAtDot");
         platform = GameObject.Find("PlatformFront1");
         platform.transform.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
@@ -79,7 +79,7 @@ public class TutorialInstructions : MonoBehaviour {
         platform.transform.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
         platform = GameObject.Find("PlatformFront3");
         platform.transform.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
-        UIManager.instance.GoPlayerHUD();
+        
         StartCoroutine(SearchForPlayer());
     }
 
@@ -278,10 +278,14 @@ public class TutorialInstructions : MonoBehaviour {
         GetComponent<ScreenFadeInOut>().FadeToClear();
     }
     IEnumerator SearchForPlayer() {
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.SpawnActor();
         while (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
             yield return null;
         }
+        // Actor found
+        UIManager.instance.GoPlayerHUD();
         StartCoroutine(LookTutorial());
     }
     IEnumerator LookTutorial() {
