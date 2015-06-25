@@ -27,6 +27,9 @@ public class ChangeableImage : MonoBehaviour, IChangeable {
     public void SetImage(int imageIndex) {
         myImage.sprite = images[imageIndex];
     }
+    public void SetImage(Sprite image) {
+        myImage.sprite = image;
+    }
 
     public void SetVisible(bool visible) {
         myImage.enabled = visible;

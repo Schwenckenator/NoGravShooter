@@ -14,6 +14,7 @@ public class UIPlayerHUD : MonoBehaviour {
     static ChangeableImage crosshair;
     static ChangeableImage sniperScope;
     static ChangeableImage sniperBackground;
+    static ChangeableImage tutorialPromptImage;
 
     static PlayerResources playerResource;
     static WeaponInventory weaponInventory;
@@ -26,6 +27,8 @@ public class UIPlayerHUD : MonoBehaviour {
     static IHideable tutorialPromptUI;
 
     static bool tutorialPromptActive = false;
+
+    public Sprite testSprite;
 
     void Awake() {
         Init();
@@ -45,6 +48,7 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("sniperUI")) sniperUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptText")) tutorialPromptText = changer as ChangeableText;
             else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
+            else if (changer.IsType("tutorialPromptImage")) tutorialPromptImage = changer as ChangeableImage;
         }
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
@@ -82,7 +86,7 @@ public class UIPlayerHUD : MonoBehaviour {
 
         // TEST
         if (Input.GetKeyDown(KeyCode.F5)) {
-            TutorialPrompt("This is a test prompt.");
+            TutorialPrompt("This is a test prompt.", testSprite);
         }
 
         if (tutorialPromptActive && (Input.GetAxisRaw("Submit") > 0)) {
@@ -149,12 +153,20 @@ public class UIPlayerHUD : MonoBehaviour {
     /// Pauses time, so this cannot be used for multiplayer
     /// </summary>
     /// <param name="input"></param>
-    public static void TutorialPrompt(string input) {
+    public static void TutorialPrompt(string input, Sprite sprite = null) {
         // If not tutorial, this is not allowed. Throw exception!
         if (!GameManager.IsSceneTutorial()) throw new TutorialCodeRunningInMultiplayerException();
 
         tutorialPromptText.SetText(input);
+
+        if (sprite != null) {
+            tutorialPromptImage.SetVisible(true);
+            tutorialPromptImage.SetImage(sprite);
+        } else {
+            tutorialPromptImage.SetVisible(false);
+        }
         tutorialPromptUI.Show(true);
+
         Time.timeScale = 0;
         tutorialPromptActive = true;
     }
