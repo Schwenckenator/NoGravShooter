@@ -15,6 +15,7 @@ public class UIPlayerHUD : MonoBehaviour {
     static ChangeableImage sniperScope;
     static ChangeableImage sniperBackground;
     static ChangeableImage tutorialPromptImage;
+    static ChangeableImage fuelBarBack;
 
     static PlayerResources playerResource;
     static WeaponInventory weaponInventory;
@@ -49,6 +50,7 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("tutorialPromptText")) tutorialPromptText = changer as ChangeableText;
             else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptImage")) tutorialPromptImage = changer as ChangeableImage;
+            else if (changer.IsType("fuelBarBack")) fuelBarBack = changer as ChangeableImage;
         }
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
@@ -174,5 +176,13 @@ public class UIPlayerHUD : MonoBehaviour {
         tutorialPromptUI.Show(false);
         Time.timeScale = 1;
         tutorialPromptActive = false;
+    }
+
+    static Color red = new Color(1, 0, 0, 1);
+    static Color black = new Color(0, 0, 0, 1);
+
+    public static void JetpackDisabled(bool disabled) {
+        Color backCol = disabled ? red : black;
+        fuelBarBack.SetColour(backCol);
     }
 }

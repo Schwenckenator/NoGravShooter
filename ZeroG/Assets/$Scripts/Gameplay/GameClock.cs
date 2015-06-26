@@ -36,7 +36,7 @@ public class GameClock : MonoBehaviour {
 
     static IEnumerator DecrementTimer() {
         while (enabled) {
-            Debug.Log("Tick");
+            //Debug.Log("Tick");
             UpdateText();
             yield return new WaitForSeconds(1f);
             secsLeft--;

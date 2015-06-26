@@ -15,8 +15,6 @@ public class ChangeableImage : MonoBehaviour, IChangeable {
     }
     #endregion
 
-    public Sprite[] images;
-
     private Image myImage;
 
 	// Use this for initialization
@@ -24,11 +22,12 @@ public class ChangeableImage : MonoBehaviour, IChangeable {
         myImage = this.GetComponentInChildren<Image>();	
 	}
 
-    public void SetImage(int imageIndex) {
-        myImage.sprite = images[imageIndex];
-    }
     public void SetImage(Sprite image) {
         myImage.sprite = image;
+    }
+
+    public void SetColour(Color colour) {
+        myImage.color = colour;
     }
 
     public void SetVisible(bool visible) {

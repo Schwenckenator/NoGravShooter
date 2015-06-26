@@ -98,7 +98,7 @@ public class PlayerResources : MonoBehaviour {
 		fuel -= spentFuel;
 		if(fuel < minFuel){
 			fuel = minFuel;
-			isJetpackDisabled = true;
+            DisableJetpack(true);
 			rechargeWaitTime = maxRechargeWaitTime*2;
 			StartCoroutine(PlayJetpackEmptySound());
 			return false;
@@ -135,7 +135,7 @@ public class PlayerResources : MonoBehaviour {
 			if(fuel > maxFuel){
 				fuel = maxFuel;
 				isRecharging = false;
-				isJetpackDisabled = false;
+                DisableJetpack(false);
 				StartCoroutine("StopRechargeSound");
 			}else{
 				PlayRechargeSound();
@@ -205,5 +205,10 @@ public class PlayerResources : MonoBehaviour {
             GUI.DrawTexture(new Rect(Screen.width - 265, Screen.height - 235 + Random.Range(-5, 6), 265, 235), GuiManager.instance.EMPstats[Random.Range(0, 4)]);
 		}
 	}
+
+    void DisableJetpack(bool disable) {
+        isJetpackDisabled = disable;
+        UIPlayerHUD.JetpackDisabled(disable);
+    }
 
 }
