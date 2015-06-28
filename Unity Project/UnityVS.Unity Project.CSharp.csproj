@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5AAC8DBB-04FC-1399-ECF9-1DE1930E2505}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace></RootNamespace>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
+    <UnityVersion>4.6.1f1</UnityVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Debug\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\UnityVS_bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DefineConstants>TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_STANDALONE_WIN;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;UNITY_STANDALONE;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_MOVIES;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_DUCK_TYPING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_WIN</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="Boo.Lang" />
+    <Reference Include="UnityScript.Lang" />
+    <Reference Include="UnityEngine">
+      <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine.UI">
+      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Assembly-UnityScript-firstpass">
+      <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="UnityVS.Unity Project.CSharp.Plugins.csproj">
+      <Project>{AC490452-AE07-CEAF-11FD-56D040021503}</Project>
+      <Name>UnityVS.Unity Project.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\$Scripts\Bonuses\BonusGrenadePackPickup.cs" />
+    <Compile Include="Assets\$Scripts\Bonuses\BonusHealthPackPickup.cs" />
+    <Compile Include="Assets\$Scripts\Bonuses\BonusWeaponPickup.cs" />
+    <Compile Include="Assets\$Scripts\Camera\AimingFOVChanger.cs" />
+    <Compile Include="Assets\$Scripts\Camera\CameraMove.cs" />
+    <Compile Include="Assets\$Scripts\Camera\CameraSmoothMove.cs" />
+    <Compile Include="Assets\$Scripts\Camera\MouseLook.cs" />
+    <Compile Include="Assets\$Scripts\Exception\ClientRunningServerCodeException.cs" />
+    <Compile Include="Assets\$Scripts\Exception\InvalidTeamColourException.cs" />
+    <Compile Include="Assets\$Scripts\Exception\TutorialCodeRunningInMultiplayerException.cs" />
+    <Compile Include="Assets\$Scripts\Extension\MonoBehaviourExtension.cs" />
+    <Compile Include="Assets\$Scripts\FloatingRotation.cs" />
+    <Compile Include="Assets\$Scripts\Gameplay\CombineTerrainMeshes.cs" />
+    <Compile Include="Assets\$Scripts\Gameplay\DEBUGSummonBoxes.cs" />
+    <Compile Include="Assets\$Scripts\Gameplay\DestroyOnNextFrame.cs" />
+    <Compile Include="Assets\$Scripts\Gameplay\ObjectCleanUp.cs" />
+    <Compile Include="Assets\$Scripts\Gameplay\WalkableMovingObject.cs" />
+    <Compile Include="Assets\$Scripts\Interfaces\IActorStats.cs" />
+    <Compile Include="Assets\$Scripts\Interfaces\IDamageable.cs" />
+    <Compile Include="Assets\$Scripts\Managers\ChatManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\DebugManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\DestroyManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\FPSDisplay.cs" />
+    <Compile Include="Assets\$Scripts\Managers\Game Mode\Deathmatch.cs" />
+    <Compile Include="Assets\$Scripts\Managers\Game Mode\IGameMode.cs" />
+    <Compile Include="Assets\$Scripts\Managers\Game Mode\TeamDeathmatch.cs" />
+    <Compile Include="Assets\$Scripts\Managers\GameManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\GuiManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\InputConverter.cs" />
+    <Compile Include="Assets\$Scripts\Managers\NetworkManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\OnGameOpen.cs" />
+    <Compile Include="Assets\$Scripts\Managers\ScoreVictoryManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
+    <Compile Include="Assets\$Scripts\Player.cs" />
+    <Compile Include="Assets\$Scripts\Player\ActorHealth.cs" />
+    <Compile Include="Assets\$Scripts\Player\ActorStats.cs" />
+    <Compile Include="Assets\$Scripts\Player\ActorTeam.cs" />
+    <Compile Include="Assets\$Scripts\Player\Assassinations.cs" />
+    <Compile Include="Assets\$Scripts\Player\Controller\CasualJetpack.cs" />
+    <Compile Include="Assets\$Scripts\Player\Controller\ControllerInput.cs" />
+    <Compile Include="Assets\$Scripts\Player\Controller\IJetpackForce.cs" />
+    <Compile Include="Assets\$Scripts\Player\Controller\KeyboardInput.cs" />
+    <Compile Include="Assets\$Scripts\Player\Controller\NewtonianJetpack.cs" />
+    <Compile Include="Assets\$Scripts\Player\Controller\NoGravCharacterMotor.cs" />
+    <Compile Include="Assets\$Scripts\Player\FloatNameManager.cs" />
+    <Compile Include="Assets\$Scripts\Player\Modules\ActorModules.cs" />
+    <Compile Include="Assets\$Scripts\Player\Modules\Module.cs" />
+    <Compile Include="Assets\$Scripts\Player\Modules\ModuleMoveSpeed.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerColour.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerColourManager.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerGUI.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerIsMine.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerKillOnContact.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerResources.cs" />
+    <Compile Include="Assets\$Scripts\RadarDot.cs" />
+    <Compile Include="Assets\$Scripts\Team.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\ScreenFadeInOut.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\Steps\ITutorialStep.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\Steps\LookingStep.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\TutorialFloorPanel.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\TutorialInstructions.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\TutorialManager.cs" />
+    <Compile Include="Assets\$Scripts\Tutorial\TutorialPlatform.cs" />
+    <Compile Include="Assets\$Scripts\UI\ChangeableImage.cs" />
+    <Compile Include="Assets\$Scripts\UI\ChangeableInputField.cs" />
+    <Compile Include="Assets\$Scripts\UI\ChangeableText.cs" />
+    <Compile Include="Assets\$Scripts\UI\ChatSubmitEvent.cs" />
+    <Compile Include="Assets\$Scripts\UI\FromConnectionType\SelectableHideFromConnectionType.cs" />
+    <Compile Include="Assets\$Scripts\UI\FromConnectionType\TextChangeFromConnectionType.cs" />
+    <Compile Include="Assets\$Scripts\UI\HideableUI.cs" />
+    <Compile Include="Assets\$Scripts\UI\IChangeable.cs" />
+    <Compile Include="Assets\$Scripts\UI\IHideable.cs" />
+    <Compile Include="Assets\$Scripts\UI\IMessageReceiver.cs" />
+    <Compile Include="Assets\$Scripts\UI\ITextBox.cs" />
+    <Compile Include="Assets\$Scripts\UI\MovingBar.cs" />
+    <Compile Include="Assets\$Scripts\UI\OptionColourBox.cs" />
+    <Compile Include="Assets\$Scripts\UI\Radar.cs" />
+    <Compile Include="Assets\$Scripts\UI\ServerListEntry.cs" />
+    <Compile Include="Assets\$Scripts\UI\ServerListManager.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIChat.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UICreateGame.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIGameSettings.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIGraphicsSettings.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIJoinByIP.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIJoinGame.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIKeybindSettings.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UILobby.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIManager.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIOptions.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIPauseSpawn.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\UIPlayerHUD.cs" />
+    <Compile Include="Assets\$Scripts\VersionNumber.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\FireWeapon.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\GrenadeLifetime.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Owner.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\ForceShotWarp.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\BlackHolePhysics.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\EMPExplosion.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\ExplosionForceDamage.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\MineDetonation.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\StickyObject.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\ThrowGrenade.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\ProjectileCollision.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\RocketBurn.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\ShotLifeTime.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\ForceShotgunValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\IWeaponValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\LaserRifleValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\LaserSniperValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\PlasmaBlasterValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\RocketLauncherValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\ShotgunValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\SlugRifleValues.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\WeaponSuperClass.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon Values\WeaponValueInitialiser.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Weapon.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\WeaponInventory.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\WeaponReloadRotation.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\WeaponResources.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\AssertionComponent.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\AssertionException.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Assertions.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\CheckMethod.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ActionBase.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\BoolComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ColliderComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ComparerBase.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\FloatComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\GeneralComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IntComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\IsRenderedByCamera.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\StringComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\TransformComparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\ValueDoesNotChange.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector2Comparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector3Comparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\Vector4Comparer.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\Comparers\VectorComparerBase.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\InvalidPathException.cs" />
+    <Compile Include="Assets\UnityTestTools\Assertions\MemberResolver.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\ITestResult.cs" />
+    <Compile Include="Assets\UnityTestTools\Common\TestResultState.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Scripts\GameScore.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CodeBasedAssertionExample.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\CustomComponent.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\DynamicIntegrationTest.cs" />
+    <Compile Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\ThrowCustomException.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ITestRunnerCallback.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTest.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestAttribute.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\IntegrationTestsProvider.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\NetworkResultSender.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\ResultDTO.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestComponent.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResult.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestResultRenderer.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunner.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerCallbackList.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestRunner\TestRunnerConfigurator.cs" />
+    <Compile Include="Assets\UnityTestTools\IntegrationTestsFramework\TestingAssets\CallTesting.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Art Assets\Materials\3dTextShader.shader" />
+    <None Include="Assets\Data\LaserRifle.txt" />
+    <None Include="Assets\Standard Assets\Lumos\Read Me.txt" />
+    <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularDisplacement.shader" />
+    <None Include="Assets\Standard Assets\Tessellation Shaders\BumpedSpecularSmooth.shader" />
+    <None Include="Assets\UnityTestTools\changelog.txt" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\AngryInclude.cginc" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\CharacterSelfIlluminationReflective.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\EnemySelfIlluminationReflective.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\Fallback.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\PlanarRealtimeReflection.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\ReflectiveBackgroundPlanar.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\BackgroundAndCharacters\SuperSimpleSelfIllumination.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Additive.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Cursor.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\LaserScope.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\Multiply.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditive.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleAdditiveBlend.shader" />
+    <None Include="Assets\UnityTestTools\Examples\IntegrationTestsFrameworkExamples\AngryBotsTests\Shaders\Fx\ParticleBlend.shader" />
+    <None Include="Assets\UnityTestTools\LICENSE.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
+</Project>
