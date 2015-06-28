@@ -12,7 +12,7 @@ public class UICreateGame : MonoBehaviour {
         inputs[1].text = SettingsManager.instance.PortNumStr;
         inputs[2].text = SettingsManager.instance.PasswordServer;
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
 
     public void CreateGame(bool online) {

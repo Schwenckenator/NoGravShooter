@@ -14,7 +14,7 @@ public class UIOptions : MonoBehaviour {
 	void Start () {
         OptionsInit();
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
 	
     void OptionsInit() {

@@ -110,13 +110,7 @@ public class UIManager : MonoBehaviour {
         MainMenuInit();
         UIChat.FindChatBoxes();
         ListInit();
-<<<<<<< HEAD:Unity Project/Assets/$Scripts/UI/Windows/UIManager.cs
-
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
-=======
-        PauseMenuInit();
         InitUI();
->>>>>>> origin/Unity5Upgrade:ZeroG/Assets/$Scripts/UI/Windows/UIManager.cs
     }
     void MainMenuInit() {
         Canvas mainMenu = GetCanvas(Menu.MainMenu);

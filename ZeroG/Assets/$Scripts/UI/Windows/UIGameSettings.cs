@@ -27,7 +27,7 @@ public class UIGameSettings : MonoBehaviour {
         InputSetup(canvas);
         ToggleSetup(canvas);
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
 
 

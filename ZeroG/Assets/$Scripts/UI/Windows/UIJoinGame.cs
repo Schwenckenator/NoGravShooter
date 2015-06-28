@@ -35,7 +35,7 @@ public class UIJoinGame : MonoBehaviour {
         serverList = new List<ServerListEntry>();
         JoinGameInit();
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
     void JoinGameInit() {
         Canvas canvas = UIManager.GetCanvas(Menu.JoinGame);

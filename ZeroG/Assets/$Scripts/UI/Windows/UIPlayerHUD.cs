@@ -36,7 +36,7 @@ public class UIPlayerHUD : MonoBehaviour {
     void Awake() {
         Init();
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
     }
     public static void Init() {
         Canvas canvas = UIManager.GetCanvas(Menu.PlayerHUD);

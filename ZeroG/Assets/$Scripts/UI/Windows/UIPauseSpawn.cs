@@ -13,10 +13,10 @@ public class UIPauseSpawn : MonoBehaviour {
     private static IHideable playerList;
     private static IHideable returnToLobby;
 
-    void Start() {
+    void Awake() {
         Init();
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
     }
 
     public static void Init() {

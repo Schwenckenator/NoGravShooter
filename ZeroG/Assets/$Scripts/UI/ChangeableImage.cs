@@ -30,10 +30,6 @@ public class ChangeableImage : MonoBehaviour, IChangeable {
         myImage.color = colour;
     }
 
-    public void SetImage(Sprite image) {
-        myImage.sprite = image;
-    }
-
     public void SetVisible(bool visible) {
         myImage.enabled = visible;
     }

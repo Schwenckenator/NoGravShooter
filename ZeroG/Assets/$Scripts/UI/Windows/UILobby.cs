@@ -33,7 +33,7 @@ public class UILobby : MonoBehaviour {
 	void Awake () {
         LobbyInit();
 
-        gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
 	}
     void Update() {
         if (teamGame != SettingsManager.instance.IsTeamGameMode()) {
