@@ -78,4 +78,9 @@ public class ActorCameraMotor : MonoBehaviour {
         // If here, actor is grounded
         cameraMouseLook.AddX_Rotation(angle);
     }
+
+    public void NotMine() {
+        cameraMouseLook.enabled = false;
+        characterMouseLook.enabled = false;
+    }
 }

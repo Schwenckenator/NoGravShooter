@@ -19,13 +19,22 @@ public class ActorMotorManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
-        rigidbody = GetComponent<Rigidbody>();
         networkView = GetComponent<NetworkView>();
+
+        if (!networkView.isMine) {
+            GetComponent<ActorJetpackMotor>().enabled = false;
+            GetComponent<ActorWalkingMotor>().enabled = false;
+            GetComponent<ActorCameraMotor>().NotMine();
+            this.enabled = false;
+            
+            return;
+        }
+
         jetpackMotor = GetComponent<ActorJetpackMotor>();
         walkingMotor = GetComponent<ActorWalkingMotor>();
         cameraMotor = GetComponent<ActorCameraMotor>();
-
+        rigidbody = GetComponent<Rigidbody>();
+        
         footRayDistance = (GetComponent<CapsuleCollider>().height * (2f / 3f));
 
         currentMotor = jetpackMotor;
