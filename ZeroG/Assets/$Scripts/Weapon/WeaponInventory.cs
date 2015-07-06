@@ -121,6 +121,7 @@ public class WeaponInventory : MonoBehaviour {
     public void ChangeWeapon(int weaponId, bool force = false) {
         if (currentInventorySlot == weaponId && !force) { return; } // If you're already here, do nothing
 
+        StopCoroutine("WeaponChange");
         if (DebugManager.IsAllWeapon()) {
             if (weaponId < GameManager.weapon.Count) {
                 currentInventorySlot = weaponId;
