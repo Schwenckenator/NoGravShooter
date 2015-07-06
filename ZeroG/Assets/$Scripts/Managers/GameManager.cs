@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour {
     }
     public static void SetCursorVisibility(bool visible) {
         Cursor.visible = visible;
-        Screen.lockCursor = !visible;
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
     }
     #endregion 
 
@@ -271,6 +271,7 @@ public class GameManager : MonoBehaviour {
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
             UIPauseSpawn.TutorialModeActive(false);
+            UIPauseSpawn.SetServerNameText();
             UIChat.UpdatePlayerLists();
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;

@@ -82,7 +82,6 @@ public class UILobby : MonoBehaviour {
     IEnumerator CountdownStartGame() {
         if (DebugManager.IsAdminMode()) {
             GameManager.instance.LoadLevel();
-            UIPauseSpawn.SetServerNameText();
             yield break;
         }
         countdown = true;
@@ -93,7 +92,6 @@ public class UILobby : MonoBehaviour {
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
         GameManager.instance.LoadLevel();
-        UIPauseSpawn.SetServerNameText();
         countdown = false;
         ChangeButtonText(countdown);
     }
@@ -129,5 +127,10 @@ public class UILobby : MonoBehaviour {
     }
     void OnServerInitialized() {
         SetServerName();
+    }
+
+    [RPC]
+    void SetPauseMenuText() {
+        UIPauseSpawn.SetServerNameText();
     }
 }
