@@ -121,13 +121,7 @@ public class UIManager : MonoBehaviour {
         textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
         buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
     }
-    void HideWindows() {
-        foreach (Canvas window in windows) {
-            window.gameObject.SetActive(false);
-        }
-        //Enable Main menu
-        SetMenuWindow(Menu.MainMenu);
-    }
+
     /// <summary>
     /// Hide all menu windows, then set menu window as Main menu
     /// </summary>
