@@ -23,14 +23,17 @@ G = Grenade<br />
 F = Interact<br />
 H = Change Grenade
 
-1 = Assault Rifle<br />
-2 = Laser Rifle<br />
-3 = Sniper Rifle<br />
-4 = Beam Sniper<br />
-5 = Shotgun<br />
-6 = Force Cannon<br />
-7 = Rocket Launcher<br />
-8 = Plasma Blaster<br/>
+1 = Hand Gun<br />
+2 = Energy Pistol<br />
+3 = Assault Rifle<br />
+4 = Laser Rifle<br />
+5 = Sniper Rifle<br />
+6 = Beam Sniper<br />
+7 = Shotgun<br />
+8 = Force Cannon<br />
+9 = Rocket Launcher<br />
+0 = Plasma Blaster<br/>
+
 
 Terminology<br/>
 
