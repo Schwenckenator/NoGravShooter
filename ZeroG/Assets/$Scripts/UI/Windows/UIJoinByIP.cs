@@ -5,13 +5,14 @@ using System.Collections;
 public class UIJoinByIP : MonoBehaviour {
 
     void Start() {
-        Canvas canvas = UIManager.GetCanvas(Menu.JoinByIP);
-        InputField[] fields = canvas.GetComponentsInChildren<InputField>(true);
+        
+        InputField[] fields = GetComponentsInChildren<InputField>(true);
 
         fields[0].text = SettingsManager.instance.IpAddress;
         fields[1].text = SettingsManager.instance.PortNumStr;
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
     }
 
     public void SetIPAddress(string value) {

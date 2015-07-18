@@ -13,7 +13,8 @@ public class UIKeybindSettings : MonoBehaviour {
         keybindButtonText = new List<Text>();
         EditKeybindInit();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
 	}
 
     void OnGUI() { // Dirty old system, but I can't see a way around it
@@ -23,7 +24,7 @@ public class UIKeybindSettings : MonoBehaviour {
     }
 
     void EditKeybindInit() {
-        Canvas editKeybind = UIManager.GetCanvas(Menu.EditKeybind);
+        Canvas editKeybind = GetComponent<Canvas>();
         Button[] buttons = editKeybind.gameObject.GetComponentsInChildren<Button>(true);
         foreach (Button button in buttons) {
             Text butText = button.GetComponentInChildren<Text>();

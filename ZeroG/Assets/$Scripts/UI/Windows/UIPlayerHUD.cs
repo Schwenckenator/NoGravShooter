@@ -32,15 +32,19 @@ public class UIPlayerHUD : MonoBehaviour {
 
     public Sprite testSprite;
 
-
-    void Awake() {
+    void Start() {
         Init();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        ShowSniperScope(false); // Set to default
+        RemoveTutorialPrompt();
+        RemovePrompt();
+
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
     }
-    public static void Init() {
-        Canvas canvas = UIManager.GetCanvas(Menu.PlayerHUD);
-        IChangeable[] changers = canvas.gameObject.GetInterfacesInChildren<IChangeable>();
+
+    public void Init() {
+        IChangeable[] changers = gameObject.GetInterfacesInChildren<IChangeable>();
 
         foreach (IChangeable changer in changers) {
             if (changer.IsType("fuel")) fuel = changer as MovingBar;
@@ -55,16 +59,13 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptImage")) tutorialPromptImage = changer as ChangeableImage;
             else if (changer.IsType("fuelBarBack")) fuelBarBack = changer as ChangeableImage;
+            else if (changer.IsType("chat") || changer.IsType("playerList")) UIChat.ConnectChatBox(changer as ChangeableText);
         }
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
         fuel.SetMaxValue(PlayerResources.GetMaxFuel());
     }
-    void Start() {
-        ShowSniperScope(false); // Set to default
-        RemoveTutorialPrompt();
-        RemovePrompt();
-    }
+
 
     public static void ShowSniperScope(bool showSniper) {
         playerUI.Show(!showSniper);

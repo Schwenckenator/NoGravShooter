@@ -35,11 +35,12 @@ public class UIJoinGame : MonoBehaviour {
         serverList = new List<ServerListEntry>();
         JoinGameInit();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
 	}
     void JoinGameInit() {
-        Canvas canvas = UIManager.GetCanvas(Menu.JoinGame);
-        listManager = canvas.GetComponentInChildren<ServerListManager>();
+        
+        listManager = GetComponentInChildren<ServerListManager>();
         RefreshPress();
     }
 	
@@ -89,17 +90,11 @@ public class UIJoinGame : MonoBehaviour {
             }
         }
     }
-    private void ConnectToServer() {
+    public void ConnectToServer() {
         NetworkManager.SetClientDetailsMasterServer(masterServerData);
         NetworkManager.ConnectToServer();
     }
-    public void PasswordEndEdit(string value) {
-        SettingsManager.instance.PasswordClient = value;
-    }
-    public void SubmitPassword() {
-        UIManager.instance.ShowMenuWindow(Menu.PasswordInput, false);
-        ConnectToServer();
-    }
+
     //void OnFailedToConnect(NetworkConnectionError error) {
     //    connectionError = true;
     //    connectionErrorMessage = error.ToString();

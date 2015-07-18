@@ -17,23 +17,18 @@ public class UIGameSettings : MonoBehaviour {
     static Toggle weaponSpawn;
 
 	// Use this for initialization
-	void Awake () {
-        Init();
+	void Start () {
+        TextSetup();
+        InputSetup();
+        ToggleSetup();
+
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
 	}
-    void Init() {
-        Canvas canvas = UIManager.GetCanvas(Menu.GameSettings);
-
-        TextSetup(canvas);
-        InputSetup(canvas);
-        ToggleSetup(canvas);
-
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
-	}
-
 
     #region Setup
-    private void TextSetup(Canvas canvas) {
-        ChangeableText[] texts = canvas.GetComponentsInChildren<ChangeableText>();
+    private void TextSetup() {
+        ChangeableText[] texts = GetComponentsInChildren<ChangeableText>();
 
         foreach (var text in texts) {
             if (text.IsType("gameModeSelect")) gameMode = text;
@@ -48,8 +43,8 @@ public class UIGameSettings : MonoBehaviour {
         Weapon2Set(SettingsManager.instance.SpawnWeapon2);
     }
 
-    private void InputSetup(Canvas canvas) {
-        ChangeableInputField[] inputs = canvas.GetComponentsInChildren<ChangeableInputField>();
+    private void InputSetup() {
+        ChangeableInputField[] inputs = GetComponentsInChildren<ChangeableInputField>();
 
         foreach (var input in inputs) {
             if (input.IsType("timeLimit")) timeLimit = input;
@@ -60,8 +55,8 @@ public class UIGameSettings : MonoBehaviour {
         scoreLimit.SetText(SettingsManager.instance.ScoreToWinServer.ToString());
     }
     
-    private void ToggleSetup(Canvas canvas) {
-        Toggle[] toggles = canvas.GetComponentsInChildren<Toggle>();
+    private void ToggleSetup() {
+        Toggle[] toggles = GetComponentsInChildren<Toggle>();
         medkitSpawn = toggles[0];
         grenadeSpawn = toggles[1];
         weaponSpawn = toggles[2];

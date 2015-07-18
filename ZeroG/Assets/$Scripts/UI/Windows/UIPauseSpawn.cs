@@ -13,16 +13,16 @@ public class UIPauseSpawn : MonoBehaviour {
     private static IHideable playerList;
     private static IHideable returnToLobby;
 
-    void Awake() {
+    void Start() {
         Init();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
     }
 
-    public static void Init() {
-        Canvas canvas = UIManager.GetCanvas(Menu.PauseMenu);
-        FindTexts(canvas);
-        FindHideables(canvas);
+    public void Init() {
+        FindTexts();
+        FindHideables();
         
         PlayerDied(); // Initialises button text
     }
@@ -31,20 +31,22 @@ public class UIPauseSpawn : MonoBehaviour {
     /// Finds the Changeable texts in the canvas, and assigns variables
     /// </summary>
     /// <param name="canvas"></param>
-    private static void FindTexts(Canvas canvas) {
-        ChangeableText[] texts = canvas.GetComponentsInChildren<ChangeableText>();
+    private void FindTexts() {
+        ChangeableText[] texts = GetComponentsInChildren<ChangeableText>();
 
         foreach (ChangeableText text in texts) {
             if (text.IsType("spawnButton")) {
                 spawnButton = text;
             } else if (text.IsType("serverName")) {
                 serverName = text;
+            } else if (text.IsType("chat") || text.IsType("playerList")) {
+                UIChat.ConnectChatBox(text);
             }
         }
     }
 
-    private static void FindHideables(Canvas canvas) {
-        IChangeable[] changeables = canvas.gameObject.GetInterfacesInChildren<IChangeable>();
+    private void FindHideables() {
+        IChangeable[] changeables = gameObject.GetInterfacesInChildren<IChangeable>();
 
         foreach (IChangeable changer in changeables) {
             if (changer.IsType("playerListHide")) {
@@ -84,6 +86,9 @@ public class UIPauseSpawn : MonoBehaviour {
     private static void PauseMenu(bool isTutorial = false) {
         Menu window = isTutorial ? Menu.TutorialMenu : Menu.PauseMenu;
         UIManager.instance.SetMenuWindow(window);
+        if (!isTutorial) {
+            returnToLobby.Show(Network.isServer);
+        }
         GameManager.SetCursorVisibility(true);
         GameManager.instance.SetPlayerMenu(true);
     }
@@ -108,5 +113,8 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     public void ReturnToLobbyPress() {
         GameManager.instance.ReturnToLobby();
+    }
+    public void Disconnect() {
+        NetworkManager.Disconnect();
     }
 }

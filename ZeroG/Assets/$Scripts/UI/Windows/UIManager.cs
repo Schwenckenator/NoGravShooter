@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour {
 
     
     public GameObject[] menus; // Only for initialisation
-    private static List<Canvas> windows;
+    private static List<GameObject> windows;
     private static int currentWindow = 0;
 
     private static TextChangeFromConnectionType[] textChangers;
@@ -33,19 +33,19 @@ public class UIManager : MonoBehaviour {
     void Awake() {
         DontDestroyOnLoad(gameObject);
 
-        windows = new List<Canvas>();
+        windows = new List<GameObject>();
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
             GameObject newMenu = Instantiate(menu) as GameObject;
             DontDestroyOnLoad(newMenu);
-            Canvas newCanvas = newMenu.GetComponent<Canvas>();
-            windows.Add(newCanvas);
+            windows.Add(newMenu);
         }
+        ListInit();
     }
 
     void Start() {
         windows[(int)Menu.Debug].gameObject.SetActive(false); // Don't show debug
-        MenuWindowInit();
+        InitUI();
     }
 
     void Update() {
@@ -84,27 +84,12 @@ public class UIManager : MonoBehaviour {
     }
 
     public static bool IsChangeKeybindWindow() {
-        return windows[(int)Menu.ChangeKeybind].gameObject.activeInHierarchy;
-    }
-    public static Canvas GetCanvas(Menu value) {
-        return windows[(int)value];
+        return windows[(int)Menu.ChangeKeybind].activeInHierarchy;
     }
     public static bool IsCurrentMenuWindow(Menu value) {
         return currentWindow == (int)value;
     }
 
-    #region MenuWindowInit
-    void MenuWindowInit() {
-        MainMenuInit();
-        UIChat.FindChatBoxes();
-        ListInit();
-        InitUI();
-    }
-    void MainMenuInit() {
-        Canvas mainMenu = GetCanvas(Menu.MainMenu);
-        InputField playerName = mainMenu.gameObject.GetComponentInChildren<InputField>();
-        playerName.text = SettingsManager.instance.PlayerName;
-    }
     void ListInit() {
         textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
         buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
@@ -114,26 +99,9 @@ public class UIManager : MonoBehaviour {
     /// Hide all menu windows, then set menu window as Main menu
     /// </summary>
     void InitUI() {
-        foreach (var ui in windows) {
-            ui.gameObject.SetActive(false);
-        }
         //Enable Main menu
         SetMenuWindow(Menu.MainMenu);
     }
-    #endregion
-
-    #region MainMenuMethods
-    public void LoadTutorial() {
-        GameManager.instance.LoadTutorial();
-    }
-    public void QuitGame() {
-        if (!Application.isWebPlayer && !Application.isEditor) {
-            Application.Quit();
-        } else {
-            RemoveAllGUI();
-        }
-    }
-    #endregion
 
     #region SetWindow
     public void SetMenuWindow(Menu newWindow) {
@@ -221,8 +189,8 @@ public class UIManager : MonoBehaviour {
     public static void RemoveAllGUI() {
         // If editor, clear instantiated windows
         // Because I want to look at something I made.
-        foreach (Canvas canvas in windows) {
-            canvas.gameObject.SetActive(false);
+        foreach (GameObject canvas in windows) {
+            canvas.SetActive(false);
         }
     }
 }

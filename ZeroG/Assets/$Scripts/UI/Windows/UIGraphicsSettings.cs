@@ -14,11 +14,12 @@ public class UIGraphicsSettings : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         resolutions = ResolutionListPrune();
         GraphicsOptionsInit();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
 	}
 
     void GraphicsOptionsInit() {
@@ -29,8 +30,8 @@ public class UIGraphicsSettings : MonoBehaviour {
             }
         }
         fullscreen = Screen.fullScreen;
-        Canvas canvas = UIManager.GetCanvas(Menu.GraphicsSettings);
-        Button[] buttons = canvas.GetComponentsInChildren<Button>(true);
+        
+        Button[] buttons = GetComponentsInChildren<Button>(true);
         btnResolutionText = buttons[0].GetComponentInChildren<Text>();
         GraphicsOptionsButtonRefresh();
     }

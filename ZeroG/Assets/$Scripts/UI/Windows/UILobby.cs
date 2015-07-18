@@ -30,10 +30,11 @@ public class UILobby : MonoBehaviour {
     private static bool teamGame = false;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         LobbyInit();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
 	}
     void Update() {
         if (teamGame != SettingsManager.instance.IsTeamGameMode()) {
@@ -47,13 +48,13 @@ public class UILobby : MonoBehaviour {
     }
 
     void LobbyInit() {
-        Canvas lobby = UIManager.GetCanvas(Menu.Lobby);
-        buttons = lobby.GetComponentsInChildren<Button>();
+        buttons = GetComponentsInChildren<Button>();
         startButtonText = buttons[0].GetComponentInChildren<Text>();
         changeTeamButton = buttons[2];
-        ChangeableText[] texts = lobby.GetComponentsInChildren<ChangeableText>();
+        ChangeableText[] texts = GetComponentsInChildren<ChangeableText>();
         foreach (var text in texts) {
             if (text.IsType("serverName")) serverNameText = text;
+            if (text.IsType("chat") || text.IsType("playerList")) UIChat.ConnectChatBox(text);
         }
         ShowChangeTeamButton(false);
     }
@@ -119,6 +120,7 @@ public class UILobby : MonoBehaviour {
     }
 
     void SetServerName() {
+        Debug.Log("Server name set");
         serverNameText.SetText(SettingsManager.instance.ServerNameClient);
     }
     void OnConnectedToServer() {

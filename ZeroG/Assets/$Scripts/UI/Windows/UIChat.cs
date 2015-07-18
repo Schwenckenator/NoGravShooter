@@ -9,22 +9,36 @@ public class UIChat : MonoBehaviour {
     private static List<ChangeableText> chatBoxes;
     private static List<ChangeableText> playerLists;
 
-    public static void FindChatBoxes() {
+    void Awake() {
         chatBoxes = new List<ChangeableText>();
         playerLists = new List<ChangeableText>();
-
-        textBoxes = GameObject.FindObjectsOfType<ChangeableText>();
-
-        foreach (ChangeableText textBox in textBoxes) {
-            if (textBox.IsType("chat")) {
-                chatBoxes.Add(textBox);
-            } else if (textBox.IsType("playerList")) {
-                playerLists.Add(textBox);
-            }
-        }
-        UpdateChatBoxes();
-        UpdatePlayerLists();
     }
+
+    public static void ConnectChatBox(ChangeableText textBox) {
+        if (textBox.IsType("chat")) {
+            chatBoxes.Add(textBox);
+            UpdateChatBoxes();
+        } else if (textBox.IsType("playerList")) {
+            playerLists.Add(textBox);
+            UpdatePlayerLists();
+        }
+    }
+    //public static void FindChatBoxes() {
+    //    chatBoxes = new List<ChangeableText>();
+    //    playerLists = new List<ChangeableText>();
+
+    //    textBoxes = GameObject.FindObjectsOfType<ChangeableText>();
+
+    //    foreach (ChangeableText textBox in textBoxes) {
+    //        if (textBox.IsType("chat")) {
+    //            chatBoxes.Add(textBox);
+    //        } else if (textBox.IsType("playerList")) {
+    //            playerLists.Add(textBox);
+    //        }
+    //    }
+    //    UpdateChatBoxes();
+    //    UpdatePlayerLists();
+    //}
     public static void UpdateChatBoxes() {
         foreach (ChangeableText chatBox in chatBoxes) {
             chatBox.SetText(ChatManager.SubmittedChat);

@@ -14,15 +14,15 @@ public class UIOptions : MonoBehaviour {
 	void Start () {
         OptionsInit();
 
-        //gameObject.SendMessage("UIWindowInitialised", SendMessageOptions.RequireReceiver);
+        // Turn self off after initialsation
+        gameObject.SetActive(false);
 	}
 	
     void OptionsInit() {
-        Canvas options = UIManager.GetCanvas(Menu.Options);
-        sliders = options.GetComponentsInChildren<Slider>(true);
-        inputFields = options.GetComponentsInChildren<InputField>(true);
-        playerColours = options.GetComponentsInChildren<OptionColourBox>(true);
-        toggles = options.GetComponentsInChildren<Toggle>(true);
+        sliders = GetComponentsInChildren<Slider>(true);
+        inputFields = GetComponentsInChildren<InputField>(true);
+        playerColours = GetComponentsInChildren<OptionColourBox>(true);
+        toggles = GetComponentsInChildren<Toggle>(true);
 
         SliderUpdate();
         InputFieldUpdate();
