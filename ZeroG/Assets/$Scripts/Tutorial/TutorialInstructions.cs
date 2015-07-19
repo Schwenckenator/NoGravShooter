@@ -317,7 +317,7 @@ public class TutorialInstructions : MonoBehaviour {
     IEnumerator MovementTutorial() {
         check1 = true;
         player.GetComponent<KeyboardInput>().canWalk = true;
-        ChatManager.TutorialChat("Use "+ SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()
+        ChatManager.TutorialChat("\nUse "+ SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()
 		 + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()  + " & " + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move around.");
 		UIPlayerHUD.TutorialPrompt("\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.\n\nPress "
