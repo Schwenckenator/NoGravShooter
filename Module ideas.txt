@@ -6,6 +6,7 @@ All active modules need a cool-down/warm-up time.
 ALL features of an active module are temporary.
 
 
+
 Module1:
 Active: Dash
 The player instantly rushes forwards a set distance, ignoring current speed & direction.
@@ -15,6 +16,7 @@ that way the player stops just before the object and cant go phasing through wal
 
 Passive: Speed Boost
 The player walks and accelerates/decelerates while floating more quickly.
+
 
 
 Module2:
@@ -27,14 +29,16 @@ However the player is also heavier and is a little slower at walking and acceler
 (equipping module1 as another passive cancels out the difference resulting in default speed)
 
 
+
 Module3:
 Active: Invisibility
-The player temporarily becomes invisible and will not show on enemy players radars.
+The player temporarily becomes invisible and also will not show on enemy players radars.
 (perhaps not completely invisible, maybe like 90% transparent, so people still have a chance to notice)
 
 Passive: Radar-Proof
 The player is not shown on enemy radars while not using fuel.
 (campers yolo420swagMLGpro)
+
 
 
 Module4:
@@ -50,6 +54,7 @@ The players equipped energy weapons gradually gain ammo over time.
 (relative to 'clip' size, so you arent gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
 
 
+
 Module5:
 Active: Energy Pulse
 The player releases a sphererical shock-wave that expands around the player, pushing other players away.
@@ -59,13 +64,13 @@ Passive: Energy Shield
 The player takes less damage from energy weapons.
 
 
+
 Module6:
 Active: Scanner
 The players radar decetion distance doubles.
 Any players that appear on radar but can't be seen are given a coloured overlay/silhouette.
 The overlay goes 'above' everything(like nametags used to), allowing the player to see others through walls.
-Invisible players will also be given an overlay if they are in the players line of sight.
-(as in there are no objects between the scanning player and the invisible player)
+Live grenades/mines also appear on the radar and have 'overlays' like other players.
 
 Passive: Radar Boost
 The players radar detection distance is increased by 50%.
