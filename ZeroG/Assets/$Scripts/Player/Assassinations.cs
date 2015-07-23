@@ -59,7 +59,7 @@ public class Assassinations : MonoBehaviour {
     private void MeleeAttack(Collider hit) {
         if (InputConverter.GetKey(KeyBind.Interact) && Time.time > meleecooldown) {
             playerResource.TakeDamage(10, Network.player, 200);
-			hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 2, ForceMode.Impulse);
+			//hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 2, ForceMode.Impulse);
 			meleecooldown = Time.time + 0.5F;;
         }
     }
