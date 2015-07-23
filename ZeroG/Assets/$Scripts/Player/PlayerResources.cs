@@ -202,7 +202,7 @@ public class PlayerResources : MonoBehaviour {
 			GUI.depth = 0;
             GUI.DrawTexture(new Rect(20 + Random.Range(-10, 11), Screen.height - 240 + Random.Range(-10, 11), 220, 220), GuiManager.instance.EMPradar[Random.Range(0, 5)]);
             GUI.DrawTexture(new Rect(Screen.width / 2 - 55 / 2, Screen.height / 2 - 45 / 2, 55, 45), GuiManager.instance.EMPcursor[Random.Range(0, 4)]);
-            GUI.DrawTexture(new Rect(Screen.width - 265, Screen.height - 235 + Random.Range(-5, 6), 265, 235), GuiManager.instance.EMPstats[Random.Range(0, 4)]);
+            GUI.DrawTexture(new Rect(Screen.width - 330, Screen.height - 285 + Random.Range(-5, 6), 330, 285), GuiManager.instance.EMPstats[Random.Range(0, 4)]);
 		}
 	}
 
