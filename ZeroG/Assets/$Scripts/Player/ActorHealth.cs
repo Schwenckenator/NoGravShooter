@@ -134,7 +134,9 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 
     IEnumerator PlayerCleanup() {
         float playerDyingTime = 3.0f;
+        BloodyScreen.Show(true);
         yield return new WaitForSeconds(playerDyingTime);
+        BloodyScreen.Show(false);
         GameManager.instance.PlayerDied();
         GameManager.instance.ManagerDetachCamera();
         GameManager.SetCursorVisibility(true);
