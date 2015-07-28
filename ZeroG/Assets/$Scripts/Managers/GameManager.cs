@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour {
     #endregion
 	
 
-    public const int MaxPlayers = 16;
+    public const int MaxPlayers = 15;
 
     NetworkView networkView;
 

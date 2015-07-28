@@ -26,7 +26,7 @@ public class SettingsManager : MonoBehaviour {
     
 
     private string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
-    private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Capture the Flag", "Extraction", "Skirmish", "Team Skirmish", "Elimination", "Infection" };
+    private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
     private string[] weaponlist = { "Laser Rifle", "Assault Rifle", "Beam Sniper", "Shotgun", "Force Cannon", "Rocket Launcher", "Plasma Blaster", "None" };
 
     public string[] LevelList { get { return levelList; } }
@@ -319,7 +319,7 @@ public class SettingsManager : MonoBehaviour {
     public bool IsTeamGameMode() {
         // Team : Team Deathmatch, Capture the Flag, Extraction, Team Skirmish
         // No Team: Deathmatch, Skirmish, Elimination, Infection <- There are teams but no choice.
-        return (GameModeIndexClient == 1 || GameModeIndexClient == 2 || GameModeIndexClient == 3 || GameModeIndexClient == 5);
+        return (GameModeIndexClient == 1 || GameModeIndexClient == 3 || GameModeIndexClient == 4 || GameModeIndexClient == 5);
     }
 
     #region RPCSettings
