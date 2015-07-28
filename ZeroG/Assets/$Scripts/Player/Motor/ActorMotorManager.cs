@@ -16,6 +16,7 @@ public class ActorMotorManager : MonoBehaviour {
     public float maxLandingAngle = 60f;
 
     bool grounded = false;
+    bool active = false;
 
 	// Use this for initialization
 	void Start () {
@@ -29,6 +30,8 @@ public class ActorMotorManager : MonoBehaviour {
             
             return;
         }
+
+        active = true; // If I get here, it's mine
 
         jetpackMotor = GetComponent<ActorJetpackMotor>();
         walkingMotor = GetComponent<ActorWalkingMotor>();
@@ -90,12 +93,16 @@ public class ActorMotorManager : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision colInfo) {
+        if (!active) return; // Checking every time seems like a waste, but it'll do for now.
+
         if (ValidLanding(colInfo)) {
             Landed();
         }
     }
 
     void OnCollisionStay(Collision colInfo) {
+        if (!active) return; // Which means this'll probably be here forever.
+
         grounded = true;
 
         if (ValidLanding(colInfo)){
@@ -151,6 +158,9 @@ public class ActorMotorManager : MonoBehaviour {
         InAir();
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
+        
+        active = false;
+        this.enabled = false;
     }
 
     public void Recoil(float angle) {

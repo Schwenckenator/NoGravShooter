@@ -39,7 +39,15 @@ public class MouseLook : MonoBehaviour {
 	private AimingFOVChanger cameraFOV;
 	private float zoomCameraSlow;
 
+    void Awake() {
+        if (!transform.root.GetComponent<NetworkView>().isMine) {
+            this.enabled = false;
+        }
+    }
+
 	void Start(){
+        
+        
 		cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
         // Base sensitivity is a fraction of maximum

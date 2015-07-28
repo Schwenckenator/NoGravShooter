@@ -53,6 +53,10 @@ public class PlayerResources : MonoBehaviour {
 		for(int i=0; i<grenadeTypes; i++){
 			grenades[i] = 0;
 		}
+
+        if (!networkView.isMine) {
+            this.enabled = false;
+        }
 	}
 	#endregion
 

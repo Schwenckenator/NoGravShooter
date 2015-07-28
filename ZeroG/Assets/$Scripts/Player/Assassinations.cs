@@ -11,6 +11,12 @@ public class Assassinations : MonoBehaviour {
 	private IDamageable playerResource;
 	private Vector3 heading;
 
+    void Start() {
+        if (!GetComponent<NetworkView>().isMine) {
+            this.enabled = false;
+        }
+    }
+
 	void Update () {
 		Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius);
 		foreach(Collider hit in hits){

@@ -24,6 +24,9 @@ public class FireWeapon : MonoBehaviour {
         weaponResources = GetComponent<WeaponResources>();
         networkView = GetComponent<NetworkView>();
         audioSource = GetComponent<AudioSource>();
+
+        if (!networkView.isMine)
+            this.enabled = false;
 	}
 	void Update(){
         if (inventory.HasNoWeapons()) return;
