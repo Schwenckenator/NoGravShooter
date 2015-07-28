@@ -25,8 +25,12 @@ public class SettingsManager : MonoBehaviour {
     const int SecondsInMinute = 60;
     
 
-    private string[] levelList = { "FirstLevel", "DerilictShipScene", "SpaceStationScene" };
+    private string[] levelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation" };
+    private string[] publiclevelList = { "Manufactorium", "Manufactorium", "Manufactorium" };
+    private string[] adminlevelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation" };
     private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
+    private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Team DeathMatch", "Team Skirmish", "DeathMatch", "Skirmish" };
+    private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
     private string[] weaponlist = { "Laser Rifle", "Assault Rifle", "Beam Sniper", "Shotgun", "Force Cannon", "Rocket Launcher", "Plasma Blaster", "None" };
 
     public string[] LevelList { get { return levelList; } }
@@ -348,7 +352,16 @@ public class SettingsManager : MonoBehaviour {
         NetworkManager.AssignMyPlayerToTeam();
         UIChat.UpdatePlayerLists();
     }
-
-
     #endregion
+	
+	
+	void Update () {
+		if (DebugManager.IsAdminMode()) {
+			levelList = adminlevelList;
+			gameModeList = admingameModeList;
+		} else {
+			levelList = publiclevelList;
+			gameModeList = publicgameModeList;
+		}
+	}
 }
