@@ -293,10 +293,8 @@ public class GameManager : MonoBehaviour {
         }
 
         NetworkManager.lastLevelPrefix = levelPrefix;
-
-        Network.SetLevelPrefix(levelPrefix);
-
         NetworkManager.DisableRPC();
+        Network.SetLevelPrefix(levelPrefix);
         Application.LoadLevel(levelName);
     }
 

@@ -106,6 +106,7 @@ public class NetworkManager : MonoBehaviour {
         Network.Disconnect();
     }
     public static void DisableRPC() {
+        Network.SetSendingEnabled(0, false);
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
@@ -113,6 +114,12 @@ public class NetworkManager : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
         
         Network.isMessageQueueRunning = true;
+        Network.SetSendingEnabled(0, true);
+        rpcDisabled = false;
+    }
+    private static void EnableRPC() {
+        Network.isMessageQueueRunning = true;
+        Network.SetSendingEnabled(0, true);
         rpcDisabled = false;
     }
 
@@ -172,7 +179,8 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {
-            StartCoroutine(EnableRPC(0.0f));
+            StartCoroutine(EnableRPC(2.0f));
+            //EnableRPC();
         }
     }
     void OnServerInitialized() {
