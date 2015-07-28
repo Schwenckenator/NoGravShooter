@@ -391,9 +391,9 @@ public class TutorialInstructions : MonoBehaviour {
         checkingfloortiles = false;
         ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
         yield return new WaitForSeconds(7);
-        check3 = true;
         ChatManager.TutorialChat("\nTo pick up a gun simply walk over it.\n\nIf you already have 2 guns you can swap out the gun you are currently holding.");
         yield return new WaitForSeconds(10);
+        check3 = true;
         UIPlayerHUD.TutorialPrompt("\nClick the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
         + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.\n\n\n\n\nPress Space to continue.");
 		CheckList(3);
@@ -435,6 +435,9 @@ public class TutorialInstructions : MonoBehaviour {
     IEnumerator FlightTutorial2() {
         check5 = false;
         check6 = true;
+        ChatManager.TutorialChat("There's no air to slow you down while you're flying, so you don't have to hold the movement buttons to keep flying.\n\nOnce you get up to speed you can release the buttons to stop boosting and save fuel.");
+		UIPlayerHUD.TutorialPrompt("\nThere's no air to slow you down while you're flying, so you don't have to hold the movement buttons to keep flying.\n\nOnce you get up to speed you can release the buttons to stop boosting and save fuel.\n\n\n\n\nPress Space to continue.");
+        yield return new WaitForSeconds(8);
         ChatManager.TutorialChat("\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString() + " & "
             + SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString() + " to roll to the left & right.\n\nYou can also rotate by moving the mouse while floating.");
