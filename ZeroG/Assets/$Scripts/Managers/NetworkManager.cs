@@ -179,8 +179,8 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {
-            StartCoroutine(EnableRPC(2.0f));
-            //EnableRPC();
+            //StartCoroutine(EnableRPC(2.0f));
+            EnableRPC();
         }
     }
     void OnServerInitialized() {

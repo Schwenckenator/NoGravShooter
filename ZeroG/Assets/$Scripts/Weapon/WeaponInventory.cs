@@ -44,6 +44,7 @@ public class WeaponInventory : MonoBehaviour {
         int[] temp = GameManager.instance.GetStartingWeapons();
 
         foreach (int id in temp) {
+            Debug.Log(id.ToString());
             if (id < GameManager.weapon.Count) {
                 AddWeapon(id);
             }

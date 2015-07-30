@@ -17,8 +17,6 @@ public class FireWeapon : MonoBehaviour {
     AudioSource audioSource;
 	// Use this for initialization
 	void Awake () {
-		//gunFirePoint = transform.FindChild("CameraPos").FindChild("Weapon").FindChild("FirePoint");
-		//cameraAnchor = transform.FindChild("CameraPos");
 		motor = GetComponent<ActorMotorManager>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
