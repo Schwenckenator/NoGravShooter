@@ -356,7 +356,7 @@ public class TutorialInstructions : MonoBehaviour {
         step0 = true;
     }
     IEnumerator MovementTutorial() {
-        check1 = true;
+		check1 = true;
         player.GetComponent<KeyboardInput>().canWalk = true;
         ChatManager.TutorialChat("\nUse "+ SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString()
 		 + ", " + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString()  + " & " + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move around.");
@@ -505,15 +505,17 @@ public class TutorialInstructions : MonoBehaviour {
         StartCoroutine(FinalTutorial());
     }
 
+    public Sprite radarsprite;
     IEnumerator FinalTutorial() {
         ChatManager.TutorialChat("\nKeep in mind that this suit uses air as fuel.\n\nIf you run low on air the suit will automatically disable boosting temporarily while it generates more.");
         yield return new WaitForSeconds(30);
         ChatManager.TutorialChat("\nAt the bottom left of your HUD the suit displays a radar.\n\nThis shows you the locations of items and other players.");
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(5);
+		UIPlayerHUD.TutorialPrompt("\nAt the bottom left of your HUD the suit displays a radar.\n\nThis shows you the locations of items and other players.\n\n\nThe green dot represents you and the triangle at the top is your field of view.\n\nPlayers or items within the triange are in front of you, when items or players are above you their dot is larger than yours, when they are below you their dot is smaller.\n\n\n\n\nPress Space to continue.", radarsprite);
         ChatManager.TutorialChat("The green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are above you their dot is larger than yours, when they are below you their dot is smaller.");
-        yield return new WaitForSeconds(30);
+        yield return new WaitForSeconds(20);
         ChatManager.TutorialChat("At the bottom right of your HUD the suit displays important information including:\nmine count, ammo count, remaining air and suit structural integrity.\nIf the structural integrity of the suit is compromised you will lose both pressurization and air supply, resulting in death.");
-        yield return new WaitForSeconds(60);
+        yield return new WaitForSeconds(45);
         ChatManager.TutorialChat("\nWhen you're ready to end the simulation, press Escape.");
     }
 	
