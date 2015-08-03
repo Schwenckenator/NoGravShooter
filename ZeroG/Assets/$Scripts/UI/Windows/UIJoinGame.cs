@@ -94,11 +94,4 @@ public class UIJoinGame : MonoBehaviour {
         NetworkManager.SetClientDetailsMasterServer(masterServerData);
         NetworkManager.ConnectToServer();
     }
-
-    //void OnFailedToConnect(NetworkConnectionError error) {
-    //    connectionError = true;
-    //    connectionErrorMessage = error.ToString();
-
-    //    SettingsManager.instance.ClearPasswordClient();
-    //}
 }

@@ -10,10 +10,6 @@ public class UIMainMenu : MonoBehaviour {
         playerName.text = SettingsManager.instance.PlayerName;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 
     public void LoadTutorial() {
         GameManager.instance.LoadTutorial();
@@ -25,6 +21,4 @@ public class UIMainMenu : MonoBehaviour {
             UIManager.RemoveAllGUI();
         }
     }
-
-
 }

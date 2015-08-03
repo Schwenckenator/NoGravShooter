@@ -34,5 +34,6 @@ public class UIJoinByIP : MonoBehaviour {
             NetworkManager.ConnectToServer();
         }
         UIManager.instance.GoJoinByIP(false);
+        UIMessage.ShowMessage("Connecting To Server", false);
     }
 }

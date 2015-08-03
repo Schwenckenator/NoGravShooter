@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum Menu { ChangeKeybind, Connecting, CreateGame, Debug, EditKeybind, GameSettings, GraphicsSettings, JoinByIP, JoinGame, Lobby, MainMenu, Options, PasswordInput, PauseMenu, PlayerHUD, TutorialMenu }
+public enum Menu { ChangeKeybind, Message, CreateGame, Debug, EditKeybind, GameSettings, GraphicsSettings, JoinByIP, JoinGame, Lobby, MainMenu, Options, PasswordInput, PauseMenu, PlayerHUD, TutorialMenu }
 
 public class UIManager : MonoBehaviour {
     #region Instance
@@ -45,7 +45,8 @@ public class UIManager : MonoBehaviour {
 
     void Start() {
         windows[(int)Menu.Debug].gameObject.SetActive(false); // Don't show debug
-        InitUI();
+        SetMenuWindow(Menu.MainMenu);
+        
     }
 
     void Update() {
@@ -95,14 +96,6 @@ public class UIManager : MonoBehaviour {
         buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
     }
 
-    /// <summary>
-    /// Hide all menu windows, then set menu window as Main menu
-    /// </summary>
-    void InitUI() {
-        //Enable Main menu
-        SetMenuWindow(Menu.MainMenu);
-    }
-
     #region SetWindow
     public void SetMenuWindow(Menu newWindow) {
         SetMenuWindow((int)newWindow);
@@ -127,8 +120,8 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     #region MenuWindowMethods
-    public void GoConnecting() {
-        SetMenuWindow(Menu.Connecting);
+    public void GoMessage(bool value) {
+        ShowMenuWindow(Menu.Message, value);
     }
     public void GoCreateGame() {
         SetMenuWindow(Menu.CreateGame);
@@ -187,7 +180,7 @@ public class UIManager : MonoBehaviour {
     }
 
     public static void RemoveAllGUI() {
-        // If editor, clear instantiated windows
+        // Clear instantiated windows
         // Because I want to look at something I made.
         foreach (GameObject canvas in windows) {
             canvas.SetActive(false);

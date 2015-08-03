@@ -9,7 +9,7 @@ public class GameClock : MonoBehaviour {
     static int minsLeft;
     static int secsLeft;
     static float endTime;
-    static bool enabled;
+    static bool counting;
 
     static GameClock _instance;
 
@@ -30,12 +30,12 @@ public class GameClock : MonoBehaviour {
         minsLeft = Mathf.FloorToInt((endTime - Time.time) / 60);
         secsLeft = Mathf.FloorToInt((endTime - Time.time) - (minsLeft * 60));
         
-        enabled = true;
+        counting = true;
         _instance.StartCoroutine(DecrementTimer());
     }
 
     static IEnumerator DecrementTimer() {
-        while (enabled) {
+        while (counting) {
             //Debug.Log("Tick");
             UpdateText();
             yield return new WaitForSeconds(1f);
@@ -49,7 +49,7 @@ public class GameClock : MonoBehaviour {
             if (minsLeft >= 0) continue;
 
             // Time out!
-            enabled = false;
+            counting = false;
             secsLeft = 0;
             minsLeft = 0;
             

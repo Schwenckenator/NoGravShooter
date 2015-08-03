@@ -191,7 +191,7 @@ public class NetworkManager : MonoBehaviour {
         UIManager.instance.UpdateArraysFromNetworkConnection();
     }
     void OnConnectedToServer() {
-        
+        UIMessage.CloseMessage();
         SettingsManager.instance.ClearPasswordClient();
 
         // Set window to lobby
@@ -203,6 +203,23 @@ public class NetworkManager : MonoBehaviour {
         AssignMyPlayerToTeam();
 
         UIManager.instance.UpdateArraysFromNetworkConnection();
+    }
+    void OnFailedToConnect(NetworkConnectionError error) {
+        SettingsManager.instance.ClearPasswordClient();
+        
+        string message = "";
+        switch (error) {
+            case NetworkConnectionError.ConnectionFailed:
+                message = "Could not connect to Server.";
+                break;
+            case NetworkConnectionError.InvalidPassword:
+                message = "Invalid password. Please try again.";
+                break;
+            default:
+                message = error.ToString();
+                break;
+        }
+        UIMessage.ShowMessage(message, true);
     }
     #endregion
     

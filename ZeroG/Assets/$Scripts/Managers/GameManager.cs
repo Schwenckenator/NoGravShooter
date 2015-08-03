@@ -265,6 +265,9 @@ public class GameManager : MonoBehaviour {
 
     [RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
+        
+        NetworkManager.lastLevelPrefix = levelPrefix;
+        NetworkManager.DisableRPC();
 
         SettingsManager.instance.GameModeIndexClient = gameModeIndex;
         //stuff for timer. Don't set up if it's tutorial or the menu.
@@ -292,8 +295,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        NetworkManager.lastLevelPrefix = levelPrefix;
-        NetworkManager.DisableRPC();
+
         Network.SetLevelPrefix(levelPrefix);
         Application.LoadLevel(levelName);
     }

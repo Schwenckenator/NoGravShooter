@@ -17,13 +17,21 @@ public class UICreateGame : MonoBehaviour {
 
     public void CreateGame(bool online) {
         SettingsManager.instance.ParsePortNumber();
-
-        if (SettingsManager.instance.PortNum >= 0) { // Check for error
-            UIManager.instance.SetMenuWindow(Menu.Lobby);
-            NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.instance.PortNum, online);
-            NetworkManager.InitialiseServer();
-            SettingsManager.instance.SaveSettings();
+        // Check for error
+        if (SettingsManager.instance.ServerNameServer == "") {
+            UIMessage.ShowMessage("Server name required. Please enter a name.", true);
+            return;
         }
+        if (SettingsManager.instance.PortNum < 0) {
+            UIMessage.ShowMessage("Port number invalid. Please enter a valid port number.", true);
+            return;
+        }
+         
+        UIManager.instance.SetMenuWindow(Menu.Lobby);
+        NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.instance.PortNum, online);
+        NetworkManager.InitialiseServer();
+        SettingsManager.instance.SaveSettings();
+        
     }
 
     public void SetServerName(string value) {
