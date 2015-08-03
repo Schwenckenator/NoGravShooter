@@ -58,6 +58,11 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     }
 
     private void Die(Player killer, int weaponID) {
+        if (GameManager.IsSceneTutorial()) {
+            // Can't die in tutorial.
+            health = 10;
+            return;
+        }
         health = 0;
 		isDying = true;//You is dead nigs
 
