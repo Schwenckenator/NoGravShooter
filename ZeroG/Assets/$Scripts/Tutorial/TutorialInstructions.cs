@@ -345,7 +345,7 @@ public class TutorialInstructions : MonoBehaviour {
         lookingDot.transform.FindChild("DotMesh").GetComponent<Renderer>().material.color = new Color(0, 0, 200, 200);
         lookingDot.transform.position = new Vector3(-358f, -10.6f, 0f);
         ChatManager.TutorialChat("\nPlease look at the blue dot.");
-		UIPlayerHUD.TutorialPrompt("\nMove your Mouse to look around.\n\n\n\n\nPress Space to continue.");
+		UIPlayerHUD.TutorialPrompt("\nMove your Mouse to look around.\n\n\n\n\nPress Enter to continue.");
 		CheckList(5);
 		updateCheckList(1, false, "Look at blue dot 1");
 		updateCheckList(2, false, "Look at blue dot 2");
@@ -364,7 +364,7 @@ public class TutorialInstructions : MonoBehaviour {
             + SettingsManager.keyBindings[(int)KeyBind.MoveForward].ToString() + " to move forwards.\n\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.MoveLeft].ToString() + " to move Left.\n\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.MoveRight].ToString() + " to move Right.\n\nPress "
-            + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString() + " to move Backwards.\n\n\n\n\nPress Space to continue.");
+            + SettingsManager.keyBindings[(int)KeyBind.MoveBack].ToString() + " to move Backwards.\n\n\n\n\nPress Enter to continue.");
 		CheckList(4);
 		updateCheckList(1, false, "Move forwards");
 		updateCheckList(2, false, "Move left");
@@ -395,7 +395,7 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(10);
         check3 = true;
         UIPlayerHUD.TutorialPrompt("\nClick the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
-        + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.\n\n\n\n\nPress Space to continue.");
+        + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.\n\n\n\n\nPress Enter to continue.");
 		CheckList(3);
 		updateCheckList(1, false, "Shoot a gun");
 		updateCheckList(2, false, "Aim a gun");
@@ -424,7 +424,7 @@ public class TutorialInstructions : MonoBehaviour {
             SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString() + " & " + SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString() + " to boost up & down.\nPress "
 			+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.");
         UIPlayerHUD.TutorialPrompt("\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetUp].ToString()+" to boost up.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.JetDown].ToString()
-		+" to boost down.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.\n\n\n\n\nPress Space to continue.");
+		+" to boost down.\n\nPress "+SettingsManager.keyBindings[(int)KeyBind.StopMovement].ToString()+" to brake.\n\n\n\n\nPress Enter to continue.");
 		CheckList(3);
 		updateCheckList(1, false, "Fly up");
 		updateCheckList(2, false, "Fly down");
@@ -436,7 +436,7 @@ public class TutorialInstructions : MonoBehaviour {
         check5 = false;
         check6 = true;
         ChatManager.TutorialChat("There's no air to slow you down while you're flying, so you don't have to hold the movement buttons to keep flying.\n\nOnce you get up to speed you can release the buttons to stop boosting and save fuel.");
-		UIPlayerHUD.TutorialPrompt("\nThere's no air to slow you down while you're flying, so you don't have to hold the movement buttons to keep flying.\n\nOnce you get up to speed you can release the buttons to stop boosting and save fuel.\n\n\n\n\nPress Space to continue.");
+		UIPlayerHUD.TutorialPrompt("\nThere's no air to slow you down while you're flying, so you don't have to hold the movement buttons to keep flying.\n\nOnce you get up to speed you can release the buttons to stop boosting and save fuel.\n\n\n\n\nPress Enter to continue.");
         yield return new WaitForSeconds(8);
         ChatManager.TutorialChat("\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString() + " & "
@@ -444,7 +444,7 @@ public class TutorialInstructions : MonoBehaviour {
 		UIPlayerHUD.TutorialPrompt("\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.RollLeft].ToString() + " to roll to the left and "
             + SettingsManager.keyBindings[(int)KeyBind.RollRight].ToString() + " to roll to the right.\n\n"
-			+ "You can also rotate by moving the mouse while floating.\n\n\n\n\nPress Space to continue.");
+			+ "You can also rotate by moving the mouse while floating.\n\n\n\n\nPress Enter to continue.");
 		CheckList(2);
 		updateCheckList(1, false, "Roll to the left");
 		updateCheckList(2, false, "Roll to the right");
@@ -461,7 +461,7 @@ public class TutorialInstructions : MonoBehaviour {
         platform2.transform.position = new Vector3(platform2.transform.position.x, 0, platform2.transform.position.z);
         platform3.transform.position = new Vector3(platform3.transform.position.x, 0, platform3.transform.position.z);
         ChatManager.TutorialChat("\nTry to land on the green platforms.\n\nRemember to 'look up' before you crash so you land feet first.");
-        UIPlayerHUD.TutorialPrompt("\nTry to land on the green platforms.\n\nRemember to 'look up' before you crash so you land feet first.\n\n\n\n\nPress Space to continue.");
+        UIPlayerHUD.TutorialPrompt("\nTry to land on the green platforms.\n\nRemember to 'look up' before you crash so you land feet first.\n\n\n\n\nPress Enter to continue.");
 		CheckList(3);
 		updateCheckList(1, false, "Land on platform 1");
 		updateCheckList(2, false, "Land on platform 2");
@@ -481,7 +481,7 @@ public class TutorialInstructions : MonoBehaviour {
         UIPlayerHUD.TutorialPrompt("Purple boxes contain grenades.\nThere are 3 types of grenades: Black Hole, EMP and Frag.\n\nPress "
             + SettingsManager.keyBindings[(int)KeyBind.Grenade].ToString() + " to throw a Proximity Grenade.\n\nPress " 
 			+ SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch].ToString() 
-			+ " to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.\n\n\n\n\nPress Space to continue.");
+			+ " to change grenade type.\n\nKeep in mind that without gravity, the grenades will fly in a straight line.\n\n\n\n\nPress Enter to continue.");
 		CheckList(2);
 		updateCheckList(1, false, "Throw a grenade");
 		updateCheckList(2, false, "Change grenade type");
@@ -500,7 +500,7 @@ public class TutorialInstructions : MonoBehaviour {
         ChatManager.TutorialChat("\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them."
 			+ "\nYou can also shoot them to destroy them and stop others from using them.");
         UIPlayerHUD.TutorialPrompt("\nThis green box is a Medkit, it will restore damage to your suit.\n\nThey can be picked up by touching them."
-			+ "\n\nYou can also shoot them to destroy them and stop others from using them.\n\n\n\n\nPress Space to continue.");
+			+ "\n\nYou can also shoot them to destroy them and stop others from using them.\n\n\n\n\nPress Enter to continue.");
         yield return new WaitForSeconds(10);
         StartCoroutine(FinalTutorial());
     }
@@ -511,7 +511,7 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(30);
         ChatManager.TutorialChat("\nAt the bottom left of your HUD the suit displays a radar.\n\nThis shows you the locations of items and other players.");
         yield return new WaitForSeconds(5);
-		UIPlayerHUD.TutorialPrompt("\nAt the bottom left of your HUD the suit displays a radar.\n\nThis shows you the locations of items and other players.\n\n\nThe green dot represents you and the triangle at the top is your field of view.\n\nPlayers or items within the triange are in front of you, when items or players are above you their dot is larger than yours, when they are below you their dot is smaller.\n\n\n\n\nPress Space to continue.", radarsprite);
+		UIPlayerHUD.TutorialPrompt("\nAt the bottom left of your HUD the suit displays a radar.\n\nThis shows you the locations of items and other players.\n\n\nThe green dot represents you and the triangle at the top is your field of view.\n\nPlayers or items within the triange are in front of you, when items or players are above you their dot is larger than yours, when they are below you their dot is smaller.\n\n\n\n\nPress Enter to continue.", radarsprite);
         ChatManager.TutorialChat("The green dot represents you and the triangle at the top is your field of view.\nPlayers or items within the triange are in front of you, when items or players are above you their dot is larger than yours, when they are below you their dot is smaller.");
         yield return new WaitForSeconds(20);
         ChatManager.TutorialChat("At the bottom right of your HUD the suit displays important information including:\nmine count, ammo count, remaining air and suit structural integrity.\nIf the structural integrity of the suit is compromised you will lose both pressurization and air supply, resulting in death.");
