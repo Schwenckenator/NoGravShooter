@@ -225,6 +225,10 @@ public class GameManager : MonoBehaviour {
             networkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
         }
     }
+    void OnDisconnectedFromServer() {
+        GameInProgress = false;
+        IsUseTimer = false;
+    }
 
     public void EndGame() {
         gameInProgress = false;
