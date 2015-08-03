@@ -117,7 +117,7 @@ public class NetworkManager : MonoBehaviour {
         Network.SetSendingEnabled(0, true);
         rpcDisabled = false;
     }
-    private static void EnableRPC() {
+    public static void EnableRPC() {
         Network.isMessageQueueRunning = true;
         Network.SetSendingEnabled(0, true);
         rpcDisabled = false;
@@ -178,10 +178,10 @@ public class NetworkManager : MonoBehaviour {
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
-        if (rpcDisabled) {
-            //StartCoroutine(EnableRPC(2.0f));
-            EnableRPC();
-        }
+        //if (rpcDisabled) {
+        //    //StartCoroutine(EnableRPC(2.0f));
+        //    EnableRPC();
+        //}
     }
     void OnServerInitialized() {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);

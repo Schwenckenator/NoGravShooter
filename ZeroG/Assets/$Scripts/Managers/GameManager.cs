@@ -254,7 +254,7 @@ public class GameManager : MonoBehaviour {
 
         networkView.RPC("RPCLoadLevel", RPCMode.All, 
             SettingsManager.instance.LevelName, 
-            NetworkManager.lastLevelPrefix, 
+            NetworkManager.lastLevelPrefix + 1, 
             SettingsManager.instance.TimeLimitSec, 
             SettingsManager.instance.GameModeIndexServer);
     }
@@ -262,16 +262,56 @@ public class GameManager : MonoBehaviour {
         int dummyValue = 0; // Just to keep the method happy
         networkView.RPC("RPCLoadLevel", RPCMode.All, 
             "Tutorial", 
-            NetworkManager.lastLevelPrefix, 
+            NetworkManager.lastLevelPrefix + 1, 
             dummyValue,
             dummyValue);
     }
 
     [RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
-        
+
+        StartCoroutine(LoadLevelCoRoutine(levelName, levelPrefix, secondsOfGame, gameModeIndex));
+        //NetworkManager.lastLevelPrefix = levelPrefix;
+        //NetworkManager.DisableRPC();
+
+        //SettingsManager.instance.GameModeIndexClient = gameModeIndex;
+        ////stuff for timer. Don't set up if it's tutorial or the menu.
+        //if (levelName != "MenuScene" && levelName != "Tutorial") {
+        //    GameInProgress = true;
+        //    UIPauseSpawn.TutorialModeActive(false);
+        //    UIPauseSpawn.SetServerNameText();
+        //    UIChat.UpdatePlayerLists();
+        //    if (secondsOfGame > 0) {
+        //        endTime = Time.time + secondsOfGame;
+        //        GameClock.SetEndTime(endTime);
+        //        ScoreVictoryManager.instance.StartTimer();
+        //        this.IsUseTimer = true;
+        //    } else {
+        //        this.IsUseTimer = false;
+        //    }
+            
+        //    ChatManager.ClearAllChat();
+        //    GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
+        //    gameMode = temp.GetInterface<IGameMode>();
+        //} else {
+        //    GameInProgress = false;
+        //    if (levelName == "Tutorial") {
+        //        UIPauseSpawn.TutorialModeActive(true);
+        //    }
+        //}
+
+
+        //Network.SetLevelPrefix(levelPrefix);
+        //Application.LoadLevel(levelName);
+    }
+
+    private IEnumerator LoadLevelCoRoutine(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
+
+        yield return new WaitForSeconds(1.0f);
+
         NetworkManager.lastLevelPrefix = levelPrefix;
-        NetworkManager.DisableRPC();
+        Network.SetSendingEnabled(0, false);
+        Network.isMessageQueueRunning = false;
 
         SettingsManager.instance.GameModeIndexClient = gameModeIndex;
         //stuff for timer. Don't set up if it's tutorial or the menu.
@@ -288,7 +328,7 @@ public class GameManager : MonoBehaviour {
             } else {
                 this.IsUseTimer = false;
             }
-            
+
             ChatManager.ClearAllChat();
             GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
             gameMode = temp.GetInterface<IGameMode>();
@@ -302,6 +342,11 @@ public class GameManager : MonoBehaviour {
 
         Network.SetLevelPrefix(levelPrefix);
         Application.LoadLevel(levelName);
+
+        yield return null;
+
+        Network.isMessageQueueRunning = true;
+        Network.SetSendingEnabled(0, true);
     }
 
     //load the tutorial level
