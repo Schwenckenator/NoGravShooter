@@ -394,8 +394,8 @@ public class TutorialInstructions : MonoBehaviour {
         ChatManager.TutorialChat("\nTo pick up a gun simply walk over it.\n\nIf you already have 2 guns you can swap out the gun you are currently holding.");
         yield return new WaitForSeconds(10);
         check3 = true;
-        UIPlayerHUD.TutorialPrompt("\nClick the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or Numbers to change weapons.\n\nPress "
-        + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.\n\n\n\n\nPress Enter to continue.");
+        UIPlayerHUD.TutorialPrompt("\nYou can carry up to 2 weapons at a time.\nClick the left Mouse Button to shoot and use the right Mouse Button to aim.\n\nUse the Mouse Wheel or 1-2 to change between your primary and secondary weapons.\n\nPress "
+        + SettingsManager.keyBindings[(int)KeyBind.Reload].ToString() + " to reload.\nTo swap one of your weapons, simply stand on a third weapon and press the Interact key.\n\n\n\n\nPress Enter to continue.");
 		CheckList(3);
 		updateCheckList(1, false, "Shoot a gun");
 		updateCheckList(2, false, "Aim a gun");
