@@ -48,6 +48,7 @@ public class NetworkManager : MonoBehaviour {
     NetworkView networkView;
     void Start() {
         networkView = GetComponent<NetworkView>();
+        objectsToSpawn = new List<GameObject>();
     }
     void Update() {
         if (DebugManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
@@ -175,12 +176,20 @@ public class NetworkManager : MonoBehaviour {
 
         NetworkManager.connectedPlayers.Clear();
         NetworkManager.myPlayer = null;
+        NetworkManager.isReadyToSpawn = false;
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {
             //StartCoroutine(EnableRPC(2.0f));
             EnableRPC();
+
+            if (!GameManager.IsSceneMenu()) {
+                ReleaseObjects();
+                isReadyToSpawn = true;
+            } else {
+                isReadyToSpawn = false;
+            }
         }
     }
     void OnServerInitialized() {
@@ -242,4 +251,22 @@ public class NetworkManager : MonoBehaviour {
         UIChat.UpdatePlayerLists();
     }
     #endregion
+
+    // Spawning Data Structure
+    private static bool isReadyToSpawn = false;
+    public static bool IsReadyToSpawn() {
+        return isReadyToSpawn;
+    }
+    public static List<GameObject> objectsToSpawn;
+
+    public static void ReserveObject(GameObject obj) {
+        objectsToSpawn.Add(obj);
+        DontDestroyOnLoad(obj);
+        obj.SetActive(false);
+    }
+    static void ReleaseObjects() {
+        foreach (GameObject obj in objectsToSpawn) {
+            obj.SetActive(true);
+        }
+    }
 }
