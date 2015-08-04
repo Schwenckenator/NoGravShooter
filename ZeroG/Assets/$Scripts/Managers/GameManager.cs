@@ -215,7 +215,7 @@ public class GameManager : MonoBehaviour {
     // If a player connects mid game,
     // we need to send an updated remaining time
     void OnPlayerConnected(NetworkPlayer connectingPlayer) {
-        if (GameInProgress && IsUseTimer) {
+        if (GameInProgress) {
             networkView.RPC("RPCLoadLevel", connectingPlayer,
                 SettingsManager.instance.LevelName,
                 NetworkManager.lastLevelPrefix,

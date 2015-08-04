@@ -61,16 +61,16 @@ public class GameClock : MonoBehaviour {
         clockText.SetText(time);
     }
 
-    void OnLevelWasLoaded(int level) {
-        bool hideClock = GameManager.IsSceneMenu() || GameManager.IsSceneTutorial();
-        myCanvas.enabled = !hideClock;
+    void OnLevelWasLoaded() {
+        bool showClock = GameManager.instance.IsUseTimer && !(GameManager.IsSceneMenu() || GameManager.IsSceneTutorial());
+        myCanvas.enabled = showClock;
 
-        if (hideClock) {
+        if (!showClock) {
             StopAllCoroutines();
         }
     }
 
     public static void ShowClock(bool show) {
-        myCanvas.enabled = show;
+        myCanvas.enabled = show && GameManager.instance.IsUseTimer;
     }
 }
