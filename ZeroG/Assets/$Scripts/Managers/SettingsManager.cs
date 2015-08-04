@@ -329,10 +329,12 @@ public class SettingsManager : MonoBehaviour {
     #region RPCSettings
     public void RelayServerName() {
         networkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
+        UILobby.instance.SetServerName();// Writes to lobby title
     }
     [RPC]
     private void RPC_RelayServerName(string inServerName) {
         this.ServerNameClient = inServerName;
+        UILobby.instance.SetServerName(); // Writes to lobby title
     }
 
     public void RelayScoreToWin() {

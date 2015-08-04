@@ -119,16 +119,8 @@ public class UILobby : MonoBehaviour {
         StopCountdown();
     }
 
-    void SetServerName() {
-        Debug.Log("Server name set");
+    public void SetServerName() {
         serverNameText.SetText(SettingsManager.instance.ServerNameClient);
-    }
-    void OnConnectedToServer() {
-        // Is client
-        SetServerName();
-    }
-    void OnServerInitialized() {
-        SetServerName();
     }
 
     [RPC]
