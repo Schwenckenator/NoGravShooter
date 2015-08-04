@@ -185,7 +185,7 @@ public class NetworkManager : MonoBehaviour {
             EnableRPC();
 
             if (!GameManager.IsSceneMenu()) {
-                ReleaseObjects();
+                //ReleaseObjects();
                 isReadyToSpawn = true;
             } else {
                 isReadyToSpawn = false;
@@ -262,7 +262,7 @@ public class NetworkManager : MonoBehaviour {
     public static void ReserveObject(GameObject obj) {
         objectsToSpawn.Add(obj);
         DontDestroyOnLoad(obj);
-        obj.SetActive(false);
+        //obj.SetActive(false);
     }
     static void ReleaseObjects() {
         foreach (GameObject obj in objectsToSpawn) {
