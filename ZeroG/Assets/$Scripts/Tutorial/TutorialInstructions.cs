@@ -383,8 +383,8 @@ public class TutorialInstructions : MonoBehaviour {
 		updateCheckList(1, false, "Move to green sqaure 1");
 		updateCheckList(2, false, "Move to green sqaure 2");
 		updateCheckList(3, false, "Move to green sqaure 3");
-        yield return new WaitForSeconds(5);
         step2 = true;
+        yield return new WaitForSeconds(5);
     }
 
     IEnumerator GunTutorial() {
