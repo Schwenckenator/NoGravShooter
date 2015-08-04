@@ -34,6 +34,9 @@ public class WeaponInventory : MonoBehaviour {
     void Start() {
         if (networkView.isMine) {
             ChangeWeapon(0);
+        } else {
+            this.enabled = false;
+            return;
         }
         initialised = true;
     }
