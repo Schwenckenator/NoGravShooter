@@ -178,10 +178,10 @@ public class NetworkManager : MonoBehaviour {
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
-        //if (rpcDisabled) {
-        //    //StartCoroutine(EnableRPC(2.0f));
-        //    EnableRPC();
-        //}
+        if (rpcDisabled) {
+            //StartCoroutine(EnableRPC(2.0f));
+            EnableRPC();
+        }
     }
     void OnServerInitialized() {
         networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
