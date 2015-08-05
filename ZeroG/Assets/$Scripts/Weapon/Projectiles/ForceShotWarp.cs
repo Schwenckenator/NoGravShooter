@@ -33,7 +33,7 @@ public class ForceShotWarp : MonoBehaviour {
 				push = false;
 			}else{
 				DamagePlayer(hit.GetComponent(typeof(IDamageable)) as IDamageable);
-                hit.GetComponent<NoGravCharacterMotor>().PushOffGround();
+                // Add Push off ground here
 			}
 		}
 		if(hit.GetComponent<Rigidbody>() && push){
