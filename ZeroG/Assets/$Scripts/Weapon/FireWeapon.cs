@@ -109,13 +109,12 @@ public class FireWeapon : MonoBehaviour {
         ShotRender(gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
 
         //Render shot everywhere else
-        //for (int j = 0; j < inventory.currentWeapon.rayNum; j++) {
-        //    Vector3 particlePos = hitParticlePoints[j] != null ? hitParticlePoints[j] : Vector3.zero;
-
-        //    networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, endPoints[j], particlePos);
-        //}
-        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
-
+        for (i = 0; i < inventory.currentWeapon.rayNum; i++) {
+            networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, endPoints[i]);
+        }
+        foreach (Vector3 hitPoint in hitParticlePoints) {
+            networkView.RPC("SpawnHitParticle", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), hitPoint);
+        }
     }
 
     [RPC]
@@ -132,20 +131,21 @@ public class FireWeapon : MonoBehaviour {
     }
 
     [RPC]
-    void NetworkShotRender(int weaponID, Vector3 start, Vector3[] endPoints, Vector3[] hitParticle) {
+    void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
         WeaponSuperClass weapon = GameManager.weapon[weaponID];
 
-        foreach (Vector3 hit in hitParticle) {
-            Instantiate(weapon.hitParticle, hit, Quaternion.identity);
-        }
+        GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
+        LineRenderer render = shot.GetComponent<LineRenderer>();
+        render.useWorldSpace = true;
+        render.SetPosition(0, start);
+        render.SetPosition(1, end);
+    }
 
-        foreach (Vector3 end in endPoints) {
-            GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
-            LineRenderer render = shot.GetComponent<LineRenderer>();
-            render.useWorldSpace = true;
-            render.SetPosition(0, start);
-            render.SetPosition(1, end);
-        }
+    [RPC]
+    void SpawnHitParticle(int weaponID, Vector3 position) {
+        WeaponSuperClass weapon = GameManager.weapon[weaponID];
+
+        Instantiate(weapon.hitParticle, position, Quaternion.identity);
     }
 
     void ShotRender(Vector3 start, Vector3[] endPoints, Vector3[] hitParticle) {
