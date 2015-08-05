@@ -14,4 +14,8 @@ public class BloodyScreen : MonoBehaviour {
     public static void Show(bool show) {
         myCanvas.enabled = show;
     }
+
+    void OnLevelWasLoaded() {
+        BloodyScreen.Show(false);
+    }
 }
