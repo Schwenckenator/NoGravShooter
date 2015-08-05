@@ -9,7 +9,7 @@ public class FireWeapon : MonoBehaviour {
 	
     WeaponInventory inventory;
     WeaponResources weaponResources;
-	GameObject shot;
+	//GameObject shot;
 
 	float nextFire = 0;
 
@@ -60,10 +60,7 @@ public class FireWeapon : MonoBehaviour {
         nextFire = Time.time + inventory.currentWeapon.fireDelay;
 
         if (inventory.currentWeapon.useRay) { //Does this weapon use a ray to hit?
-
-            for (int i = 0; i < inventory.currentWeapon.rayNum; i++) {
-                FireRay();
-            }
+            FireRay(inventory.currentWeapon.rayNum);
         } else {
             SpawnProjectile(GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, cameraAnchor.rotation, Network.player);
         }
@@ -73,34 +70,52 @@ public class FireWeapon : MonoBehaviour {
 
     }
 	
-	private void FireRay() {
-        RaycastHit hit = new RaycastHit();
-        //Find direction after shot spread
-        Vector3 shotDir = cameraAnchor.forward;
-        //Apply two rotations
-        float angle1 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
-        float angle2 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
+	private void FireRay(int rayNum) {
+        List<Vector3> endPoints = new List<Vector3>();
+        List<Vector3> hitParticlePoints = new List<Vector3>();
 
-        shotDir = Quaternion.AngleAxis(angle1, cameraAnchor.up) * Quaternion.AngleAxis(angle2, cameraAnchor.right) * shotDir;
-		
-        Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
+        int i = 0;
+        do {
+            RaycastHit hit = new RaycastHit();
+            //Find direction after shot spread
+            Vector3 shotDir = cameraAnchor.forward;
+            //Apply two rotations
+            float angle1 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
+            float angle2 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
 
-        //Deal with the shot
-        bool spawnHitParticle = false;
-        Collider col = hit.collider;
-        if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
-            spawnHitParticle = true;
-            IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
-            if (damageable != null) {
-                damageable.TakeDamage(inventory.currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
+            shotDir = Quaternion.AngleAxis(angle1, cameraAnchor.up) * Quaternion.AngleAxis(angle2, cameraAnchor.right) * shotDir;
+
+            Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
+            
+            //Deal with the shot
+            bool spawnHitParticle = false;
+            Collider col = hit.collider;
+            if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
+                spawnHitParticle = true;
+                IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
+                if (damageable != null) {
+                    damageable.TakeDamage(inventory.currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
+                }
             }
-        }
+
+            endPoints.Add(hit.point);
+            if (spawnHitParticle) {
+                hitParticlePoints.Add(hit.point);
+            }
+        } while (inventory.currentWeapon.rayNum > ++i);
 
 
-        ShotRender(gunFirePoint.position, hit.point, spawnHitParticle);
+
+        ShotRender(gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
 
         //Render shot everywhere else
-        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, hit.point, spawnHitParticle);
+        //for (int j = 0; j < inventory.currentWeapon.rayNum; j++) {
+        //    Vector3 particlePos = hitParticlePoints[j] != null ? hitParticlePoints[j] : Vector3.zero;
+
+        //    networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, endPoints[j], particlePos);
+        //}
+        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
+
     }
 
     [RPC]
@@ -117,37 +132,44 @@ public class FireWeapon : MonoBehaviour {
     }
 
     [RPC]
-    void NetworkShotRender(int weaponID, Vector3 start, Vector3 end, bool spawnHitParticle) {
+    void NetworkShotRender(int weaponID, Vector3 start, Vector3[] endPoints, Vector3[] hitParticle) {
         WeaponSuperClass weapon = GameManager.weapon[weaponID];
 
-        if (spawnHitParticle) {
-            Instantiate(weapon.hitParticle, end, Quaternion.identity);
+        foreach (Vector3 hit in hitParticle) {
+            Instantiate(weapon.hitParticle, hit, Quaternion.identity);
         }
 
-        shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
-        LineRenderer render = shot.GetComponent<LineRenderer>();
-        render.useWorldSpace = true;
-        render.SetPosition(0, start);
-        render.SetPosition(1, end);
+        foreach (Vector3 end in endPoints) {
+            GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
+            LineRenderer render = shot.GetComponent<LineRenderer>();
+            render.useWorldSpace = true;
+            render.SetPosition(0, start);
+            render.SetPosition(1, end);
+        }
     }
 
-    void ShotRender(Vector3 start, Vector3 end, bool spawnHitParticle) {
+    void ShotRender(Vector3 start, Vector3[] endPoints, Vector3[] hitParticle) {
         // Spawn hit particle
-        if (spawnHitParticle) {
-            Instantiate(inventory.currentWeapon.hitParticle, end, Quaternion.identity);
+        foreach(Vector3 hit in hitParticle){
+            Instantiate(inventory.currentWeapon.hitParticle, hit, Quaternion.identity);
         }
 
         // Render shot line
-        shot = Instantiate(inventory.currentWeapon.projectile, cameraAnchor.position, cameraAnchor.rotation) as GameObject;
-        shot.transform.parent = cameraAnchor;
-        LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
 
+        // Modify start point once
         start = cameraAnchor.InverseTransformPoint(start);
-        end = cameraAnchor.InverseTransformPoint(end);
 
-        lineRenderer.useWorldSpace = false;
-        lineRenderer.SetPosition(0, start);
-        lineRenderer.SetPosition(1, end);
+        foreach (Vector3 end in endPoints) {
+            GameObject shot = Instantiate(inventory.currentWeapon.projectile, cameraAnchor.position, cameraAnchor.rotation) as GameObject;
+            shot.transform.parent = cameraAnchor;
+            LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
+
+            Vector3 newEnd = cameraAnchor.InverseTransformPoint(end);
+
+            lineRenderer.useWorldSpace = false;
+            lineRenderer.SetPosition(0, start);
+            lineRenderer.SetPosition(1, newEnd);
+        }
     }
 	
     void PlayFireWeaponSound() {
