@@ -86,8 +86,10 @@ public class FireWeapon : MonoBehaviour {
         Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
 
         //Deal with the shot
+        bool spawnHitParticle = false;
         Collider col = hit.collider;
         if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
+            spawnHitParticle = true;
             IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
             if (damageable != null) {
                 damageable.TakeDamage(inventory.currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
@@ -95,10 +97,10 @@ public class FireWeapon : MonoBehaviour {
         }
 
 
-        ShotRender(gunFirePoint.position, hit.point);
+        ShotRender(gunFirePoint.position, hit.point, spawnHitParticle);
 
         //Render shot everywhere else
-        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, hit.point);
+        networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, hit.point, spawnHitParticle);
     }
 
     [RPC]
@@ -115,11 +117,12 @@ public class FireWeapon : MonoBehaviour {
     }
 
     [RPC]
-    void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
+    void NetworkShotRender(int weaponID, Vector3 start, Vector3 end, bool spawnHitParticle) {
         WeaponSuperClass weapon = GameManager.weapon[weaponID];
 
-        Instantiate(weapon.hitParticle, end, Quaternion.identity);
-
+        if (spawnHitParticle) {
+            Instantiate(weapon.hitParticle, end, Quaternion.identity);
+        }
 
         shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
         LineRenderer render = shot.GetComponent<LineRenderer>();
@@ -128,7 +131,13 @@ public class FireWeapon : MonoBehaviour {
         render.SetPosition(1, end);
     }
 
-    void ShotRender(Vector3 start, Vector3 end){
+    void ShotRender(Vector3 start, Vector3 end, bool spawnHitParticle) {
+        // Spawn hit particle
+        if (spawnHitParticle) {
+            Instantiate(inventory.currentWeapon.hitParticle, end, Quaternion.identity);
+        }
+
+        // Render shot line
         shot = Instantiate(inventory.currentWeapon.projectile, cameraAnchor.position, cameraAnchor.rotation) as GameObject;
         shot.transform.parent = cameraAnchor;
         LineRenderer lineRenderer = shot.GetComponent<LineRenderer>();
