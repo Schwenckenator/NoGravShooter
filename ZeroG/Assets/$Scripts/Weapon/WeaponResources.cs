@@ -27,6 +27,10 @@ public class WeaponResources : MonoBehaviour {
         smoke = GetComponentInChildren<ParticleSystem>();
         smoke.emissionRate = 0;
         smoke.Play();
+
+        if (!GetComponent<NetworkView>().isMine) {
+            this.enabled = false;
+        }
 	}
 
     public float GetWeaponHeat() {
