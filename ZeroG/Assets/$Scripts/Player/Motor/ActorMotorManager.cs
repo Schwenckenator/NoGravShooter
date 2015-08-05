@@ -170,4 +170,10 @@ public class ActorMotorManager : MonoBehaviour {
             transform.Rotate(-angle, 0, 0);
         }
     }
+
+    public void PushOffGround() {
+        if (active) {
+            InAir(); // Activate the jetpack motor
+        }
+    }
 }

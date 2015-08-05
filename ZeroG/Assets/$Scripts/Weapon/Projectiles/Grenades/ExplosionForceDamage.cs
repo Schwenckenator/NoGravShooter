@@ -30,6 +30,11 @@ public class ExplosionForceDamage : MonoBehaviour {
 		foreach(Collider hit in hits){
 			if(hit.CompareTag("ForceProjectile")) continue; // Don't touch the force
 
+            if (hit.CompareTag("Player") && hit.GetComponent<NetworkView>().isMine) { // Did it hit my player?
+                // Better push myself off the ground
+                hit.GetComponent<ActorMotorManager>().PushOffGround();
+            }
+
             if (hit.GetComponent<Rigidbody>()) {
                 hit.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, transform.position, explosionRadius);
             }
@@ -44,14 +49,14 @@ public class ExplosionForceDamage : MonoBehaviour {
                 hit.GetComponent<MineDetonation>().ForceDetonate();
             }
 
-			if(hit.CompareTag("Player")){
-				//Find distance
-				float distance = (hit.transform.position - transform.position).magnitude;
-				float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
+            if (hit.CompareTag("Player")) {
+                //Find distance
+                float distance = (hit.transform.position - transform.position).magnitude;
+                float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
 
                 IDamageable damageable = hit.GetComponent(typeof(IDamageable)) as IDamageable;
-				damageable.TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
-			}
+                damageable.TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
+            }
 		}
 	}
 
