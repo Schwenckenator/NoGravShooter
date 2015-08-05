@@ -232,10 +232,45 @@ public class NetworkManager : MonoBehaviour {
     }
     #endregion
     
-    public static void AssignMyPlayerToTeam() {
+    public void AssignMyPlayerToTeam() {
         if (SettingsManager.instance.IsTeamGameMode() == NetworkManager.MyPlayer().HasNoTeam()) {
-            NetworkManager.MyPlayer().ChangeTeam();
+            //NetworkManager.MyPlayer().ChangeTeam();
+
+            if (Network.isServer) {
+                FindTeamWithLeastPlayers(Network.player);
+            } else { // Is client
+                networkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
+            }
         }
+    }
+    [RPC]
+    void FindTeamWithLeastPlayers(NetworkPlayer networkPlayer, bool callback = false) {
+        // This should only be called on server
+        if(Network.isClient) throw new ClientRunningServerCodeException();
+
+        int[] teamCount = new int[2]; 
+        foreach (Player player in connectedPlayers) {
+            if (player.Team == TeamColour.Red) {
+                teamCount[0]++;
+            } else {
+                teamCount[1]++;
+            }
+        }
+        int smallestTeamIndex = 0;
+        if (teamCount[0] >= teamCount[1]) {
+            smallestTeamIndex = 1;
+        }
+
+        //Callback
+        if (callback) {
+            networkView.RPC("ChangeTeamFromIndex", networkPlayer, smallestTeamIndex);
+        } else {
+            ChangeTeamFromIndex(smallestTeamIndex);
+        }
+    }
+    [RPC]
+    void ChangeTeamFromIndex(int newTeamIndex) {
+        NetworkManager.MyPlayer().ChangeTeam(ScoreVictoryManager.instance.Teams[newTeamIndex].Type);
     }
 
     #region RPC
