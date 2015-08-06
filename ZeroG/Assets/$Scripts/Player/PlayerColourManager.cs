@@ -19,8 +19,8 @@ public class PlayerColourManager : MonoBehaviour {
     }
     #endregion
 
-    public Color RedTeamLimit = new Color(0.85f, 0.5f, 0.75f); // 216, 127, 191
-    public Color BlueTeamLimit = new Color(0.5f, 0.75f, 0.85f); // 127, 191, 216
+    public Color RedTeamLimit;// 216, 191, 127
+    public Color BlueTeamLimit;// 127, 191, 216
 
     public void AssignColour(GameObject player) {
         PlayerColour playerColour = player.GetComponent<PlayerColour>();
