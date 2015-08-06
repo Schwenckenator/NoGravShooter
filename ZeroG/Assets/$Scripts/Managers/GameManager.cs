@@ -276,12 +276,12 @@ public class GameManager : MonoBehaviour {
         NetworkManager.DisableRPC();
 
         SettingsManager.instance.GameModeIndexClient = gameModeIndex;
+        UIChat.UpdatePlayerLists();
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
             UIPauseSpawn.TutorialModeActive(false);
             UIPauseSpawn.SetServerNameText();
-            UIChat.UpdatePlayerLists();
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
                 GameClock.SetEndTime(endTime);
