@@ -318,7 +318,7 @@ public class SettingsManager : MonoBehaviour {
         PasswordClient = "";
     }
     public Color GetPlayerColour() {
-        return new Color(ColourR, ColourG, ColourB, 1);
+        return new Color(ColourR*2, ColourG*2, ColourB*2, 1);
     }
     public bool IsTeamGameMode() {
         // Team : Team Deathmatch, Capture the Flag, Extraction, Team Skirmish

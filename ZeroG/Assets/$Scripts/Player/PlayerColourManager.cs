@@ -19,8 +19,8 @@ public class PlayerColourManager : MonoBehaviour {
     }
     #endregion
 
-    public Color RedTeamLimit;// 216, 191, 127
-    public Color BlueTeamLimit;// 127, 191, 216
+    public Color RedTeamLimit;
+    public Color BlueTeamLimit;
 
     public void AssignColour(GameObject player) {
         PlayerColour playerColour = player.GetComponent<PlayerColour>();
@@ -45,11 +45,11 @@ public class PlayerColourManager : MonoBehaviour {
         Color newColour = new Color(0, 0, 0, 1);
         
         //Max the main colour
-        newColour.r = Mathf.Max(input.r, RedTeamLimit.r);
+        newColour.r = Mathf.Max(input.r, RedTeamLimit.r*2);
 
         //Lessen the supporting colours
-        newColour.g = Mathf.Min(input.g, RedTeamLimit.g);
-        newColour.b = Mathf.Min(input.b, RedTeamLimit.b);
+        newColour.g = Mathf.Min(input.g, RedTeamLimit.g*2);
+        newColour.b = Mathf.Min(input.b, RedTeamLimit.b*2);
         
         return newColour;
     }
@@ -57,11 +57,11 @@ public class PlayerColourManager : MonoBehaviour {
         Color newColour = new Color(0, 0, 0, 1);
 
         //Lessen the supporting colours
-        newColour.r = Mathf.Min(input.r, BlueTeamLimit.r);
-        newColour.g = Mathf.Min(input.g, BlueTeamLimit.g);
+        newColour.r = Mathf.Min(input.r, BlueTeamLimit.r*2);
+        newColour.g = Mathf.Min(input.g, BlueTeamLimit.g*2);
 
         //Max the main colour
-        newColour.b = Mathf.Max(input.b, BlueTeamLimit.b);
+        newColour.b = Mathf.Max(input.b, BlueTeamLimit.b*2);
 
         return newColour;
     }
