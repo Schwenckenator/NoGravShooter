@@ -14,14 +14,13 @@ public class FireWeapon : MonoBehaviour {
 	float nextFire = 0;
 
     NetworkView networkView;
-    AudioSource audioSource;
+    public AudioSource audioSource; // Assign in inspector
 	// Use this for initialization
 	void Awake () {
 		motor = GetComponent<ActorMotorManager>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
         networkView = GetComponent<NetworkView>();
-        audioSource = GetComponent<AudioSource>();
 
         if (!networkView.isMine)
             this.enabled = false;
