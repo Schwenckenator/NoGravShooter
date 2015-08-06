@@ -12,6 +12,6 @@ public class ObjectCleanUp : MonoBehaviour {
 
     public void ClientKillMe() {
         ChatManager.DebugMessage("ClientKillMe() called on " + gameObject.ToString() + ", view ID: " + gameObject.GetComponent<NetworkView>().viewID.ToString());
-        DestroyManager.instance.Destroy(gameObject.GetComponent<NetworkView>().viewID);
+        DestroyManager.instance.DirectDestroy(gameObject.GetComponent<NetworkView>().viewID);
     }
 }

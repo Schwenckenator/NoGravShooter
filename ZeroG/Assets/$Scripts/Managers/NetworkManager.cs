@@ -46,9 +46,10 @@ public class NetworkManager : MonoBehaviour {
     public static int lastLevelPrefix = 0;
     #endregion
     NetworkView networkView;
+    static List<NetworkPlayer> actorOwners;
     void Start() {
         networkView = GetComponent<NetworkView>();
-        objectsToSpawn = new List<GameObject>();
+        actorOwners = new List<NetworkPlayer>();
     }
     void Update() {
         if (DebugManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
@@ -175,8 +176,10 @@ public class NetworkManager : MonoBehaviour {
         UIManager.instance.SetMenuWindow(Menu.MainMenu);
 
         NetworkManager.connectedPlayers.Clear();
+        NetworkManager.actorOwners.Clear();
         NetworkManager.myPlayer = null;
         NetworkManager.isReadyToSpawn = false;
+        
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
@@ -292,16 +295,17 @@ public class NetworkManager : MonoBehaviour {
     public static bool IsReadyToSpawn() {
         return isReadyToSpawn;
     }
-    public static List<GameObject> objectsToSpawn;
 
-    public static void ReserveObject(GameObject obj) {
-        objectsToSpawn.Add(obj);
+    public static void ReserveObject(NetworkMessageInfo info, GameObject obj) {
         DontDestroyOnLoad(obj);
-        //obj.SetActive(false);
-    }
-    static void ReleaseObjects() {
-        foreach (GameObject obj in objectsToSpawn) {
-            obj.SetActive(true);
+        Debug.Log("Owner is: " + info.sender.ToString());
+        if (actorOwners.Contains(info.sender)) {
+            Debug.Log("Owner already sent something.");
+            Debug.Log("Owner is: " + info.sender.ToString());
+        } else {
+            Debug.Log("Keeping an object");
+            actorOwners.Add(info.sender);
         }
     }
+
 }

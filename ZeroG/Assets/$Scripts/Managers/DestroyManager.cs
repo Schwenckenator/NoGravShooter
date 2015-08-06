@@ -69,7 +69,13 @@ public class DestroyManager : MonoBehaviour {
     /// Use with caution, direct call to destroy.
     /// </summary>
     /// <param name="viewID"></param>
-    public void Destroy(NetworkViewID viewID) {
+    void Destroy(NetworkViewID viewID) {
+        Network.RemoveRPCs(viewID);
+        Network.Destroy(viewID);
+    }
+
+    public void DirectDestroy(NetworkViewID viewID) {
+        //Tell server to also remove RPC
         Network.RemoveRPCs(viewID);
         Network.Destroy(viewID);
     }

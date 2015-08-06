@@ -151,7 +151,4 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     public static int GetDefaultMaxHealth() {
         return 100; // Default max health
     }
-
-
-
 }
