@@ -233,14 +233,14 @@ public class NetworkManager : MonoBehaviour {
     #endregion
     
     public void AssignMyPlayerToTeam() {
-        if (SettingsManager.instance.IsTeamGameMode() == NetworkManager.MyPlayer().HasNoTeam()) {
-            //NetworkManager.MyPlayer().ChangeTeam();
-
+        if (SettingsManager.instance.IsTeamGameMode() && NetworkManager.MyPlayer().HasNoTeam()) {
             if (Network.isServer) {
                 FindTeamWithLeastPlayers(Network.player);
             } else { // Is client
                 networkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
             }
+        } else if(!SettingsManager.instance.IsTeamGameMode()){
+            NetworkManager.MyPlayer().ChangeTeam();
         }
     }
     [RPC]
