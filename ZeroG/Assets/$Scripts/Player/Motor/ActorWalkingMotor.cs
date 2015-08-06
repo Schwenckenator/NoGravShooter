@@ -20,7 +20,12 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
     Rigidbody rigidbody;
     IControllerInput input;
 
+    NetworkView networkView;
+
 	// Use this for initialization
+    void Awake() {
+        networkView = GetComponent<NetworkView>();
+    }
 	void Start () {
         rigidbody = GetComponent<Rigidbody>();
         stats = gameObject.GetInterface<IActorStats>();
@@ -31,11 +36,6 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
         StartCoroutine(PlayFeetSound());
 	}
 	
-	// Update is called once per frame
-    //void FixedUpdate () {
-    //    playWalkingSound = true;
-    //}
-
     public void Movement() {
         Vector3 targetVelocity;
         if (GameManager.IsPlayerMenu()) {
@@ -160,10 +160,9 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
         int stepKind = 0;
         while (true) {
             if (playWalkingSound) {
-                feetAudio.clip = soundFootsteps[stepKind];
-                feetAudio.Play();
+                PlayFootstep(stepKind);
                 yield return new WaitForSeconds(soundFootsteps[stepKind].length);
-                stepKind = (++stepKind) % soundFootsteps.Length; //
+                stepKind = (++stepKind) % soundFootsteps.Length;
             } else {
                 stepKind = 0;
                 feetAudio.Stop();
@@ -171,6 +170,17 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
             yield return null;
         }
     }
+
+    [RPC]
+    void PlayFootstep(int stepNum) {
+        feetAudio.clip = soundFootsteps[stepNum];
+        feetAudio.Play();
+
+        if (networkView.isMine) {
+            networkView.RPC("PlayFootstep", RPCMode.Others, stepNum);
+        }
+    }
+    
 
     public void OnDeactivate() {
         playWalkingSound = false;

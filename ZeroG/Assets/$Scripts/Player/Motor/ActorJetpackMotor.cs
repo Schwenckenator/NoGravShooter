@@ -26,7 +26,12 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
     IControllerInput input;
     IActorStats stats;
 
+    NetworkView networkView;
+
 	// Use this for initialization
+    void Awake() {
+        networkView = GetComponent<NetworkView>();
+    }
 	void Start () {
         stats = gameObject.GetInterface<IActorStats>();
 
@@ -113,19 +118,35 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
             if (playJetSound) {
                 jetpackSoundWasPlayed = true;
                 if (!jetpackAudioSource.isPlaying || jetpackAudioSource.clip != soundJetpackBurn) {
-                    jetpackAudioSource.clip = soundJetpackBurn;
-                    jetpackAudioSource.volume = volumeJetpackBurn;
-                    jetpackAudioSource.Play();
+                    PlaySoundBurn();
                 }
             } else if (jetpackSoundWasPlayed) {
-                jetpackAudioSource.clip = soundJetpackShutoff;
-                jetpackAudioSource.volume = volumeJetpackShutoff;
-                jetpackAudioSource.Play();
+                PlaySoundShutoff();
                 jetpackSoundWasPlayed = false;
             }
             yield return null;
         }
 
+    }
+    [RPC]
+    private void PlaySoundBurn() {
+        jetpackAudioSource.clip = soundJetpackBurn;
+        jetpackAudioSource.volume = volumeJetpackBurn;
+        jetpackAudioSource.Play();
+
+        if (networkView.isMine) {
+            networkView.RPC("PlaySoundBurn", RPCMode.Others);
+        }
+    }
+    [RPC]
+    private void PlaySoundShutoff() {
+        jetpackAudioSource.clip = soundJetpackShutoff;
+        jetpackAudioSource.volume = volumeJetpackShutoff;
+        jetpackAudioSource.Play();
+
+        if (networkView.isMine) {
+            networkView.RPC("PlaySoundShutoff", RPCMode.Others);
+        }
     }
 
     public void OnDeactivate() {
