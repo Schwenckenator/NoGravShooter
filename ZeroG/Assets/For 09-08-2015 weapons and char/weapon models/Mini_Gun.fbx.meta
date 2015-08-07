@@ -1,0 +1,162 @@
+fileFormatVersion: 2
+guid: 51cfd2b93b6c1d14c99ff3a7cbd9cc01
+timeCreated: 1438933010
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Back_Grip
+    100002: Bodypart_1
+    100004: Bodypart_2
+    100006: Bodypart_2_MeshPart0
+    100008: Bodypart_2_MeshPart1
+    100010: Camera
+    100012: Circle
+    100014: Cube.001
+    100016: Cube.002
+    100018: Cylinder
+    100020: Cylinder.001
+    100022: Cylinder.002
+    100024: Cylinder.003
+    100026: Cylinder.004
+    100028: Cylinder.005
+    100030: Cylinder.006
+    100032: Cylinder.007
+    100034: Front_Grip
+    100036: Lamp
+    100038: Mag
+    100040: //RootNode
+    400000: Back_Grip
+    400002: Bodypart_1
+    400004: Bodypart_2
+    400006: Bodypart_2_MeshPart0
+    400008: Bodypart_2_MeshPart1
+    400010: Camera
+    400012: Circle
+    400014: Cube.001
+    400016: Cube.002
+    400018: Cylinder
+    400020: Cylinder.001
+    400022: Cylinder.002
+    400024: Cylinder.003
+    400026: Cylinder.004
+    400028: Cylinder.005
+    400030: Cylinder.006
+    400032: Cylinder.007
+    400034: Front_Grip
+    400036: Lamp
+    400038: Mag
+    400040: //RootNode
+    2300000: Back_Grip
+    2300002: Bodypart_1
+    2300004: Bodypart_2_MeshPart0
+    2300006: Bodypart_2_MeshPart1
+    2300008: Circle
+    2300010: Cube.001
+    2300012: Cube.002
+    2300014: Cylinder
+    2300016: Cylinder.001
+    2300018: Cylinder.002
+    2300020: Cylinder.003
+    2300022: Cylinder.004
+    2300024: Cylinder.005
+    2300026: Cylinder.006
+    2300028: Cylinder.007
+    2300030: Front_Grip
+    2300032: Mag
+    3300000: Back_Grip
+    3300002: Bodypart_1
+    3300004: Bodypart_2_MeshPart0
+    3300006: Bodypart_2_MeshPart1
+    3300008: Circle
+    3300010: Cube.001
+    3300012: Cube.002
+    3300014: Cylinder
+    3300016: Cylinder.001
+    3300018: Cylinder.002
+    3300020: Cylinder.003
+    3300022: Cylinder.004
+    3300024: Cylinder.005
+    3300026: Cylinder.006
+    3300028: Cylinder.007
+    3300030: Front_Grip
+    3300032: Mag
+    4300000: Cylinder.007
+    4300002: Cylinder.004
+    4300004: Cylinder.001
+    4300006: Circle
+    4300008: Cylinder.002
+    4300010: Cylinder.003
+    4300012: Cylinder.005
+    4300014: Cylinder.006
+    4300016: Cylinder
+    4300018: Back_Grip
+    4300020: Bodypart_1
+    4300022: Bodypart_2_MeshPart0
+    4300024: Bodypart_2_MeshPart1
+    4300026: Cube.001
+    4300028: Cube.002
+    4300030: Front_Grip
+    4300032: Mag
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

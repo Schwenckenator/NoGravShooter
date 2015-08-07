@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 274fd976c6f137a4eba2f49f8e030828
+timeCreated: 1438932971
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Acc_Rack
+    100002: Barrel
+    100004: Body
+    100006: Body_MeshPart0
+    100008: Body_MeshPart1
+    100010: Circle
+    100012: Cube
+    100014: Cylinder
+    100016: Cylinder.001
+    100018: Cylinder.002
+    100020: Cylinder.003
+    100022: Grip
+    100024: Magazine
+    100026: Muzzle
+    100028: Plane
+    100030: Rack_Pieces
+    100032: Scope
+    100034: //RootNode
+    100036: Stock
+    100038: Trigger
+    400000: Acc_Rack
+    400002: Barrel
+    400004: Body
+    400006: Body_MeshPart0
+    400008: Body_MeshPart1
+    400010: Circle
+    400012: Cube
+    400014: Cylinder
+    400016: Cylinder.001
+    400018: Cylinder.002
+    400020: Cylinder.003
+    400022: Grip
+    400024: Magazine
+    400026: Muzzle
+    400028: Plane
+    400030: Rack_Pieces
+    400032: Scope
+    400034: //RootNode
+    400036: Stock
+    400038: Trigger
+    2300000: Acc_Rack
+    2300002: Barrel
+    2300004: Body_MeshPart0
+    2300006: Body_MeshPart1
+    2300008: Circle
+    2300010: Cube
+    2300012: Cylinder
+    2300014: Cylinder.001
+    2300016: Cylinder.002
+    2300018: Cylinder.003
+    2300020: Grip
+    2300022: Magazine
+    2300024: Muzzle
+    2300026: Plane
+    2300028: Rack_Pieces
+    2300030: Scope
+    2300032: Stock
+    2300034: Trigger
+    3300000: Acc_Rack
+    3300002: Barrel
+    3300004: Body_MeshPart0
+    3300006: Body_MeshPart1
+    3300008: Circle
+    3300010: Cube
+    3300012: Cylinder
+    3300014: Cylinder.001
+    3300016: Cylinder.002
+    3300018: Cylinder.003
+    3300020: Grip
+    3300022: Magazine
+    3300024: Muzzle
+    3300026: Plane
+    3300028: Rack_Pieces
+    3300030: Scope
+    3300032: Stock
+    3300034: Trigger
+    4300000: Cylinder
+    4300002: Cube
+    4300004: Circle
+    4300006: Magazine
+    4300008: Trigger
+    4300010: Grip
+    4300012: Cylinder.003
+    4300014: Cylinder.002
+    4300016: Cylinder.001
+    4300018: Rack_Pieces
+    4300020: Acc_Rack
+    4300022: Muzzle
+    4300024: Barrel
+    4300026: Body_MeshPart0
+    4300028: Body_MeshPart1
+    4300030: Scope
+    4300032: Stock
+    4300034: Plane
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
