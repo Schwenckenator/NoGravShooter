@@ -14,11 +14,11 @@ public class RocketLauncherValues : WeaponSuperClass {
 		this.shotSpread 			= 0;
 		this.damagePerShot 			= 0;
 		this.heatPerShot 			= 0;
-		this.fireDelay 				= 1f;
+		this.fireDelay 				= .75f;
 		
-		this.clipSize 				= 1;
-		this.currentClip 			= 1;
-		this.remainingAmmo 			= 4;
+		this.clipSize 				= 4;
+		this.currentClip 			= 4;
+		this.remainingAmmo 			= 8;
 		this.defaultRemainingAmmo 	= this.remainingAmmo;
 		this.reloadTime 			= 3f;
 	}
