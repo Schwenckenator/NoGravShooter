@@ -23,6 +23,11 @@ ModelImporter:
     100030: MIdBarrel_MeshPart1
     100032: MIdBarrel_MeshPart2
     100034: //RootNode
+    100036: Cube.007
+    100038: Cube.008
+    100040: Cube.009
+    100042: Cylinder.006
+    100044: Cylinder.007
     400000: Barrelll
     400002: Cube
     400004: Cube.001
@@ -41,6 +46,11 @@ ModelImporter:
     400030: MIdBarrel_MeshPart1
     400032: MIdBarrel_MeshPart2
     400034: //RootNode
+    400036: Cube.007
+    400038: Cube.008
+    400040: Cube.009
+    400042: Cylinder.006
+    400044: Cylinder.007
     2300000: Barrelll
     2300002: Cube
     2300004: Cube.001
@@ -57,6 +67,11 @@ ModelImporter:
     2300026: MIdBarrel_MeshPart0
     2300028: MIdBarrel_MeshPart1
     2300030: MIdBarrel_MeshPart2
+    2300032: Cube.007
+    2300034: Cube.008
+    2300036: Cube.009
+    2300038: Cylinder.006
+    2300040: Cylinder.007
     3300000: Barrelll
     3300002: Cube
     3300004: Cube.001
@@ -73,6 +88,11 @@ ModelImporter:
     3300026: MIdBarrel_MeshPart0
     3300028: MIdBarrel_MeshPart1
     3300030: MIdBarrel_MeshPart2
+    3300032: Cube.007
+    3300034: Cube.008
+    3300036: Cube.009
+    3300038: Cylinder.006
+    3300040: Cylinder.007
     4300000: Cube.006
     4300002: Cube.004
     4300004: Cube.003
@@ -89,6 +109,11 @@ ModelImporter:
     4300026: MIdBarrel_MeshPart0
     4300028: MIdBarrel_MeshPart1
     4300030: MIdBarrel_MeshPart2
+    4300032: Cube.007
+    4300034: Cube.008
+    4300036: Cube.009
+    4300038: Cylinder.006
+    4300040: Cylinder.007
   materials:
     importMaterials: 1
     materialName: 0

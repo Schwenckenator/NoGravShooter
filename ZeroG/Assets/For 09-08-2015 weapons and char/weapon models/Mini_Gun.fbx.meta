@@ -26,6 +26,17 @@ ModelImporter:
     100036: Lamp
     100038: Mag
     100040: //RootNode
+    100042: Circle.001
+    100044: Cube.026
+    100046: Cube.027
+    100048: Cylinder.017
+    100050: Cylinder.018
+    100052: Cylinder.019
+    100054: Cylinder.020
+    100056: Cylinder.021
+    100058: Cylinder.022
+    100060: Cylinder.023
+    100062: Cylinder.024
     400000: Back_Grip
     400002: Bodypart_1
     400004: Bodypart_2
@@ -47,6 +58,17 @@ ModelImporter:
     400036: Lamp
     400038: Mag
     400040: //RootNode
+    400042: Circle.001
+    400044: Cube.026
+    400046: Cube.027
+    400048: Cylinder.017
+    400050: Cylinder.018
+    400052: Cylinder.019
+    400054: Cylinder.020
+    400056: Cylinder.021
+    400058: Cylinder.022
+    400060: Cylinder.023
+    400062: Cylinder.024
     2300000: Back_Grip
     2300002: Bodypart_1
     2300004: Bodypart_2_MeshPart0
@@ -64,6 +86,17 @@ ModelImporter:
     2300028: Cylinder.007
     2300030: Front_Grip
     2300032: Mag
+    2300034: Circle.001
+    2300036: Cube.026
+    2300038: Cube.027
+    2300040: Cylinder.017
+    2300042: Cylinder.018
+    2300044: Cylinder.019
+    2300046: Cylinder.020
+    2300048: Cylinder.021
+    2300050: Cylinder.022
+    2300052: Cylinder.023
+    2300054: Cylinder.024
     3300000: Back_Grip
     3300002: Bodypart_1
     3300004: Bodypart_2_MeshPart0
@@ -81,6 +114,17 @@ ModelImporter:
     3300028: Cylinder.007
     3300030: Front_Grip
     3300032: Mag
+    3300034: Circle.001
+    3300036: Cube.026
+    3300038: Cube.027
+    3300040: Cylinder.017
+    3300042: Cylinder.018
+    3300044: Cylinder.019
+    3300046: Cylinder.020
+    3300048: Cylinder.021
+    3300050: Cylinder.022
+    3300052: Cylinder.023
+    3300054: Cylinder.024
     4300000: Cylinder.007
     4300002: Cylinder.004
     4300004: Cylinder.001
@@ -98,6 +142,17 @@ ModelImporter:
     4300028: Cube.002
     4300030: Front_Grip
     4300032: Mag
+    4300034: Circle.001
+    4300036: Cube.026
+    4300038: Cube.027
+    4300040: Cylinder.018
+    4300042: Cylinder.019
+    4300044: Cylinder.020
+    4300046: Cylinder.021
+    4300048: Cylinder.022
+    4300050: Cylinder.023
+    4300052: Cylinder.024
+    4300054: Cylinder.017
   materials:
     importMaterials: 1
     materialName: 0
