@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 
         networkView = GetComponent<NetworkView>();
+       // validID = new List<NetworkViewID>();
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -216,6 +217,7 @@ public class GameManager : MonoBehaviour {
     // we need to send an updated remaining time
     void OnPlayerConnected(NetworkPlayer connectingPlayer) {
         if (GameInProgress) {
+            ChatManager.AddToLocalChat(NetworkManager.lastLevelPrefix.ToString());
             networkView.RPC("RPCLoadLevel", connectingPlayer,
                 SettingsManager.instance.LevelName,
                 NetworkManager.lastLevelPrefix,
@@ -223,6 +225,11 @@ public class GameManager : MonoBehaviour {
                 SettingsManager.instance.GameModeIndexServer);
 
             networkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
+
+            //GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
+            //foreach (GameObject obj in objs) {
+            //    networkView.RPC("ValidPlayerID", connectingPlayer, obj.GetComponent<NetworkView>().viewID);
+            //}
         }
     }
     void OnDisconnectedFromServer() {
@@ -234,7 +241,25 @@ public class GameManager : MonoBehaviour {
             Destroy(actor);
         }
     }
+    //private List<NetworkViewID> validID;
+    //private bool validationStarted = false;
+    //[RPC]
+    //void ValidPlayerID(NetworkViewID id) {
+    //    if(!validationStarted){
+    //        StartCoroutine(DestroyInvalidPlayers());
+    //    }
+    //    validID.Add(id);
+    //}
 
+    //private IEnumerator DestroyInvalidPlayers() {
+    //    yield return new WaitForSeconds(1.0f);
+    //    GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
+    //    for (int i = 0; i < objs.Length; i++) {
+    //        if (!validID.Contains(objs[i].GetComponent<NetworkView>().viewID)) {
+    //            Destroy(objs[i]);
+    //        }
+    //    }
+    //}
     public void EndGame() {
         gameInProgress = false;
         
@@ -275,11 +300,6 @@ public class GameManager : MonoBehaviour {
     [RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
 
-        //StartCoroutine(LoadLevelCoRoutine(levelName, levelPrefix, secondsOfGame, gameModeIndex));
-
-        NetworkManager.lastLevelPrefix = levelPrefix;
-        NetworkManager.DisableRPC();
-
         SettingsManager.instance.GameModeIndexClient = gameModeIndex;
         UIChat.UpdatePlayerLists();
         //stuff for timer. Don't set up if it's tutorial or the menu.
@@ -306,10 +326,10 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-
-        
-        Application.LoadLevel(levelName);
+        NetworkManager.lastLevelPrefix = levelPrefix;
+        NetworkManager.DisableRPC();
         Network.SetLevelPrefix(levelPrefix);
+        Application.LoadLevel(levelName);
     }
 
     private IEnumerator LoadLevelCoRoutine(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {

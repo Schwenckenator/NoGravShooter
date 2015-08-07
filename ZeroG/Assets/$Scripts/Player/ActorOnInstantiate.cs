@@ -5,7 +5,7 @@ public class ActorOnInstantiate : MonoBehaviour {
 
     void OnNetworkInstantiate(NetworkMessageInfo info) {
         if (!NetworkManager.IsReadyToSpawn()) {
-            NetworkManager.ReserveObject(info, gameObject);
+            NetworkManager.ReserveObject(info, GetComponent<NetworkView>(), gameObject);
         }
     }
 }

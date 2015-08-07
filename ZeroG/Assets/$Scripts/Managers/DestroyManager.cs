@@ -76,8 +76,13 @@ public class DestroyManager : MonoBehaviour {
 
     public void DirectDestroy(NetworkViewID viewID) {
         //Tell server to also remove RPC
-        Network.RemoveRPCs(viewID);
+        //Network.RemoveRPCs(viewID);
         Network.Destroy(viewID);
+        networkView.RPC("ServerCallRemoveRPC", RPCMode.Server, viewID);
+    }
+    [RPC]
+    void ServerCallRemoveRPC(NetworkViewID viewID) {
+        Network.RemoveRPCs(viewID);
     }
 
     IEnumerator DestroyBufferObjects() {

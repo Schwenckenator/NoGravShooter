@@ -296,14 +296,14 @@ public class NetworkManager : MonoBehaviour {
         return isReadyToSpawn;
     }
 
-    public static void ReserveObject(NetworkMessageInfo info, GameObject obj) {
-        DontDestroyOnLoad(obj);
+    public static void ReserveObject(NetworkMessageInfo info, NetworkView nView, GameObject obj) {
+        //DontDestroyOnLoad(obj);
         Debug.Log("Owner is: " + info.sender.ToString());
+        Debug.Log("Timestamp is: " + info.timestamp.ToString());
+        Debug.Log("NetworkView is:" + nView.ToString());
+        Debug.Log("NetworkViewID is: " + nView.viewID.ToString());
         if (actorOwners.Contains(info.sender)) {
-            Debug.Log("Owner already sent something.");
-            Debug.Log("Owner is: " + info.sender.ToString());
         } else {
-            Debug.Log("Keeping an object");
             actorOwners.Add(info.sender);
         }
     }
