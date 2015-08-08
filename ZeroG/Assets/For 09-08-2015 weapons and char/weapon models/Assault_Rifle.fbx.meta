@@ -27,6 +27,22 @@ ModelImporter:
     100038: Cylinder.002
     100040: Cylinder.003
     100042: Cylinder.004
+    100044: Cube.013_MeshPart0
+    100046: Cube.013_MeshPart1
+    100048: Cube.014
+    100050: Cube.015
+    100052: Cube.016
+    100054: Cube.017
+    100056: Cube.018
+    100058: Cube.019
+    100060: Cube.020
+    100062: Cube.021
+    100064: Cube.022
+    100066: Cube.023
+    100068: Cylinder.008
+    100070: Cylinder.009
+    100072: Cylinder.011
+    100074: Cylinder.012
     400000: //RootNode
     400002: Cube
     400004: Cube.001
@@ -49,6 +65,22 @@ ModelImporter:
     400038: Cylinder.002
     400040: Cylinder.003
     400042: Cylinder.004
+    400044: Cube.013_MeshPart0
+    400046: Cube.013_MeshPart1
+    400048: Cube.014
+    400050: Cube.015
+    400052: Cube.016
+    400054: Cube.017
+    400056: Cube.018
+    400058: Cube.019
+    400060: Cube.020
+    400062: Cube.021
+    400064: Cube.022
+    400066: Cube.023
+    400068: Cylinder.008
+    400070: Cylinder.009
+    400072: Cylinder.011
+    400074: Cylinder.012
     2300000: Cube
     2300002: Cube.001
     2300004: Cube.002
@@ -69,6 +101,22 @@ ModelImporter:
     2300034: Cylinder.002
     2300036: Cylinder.003
     2300038: Cylinder.004
+    2300040: Cube.013_MeshPart0
+    2300042: Cube.013_MeshPart1
+    2300044: Cube.014
+    2300046: Cube.015
+    2300048: Cube.016
+    2300050: Cube.017
+    2300052: Cube.018
+    2300054: Cube.019
+    2300056: Cube.020
+    2300058: Cube.021
+    2300060: Cube.022
+    2300062: Cube.023
+    2300064: Cylinder.008
+    2300066: Cylinder.009
+    2300068: Cylinder.011
+    2300070: Cylinder.012
     3300000: Cube
     3300002: Cube.001
     3300004: Cube.002
@@ -89,6 +137,22 @@ ModelImporter:
     3300034: Cylinder.002
     3300036: Cylinder.003
     3300038: Cylinder.004
+    3300040: Cube.013_MeshPart0
+    3300042: Cube.013_MeshPart1
+    3300044: Cube.014
+    3300046: Cube.015
+    3300048: Cube.016
+    3300050: Cube.017
+    3300052: Cube.018
+    3300054: Cube.019
+    3300056: Cube.020
+    3300058: Cube.021
+    3300060: Cube.022
+    3300062: Cube.023
+    3300064: Cylinder.008
+    3300066: Cylinder.009
+    3300068: Cylinder.011
+    3300070: Cylinder.012
     4300000: Cylinder.004
     4300002: Cube.013
     4300004: Cube.012
@@ -109,6 +173,22 @@ ModelImporter:
     4300034: Cube.007
     4300036: Cube
     4300038: Cylinder.002
+    4300040: Cube.013_MeshPart0
+    4300042: Cube.013_MeshPart1
+    4300044: Cube.014
+    4300046: Cube.015
+    4300048: Cube.016
+    4300050: Cube.017
+    4300052: Cube.018
+    4300054: Cube.019
+    4300056: Cube.020
+    4300058: Cube.021
+    4300060: Cube.022
+    4300062: Cube.023
+    4300064: Cylinder.009
+    4300066: Cylinder.011
+    4300068: Cylinder.012
+    4300070: Cylinder.008
   materials:
     importMaterials: 1
     materialName: 0

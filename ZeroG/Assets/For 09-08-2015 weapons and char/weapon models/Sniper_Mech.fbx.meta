@@ -25,6 +25,8 @@ ModelImporter:
     100034: //RootNode
     100036: Stock
     100038: Trigger
+    100040: Cube.002
+    100042: Cylinder.004
     400000: Acc_Rack
     400002: Barrel
     400004: Body
@@ -45,6 +47,8 @@ ModelImporter:
     400034: //RootNode
     400036: Stock
     400038: Trigger
+    400040: Cube.002
+    400042: Cylinder.004
     2300000: Acc_Rack
     2300002: Barrel
     2300004: Body_MeshPart0
@@ -63,6 +67,8 @@ ModelImporter:
     2300030: Scope
     2300032: Stock
     2300034: Trigger
+    2300036: Cube.002
+    2300038: Cylinder.004
     3300000: Acc_Rack
     3300002: Barrel
     3300004: Body_MeshPart0
@@ -81,6 +87,8 @@ ModelImporter:
     3300030: Scope
     3300032: Stock
     3300034: Trigger
+    3300036: Cube.002
+    3300038: Cylinder.004
     4300000: Cylinder
     4300002: Cube
     4300004: Circle
@@ -99,6 +107,8 @@ ModelImporter:
     4300030: Scope
     4300032: Stock
     4300034: Plane
+    4300036: Cube.002
+    4300038: Cylinder.004
   materials:
     importMaterials: 1
     materialName: 0

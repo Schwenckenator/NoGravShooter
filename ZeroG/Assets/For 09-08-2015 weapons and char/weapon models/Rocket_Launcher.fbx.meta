@@ -33,6 +33,22 @@ ModelImporter:
     100050: ShieldHands
     100052: Turner_Holder
     100054: Wut ies dwat?
+    100056: Cube.029
+    100058: Cube.030
+    100060: Cylinder.025
+    100062: Cylinder.026
+    100064: Cylinder.027
+    100066: Cylinder.028
+    100068: Cylinder.029
+    100070: Cylinder.030
+    100072: Cylinder.031
+    100074: Cylinder.032
+    100076: Cylinder.033
+    100078: Cylinder.034
+    100080: Cylinder.035
+    100082: Rocket_Ammo.001
+    100084: Rocket_Ammo.002
+    100086: Rocket_Ammo.003
     400000: 4Barrels
     400002: BarrelCap
     400004: BarrelCapClone
@@ -61,6 +77,22 @@ ModelImporter:
     400050: ShieldHands
     400052: Turner_Holder
     400054: Wut ies dwat?
+    400056: Cube.029
+    400058: Cube.030
+    400060: Cylinder.025
+    400062: Cylinder.026
+    400064: Cylinder.027
+    400066: Cylinder.028
+    400068: Cylinder.029
+    400070: Cylinder.030
+    400072: Cylinder.031
+    400074: Cylinder.032
+    400076: Cylinder.033
+    400078: Cylinder.034
+    400080: Cylinder.035
+    400082: Rocket_Ammo.001
+    400084: Rocket_Ammo.002
+    400086: Rocket_Ammo.003
     2300000: BarrelCap
     2300002: BarrelCapClone
     2300004: Cube
@@ -85,6 +117,22 @@ ModelImporter:
     2300042: ShieldHands
     2300044: Turner_Holder
     2300046: Wut ies dwat?
+    2300048: Cube.029
+    2300050: Cube.030
+    2300052: Cylinder.025
+    2300054: Cylinder.026
+    2300056: Cylinder.027
+    2300058: Cylinder.028
+    2300060: Cylinder.029
+    2300062: Cylinder.030
+    2300064: Cylinder.031
+    2300066: Cylinder.032
+    2300068: Cylinder.033
+    2300070: Cylinder.034
+    2300072: Cylinder.035
+    2300074: Rocket_Ammo.001
+    2300076: Rocket_Ammo.002
+    2300078: Rocket_Ammo.003
     3300000: BarrelCap
     3300002: BarrelCapClone
     3300004: Cube
@@ -109,6 +157,22 @@ ModelImporter:
     3300042: ShieldHands
     3300044: Turner_Holder
     3300046: Wut ies dwat?
+    3300048: Cube.029
+    3300050: Cube.030
+    3300052: Cylinder.025
+    3300054: Cylinder.026
+    3300056: Cylinder.027
+    3300058: Cylinder.028
+    3300060: Cylinder.029
+    3300062: Cylinder.030
+    3300064: Cylinder.031
+    3300066: Cylinder.032
+    3300068: Cylinder.033
+    3300070: Cylinder.034
+    3300072: Cylinder.035
+    3300074: Rocket_Ammo.001
+    3300076: Rocket_Ammo.002
+    3300078: Rocket_Ammo.003
     4300000: Rocket_Ammo
     4300002: Cylinder.015
     4300004: Cylinder.012
@@ -133,6 +197,22 @@ ModelImporter:
     4300042: Cylinder.001
     4300044: Cube
     4300046: Front_Top_Gear
+    4300048: Rocket_Ammo.003
+    4300050: Rocket_Ammo.002
+    4300052: Rocket_Ammo.001
+    4300054: Cylinder.026
+    4300056: Cylinder.025
+    4300058: Cube.029
+    4300060: Cube.030
+    4300062: Cylinder.029
+    4300064: Cylinder.030
+    4300066: Cylinder.031
+    4300068: Cylinder.032
+    4300070: Cylinder.035
+    4300072: Cylinder.027
+    4300074: Cylinder.028
+    4300076: Cylinder.033
+    4300078: Cylinder.034
     7400000: 4Barrels|Cylinder.002Action
     7400002: 4Barrels|Cylinder.002Action.001
     7400004: 4Barrels|EmptyAction
@@ -142,6 +222,9 @@ ModelImporter:
     7400012: Cylinder.002|Cylinder.002Action
     7400014: Cylinder.002|Cylinder.002Action.001
     7400016: Cylinder.002|EmptyAction
+    7400018: Cylinder.026|Cylinder.002Action
+    7400020: Cylinder.026|Cylinder.002Action.001
+    7400022: Cylinder.026|EmptyAction
     9500000: //RootNode
   materials:
     importMaterials: 1
