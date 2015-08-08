@@ -22,6 +22,7 @@ public class DestroyManager : MonoBehaviour {
 
     private List<NetworkViewID> DestroyBuffer;
     private List<NetworkViewID> DestroyedObjects;
+    private List<NetworkViewID> DestroyedPlayers;
     private bool willDestroy = false;
 
     NetworkView networkView;
@@ -29,6 +30,7 @@ public class DestroyManager : MonoBehaviour {
         networkView = GetComponent<NetworkView>();
         DestroyBuffer = new List<NetworkViewID>();
         DestroyedObjects = new List<NetworkViewID>();
+        DestroyedPlayers = new List<NetworkViewID>();
     }
 
     /// <summary>
@@ -83,6 +85,7 @@ public class DestroyManager : MonoBehaviour {
     [RPC]
     void ServerCallRemoveRPC(NetworkViewID viewID) {
         Network.RemoveRPCs(viewID);
+        DestroyedPlayers.Add(viewID);
     }
 
     IEnumerator DestroyBufferObjects() {
@@ -100,5 +103,26 @@ public class DestroyManager : MonoBehaviour {
     public void ClearDestroyLists() {
         DestroyBuffer.Clear();
         DestroyedObjects.Clear();
+    }
+
+    void OnPlayerConnected(NetworkPlayer connectedPlayer) {
+        if(GameManager.instance.GameInProgress){
+            StartCoroutine(SendDestroyedPlayerIDs(1.0f, connectedPlayer));
+        }
+    }
+    IEnumerator SendDestroyedPlayerIDs(float waitTime, NetworkPlayer connectedPlayer) {
+        yield return new WaitForSeconds(waitTime);
+
+        foreach(NetworkViewID id in DestroyedPlayers){
+            networkView.RPC("DestroyGhostPlayer", connectedPlayer, id);
+        }
+    }
+
+    [RPC]
+    void DestroyGhostPlayer(NetworkViewID id) {
+        NetworkView nView = NetworkView.Find(id);
+        if (nView != null) {
+            Destroy(nView.gameObject);
+        }
     }
 }

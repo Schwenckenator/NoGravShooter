@@ -297,11 +297,8 @@ public class NetworkManager : MonoBehaviour {
     }
 
     public static void ReserveObject(NetworkMessageInfo info, NetworkView nView, GameObject obj) {
-        //DontDestroyOnLoad(obj);
-        Debug.Log("Owner is: " + info.sender.ToString());
-        Debug.Log("Timestamp is: " + info.timestamp.ToString());
-        Debug.Log("NetworkView is:" + nView.ToString());
-        Debug.Log("NetworkViewID is: " + nView.viewID.ToString());
+        DontDestroyOnLoad(obj);
+
         if (actorOwners.Contains(info.sender)) {
         } else {
             actorOwners.Add(info.sender);

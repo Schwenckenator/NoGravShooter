@@ -145,8 +145,13 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         GameManager.instance.PlayerDied();
         GameManager.instance.ManagerDetachCamera();
         GameManager.SetCursorVisibility(true);
-        //GetComponent<ObjectCleanUp>().ClientKillMe();
-        GetComponent<ObjectCleanUp>().KillMe();
+       
+        //
+        if (Network.isServer) {
+            GetComponent<ObjectCleanUp>().KillMe();
+        } else {
+            GetComponent<ObjectCleanUp>().ClientKillMe();
+        }
     }
 
     public static int GetDefaultMaxHealth() {
