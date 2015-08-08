@@ -36,7 +36,7 @@ public class UIPlayerHUD : MonoBehaviour {
         Init();
 
         ShowSniperScope(false); // Set to default
-        RemoveTutorialPrompt();
+        tutorialPromptUI.Show(false);
         RemovePrompt();
 
         // Turn self off after initialsation
@@ -180,6 +180,7 @@ public class UIPlayerHUD : MonoBehaviour {
         tutorialPromptUI.Show(false);
         Time.timeScale = 1;
         tutorialPromptActive = false;
+        GameManager.SetCursorVisibility(false); // Make sure cursor is locked.
     }
 
     static Color red = new Color(1, 0, 0, 1);
