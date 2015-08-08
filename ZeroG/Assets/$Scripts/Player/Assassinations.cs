@@ -21,7 +21,6 @@ public class Assassinations : MonoBehaviour {
 		Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius);
 		foreach(Collider hit in hits){
             if (hit.CompareTag("Player") && !hit.GetComponent<NetworkView>().isMine) { // Don't like the GetComponent in Update()
-
                 AssassinateTargetInRange(hit);
 			}
 		}
@@ -61,12 +60,14 @@ public class Assassinations : MonoBehaviour {
             playerResource.TakeDamage(100, Network.player, 200); // 200 is assassination ID
         }
     }
+	private int pushstrength = 2;
 	private float meleecooldown = 0f;
     private void MeleeAttack(Collider hit) {
         if (InputConverter.GetKey(KeyBind.Interact) && Time.time > meleecooldown) {
-            playerResource.TakeDamage(10, Network.player, 200);
-			//hit.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * 2, ForceMode.Impulse);
-			meleecooldown = Time.time + 0.5F;;
+            playerResource.TakeDamage(10, Network.player);
+			//hit.GetComponent<ActorMotorManager>().PushOffGround();
+			//hit.GetComponent<Rigidbody>().AddForce(transform.forward * pushstrength, ForceMode.Impulse);
+			meleecooldown = Time.time + 0.5F;
         }
     }
 }
