@@ -157,7 +157,7 @@ public class ActorMotorManager : MonoBehaviour {
         // Ragdoll the actor
         InAir();
         rigidbody.constraints = RigidbodyConstraints.None;
-        rigidbody.AddTorque(Random.Range(-1, 1), Random.Range(-1, 1), Random.Range(-1, 1), ForceMode.Impulse);
+        rigidbody.AddTorque(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f), ForceMode.Impulse);
         
         active = false;
         this.enabled = false;

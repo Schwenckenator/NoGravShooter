@@ -241,25 +241,6 @@ public class GameManager : MonoBehaviour {
             Destroy(actor);
         }
     }
-    //private List<NetworkViewID> validID;
-    //private bool validationStarted = false;
-    //[RPC]
-    //void ValidPlayerID(NetworkViewID id) {
-    //    if(!validationStarted){
-    //        StartCoroutine(DestroyInvalidPlayers());
-    //    }
-    //    validID.Add(id);
-    //}
-
-    //private IEnumerator DestroyInvalidPlayers() {
-    //    yield return new WaitForSeconds(1.0f);
-    //    GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
-    //    for (int i = 0; i < objs.Length; i++) {
-    //        if (!validID.Contains(objs[i].GetComponent<NetworkView>().viewID)) {
-    //            Destroy(objs[i]);
-    //        }
-    //    }
-    //}
     public void EndGame() {
         gameInProgress = false;
         

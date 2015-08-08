@@ -39,7 +39,7 @@ public class WeaponResources : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (InputConverter.GetKeyDown(KeyBind.Reload) && !WeaponInventory.isChanging && !isReloading && !isWeaponFull()) {
+        if (InputConverter.GetKeyDown(KeyBind.Reload) && !GameManager.IsPlayerMenu() && !WeaponInventory.isChanging && !isReloading && !isWeaponFull()) {
             StartCoroutine("WeaponReload");
         }
         CoolWeapon();
