@@ -31,7 +31,7 @@ public class SettingsManager : MonoBehaviour {
     private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
     private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Team DeathMatch", "Team Skirmish", "DeathMatch", "Skirmish" };
     private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
-    private string[] weaponlist = { "Laser Rifle", "Assault Rifle", "Beam Sniper", "Shotgun", "Force Cannon", "Rocket Launcher", "Plasma Blaster", "None" };
+    private string[] weaponlist = { "Laser Rifle", "Assault Rifle", "Beam Sniper", "Shotgun", "Force Cannon", "Rocket Launcher", "Plasma Blaster", "Hand gun", "None" };
 
     public string[] LevelList { get { return levelList; } }
     public string[] GameModeList { get { return gameModeList; } }

@@ -62,30 +62,39 @@ public class WeaponInventory : MonoBehaviour {
 
 	}
     private void GetKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
-            ChangeWeapon(0);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2)) {
-            ChangeWeapon(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3)) {
-            ChangeWeapon(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha4)) {
-            ChangeWeapon(3);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha5)) {
-            ChangeWeapon(4);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha6)) {
-            ChangeWeapon(5);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha7)) {
-            ChangeWeapon(6);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha8)) {
-            ChangeWeapon(7);
-        }
+		if (DebugManager.IsAllWeapon()) {
+			if (Input.GetKeyDown(KeyCode.Alpha1)) {
+				ChangeWeapon(7);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha2)) {
+				ChangeWeapon(0);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha3)) {
+				ChangeWeapon(1);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha4)) {
+				ChangeWeapon(2);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha5)) {
+				ChangeWeapon(3);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha6)) {
+				ChangeWeapon(4);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha7)) {
+				ChangeWeapon(5);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha8)) {
+				ChangeWeapon(6);
+			}
+		} else {
+			if (Input.GetKeyDown(KeyCode.Alpha1)) {
+				ChangeWeapon(0);
+			}
+			if (Input.GetKeyDown(KeyCode.Alpha2)) {
+				ChangeWeapon(1);
+			}
+		}
     }
     private void MouseWheelWeaponChange() {
         //change weapons by mouse wheel
