@@ -28,7 +28,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 		}
 		if(Network.isServer){
 			if(randomid){
-				networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,7));
+				networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,8));
 			} else {
 				networkView.RPC("ChangeId", RPCMode.AllBuffered, id);
 			}
