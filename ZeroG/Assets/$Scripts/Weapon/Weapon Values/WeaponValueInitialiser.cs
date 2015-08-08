@@ -3,9 +3,6 @@ using System.Collections;
 
 public class WeaponValueInitialiser : MonoBehaviour {
 	
-
-	public const int numWeapon = 7;
-
 	public GameObject[] projectile;
 	public GameObject[] particle;
 	public AudioClip[] fireSound;
@@ -21,7 +18,7 @@ public class WeaponValueInitialiser : MonoBehaviour {
 
 	void SetUp(){
 
-		for(int i=0; i< numWeapon; i++){
+		for(int i=0; i< GameManager.weapon.Count; i++){
 			GameManager.weapon[i].fireSound = fireSound[i];
 			GameManager.weapon[i].hitParticle = particle[i];
 			GameManager.weapon[i].projectile = projectile[i];

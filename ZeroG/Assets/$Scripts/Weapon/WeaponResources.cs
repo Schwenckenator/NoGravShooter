@@ -120,7 +120,7 @@ public class WeaponResources : MonoBehaviour {
         }
 
         isReloading = true;
-        if (inventory.currentWeapon.reloadTime > 1.0f) {
+        if (inventory.currentWeapon.reloadTime > 0.5f) {
             weaponReloadRotation.ReloadRotation(inventory.currentWeapon.reloadTime);
         }
         GetComponent<AudioSource>().clip = inventory.currentWeapon.reloadSound;

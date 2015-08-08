@@ -83,6 +83,9 @@ public class WeaponInventory : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Alpha7)) {
             ChangeWeapon(6);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha8)) {
+            ChangeWeapon(7);
+        }
     }
     private void MouseWheelWeaponChange() {
         //change weapons by mouse wheel

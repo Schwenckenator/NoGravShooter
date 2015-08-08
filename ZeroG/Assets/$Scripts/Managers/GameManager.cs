@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour {
 		weapon.Add(new ForceShotgunValues());
 		weapon.Add(new RocketLauncherValues());
 		weapon.Add(new PlasmaBlasterValues());
+        weapon.Add(new MechPistolValues());
 	}
 
 	void OnLevelWasLoaded(int level){
