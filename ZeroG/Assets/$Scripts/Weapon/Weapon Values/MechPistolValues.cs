@@ -7,7 +7,7 @@ public class MechPistolValues : WeaponSuperClass {
 		this.useRay 				= true;
 		this.hasRecoil 				= true;
 		this.isEnergy 				= false;
-		this.recoil 				= 1;
+		this.recoil 				= 1.5f;
 		this.rayNum 				= 1;
 		
 		this.shotSpread 			= 0.15f;
