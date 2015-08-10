@@ -110,6 +110,11 @@ public class TutorialInstructions : MonoBehaviour {
 			updateCheckList(5, true);
         }
 		
+		
+		if (Input.GetKeyDown("y")) {
+			skip = true;
+		}
+		
 
         if (check1) {
             if (Input.GetKeyDown(SettingsManager.keyBindings[(int)KeyBind.MoveForward])) {
@@ -274,9 +279,13 @@ public class TutorialInstructions : MonoBehaviour {
         if (shotAllTargets && step4) {
             step4 = false;
             checkingtargets = false;
-            StartCoroutine(FlightTutorial());
+			if(skip){
+				StartCoroutine(FlightTutorial());
+			} else {
+				StartCoroutine(preFlightTutorial());
+			}
         }
-        if (shotAllTargets) {
+        if (shotAllTargets && !skip) {
             room2exit = GameObject.Find("GunRoomExit");
             if (room2exit.transform.position.y > -30) {
                 room2exit.transform.position = new Vector3(room2exit.transform.position.x, room2exit.transform.position.y - 0.07f, room2exit.transform.position.z);
@@ -323,6 +332,7 @@ public class TutorialInstructions : MonoBehaviour {
         UIManager.instance.GoPlayerHUD();
         StartCoroutine(LookTutorial());
     }
+	private bool skip = false;
     public Sprite mousesprite;
     IEnumerator LookTutorial() {
         Invoke("ClearScreen", 6f); // Time it takes to get through starting messages
@@ -341,20 +351,29 @@ public class TutorialInstructions : MonoBehaviour {
         ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.");
         yield return new WaitForSeconds(2);
         GuiManager.instance.blackOutScreen = false;
-        ChatManager.TutorialChat("\nSuit Calibrated.\n\nRunning Tutorial Simulation.");
+        ChatManager.TutorialChat("\n\nRunning Tutorial Simulation.");
         yield return new WaitForSeconds(4);
-		lookingDot.transform.FindChild("DotMesh").GetComponent<Renderer>().material.color = new Color(0, 0, 200, 200);
-        lookingDot.transform.position = new Vector3(-358f, -10.6f, 0f);
-        ChatManager.TutorialChat("\nPlease look at the blue dot.");
-		UIPlayerHUD.TutorialPrompt("\nMove your Mouse to look around.\n\n\n\n\nPress Enter to continue.", mousesprite);
-		CheckList(5);
-		updateCheckList(1, false, "Look at blue dot 1");
-		updateCheckList(2, false, "Look at blue dot 2");
-		updateCheckList(3, false, "Look at blue dot 3");
-		updateCheckList(4, false, "Look at blue dot 4");
-		updateCheckList(5, false, "Look at blue dot 5");
-        yield return new WaitForSeconds(5);
-        step0 = true;
+		UIPlayerHUD.TutorialPrompt("\n\nAre you familiar with the typical controls of FPS games?\n\n\nYes(press Y)  or  No(press N)\n\nThen press Enter.");
+        yield return new WaitForSeconds(3);
+		if(skip){
+			shotAllTargets = true;
+			step4 = true;
+			player.GetComponent<KeyboardInput>().canWalk = true;
+			player.transform.position = new Vector3(-50f, 0f, 0f);
+		} else {
+			lookingDot.transform.FindChild("DotMesh").GetComponent<Renderer>().material.color = new Color(0, 0, 200, 200);
+			lookingDot.transform.position = new Vector3(-358f, -10.6f, 0f);
+			ChatManager.TutorialChat("\nPlease look at the blue dot.");
+			UIPlayerHUD.TutorialPrompt("\nMove your Mouse to look around.\n\n\n\n\nPress Enter to continue.", mousesprite);
+			CheckList(5);
+			updateCheckList(1, false, "Look at blue dot 1");
+			updateCheckList(2, false, "Look at blue dot 2");
+			updateCheckList(3, false, "Look at blue dot 3");
+			updateCheckList(4, false, "Look at blue dot 4");
+			updateCheckList(5, false, "Look at blue dot 5");
+			yield return new WaitForSeconds(5);
+			step0 = true;
+		}
     }
     public Sprite movementsprite;
     IEnumerator MovementTutorial() {
@@ -415,13 +434,17 @@ public class TutorialInstructions : MonoBehaviour {
 		updateCheckList(1, false, "Shoot the targets");
         yield return new WaitForSeconds(5);
         step4 = true;
+		skip = false;
     }
 
+	IEnumerator preFlightTutorial() {
+		ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
+		yield return new WaitForSeconds(6);
+		StartCoroutine(FlightTutorial());
+	}
+	
     public Sprite flightsprite;
     IEnumerator FlightTutorial() {
-        checkingtargets = false;
-        ChatManager.TutorialChat("\nWell done!\n\nPlease proceed to the next room.");
-        yield return new WaitForSeconds(7);
         check5 = true;
         player.GetComponent<KeyboardInput>().canJump = true;
         ChatManager.TutorialChat("This suit comes equipped with Electro-Gravitational Boots.\nTo land on a surface you must rotate yourself so you hit the surface feet first.\nPress " +
