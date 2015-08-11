@@ -181,6 +181,11 @@ public class NetworkManager : MonoBehaviour {
         NetworkManager.isReadyToSpawn = false;
         
         ChatManager.ClearAllChat();
+
+        Debug.Log("Setting time back to normal.");
+        Time.timeScale = 1.0f; // Make sure time is normal
+        UIPlayerHUD.RemoveTutorialPrompt(); // Clear prompt
+
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {

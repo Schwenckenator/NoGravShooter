@@ -96,10 +96,10 @@ public class WeaponResources : MonoBehaviour {
     }
     private void WeaponSmokeCheck() {
         if (isWeaponOverheated()) {
-            smoke.emissionRate = 10;
+            smoke.emissionRate = 15;
             smoke.startColor = Color.black;
         } else if (heat > maxHeat * 2 / 3) {
-            smoke.emissionRate = 10;
+            smoke.emissionRate = 15;
             smoke.startColor = Color.grey;
         } else if (heat > maxHeat * 1 / 3) {
             smoke.emissionRate = 10;

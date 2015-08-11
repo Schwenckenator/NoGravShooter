@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 
         networkView = GetComponent<NetworkView>();
-       // validID = new List<NetworkViewID>();
 
 		// Add weapons to list
 		weapon.Add(new LaserRifleValues());
@@ -390,16 +389,5 @@ public class GameManager : MonoBehaviour {
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.instance.ClearScoreData();
         UIManager.instance.SetMenuWindow(Menu.Lobby);
-    }
-
-    public void BackToMainMenu() {
-
-        if (Network.isClient || Network.isServer) {
-            Network.Disconnect();
-        }
-
-        ScoreVictoryManager.instance.ClearScoreData();
-        Application.LoadLevel("MenuScene");
-
     }
 }

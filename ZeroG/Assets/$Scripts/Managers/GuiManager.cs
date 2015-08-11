@@ -982,7 +982,7 @@ public class GuiManager : MonoBehaviour {
             }
         }
         if (GUI.Button(new Rect(20, largeRect.height - 40, largeRect.width / 3, 30), DisconnectButtonText())) {
-            GameManager.instance.BackToMainMenu();
+           // GameManager.instance.BackToMainMenu();
         }
 		
 		GUI.Box(new Rect( (largeRect.width/3) + 40, 100, (largeRect.width*2/3)-60, largeRect.height - 150), ChatManager.SubmittedChat, lowerLeftTextAlign);
