@@ -112,14 +112,7 @@ public class NetworkManager : MonoBehaviour {
         Network.isMessageQueueRunning = false;
         rpcDisabled = true;
     }
-    private static IEnumerator EnableRPC(float waitTime) {
-        yield return new WaitForSeconds(waitTime);
-        
-        Network.isMessageQueueRunning = true;
-        Network.SetSendingEnabled(0, true);
-        rpcDisabled = false;
-    }
-    public static void EnableRPC() {
+    private static void EnableRPC() {
         Network.isMessageQueueRunning = true;
         Network.SetSendingEnabled(0, true);
         rpcDisabled = false;
@@ -189,7 +182,6 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {
-            //StartCoroutine(EnableRPC(2.0f));
             EnableRPC();
 
             if (!GameManager.IsSceneMenu()) {
