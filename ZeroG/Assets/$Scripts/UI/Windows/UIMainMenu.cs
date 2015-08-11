@@ -9,7 +9,24 @@ public class UIMainMenu : MonoBehaviour {
         InputField playerName = gameObject.GetComponentInChildren<InputField>();
         playerName.text = SettingsManager.instance.PlayerName;
 	}
-	
+    public void CreateGame() {
+        if (CheckName()) {
+            UIManager.instance.GoCreateGame();
+        }
+    }
+    public void JoinGame() {
+        if (CheckName()) {
+            UIManager.instance.GoJoinGame();
+        }
+    }
+
+    private bool CheckName() {
+        bool hasName = SettingsManager.instance.PlayerName != "";
+        if (!hasName) {
+            UIMessage.ShowMessage("Please enter a Player Name.", true);
+        }
+        return hasName;
+    }
 
     public void LoadTutorial() {
         GameManager.instance.LoadTutorial();

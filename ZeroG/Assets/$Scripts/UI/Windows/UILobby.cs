@@ -120,6 +120,7 @@ public class UILobby : MonoBehaviour {
     }
 
     public void SetServerName() {
+        Debug.Log("Server Name is: " + SettingsManager.instance.ServerNameClient);
         serverNameText.SetText(SettingsManager.instance.ServerNameClient);
 
         string text = "IP: " + Network.player.ipAddress;
