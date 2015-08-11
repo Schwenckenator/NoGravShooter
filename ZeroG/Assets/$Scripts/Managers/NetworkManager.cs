@@ -163,6 +163,9 @@ public class NetworkManager : MonoBehaviour {
 
         GameManager.SetCursorVisibility(true);
         if (!GameManager.IsSceneMenu()) {
+            Debug.Log("Setting time back to normal.");
+            Time.timeScale = 1.0f; // Make sure time is normal
+            UIPlayerHUD.RemoveTutorialPrompt(); // Clear prompt
             Application.LoadLevel("MenuScene");
         }
 
@@ -174,11 +177,6 @@ public class NetworkManager : MonoBehaviour {
         NetworkManager.isReadyToSpawn = false;
         
         ChatManager.ClearAllChat();
-
-        Debug.Log("Setting time back to normal.");
-        Time.timeScale = 1.0f; // Make sure time is normal
-        UIPlayerHUD.RemoveTutorialPrompt(); // Clear prompt
-
     }
     void OnLevelWasLoaded() {
         if (rpcDisabled) {

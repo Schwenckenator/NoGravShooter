@@ -19,7 +19,7 @@ public class UILobby : MonoBehaviour {
         }
     }
     #endregion
-
+    public Text serverSettings;
     private static Text startButtonText;
     private static ChangeableText serverNameText;
     private static Button[] buttons;
@@ -121,6 +121,10 @@ public class UILobby : MonoBehaviour {
 
     public void SetServerName() {
         serverNameText.SetText(SettingsManager.instance.ServerNameClient);
+
+        string text = "IP: " + Network.player.ipAddress;
+        text += ", Port: " + Network.player.port;
+        serverSettings.text = text;
     }
 
     [RPC]
