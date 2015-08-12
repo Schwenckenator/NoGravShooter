@@ -95,6 +95,10 @@ public class PlayerResources : MonoBehaviour {
     /// <param name="forceSpend"></param>
     /// <returns></returns>
 	public bool SpendFuel(float spentFuel, bool forceSpend = false){
+        if (DebugManager.IsAllFuel()) {
+            return true;
+        }
+
 		isRecharging = true;
 		if(isJetpackDisabled && !forceSpend){
 			return false;
