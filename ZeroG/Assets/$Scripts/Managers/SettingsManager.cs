@@ -147,6 +147,10 @@ public class SettingsManager : MonoBehaviour {
     public float ColourR { get; set; }
     public float ColourG { get; set; }
     public float ColourB { get; set; }
+
+    public float VolumeMaster { get; set; }
+    public float VolumeMusic { get; set; }
+    public float VolumeEffects { get; set; }
     #endregion
 
     #region PlayerPrefsKeys
@@ -246,6 +250,12 @@ public class SettingsManager : MonoBehaviour {
 		ColourG = PlayerPrefs.GetFloat("ColourG", 0.6f);
 		ColourB = PlayerPrefs.GetFloat("ColourB", 0.6f);
 
+        // Audio Settings
+
+        VolumeMaster = PlayerPrefs.GetFloat("VolumeMaster", 1.0f);
+        VolumeMusic = PlayerPrefs.GetFloat("VolumeMusic", 1.0f);
+        VolumeEffects = PlayerPrefs.GetFloat("VolumeEffects", 1.0f);
+
         ScoreToWinServer = PlayerPrefs.GetInt("ScoreToWin", 20);
         TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
 
@@ -286,6 +296,11 @@ public class SettingsManager : MonoBehaviour {
 		PlayerPrefs.SetFloat("ColourR", ColourR);
 		PlayerPrefs.SetFloat("ColourG", ColourG);
 		PlayerPrefs.SetFloat("ColourB", ColourB);
+
+        //Audio Setting
+        PlayerPrefs.SetFloat("VolumeMaster", VolumeMaster);
+        PlayerPrefs.SetFloat("VolumeMusic", VolumeMusic);
+        PlayerPrefs.SetFloat("VolumeEffects", VolumeEffects);
 
         PlayerPrefs.SetInt("ScoreToWin", ScoreToWinServer);
         PlayerPrefs.SetInt("TimeLimitMin", TimeLimitMin);
