@@ -69,6 +69,7 @@ public class UIKeybindSettings : MonoBehaviour {
 
     public void SaveKeybinds() {
         SettingsManager.instance.SaveKeyBinds();
+        SettingsManager.instance.SaveSettings();
         UIManager.instance.SetMenuWindow(Menu.Options);
     }
 }

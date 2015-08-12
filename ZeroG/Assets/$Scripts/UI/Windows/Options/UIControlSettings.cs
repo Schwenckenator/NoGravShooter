@@ -32,5 +32,16 @@ public class UIControlSettings : MonoBehaviour {
         sliders[1].value = SettingsManager.instance.MouseSensitivityY * 100;
     }
 
+    public void MouseSenXSliderUpdate(float value) {
+        SettingsManager.instance.MouseSensitivityX = value / 100f;
+        InputFieldUpdate();
+    }
+    public void MouseSenYSliderUpdate(float value) {
+        SettingsManager.instance.MouseSensitivityY = value / 100f;
+        InputFieldUpdate();
+    }
+    public void InvertToggleUpdate(bool value) {
+        SettingsManager.instance.MouseYDirection = value ? 1 : -1;
+    }
 
 }
