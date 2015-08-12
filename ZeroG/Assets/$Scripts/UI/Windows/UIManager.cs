@@ -55,25 +55,28 @@ public class UIManager : MonoBehaviour {
     }
     void OnGUI() {
         if (DebugManager.IsAdminMode()) {
-            GUI.Label(new Rect(Screen.width -100, 70, 100, 20), "TEST MODE");
+            GUI.Label(new Rect(Screen.width -100, 70, 100, 20), "ADMIN MODE");
         }
         if (DebugManager.IsDebugMode()) {
             GUI.Label(new Rect(Screen.width -100, 100, 100, 20), "DEBUG: On");
         }
     }
     private static void GetDebugKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.F1)) {
-            DebugManager.ToggleTestMode();
+        if (Input.GetKeyDown(KeyCode.F12)) {
+            UIDebugMenu.ToggleShow();
         }
-        if (Input.GetKeyDown(KeyCode.F2)) {
-            DebugManager.ToggleDebugMode();
-        }
-        if (Input.GetKeyDown(KeyCode.F3)) {
-            if (DebugManager.IsAdminMode()) {
-                PlayerPrefs.DeleteAll();
-                Debug.Log("PlayerPrefs Wiped!");
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.F1)) {
+        //    DebugManager.ToggleTestMode();
+        //}
+        //if (Input.GetKeyDown(KeyCode.F2)) {
+        //    DebugManager.ToggleDebugMode();
+        //}
+        //if (Input.GetKeyDown(KeyCode.F3)) {
+        //    if (DebugManager.IsAdminMode()) {
+        //        PlayerPrefs.DeleteAll();
+        //        Debug.Log("PlayerPrefs Wiped!");
+        //    }
+        //}
 
     }
     private void GetKeyStrokes() {

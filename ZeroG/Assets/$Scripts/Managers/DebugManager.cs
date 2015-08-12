@@ -42,6 +42,12 @@ static class DebugManager {
     public static void SetAllFuel(bool value) {
         allFuel = value;
     }
+    public static void SetAdminMode(bool value) {
+        adminMode = value;
+    }
+    public static void SetDebugMode(bool value) {
+        debugMode = value;
+    }
     
     public static void ToggleTestMode() {
         adminMode = !adminMode;
