@@ -3,7 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum Menu { ChangeKeybind, Message, CreateGame, Debug, EditKeybind, GameSettings, GraphicsSettings, JoinByIP, JoinGame, Lobby, MainMenu, Options, PasswordInput, PauseMenu, PlayerHUD, TutorialMenu }
+public enum Menu { 
+    ChangeKeybind, 
+    Message, 
+    CreateGame, 
+    Debug, 
+    EditKeybind, 
+    GameSettings, 
+    GraphicsSettings, 
+    JoinByIP, 
+    JoinGame, 
+    Lobby, 
+    MainMenu, 
+    Options, 
+    PasswordInput, 
+    PauseMenu, 
+    PlayerHUD, 
+    TutorialMenu,
+    GameClock,
+    BloodyScreen,
+    PlayerSettings,
+    AudioSettings
+}
 
 public class UIManager : MonoBehaviour {
     #region Instance
@@ -65,12 +86,6 @@ public class UIManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F12)) {
             UIDebugMenu.ToggleShow();
         }
-        //if (Input.GetKeyDown(KeyCode.F1)) {
-        //    DebugManager.ToggleTestMode();
-        //}
-        //if (Input.GetKeyDown(KeyCode.F2)) {
-        //    DebugManager.ToggleDebugMode();
-        //}
         //if (Input.GetKeyDown(KeyCode.F3)) {
         //    if (DebugManager.IsAdminMode()) {
         //        PlayerPrefs.DeleteAll();

@@ -30,6 +30,10 @@ public class UIOptions : MonoBehaviour {
         ToggleUpdate();
     }
 
+    public void GoPlayerSettings() {
+        UIManager.instance.SetMenuWindow(Menu.PlayerSettings);
+    }
+
     private void InputFieldUpdate() {
         inputFields[0].text = SettingsManager.instance.MouseSensitivityX.ToString();
         inputFields[1].text = SettingsManager.instance.MouseSensitivityY.ToString();
