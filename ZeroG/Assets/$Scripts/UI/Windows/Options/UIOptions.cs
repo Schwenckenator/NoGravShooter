@@ -28,4 +28,8 @@ public class UIOptions : MonoBehaviour {
     public void GoAudioSettings() {
         UIManager.instance.SetMenuWindow(Menu.AudioSettings);
     }
+    public void GoGraphicsSettings() {
+        UIGraphicsSettings.instance.GraphicsOptionsButtonRefresh();
+        UIManager.instance.SetMenuWindow(Menu.GraphicsSettings);
+    }
 }
