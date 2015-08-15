@@ -33,7 +33,7 @@ public class AimingFOVChanger : MonoBehaviour {
 		}
 		
 		if(Input.GetMouseButton(1)){
-			if (inventory.IsCurrentWeapon(2)){//check if current weapon is sniper
+			if (inventory.IsCurrentWeapon(3)){//check if current weapon is sniper.  I don't like this magic number
                 if (myCamera.fieldOfView > sniperFOV) {
 					myCamera.fieldOfView -= zoomSpeed;
 				} else {

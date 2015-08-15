@@ -3,7 +3,6 @@ using System.Collections;
 
 public class WeaponReloadRotation : MonoBehaviour {
 	
-	public GameObject[] weaponModelList;
 	public float[] firePointZPosition;
 
 	private Transform firePoint;
@@ -24,7 +23,7 @@ public class WeaponReloadRotation : MonoBehaviour {
 		firePoint = transform.FindChild("FirePoint");
 	}
 
-	public void ReloadRotation(float reloadTime, WeaponSuperClass newWeapon = null){
+    public void ReloadRotation(float reloadTime, Weapon newWeapon = null) {
         StopAllCoroutines();
 
 		downTime = reloadTime*0.35f;
@@ -36,7 +35,7 @@ public class WeaponReloadRotation : MonoBehaviour {
 		StartCoroutine("MoveDown");
 	}
 
-	private void NewModelPrep(WeaponSuperClass newWeapon){
+    private void NewModelPrep(Weapon newWeapon) {
 		for(int i=0; i < GameManager.weapon.Count; i++){
 			if(GameManager.weapon[i].Equals(newWeapon)){
 				newModelNum = i;
@@ -49,7 +48,7 @@ public class WeaponReloadRotation : MonoBehaviour {
 		if(weaponModel != null){
 			Destroy(weaponModel);
 		}
-		weaponModel = Instantiate(weaponModelList[newModelNum]) as GameObject;
+		weaponModel = Instantiate(GameManager.weapon[newModelNum].model) as GameObject;
 
         if (transform.root.GetComponent<NetworkView>().isMine)
             SetLayers(weaponModel);

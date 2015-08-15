@@ -7,14 +7,14 @@ using System.Collections.Generic;
 /// </summary>
 public class WeaponInventory : MonoBehaviour {
     public int maxHeldWeapons = 2;
-    public WeaponSuperClass currentWeapon {get; set;}
+    public Weapon currentWeapon { get; set; }
     public int currentInventorySlot {get; private set;}
     public AudioClip soundChangeWeapon;
 
     public static bool isChanging = false;
     
     private bool initialised = false;
-    private List<WeaponSuperClass> heldWeapons;
+    private List<Weapon> heldWeapons;
     private WeaponReloadRotation weaponReloadRotation;
 
     private AudioSource audioSource;
@@ -23,7 +23,7 @@ public class WeaponInventory : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         networkView = GetComponent<NetworkView>();
-        heldWeapons = new List<WeaponSuperClass>();
+        heldWeapons = new List<Weapon>();
         SetWeaponLoadout();
         currentInventorySlot = -1; // Bad value, will change
         currentWeapon = null;
@@ -62,38 +62,29 @@ public class WeaponInventory : MonoBehaviour {
 
 	}
     private void GetKeyStrokes() {
-		if (DebugManager.IsAllWeapon()) {
-			if (Input.GetKeyDown(KeyCode.Alpha1)) {
-				ChangeWeapon(7);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha2)) {
-				ChangeWeapon(0);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha3)) {
-				ChangeWeapon(1);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha4)) {
-				ChangeWeapon(2);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha5)) {
-				ChangeWeapon(3);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha6)) {
-				ChangeWeapon(4);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha7)) {
-				ChangeWeapon(5);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha8)) {
-				ChangeWeapon(6);
-			}
-		} else {
-			if (Input.GetKeyDown(KeyCode.Alpha1)) {
-				ChangeWeapon(0);
-			}
-			if (Input.GetKeyDown(KeyCode.Alpha2)) {
-				ChangeWeapon(1);
-			}
+		if (Input.GetKeyDown(KeyCode.Alpha1)) {
+			ChangeWeapon(0);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2)) {
+			ChangeWeapon(1);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3)) {
+			ChangeWeapon(2);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4)) {
+			ChangeWeapon(3);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha5)) {
+			ChangeWeapon(4);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha6)) {
+			ChangeWeapon(5);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha7)) {
+			ChangeWeapon(6);
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha8)) {
+			ChangeWeapon(7);
 		}
     }
     private void MouseWheelWeaponChange() {
@@ -163,7 +154,7 @@ public class WeaponInventory : MonoBehaviour {
     public void AddWeapon(int weaponID) {
         AddWeapon(weaponID, heldWeapons.Count);
     }
-    public void RemoveWeapon(WeaponSuperClass item) {
+    public void RemoveWeapon(Weapon item) {
         heldWeapons.Remove(item);
     }
 

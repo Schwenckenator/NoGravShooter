@@ -3,8 +3,6 @@ using System.Collections;
 
 [RequireComponent(typeof(ObjectCleanUp))]
 public class BonusWeaponPickup : MonoBehaviour {
-	[SerializeField]
-    private GameObject[] weaponModelsArray;
 	
     private GameObject currentWeaponModel;
 
@@ -53,7 +51,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 	}
 	[RPC]
 	void CreateNewModel(){
-		currentWeaponModel = Instantiate(weaponModelsArray[id], transform.position, transform.rotation) as GameObject;
+		currentWeaponModel = Instantiate(GameManager.weapon[id].model, transform.position, transform.rotation) as GameObject;
 		currentWeaponModel.transform.parent = transform;
 	}
 
@@ -103,7 +101,6 @@ public class BonusWeaponPickup : MonoBehaviour {
         if (swapTimeout > Time.time) return;
 
         swapTimeout = weaponSwapCooldown;
-        //GuiManager.instance.ButtonPrompt("Swap Weapons", (int)KeyBind.Interact);
         UIPlayerHUD.Prompt(InputConverter.GetKeyName(KeyBind.Interact) + " - Swap Weapons");
 
         if (InputConverter.GetKeyDown(KeyBind.Interact)) {

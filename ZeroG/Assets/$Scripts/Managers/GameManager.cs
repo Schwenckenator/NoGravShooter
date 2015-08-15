@@ -40,8 +40,8 @@ public class GameManager : MonoBehaviour {
 	private GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
-	
-	public static List<WeaponSuperClass> weapon = new List<WeaponSuperClass>();
+
+    public static List<Weapon> weapon = new List<Weapon>();
 
     public float endTime;
     public bool IsUseTimer { get; private set; }
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region public static methods
-    public static int WeaponClassToWeaponId(WeaponSuperClass input) {
+    public static int WeaponClassToWeaponId(Weapon input) {
         for (int i = 0; i < weapon.Count; i++) {
             if (input == weapon[i]) {
                 return i;
@@ -126,14 +126,14 @@ public class GameManager : MonoBehaviour {
         networkView = GetComponent<NetworkView>();
 
 		// Add weapons to list
-		weapon.Add(new LaserRifleValues());
-		weapon.Add(new SlugRifleValues());
-		weapon.Add(new LaserSniperValues());
-		weapon.Add(new ShotgunValues());
-		weapon.Add(new ForceShotgunValues());
-		weapon.Add(new RocketLauncherValues());
-		weapon.Add(new PlasmaBlasterValues());
-        weapon.Add(new MechPistolValues());
+        //weapon.Add(new LaserRifleValues());
+        //weapon.Add(new SlugRifleValues());
+        //weapon.Add(new LaserSniperValues());
+        //weapon.Add(new ShotgunValues());
+        //weapon.Add(new ForceShotgunValues());
+        //weapon.Add(new RocketLauncherValues());
+        //weapon.Add(new PlasmaBlasterValues());
+        //weapon.Add(new MechPistolValues());
 	}
 
 	void OnLevelWasLoaded(int level){

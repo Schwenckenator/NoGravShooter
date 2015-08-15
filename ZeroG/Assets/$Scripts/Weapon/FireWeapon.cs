@@ -29,7 +29,7 @@ public class FireWeapon : MonoBehaviour {
         if (inventory.HasNoWeapons()) return;
         
 
-        if (!inventory.currentWeapon.useRay && IsWeaponFiring() && CanWeaponFire()) {
+        if (inventory.currentWeapon.type != WeaponType.Ray && IsWeaponFiring() && CanWeaponFire()) {
             WeaponFired();
         }
 
@@ -41,7 +41,7 @@ public class FireWeapon : MonoBehaviour {
 
     void FixedUpdate() {
         if (inventory.HasNoWeapons()) return;
-        if (inventory.currentWeapon.useRay && IsWeaponFiring() && CanWeaponFire()) {
+        if (inventory.currentWeapon.type == WeaponType.Ray && IsWeaponFiring() && CanWeaponFire()) {
             WeaponFired();
         } 
     }
@@ -58,7 +58,7 @@ public class FireWeapon : MonoBehaviour {
         PlayFireWeaponSound();
         nextFire = Time.time + inventory.currentWeapon.fireDelay;
 
-        if (inventory.currentWeapon.useRay) { //Does this weapon use a ray to hit?
+        if (inventory.currentWeapon.type == WeaponType.Ray) { //Does this weapon use a ray to hit?
             FireRay(inventory.currentWeapon.rayNum);
         } else {
             SpawnProjectile(GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, cameraAnchor.rotation, Network.player);
@@ -93,7 +93,7 @@ public class FireWeapon : MonoBehaviour {
                 spawnHitParticle = true;
                 IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
                 if (damageable != null) {
-                    damageable.TakeDamage(inventory.currentWeapon.damagePerShot, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
+                    damageable.TakeDamage(inventory.currentWeapon.damage, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
                 }
             }
 
@@ -131,7 +131,7 @@ public class FireWeapon : MonoBehaviour {
 
     [RPC]
     void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
-        WeaponSuperClass weapon = GameManager.weapon[weaponID];
+        Weapon weapon = GameManager.weapon[weaponID];
 
         GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
         LineRenderer render = shot.GetComponent<LineRenderer>();
@@ -142,7 +142,7 @@ public class FireWeapon : MonoBehaviour {
 
     [RPC]
     void SpawnHitParticle(int weaponID, Vector3 position) {
-        WeaponSuperClass weapon = GameManager.weapon[weaponID];
+        Weapon weapon = GameManager.weapon[weaponID];
 
         Instantiate(weapon.hitParticle, position, Quaternion.identity);
     }
@@ -180,7 +180,7 @@ public class FireWeapon : MonoBehaviour {
     }
     [RPC]
     void RPCPlayFireWeaponSound(int weaponID) {
-        WeaponSuperClass weapon = GameManager.weapon[weaponID];
+        Weapon weapon = GameManager.weapon[weaponID];
         audioSource.PlayOneShot(weapon.fireSound);
     }
 }
