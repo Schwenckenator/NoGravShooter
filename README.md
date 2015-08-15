@@ -37,6 +37,10 @@ H = Change Grenade
 
 Terminology<br/>
 
+Priority Low: "This'd be nice to have eventually."<br/>
+Priority Medium: "Get on this whenever you can."<br/>
+Priority High: "This needs sorting out, sooner rather than later."<br/>
+Priority IMPORTANT: "Drop everything and do this ASAP."<br/>
 Player: The information held in Player.cs<br/>
 Actor: The character the player controls<br/>
 Grenade: Any thrown projectile.<br/>
