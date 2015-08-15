@@ -11,12 +11,13 @@ public class UIMainMenu : MonoBehaviour {
 	}
     public void CreateGame() {
         if (CheckName()) {
-            UIManager.instance.GoCreateGame();
+            UIManager.instance.SetMenuWindow(Menu.CreateGame);
         }
     }
     public void JoinGame() {
         if (CheckName()) {
-            UIManager.instance.GoJoinGame();
+            UIManager.instance.SetMenuWindow(Menu.JoinGame);
+            UIJoinGame.instance.StartRefresh();
         }
     }
 

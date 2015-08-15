@@ -117,4 +117,7 @@ public class UIPauseSpawn : MonoBehaviour {
     public void Disconnect() {
         NetworkManager.Disconnect();
     }
+    public void GoOptions() {
+        UIManager.instance.SetMenuWindow(Menu.Options);
+    }
 }

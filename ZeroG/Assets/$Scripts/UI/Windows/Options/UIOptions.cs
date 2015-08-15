@@ -15,15 +15,25 @@ public class UIOptions : MonoBehaviour {
         // Turn self off after initialsation
         gameObject.SetActive(false);
 	}
-	
 
     public void GoPlayerSettings() {
         UIManager.instance.SetMenuWindow(Menu.PlayerSettings);
     }
 
-    public void SaveOptionsGoMainMenu() {
+    public void CloseOptions() {
         SettingsManager.instance.SaveSettings();
-        UIManager.instance.SetMenuWindow(Menu.MainMenu);
+
+        if (GameManager.instance.GameInProgress) {
+            if (GameManager.IsSceneTutorial()) {
+                UIManager.instance.SetMenuWindow(Menu.TutorialMenu);
+            } else {
+                UIManager.instance.SetMenuWindow(Menu.PauseMenu);
+            }
+        } else if(Network.isServer || Network.isClient){
+            UIManager.instance.SetMenuWindow(Menu.Lobby);
+        }else {
+            UIManager.instance.SetMenuWindow(Menu.MainMenu);
+        }
     }
     public void GoAudioSettings() {
         UIManager.instance.SetMenuWindow(Menu.AudioSettings);

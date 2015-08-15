@@ -132,4 +132,7 @@ public class UILobby : MonoBehaviour {
     void SetPauseMenuText() {
         UIPauseSpawn.SetServerNameText();
     }
+    public void GoOptions() {
+        UIManager.instance.SetMenuWindow(Menu.Options);
+    }
 }
