@@ -79,10 +79,9 @@ public class FireWeapon : MonoBehaviour {
             //Find direction after shot spread
             Vector3 shotDir = cameraAnchor.forward;
             //Apply two rotations
-            float angle1 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
-            float angle2 = Random.Range(-inventory.currentWeapon.shotSpread, inventory.currentWeapon.shotSpread);
+            Vector2 angle = Random.insideUnitCircle * inventory.currentWeapon.shotSpread;
 
-            shotDir = Quaternion.AngleAxis(angle1, cameraAnchor.up) * Quaternion.AngleAxis(angle2, cameraAnchor.right) * shotDir;
+            shotDir = Quaternion.AngleAxis(angle.x, cameraAnchor.up) * Quaternion.AngleAxis(angle.y, cameraAnchor.right) * shotDir;
 
             Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
             
