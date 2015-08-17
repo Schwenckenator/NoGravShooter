@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour {
                 actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
                 UIPlayerHUD.SetupPlayer(actor);
-
+                DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
                 PlayerColourManager.instance.AssignColour(actor);
 			}
 		}
