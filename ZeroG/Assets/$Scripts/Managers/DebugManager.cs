@@ -5,11 +5,11 @@ static class DebugManager {
     
     private static bool debugMode = false;
     private static bool adminMode = false;
-
     private static bool allWeapon = false;
     private static bool allAmmo = false;
     private static bool allGrenade = false;
     private static bool allFuel = false;
+    private static bool paintballMode = false;
 
     public static bool IsAllWeapon() {
         return allWeapon;
@@ -29,6 +29,9 @@ static class DebugManager {
     public static bool IsDebugMode() {
         return debugMode;
     }
+    public static bool IsPaintballMode() {
+        return paintballMode;
+    }
 
     public static void SetAllWeapon(bool value){
         allWeapon = value;
@@ -47,6 +50,9 @@ static class DebugManager {
     }
     public static void SetDebugMode(bool value) {
         debugMode = value;
+    }
+    public static void SetPaintballMode(bool value) {
+        paintballMode = value;
     }
     
     public static void ToggleTestMode() {
@@ -72,5 +78,7 @@ static class DebugManager {
         Debug.DrawLine(start, end, Color.red, duration, false);
         Debug.DrawLine(start, end, colour, duration, true);
     }
+
+ 
 }
 

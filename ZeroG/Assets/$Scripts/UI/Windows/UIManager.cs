@@ -81,10 +81,17 @@ public class UIManager : MonoBehaviour {
         if (DebugManager.IsDebugMode()) {
             GUI.Label(new Rect(Screen.width -100, 100, 100, 20), "DEBUG: On");
         }
+        if (DebugManager.IsPaintballMode()) {
+            GUI.Label(new Rect(Screen.width - 100, 40, 100, 20), "Paintball: On");
+        }
+
     }
     private static void GetDebugKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.F12)) {
             UIDebugMenu.ToggleShow();
+        }
+        if (Input.GetKeyDown(KeyCode.F1)) {
+            DebugManager.SetPaintballMode(!DebugManager.IsPaintballMode());
         }
         //if (Input.GetKeyDown(KeyCode.F3)) {
         //    if (DebugManager.IsAdminMode()) {

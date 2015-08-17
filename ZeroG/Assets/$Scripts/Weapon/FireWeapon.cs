@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class FireWeapon : MonoBehaviour {
+    public GameObject paintSplat;
 	public Transform gunFirePoint;
 	public Transform cameraAnchor;
 	ActorMotorManager motor;
@@ -100,9 +101,10 @@ public class FireWeapon : MonoBehaviour {
             if (spawnHitParticle) {
                 hitParticlePoints.Add(hit.point);
             }
+            if (DebugManager.IsPaintballMode()) {
+                Instantiate(paintSplat, hit.point, Quaternion.identity);
+            }
         } while (inventory.currentWeapon.rayNum > ++i);
-
-
 
         ShotRender(gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
 

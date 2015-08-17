@@ -124,16 +124,6 @@ public class GameManager : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 
         networkView = GetComponent<NetworkView>();
-
-		// Add weapons to list
-        //weapon.Add(new LaserRifleValues());
-        //weapon.Add(new SlugRifleValues());
-        //weapon.Add(new LaserSniperValues());
-        //weapon.Add(new ShotgunValues());
-        //weapon.Add(new ForceShotgunValues());
-        //weapon.Add(new RocketLauncherValues());
-        //weapon.Add(new PlasmaBlasterValues());
-        //weapon.Add(new MechPistolValues());
 	}
 
 	void OnLevelWasLoaded(int level){
