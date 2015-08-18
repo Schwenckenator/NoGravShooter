@@ -18,9 +18,6 @@ public class DynamicCrosshair : MonoBehaviour {
         float vertFov = Camera.main.fieldOfView;
         float angleToCentre = vertFov / 2;
         float moveFraction = currentSpread / angleToCentre;
-         
-
-
         return Screen.height/2f * moveFraction;
     }
     void MoveCrosshair(float screenDistance) {

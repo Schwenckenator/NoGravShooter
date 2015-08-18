@@ -17,7 +17,8 @@ public abstract class Weapon: MonoBehaviour {
     public int defaultRemainingAmmo;
 
     public float fireDelay;
-    public float shotSpread;
+    public float minSpread;
+    public float maxSpread;
     public float recoil;
     public float reloadTime;
 
@@ -33,6 +34,18 @@ public abstract class Weapon: MonoBehaviour {
     public float coolTime { get; set; }
     public int currentClip{ get; set;}
     public int remainingAmmo {get; set;}
+    public float shotSpread { get; set; }
+
+    public void ResetVariables() {
+        if (isEnergy) {
+            currentClip = defaultRemainingAmmo;
+            remainingAmmo = 0;
+        } else {
+            currentClip = clipSize;
+            remainingAmmo = defaultRemainingAmmo;
+        }
+        shotSpread = minSpread;
+    }
 
     public bool isFull() {
         return currentClip == clipSize;
@@ -41,4 +54,16 @@ public abstract class Weapon: MonoBehaviour {
         return currentClip <= 0;
     }
 
+    public void Fire() {
+        heat += heatPerShot;
+
+        // Add the fire delay as a cooldown time
+        // Sustained fire will quickly heat up your weapon, but taking small breaks will help it cool
+        coolTime = Time.time + fireDelay + 0.1f; // Just a little bit extra
+        currentClip--;
+        AfterFire();
+    }
+    protected virtual void AfterFire() {
+
+    }
 }

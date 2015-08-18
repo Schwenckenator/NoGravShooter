@@ -6,6 +6,7 @@ public class WeaponResources : MonoBehaviour {
     public static bool isReloading = false;
 
     public AudioClip soundOverheat;
+    AudioSource audioSource;
 
     // Set in editor
     public int maxHeat;
@@ -24,6 +25,7 @@ public class WeaponResources : MonoBehaviour {
 	void Awake () {
         weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
         inventory = GetComponent<WeaponInventory>();
+        audioSource = GetComponent<AudioSource>();
         smoke = GetComponentInChildren<ParticleSystem>();
         smoke.emissionRate = 0;
         smoke.Play();
@@ -68,15 +70,11 @@ public class WeaponResources : MonoBehaviour {
 
     public void WeaponFired(float addedHeat) {
         StopCoroutine("WeaponReload");
-        GetComponent<AudioSource>().Stop();
-        inventory.currentWeapon.heat += addedHeat;
-        // Add the fire delay as a cooldown time
-        // Sustained fire will quickly heat up your weapon, but taking small breaks will help it cool
-        inventory.currentWeapon.coolTime = Time.time + inventory.currentWeapon.fireDelay + 0.1f; // Just a little bit extra
-        inventory.currentWeapon.currentClip--;
+        audioSource.Stop();
+        inventory.currentWeapon.Fire();
         if (isWeaponOverheated()) {
             //Gun overheated
-            GetComponent<AudioSource>().PlayOneShot(soundOverheat);
+            audioSource.PlayOneShot(soundOverheat);
             inventory.currentWeapon.heat = maxHeat;
 
             //When overheating, delay cooling
@@ -115,8 +113,8 @@ public class WeaponResources : MonoBehaviour {
         if (inventory.currentWeapon.reloadTime > 0.5f) {
             weaponReloadRotation.ReloadRotation(inventory.currentWeapon.reloadTime);
         }
-        GetComponent<AudioSource>().clip = inventory.currentWeapon.reloadSound;
-        GetComponent<AudioSource>().Play();
+        audioSource.clip = inventory.currentWeapon.reloadSound;
+        audioSource.Play();
         float wait = 0;
         while (wait < inventory.currentWeapon.reloadTime) {
             wait += Time.deltaTime;

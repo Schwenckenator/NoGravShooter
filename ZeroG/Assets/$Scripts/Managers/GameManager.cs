@@ -170,15 +170,9 @@ public class GameManager : MonoBehaviour {
 			}
 		}
 		//Reload all weapons
-		for(int i=0; i< weapon.Count; i++){
-			if(weapon[i].isEnergy){
-				weapon[i].currentClip = weapon[i].defaultRemainingAmmo;
-				weapon[i].remainingAmmo = 0;
-			} else {
-				weapon[i].currentClip = weapon[i].clipSize;
-				weapon[i].remainingAmmo = weapon[i].defaultRemainingAmmo;
-			}
-		}
+		foreach(Weapon weap in weapon){
+            weap.ResetVariables();
+        }
 
         Radar.instance.ActorsChanged();
         UIPauseSpawn.PlayerSpawned();
