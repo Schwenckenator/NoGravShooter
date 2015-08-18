@@ -61,14 +61,6 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region public static methods
-    public static int WeaponClassToWeaponId(Weapon input) {
-        for (int i = 0; i < weapon.Count; i++) {
-            if (input == weapon[i]) {
-                return i;
-            }
-        }
-        return -1;
-    }
     public static bool IsSceneMenu() {
         return Application.loadedLevelName == "MenuScene";
     }

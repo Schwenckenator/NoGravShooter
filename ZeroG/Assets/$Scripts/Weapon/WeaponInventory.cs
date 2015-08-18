@@ -166,7 +166,7 @@ public class WeaponInventory : MonoBehaviour {
         audioSource.Play();
         float waitTime = 1.0f;
         weaponReloadRotation.ReloadRotation(waitTime, currentWeapon);
-        networkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, GameManager.WeaponClassToWeaponId(currentWeapon));
+        networkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, currentWeapon.id);
         yield return new WaitForSeconds(waitTime);
         isChanging = false;
     }

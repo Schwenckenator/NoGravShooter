@@ -62,7 +62,7 @@ public class FireWeapon : MonoBehaviour {
         if (inventory.currentWeapon.type == WeaponType.Ray) { //Does this weapon use a ray to hit?
             FireRay(inventory.currentWeapon.rayNum);
         } else {
-            SpawnProjectile(GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, cameraAnchor.rotation, Network.player);
+            SpawnProjectile(inventory.currentWeapon.id, gunFirePoint.position, cameraAnchor.rotation, Network.player);
         }
         if (inventory.currentWeapon.hasRecoil) {
             motor.Recoil(inventory.currentWeapon.recoil);
@@ -93,7 +93,7 @@ public class FireWeapon : MonoBehaviour {
                 spawnHitParticle = true;
                 IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
                 if (damageable != null) {
-                    damageable.TakeDamage(inventory.currentWeapon.damage, Network.player, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
+                    damageable.TakeDamage(inventory.currentWeapon.damage, Network.player, inventory.currentWeapon.id);
                 }
             }
 
@@ -110,10 +110,10 @@ public class FireWeapon : MonoBehaviour {
 
         //Render shot everywhere else
         for (i = 0; i < inventory.currentWeapon.rayNum; i++) {
-            networkView.RPC("NetworkShotRender", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), gunFirePoint.position, endPoints[i]);
+            networkView.RPC("NetworkShotRender", RPCMode.Others, inventory.currentWeapon.id, gunFirePoint.position, endPoints[i]);
         }
         foreach (Vector3 hitPoint in hitParticlePoints) {
-            networkView.RPC("SpawnHitParticle", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon), hitPoint);
+            networkView.RPC("SpawnHitParticle", RPCMode.Others, inventory.currentWeapon.id, hitPoint);
         }
     }
 
@@ -176,7 +176,7 @@ public class FireWeapon : MonoBehaviour {
         if (networkView.isMine) {
             audioSource.PlayOneShot(inventory.currentWeapon.fireSound);
 
-            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, GameManager.WeaponClassToWeaponId(inventory.currentWeapon));
+            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, inventory.currentWeapon.id);
         }
     }
     [RPC]

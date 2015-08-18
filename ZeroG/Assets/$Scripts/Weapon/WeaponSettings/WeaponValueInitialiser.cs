@@ -11,6 +11,10 @@ public class WeaponValueInitialiser : MonoBehaviour {
         foreach (Weapon weap in weapons) {
             //Debug.Log(weap.ToString());
             GameManager.weapon.Add(weap);
+            
+        }
+        for (int i = 0; i < GameManager.weapon.Count; i++) {
+            GameManager.weapon[i].id = i;
         }
 	}
 }

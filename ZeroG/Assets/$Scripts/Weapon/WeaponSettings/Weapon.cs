@@ -16,7 +16,6 @@ public abstract class Weapon: MonoBehaviour {
     public int clipSize;
     public int defaultRemainingAmmo;
 
-
     public float fireDelay;
     public float shotSpread;
     public float recoil;
@@ -29,7 +28,9 @@ public abstract class Weapon: MonoBehaviour {
     public AudioClip reloadSound;
 
     // Changeables
+    public int id { get; set; }
     public float heat { get; set; }
     public int currentClip{ get; set;}
     public int remainingAmmo {get; set;}
+
 }
