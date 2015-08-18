@@ -9,7 +9,7 @@ public class WeaponValueInitialiser : MonoBehaviour {
 
         Weapon[] weapons = GetComponents<Weapon>();
         foreach (Weapon weap in weapons) {
-            Debug.Log(weap.ToString());
+            //Debug.Log(weap.ToString());
             GameManager.weapon.Add(weap);
         }
 	}

@@ -87,26 +87,16 @@ public class ScoreVictoryManager : MonoBehaviour {
     void TeamCheckForScoreVictory() {
         foreach (Team team in Teams) {
             if (team.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWinClient)) {
-                if (Network.isServer) {
-                    ChatManager.instance.AddToChat(team.Name + " wins!");
-                }
-                GameManager.instance.EndGame();
-                this.VictorName = team.Name;
-                break;
+                DeclareWinner(team.Name);
             }
         }
     }
     void FFACheckForScoreVictory() {
         foreach (Player player in NetworkManager.connectedPlayers) {
             if (player.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWinClient)) {
-                if (Network.isServer) {
-                    ChatManager.instance.AddToChat(player.Name + " wins!");
-                }
-                GameManager.instance.EndGame();
-                this.VictorName = player.Name;
+                DeclareWinner(player.Name);
                 break;
             }
-
         }
     }
     
@@ -115,8 +105,15 @@ public class ScoreVictoryManager : MonoBehaviour {
         string winningName = WinningName();
         if (Network.isServer) {
             ChatManager.instance.AddToChat("Time is up.");
+        }
+        DeclareWinner(winningName);
+    }
+    void DeclareWinner(string winningName) {
+        
+        if (Network.isServer) {
             ChatManager.instance.AddToChat(winningName + " wins!");
         }
+        UIWinnerSplash.SetWinner(winningName);
         GameManager.instance.EndGame();
         this.VictorName = winningName;
     }

@@ -23,7 +23,8 @@ public enum Menu {
     GameClock,
     BloodyScreen,
     PlayerSettings,
-    AudioSettings
+    AudioSettings,
+    WinnerSplash
 }
 
 public class UIManager : MonoBehaviour {
@@ -82,7 +83,7 @@ public class UIManager : MonoBehaviour {
             GUI.Label(new Rect(Screen.width -100, 100, 100, 20), "DEBUG: On");
         }
         if (DebugManager.IsPaintballMode()) {
-            GUI.Label(new Rect(Screen.width - 100, 40, 100, 20), "Paintball: On");
+            GUI.Label(new Rect(Screen.width - 200, 70, 100, 20), "Paintball: On");
         }
 
     }
