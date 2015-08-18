@@ -30,7 +30,15 @@ public abstract class Weapon: MonoBehaviour {
     // Changeables
     public int id { get; set; }
     public float heat { get; set; }
+    public float coolTime { get; set; }
     public int currentClip{ get; set;}
     public int remainingAmmo {get; set;}
+
+    public bool isFull() {
+        return currentClip == clipSize;
+    }
+    public bool isEmpty() {
+        return currentClip <= 0;
+    }
 
 }

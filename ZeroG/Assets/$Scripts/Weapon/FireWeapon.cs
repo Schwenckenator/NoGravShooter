@@ -35,7 +35,7 @@ public class FireWeapon : MonoBehaviour {
         }
 
         // Check for dry fire
-        if (IsWeaponFiring() && weaponResources.isWeaponEmpty()) {
+        if (IsWeaponFiring() && inventory.currentWeapon.isEmpty()) {
            weaponResources.SafeStartReload();
         }
 	}
