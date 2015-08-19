@@ -53,11 +53,7 @@ public class WeaponResources : MonoBehaviour {
 
     private void CoolWeapon() {
         foreach (Weapon weapon in GameManager.weapon) {
-            if (!weapon.isEnergy || weapon.heat <= 0 || Time.time < weapon.coolTime) continue;
-            weapon.heat -= coolRate * Time.deltaTime;
-            if (weapon.heat < 0) {
-                weapon.heat = 0;
-            }
+            weapon.Cool();
         }
     }
     public bool WeaponCanFire() {

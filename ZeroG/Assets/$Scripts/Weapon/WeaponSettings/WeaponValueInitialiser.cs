@@ -15,6 +15,8 @@ public class WeaponValueInitialiser : MonoBehaviour {
         }
         for (int i = 0; i < GameManager.weapon.Count; i++) {
             GameManager.weapon[i].id = i;
+            GameManager.weapon[i].Init();
+            
         }
 	}
 }

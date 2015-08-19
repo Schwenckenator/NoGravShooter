@@ -48,7 +48,7 @@ public class WeaponInventory : MonoBehaviour {
 
         foreach (int id in temp) {
             //Debug.Log(id.ToString());
-            if (id < GameManager.weapon.Count) {
+            if (id >= 0 && id < GameManager.weapon.Count) {
                 AddWeapon(id);
             }
         }
