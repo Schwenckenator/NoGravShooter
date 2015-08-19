@@ -40,7 +40,6 @@ public class WeaponResources : MonoBehaviour {
         if (InputConverter.GetKeyDown(KeyBind.Reload) && !GameManager.IsPlayerMenu() && !WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull()) {
             StartCoroutine("WeaponReload");
         }
-        CoolWeapon();
         WeaponSmokeCheck();
 	}
     void OnGUI() {
@@ -51,11 +50,6 @@ public class WeaponResources : MonoBehaviour {
         }
     }
 
-    private void CoolWeapon() {
-        foreach (Weapon weapon in GameManager.weapon) {
-            weapon.Cool();
-        }
-    }
     public bool WeaponCanFire() {
         return !( inventory.currentWeapon.isEmpty() || isWeaponOverheated() || isReloading);
     }

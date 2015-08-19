@@ -55,7 +55,7 @@ public class FireWeapon : MonoBehaviour {
     }
 
     private void WeaponFired() {
-        weaponResources.WeaponFired(inventory.currentWeapon.heatPerShot);
+        // Play sounds
         PlayFireWeaponSound();
         nextFire = Time.time + inventory.currentWeapon.fireDelay;
 
@@ -64,10 +64,10 @@ public class FireWeapon : MonoBehaviour {
         } else {
             SpawnProjectile(inventory.currentWeapon.id, gunFirePoint.position, cameraAnchor.rotation, Network.player);
         }
+        weaponResources.WeaponFired(inventory.currentWeapon.heatPerShot);
         if (inventory.currentWeapon.hasRecoil) {
             motor.Recoil(inventory.currentWeapon.recoil);
         }
-
     }
 	
 	private void FireRay(int rayNum) {

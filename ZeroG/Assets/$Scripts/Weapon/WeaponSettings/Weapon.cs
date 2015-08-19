@@ -53,8 +53,6 @@ public abstract class Weapon: MonoBehaviour {
         shotSpread = minSpread;
     }
 
-    delegate void OnUpdate();
-
     public abstract void Init();
 
     public bool isFull() {
@@ -79,15 +77,14 @@ public abstract class Weapon: MonoBehaviour {
         }
 
     }
-    
 
+    protected delegate void OnUpdate();
+    protected OnUpdate update;
     void Update() {
-        if (recoil > 0) {
-            ReduceSpread();
-        }
+        update();
     }
 
-    private void ReduceSpread() {
+    protected void ReduceSpread() {
         // Reduce if above min
         if (shotSpread > minSpread) {
             shotSpread -= spreadReduceRate * Time.deltaTime;
@@ -98,12 +95,14 @@ public abstract class Weapon: MonoBehaviour {
             }
         }
     }
-    public void Cool() {
-        if (!isEnergy) return;
+    protected void Cool() {
         if (heat <= 0 || Time.time < coolTime) return;
 
         heat -= coolRate * Time.deltaTime;
 
         if (heat < 0) heat = 0;
+    }
+    protected void PlayWithBalls() {
+        // Do nothing
     }
 }
