@@ -69,6 +69,8 @@ public class SettingsManager : MonoBehaviour {
     public float FieldOfView { get; set; }
     private int i_AutoPickup { get; set; } // Deal with the hungarian
     public bool AutoPickup { get; set; }
+    private int i_AutoSpawn { get; set; }
+    public bool AutoSpawn { get; set; }
     #endregion
 
     #region GameSettings
@@ -233,6 +235,7 @@ public class SettingsManager : MonoBehaviour {
         MouseYDirection = PlayerPrefs.GetInt("MouseYDirection", defaultMouseYDirection);
         FieldOfView = PlayerPrefs.GetFloat("FieldOfView", defaultFieldOfView);
         i_AutoPickup = PlayerPrefs.GetInt("AutoPickup", i_False);
+        i_AutoSpawn = PlayerPrefs.GetInt("AutoSpawn", i_False);
 
         //Game Settings
         LevelIndex = PlayerPrefs.GetInt("LevelIndex", 0);
@@ -280,6 +283,7 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetInt("MouseYDirection", MouseYDirection);
         PlayerPrefs.SetFloat("FieldOfView", FieldOfView);
         PlayerPrefs.SetInt("AutoPickup", i_AutoPickup);
+        PlayerPrefs.SetInt("AutoSpawn", i_AutoSpawn);
         
         //Game Settings
         PlayerPrefs.SetInt("LevelIndex", LevelIndex); 
@@ -322,9 +326,11 @@ public class SettingsManager : MonoBehaviour {
     }
     private void ConvertSettingsIntToBool() {
         AutoPickup = (i_AutoPickup == i_True);
+        AutoSpawn = (i_AutoSpawn == i_True);
     }
     private void ConvertSettingsBoolToInt() {
         i_AutoPickup = AutoPickup ? i_True : i_False;
+        i_AutoSpawn = AutoSpawn ? i_True : i_False;
     }
 
     public void ClearPasswordClient() {

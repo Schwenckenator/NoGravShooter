@@ -9,6 +9,7 @@ public class UIPauseSpawn : MonoBehaviour {
     private static string unpause = "Return to Game";
 
     private static ChangeableText serverName;
+    public Toggle AutoSpawn;
 
     private static IHideable playerList;
     private static IHideable returnToLobby;
@@ -23,6 +24,8 @@ public class UIPauseSpawn : MonoBehaviour {
     public void Init() {
         FindTexts();
         FindHideables();
+        SetToggle();
+
         
         PlayerDied(); // Initialises button text
     }
@@ -56,7 +59,15 @@ public class UIPauseSpawn : MonoBehaviour {
             }
         }
     }
-
+    private void SetToggle() {
+        if (AutoSpawn != null) {
+            AutoSpawn.isOn = SettingsManager.instance.AutoSpawn;
+        }
+    }
+    public void ToggleAutoSpawn(bool value) {
+        SettingsManager.instance.AutoSpawn = value;
+        SettingsManager.instance.SaveSettings();
+    }
 
     public static void PlayerSpawned() {
         spawnButton.SetText(unpause);

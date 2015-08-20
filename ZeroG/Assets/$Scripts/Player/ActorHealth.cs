@@ -152,6 +152,10 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         } else {
             GetComponent<ObjectCleanUp>().ClientKillMe();
         }
+
+        if (SettingsManager.instance.AutoSpawn) {
+            GameManager.instance.SpawnActor();
+        }
     }
 
     public static int GetDefaultMaxHealth() {
