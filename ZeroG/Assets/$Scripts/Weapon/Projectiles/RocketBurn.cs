@@ -9,6 +9,7 @@ public class RocketBurn : MonoBehaviour {
 
 	public float rocketAccel;
 	public float startVelocity;
+    public bool fullyRelative; // Is fully relative, or just Z relative?
 
     private bool moving = true;
 
@@ -16,7 +17,7 @@ public class RocketBurn : MonoBehaviour {
 		if(!Network.isServer) return;
 
 		Vector3 vel = transform.forward * startVelocity;
-        vel += GetPlayerZVelocity();
+        vel += GetPlayerVelocity(fullyRelative);
 
 		GetComponent<Rigidbody>().AddForce(vel, ForceMode.VelocityChange);
 	}
@@ -40,11 +41,11 @@ public class RocketBurn : MonoBehaviour {
         moving = false;
     }
 
-    private Vector3 GetPlayerZVelocity() {
+    private Vector3 GetPlayerVelocity(bool fullRelative) {
         Vector3 playerVel = Vector3.zero;
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
             if (player.GetComponent<NetworkView>().owner == GetComponent<Owner>().ID) {
-                playerVel = StripXYaxisFromPlayerVelocity(player);
+                playerVel = fullRelative ? player.GetComponent<Rigidbody>().velocity : StripXYaxisFromPlayerVelocity(player);
             }
         }
         return playerVel;

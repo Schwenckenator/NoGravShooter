@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ForceShotWarp : MonoBehaviour {
 
-	public int damage;
+	int damage;
 
 	public float push;
 
@@ -13,6 +13,7 @@ public class ForceShotWarp : MonoBehaviour {
 
 	void Start(){
 		transform.Translate(new Vector3(0, 0, 1), Space.Self);
+        damage = ForceCannon.instance.damage;
 	}
 
 	void FixedUpdate(){
