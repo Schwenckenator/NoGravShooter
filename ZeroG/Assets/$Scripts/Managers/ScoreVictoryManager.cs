@@ -77,6 +77,9 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     void CheckForScoreVictory() {
+
+        if (SettingsManager.instance.ScoreToWinClient <= 0) return; // If score disabled, don't bother
+
         if (SettingsManager.instance.IsTeamGameMode()) {
             TeamCheckForScoreVictory();
         } else {
