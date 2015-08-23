@@ -27,6 +27,7 @@ public abstract class Weapon: MonoBehaviour {
     public float spreadPerShot;
     public float spreadReduceRate;
     public float reloadTime;
+    public float zoomFactor;
 
     public GameObject model;
     public GameObject projectile;
@@ -77,7 +78,9 @@ public abstract class Weapon: MonoBehaviour {
         }
 
     }
-
+    //***********************
+    //*** Delegate events ***
+    //***********************
     protected delegate void OnUpdate();
     protected OnUpdate update;
     void Update() {

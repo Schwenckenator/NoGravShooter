@@ -22,44 +22,59 @@ public class AimingFOVChanger : MonoBehaviour {
     }
 	
 	void FixedUpdate(){
+        
         // What is all this doing in an update loop?
         // TODO: Cache the results
 	    maxFOV = SettingsManager.instance.FieldOfView;
+
 	    GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		foreach(GameObject player in list){
             if (player.GetComponent<NetworkView>().isMine) {
 				inventory = player.GetComponent<WeaponInventory>();
 			}
 		}
-		
-		if(Input.GetMouseButton(1)){
-			if (inventory.currentWeapon.isScoped){//check if current weapon is scoped
-                if (myCamera.fieldOfView > sniperFOV) {
-					myCamera.fieldOfView -= zoomSpeed;
-				} else {
+
+        float zoomFov = GetZoomFOV();
+        if (Input.GetMouseButton(1)) {
+            
+            if (inventory.currentWeapon.isScoped) {
+                if (myCamera.fieldOfView == zoomFov) {
                     UIPlayerHUD.ShowSniperScope(true);
-				}
-			} else {
+                }
+            } else {
                 UIPlayerHUD.ShowSniperScope(false);
-				//bugfix for zooming with sniper then changing weapons
-				if(myCamera.fieldOfView < minFOV){
-					myCamera.fieldOfView = minFOV;
-				}
-				if(myCamera.fieldOfView > minFOV){
-					myCamera.fieldOfView -= zoomSpeed;
-				}
-			}
-		} else {
+            }
+
+            if (myCamera.fieldOfView > zoomFov) {
+                myCamera.fieldOfView -= zoomSpeed;
+            }
+        } else {
             UIPlayerHUD.ShowSniperScope(false);
-			//bug fix for changing field of view between games without closing
-			if(myCamera.fieldOfView > maxFOV){
-				myCamera.fieldOfView = maxFOV;
-			}
-			if(myCamera.fieldOfView < maxFOV){
-				myCamera.fieldOfView += zoomSpeed;
-			}
-		}
+            if (myCamera.fieldOfView < maxFOV) {
+                myCamera.fieldOfView += zoomSpeed;
+            }
+        }
+        ClampFOV(zoomFov, maxFOV);
 	}
+
+    private float GetZoomFOV() {
+        float divisor;
+        if (inventory != null && inventory.currentWeapon != null) {
+            divisor = inventory.currentWeapon.zoomFactor;
+        } else {
+            divisor = 2f; // Default
+        }
+         
+        return maxFOV / divisor;
+    }
+
+    private void ClampFOV(float min, float max) {
+        if (myCamera.fieldOfView > max) {
+            myCamera.fieldOfView = max;
+        } else if (myCamera.fieldOfView < min) {
+            myCamera.fieldOfView = min;
+        }
+    }
 	
 	public float zoomRotationRatio(){
 		return myCamera.fieldOfView/maxFOV;
