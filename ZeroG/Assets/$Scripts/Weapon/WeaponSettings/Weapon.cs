@@ -25,7 +25,7 @@ public abstract class Weapon: MonoBehaviour {
     public float minSpread;
     public float maxSpread;
     public float spreadPerShot;
-    public float spreadReduceRate;
+    public float spreadChangeRate;
     public float reloadTime;
     public float zoomFactor;
 
@@ -78,6 +78,9 @@ public abstract class Weapon: MonoBehaviour {
         }
 
     }
+    public virtual void Aim(bool aiming) {
+
+    }
     //***********************
     //*** Delegate events ***
     //***********************
@@ -90,11 +93,21 @@ public abstract class Weapon: MonoBehaviour {
     protected void ReduceSpread() {
         // Reduce if above min
         if (shotSpread > minSpread) {
-            shotSpread -= spreadReduceRate * Time.deltaTime;
+            shotSpread -= spreadChangeRate * Time.deltaTime;
 
             // Set to min if overshot
             if (shotSpread < minSpread) {
                 shotSpread = minSpread;
+            }
+        }
+    }
+    protected void IncreaseSpread() {
+        if (shotSpread < maxSpread) {
+            shotSpread += spreadChangeRate * Time.deltaTime;
+
+            // Set to min if overshot
+            if (shotSpread > maxSpread) {
+                shotSpread = maxSpread;
             }
         }
     }

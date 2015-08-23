@@ -36,7 +36,7 @@ public class AimingFOVChanger : MonoBehaviour {
 
         float zoomFov = GetZoomFOV();
         if (Input.GetMouseButton(1)) {
-            
+            inventory.currentWeapon.Aim(true);
             if (inventory.currentWeapon.isScoped) {
                 if (myCamera.fieldOfView == zoomFov) {
                     UIPlayerHUD.ShowSniperScope(true);
@@ -49,9 +49,13 @@ public class AimingFOVChanger : MonoBehaviour {
                 myCamera.fieldOfView -= zoomSpeed;
             }
         } else {
+            
             UIPlayerHUD.ShowSniperScope(false);
             if (myCamera.fieldOfView < maxFOV) {
                 myCamera.fieldOfView += zoomSpeed;
+            }
+            if (inventory != null && inventory.currentWeapon != null) {
+                inventory.currentWeapon.Aim(false);
             }
         }
         ClampFOV(zoomFov, maxFOV);
