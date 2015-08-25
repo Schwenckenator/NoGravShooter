@@ -5,17 +5,11 @@ public class AimingFOVChanger : MonoBehaviour {
     private float maxFOV;
 
     [SerializeField]
-    private float minFOV;
-    [SerializeField]
     private float zoomSpeed;
-    [SerializeField]
-    private float sniperFOV;
 	
 	private WeaponInventory inventory;
 
     private Camera myCamera;
-
-    
 
     void Start() {
         myCamera = GetComponent<Camera>();

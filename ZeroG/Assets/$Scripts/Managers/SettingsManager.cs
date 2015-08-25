@@ -25,9 +25,7 @@ public class SettingsManager : MonoBehaviour {
     const int SecondsInMinute = 60;
     
 
-    private string[] levelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation" };
-    private string[] publiclevelList = { "Manufactorium", "Manufactorium", "Manufactorium" };
-    private string[] adminlevelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation" };
+    private string[] levelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation", "TestZone" };
     private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
     private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Team DeathMatch", "Team Skirmish", "DeathMatch", "Skirmish" };
     private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
@@ -82,7 +80,7 @@ public class SettingsManager : MonoBehaviour {
         }
         set {
             levelIndex = value;
-            LevelName = LevelList[value];
+            LevelName = levelList[value];
         }
     }
     public string LevelName { get; set; }
@@ -374,15 +372,4 @@ public class SettingsManager : MonoBehaviour {
         UIChat.UpdatePlayerLists();
     }
     #endregion
-	
-	
-	void Update () {
-		if (DebugManager.IsAdminMode()) {
-			levelList = adminlevelList;
-			gameModeList = admingameModeList;
-		} else {
-			levelList = publiclevelList;
-			gameModeList = publicgameModeList;
-		}
-	}
 }

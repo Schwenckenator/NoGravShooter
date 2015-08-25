@@ -36,6 +36,8 @@ public class UIDebugMenu : MonoBehaviour {
     public void ToggleAllFuel(bool value) {
         DebugManager.SetAllFuel(value);
     }
-
+    public void ClearPlayerPrefs() {
+        PlayerPrefs.DeleteAll();
+    }
 
 }

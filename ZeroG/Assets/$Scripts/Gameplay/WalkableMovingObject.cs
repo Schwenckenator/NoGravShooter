@@ -1,31 +1,34 @@
-﻿/*
- * This script responds to player collisions by making the player a child of this object
- * When the player leave the collision, it de-parents it.
- */
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class WalkableMovingObject : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+	void OnCollisionEnter(Collision info){
+        Debug.Log("Collision Enter! " + Time.time.ToString());
+        if (info.collider.CompareTag("Player") && info.collider.GetComponent<NetworkView>().isMine) {
+            Debug.Log("Set the Actor! " + Time.time.ToString());
+            actor = info.collider.transform;
+		}
 	}
 
-	void OnCollisionEnter(Collision info){
-		if(info.collider.CompareTag("Player")){
-			info.transform.parent = transform;
-		}
-	}
 	void OnCollisionExit(Collision info){
-		if(info.collider.CompareTag("Player")){
-			info.transform.parent = null;
+        Debug.Log("Collision exit. " + Time.time.ToString());
+		if(info.collider.CompareTag("Player") && info.collider.GetComponent<NetworkView>().isMine){
+            Debug.Log("Unset actor. " + Time.time.ToString());
+            actor = null;
 		}
 	}
+
+    Transform actor;
+    Vector3 oldPosition;
+    
+    void FixedUpdate() {
+        if (actor != null) {
+            Debug.Log("Moved the actor. " + Time.time.ToString());
+            Vector3 translation = transform.position - oldPosition;
+            //Vector3 translation = oldPosition - transform.position;
+            actor.transform.Translate(translation);
+        }
+        oldPosition = transform.position;
+    }
 }
