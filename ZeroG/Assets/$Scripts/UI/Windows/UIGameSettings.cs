@@ -105,5 +105,17 @@ public class UIGameSettings : MonoBehaviour {
     public void WeaponToggle(bool value) {
         SettingsManager.instance.WeaponCanSpawn = value ? 1 : 0;
     }
+    public void AllWeaponToggle(bool value) {
+        DebugManager.SetAllWeapon(value);
+    }
+    public void AllAmmoToggle(bool value) {
+        DebugManager.SetAllAmmo(value);
+    }
+    public void AllGrenadeToggle(bool value) {
+        DebugManager.SetAllGrenade(value);
+    }
+    public void AllFuelToggle(bool value) {
+        DebugManager.SetAllFuel(value);
+    }
     #endregion
 }

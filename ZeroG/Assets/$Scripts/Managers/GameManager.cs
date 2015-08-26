@@ -146,8 +146,16 @@ public class GameManager : MonoBehaviour {
     private IEnumerator SetStartingWeaponsDelay(int[] weapons) {
         yield return new WaitForSeconds(0.1f); // Small delay
         networkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
+        networkView.RPC("SetCheats", RPCMode.AllBuffered, DebugManager.IsAllWeapon(), DebugManager.IsAllAmmo(), DebugManager.IsAllGrenade(), DebugManager.IsAllFuel());
     }
 
+    [RPC]
+    private void SetCheats(bool allWeapon, bool allAmmo, bool allGrenade, bool allFuel) {
+        DebugManager.SetAllWeapon(allWeapon);
+        DebugManager.SetAllAmmo(allAmmo);
+        DebugManager.SetAllGrenade(allGrenade);
+        DebugManager.SetAllFuel(allFuel);
+    }
 	public void SpawnActor(){
 		myPlayerSpawned = true;
 
