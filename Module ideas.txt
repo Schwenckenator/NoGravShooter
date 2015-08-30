@@ -2,7 +2,6 @@ MODULE SYSTEM
 
 The player has an Active and a Passive slot.
 Only 1 module per slot, 1 module may not be equipped into multiple slots.
-All active modules need a cool-down/warm-up time.
 ALL features of an active module are temporary.
 
 Active modules use different amounts of energy, which is displayed as a small/thin blue bar above fuel, energy gradually increases over time.
