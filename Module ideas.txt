@@ -1,18 +1,21 @@
 MODULE SYSTEM
 
-The player has 3 module slots, 1 Active and 2 Passive.
-Only 1 module may be equipped in a slot, 1 module may not be equipped into multiple slots.
+The player has an Active and a Passive slot.
+Only 1 module per slot, 1 module may not be equipped into multiple slots.
 All active modules need a cool-down/warm-up time.
 ALL features of an active module are temporary.
+
+Active modules use different amounts of energy, which is displayed as a small/thin blue bar above fuel, energy gradually increases over time.
+(aka 'cool-down' is simply defined by how much power the module uses, some you would have to wait for the bar to fill to use, some for example may take only a quarter, so you could wait a quarter of the time or you can wait for it to fill and use the ability 4 times in quick succession, energy cost can be used to balance modules.)
 
 
 
 Module1:
-Active: Dash
+Active: Blink
 The player instantly rushes forwards a set distance, ignoring current speed & direction.
 After the dash the players speed and direction return to the what they were originally.
 (module would detect if anything solid is in front of the player and cut the distance short,
-that way the player stops just before the object and cant go phasing through walls)
+that way the player stops just before the object and can't go phasing through walls)
 
 Passive: Speed Boost
 The player walks and accelerates/decelerates while floating more quickly.
@@ -21,12 +24,11 @@ The player walks and accelerates/decelerates while floating more quickly.
 
 Module2:
 Active: Invulnerability
-The player temporarily becomes unable to take damage.
+The player temporarily gains a shield and becomes unable to take damage.
 
 Passive: Strength Boost
 The player has stronger armour (more health) and therefore takes more damage to kill.
 However the player is also heavier and is a little slower at walking and accelerating/decelerating while floating.
-(equipping module1 as another passive cancels out the difference resulting in default speed)
 
 
 
@@ -36,15 +38,14 @@ The player temporarily becomes invisible and also will not show on enemy players
 (perhaps not completely invisible, maybe like 90% transparent, so people still have a chance to notice)
 
 Passive: Radar-Proof
-The player is not shown on enemy radars while not using fuel.
+The player is not shown on enemy radars while not moving.
 (campers yolo420swagMLGpro)
 
 
 
 Module4:
 Active: Weapon Recharge
-The player uses their suits power to recharge their equipped energy weapon.
-This temporarily disables flight controls due to lack of power.
+The player uses their energy to recharge their equipped energy weapon.
 This should not work if a slug weapon is equipped.
 This gives the weapon extra ammo with an amount depending on the type of weapon.
 (eg laserrifle gets 30, shock-cannon gets 12, plasma blaster gets 4, basically one 'clip')
@@ -68,8 +69,8 @@ The player takes less damage from energy weapons.
 Module6:
 Active: Scanner
 The players radar decetion distance doubles.
-Any players that appear on radar but can't be seen are given a coloured overlay/silhouette.
-The overlay goes 'above' everything(like nametags used to), allowing the player to see others through walls.
+Any players that appear on radar but can't be seen are given a coloured overlay/silhouette/outline.
+The overlay goes 'above' everything (like nametags used to), allowing the player to see others through walls simply by looking in their direction.
 Live grenades/mines also appear on the radar and have 'overlays' like other players.
 
 Passive: Radar Boost
