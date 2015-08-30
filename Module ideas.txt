@@ -4,8 +4,12 @@ The player has an Active and a Passive slot.
 Only 1 module per slot, 1 module may not be equipped into multiple slots.
 ALL features of an active module are temporary.
 
-Active modules use different amounts of energy, which is displayed as a small/thin blue bar above fuel, energy gradually increases over time.
-(aka 'cool-down' is simply defined by how much power the module uses, some you would have to wait for the bar to fill to use, some for example may take only a quarter, so you could wait a quarter of the time or you can wait for it to fill and use the ability 4 times in quick succession, energy cost can be used to balance modules.)
+Active modules use different amounts of energy, which is displayed as a small/thin blue bar above fuel.
+Energy gradually increases over time.
+(aka 'cool-down' is simply defined by how much power the module uses, some you would have to wait
+for the bar to fill to use, some for example may take only a quarter, so you could wait a quarter of the time
+or you can wait for it to fill and use the ability 4 times in quick succession,
+energy cost can be used to balance modules.)
 
 
 
@@ -69,7 +73,8 @@ Module6:
 Active: Scanner
 The players radar decetion distance doubles.
 Any players that appear on radar but can't be seen are given a coloured overlay/silhouette/outline.
-The overlay goes 'above' everything (like nametags used to), allowing the player to see others through walls simply by looking in their direction.
+The overlay goes 'above' everything (like nametags used to), allowing the player to see others
+through walls simply by looking in their direction.
 Live grenades/mines also appear on the radar and have 'overlays' like other players.
 
 Passive: Radar Boost
