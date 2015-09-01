@@ -5,6 +5,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 
     public AudioClip SoundTakeDamage;
     public AudioSource helmetAudio;
+    public ParticleSystem bloodParticle;
 
     int maxHealth = 100;
     int health;
@@ -139,6 +140,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 
     IEnumerator PlayerCleanup() {
         float playerDyingTime = 3.0f;
+        BloodyPlayer();
         BloodyScreen.Show(true);
         yield return new WaitForSeconds(playerDyingTime);
         BloodyScreen.Show(false);
@@ -155,6 +157,17 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 
         if (SettingsManager.instance.AutoSpawn) {
             GameManager.instance.SpawnActor();
+        }
+    }
+
+    [RPC]
+    void BloodyPlayer(bool sendRPC = true) {
+        //Rotate blood to angle TODO
+        bloodParticle.transform.localRotation = Random.rotation;
+        bloodParticle.Play();
+
+        if (sendRPC) {
+            networkView.RPC("BloodyPlayer", RPCMode.Others, false);
         }
     }
 
