@@ -9,6 +9,7 @@ public abstract class Weapon: MonoBehaviour {
     /// Weapon Stats
     /// 
     public string name;
+    public string killMessage;
     public WeaponType type;
     public bool hasRecoil;
     public bool isEnergy;

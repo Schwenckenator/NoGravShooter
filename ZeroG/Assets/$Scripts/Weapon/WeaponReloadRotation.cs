@@ -45,6 +45,9 @@ public class WeaponReloadRotation : MonoBehaviour {
 	}
 
 	private void ChangeModel(){
+
+        firePoint.SetParent(transform);
+
 		if(weaponModel != null){
 			Destroy(weaponModel);
 		}
@@ -58,7 +61,10 @@ public class WeaponReloadRotation : MonoBehaviour {
 		weaponModel.transform.localPosition = new Vector3(0, 0, 0.5f);
 		weaponModel.transform.localEulerAngles = new Vector3(0, 270, 0);
 
-		firePoint.localPosition = new Vector3(0, 0, firePointZPosition[newModelNum] + 0.5f);
+        Transform newFirePoint = weaponModel.transform.FindChild("FirePointAnchor");
+
+        firePoint.SetParent(newFirePoint);
+        firePoint.localPosition = Vector3.zero;
 
 		newModel = false;
 	}

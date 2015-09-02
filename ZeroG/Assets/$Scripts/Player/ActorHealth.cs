@@ -113,27 +113,17 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     const int teamKillID = 100;
     const int assassinated = 200;
     string KillMessageGenerator(int weaponId) {
-        switch (weaponId) {
-            case 0:
-                return " lasered ";
-            case 1:
-                return " shot ";
-            case 2:
-                return " sniped ";
-            case 3:
-                return " shotgunned ";
-            case 4:
-                return " forced ";
-            case 5:
-                return " exploded ";
-            case 6:
-                return " plasmered ";
-            case teamKillID:
-                return " betrayed ";
-            case assassinated:
-                return " assassinated ";
+        Debug.Log(weaponId + "killed me.");
+        if (weaponId > 99) { // Is it special case?
+            switch (weaponId) {
+                case teamKillID:
+                    return " betrayed ";
+                case assassinated:
+                    return " assassinated ";
+            }
+        } else {
+            return " " + GameManager.weapon[weaponId].killMessage + " ";
         }
-
         return " killed ";
 
     }
