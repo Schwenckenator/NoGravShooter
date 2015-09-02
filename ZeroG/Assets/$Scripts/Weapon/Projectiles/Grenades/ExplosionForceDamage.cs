@@ -6,8 +6,6 @@ public class ExplosionForceDamage : MonoBehaviour {
 	public float distanceReduction;
 	public float explosionPower;
 	public float explosionRadius;
-	public float maxDamage;
-
     [SerializeField]
     private int weaponId;
     [SerializeField]
@@ -52,9 +50,9 @@ public class ExplosionForceDamage : MonoBehaviour {
             if (hit.CompareTag("Player")) {
                 //Find distance
                 float distance = (hit.transform.position - transform.position).magnitude;
-                float damage = maxDamage / (Mathf.Max(distance * distanceReduction, 1));
+                float damage = GameManager.weapon[weaponId].damage / (Mathf.Max(distance * distanceReduction, 1));
 
-                IDamageable damageable = hit.GetComponent(typeof(IDamageable)) as IDamageable;
+                IDamageable damageable = hit.gameObject.GetInterface<IDamageable>();
                 damageable.TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
             }
 		}
