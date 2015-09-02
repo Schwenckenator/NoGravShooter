@@ -21,23 +21,24 @@ After the dash the players speed and direction return to the what they were orig
 that way the player stops just before the object and can't go phasing through walls)
 
 Passive: Speed Boost
-The player walks and accelerates/decelerates while floating more quickly.
+The player walks and accelerates/decelerates while floating more quickly,
+also making them more susceptible to grenades and force-cannon.
 
 
 
 Module2:
 Active: Invulnerability
-The player temporarily gains a shield and becomes unable to take damage.
+The player gains a shield and becomes unable to take damage.
 
 Passive: Strength Boost
-The player has stronger armour (more health) and therefore takes more damage to kill.
-However the player is also heavier and is a little slower at walking and accelerating/decelerating while floating.
+The player has stronger armour (more health) and therefore takes more damage to kill but is also heavier,
+making them a little slower at walking and accelerating/decelerating while floating.
 
 
 
 Module3:
 Active: Invisibility
-The player temporarily becomes invisible and also will not show on enemy players radars.
+The player becomes invisible and also will not show on enemy players radars.
 (perhaps not completely invisible, maybe like 90% transparent, so people still have a chance to notice)
 
 Passive: Radar-Proof
@@ -48,34 +49,34 @@ The player is not shown on enemy radars while not moving.
 
 Module4:
 Active: Weapon Recharge
-The player uses their energy to recharge their equipped energy weapon.
-This should not work if a slug weapon is equipped.
+The player uses their energy to recharge the energy weapon they are current using.
+(should fail if slug weapon being used)
 This gives the weapon extra ammo with an amount depending on the type of weapon.
-(eg laserrifle gets 30, shock-cannon gets 12, plasma blaster gets 4, basically one 'clip')
+(eg laserrifle gets 30, force-cannon gets 12, plasma blaster gets 4, basically one 'clip')
 
 Passive: Gradual Charge
-The players equipped energy weapons gradually gain ammo over time.
-(relative to 'clip' size, so you arent gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
+Any energy weapons the player has will gradually gain ammo over time.
+(relative to 'clip' size, so you aren't gonna get 1 plasma blast in the same amount of time as 1 laser rifle shot)
 
 
 
 Module5:
 Active: Energy Pulse
 The player releases a sphererical shock-wave that expands around the player, pushing other players away.
-Not as strong as a shock-cannon but hits in all directions.
+Not as strong as a force-cannon but hits in all directions.
 
 Passive: Energy Shield
-The player takes less damage from energy weapons.
+The player takes less damage from laser weapons.
 
 
 
 Module6:
 Active: Scanner
-The players radar decetion distance doubles.
-Any players that appear on radar but can't be seen are given a coloured overlay/silhouette/outline.
+The players radar detection distance doubles.
+Any players that appear on radar are given a coloured overlay/silhouette/outline.
 The overlay goes 'above' everything (like nametags used to), allowing the player to see others
 through walls simply by looking in their direction.
-Live grenades/mines also appear on the radar and have 'overlays' like other players.
+Live grenades/mines also appear on the radar and/or have 'overlays' like other players.
 
 Passive: Radar Boost
 The players radar detection distance is increased by 50%.
