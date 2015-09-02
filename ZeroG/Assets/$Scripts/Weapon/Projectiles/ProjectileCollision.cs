@@ -4,8 +4,12 @@ using System.Collections;
 public class ProjectileCollision : MonoBehaviour {
 
     public GameObject rocketBlast;
+    public DestroyParticleEffect particles;
 
     void OnCollisionEnter() {
+
+        particles.DestroyAfterDelay(4.0f);
+
         if (Network.isServer) {
 
             GameObject explosion = Network.Instantiate(rocketBlast, transform.position, Quaternion.identity, 0) as GameObject;

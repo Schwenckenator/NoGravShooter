@@ -6,6 +6,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     public AudioClip SoundTakeDamage;
     public AudioSource helmetAudio;
     public ParticleSystem bloodParticle;
+    private DestroyParticleEffect killBlood;
 
     int maxHealth = 100;
     int health;
@@ -114,7 +115,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     const int assassinated = 200;
     string KillMessageGenerator(int weaponId) {
         Debug.Log(weaponId + "killed me.");
-        if (weaponId > 99) { // Is it special case?
+        if (weaponId < 0 || weaponId > 99) { // Is it special case?
             switch (weaponId) {
                 case teamKillID:
                     return " betrayed ";
@@ -155,10 +156,14 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         //Rotate blood to angle TODO
         bloodParticle.transform.localRotation = Random.rotation;
         bloodParticle.Play();
-
+        killBlood = bloodParticle.GetComponent<DestroyParticleEffect>();
+        Invoke("DetachBlood", 2.9f); // Just shy of player deletion time
         if (sendRPC) {
             networkView.RPC("BloodyPlayer", RPCMode.Others, false);
         }
+    }
+    void DetachBlood() {
+        killBlood.DestroyAfterDelay(5.0f);
     }
 
     public static int GetDefaultMaxHealth() {
