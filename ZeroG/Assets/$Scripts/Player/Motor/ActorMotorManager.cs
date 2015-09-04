@@ -14,6 +14,8 @@ public class ActorMotorManager : MonoBehaviour {
 
     float footRayDistance;
     public float maxLandingAngle = 60f;
+    float maxWalkingAngle = 105f;
+    private float currentLandingAngle;
 
     bool grounded = false;
     bool active = false;
@@ -53,8 +55,17 @@ public class ActorMotorManager : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         grounded = false;
+        UpdateLandingAngle();
         currentMotor.Movement();
 	}
+    void UpdateLandingAngle() {
+        if (currentMotor == walkingMotor && InputConverter.GetKey(KeyBind.MoveForward) && !InputConverter.GetKey(KeyBind.JetDown)) {
+            currentLandingAngle = maxWalkingAngle;
+        } else {
+            currentLandingAngle = maxLandingAngle;
+        }
+        //Debug.Log(currentLandingAngle);
+    }
     IEnumerator MagnetBoots() {
         while (true) {
             yield return new WaitForFixedUpdate();
@@ -107,7 +118,7 @@ public class ActorMotorManager : MonoBehaviour {
 
         if (ValidLanding(colInfo)){
             //Snap to surface
-            cameraMotor.SnapToSurface(CollisionNormal(colInfo)); // Getting collision normal twice, might cause problems
+            cameraMotor.SnapToSurface(LargestValidAngleNormal(colInfo)); // Getting collision normal twice, might cause problems
         }
 
         RaycastHit hit;
@@ -131,7 +142,26 @@ public class ActorMotorManager : MonoBehaviour {
                 break;
             }
         }
+        colNormal = colInfo.contacts[0].normal;
         return colNormal;
+    }
+    private Vector3 LargestValidAngleNormal(Collision colInfo) {
+        float[] angles = new float[colInfo.contacts.Length];
+
+        for (int i = 0; i < angles.Length; i++) {
+            angles[i] = Vector3.Angle(transform.up, colInfo.contacts[i].normal);
+        }
+
+        int index = -1; // Will explode if fails
+        float max = 0;
+        // Find maximum valid angle
+        for (int i = 0; i < angles.Length; i++) {
+            if (angles[i] > max && angles[i] < currentLandingAngle) {
+                index = i;
+                max = angles[i];
+            }
+        }
+        return colInfo.contacts[index].normal;
     }
 
     private Ray CollisionRay() {
@@ -150,7 +180,11 @@ public class ActorMotorManager : MonoBehaviour {
 
         float angle = Vector3.Angle(transform.up, colNormal);
 
-        return (angle > 0f && angle < maxLandingAngle);
+        if(angle > 0){
+            Debug.Log(angle);
+        }
+
+        return (angle > 0f && angle < currentLandingAngle);
     }
 
     void OnDeath() {
