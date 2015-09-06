@@ -150,10 +150,11 @@ public class ActorMotorManager : MonoBehaviour {
 
         for (int i = 0; i < angles.Length; i++) {
             angles[i] = Vector3.Angle(transform.up, colInfo.contacts[i].normal);
+            Debug.Log(angles[i]);
         }
 
         int index = -1; // Will explode if fails
-        float max = 0;
+        float max = Mathf.NegativeInfinity; // Lowest possible value
         // Find maximum valid angle
         for (int i = 0; i < angles.Length; i++) {
             if (angles[i] > max && angles[i] < currentLandingAngle) {
@@ -161,7 +162,7 @@ public class ActorMotorManager : MonoBehaviour {
                 max = angles[i];
             }
         }
-        return colInfo.contacts[index].normal;
+        return (index < 0) ? Vector3.zero : colInfo.contacts[index].normal;
     }
 
     private Ray CollisionRay() {
@@ -173,7 +174,7 @@ public class ActorMotorManager : MonoBehaviour {
         // If not mine, don't bother
         if (!networkView.isMine) return false;
 
-        Vector3 colNormal = CollisionNormal(colInfo);
+        Vector3 colNormal = LargestValidAngleNormal(colInfo);
 
         // If the ray didn't hit, the actor isn't walking
         if (colNormal.Equals(Vector3.zero)) return false;
