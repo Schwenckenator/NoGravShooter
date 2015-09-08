@@ -150,7 +150,7 @@ public class ActorMotorManager : MonoBehaviour {
 
         for (int i = 0; i < angles.Length; i++) {
             angles[i] = Vector3.Angle(transform.up, colInfo.contacts[i].normal);
-            Debug.Log(angles[i]);
+            //Debug.Log(angles[i]);
         }
 
         int index = -1; // Will explode if fails
