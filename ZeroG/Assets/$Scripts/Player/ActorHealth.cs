@@ -102,6 +102,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         if (networkView.isMine && !isDamageSound) {
             isDamageSound = true;
             StartCoroutine(PlaySoundTakeDamage());
+            BloodyScreen.Flash();
         }
     }
 
