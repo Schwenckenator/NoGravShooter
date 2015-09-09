@@ -149,12 +149,16 @@ public class ActorMotorManager : MonoBehaviour {
         float[] angles = new float[colInfo.contacts.Length];
 
         for (int i = 0; i < angles.Length; i++) {
+            
+            if (colInfo.contacts[i].otherCollider.CompareTag("Player")) { // If player contact, don't count it
+                angles[i] = -10f; // Lower value than what is possible
+                continue;
+            }
             angles[i] = Vector3.Angle(transform.up, colInfo.contacts[i].normal);
-            //Debug.Log(angles[i]);
         }
 
-        int index = -1; // Will explode if fails
-        float max = Mathf.NegativeInfinity; // Lowest possible value
+        int index = -1;
+        float max = -1f; // Lowest possible value
         // Find maximum valid angle
         for (int i = 0; i < angles.Length; i++) {
             if (angles[i] > max && angles[i] < currentLandingAngle) {
@@ -173,6 +177,7 @@ public class ActorMotorManager : MonoBehaviour {
     bool ValidLanding(Collision colInfo) {
         // If not mine, don't bother
         if (!networkView.isMine) return false;
+        
 
         Vector3 colNormal = LargestValidAngleNormal(colInfo);
 
@@ -209,6 +214,7 @@ public class ActorMotorManager : MonoBehaviour {
     public void PushOffGround() {
         if (active) {
             InAir(); // Activate the jetpack motor
+            rigidbody.AddRelativeForce(Vector3.up, ForceMode.Impulse); // Add some up?
         }
     }
 }

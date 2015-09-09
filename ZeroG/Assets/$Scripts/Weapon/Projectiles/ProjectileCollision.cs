@@ -8,7 +8,7 @@ public class ProjectileCollision : MonoBehaviour {
 
     void OnCollisionEnter() {
 
-        particles.DestroyAfterDelay(4.0f);
+        particles.DestroyAfterDelay();
 
         if (Network.isServer) {
 

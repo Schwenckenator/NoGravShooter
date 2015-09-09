@@ -3,8 +3,9 @@ using System.Collections;
 
 public class DestroyParticleEffect : MonoBehaviour {
 
+    public float delay;
 
-    public void DestroyAfterDelay(float delay) {
+    public void DestroyAfterDelay() {
         GetComponent<ParticleSystem>().Stop();
         transform.SetParent(null);
         Invoke("DestroyMe", delay);

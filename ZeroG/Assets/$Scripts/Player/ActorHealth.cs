@@ -163,7 +163,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         }
     }
     void DetachBlood() {
-        killBlood.DestroyAfterDelay(5.0f);
+        killBlood.DestroyAfterDelay();
     }
 
     public static int GetDefaultMaxHealth() {
