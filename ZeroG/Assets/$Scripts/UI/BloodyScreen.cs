@@ -5,7 +5,7 @@ public class BloodyScreen : MonoBehaviour {
     private static BloodyScreen instance;
     private static CanvasGroup canvasGroup;
 
-    private static float flashSpeed = 7;
+    private static float fadeSpeed = 4;
 
 	// Use this for initialization
 	void Start () {
@@ -15,56 +15,26 @@ public class BloodyScreen : MonoBehaviour {
 	}
 
     public static void Show(bool show) {
-        if (show) {
-            instance.StopAllCoroutines();
-            instance.StartCoroutine(instance.ShowBloodyScreen());
-        } else {
-            canvasGroup.alpha = 0;
-        }
+        instance.StopAllCoroutines();
+        canvasGroup.alpha = show ? 1 : 0;
     }
 
     public static void Flash() {
         instance.StartCoroutine(instance.FlashBloodyScreen());
     }
 
-    IEnumerator ShowBloodyScreen() {
-        while (!IncreaseAlpha(Time.deltaTime * flashSpeed)) {
-            Debug.Log("Show Bloody Screen.");
-            yield return null;
-        }
-    }
     IEnumerator FlashBloodyScreen() {
-        while (!IncreaseAlpha(Time.deltaTime * flashSpeed)) {
-            Debug.Log("Flash Bloody Screen UP.");
+        canvasGroup.alpha = 1f;
+        yield return null;
+
+        float t = 0f;
+        while (canvasGroup.alpha > 0.01f) {
+            canvasGroup.alpha = Mathf.Lerp(1f, 0f, t * fadeSpeed);
+            t += Time.deltaTime;
             yield return null;
         }
-        //yield return new WaitForSeconds(0.1f); // Hold for 1/10th of second
-        while (!DecreaseAlpha(Time.deltaTime * flashSpeed)) {
-            Debug.Log("Flash Bloody Screen DOWN.");
-            yield return null;
-        }
     }
 
-    static bool IncreaseAlpha(float increase) {
-        canvasGroup.alpha += increase;
-
-        if (canvasGroup.alpha >= 0.99f) {
-            canvasGroup.alpha = 1;
-            return true;
-        } else {
-            return false;
-        }
-    }
-    static bool DecreaseAlpha(float decrease) {
-        canvasGroup.alpha -= decrease;
-
-        if (canvasGroup.alpha <= 0.01f) {
-            canvasGroup.alpha = 0;
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     void OnLevelWasLoaded() {
         BloodyScreen.Show(false);

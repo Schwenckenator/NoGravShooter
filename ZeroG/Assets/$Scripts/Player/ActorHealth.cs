@@ -16,6 +16,8 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 
     private NetworkView networkView;
 
+    private int suicideDamage = 10; // How much damage K does
+
 	// Use this for initialization
 	void Start () {
         IActorStats stats = gameObject.GetInterface<IActorStats>();
@@ -25,7 +27,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 	}
     void Update() {
         if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine) { //K is for kill! // This is for testing purposes only
-            TakeDamage(100, Network.player);
+            TakeDamage(suicideDamage, Network.player);
         }
     }
     // Interface Implementation
