@@ -1,0 +1,1 @@
+The body hit sounds are played when you are being hit by someone elses gun. There are 4 sounds so a randomised effect could work well or use different sounds for different types of weapons.

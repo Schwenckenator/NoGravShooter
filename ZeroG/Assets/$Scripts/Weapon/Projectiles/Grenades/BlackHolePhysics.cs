@@ -10,6 +10,7 @@ public class BlackHolePhysics : MonoBehaviour {
 
 	private List<Rigidbody> hitsRigid;
     private ActorMotorManager actor;
+    private Rigidbody actorRigid;
 
 	// Use this for initialization
 	void Start () {
@@ -25,10 +26,6 @@ public class BlackHolePhysics : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 		//Move said captured objects towards me
-        if (actor != null) {
-            actor.PushOffGround();
-        }
-
 		for(int i=0; i<hitsRigid.Count; i++){
 			if(hitsRigid[i] == null || hitsRigid[i].CompareTag("ForceProjectile")){
 				continue;
@@ -39,6 +36,11 @@ public class BlackHolePhysics : MonoBehaviour {
 			Vector3 totalForce = Vector3.ClampMagnitude((forceDir * strength)/forceMag, maxStrength);
 
 			hitsRigid[i].AddForce(totalForce, ForceMode.Acceleration);
+            if (hitsRigid[i] == actorRigid) {
+                if (totalForce.sqrMagnitude > 1) {
+                    actor.PushOffGround();
+                }
+            }
 		}
 	}
 
@@ -53,6 +55,7 @@ public class BlackHolePhysics : MonoBehaviour {
 					}
 				}
                 if (hit.CompareTag("Player") && hit.GetComponent<NetworkView>().isMine) {
+                    actorRigid = hit.GetComponent<Rigidbody>();
                     actor = hit.GetComponent<ActorMotorManager>();
                 }
 			}

@@ -1,0 +1,1 @@
+I only made one of these sounds because I figured due to the high rate of fire having multiple sounds arent noticable and would waste cpu randomizing it

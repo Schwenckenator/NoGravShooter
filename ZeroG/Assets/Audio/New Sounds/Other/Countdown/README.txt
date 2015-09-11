@@ -1,0 +1,1 @@
+These are for the countdown before the game starts.

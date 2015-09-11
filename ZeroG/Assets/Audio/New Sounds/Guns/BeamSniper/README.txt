@@ -1,0 +1,1 @@
+These are for the beam sniper. Im not too sure what you would want the sound for this one to be like so I included a short one and a long one if the player holds down the button to shoot

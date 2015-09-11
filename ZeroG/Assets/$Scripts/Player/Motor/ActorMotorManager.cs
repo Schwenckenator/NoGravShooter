@@ -214,7 +214,7 @@ public class ActorMotorManager : MonoBehaviour {
     public void PushOffGround() {
         if (active) {
             InAir(); // Activate the jetpack motor
-            rigidbody.AddRelativeForce(Vector3.up, ForceMode.Impulse); // Add some up?
+            //rigidbody.AddRelativeForce(Vector3.up, ForceMode.Impulse); // Add some up?
         }
     }
 }

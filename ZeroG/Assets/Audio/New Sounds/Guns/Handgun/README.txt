@@ -1,0 +1,1 @@
+These are for the hand gun. There are three sounds for a randomized effect
