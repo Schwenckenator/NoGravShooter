@@ -1,0 +1,1 @@
+This is for when you pick up items. Ill probably fix this one at a later date and also add one for when you pick up a gun

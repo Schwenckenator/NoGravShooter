@@ -1,0 +1,1 @@
+This is for when you hit another player. Basically a notification so that you know your shots are getting through
