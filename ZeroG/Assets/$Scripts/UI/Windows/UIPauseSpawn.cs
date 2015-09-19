@@ -116,10 +116,10 @@ public class UIPauseSpawn : MonoBehaviour {
     }
 
     public void PauseSpawnPress() {
-        if (GameManager.instance.IsPlayerSpawned()) {
+        if (PlayerManager.IsActorSpawned()) {
             PauseMenuSwitch();
         } else {
-            GameManager.instance.SpawnActor();
+            PlayerManager.instance.SpawnActor();
         }
     }
     public void ReturnToLobbyPress() {

@@ -191,8 +191,8 @@ public class GuiManager : MonoBehaviour {
 		}else if(GameManager.IsPlayerMenu()){
             GUI.Window(0, largeRect, PauseWindow, menuText);
 			
-		}else if(GameManager.instance.IsPlayerSpawned()){
-			PlayerGUI();
+		//}else if(GameManager.instance.IsPlayerSpawned()){
+		//	PlayerGUI();
 			
 		}else if(!GameManager.IsSceneMenu()){
             GUI.Window(1, largeRect, PauseWindow, menuText);
@@ -937,25 +937,25 @@ public class GuiManager : MonoBehaviour {
             DisplayTimer(); // Display the timer even when paused
         }
 
-		if(GameManager.instance.IsPlayerSpawned()){
-            string strReturnToGame = GameManager.IsSceneTutorial() ? "Return to Simulation" : "Return to Game";
-			if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
-				GameManager.instance.SetPlayerMenu(false);
-				GameManager.SetCursorVisibility(false);
-			}
-		}else {
-            if (ScoreVictoryManager.instance.IsVictor()) {
-                GUI.enabled = false;
-                GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), ScoreVictoryManager.instance.VictorName + " has won!");
-                GUI.enabled = true;
-            } else {
-                if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
-                    GameManager.instance.SpawnActor();
-                    SetMyPlayerResources();
-                }
-            }
+		//if(GameManager.instance.IsPlayerSpawned()){
+  //          string strReturnToGame = GameManager.IsSceneTutorial() ? "Return to Simulation" : "Return to Game";
+		//	if(GUI.Button(new Rect(20, 50, largeRect.width-40, 30), strReturnToGame)){
+		//		GameManager.instance.SetPlayerMenu(false);
+		//		GameManager.SetCursorVisibility(false);
+		//	}
+		//}else {
+  //          if (ScoreVictoryManager.instance.IsVictor()) {
+  //              GUI.enabled = false;
+  //              GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), ScoreVictoryManager.instance.VictorName + " has won!");
+  //              GUI.enabled = true;
+  //          } else {
+  //              if (GUI.Button(new Rect(20, 50, largeRect.width - 40, 30), "Spawn")) {
+  //                  GameManager.instance.SpawnActor();
+  //                  SetMyPlayerResources();
+  //              }
+  //          }
 
-		}
+		//}
 
         if(SettingsManager.instance.IsTeamGameMode() && !GameManager.IsSceneTutorial()){
 			GUI.Box(new Rect(20, 100, (largeRect.width/6)-5, largeRect.height-190), RedPlayerList(true), upperLeftTextAlign);

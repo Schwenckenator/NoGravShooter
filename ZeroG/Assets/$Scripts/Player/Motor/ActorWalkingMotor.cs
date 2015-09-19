@@ -33,9 +33,14 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
         sqrWalkingSoundVelocity = walkingSoundVelocity * walkingSoundVelocity;
         jumpVector = new Vector3(0, jumpForce, 0);
 
+        Reset();
+    }
+
+    public void Reset() {
+        StopAllCoroutines();
         StartCoroutine(PlayFeetSound());
-	}
-	
+    }
+
     public void Movement() {
         Vector3 targetVelocity;
         if (GameManager.IsPlayerMenu()) {

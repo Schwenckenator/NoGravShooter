@@ -28,7 +28,7 @@ public class TutorialManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        GameManager.instance.SpawnActor();
+        PlayerManager.instance.SpawnActor();
         TutorialSetup();
         tutorialStep = SearchingForPlayer;
         Invoke("ClearScreen", 6f); // Time it takes to get through starting messages

@@ -171,7 +171,7 @@ public class PlayerResources : MonoBehaviour {
 
 	IEnumerator StopRechargeSound(){
 
-		while (jetpackAudio.volume > 0){
+		while (jetpackAudio.volume > 0.05f){
 			if(jetpackAudio.clip == soundJetpackRecharge){
 				jetpackAudio.volume /= 1+ (3* Time.deltaTime);
 			}else{
@@ -180,6 +180,7 @@ public class PlayerResources : MonoBehaviour {
 
 			yield return null;
 		}
+        jetpackAudio.volume = 0;
 	}
 	#endregion
 

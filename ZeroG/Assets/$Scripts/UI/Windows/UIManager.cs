@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour {
     }
     private void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (GameManager.instance.IsPlayerSpawned()) {
+            if (PlayerManager.IsActorSpawned()) {
                 UIPauseSpawn.PauseMenuSwitch();
             }
         }

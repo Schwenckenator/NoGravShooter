@@ -24,13 +24,22 @@ public class WeaponInventory : MonoBehaviour {
 	void Awake () {
         networkView = GetComponent<NetworkView>();
         heldWeapons = new List<Weapon>();
+        weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
+        audioSource = GetComponent<AudioSource>();
+
         SetWeaponLoadout();
         currentInventorySlot = -1; // Bad value, will change
         currentWeapon = null;
-        weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
-        audioSource = GetComponent<AudioSource>();
-        
-	}
+
+    }
+    public void Reset() {
+        SetWeaponLoadout();
+        currentInventorySlot = -1; // Bad value, will change
+        currentWeapon = null;
+        if (networkView.isMine) {
+            ChangeWeapon(0);
+        }
+    }
     void Start() {
         if (networkView.isMine) {
             ChangeWeapon(0);
@@ -43,6 +52,8 @@ public class WeaponInventory : MonoBehaviour {
 
     private void SetWeaponLoadout() {
         if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
+        currentWeapon = null;
+        heldWeapons.Clear();
 
         int[] temp = GameManager.instance.GetStartingWeapons();
 

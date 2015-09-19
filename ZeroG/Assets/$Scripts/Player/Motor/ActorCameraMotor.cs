@@ -73,6 +73,10 @@ public class ActorCameraMotor : MonoBehaviour {
         cameraMouseLook.Ragdoll(true);
         characterMouseLook.Ragdoll(true);
     }
+    public void Reset() {
+        cameraMouseLook.Ragdoll(false);
+        characterMouseLook.Ragdoll(false);
+    }
 
     public void Recoil(float angle) {
         // If here, actor is grounded

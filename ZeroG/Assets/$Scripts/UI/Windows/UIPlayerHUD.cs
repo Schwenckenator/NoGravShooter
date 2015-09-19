@@ -82,7 +82,7 @@ public class UIPlayerHUD : MonoBehaviour {
     }
 
     void Update() {
-        if(GameManager.instance.IsPlayerSpawned()){
+        if(PlayerManager.IsActorSpawned()){
             float temp = playerHealth.GetHealth();
             health.SetValue(temp);
             fuel.SetValue(playerResource.GetFuel());

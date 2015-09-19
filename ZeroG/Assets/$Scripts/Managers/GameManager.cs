@@ -83,12 +83,6 @@ public class GameManager : MonoBehaviour {
     public int[] GetStartingWeapons() {
         return startingWeapons;
     }
-    public bool IsPlayerSpawned() {
-        return myPlayerSpawned;
-    }
-    private MouseLook GetPlayerCameraMouseLook(GameObject player) {
-        return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
-    }
     #endregion
 
     #region Variable mutators
@@ -109,7 +103,7 @@ public class GameManager : MonoBehaviour {
 
     public const int MaxPlayers = 15;
 
-    NetworkView networkView;
+    new NetworkView networkView;
 
     void Awake(){
 
@@ -121,10 +115,8 @@ public class GameManager : MonoBehaviour {
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
 		if(!GameManager.IsSceneMenu()){
-			spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-			cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
 
-			PlayerDied(); //Died before you begin? Don't worry, it's just cleanup
+            PlayerManager.instance.Init(); // Initialise players
 
             UIManager.instance.SetMenuWindow(Menu.PauseMenu);
 			//
@@ -140,7 +132,13 @@ public class GameManager : MonoBehaviour {
 				}
                 StartCoroutine(SetStartingWeaponsDelay(temp));
 			}
-		}
+        } else {
+            // If menu, destroy all actors
+            foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
+                Debug.Log("Destroyed actor");
+                Destroy(actor);
+            }
+        }
 	}
 
     private IEnumerator SetStartingWeaponsDelay(int[] weapons) {
@@ -156,42 +154,42 @@ public class GameManager : MonoBehaviour {
         DebugManager.SetAllGrenade(allGrenade);
         DebugManager.SetAllFuel(allFuel);
     }
-	public void SpawnActor(){
-		myPlayerSpawned = true;
+	//public void SpawnActor(){
+	//	myPlayerSpawned = true;
 
-		SetCursorVisibility(false);
-		int point = Random.Range(0, spawnPoints.Length);
-		Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
-		cameraMove.PlayerSpawned();
+	//	SetCursorVisibility(false);
+	//	int point = Random.Range(0, spawnPoints.Length);
+	//	Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
+	//	cameraMove.PlayerSpawned();
 
-		GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject actor in list){
-            if (actor.GetComponent<NetworkView>().isMine) {
-                GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.instance.MouseYDirection);
-                actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
+	//	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
+	//	foreach(GameObject actor in list){
+ //           if (actor.GetComponent<NetworkView>().isMine) {
+ //               actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
                 
-                actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
+ //               actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
-                UIPlayerHUD.SetupPlayer(actor);
-                DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
-                PlayerColourManager.instance.AssignColour(actor);
-			}
-		}
-		//Reload all weapons
-		foreach(Weapon weap in weapon){
-            weap.ResetVariables();
-        }
+ //               UIPlayerHUD.SetupPlayer(actor);
+ //               DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
+ //               PlayerColourManager.instance.AssignColour(actor);
+	//		}
+	//	}
+	//	//Reload all weapons
+	//	foreach(Weapon weap in weapon){
+ //           weap.ResetVariables();
+ //       }
 
-        Radar.instance.ActorsChanged();
-        UIPauseSpawn.PlayerSpawned();
+ //       Radar.instance.ActorsChanged();
+ //       UIPauseSpawn.PlayerSpawned();
 
-	}
+	//}
 
-	public void PlayerDied(){
-		myPlayerSpawned = false;
-        UIPauseSpawn.PlayerDied();
-        SetPlayerMenu(false);
-	}
+	//public void PlayerDied(){
+	//	myPlayerSpawned = false;
+
+ //       UIPauseSpawn.PlayerDied();
+ //       SetPlayerMenu(false);
+	//}
 
 	public void ManagerDetachCamera(){
 		cameraMove.DetachCamera();

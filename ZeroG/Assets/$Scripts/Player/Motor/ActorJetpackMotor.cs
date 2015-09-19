@@ -42,8 +42,13 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
 
         playerResource = GetComponent<PlayerResources>();
 
+        Reset();
+    }
+
+    public void Reset() {
+        StopAllCoroutines();
         StartCoroutine(PlayJetpackSound());
-	}
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {

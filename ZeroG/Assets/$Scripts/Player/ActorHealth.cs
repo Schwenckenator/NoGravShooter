@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class ActorHealth : MonoBehaviour, IDamageable {
 
     public AudioClip SoundTakeDamage;
     public AudioSource helmetAudio;
-    public ParticleSystem bloodParticle;
+    public GameObject bloodParticle;
     private DestroyParticleEffect killBlood;
 
     int maxHealth = 100;
@@ -15,15 +16,15 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     bool isDying = false;
 
     private NetworkView networkView;
+    IActorStats stats;
 
-    private int suicideDamage = 10; // How much damage K does
+    private int suicideDamage = 100; // How much damage K does
 
 	// Use this for initialization
-	void Start () {
-        IActorStats stats = gameObject.GetInterface<IActorStats>();
+	void Awake () {
+        stats = gameObject.GetInterface<IActorStats>();
         networkView = GetComponent<NetworkView>();
-        maxHealth = stats.maxHealth;
-        health = maxHealth;
+        Reset();
 	}
     void Update() {
         if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine) { //K is for kill! // This is for testing purposes only
@@ -59,6 +60,12 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         if (health <= 0) {
             Die(NetworkManager.GetPlayer(fromPlayer), weaponID);
         }
+    }
+
+    public void Reset() {
+        maxHealth = stats.maxHealth;
+        health = maxHealth;
+        isDying = false;
     }
 
     private void Die(Player killer, int weaponID) {
@@ -138,28 +145,23 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         BloodyScreen.Show(true);
         yield return new WaitForSeconds(playerDyingTime);
         BloodyScreen.Show(false);
-        GameManager.instance.PlayerDied();
-        GameManager.instance.ManagerDetachCamera();
-        GameManager.SetCursorVisibility(true);
-       
-        //
-        if (Network.isServer) {
-            GetComponent<ObjectCleanUp>().KillMe();
-        } else {
-            GetComponent<ObjectCleanUp>().ClientKillMe();
-        }
+        PlayerManager.instance.ActorDied();
 
         if (SettingsManager.instance.AutoSpawn) {
-            GameManager.instance.SpawnActor();
+            PlayerManager.instance.SpawnActor();
         }
     }
 
     [RPC]
     void BloodyPlayer(bool sendRPC = true) {
         //Rotate blood to angle TODO
-        bloodParticle.transform.localRotation = Random.rotation;
-        bloodParticle.Play();
-        killBlood = bloodParticle.GetComponent<DestroyParticleEffect>();
+        GameObject newBlood = Instantiate(bloodParticle) as GameObject;
+        newBlood.transform.SetParent(this.transform);
+        newBlood.transform.localPosition = Vector3.zero;
+        ParticleSystem newBloodParticle = newBlood.GetComponent<ParticleSystem>();
+
+        newBloodParticle.Play();
+        killBlood = newBloodParticle.GetComponent<DestroyParticleEffect>();
         Invoke("DetachBlood", 2.9f); // Just shy of player deletion time
         if (sendRPC) {
             networkView.RPC("BloodyPlayer", RPCMode.Others, false);

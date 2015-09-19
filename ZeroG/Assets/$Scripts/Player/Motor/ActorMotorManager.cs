@@ -42,11 +42,24 @@ public class ActorMotorManager : MonoBehaviour {
         
         footRayDistance = (GetComponent<CapsuleCollider>().height * (2f / 3f));
 
+        Reset();
+	}
+
+    public void Reset() {
+        this.enabled = true;
+        active = true;
+
+        rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
+
+        cameraMotor.Reset();
+        walkingMotor.Reset();
+        jetpackMotor.Reset();
+
         currentMotor = jetpackMotor;
         cameraMotor.LockMouseLook(true);
         StartCoroutine(MagnetBoots());
         SpawnMove();
-	}
+    }
 
     void SpawnMove() {
         rigidbody.AddRelativeForce(Vector3.down * 2, ForceMode.Impulse);
@@ -196,6 +209,7 @@ public class ActorMotorManager : MonoBehaviour {
     void OnDeath() {
         // Ragdoll the actor
         InAir();
+        //StopAllCoroutines();
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddTorque(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f), ForceMode.Impulse);
         
