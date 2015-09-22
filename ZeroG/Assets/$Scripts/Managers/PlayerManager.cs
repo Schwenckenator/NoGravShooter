@@ -4,25 +4,48 @@ using System.Collections;
 public class PlayerManager : MonoBehaviour {
 
     public GameObject playerPrefab;
+    public GameObject managerPrefab;
 
     static GameObject actor;
+    //static NetworkView actorView;
+    static ActorEnableManager actorManager;
+
     static bool myActorSpawned;
     private GameObject[] spawnPoints;
     private CameraMove cameraMove;
 
     public static PlayerManager instance;
 
+    private new NetworkView networkView;
+
     void Start() {
         instance = this;
+        networkView = GetComponent<NetworkView>();
     }
 
     public void Init() {
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-       
+
+        StartCoroutine(CreateActor());
+    }
+    IEnumerator CreateActor() {
+        yield return new WaitForSeconds(0.1f);
         // Spawn a new player object
         actor = Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+        GameObject temp = Network.Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+        actorManager = temp.GetComponent<ActorEnableManager>();
+        actorManager.SetActor(actor);
+
+        DisableLookers();
+
         StartCoroutine(RemoveActor());
+    }
+    void DisableLookers() {
+        MouseLook[] lookers = actor.GetComponentsInChildren<MouseLook>();
+        foreach(MouseLook look in lookers) {
+            look.Ragdoll(true); // Disable input
+        }
     }
     IEnumerator RemoveActor() {
         yield return null;
@@ -31,7 +54,7 @@ public class PlayerManager : MonoBehaviour {
 
     public void SpawnActor() {
         // Activate Actor
-        actor.SetActive(true);
+        actorManager.EnableActor();
 
         // Reset all stats
         foreach (Weapon weap in GameManager.weapon) {
@@ -40,10 +63,6 @@ public class PlayerManager : MonoBehaviour {
         actor.GetComponent<ActorHealth>().Reset();
         actor.GetComponent<WeaponInventory>().Reset();
         actor.GetComponent<ActorMotorManager>().Reset();
-
-        // Freeze movement and rotation
-        actor.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        actor.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         GameManager.SetCursorVisibility(false);
 
@@ -71,6 +90,10 @@ public class PlayerManager : MonoBehaviour {
 
         actor.transform.position = spawnPoints[point].transform.position;
         actor.transform.rotation = spawnPoints[point].transform.rotation;
+
+        // Freeze movement and rotation
+        actor.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        actor.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
     }
 
     public void ActorDied() {
@@ -81,8 +104,8 @@ public class PlayerManager : MonoBehaviour {
         cameraMove.DetachCamera();
         GameManager.SetCursorVisibility(true);
 
-        // Disable Actor
-        actor.SetActive(false);
+        actorManager.DisableActor();
+
     }
 
     public static bool IsActorSpawned() {

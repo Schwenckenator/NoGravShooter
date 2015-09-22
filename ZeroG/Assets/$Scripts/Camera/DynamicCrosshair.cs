@@ -1,12 +1,24 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class DynamicCrosshair : MonoBehaviour {
     public RectTransform[] crosshair;
+    public Color neutral;
+    public Color enemy;
+    public Color ally;
 
+    private Image[] crosshairImages;
+    private Color currentColour;
     private static WeaponInventory inventory;
     public static void SetInventory(WeaponInventory value) {
         inventory = value;
+    }
+    void Start() {
+        crosshairImages = new Image[crosshair.Length];
+        for(int i=0; i<crosshair.Length; i++) {
+            crosshairImages[i] = crosshair[i].GetComponent<Image>();
+        }
     }
 	// Update is called once per frame
 	void Update () {
@@ -27,5 +39,31 @@ public class DynamicCrosshair : MonoBehaviour {
         crosshair[2].anchoredPosition = new Vector2(-screenDistance, 0);
         crosshair[3].anchoredPosition = new Vector2(0, -screenDistance);
 
+    }
+
+    void ColourCrosshair() {
+        // Fire a raycast through crosshair
+        Color newColour = neutral;
+        Transform cam = Camera.main.transform;
+        RaycastHit hit;
+        if (Physics.Raycast(cam.position, cam.forward, out hit)) {
+            if (hit.collider.CompareTag("Player")) {
+                if (SettingsManager.instance.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
+                    newColour = ally;
+                } else {
+                    newColour = enemy;
+                }
+            }
+        }
+
+        ChangeCrosshairColour(newColour);
+    }
+
+    void ChangeCrosshairColour(Color col) {
+        if (currentColour.Equals(col)) return; // Only change if colour is different
+
+        foreach (Image im in crosshairImages) {
+            im.color = col;
+        }
     }
 }

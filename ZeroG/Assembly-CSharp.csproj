@@ -90,6 +90,7 @@
      <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
      <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
      <Compile Include="Assets\$Scripts\Player.cs" />
+     <Compile Include="Assets\$Scripts\Player\ActorEnableManager.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorHealth.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorOnInstantiate.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorStats.cs" />
@@ -205,17 +206,11 @@
  <Reference Include="Assembly-UnityScript-firstpass">
  <HintPath>C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>

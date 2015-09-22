@@ -58,10 +58,11 @@ public class ActorMotorManager : MonoBehaviour {
         currentMotor = jetpackMotor;
         cameraMotor.LockMouseLook(true);
         StartCoroutine(MagnetBoots());
-        SpawnMove();
+        StartCoroutine(SpawnMove());
     }
 
-    void SpawnMove() {
+    IEnumerator SpawnMove() {
+        yield return null;
         rigidbody.AddRelativeForce(Vector3.down * 2, ForceMode.Impulse);
     }
 	

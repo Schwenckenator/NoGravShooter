@@ -43,19 +43,15 @@ public class MouseLook : MonoBehaviour {
         if (!transform.root.GetComponent<NetworkView>().isMine) {
             this.enabled = false;
         }
-    }
-
-	void Start(){
-        
-        
-		cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
+        cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
         // Base sensitivity is a fraction of maximum
         // Set true value here
         sensitivityX = SettingsManager.instance.MouseSensitivityX * maxSensitivity;
         sensitivityY = SettingsManager.instance.MouseSensitivityY * maxSensitivity;
 
-	}
+        ragdoll = true;
+    }
 
 	void Update ()
 	{
