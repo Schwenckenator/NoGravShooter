@@ -31,7 +31,7 @@ public class FPSDisplay : MonoBehaviour {
             GUI.contentColor = Color.red;
         }
 
-        GUI.Label(new Rect(Screen.width - 100, 40, 100, 20), "FPS: " + fps.ToString());
+        GUI.Label(new Rect(Screen.width - 100, 20, 100, 20), "FPS: " + fps.ToString());
     }
 
     private void CountFrame() {

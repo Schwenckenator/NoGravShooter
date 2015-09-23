@@ -21,7 +21,7 @@ public class VersionNumber : MonoBehaviour{
         DontDestroyOnLoad (this);
 	    // Log current version in log file
         Debug.Log (string.Format ("Currently running version is {0}", Version));
-	    position.y = 10f;
+	    position.y = 1f;
         position.x = Screen.width - position.width - 10f;
 
     }

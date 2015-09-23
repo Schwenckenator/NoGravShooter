@@ -8,3 +8,6 @@
 /ZeroG/UnityVS.ZeroG.CSharp.Editor.csproj
 /Finished Builds/Build Archive
 /Test Builds
+
+ZeroG/ZeroG.sln
+*.suo

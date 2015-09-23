@@ -39,7 +39,7 @@ public class PingDisplay : MonoBehaviour {
             GUI.contentColor = Color.red;
         }
 
-        GUI.Label(new Rect(Screen.width - 100, 60, 100, 20), "Ping: " + time.ToString());
+        GUI.Label(new Rect(Screen.width - 100, 40, 100, 20), "Ping: " + time.ToString());
     }
 
     private IEnumerator PingServerLoop() {
