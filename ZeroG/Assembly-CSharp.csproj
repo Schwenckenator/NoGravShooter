@@ -85,6 +85,7 @@
      <Compile Include="Assets\$Scripts\Managers\InputConverter.cs" />
      <Compile Include="Assets\$Scripts\Managers\NetworkManager.cs" />
      <Compile Include="Assets\$Scripts\Managers\OnGameOpen.cs" />
+     <Compile Include="Assets\$Scripts\Managers\PingDisplay.cs" />
      <Compile Include="Assets\$Scripts\Managers\PlayerManager.cs" />
      <Compile Include="Assets\$Scripts\Managers\ScoreVictoryManager.cs" />
      <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
