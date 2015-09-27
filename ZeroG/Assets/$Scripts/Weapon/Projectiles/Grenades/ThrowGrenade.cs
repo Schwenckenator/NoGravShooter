@@ -5,7 +5,7 @@ public class ThrowGrenade : MonoBehaviour {
 	public GameObject[] grenade;
 	public Transform grenadeSpawn;
 
-	PlayerResources playerResource;
+	ActorGrenades actorGrenade;
 
 	float nextThrow = 0;
 	float throwDelay = 1.5f;
@@ -14,14 +14,14 @@ public class ThrowGrenade : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         networkView = GetComponent<NetworkView>();
-		playerResource = GetComponent<PlayerResources>();
+        actorGrenade = GetComponent<ActorGrenades>();
 	}
 
 	// Update is called once per frame
 	void Update () {
         if (InputConverter.GetKeyDown(KeyBind.Grenade) && !GameManager.IsPlayerMenu() && Time.time > nextThrow && networkView.isMine) {
-			if(playerResource.CanThrowGrenade()){
-                SpawnGrenade(playerResource.GetCurrentGrenadeType(), grenadeSpawn.position, grenadeSpawn.rotation, Network.player);
+			if(actorGrenade.CanThrowGrenade()){
+                SpawnGrenade(actorGrenade.GetCurrentGrenadeType(), grenadeSpawn.position, grenadeSpawn.rotation, Network.player);
 				nextThrow = Time.time + throwDelay;
 			}
 		}

@@ -60,9 +60,10 @@ public class PlayerManager : MonoBehaviour {
         foreach (Weapon weap in GameManager.weapon) {
             weap.ResetVariables();
         }
-        actor.GetComponent<ActorHealth>().Reset();
+        actor.GetComponent<ActorHealth>().Reset(); // SHould interface this shit
         actor.GetComponent<WeaponInventory>().Reset();
         actor.GetComponent<ActorMotorManager>().Reset();
+        actor.GetComponent<ActorGrenades>().Reset();
 
         GameManager.SetCursorVisibility(false);
 

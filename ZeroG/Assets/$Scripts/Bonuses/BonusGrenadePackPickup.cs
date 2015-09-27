@@ -21,12 +21,12 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 	void OnTriggerEnter(Collider info){
 		if(info.CompareTag("Player")){
 			
-			PlayerResources playerResource = info.GetComponent<Collider>().GetComponent<PlayerResources>();
+			ActorGrenades actorGrenade = info.GetComponent<Collider>().GetComponent<ActorGrenades>();
 
 			if(SettingsManager.instance.AutoPickup){
-				playerResource.ChangeGrenade(grenadeType);
+				actorGrenade.ChangeGrenade(grenadeType);
 			}
-			playerResource.PickUpGrenades(amount, grenadeType);
+			actorGrenade.PickUpGrenades(amount, grenadeType);
 			
 			GetComponent<ObjectCleanUp>().KillMe();
 		}

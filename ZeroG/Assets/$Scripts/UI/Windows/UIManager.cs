@@ -94,12 +94,6 @@ public class UIManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.F1)) {
             DebugManager.SetPaintballMode(!DebugManager.IsPaintballMode());
         }
-        //if (Input.GetKeyDown(KeyCode.F3)) {
-        //    if (DebugManager.IsAdminMode()) {
-        //        PlayerPrefs.DeleteAll();
-        //        Debug.Log("PlayerPrefs Wiped!");
-        //    }
-        //}
 
     }
     private void GetKeyStrokes() {

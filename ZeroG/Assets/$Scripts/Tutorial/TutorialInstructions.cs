@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 
 public class TutorialInstructions : MonoBehaviour {
-    private PlayerResources playerRes;
     private GameObject player;
 
     private int dotLooks = 0;
@@ -323,7 +322,7 @@ public class TutorialInstructions : MonoBehaviour {
     }
     IEnumerator SearchForPlayer() {
         yield return new WaitForSeconds(0.1f);
-        PlayerManager.instance.SpawnActor();
+        //PlayerManager.instance.SpawnActor();
         while (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
             yield return null;
@@ -350,7 +349,7 @@ public class TutorialInstructions : MonoBehaviour {
         yield return new WaitForSeconds(1);
         ChatManager.TutorialChat("Welcome to the SC1830 Utility Suit.\n\nSuit Calibrated.");
         yield return new WaitForSeconds(2);
-        GuiManager.instance.blackOutScreen = false;
+        //GuiManager.instance.blackOutScreen = false;
         ChatManager.TutorialChat("\n\nRunning Tutorial Simulation.");
         yield return new WaitForSeconds(4);
 		UIPlayerHUD.TutorialPrompt("\n\nAre you familiar with the typical controls of FPS games?\n\n\nYes(press Y)  or  No(press N)\n\nThen press Enter.");

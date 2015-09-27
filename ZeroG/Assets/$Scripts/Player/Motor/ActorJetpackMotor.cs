@@ -21,8 +21,8 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
     bool playJetSound = false;
     
     Rigidbody rigidbody;
-    PlayerResources playerResource;
-    
+    ActorJetpackFuel jetpack;
+
     IControllerInput input;
     IActorStats stats;
 
@@ -40,7 +40,7 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
 
         rigidbody.freezeRotation = true;
 
-        playerResource = GetComponent<PlayerResources>();
+        jetpack = GetComponent<ActorJetpackFuel>();
 
         Reset();
     }
@@ -63,7 +63,7 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
         // If non-zero force, spend fuel
         if (force.sqrMagnitude > 0) {
             if ((input.IsMovementKeys() || input.IsStopKey()) && !GameManager.IsPlayerMenu()) {
-                if (playerResource.SpendFuel(stats.fuelSpend)) {
+                if (jetpack.SpendFuel(stats.fuelSpend)) {
                     playJetSound = true;
                     rigidbody.AddRelativeForce(force);
                 } else {

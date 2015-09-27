@@ -53,6 +53,7 @@
      <Compile Include="Assets\$Scripts\Camera\CameraSmoothMove.cs" />
      <Compile Include="Assets\$Scripts\Camera\DynamicCrosshair.cs" />
      <Compile Include="Assets\$Scripts\Camera\MouseLook.cs" />
+     <Compile Include="Assets\$Scripts\DebugHelp.cs" />
      <Compile Include="Assets\$Scripts\Exception\ClientRunningServerCodeException.cs" />
      <Compile Include="Assets\$Scripts\Exception\InvalidTeamColourException.cs" />
      <Compile Include="Assets\$Scripts\Exception\TutorialCodeRunningInMultiplayerException.cs" />
@@ -92,7 +93,9 @@
      <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
      <Compile Include="Assets\$Scripts\Player.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorEnableManager.cs" />
+     <Compile Include="Assets\$Scripts\Player\ActorGrenades.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorHealth.cs" />
+     <Compile Include="Assets\$Scripts\Player\ActorJetpackFuel.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorOnInstantiate.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorStats.cs" />
      <Compile Include="Assets\$Scripts\Player\ActorTeam.cs" />

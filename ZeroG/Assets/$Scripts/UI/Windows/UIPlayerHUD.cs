@@ -18,7 +18,8 @@ public class UIPlayerHUD : MonoBehaviour {
     static ChangeableImage tutorialPromptImage;
     static ChangeableImage fuelBarBack;
 
-    static PlayerResources playerResource;
+    static ActorJetpackFuel jetpackFuel;
+    static ActorGrenades actorGrenades;
     static WeaponInventory weaponInventory;
     static IDamageable playerHealth;
     static IActorStats ActorStats;
@@ -63,7 +64,7 @@ public class UIPlayerHUD : MonoBehaviour {
         }
 
         health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
-        fuel.SetMaxValue(PlayerResources.GetMaxFuel());
+        fuel.SetMaxValue(ActorJetpackFuel.GetDefaultMaxFuel());
     }
 
 
@@ -74,7 +75,8 @@ public class UIPlayerHUD : MonoBehaviour {
     }
 
     public static void SetupPlayer(GameObject actor) {
-        playerResource = actor.GetComponent<PlayerResources>();
+        jetpackFuel = actor.GetComponent<ActorJetpackFuel>();
+        actorGrenades = actor.GetComponent<ActorGrenades>();
         playerHealth = actor.GetInterface<IDamageable>();
         weaponInventory = actor.GetComponent<WeaponInventory>();
 
@@ -85,7 +87,7 @@ public class UIPlayerHUD : MonoBehaviour {
         if(PlayerManager.IsActorSpawned()){
             float temp = playerHealth.GetHealth();
             health.SetValue(temp);
-            fuel.SetValue(playerResource.GetFuel());
+            fuel.SetValue(jetpackFuel.GetFuel());
 
             ammo.SetText(MakeAmmoString());
             grenade.SetText(MakeGrenadeString());
@@ -112,7 +114,7 @@ public class UIPlayerHUD : MonoBehaviour {
 
     private string MakeGrenadeString() {
         string grenadeText = "";
-        switch (playerResource.GetCurrentGrenadeType()) {
+        switch (actorGrenades.GetCurrentGrenadeType()) {
             case 0: // Black hole
                 grenadeText = "BH";
                 break;
@@ -123,7 +125,7 @@ public class UIPlayerHUD : MonoBehaviour {
                 grenadeText = "Frag";
                 break;
         }
-        grenadeText += " " + playerResource.GetCurrentGrenadeCount().ToString();
+        grenadeText += " " + actorGrenades.GetCurrentGrenadeCount().ToString();
         return grenadeText;
     }
 
