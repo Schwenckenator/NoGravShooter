@@ -42,6 +42,9 @@ public class ActorEnableManager : MonoBehaviour {
 
     // Kill self on disconnect
     void OnDisconnectedFromServer() {
+        if (Network.isServer) {
+            Debug.Log("Disconnection on server");
+        }
         Debug.Log("Destroyed Actor Enable Manager.");
         Destroy(this);
     }

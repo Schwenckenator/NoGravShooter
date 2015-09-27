@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour {
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
 		if(!GameManager.IsSceneMenu()){
-            PlayerManager.instance.LevelStart();
             
             UIManager.instance.SetMenuWindow(Menu.PauseMenu);
 			//

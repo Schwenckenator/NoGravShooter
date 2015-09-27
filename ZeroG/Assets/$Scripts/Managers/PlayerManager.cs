@@ -27,11 +27,23 @@ public class PlayerManager : MonoBehaviour {
     public void Init() {
         StartCoroutine(CreateActor());
     }
-    public void LevelStart() {
-        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
-        spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-        foreach (MouseLook look in lookers) {
-            look.LevelStart();
+    void OnLevelWasLoaded() {
+        if (GameManager.IsSceneMenu()) {
+            myActorSpawned = false;
+
+            UIPauseSpawn.PlayerDied();
+            GameManager.instance.SetPlayerMenu(false);
+            GameManager.SetCursorVisibility(true);
+
+            actorManager.DisableActor();
+            cameraMove = null;
+            spawnPoints = null;
+        } else {
+            cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+            spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+            foreach (MouseLook look in lookers) {
+                look.LevelStart();
+            }
         }
     }
     IEnumerator CreateActor() {
