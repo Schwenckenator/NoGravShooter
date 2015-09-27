@@ -8,6 +8,7 @@ public class ActorEnableManager : MonoBehaviour {
 
     void Awake() {
         networkView = GetComponent<NetworkView>();
+        DontDestroyOnLoad(gameObject);
     }
 
     public void SetActor(GameObject actor) {
@@ -37,5 +38,11 @@ public class ActorEnableManager : MonoBehaviour {
         if (sendRPC) {
             networkView.RPC("EnableActor", RPCMode.Others, false);
         }
+    }
+
+    // Kill self on disconnect
+    void OnDisconnectedFromServer() {
+        Debug.Log("Destroyed Actor Enable Manager.");
+        Destroy(this);
     }
 }

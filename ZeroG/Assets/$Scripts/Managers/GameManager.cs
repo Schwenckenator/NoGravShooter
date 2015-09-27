@@ -115,9 +115,8 @@ public class GameManager : MonoBehaviour {
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
 		if(!GameManager.IsSceneMenu()){
-
-            PlayerManager.instance.Init(); // Initialise players
-
+            PlayerManager.instance.LevelStart();
+            
             UIManager.instance.SetMenuWindow(Menu.PauseMenu);
 			//
 			if(Network.isServer){
@@ -132,12 +131,6 @@ public class GameManager : MonoBehaviour {
 				}
                 StartCoroutine(SetStartingWeaponsDelay(temp));
 			}
-        } else {
-            // If menu, destroy all actors
-            foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
-                Debug.Log("Destroyed actor");
-                Destroy(actor);
-            }
         }
 	}
 
@@ -154,42 +147,6 @@ public class GameManager : MonoBehaviour {
         DebugManager.SetAllGrenade(allGrenade);
         DebugManager.SetAllFuel(allFuel);
     }
-	//public void SpawnActor(){
-	//	myPlayerSpawned = true;
-
-	//	SetCursorVisibility(false);
-	//	int point = Random.Range(0, spawnPoints.Length);
-	//	Network.Instantiate(playerPrefab, spawnPoints[point].transform.position, spawnPoints[point].transform.rotation, 0);
-	//	cameraMove.PlayerSpawned();
-
-	//	GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
-	//	foreach(GameObject actor in list){
- //           if (actor.GetComponent<NetworkView>().isMine) {
- //               actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
-                
- //               actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
-
- //               UIPlayerHUD.SetupPlayer(actor);
- //               DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
- //               PlayerColourManager.instance.AssignColour(actor);
-	//		}
-	//	}
-	//	//Reload all weapons
-	//	foreach(Weapon weap in weapon){
- //           weap.ResetVariables();
- //       }
-
- //       Radar.instance.ActorsChanged();
- //       UIPauseSpawn.PlayerSpawned();
-
-	//}
-
-	//public void PlayerDied(){
-	//	myPlayerSpawned = false;
-
- //       UIPauseSpawn.PlayerDied();
- //       SetPlayerMenu(false);
-	//}
 
 	public void ManagerDetachCamera(){
 		cameraMove.DetachCamera();
@@ -207,11 +164,6 @@ public class GameManager : MonoBehaviour {
                 SettingsManager.instance.GameModeIndexServer);
 
             networkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
-
-            //GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
-            //foreach (GameObject obj in objs) {
-            //    networkView.RPC("ValidPlayerID", connectingPlayer, obj.GetComponent<NetworkView>().viewID);
-            //}
         }
     }
     void OnDisconnectedFromServer() {

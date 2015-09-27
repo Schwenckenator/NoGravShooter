@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour {
     static bool myActorSpawned;
     private GameObject[] spawnPoints;
     private CameraMove cameraMove;
+    MouseLook[] lookers;
 
     public static PlayerManager instance;
 
@@ -24,32 +25,37 @@ public class PlayerManager : MonoBehaviour {
     }
 
     public void Init() {
+        StartCoroutine(CreateActor());
+    }
+    public void LevelStart() {
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-
-        StartCoroutine(CreateActor());
+        foreach (MouseLook look in lookers) {
+            look.LevelStart();
+        }
     }
     IEnumerator CreateActor() {
         yield return new WaitForSeconds(0.1f);
         // Spawn a new player object
         actor = Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+        lookers = actor.GetComponentsInChildren<MouseLook>();
+
         GameObject temp = Network.Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
         actorManager = temp.GetComponent<ActorEnableManager>();
         actorManager.SetActor(actor);
-
+        
         DisableLookers();
-
         StartCoroutine(RemoveActor());
     }
     void DisableLookers() {
-        MouseLook[] lookers = actor.GetComponentsInChildren<MouseLook>();
         foreach(MouseLook look in lookers) {
             look.Ragdoll(true); // Disable input
         }
     }
     IEnumerator RemoveActor() {
         yield return null;
-        ActorDied();
+        actorManager.DisableActor();
+        GameManager.instance.SetPlayerMenu(false);
     }
 
     public void SpawnActor() {

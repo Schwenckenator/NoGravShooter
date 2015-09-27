@@ -17,8 +17,6 @@ using System.Collections;
 [AddComponentMenu("Camera-Control/Mouse Look")]
 public class MouseLook : MonoBehaviour {
 
-	private bool ragdoll = false;
-
 	public enum RotationAxes { MouseXAndY = 0, MouseX = 1, MouseY = 2, MouseNone = 3}
 	public RotationAxes axes = RotationAxes.MouseXAndY;
     public float maxSensitivity = 15F;
@@ -43,21 +41,22 @@ public class MouseLook : MonoBehaviour {
         if (!transform.root.GetComponent<NetworkView>().isMine) {
             this.enabled = false;
         }
-        cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
 
         // Base sensitivity is a fraction of maximum
         // Set true value here
         sensitivityX = SettingsManager.instance.MouseSensitivityX * maxSensitivity;
         sensitivityY = SettingsManager.instance.MouseSensitivityY * maxSensitivity;
 
-        ragdoll = true;
+        this.enabled = false;
+    }
+
+    public void LevelStart() {
+        cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
     }
 
 	void Update ()
 	{
-		if(ragdoll) return;
-        
-		if(!GameManager.IsPlayerMenu() && Time.timeScale != 0){
+		if(!GameManager.IsSceneMenu() && !GameManager.IsPlayerMenu() && Time.timeScale != 0){
 
             zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)
@@ -108,7 +107,7 @@ public class MouseLook : MonoBehaviour {
 	}
 
 	public void Ragdoll(bool state){
-		ragdoll = state;
+		this.enabled = !state;
 	}
 
 	public int GetYDirection(){

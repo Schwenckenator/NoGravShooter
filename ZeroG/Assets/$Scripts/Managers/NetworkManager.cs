@@ -179,6 +179,7 @@ public class NetworkManager : MonoBehaviour {
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
+        Debug.Log("On level was loaded call in NetworkManager.");
         if (rpcDisabled) {
             EnableRPC();
 
@@ -195,6 +196,8 @@ public class NetworkManager : MonoBehaviour {
         SettingsManager.instance.RelayServerName();
         AssignMyPlayerToTeam();
 
+        PlayerManager.instance.Init(); // Initialise player
+
         UIManager.instance.UpdateArraysFromNetworkConnection();
     }
     void OnConnectedToServer() {
@@ -208,6 +211,8 @@ public class NetworkManager : MonoBehaviour {
         string message = SettingsManager.instance.PlayerName + " has connected.";
         ChatManager.instance.AddToChat(message);
         AssignMyPlayerToTeam();
+
+        PlayerManager.instance.Init(); // Initialise players
 
         UIManager.instance.UpdateArraysFromNetworkConnection();
     }
