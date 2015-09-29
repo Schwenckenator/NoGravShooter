@@ -39,13 +39,21 @@ public class PlayerManager : MonoBehaviour {
 
             if (Network.isClient || Network.isServer) {
                 actorManager.DisableActor(); // Should only disable if connected
+            } else {
+                lookers = null; // If not connected, clear
             }
         } else {
             cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
             spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-            foreach (MouseLook look in lookers) {
-                look.LevelStart();
-            }
+            
+            float wait = lookers == null ? 0.5f : 0.0f;
+            StartCoroutine(LookerLevelStart(wait));
+        }
+    }
+    IEnumerator LookerLevelStart(float wait) {
+        yield return new WaitForSeconds(wait);
+        foreach (MouseLook look in lookers) {
+            look.LevelStart();
         }
     }
     IEnumerator CreateActor() {

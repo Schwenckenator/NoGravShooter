@@ -22,7 +22,6 @@ public class MouseLook : MonoBehaviour {
     public float maxSensitivity = 15F;
     private float sensitivityX;
 	private float sensitivityY;
-    //public int grounded = 1;
 
 	public float minimumX = -360F;
 	public float maximumX = 360F;
@@ -56,7 +55,7 @@ public class MouseLook : MonoBehaviour {
 
 	void Update ()
 	{
-		if(!GameManager.IsSceneMenu() && !GameManager.IsPlayerMenu() && Time.timeScale != 0){
+		if(!GameManager.IsSceneMenu() && !GameManager.IsPlayerMenu() && Time.timeScale != 0 && cameraFOV != null){
 
             zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)
