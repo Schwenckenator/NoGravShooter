@@ -179,7 +179,6 @@ public class NetworkManager : MonoBehaviour {
         ChatManager.ClearAllChat();
     }
     void OnLevelWasLoaded() {
-        Debug.Log("On level was loaded call in NetworkManager.");
         if (rpcDisabled) {
             EnableRPC();
 

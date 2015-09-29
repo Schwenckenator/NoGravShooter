@@ -322,7 +322,7 @@ public class TutorialInstructions : MonoBehaviour {
     }
     IEnumerator SearchForPlayer() {
         yield return new WaitForSeconds(0.1f);
-        //PlayerManager.instance.SpawnActor();
+        PlayerManager.instance.SpawnActor();
         while (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
             yield return null;

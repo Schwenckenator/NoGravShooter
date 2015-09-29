@@ -51,10 +51,11 @@ public class WeaponInventory : MonoBehaviour {
     }
 
     private void SetWeaponLoadout() {
-        if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
+
         currentWeapon = null;
         heldWeapons.Clear();
 
+        if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
         int[] temp = GameManager.instance.GetStartingWeapons();
 
         foreach (int id in temp) {

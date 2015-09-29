@@ -37,7 +37,6 @@ public class BloodyScreen : MonoBehaviour {
 
 
     void OnLevelWasLoaded() {
-        Debug.Log("On level was loaded call in BloodyScreen.");
         BloodyScreen.Show(false);
     }
 }

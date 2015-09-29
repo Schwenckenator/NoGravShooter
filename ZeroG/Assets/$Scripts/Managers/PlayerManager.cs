@@ -7,7 +7,6 @@ public class PlayerManager : MonoBehaviour {
     public GameObject managerPrefab;
 
     static GameObject actor;
-    //static NetworkView actorView;
     static ActorEnableManager actorManager;
 
     static bool myActorSpawned;
@@ -35,9 +34,12 @@ public class PlayerManager : MonoBehaviour {
             GameManager.instance.SetPlayerMenu(false);
             GameManager.SetCursorVisibility(true);
 
-            actorManager.DisableActor();
             cameraMove = null;
             spawnPoints = null;
+
+            if (Network.isClient || Network.isServer) {
+                actorManager.DisableActor(); // Should only disable if connected
+            }
         } else {
             cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
             spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
@@ -49,8 +51,9 @@ public class PlayerManager : MonoBehaviour {
     IEnumerator CreateActor() {
         yield return new WaitForSeconds(0.1f);
         // Spawn a new player object
-        actor = Network.Instantiate(playerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+        actor = Network.Instantiate(playerPrefab, new Vector3(100, 100, 100), Quaternion.identity, 0) as GameObject; // Spawn player way out, middle of nowhere
         lookers = actor.GetComponentsInChildren<MouseLook>();
+        actor.GetComponentInChildren<MeshRenderer>().enabled = false;
 
         GameObject temp = Network.Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
         actorManager = temp.GetComponent<ActorEnableManager>();
@@ -66,6 +69,7 @@ public class PlayerManager : MonoBehaviour {
     }
     IEnumerator RemoveActor() {
         yield return null;
+        actor.GetComponentInChildren<MeshRenderer>().enabled = true;
         actorManager.DisableActor();
         GameManager.instance.SetPlayerMenu(false);
     }

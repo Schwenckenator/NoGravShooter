@@ -62,7 +62,6 @@ public class GameClock : MonoBehaviour {
     }
 
     void OnLevelWasLoaded() {
-        Debug.Log("On level was loaded call in GameClock.");
         bool showClock = GameManager.instance.IsUseTimer && !(GameManager.IsSceneMenu() || GameManager.IsSceneTutorial());
         myCanvas.enabled = showClock;
 

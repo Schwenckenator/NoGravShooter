@@ -29,7 +29,6 @@ public class CameraMove : MonoBehaviour {
 	}
 
     void OnLevelWasLoaded() {
-        Debug.Log("On level was loaded call in CameraMove.");
         if (GameManager.IsSceneMenu()) {
             DetachCamera();
             Destroy(gameObject);

@@ -18,7 +18,6 @@ public class UIWinnerSplash : MonoBehaviour {
         myText.text = newText;
     }
     void OnLevelWasLoaded() {
-        Debug.Log("On level was loaded call in UIWinnerSplash.");
         myCanvas.enabled = false;
     }
     void Start() {

@@ -31,6 +31,7 @@ public class UILobby : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        _instance = this;
         LobbyInit();
 
         // Turn self off after initialsation

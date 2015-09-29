@@ -300,6 +300,8 @@ public class GameManager : MonoBehaviour {
         NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false);
         NetworkManager.InitialiseServer();
 
+        yield return new WaitForSeconds(1f);
+
         LoadLevelTutorial();
 
         yield return new WaitForSeconds(1f);

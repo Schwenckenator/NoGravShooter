@@ -54,7 +54,7 @@ public class WeaponResources : MonoBehaviour {
         return !( inventory.currentWeapon.isEmpty() || isWeaponOverheated() || isReloading);
     }
 
-    public bool isWeaponOverheated() {
+    private bool isWeaponOverheated() {
         return inventory.currentWeapon.heat >= maxHeat;
     }
 
@@ -75,6 +75,8 @@ public class WeaponResources : MonoBehaviour {
         }
     }
     private void WeaponSmokeCheck() {
+        if (inventory.currentWeapon == null) return;
+
         if (isWeaponOverheated()) {
             smoke.emissionRate = 15;
             smoke.startColor = Color.black;
