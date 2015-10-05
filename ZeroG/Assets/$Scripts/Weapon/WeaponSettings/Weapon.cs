@@ -52,6 +52,7 @@ public abstract class Weapon: MonoBehaviour {
             currentClip = clipSize;
             remainingAmmo = defaultRemainingAmmo;
         }
+        heat = 0;
         shotSpread = minSpread;
     }
 

@@ -26,6 +26,7 @@ public class DynamicCrosshair : MonoBehaviour {
         if (inventory == null) return;
         if (inventory.currentWeapon == null) return;
         MoveCrosshair(CalculatePixelMove(inventory.currentWeapon.shotSpread));
+        ColourCrosshair();
 	}
     float CalculatePixelMove(float currentSpread) {
         float vertFov = Camera.main.fieldOfView;
@@ -47,6 +48,7 @@ public class DynamicCrosshair : MonoBehaviour {
         Color newColour = neutral;
         Transform cam = Camera.main.transform;
         RaycastHit hit;
+        
         if (Physics.Raycast(cam.position, cam.forward, out hit)) {
             if (hit.collider.CompareTag("Player")) {
                 if (SettingsManager.instance.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
