@@ -85,7 +85,7 @@ public class Radar : MonoBehaviour {
         List<RadarDot> after = new List<RadarDot>();
 
         foreach (RadarDot dot in dots) {
-            if (!dot.Actor.activeInHierarchy) {
+            if (dot.Actor == null || !dot.Actor.activeInHierarchy) {
                 // If dead add to list for removal
                 deadDots.Add(dot);
                 continue;

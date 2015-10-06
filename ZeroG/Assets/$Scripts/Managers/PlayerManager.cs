@@ -66,6 +66,7 @@ public class PlayerManager : MonoBehaviour {
         GameObject temp = Network.Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
         actorManager = temp.GetComponent<ActorEnableManager>();
         actorManager.SetActor(actor);
+        DynamicCrosshair.myActor = actor.GetComponent<Collider>();
         
         DisableLookers();
         StartCoroutine(RemoveActor());
@@ -77,7 +78,6 @@ public class PlayerManager : MonoBehaviour {
     }
     IEnumerator RemoveActor() {
         yield return null;
-        actor.GetComponentInChildren<MeshRenderer>().enabled = true;
         actorManager.DisableActor();
         GameManager.instance.SetPlayerMenu(false);
     }

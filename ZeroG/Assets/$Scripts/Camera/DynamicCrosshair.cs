@@ -14,6 +14,8 @@ public class DynamicCrosshair : MonoBehaviour {
     public static void SetInventory(WeaponInventory value) {
         inventory = value;
     }
+    public static Collider myActor;
+
     void Start() {
         crosshairImages = new Image[crosshair.Length];
         for(int i=0; i<crosshair.Length; i++) {
@@ -50,7 +52,7 @@ public class DynamicCrosshair : MonoBehaviour {
         RaycastHit hit;
         
         if (Physics.Raycast(cam.position, cam.forward, out hit)) {
-            if (hit.collider.CompareTag("Player")) {
+            if (hit.collider.CompareTag("Player") && !hit.collider.Equals(myActor)) {
                 if (SettingsManager.instance.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
                     newColour = ally;
                 } else {
