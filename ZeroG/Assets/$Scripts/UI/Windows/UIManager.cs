@@ -24,7 +24,8 @@ public enum Menu {
     BloodyScreen,
     PlayerSettings,
     AudioSettings,
-    WinnerSplash
+    WinnerSplash,
+    SniperScope
 }
 
 public class UIManager : MonoBehaviour {

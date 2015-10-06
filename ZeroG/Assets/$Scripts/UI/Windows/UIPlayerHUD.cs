@@ -24,8 +24,9 @@ public class UIPlayerHUD : MonoBehaviour {
     static IDamageable playerHealth;
     static IActorStats ActorStats;
 
-    static IHideable playerUI;
-    static IHideable sniperUI;
+    static Canvas playerUI;
+    static Canvas sniperUI;
+
     static IHideable promptUI;
     static IHideable tutorialPromptUI;
 
@@ -35,8 +36,10 @@ public class UIPlayerHUD : MonoBehaviour {
 
     void Start() {
         Init();
+        playerUI = GetComponent<Canvas>();
 
-        ShowSniperScope(false); // Set to default
+        GameClock.ShowClock(true);
+
         tutorialPromptUI.Show(false);
         RemovePrompt();
 
@@ -54,8 +57,6 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("grenade")) grenade = changer as ChangeableText;
             else if (changer.IsType("promptText")) promptText = changer as ChangeableText;
             else if (changer.IsType("promptHide")) promptUI = changer as HideableUI;
-            else if (changer.IsType("playerUI")) playerUI = changer as HideableUI;
-            else if (changer.IsType("sniperUI")) sniperUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptText")) tutorialPromptText = changer as ChangeableText;
             else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptImage")) tutorialPromptImage = changer as ChangeableImage;
@@ -68,10 +69,11 @@ public class UIPlayerHUD : MonoBehaviour {
     }
 
 
+
     public static void ShowSniperScope(bool showSniper) {
-        playerUI.Show(!showSniper);
         GameClock.ShowClock(!showSniper);
-        sniperUI.Show(showSniper);
+        Menu window = showSniper ? Menu.SniperScope : Menu.PlayerHUD;
+        UIManager.instance.SetMenuWindow(window);
     }
 
     public static void SetupPlayer(GameObject actor) {

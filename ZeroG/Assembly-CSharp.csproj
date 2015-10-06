@@ -166,6 +166,7 @@
      <Compile Include="Assets\$Scripts\UI\Windows\UIPasswordInput.cs" />
      <Compile Include="Assets\$Scripts\UI\Windows\UIPauseSpawn.cs" />
      <Compile Include="Assets\$Scripts\UI\Windows\UIPlayerHUD.cs" />
+     <Compile Include="Assets\$Scripts\UI\Windows\UISniperScope.cs" />
      <Compile Include="Assets\$Scripts\UI\Windows\UIWinnerSplash.cs" />
      <Compile Include="Assets\$Scripts\VersionNumber.cs" />
      <Compile Include="Assets\$Scripts\Weapon\FireWeapon.cs" />
