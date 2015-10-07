@@ -1,0 +1,1646 @@
+Mono path[0] = 'C:/Users/Schwenck/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG 2015-10-6_Data/Managed'
+Mono path[1] = 'C:/Users/Schwenck/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG 2015-10-6_Data/Mono'
+Mono config path = 'C:/Users/Schwenck/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG 2015-10-6_Data/Mono/etc'
+PlayerConnection initialized from C:/Users/Schwenck/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG 2015-10-6_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55367
+Multi-casting "[IP] 192.168.0.17 [Port] 55367 [Flags] 3 [Guid] 75161852 [EditorId] 2745294570 [Version] 1048832 [Id] WindowsPlayer(BeastTheSecond) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [192.168.0.17:55367]...
+PlayerConnection accepted from [192.168.0.17] handle:0x14c
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56852
+PlayerConnection already initialized - listening to [192.168.0.17:55367]
+Initialize engine version: 5.1.3f1 (b0a23b31c3d8)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1395]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2022 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.085 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG 2015-10-6_Data\Managed\System.dll (this message is harmless)
+Currently running version is 0.1.5757.36310
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+VersionNumber:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\VersionNumber.cs:23)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/VersionNumber.cs Line: 23)
+
+Server Name is: Best Server Evar 2: Electric Boogaloo
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UILobby:SetServerName() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:124)
+SettingsManager:RelayServerName() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:349)
+NetworkManager:OnServerInitialized() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:195)
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:104)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Windows/UILobby.cs Line: 124)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.230809 ms
+System memory in use before: 73.3 MB.
+System memory in use after: 73.6 MB.
+
+Unloading 31 unused Assets to reduce memory usage. Loaded Objects now: 7987.
+Total: 5.086192 ms (FindLiveObjects: 0.386647 ms CreateObjectMapping: 0.441466 ms MarkObjects: 4.216964 ms  DeleteObjects: 0.039072 ms)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Single, Single, Single, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:231)
+UnityEngine.Transform:Rotate(Single, Single, Single) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:226)
+MouseLook:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Camera\MouseLook.cs:66)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at Radar.DrawDot (.RadarDot dot) [0x00000] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:122 
+  at Radar.DrawRadar () [0x00144] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:109 
+  at Radar.OnGUI () [0x0000c] in C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:42 
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Radar.cs Line: 122)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Infinity or nan floating point numbers appear when calculating matrices for collider.
+UnityEngine.Transform:INTERNAL_set_localRotation(Quaternion&)
+UnityEngine.Transform:set_localRotation(Quaternion) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:88)
+UnityEngine.Transform:Rotate(Vector3, Space) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:214)
+UnityEngine.Transform:Rotate(Vector3) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineTransformBindings.gen.cs:207)
+ActorJetpackMotor:Movement() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs:59)
+ActorMotorManager:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:73)
+
+[C:/buildslave/unity/build/Runtime/Dynamics/Dynamics3/Collider.cpp line 160] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineTransformBindings.gen.cs Line: 88)
+
+Disconnection on server
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ActorEnableManager:OnDisconnectedFromServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\ActorEnableManager.cs:46)
+UnityEngine.Network:Disconnect(Int32)
+UnityEngine.Network:Disconnect() (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:592)
+NetworkManager:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:108)
+UIPauseSpawn:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:129)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/ActorEnableManager.cs Line: 46)
+
+Destroyed Actor Enable Manager.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ActorEnableManager:OnDisconnectedFromServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\ActorEnableManager.cs:48)
+UnityEngine.Network:Disconnect(Int32)
+UnityEngine.Network:Disconnect() (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:592)
+NetworkManager:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:108)
+UIPauseSpawn:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:129)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/ActorEnableManager.cs Line: 48)
+
+Destroyed actor
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+GameManager:OnDisconnectedFromServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UnityEngine.Network:Disconnect(Int32)
+UnityEngine.Network:Disconnect() (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:592)
+NetworkManager:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:108)
+UIPauseSpawn:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:129)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Managers/GameManager.cs Line: 173)
+
+Setting time back to normal.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NetworkManager:OnDisconnectedFromServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:166)
+UnityEngine.Network:Disconnect(Int32)
+UnityEngine.Network:Disconnect() (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:592)
+NetworkManager:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:108)
+UIPauseSpawn:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:129)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Managers/NetworkManager.cs Line: 166)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.910201 ms
+System memory in use before: 73.0 MB.
+System memory in use after: 71.9 MB.
+
+Unloading 134 unused Assets to reduce memory usage. Loaded Objects now: 6765.
+Total: 4.838341 ms (FindLiveObjects: 0.241727 ms CreateObjectMapping: 0.239394 ms MarkObjects: 3.876679 ms  DeleteObjects: 0.478789 ms)
+
+Waiting for finish
