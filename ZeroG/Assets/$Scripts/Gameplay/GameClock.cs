@@ -14,7 +14,7 @@ public class GameClock : MonoBehaviour {
     static GameClock _instance;
 
     void Awake() {
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
         _instance = this;
         clockText = GetComponentInChildren<ChangeableText>();
         myCanvas = GetComponent<Canvas>();

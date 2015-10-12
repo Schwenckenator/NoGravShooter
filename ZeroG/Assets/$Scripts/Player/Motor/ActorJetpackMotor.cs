@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
-public class ActorJetpackMotor : MonoBehaviour, IActorMotor {
+public class ActorJetpackMotor : MonoBehaviour, IActorMotor, IResetable {
 
     public AudioSource jetpackAudioSource;
 

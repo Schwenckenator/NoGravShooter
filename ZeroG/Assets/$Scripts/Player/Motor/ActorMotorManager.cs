@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActorMotorManager : MonoBehaviour {
+public class ActorMotorManager : MonoBehaviour, IResetable {
 
     IActorMotor walkingMotor;
     IActorMotor jetpackMotor;

@@ -116,15 +116,25 @@ public class PlayerManager : MonoBehaviour {
         myActorSpawned = true;
     }
 
+    private IEnumerator CoSpawnActor() {
+
+        //yield return null; // Hold for 1 frame
+
+
+
+        yield return null; // Hold for 1 frame
+    }
+
     private void MovePlayerToSpawnPoint() {
         int point = Random.Range(0, spawnPoints.Length);
-
-        actor.transform.position = spawnPoints[point].transform.position;
-        actor.transform.rotation = spawnPoints[point].transform.rotation;
 
         // Freeze movement and rotation
         actor.GetComponent<Rigidbody>().velocity = Vector3.zero;
         actor.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        actor.transform.position = spawnPoints[point].transform.position;
+        actor.transform.rotation = spawnPoints[point].transform.rotation;
+        //actor.transform.position = new Vector3(5, 0, 0);
     }
 
     public void ActorDied() {

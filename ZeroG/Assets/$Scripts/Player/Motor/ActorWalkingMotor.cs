@@ -4,7 +4,7 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
 
-public class ActorWalkingMotor : MonoBehaviour, IActorMotor {
+public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
 
     public AudioSource feetAudio;
     public AudioClip[] soundFootsteps;

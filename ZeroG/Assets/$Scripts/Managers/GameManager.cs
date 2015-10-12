@@ -169,10 +169,10 @@ public class GameManager : MonoBehaviour {
         GameInProgress = false;
         IsUseTimer = false;
 
-        foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
-            Debug.Log("Destroyed actor");
-            Destroy(actor);
-        }
+        //foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
+        //    Debug.Log("Destroyed actor");
+        //    Destroy(actor);
+        //}
     }
     public void EndGame() {
         gameInProgress = false;

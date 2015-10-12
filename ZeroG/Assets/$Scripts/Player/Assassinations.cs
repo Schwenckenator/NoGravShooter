@@ -11,8 +11,13 @@ public class Assassinations : MonoBehaviour {
 	private IDamageable playerResource;
 	private Vector3 heading;
 
+    private NetworkView myActorView;
+    private Collider myActorCollider;
+
     void Start() {
-        if (!GetComponent<NetworkView>().isMine) {
+        myActorView = GetComponent<NetworkView>();
+        myActorCollider = GetComponent<Collider>();
+        if (!myActorView.isMine) {
             this.enabled = false;
         }
     }
@@ -20,7 +25,7 @@ public class Assassinations : MonoBehaviour {
 	void Update () {
 		Collider[] hits = Physics.OverlapSphere(transform.position, detectionRadius);
 		foreach(Collider hit in hits){
-            if (hit.CompareTag("Player") && !hit.GetComponent<NetworkView>().isMine) { // Don't like the GetComponent in Update()
+            if (hit.CompareTag("Player") && hit != myActorCollider) {
                 AssassinateTargetInRange(hit);
 			}
 		}

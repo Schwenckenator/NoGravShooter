@@ -36,6 +36,8 @@ public class MouseLook : MonoBehaviour {
 	private AimingFOVChanger cameraFOV;
 	private float zoomCameraSlow;
 
+    private bool active = false;
+
     void Awake() {
         if (!transform.root.GetComponent<NetworkView>().isMine) {
             this.enabled = false;
@@ -46,7 +48,7 @@ public class MouseLook : MonoBehaviour {
         sensitivityX = SettingsManager.instance.MouseSensitivityX * maxSensitivity;
         sensitivityY = SettingsManager.instance.MouseSensitivityY * maxSensitivity;
 
-        this.enabled = false;
+        //this.enabled = false;
     }
 
     public void LevelStart() {
@@ -55,6 +57,12 @@ public class MouseLook : MonoBehaviour {
 
 	void Update ()
 	{
+        if (!active) return;
+        //Debug.Log("Time is: " + Time.time.ToString());
+        //Debug.Log("MouseLook is active.");
+        //string temp = transform != null ? "Transform "+ transform.ToString()+"is not null" : "Transform is NULL!";
+        //Debug.Log(temp);
+
 		if(!GameManager.IsSceneMenu() && !GameManager.IsPlayerMenu() && Time.timeScale != 0 && cameraFOV != null){
 
             zoomCameraSlow = cameraFOV.zoomRotationRatio();
@@ -106,7 +114,8 @@ public class MouseLook : MonoBehaviour {
 	}
 
 	public void Ragdoll(bool state){
-		this.enabled = !state;
+		//this.enabled = !state;
+        active = !state;
 	}
 
 	public int GetYDirection(){

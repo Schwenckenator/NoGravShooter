@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ActorCameraMotor : MonoBehaviour {
+public class ActorCameraMotor : MonoBehaviour, IResetable {
 
     public Transform cameraTransform;
     public CameraSmoothMove smoothMove;
@@ -74,8 +74,18 @@ public class ActorCameraMotor : MonoBehaviour {
         characterMouseLook.Ragdoll(true);
     }
     public void Reset() {
+        //cameraMouseLook.Ragdoll(false);
+        //characterMouseLook.Ragdoll(false);
+        StartCoroutine(CoUnRagdoll());
+    }
+    IEnumerator CoUnRagdoll() {
+        //yield return new WaitForSeconds(0.1f);
+        
+        Debug.Log("Unragdolling");
         cameraMouseLook.Ragdoll(false);
         characterMouseLook.Ragdoll(false);
+
+        yield return null;
     }
 
     public void Recoil(float angle) {

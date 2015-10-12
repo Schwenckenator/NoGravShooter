@@ -13,12 +13,14 @@ public class ActorEnableManager : MonoBehaviour {
 
     public void SetActor(GameObject actor) {
         myActor = actor;
+        DontDestroyOnLoad(myActor);
         networkView.RPC("SetActorByViewID", RPCMode.OthersBuffered, actor.GetComponent<NetworkView>().viewID);
     }
 
     [RPC]
     void SetActorByViewID(NetworkViewID viewID) {
         myActor = NetworkView.Find(viewID).gameObject;
+        DontDestroyOnLoad(myActor);
     }
 
     [RPC]
@@ -42,10 +44,8 @@ public class ActorEnableManager : MonoBehaviour {
 
     // Kill self on disconnect
     void OnDisconnectedFromServer() {
-        if (Network.isServer) {
-            Debug.Log("Disconnection on server");
-        }
         Debug.Log("Destroyed Actor Enable Manager.");
-        Destroy(this);
+        Destroy(myActor);
+        Destroy(gameObject);
     }
 }

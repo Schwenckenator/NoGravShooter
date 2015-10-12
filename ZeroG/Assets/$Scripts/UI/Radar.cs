@@ -106,7 +106,9 @@ public class Radar : MonoBehaviour {
         foreach (RadarDot dot in before) {
             DrawDot(dot);
         }
-        DrawDot(player);
+        if (player != null) {
+            DrawDot(player);
+        }
         foreach (RadarDot dot in after) {
             DrawDot(dot);
         }

@@ -5,10 +5,8 @@ public class HideableUI : MonoBehaviour, IChangeable, IHideable {
 
     public string _type; // Only for editor
     private CanvasGroup canvasGroup;
-    private bool visible;
 
     void Start() {
-        visible = gameObject.activeInHierarchy;
     }
 
     public string type {

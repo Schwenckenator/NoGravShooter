@@ -72,6 +72,7 @@
      <Compile Include="Assets\$Scripts\Interfaces\IActorMotor.cs" />
      <Compile Include="Assets\$Scripts\Interfaces\IActorStats.cs" />
      <Compile Include="Assets\$Scripts\Interfaces\IDamageable.cs" />
+     <Compile Include="Assets\$Scripts\Interfaces\IResetable.cs" />
      <Compile Include="Assets\$Scripts\LoadMenuScene.cs" />
      <Compile Include="Assets\$Scripts\Managers\ChatManager.cs" />
      <Compile Include="Assets\$Scripts\Managers\DebugManager.cs" />
