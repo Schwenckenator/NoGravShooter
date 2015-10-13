@@ -18,7 +18,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     private NetworkView networkView;
     IActorStats stats;
 
-    private int suicideDamage = 100; // How much damage K does
+    private int suicideDamage = 9; // How much damage K does
 
 	// Use this for initialization
 	void Awake () {
@@ -40,6 +40,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         if (health > maxHealth) {
             health = maxHealth;
         }
+        CheckHealthForWaver();
     }
     public int GetHealth() {
         return health;
@@ -60,6 +61,23 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         if (health <= 0) {
             Die(NetworkManager.GetPlayer(fromPlayer), weaponID);
         }
+    }
+
+    bool CheckHealthForWaver() {
+        bool willWaver = true;
+        if (health <= 40) {
+            BloodyScreen.Waver(0.5f, .25f);
+        } else if (health <= 30) {
+            BloodyScreen.Waver(0.5f, .5f);
+        } else if (health <= 20) {
+            BloodyScreen.Waver(0.75f, .75f);
+        } else if (health <= 10) {
+            BloodyScreen.Waver(1.25f, 1f);
+        }else{
+            BloodyScreen.StopWaver();
+            willWaver = false;
+	    }
+        return willWaver;
     }
 
     public void Reset() {
@@ -111,7 +129,9 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         if (networkView.isMine && !isDamageSound) {
             isDamageSound = true;
             StartCoroutine(PlaySoundTakeDamage());
-            BloodyScreen.Flash();
+            if (!CheckHealthForWaver()) {
+                BloodyScreen.Flash();
+            }
         }
     }
 
