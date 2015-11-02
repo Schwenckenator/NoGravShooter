@@ -8,32 +8,32 @@ public class UIJoinByIP : MonoBehaviour {
         
         InputField[] fields = GetComponentsInChildren<InputField>(true);
 
-        fields[0].text = SettingsManager.instance.IpAddress;
-        fields[1].text = SettingsManager.instance.PortNumStr;
+        fields[0].text = SettingsManager.singleton.IpAddress;
+        fields[1].text = SettingsManager.singleton.PortNumStr;
 
         // Turn self off after initialsation
         gameObject.SetActive(false);
     }
 
     public void SetIPAddress(string value) {
-        SettingsManager.instance.IpAddress = value;
+        SettingsManager.singleton.IpAddress = value;
     }
     public void SetPortNum(string value) {
-        SettingsManager.instance.PortNumStr = value;
+        SettingsManager.singleton.PortNumStr = value;
     }
     public void SetPassword(string value) {
-        SettingsManager.instance.PasswordClient = value;
+        SettingsManager.singleton.PasswordClient = value;
     }
     public void JoinGame(){
-        SettingsManager.instance.ParsePortNumber();
+        SettingsManager.singleton.ParsePortNumber();
 
-        if (SettingsManager.instance.PortNum >= 0) { // Check for error
-            SettingsManager.instance.SaveSettings();
+        if (SettingsManager.singleton.PortNum >= 0) { // Check for error
+            SettingsManager.singleton.SaveSettings();
 
-            NetworkManager.SetClientDetails(SettingsManager.instance.IpAddress, SettingsManager.instance.PortNum);
+            NetworkManager.SetClientDetails(SettingsManager.singleton.IpAddress, SettingsManager.singleton.PortNum);
             NetworkManager.ConnectToServer();
         }
-        UIManager.instance.GoJoinByIP(false);
+        UIManager.singleton.GoJoinByIP(false);
         UIMessage.ShowMessage("Connecting To Server", false);
     }
 }

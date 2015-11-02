@@ -10,10 +10,10 @@ public class UIPasswordInput : MonoBehaviour {
 	}
 
     public void PasswordEndEdit(string value) {
-        SettingsManager.instance.PasswordClient = value;
+        SettingsManager.singleton.PasswordClient = value;
     }
     public void SubmitPassword() {
-        UIManager.instance.ShowMenuWindow(Menu.PasswordInput, false);
+        UIManager.singleton.ShowMenuWindow(Menu.PasswordInput, false);
         UIJoinGame.instance.ConnectToServer();
     }
 }

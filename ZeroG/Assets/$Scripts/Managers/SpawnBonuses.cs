@@ -24,7 +24,7 @@ public class SpawnBonuses : MonoBehaviour {
             //Determine what bonuses are being spawned this game
             spawnableBonuses = new List<GameObject>();
 
-            bool[] allowedBonuses = SettingsManager.instance.GetAllowedBonuses();
+            bool[] allowedBonuses = SettingsManager.singleton.GetAllowedBonuses();
 
             for (int i = 0; i < allowedBonuses.Length; i++) {
                 if (allowedBonuses[i]) {

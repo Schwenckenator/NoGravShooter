@@ -7,22 +7,22 @@ public class UIMainMenu : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         InputField playerName = gameObject.GetComponentInChildren<InputField>();
-        playerName.text = SettingsManager.instance.PlayerName;
+        playerName.text = SettingsManager.singleton.PlayerName;
 	}
     public void CreateGame() {
         if (CheckName()) {
-            UIManager.instance.SetMenuWindow(Menu.CreateGame);
+            UIManager.singleton.SetMenuWindow(Menu.CreateGame);
         }
     }
     public void JoinGame() {
         if (CheckName()) {
-            UIManager.instance.SetMenuWindow(Menu.JoinGame);
+            UIManager.singleton.SetMenuWindow(Menu.JoinGame);
             UIJoinGame.instance.StartRefresh();
         }
     }
 
     private bool CheckName() {
-        bool hasName = SettingsManager.instance.PlayerName != "";
+        bool hasName = SettingsManager.singleton.PlayerName != "";
         if (!hasName) {
             UIMessage.ShowMessage("Please enter a Player Name.", true);
         }
@@ -30,7 +30,7 @@ public class UIMainMenu : MonoBehaviour {
     }
 
     public void LoadTutorial() {
-        GameManager.instance.LoadTutorial();
+        GameManager.singleton.LoadTutorial();
     }
     public void QuitGame() {
         if (!Application.isWebPlayer && !Application.isEditor) {

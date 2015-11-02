@@ -8,21 +8,7 @@ using System.Collections.Generic;
 /// </summary>
 public class NetworkManager : MonoBehaviour {
 
-    #region Instance
-    //Here is a private reference only this class can access
-    private static NetworkManager _instance;
-    //This is the public reference that other classes will use
-    public static NetworkManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<NetworkManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+    public static NetworkManager singleton { get; private set; }
 
     public const string GameType = "NoGravShooter";
 
@@ -84,9 +70,9 @@ public class NetworkManager : MonoBehaviour {
     #region Connect To Server
     public static void ConnectToServer() {
         if (useMasterServer) {
-            ConnectToServer(masterServerData, SettingsManager.instance.PasswordClient);
+            ConnectToServer(masterServerData, SettingsManager.singleton.PasswordClient);
         } else {
-            ConnectToServer(ipAddress, portNum, SettingsManager.instance.PasswordClient);
+            ConnectToServer(ipAddress, portNum, SettingsManager.singleton.PasswordClient);
         }
     }
 
@@ -100,9 +86,9 @@ public class NetworkManager : MonoBehaviour {
 
     public static void InitialiseServer() {
         if (useNat) useNat = !Network.HavePublicAddress();
-        Network.incomingPassword = SettingsManager.instance.PasswordServer;
+        Network.incomingPassword = SettingsManager.singleton.PasswordServer;
         Network.InitializeServer(maxPlayers, portNum, useNat);
-        if (useMasterServer) MasterServer.RegisterHost(GameType, SettingsManager.instance.ServerNameServer);
+        if (useMasterServer) MasterServer.RegisterHost(GameType, SettingsManager.singleton.ServerNameServer);
     }
     public static void Disconnect() {
         Network.Disconnect();
@@ -147,7 +133,7 @@ public class NetworkManager : MonoBehaviour {
 
         string message = NetworkManager.GetPlayer(disconnectedPlayer).Name;
         message += " has disconnected.";
-        ChatManager.instance.AddToChat(message);
+        ChatManager.singleton.AddToChat(message);
 
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
@@ -169,7 +155,7 @@ public class NetworkManager : MonoBehaviour {
             Application.LoadLevel("MenuScene");
         }
 
-        UIManager.instance.SetMenuWindow(Menu.MainMenu);
+        UIManager.singleton.SetMenuWindow(Menu.MainMenu);
 
         NetworkManager.connectedPlayers.Clear();
         NetworkManager.actorOwners.Clear();
@@ -192,31 +178,31 @@ public class NetworkManager : MonoBehaviour {
     }
     void OnServerInitialized() {
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
-        SettingsManager.instance.RelayServerName();
+        SettingsManager.singleton.RelayServerName();
         AssignMyPlayerToTeam();
 
-        PlayerManager.instance.Init(); // Initialise player
+        PlayerManager.singleton.Init(); // Initialise player
 
-        UIManager.instance.UpdateArraysFromNetworkConnection();
+        UIManager.singleton.UpdateArraysFromNetworkConnection();
     }
     void OnConnectedToServer() {
         UIMessage.CloseMessage();
-        SettingsManager.instance.ClearPasswordClient();
+        SettingsManager.singleton.ClearPasswordClient();
 
         // Set window to lobby
-        UIManager.instance.SetMenuWindow(Menu.Lobby);
+        UIManager.singleton.SetMenuWindow(Menu.Lobby);
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         
-        string message = SettingsManager.instance.PlayerName + " has connected.";
-        ChatManager.instance.AddToChat(message);
+        string message = SettingsManager.singleton.PlayerName + " has connected.";
+        ChatManager.singleton.AddToChat(message);
         AssignMyPlayerToTeam();
 
-        PlayerManager.instance.Init(); // Initialise players
+        PlayerManager.singleton.Init(); // Initialise players
 
-        UIManager.instance.UpdateArraysFromNetworkConnection();
+        UIManager.singleton.UpdateArraysFromNetworkConnection();
     }
     void OnFailedToConnect(NetworkConnectionError error) {
-        SettingsManager.instance.ClearPasswordClient();
+        SettingsManager.singleton.ClearPasswordClient();
         
         string message = "";
         switch (error) {
@@ -235,13 +221,13 @@ public class NetworkManager : MonoBehaviour {
     #endregion
     
     public void AssignMyPlayerToTeam() {
-        if (SettingsManager.instance.IsTeamGameMode() && NetworkManager.MyPlayer().HasNoTeam()) {
+        if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().HasNoTeam()) {
             if (Network.isServer) {
                 FindTeamWithLeastPlayers(Network.player);
             } else { // Is client
                 //NetworkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
             }
-        } else if(!SettingsManager.instance.IsTeamGameMode()){
+        } else if(!SettingsManager.singleton.IsTeamGameMode()){
             NetworkManager.MyPlayer().ChangeTeam();
         }
     }
@@ -272,7 +258,7 @@ public class NetworkManager : MonoBehaviour {
     }
     //[RPC]
     void ChangeTeamFromIndex(int newTeamIndex) {
-        NetworkManager.MyPlayer().ChangeTeam(ScoreVictoryManager.instance.Teams[newTeamIndex].Type);
+        NetworkManager.MyPlayer().ChangeTeam(ScoreVictoryManager.singleton.Teams[newTeamIndex].Type);
     }
 
     #region RPC

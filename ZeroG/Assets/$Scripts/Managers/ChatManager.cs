@@ -6,21 +6,8 @@ using System.Collections.Generic;
 /// Chat manager manages chat, submission to chat and RPCs of chat
 /// </summary>
 public class ChatManager : MonoBehaviour {
-    #region Instance
-    //Here is a private reference only this class can access
-    private static ChatManager _instance;
-    //This is the public reference that other classes will use
-    public static ChatManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<ChatManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+
+    public static ChatManager singleton { get; private set; }
 
     public static string currentChat;
 
@@ -36,7 +23,7 @@ public class ChatManager : MonoBehaviour {
 
     ////NetworkView //NetworkView;
     void Start() {
-        ////NetworkView = GetComponent<//NetworkView>();
+        singleton = this;
         currentChat = "";
         submittedChatList = new List<string>();
     }
@@ -46,7 +33,7 @@ public class ChatManager : MonoBehaviour {
         if (input != "") {
             string newChat = "";
             if (addPlayerPrefix) {
-                newChat += SettingsManager.instance.PlayerName + ": ";
+                newChat += SettingsManager.singleton.PlayerName + ": ";
             }
             newChat += input;
 

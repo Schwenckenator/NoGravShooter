@@ -62,7 +62,7 @@ public class GameClock : MonoBehaviour {
     }
 
     void OnLevelWasLoaded() {
-        bool showClock = GameManager.instance.IsUseTimer && !(GameManager.IsSceneMenu() || GameManager.IsSceneTutorial());
+        bool showClock = GameManager.singleton.IsUseTimer && !(GameManager.IsSceneMenu() || GameManager.IsSceneTutorial());
         myCanvas.enabled = showClock;
 
         if (!showClock) {
@@ -71,6 +71,6 @@ public class GameClock : MonoBehaviour {
     }
 
     public static void ShowClock(bool show) {
-        myCanvas.enabled = show && GameManager.instance.IsUseTimer;
+        myCanvas.enabled = show && GameManager.singleton.IsUseTimer;
     }
 }

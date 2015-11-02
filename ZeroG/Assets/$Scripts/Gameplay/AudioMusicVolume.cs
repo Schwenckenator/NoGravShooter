@@ -14,6 +14,6 @@ public class AudioMusicVolume : MonoBehaviour {
     }
 
     public static void UpdateMusicVolume() {
-        source.volume = SettingsManager.instance.VolumeMusic;
+        source.volume = SettingsManager.singleton.VolumeMusic;
     }
 }

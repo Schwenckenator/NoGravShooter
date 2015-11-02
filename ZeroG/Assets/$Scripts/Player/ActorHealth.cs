@@ -110,7 +110,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
                     } else {
                         killMessage += KillMessageGenerator(weaponID);
                     }
-                    killMessage += SettingsManager.instance.PlayerName;
+                    killMessage += SettingsManager.singleton.PlayerName;
 
                         
 				} else {
@@ -118,7 +118,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
                     GameManager.gameMode.Suicide(killer);
                         
 				}
-                ChatManager.instance.AddToChat(killMessage);
+                ChatManager.singleton.AddToChat(killMessage);
 			}
             gameObject.SendMessage("OnDeath");
 			StartCoroutine(PlayerCleanup());
@@ -165,10 +165,10 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         BloodyScreen.Show(true);
         yield return new WaitForSeconds(playerDyingTime);
         BloodyScreen.Show(false);
-        PlayerManager.instance.ActorDied();
+        PlayerManager.singleton.ActorDied();
 
-        if (SettingsManager.instance.AutoSpawn) {
-            PlayerManager.instance.SpawnActor();
+        if (SettingsManager.singleton.AutoSpawn) {
+            PlayerManager.singleton.SpawnActor();
         }
     }
 

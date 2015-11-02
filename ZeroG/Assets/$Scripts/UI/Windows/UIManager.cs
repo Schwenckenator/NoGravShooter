@@ -29,23 +29,10 @@ public enum Menu {
 }
 
 public class UIManager : MonoBehaviour {
-    #region Instance
-    //Here is a private reference only this class can access
-    private static UIManager _instance;
-    //This is the public reference that other classes will use
-    public static UIManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<UIManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
 
-    
+    public static UIManager singleton { get; private set; }
+
+
     public GameObject[] menus; // Only for initialisation
     private static List<GameObject> windows;
     private static int currentWindow = 0;
@@ -183,7 +170,7 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     public void SetPlayerName(string value) {
-        SettingsManager.instance.PlayerName = value;
+        SettingsManager.singleton.PlayerName = value;
     }
     /// <summary>
     /// For the arrays with changing text based of network connection type, loop through and update the text for all.

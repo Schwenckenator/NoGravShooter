@@ -8,6 +8,6 @@ public class AudioMasterVolume : MonoBehaviour {
     }
 
     public static void UpdateMasterVolume() {
-        AudioListener.volume = SettingsManager.instance.VolumeMaster;
+        AudioListener.volume = SettingsManager.singleton.VolumeMaster;
     }
 }

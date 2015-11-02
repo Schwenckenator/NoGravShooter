@@ -17,29 +17,29 @@ public class UIOptions : MonoBehaviour {
 	}
 
     public void GoPlayerSettings() {
-        UIManager.instance.SetMenuWindow(Menu.PlayerSettings);
+        UIManager.singleton.SetMenuWindow(Menu.PlayerSettings);
     }
 
     public void CloseOptions() {
-        SettingsManager.instance.SaveSettings();
+        SettingsManager.singleton.SaveSettings();
 
-        if (GameManager.instance.GameInProgress) {
+        if (GameManager.singleton.GameInProgress) {
             if (GameManager.IsSceneTutorial()) {
-                UIManager.instance.SetMenuWindow(Menu.TutorialMenu);
+                UIManager.singleton.SetMenuWindow(Menu.TutorialMenu);
             } else {
-                UIManager.instance.SetMenuWindow(Menu.PauseMenu);
+                UIManager.singleton.SetMenuWindow(Menu.PauseMenu);
             }
         } else if(Network.isServer || Network.isClient){
-            UIManager.instance.SetMenuWindow(Menu.Lobby);
+            UIManager.singleton.SetMenuWindow(Menu.Lobby);
         }else {
-            UIManager.instance.SetMenuWindow(Menu.MainMenu);
+            UIManager.singleton.SetMenuWindow(Menu.MainMenu);
         }
     }
     public void GoAudioSettings() {
-        UIManager.instance.SetMenuWindow(Menu.AudioSettings);
+        UIManager.singleton.SetMenuWindow(Menu.AudioSettings);
     }
     public void GoGraphicsSettings() {
         UIGraphicsSettings.instance.GraphicsOptionsButtonRefresh();
-        UIManager.instance.SetMenuWindow(Menu.GraphicsSettings);
+        UIManager.singleton.SetMenuWindow(Menu.GraphicsSettings);
     }
 }

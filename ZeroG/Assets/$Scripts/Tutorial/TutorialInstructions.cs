@@ -322,13 +322,13 @@ public class TutorialInstructions : MonoBehaviour {
     }
     IEnumerator SearchForPlayer() {
         yield return new WaitForSeconds(0.1f);
-        PlayerManager.instance.SpawnActor();
+        PlayerManager.singleton.SpawnActor();
         while (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
             yield return null;
         }
         // Actor found
-        UIManager.instance.GoPlayerHUD();
+        UIManager.singleton.GoPlayerHUD();
         StartCoroutine(LookTutorial());
     }
 	private bool skip = false;

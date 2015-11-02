@@ -42,18 +42,18 @@ public class Player {
         this.Team = newTeam;
 
         if (sendRPC) { // Sends RPC by default
-            NetworkManager.instance.PlayerChangedTeam(this, newTeam);
+            NetworkManager.singleton.PlayerChangedTeam(this, newTeam);
         }
     }
     public void ChangeTeam(bool sendRPC = true) {
-        if (SettingsManager.instance.IsTeamGameMode()) {
+        if (SettingsManager.singleton.IsTeamGameMode()) {
             SwapTeam();
         } else {
             this.Team = TeamColour.None;
         }
 
         if (sendRPC) { // Sends RPC by default
-            NetworkManager.instance.PlayerChangedTeam(this, this.Team);
+            NetworkManager.singleton.PlayerChangedTeam(this, this.Team);
         }
     }
     private void SwapTeam() {

@@ -4,21 +4,7 @@ using System.Collections.Generic;
 
 public class DestroyManager : MonoBehaviour {
 
-    #region Instance
-    //Here is a private reference only this class can access
-    private static DestroyManager _instance;
-    //This is the public reference that other classes will use
-    public static DestroyManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<DestroyManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+    public static DestroyManager singleton { get; private set; }
 
     private List<NetworkViewID> DestroyBuffer;
     private List<NetworkViewID> DestroyedObjects;
@@ -106,7 +92,7 @@ public class DestroyManager : MonoBehaviour {
     }
 
     void OnPlayerConnected(NetworkPlayer connectedPlayer) {
-        if(GameManager.instance.GameInProgress){
+        if(GameManager.singleton.GameInProgress){
             StartCoroutine(SendDestroyedPlayerIDs(1.0f, connectedPlayer));
         }
     }

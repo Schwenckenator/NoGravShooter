@@ -19,29 +19,29 @@ public class UIControlSettings : MonoBehaviour {
 	}
 
     private void ToggleUpdate() {
-        toggles[0].isOn = (SettingsManager.instance.MouseYDirection == 1);
+        toggles[0].isOn = (SettingsManager.singleton.MouseYDirection == 1);
     }
 
     private void InputFieldUpdate() {
-        inputFields[0].text = SettingsManager.instance.MouseSensitivityX.ToString();
-        inputFields[1].text = SettingsManager.instance.MouseSensitivityY.ToString();
+        inputFields[0].text = SettingsManager.singleton.MouseSensitivityX.ToString();
+        inputFields[1].text = SettingsManager.singleton.MouseSensitivityY.ToString();
     }
 
     private void SliderUpdate() {
-        sliders[0].value = SettingsManager.instance.MouseSensitivityX * 100;
-        sliders[1].value = SettingsManager.instance.MouseSensitivityY * 100;
+        sliders[0].value = SettingsManager.singleton.MouseSensitivityX * 100;
+        sliders[1].value = SettingsManager.singleton.MouseSensitivityY * 100;
     }
 
     public void MouseSenXSliderUpdate(float value) {
-        SettingsManager.instance.MouseSensitivityX = value / 100f;
+        SettingsManager.singleton.MouseSensitivityX = value / 100f;
         InputFieldUpdate();
     }
     public void MouseSenYSliderUpdate(float value) {
-        SettingsManager.instance.MouseSensitivityY = value / 100f;
+        SettingsManager.singleton.MouseSensitivityY = value / 100f;
         InputFieldUpdate();
     }
     public void InvertToggleUpdate(bool value) {
-        SettingsManager.instance.MouseYDirection = value ? 1 : -1;
+        SettingsManager.singleton.MouseYDirection = value ? 1 : -1;
     }
 
 }

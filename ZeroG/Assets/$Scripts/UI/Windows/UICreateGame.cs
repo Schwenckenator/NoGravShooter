@@ -7,40 +7,40 @@ public class UICreateGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         InputField[] inputs = GetComponentsInChildren<InputField>(true);
-        inputs[0].text = SettingsManager.instance.ServerNameServer;
-        inputs[1].text = SettingsManager.instance.PortNumStr;
-        inputs[2].text = SettingsManager.instance.PasswordServer;
+        inputs[0].text = SettingsManager.singleton.ServerNameServer;
+        inputs[1].text = SettingsManager.singleton.PortNumStr;
+        inputs[2].text = SettingsManager.singleton.PasswordServer;
 
         // Turn self off after initialsation
         gameObject.SetActive(false);
 	}
 
     public void CreateGame(bool online) {
-        SettingsManager.instance.ParsePortNumber();
+        SettingsManager.singleton.ParsePortNumber();
         // Check for error
-        if (SettingsManager.instance.ServerNameServer == "") {
+        if (SettingsManager.singleton.ServerNameServer == "") {
             UIMessage.ShowMessage("Server name required. Please enter a name.", true);
             return;
         }
-        if (SettingsManager.instance.PortNum < 0) {
+        if (SettingsManager.singleton.PortNum < 0) {
             UIMessage.ShowMessage("Port number invalid. Please enter a valid port number.", true);
             return;
         }
          
-        UIManager.instance.SetMenuWindow(Menu.Lobby);
-        NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.instance.PortNum, online);
+        UIManager.singleton.SetMenuWindow(Menu.Lobby);
+        NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum, online);
         NetworkManager.InitialiseServer();
-        SettingsManager.instance.SaveSettings();
+        SettingsManager.singleton.SaveSettings();
         
     }
 
     public void SetServerName(string value) {
-        SettingsManager.instance.ServerNameServer = value;
+        SettingsManager.singleton.ServerNameServer = value;
     }
     public void SetPortNum(string value) {
-        SettingsManager.instance.PortNumStr = value;
+        SettingsManager.singleton.PortNumStr = value;
     }
     public void SetPassword(string value) {
-        SettingsManager.instance.PasswordServer = value;
+        SettingsManager.singleton.PasswordServer = value;
     }
 }

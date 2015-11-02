@@ -23,7 +23,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 			
 			ActorGrenades actorGrenade = info.GetComponent<Collider>().GetComponent<ActorGrenades>();
 
-			if(SettingsManager.instance.AutoPickup){
+			if(SettingsManager.singleton.AutoPickup){
 				actorGrenade.ChangeGrenade(grenadeType);
 			}
 			actorGrenade.PickUpGrenades(amount, grenadeType);

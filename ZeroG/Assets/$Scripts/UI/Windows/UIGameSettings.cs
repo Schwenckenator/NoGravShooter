@@ -37,10 +37,10 @@ public class UIGameSettings : MonoBehaviour {
             else if (text.IsType("weaponSelect2")) weapon2 = text;
 
         }
-        GameModeSelect(SettingsManager.instance.GameModeIndexServer);
-        MapSelect(SettingsManager.instance.LevelIndex);
-        Weapon1Set(SettingsManager.instance.SpawnWeapon1);
-        Weapon2Set(SettingsManager.instance.SpawnWeapon2);
+        GameModeSelect(SettingsManager.singleton.GameModeIndexServer);
+        MapSelect(SettingsManager.singleton.LevelIndex);
+        Weapon1Set(SettingsManager.singleton.SpawnWeapon1);
+        Weapon2Set(SettingsManager.singleton.SpawnWeapon2);
     }
 
     private void InputSetup() {
@@ -51,8 +51,8 @@ public class UIGameSettings : MonoBehaviour {
             else if (input.IsType("scoreLimit")) scoreLimit = input;
         }
 
-        timeLimit.SetText(SettingsManager.instance.TimeLimitMin.ToString());
-        scoreLimit.SetText(SettingsManager.instance.ScoreToWinServer.ToString());
+        timeLimit.SetText(SettingsManager.singleton.TimeLimitMin.ToString());
+        scoreLimit.SetText(SettingsManager.singleton.ScoreToWinServer.ToString());
     }
     
     private void ToggleSetup() {
@@ -60,50 +60,50 @@ public class UIGameSettings : MonoBehaviour {
         medkitSpawn = toggles[0];
         grenadeSpawn = toggles[1];
         weaponSpawn = toggles[2];
-        medkitSpawn.isOn = (SettingsManager.instance.MedkitCanSpawn == 1);
-        grenadeSpawn.isOn = (SettingsManager.instance.GrenadeCanSpawn == 1);
-        weaponSpawn.isOn = (SettingsManager.instance.WeaponCanSpawn == 1);
+        medkitSpawn.isOn = (SettingsManager.singleton.MedkitCanSpawn == 1);
+        grenadeSpawn.isOn = (SettingsManager.singleton.GrenadeCanSpawn == 1);
+        weaponSpawn.isOn = (SettingsManager.singleton.WeaponCanSpawn == 1);
     }
     #endregion
     #region ButtonPushes
     public void SaveSettings() {
-        SettingsManager.instance.SaveSettings();
-        SettingsManager.instance.RelayGameMode();
+        SettingsManager.singleton.SaveSettings();
+        SettingsManager.singleton.RelayGameMode();
     }
     public void GameModeSelect(int id) {
-        SettingsManager.instance.GameModeIndexServer = id;
-        gameMode.SetText(SettingsManager.instance.GameModeList[id]);
+        SettingsManager.singleton.GameModeIndexServer = id;
+        gameMode.SetText(SettingsManager.singleton.GameModeList[id]);
     }
     public void MapSelect(int id) {
-        SettingsManager.instance.LevelIndex = id;
-        mapSelect.SetText(SettingsManager.instance.LevelName);
+        SettingsManager.singleton.LevelIndex = id;
+        mapSelect.SetText(SettingsManager.singleton.LevelName);
     }
     public void Weapon1Set(int id) {
-        SettingsManager.instance.SpawnWeapon1 = id;
+        SettingsManager.singleton.SpawnWeapon1 = id;
         weapon1.SetText(GameManager.weapon[id].name);
     }
     public void Weapon2Set(int id) {
-        SettingsManager.instance.SpawnWeapon2 = id;
+        SettingsManager.singleton.SpawnWeapon2 = id;
         weapon2.SetText(GameManager.weapon[id].name);
     }
     public void TimeLimit(string min) {
         if (min != "") {
-            SettingsManager.instance.TimeLimitMin = int.Parse(min);
+            SettingsManager.singleton.TimeLimitMin = int.Parse(min);
         }
     }
     public void ScoreLimit(string score) {
         if (score != "") { 
-            SettingsManager.instance.ScoreToWinServer = int.Parse(score); 
+            SettingsManager.singleton.ScoreToWinServer = int.Parse(score); 
         }
     }
     public void MedkitToggle(bool value) {
-        SettingsManager.instance.MedkitCanSpawn = value ? 1 : 0;
+        SettingsManager.singleton.MedkitCanSpawn = value ? 1 : 0;
     }
     public void GrenadeToggle(bool value) {
-        SettingsManager.instance.GrenadeCanSpawn = value ? 1 : 0;
+        SettingsManager.singleton.GrenadeCanSpawn = value ? 1 : 0;
     }
     public void WeaponToggle(bool value) {
-        SettingsManager.instance.WeaponCanSpawn = value ? 1 : 0;
+        SettingsManager.singleton.WeaponCanSpawn = value ? 1 : 0;
     }
     public void AllWeaponToggle(bool value) {
         DebugManager.SetAllWeapon(value);

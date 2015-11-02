@@ -5,21 +5,7 @@ public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, Roll
 
 public class SettingsManager : MonoBehaviour {
 
-    #region Instance
-    //Here is a private reference only this class can access
-    private static SettingsManager _instance;
-    //This is the public reference that other classes will use
-    public static SettingsManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<SettingsManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+    public static SettingsManager singleton { get; private set; }
 
     public static KeyCode[] keyBindings;
     const int SecondsInMinute = 60;
@@ -172,7 +158,7 @@ public class SettingsManager : MonoBehaviour {
 
     //NetworkView //NetworkView;
     void Awake() {
-        //NetworkView = GetComponent<//NetworkView>();
+        singleton = this;
         RetrieveKeyBinds();
         RetrieveSettings();
     }
@@ -346,12 +332,12 @@ public class SettingsManager : MonoBehaviour {
     #region RPCSettings
     public void RelayServerName() {
         //NetworkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
-        UILobby.instance.SetServerName();// Writes to lobby title
+        UILobby.singleton.SetServerName();// Writes to lobby title
     }
     //[RPC]
     private void RPC_RelayServerName(string inServerName) {
         this.ServerNameClient = inServerName;
-        UILobby.instance.SetServerName(); // Writes to lobby title
+        UILobby.singleton.SetServerName(); // Writes to lobby title
     }
 
     public void RelayScoreToWin() {
@@ -367,8 +353,8 @@ public class SettingsManager : MonoBehaviour {
     }
     //[RPC]
     void RPC_RelayGameMode(int index) {
-        SettingsManager.instance.GameModeIndexClient = index;
-        NetworkManager.instance.AssignMyPlayerToTeam();
+        SettingsManager.singleton.GameModeIndexClient = index;
+        NetworkManager.singleton.AssignMyPlayerToTeam();
         UIChat.UpdatePlayerLists();
     }
     #endregion

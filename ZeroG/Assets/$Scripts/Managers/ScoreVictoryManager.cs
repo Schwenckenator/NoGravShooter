@@ -4,21 +4,7 @@ using System.Collections.Generic;
 
 public class ScoreVictoryManager : MonoBehaviour {
 
-    #region Instance
-    //Here is a private reference only this class can access
-    private static ScoreVictoryManager _instance;
-    //This is the public reference that other classes will use
-    public static ScoreVictoryManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<ScoreVictoryManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+    public static ScoreVictoryManager singleton { get; private set; }
 
     public string VictorName { get; set; }
     public bool IsVictor() {
@@ -32,7 +18,7 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     //NetworkView //NetworkView;
     void Start() {
-        //NetworkView = GetComponent<//NetworkView>();
+        singleton = this;
         ClearScoreData(); // Clean Set up
         Teams.Add(new Team(TeamColour.Red));
         Teams.Add(new Team(TeamColour.Blue));
@@ -67,7 +53,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         if (score != 0) { // If 0, don't bother
             Player player = NetworkManager.GetPlayer(playerID);
             player.AddScore(score);
-            if (SettingsManager.instance.IsTeamGameMode()) {
+            if (SettingsManager.singleton.IsTeamGameMode()) {
                 GetTeam(player.Team).AddScore(score);
             }
             CheckForScoreVictory();
@@ -78,9 +64,9 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     void CheckForScoreVictory() {
 
-        if (SettingsManager.instance.ScoreToWinClient <= 0) return; // If score disabled, don't bother
+        if (SettingsManager.singleton.ScoreToWinClient <= 0) return; // If score disabled, don't bother
 
-        if (SettingsManager.instance.IsTeamGameMode()) {
+        if (SettingsManager.singleton.IsTeamGameMode()) {
             TeamCheckForScoreVictory();
         } else {
             FFACheckForScoreVictory();
@@ -89,14 +75,14 @@ public class ScoreVictoryManager : MonoBehaviour {
     // Bad bad code duplication. Bad Matt! *smack*
     void TeamCheckForScoreVictory() {
         foreach (Team team in Teams) {
-            if (team.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWinClient)) {
+            if (team.IsScoreEqualOrOverAmount(SettingsManager.singleton.ScoreToWinClient)) {
                 DeclareWinner(team.Name);
             }
         }
     }
     void FFACheckForScoreVictory() {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            if (player.IsScoreEqualOrOverAmount(SettingsManager.instance.ScoreToWinClient)) {
+            if (player.IsScoreEqualOrOverAmount(SettingsManager.singleton.ScoreToWinClient)) {
                 DeclareWinner(player.Name);
                 break;
             }
@@ -107,24 +93,24 @@ public class ScoreVictoryManager : MonoBehaviour {
 
         string winningName = WinningName();
         if (Network.isServer) {
-            ChatManager.instance.AddToChat("Time is up.");
+            ChatManager.singleton.AddToChat("Time is up.");
         }
         DeclareWinner(winningName);
     }
     void DeclareWinner(string winningName) {
         
         if (Network.isServer) {
-            ChatManager.instance.AddToChat(winningName + " wins!");
+            ChatManager.singleton.AddToChat(winningName + " wins!");
         }
         UIWinnerSplash.SetWinner(winningName);
-        GameManager.instance.EndGame();
+        GameManager.singleton.EndGame();
         this.VictorName = winningName;
     }
 
     private string WinningName() {
         int maxValue = -999999999; // Very negative number
         string winningName = "";
-        if (SettingsManager.instance.IsTeamGameMode()) { // Bad code duplication
+        if (SettingsManager.singleton.IsTeamGameMode()) { // Bad code duplication
             foreach (Team team in Teams) {
                 if (team.Score > maxValue) {
                     maxValue = team.Score;
@@ -150,9 +136,9 @@ public class ScoreVictoryManager : MonoBehaviour {
     IEnumerator CheckForGameEnd() {
         float waitTime = 1.0f;
         
-        while(GameManager.instance.GameInProgress){
+        while(GameManager.singleton.GameInProgress){
             yield return new WaitForSeconds(waitTime);
-            if (Time.time >= GameManager.instance.endTime && GameManager.instance.GameInProgress) {
+            if (Time.time >= GameManager.singleton.endTime && GameManager.singleton.GameInProgress) {
                 TimeVictory();
                 break;
             }
@@ -168,7 +154,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         playerBuffer = SortPlayers();
         teamBuffer = SortTeams();
 
-        if (SettingsManager.instance.IsTeamGameMode()) {
+        if (SettingsManager.singleton.IsTeamGameMode()) {
             foreach (Team team in teamBuffer) {
                 scoreBoardBuffer += Team.ColourTag(team.Type) + team.Name + ": " + Team.ColourEnd() + team.Score + "\n";
             }
@@ -200,7 +186,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     private static List<Team> SortTeams() {
         List<Team> teamBuffer = new List<Team>();
 
-        foreach (Team team in ScoreVictoryManager.instance.Teams) {
+        foreach (Team team in ScoreVictoryManager.singleton.Teams) {
             int score = team.Score;
             int i = 0;
             foreach (Team buffer in teamBuffer) {

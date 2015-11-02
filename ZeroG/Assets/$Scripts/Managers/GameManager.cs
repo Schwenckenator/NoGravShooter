@@ -6,21 +6,7 @@ using System.Collections.Generic;
 /// </summary>
 public class GameManager : MonoBehaviour {
 
-    #region Instance
-    //Here is a private reference only this class can access
-    private static GameManager _instance;
-    //This is the public reference that other classes will use
-    public static GameManager instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<GameManager>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+    public static GameManager singleton { get; private set; }
 
     public static IGameMode gameMode;
     public GameObject[] gameModes;
@@ -116,17 +102,17 @@ public class GameManager : MonoBehaviour {
 		SetCursorVisibility(true);
 		if(!GameManager.IsSceneMenu()){
             
-            UIManager.instance.SetMenuWindow(Menu.PauseMenu);
+            UIManager.singleton.SetMenuWindow(Menu.PauseMenu);
 			//
 			if(Network.isServer){
                 int[] temp = new int[2];
 
-                temp[0] = SettingsManager.instance.SpawnWeapon1;
-				if(SettingsManager.instance.SpawnWeapon1 == SettingsManager.instance.SpawnWeapon2){
+                temp[0] = SettingsManager.singleton.SpawnWeapon1;
+				if(SettingsManager.singleton.SpawnWeapon1 == SettingsManager.singleton.SpawnWeapon2){
 					Debug.Log("same weapon twice");
 					temp[1] = 99;
 				} else {
-					temp[1] = SettingsManager.instance.SpawnWeapon2;
+					temp[1] = SettingsManager.singleton.SpawnWeapon2;
 				}
                 StartCoroutine(SetStartingWeaponsDelay(temp));
 			}
@@ -157,10 +143,10 @@ public class GameManager : MonoBehaviour {
         if (GameInProgress) {
             ChatManager.AddToLocalChat(NetworkManager.lastLevelPrefix.ToString());
             //NetworkView.RPC("RPCLoadLevel", connectingPlayer,
-                //SettingsManager.instance.LevelName,
+                //SettingsManager.singleton.LevelName,
                 //NetworkManager.lastLevelPrefix,
-                //SettingsManager.instance.TimeLimitSec,
-                //SettingsManager.instance.GameModeIndexServer);
+                //SettingsManager.sin.TimeLimitSec,
+                //SettingsManager.oeu.GameModeIndexServer);
 
             //NetworkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
         }
@@ -193,14 +179,14 @@ public class GameManager : MonoBehaviour {
         if (Network.isClient) {
             throw new ClientRunningServerCodeException("Thrown in GameManager.");
         }
-        DestroyManager.instance.ClearDestroyLists();
-        SettingsManager.instance.RelayScoreToWin();
+        DestroyManager.singleton.ClearDestroyLists();
+        SettingsManager.singleton.RelayScoreToWin();
 
         ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
-        //    SettingsManager.instance.LevelName, 
+        //    SettingsManager.eu.LevelName, 
         //    NetworkManager.lastLevelPrefix + 1, 
-        //    SettingsManager.instance.TimeLimitSec, 
-        //    SettingsManager.instance.GameModeIndexServer);
+        //    SettingsManager.eu.TimeLimitSec, 
+        //    SettingsManager.eu.GameModeIndexServer);
     }
     private void LoadLevelTutorial() {
         //int dummyValue = 0; // Just to keep the method happy
@@ -214,7 +200,7 @@ public class GameManager : MonoBehaviour {
     //[RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
 
-        SettingsManager.instance.GameModeIndexClient = gameModeIndex;
+        SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
         UIChat.UpdatePlayerLists();
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
@@ -224,7 +210,7 @@ public class GameManager : MonoBehaviour {
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
                 GameClock.SetEndTime(endTime);
-                ScoreVictoryManager.instance.StartTimer();
+                ScoreVictoryManager.singleton.StartTimer();
                 this.IsUseTimer = true;
             } else {
                 this.IsUseTimer = false;
@@ -254,7 +240,7 @@ public class GameManager : MonoBehaviour {
         Network.SetSendingEnabled(0, false);
         Network.isMessageQueueRunning = false;
 
-        SettingsManager.instance.GameModeIndexClient = gameModeIndex;
+        SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
             GameInProgress = true;
@@ -264,7 +250,7 @@ public class GameManager : MonoBehaviour {
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
                 GameClock.SetEndTime(endTime);
-                ScoreVictoryManager.instance.StartTimer();
+                ScoreVictoryManager.singleton.StartTimer();
                 this.IsUseTimer = true;
             } else {
                 this.IsUseTimer = false;
@@ -322,7 +308,7 @@ public class GameManager : MonoBehaviour {
     //[RPC]
     void RPCReturnToLobby() {
         //Clear data about a winner, the games over yo
-        ScoreVictoryManager.instance.ClearScoreData();
-        UIManager.instance.SetMenuWindow(Menu.Lobby);
+        ScoreVictoryManager.singleton.ClearScoreData();
+        UIManager.singleton.SetMenuWindow(Menu.Lobby);
     }
 }

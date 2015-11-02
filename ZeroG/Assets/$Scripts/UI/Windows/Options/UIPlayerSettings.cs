@@ -28,56 +28,56 @@ public class UIPlayerSettings : MonoBehaviour {
 	}
 
     public void SaveSettingsGoOption() {
-        SettingsManager.instance.SaveSettings();
-        UIManager.instance.SetMenuWindow(Menu.Options);
+        SettingsManager.singleton.SaveSettings();
+        UIManager.singleton.SetMenuWindow(Menu.Options);
     }
     private void InputFieldUpdate() {
-        inputFields[0].text = SettingsManager.instance.FieldOfView.ToString();
-        inputFields[1].text = SettingsManager.instance.ColourR.ToString();
-        inputFields[2].text = SettingsManager.instance.ColourG.ToString();
-        inputFields[3].text = SettingsManager.instance.ColourB.ToString();
+        inputFields[0].text = SettingsManager.singleton.FieldOfView.ToString();
+        inputFields[1].text = SettingsManager.singleton.ColourR.ToString();
+        inputFields[2].text = SettingsManager.singleton.ColourG.ToString();
+        inputFields[3].text = SettingsManager.singleton.ColourB.ToString();
     }
     private void SliderUpdate() {
-        sliders[0].value = SettingsManager.instance.FieldOfView * 10;
-        sliders[1].value = SettingsManager.instance.ColourR * 100;
-        sliders[2].value = SettingsManager.instance.ColourG * 100;
-        sliders[3].value = SettingsManager.instance.ColourB * 100;
+        sliders[0].value = SettingsManager.singleton.FieldOfView * 10;
+        sliders[1].value = SettingsManager.singleton.ColourR * 100;
+        sliders[2].value = SettingsManager.singleton.ColourG * 100;
+        sliders[3].value = SettingsManager.singleton.ColourB * 100;
     }
     private void ColoursUpdate() {
-        playerColours[0].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.Red, SettingsManager.instance.GetPlayerColour()));
-        playerColours[1].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.None, SettingsManager.instance.GetPlayerColour()));
-        playerColours[2].ChangeColour(PlayerColourManager.instance.LimitTeamColour(TeamColour.Blue, SettingsManager.instance.GetPlayerColour()));
+        playerColours[0].ChangeColour(PlayerColourManager.singleton.LimitTeamColour(TeamColour.Red, SettingsManager.singleton.GetPlayerColour()));
+        playerColours[1].ChangeColour(PlayerColourManager.singleton.LimitTeamColour(TeamColour.None, SettingsManager.singleton.GetPlayerColour()));
+        playerColours[2].ChangeColour(PlayerColourManager.singleton.LimitTeamColour(TeamColour.Blue, SettingsManager.singleton.GetPlayerColour()));
     }
     private void ToggleUpdate() {
-        toggles[0].isOn = SettingsManager.instance.AutoPickup;
+        toggles[0].isOn = SettingsManager.singleton.AutoPickup;
     }
 
     public void FOVSliderUpdate(float value) {
-        SettingsManager.instance.FieldOfView = value / 10f;
+        SettingsManager.singleton.FieldOfView = value / 10f;
         InputFieldUpdate();
     }
     public void ColourRSliderUpdate(float value) {
-        SettingsManager.instance.ColourR = value / 100f;
+        SettingsManager.singleton.ColourR = value / 100f;
         InputFieldUpdate();
         ColoursUpdate();
     }
     public void ColourGSliderUpdate(float value) {
-        SettingsManager.instance.ColourG = value / 100f;
+        SettingsManager.singleton.ColourG = value / 100f;
         InputFieldUpdate();
         ColoursUpdate();
     }
     public void ColourBSliderUpdate(float value) {
-        SettingsManager.instance.ColourB = value / 100f;
+        SettingsManager.singleton.ColourB = value / 100f;
         InputFieldUpdate();
         ColoursUpdate();
     }
     public void AutoPickupToggleUpdate(bool value) {
-        SettingsManager.instance.AutoPickup = value;
+        SettingsManager.singleton.AutoPickup = value;
     }
     public void RandomColour() {
-        SettingsManager.instance.ColourR = Random.Range(0f, 1f);
-        SettingsManager.instance.ColourG = Random.Range(0f, 1f);
-        SettingsManager.instance.ColourB = Random.Range(0f, 1f);
+        SettingsManager.singleton.ColourR = Random.Range(0f, 1f);
+        SettingsManager.singleton.ColourG = Random.Range(0f, 1f);
+        SettingsManager.singleton.ColourB = Random.Range(0f, 1f);
 
         SliderUpdate();
         ColoursUpdate();

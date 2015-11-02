@@ -54,22 +54,22 @@ public class UIKeybindSettings : MonoBehaviour {
 
         if (done) {
             EditKeybindTextRefresh();
-            UIManager.instance.ShowMenuWindow(Menu.ChangeKeybind, false);
+            UIManager.singleton.ShowMenuWindow(Menu.ChangeKeybind, false);
         }
     }
 
     public void OpenChangeKeybind(int key) {
         editedBinding = key;
-        UIManager.instance.ShowMenuWindow(Menu.ChangeKeybind, true);
+        UIManager.singleton.ShowMenuWindow(Menu.ChangeKeybind, true);
     }
 
     public void CloseChangeKeybind() {
-        UIManager.instance.ShowMenuWindow(Menu.ChangeKeybind, false);
+        UIManager.singleton.ShowMenuWindow(Menu.ChangeKeybind, false);
     }
 
     public void SaveKeybinds() {
-        SettingsManager.instance.SaveKeyBinds();
-        SettingsManager.instance.SaveSettings();
-        UIManager.instance.SetMenuWindow(Menu.Options);
+        SettingsManager.singleton.SaveKeyBinds();
+        SettingsManager.singleton.SaveSettings();
+        UIManager.singleton.SetMenuWindow(Menu.Options);
     }
 }

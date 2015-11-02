@@ -14,12 +14,12 @@ public class PlayerManager : MonoBehaviour {
     private CameraMove cameraMove;
     MouseLook[] lookers;
 
-    public static PlayerManager instance;
+    public static PlayerManager singleton;
 
     //private new //NetworkView //NetworkView;
 
     void Start() {
-        instance = this;
+        singleton = this;
         //NetworkView = GetComponent<//NetworkView>();
     }
 
@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour {
             myActorSpawned = false;
 
             UIPauseSpawn.PlayerDied();
-            GameManager.instance.SetPlayerMenu(false);
+            GameManager.singleton.SetPlayerMenu(false);
             GameManager.SetCursorVisibility(true);
 
             cameraMove = null;
@@ -79,7 +79,7 @@ public class PlayerManager : MonoBehaviour {
     IEnumerator RemoveActor() {
         yield return null;
         actorManager.DisableActor();
-        GameManager.instance.SetPlayerMenu(false);
+        GameManager.singleton.SetPlayerMenu(false);
     }
 
     public void SpawnActor() {
@@ -97,14 +97,14 @@ public class PlayerManager : MonoBehaviour {
 
         GameManager.SetCursorVisibility(false);
 
-        GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.instance.MouseYDirection);
-        actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.instance.MouseYDirection);
+        GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.singleton.MouseYDirection);
+        actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.singleton.MouseYDirection);
 
         actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
         UIPlayerHUD.SetupPlayer(actor);
         DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
-        PlayerColourManager.instance.AssignColour(actor);
+        PlayerColourManager.singleton.AssignColour(actor);
 
         MovePlayerToSpawnPoint();
 
@@ -141,7 +141,7 @@ public class PlayerManager : MonoBehaviour {
         myActorSpawned = false;
 
         UIPauseSpawn.PlayerDied();
-        GameManager.instance.SetPlayerMenu(false);
+        GameManager.singleton.SetPlayerMenu(false);
         cameraMove.DetachCamera();
         GameManager.SetCursorVisibility(true);
 

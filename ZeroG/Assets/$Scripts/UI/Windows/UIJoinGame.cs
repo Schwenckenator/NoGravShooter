@@ -82,7 +82,7 @@ public class UIJoinGame : MonoBehaviour {
                 masterServerData = serverList[i].hostData;
                 if (masterServerData.passwordProtected) {
                     // Need password
-                    UIManager.instance.ShowMenuWindow(Menu.PasswordInput, true);
+                    UIManager.singleton.ShowMenuWindow(Menu.PasswordInput, true);
                 } else {
                     // Ready to connect
                     ConnectToServer();

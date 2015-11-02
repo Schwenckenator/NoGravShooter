@@ -19,7 +19,7 @@ public class AimingFOVChanger : MonoBehaviour {
         if (UIManager.IsCurrentMenuWindow(Menu.PauseMenu)) return;
         // What is all this doing in an update loop?
         // TODO: Cache the results
-	    maxFOV = SettingsManager.instance.FieldOfView;
+	    maxFOV = SettingsManager.singleton.FieldOfView;
 
 	    GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
 		//foreach(GameObject player in list){

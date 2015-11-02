@@ -16,6 +16,6 @@ public class ChatSubmitEvent : MonoBehaviour {
     }
 
     private void SubmitChat(string chat) {
-        ChatManager.instance.AddToChat(chat);
+        ChatManager.singleton.AddToChat(chat);
     }
 }

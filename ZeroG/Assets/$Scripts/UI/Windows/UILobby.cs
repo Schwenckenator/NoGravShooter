@@ -4,21 +4,7 @@ using System.Collections;
 
 public class UILobby : MonoBehaviour {
 
-    #region Instance
-    //Here is a private reference only this class can access
-    private static UILobby _instance;
-    //This is the public reference that other classes will use
-    public static UILobby instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<UILobby>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+    public static UILobby singleton { get; private set; }
     public Text serverSettings;
     private static Text startButtonText;
     private static ChangeableText serverNameText;
@@ -31,15 +17,15 @@ public class UILobby : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        _instance = this;
+        singleton = this;
         LobbyInit();
 
         // Turn self off after initialsation
         gameObject.SetActive(false);
 	}
     void Update() {
-        if (teamGame != SettingsManager.instance.IsTeamGameMode()) {
-            ShowChangeTeamButton(SettingsManager.instance.IsTeamGameMode());
+        if (teamGame != SettingsManager.singleton.IsTeamGameMode()) {
+            ShowChangeTeamButton(SettingsManager.singleton.IsTeamGameMode());
         }
     }
     
@@ -61,12 +47,12 @@ public class UILobby : MonoBehaviour {
     }
     #region StartGame
     public void StartCountdown() {
-        UILobby.instance.StartCountdownStatic();
+        UILobby.singleton.StartCountdownStatic();
     }
     private void StartCountdownStatic() {
         if (countdown) {
             StopCoroutine("CountdownStartGame");
-            ChatManager.instance.AddToChat("Countdown cancelled.");
+            ChatManager.singleton.AddToChat("Countdown cancelled.");
             countdown = false;
         } else {
             StartCoroutine("CountdownStartGame");
@@ -76,24 +62,24 @@ public class UILobby : MonoBehaviour {
     private void StopCountdown() {
         if (countdown) {
             StopCoroutine("CountdownStartGame");
-            ChatManager.instance.AddToChat("Countdown cancelled.");
+            ChatManager.singleton.AddToChat("Countdown cancelled.");
             countdown = false;
         }
         ChangeButtonText(countdown);
     }
     IEnumerator CountdownStartGame() {
         if (DebugManager.IsAdminMode()) {
-            GameManager.instance.LoadLevel();
+            GameManager.singleton.LoadLevel();
             yield break;
         }
         countdown = true;
         int waitSeconds = 5;
-        ChatManager.instance.AddToChat("Game starting in...");
+        ChatManager.singleton.AddToChat("Game starting in...");
         do {
-            ChatManager.instance.AddToChat(waitSeconds.ToString() + "...");
+            ChatManager.singleton.AddToChat(waitSeconds.ToString() + "...");
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
-        GameManager.instance.LoadLevel();
+        GameManager.singleton.LoadLevel();
         countdown = false;
         ChangeButtonText(countdown);
     }
@@ -106,11 +92,11 @@ public class UILobby : MonoBehaviour {
         NetworkManager.MyPlayer().ChangeTeam();
     }
     public void Disconnect() {
-        UILobby.instance.DisconnectStatic();
+        UILobby.singleton.DisconnectStatic();
     }
     public void GoGameSettings() {
-        UIManager.instance.GoGameSettings(true);
-        UILobby.instance.StopCountdown();
+        UIManager.singleton.GoGameSettings(true);
+        UILobby.singleton.StopCountdown();
     }
 
 
@@ -121,8 +107,8 @@ public class UILobby : MonoBehaviour {
     }
 
     public void SetServerName() {
-        Debug.Log("Server Name is: " + SettingsManager.instance.ServerNameClient);
-        serverNameText.SetText(SettingsManager.instance.ServerNameClient);
+        Debug.Log("Server Name is: " + SettingsManager.singleton.ServerNameClient);
+        serverNameText.SetText(SettingsManager.singleton.ServerNameClient);
 
         string text = "IP: " + Network.player.ipAddress;
         text += ", Port: " + Network.player.port;
@@ -134,6 +120,6 @@ public class UILobby : MonoBehaviour {
         UIPauseSpawn.SetServerNameText();
     }
     public void GoOptions() {
-        UIManager.instance.SetMenuWindow(Menu.Options);
+        UIManager.singleton.SetMenuWindow(Menu.Options);
     }
 }

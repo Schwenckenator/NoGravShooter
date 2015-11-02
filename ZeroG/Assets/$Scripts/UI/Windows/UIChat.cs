@@ -52,7 +52,7 @@ public class UIChat : MonoBehaviour {
 
     public void SubmitMessage(string newChat) {
         if(newChat != "" && Input.GetButtonDown("Submit")){
-            ChatManager.instance.AddToChat(newChat, true);
+            ChatManager.singleton.AddToChat(newChat, true);
         }
     }
     public void FocusTextBox(InputField value) {

@@ -53,7 +53,7 @@ public class DynamicCrosshair : MonoBehaviour {
         
         if (Physics.Raycast(cam.position, cam.forward, out hit)) {
             if (hit.collider.CompareTag("Player") && !hit.collider.Equals(myActor)) {
-                if (SettingsManager.instance.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
+                if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
                     newColour = ally;
                 } else {
                     newColour = enemy;

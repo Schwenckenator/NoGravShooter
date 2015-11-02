@@ -61,28 +61,28 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     private void SetToggle() {
         if (AutoSpawn != null) {
-            AutoSpawn.isOn = SettingsManager.instance.AutoSpawn;
+            AutoSpawn.isOn = SettingsManager.singleton.AutoSpawn;
         }
     }
     public void ToggleAutoSpawn(bool value) {
-        SettingsManager.instance.AutoSpawn = value;
-        SettingsManager.instance.SaveSettings();
+        SettingsManager.singleton.AutoSpawn = value;
+        SettingsManager.singleton.SaveSettings();
     }
 
     public static void PlayerSpawned() {
         spawnButton.SetText(unpause);
-        if (GameManager.instance.GameInProgress || GameManager.IsSceneTutorial())
+        if (GameManager.singleton.GameInProgress || GameManager.IsSceneTutorial())
             ReturnToGame();
     }
     public static void PlayerDied() {
         spawnButton.SetText(spawn);
-        if (GameManager.instance.GameInProgress || GameManager.IsSceneTutorial())
+        if (GameManager.singleton.GameInProgress || GameManager.IsSceneTutorial())
             PauseMenu();
     }
 
     public static void SetServerNameText() {
-        string newText = SettingsManager.instance.ServerNameClient;
-        newText += ", " + SettingsManager.instance.GameModeName;
+        string newText = SettingsManager.singleton.ServerNameClient;
+        newText += ", " + SettingsManager.singleton.GameModeName;
         serverName.SetText(newText);
     }
     public static void TutorialModeActive(bool isTutorial) {
@@ -90,18 +90,18 @@ public class UIPauseSpawn : MonoBehaviour {
         returnToLobby.Show(!isTutorial);
     }
     private static void ReturnToGame() {
-        UIManager.instance.SetMenuWindow(Menu.PlayerHUD);
+        UIManager.singleton.SetMenuWindow(Menu.PlayerHUD);
         GameManager.SetCursorVisibility(false);
-        GameManager.instance.SetPlayerMenu(false);
+        GameManager.singleton.SetPlayerMenu(false);
     }
     private static void PauseMenu(bool isTutorial = false) {
         Menu window = isTutorial ? Menu.TutorialMenu : Menu.PauseMenu;
-        UIManager.instance.SetMenuWindow(window);
+        UIManager.singleton.SetMenuWindow(window);
         if (!isTutorial) {
             returnToLobby.Show(Network.isServer);
         }
         GameManager.SetCursorVisibility(true);
-        GameManager.instance.SetPlayerMenu(true);
+        GameManager.singleton.SetPlayerMenu(true);
     }
 
     /// <summary>
@@ -119,16 +119,16 @@ public class UIPauseSpawn : MonoBehaviour {
         if (PlayerManager.IsActorSpawned()) {
             PauseMenuSwitch();
         } else {
-            PlayerManager.instance.SpawnActor();
+            PlayerManager.singleton.SpawnActor();
         }
     }
     public void ReturnToLobbyPress() {
-        GameManager.instance.ReturnToLobby();
+        GameManager.singleton.ReturnToLobby();
     }
     public void Disconnect() {
         NetworkManager.Disconnect();
     }
     public void GoOptions() {
-        UIManager.instance.SetMenuWindow(Menu.Options);
+        UIManager.singleton.SetMenuWindow(Menu.Options);
     }
 }

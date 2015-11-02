@@ -45,8 +45,8 @@ public class MouseLook : MonoBehaviour {
 
         // Base sensitivity is a fraction of maximum
         // Set true value here
-        sensitivityX = SettingsManager.instance.MouseSensitivityX * maxSensitivity;
-        sensitivityY = SettingsManager.instance.MouseSensitivityY * maxSensitivity;
+        sensitivityX = SettingsManager.singleton.MouseSensitivityX * maxSensitivity;
+        sensitivityY = SettingsManager.singleton.MouseSensitivityY * maxSensitivity;
 
         //this.enabled = false;
     }

@@ -130,7 +130,7 @@ public class BonusWeaponPickup : MonoBehaviour {
     private void AddWeapon() {
         if (!hasAmmo) return;
         inventory.AddWeapon(id);
-        if (SettingsManager.instance.AutoPickup) {
+        if (SettingsManager.singleton.AutoPickup) {
             inventory.ChangeWeapon(weaponcount);
         }
         Debug.Log("Not at maximum weapons, auto picking up");
