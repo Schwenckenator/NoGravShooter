@@ -70,7 +70,7 @@ public class TutorialInstructions : MonoBehaviour {
 
 
     void Start() {
-        UIManager.RemoveAllGUI(); // Hide the main menu while the player loads
+        OldUIManager.RemoveAllGUI(); // Hide the main menu while the player loads
         lookingDot = GameObject.Find("LookAtDot");
         platform = GameObject.Find("PlatformFront1");
         platform.transform.GetComponent<Renderer>().material.color = new Color(0, 1, 0);
@@ -328,7 +328,6 @@ public class TutorialInstructions : MonoBehaviour {
             yield return null;
         }
         // Actor found
-        UIManager.singleton.GoPlayerHUD();
         StartCoroutine(LookTutorial());
     }
 	private bool skip = false;

@@ -3,15 +3,13 @@ using System.Collections;
 
 public class OnGameOpen : MonoBehaviour {
 
-	public GameObject gameManager;
-	public GameObject weaponManager;
-    public GameObject uiManager;
+    public GameObject[] spawns;
 
 	void Awake(){
 		if(GameObject.FindGameObjectsWithTag("GameController").Length == 0){
-			Instantiate(gameManager);
-			Instantiate(weaponManager);
-            Instantiate(uiManager);
+			foreach(GameObject spawn in spawns) {
+                Instantiate(spawn);
+            }
 		}
 		Destroy(gameObject);
 	}

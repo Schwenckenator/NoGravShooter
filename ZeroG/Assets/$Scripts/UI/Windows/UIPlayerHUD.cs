@@ -73,7 +73,6 @@ public class UIPlayerHUD : MonoBehaviour {
     public static void ShowSniperScope(bool showSniper) {
         GameClock.ShowClock(!showSniper);
         Menu window = showSniper ? Menu.SniperScope : Menu.PlayerHUD;
-        UIManager.singleton.SetMenuWindow(window);
     }
 
     public static void SetupPlayer(GameObject actor) {

@@ -5,6 +5,7 @@ using System.Collections;
 public class UILobby : MonoBehaviour {
 
     public static UILobby singleton { get; private set; }
+
     public Text serverSettings;
     private static Text startButtonText;
     private static ChangeableText serverNameText;
@@ -95,7 +96,6 @@ public class UILobby : MonoBehaviour {
         UILobby.singleton.DisconnectStatic();
     }
     public void GoGameSettings() {
-        UIManager.singleton.GoGameSettings(true);
         UILobby.singleton.StopCountdown();
     }
 
@@ -119,7 +119,8 @@ public class UILobby : MonoBehaviour {
     void SetPauseMenuText() {
         UIPauseSpawn.SetServerNameText();
     }
-    public void GoOptions() {
-        UIManager.singleton.SetMenuWindow(Menu.Options);
+
+    public void CancelCountdown() {
+        StopCountdown();
     }
 }

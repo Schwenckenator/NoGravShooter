@@ -13,7 +13,6 @@ public class UIPasswordInput : MonoBehaviour {
         SettingsManager.singleton.PasswordClient = value;
     }
     public void SubmitPassword() {
-        UIManager.singleton.ShowMenuWindow(Menu.PasswordInput, false);
         UIJoinGame.instance.ConnectToServer();
     }
 }

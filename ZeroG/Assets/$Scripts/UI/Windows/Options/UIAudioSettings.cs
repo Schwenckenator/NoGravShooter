@@ -44,9 +44,8 @@ public class UIAudioSettings : MonoBehaviour {
         InputFieldUpdate();
         SetAudioLevels();
     }
-    public void SaveSettingsGoOption() {
+    public void SaveSettings() {
         SettingsManager.singleton.SaveSettings();
-        UIManager.singleton.SetMenuWindow(Menu.Options);
     }
 
     void SetAudioLevels() {

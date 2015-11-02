@@ -27,10 +27,6 @@ public class UIPlayerSettings : MonoBehaviour {
         gameObject.SetActive(false);
 	}
 
-    public void SaveSettingsGoOption() {
-        SettingsManager.singleton.SaveSettings();
-        UIManager.singleton.SetMenuWindow(Menu.Options);
-    }
     private void InputFieldUpdate() {
         inputFields[0].text = SettingsManager.singleton.FieldOfView.ToString();
         inputFields[1].text = SettingsManager.singleton.ColourR.ToString();

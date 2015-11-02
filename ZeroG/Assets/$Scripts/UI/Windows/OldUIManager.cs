@@ -28,9 +28,9 @@ public enum Menu {
     SniperScope
 }
 
-public class UIManager : MonoBehaviour {
+public class OldUIManager : MonoBehaviour {
 
-    public static UIManager singleton { get; private set; }
+    //public static OldUIManager singleton { get; private set; }
 
 
     public GameObject[] menus; // Only for initialisation
@@ -41,7 +41,7 @@ public class UIManager : MonoBehaviour {
     private static SelectableHideFromConnectionType[] buttonHiders;
 
     void Awake() {
-        singleton = this;
+        //singleton = this;
         DontDestroyOnLoad(gameObject);
 
         windows = new List<GameObject>();

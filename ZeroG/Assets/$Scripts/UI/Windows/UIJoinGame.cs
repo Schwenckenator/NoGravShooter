@@ -63,7 +63,7 @@ public class UIJoinGame : MonoBehaviour {
         HostData[] servers = MasterServer.PollHostList();
         foreach (HostData server in servers) {
             ServerListEntry newServer = listManager.AddServer(server.gameName, server.comment, server.connectedPlayers + "/" + server.playerLimit);
-            newServer.hostData = server;
+            //newServer.hostData = server;
             serverList.Add(newServer);
         }
         MasterServer.ClearHostList();
@@ -79,10 +79,10 @@ public class UIJoinGame : MonoBehaviour {
     public void JoinButtonPressed() {
         for (int i = 0; i < serverList.Count; i++) {
             if (serverList[i].IsPressed()) {
-                masterServerData = serverList[i].hostData;
+                //masterServerData = serverList[i].hostData;
                 if (masterServerData.passwordProtected) {
                     // Need password
-                    UIManager.singleton.ShowMenuWindow(Menu.PasswordInput, true);
+                    //OldUIManager.singleton.ShowMenuWindow(Menu.PasswordInput, true);
                 } else {
                     // Ready to connect
                     ConnectToServer();

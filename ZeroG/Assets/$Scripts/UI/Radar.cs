@@ -38,7 +38,7 @@ public class Radar : MonoBehaviour {
     }
 
     void OnGUI() {
-        if (UIManager.IsCurrentMenuWindow(Menu.PlayerHUD)) {
+        if (OldUIManager.IsCurrentMenuWindow(Menu.PlayerHUD)) {
             DrawRadar();
         }
     }

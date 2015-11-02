@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 
 ///<summary>
-/// Manages connections with the Network
+/// Manages connections with the network
 /// </summary>
 public class NetworkManager : NetworkLobbyManager {
 
@@ -17,6 +17,7 @@ public class NetworkManager : NetworkLobbyManager {
     private static Player myPlayer;
 
     private static bool useMatchmaking = false;
+    
 
     void Awake() {
         single = this;
@@ -39,7 +40,8 @@ public class NetworkManager : NetworkLobbyManager {
     }
     public static Player MyPlayer() {
         if (myPlayer == null) {
-            myPlayer = GetPlayer(Network.player);
+            //myPlayer = GetPlayer(Network.player);
+            
         }
         return myPlayer;
     }
@@ -86,7 +88,10 @@ public class NetworkManager : NetworkLobbyManager {
 
     }
 
-    #region OnEvent
+    public override void OnLobbyServerConnect(NetworkConnection conn) {
+        base.OnLobbyServerConnect(conn);
+        Debug.Log(conn.connectionId);
+    }
     //void OnPlayerConnected(NetworkPlayer connectedPlayer) {
     //    foreach (Player player in NetworkManager.connectedPlayers) {
     //        //NetworkView.RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
@@ -118,8 +123,6 @@ public class NetworkManager : NetworkLobbyManager {
             Application.LoadLevel("MenuScene");
         }
 
-        UIManager.singleton.SetMenuWindow(Menu.MainMenu);
-
         connectedPlayers.Clear();
         myPlayer = null;
 
@@ -128,13 +131,11 @@ public class NetworkManager : NetworkLobbyManager {
 
     public override void OnStartServer() {
         base.OnStartServer();
-        //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+        //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
         SettingsManager.singleton.RelayServerName();
         AssignMyPlayerToTeam();
 
-        PlayerManager.singleton.Init(); // Initialise player
-
-        UIManager.singleton.UpdateArraysFromNetworkConnection();
+        //PlayerManager.singleton.Init(); // Initialise player
     }
 
     //public override void OnClientConnect(NetworkConnection conn) {
@@ -144,7 +145,7 @@ public class NetworkManager : NetworkLobbyManager {
 
     //    // Set window to lobby
     //    UIManager.singleton.SetMenuWindow(Menu.Lobby);
-    //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+    //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
 
     //    string message = SettingsManager.singleton.PlayerName + " has connected.";
     //    ChatManager.singleton.AddToChat(message);
@@ -174,15 +175,14 @@ public class NetworkManager : NetworkLobbyManager {
         string message = "Shit went wrong yo.";
         UIMessage.ShowMessage(message, true);
     }
-    #endregion
     
     public void AssignMyPlayerToTeam() {
         if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().HasNoTeam()) {
-            if (Network.isServer) {
-                FindTeamWithLeastPlayers(Network.player);
-            } else { // Is client
-                //NetworkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
-            }
+            //if (Network.isServer) {
+            //    FindTeamWithLeastPlayers(Network.player);
+            //} else { // Is client
+            //    //NetworkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
+            //}
         } else if(!SettingsManager.singleton.IsTeamGameMode()){
             //NetworkManager.MyPlayer().ChangeTeam();
         }
@@ -190,7 +190,6 @@ public class NetworkManager : NetworkLobbyManager {
     //[RPC]
     void FindTeamWithLeastPlayers(NetworkPlayer networkPlayer, bool callback = false) {
         // This should only be called on server
-        if(Network.isClient) throw new ClientRunningServerCodeException();
 
         int[] teamCount = new int[2]; 
         foreach (Player player in connectedPlayers) {
@@ -246,4 +245,7 @@ public class NetworkManager : NetworkLobbyManager {
     //    }
     //}
 
+    private void MoveToLobby() {
+        UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
+    }
 }

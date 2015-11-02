@@ -10,7 +10,7 @@ public class ServerListEntry : MonoBehaviour {
     public Text PlayerCount;
     public Button JoinServer;
 
-    public HostData hostData;
+    //public HostData hostData;
 
     private bool pressed;
 

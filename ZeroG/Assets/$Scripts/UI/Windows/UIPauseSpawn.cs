@@ -90,13 +90,10 @@ public class UIPauseSpawn : MonoBehaviour {
         returnToLobby.Show(!isTutorial);
     }
     private static void ReturnToGame() {
-        UIManager.singleton.SetMenuWindow(Menu.PlayerHUD);
         GameManager.SetCursorVisibility(false);
         GameManager.singleton.SetPlayerMenu(false);
     }
     private static void PauseMenu(bool isTutorial = false) {
-        Menu window = isTutorial ? Menu.TutorialMenu : Menu.PauseMenu;
-        UIManager.singleton.SetMenuWindow(window);
         if (!isTutorial) {
             returnToLobby.Show(Network.isServer);
         }
@@ -108,7 +105,7 @@ public class UIPauseSpawn : MonoBehaviour {
     /// Switches between paused and not paused, based on state
     /// </summary>
     public static void PauseMenuSwitch() {
-        if(UIManager.IsCurrentMenuWindow(Menu.PlayerHUD)){
+        if(OldUIManager.IsCurrentMenuWindow(Menu.PlayerHUD)){
             PauseMenu(GameManager.IsSceneTutorial()); 
         } else {
             ReturnToGame();
@@ -129,6 +126,5 @@ public class UIPauseSpawn : MonoBehaviour {
         NetworkManager.Disconnect();
     }
     public void GoOptions() {
-        UIManager.singleton.SetMenuWindow(Menu.Options);
     }
 }

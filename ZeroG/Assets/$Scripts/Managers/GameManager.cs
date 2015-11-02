@@ -102,7 +102,6 @@ public class GameManager : MonoBehaviour {
 		SetCursorVisibility(true);
 		if(!GameManager.IsSceneMenu()){
             
-            UIManager.singleton.SetMenuWindow(Menu.PauseMenu);
 			//
 			if(Network.isServer){
                 int[] temp = new int[2];
@@ -260,6 +259,5 @@ public class GameManager : MonoBehaviour {
     void RPCReturnToLobby() {
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.singleton.ClearScoreData();
-        UIManager.singleton.SetMenuWindow(Menu.Lobby);
     }
 }

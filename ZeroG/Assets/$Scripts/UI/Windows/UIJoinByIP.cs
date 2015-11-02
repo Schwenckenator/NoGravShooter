@@ -33,7 +33,6 @@ public class UIJoinByIP : MonoBehaviour {
             NetworkManager.SetClientDetails(SettingsManager.singleton.IpAddress, SettingsManager.singleton.PortNum);
             NetworkManager.single.StartClient();
         }
-        UIManager.singleton.GoJoinByIP(false);
         UIMessage.ShowMessage("Connecting To Server", false);
     }
 }

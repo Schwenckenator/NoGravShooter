@@ -5,8 +5,12 @@ using System.Collections.Generic;
 
 public class UIKeybindSettings : MonoBehaviour {
 
+    public GameObject changeKeybind;
+
     private static List<Text> keybindButtonText;
     private static int editedBinding = 0;
+
+    
 
 	// Use this for initialization
 	void Awake () {
@@ -18,7 +22,7 @@ public class UIKeybindSettings : MonoBehaviour {
 	}
 
     void OnGUI() { // Dirty old system, but I can't see a way around it
-        if (UIManager.IsChangeKeybindWindow()) {
+        if (OldUIManager.IsChangeKeybindWindow()) {
             ChangeKeybindUpdate();
         }
     }
@@ -54,22 +58,16 @@ public class UIKeybindSettings : MonoBehaviour {
 
         if (done) {
             EditKeybindTextRefresh();
-            UIManager.singleton.ShowMenuWindow(Menu.ChangeKeybind, false);
+            CloseChangeKeybind();
         }
     }
 
     public void OpenChangeKeybind(int key) {
         editedBinding = key;
-        UIManager.singleton.ShowMenuWindow(Menu.ChangeKeybind, true);
+        UIManager.singleton.Open(changeKeybind);
     }
 
     public void CloseChangeKeybind() {
-        UIManager.singleton.ShowMenuWindow(Menu.ChangeKeybind, false);
-    }
-
-    public void SaveKeybinds() {
-        SettingsManager.singleton.SaveKeyBinds();
-        SettingsManager.singleton.SaveSettings();
-        UIManager.singleton.SetMenuWindow(Menu.Options);
+        UIManager.singleton.Close(changeKeybind);
     }
 }

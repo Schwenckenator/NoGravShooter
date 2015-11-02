@@ -24,7 +24,7 @@ public class DynamicCrosshair : MonoBehaviour {
     }
 	// Update is called once per frame
 	void Update () {
-        if (!UIManager.IsCurrentMenuWindow(Menu.PlayerHUD)) return;
+        if (!OldUIManager.IsCurrentMenuWindow(Menu.PlayerHUD)) return;
         if (inventory == null) return;
         if (inventory.currentWeapon == null) return;
         MoveCrosshair(CalculatePixelMove(inventory.currentWeapon.shotSpread));

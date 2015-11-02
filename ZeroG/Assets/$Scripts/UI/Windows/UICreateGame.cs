@@ -27,7 +27,7 @@ public class UICreateGame : MonoBehaviour {
             return;
         }
          
-        UIManager.singleton.SetMenuWindow(Menu.Lobby);
+
         NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum);
         NetworkManager.single.StartHost();
         SettingsManager.singleton.SaveSettings();

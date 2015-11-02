@@ -88,7 +88,6 @@ public class UIGraphicsSettings : MonoBehaviour {
     public void SaveGraphicsSettings() {
         // Save settings logic
         Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
-        UIManager.singleton.GoGraphicsSettings();
         //Screen.SetResolution(1280, 720, false);
     }
 }

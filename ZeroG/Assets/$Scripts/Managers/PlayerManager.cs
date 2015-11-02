@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerManager : MonoBehaviour {
 
-    public GameObject playerPrefab;
-    public GameObject managerPrefab;
+    //public GameObject playerPrefab;
+    //public GameObject managerPrefab;
 
     static GameObject actor;
     static ActorEnableManager actorManager;
@@ -16,71 +16,70 @@ public class PlayerManager : MonoBehaviour {
 
     public static PlayerManager singleton;
 
-    //private new //NetworkView //NetworkView;
+    ////private new //NetworkView //NetworkView;
 
     void Start() {
         singleton = this;
-        //NetworkView = GetComponent<//NetworkView>();
     }
 
-    public void Init() {
-        //tStartCoroutine(CreateActor());
-    }
-    void OnLevelWasLoaded() {
-        if (GameManager.IsSceneMenu()) {
-            myActorSpawned = false;
+    //public void Init() {
+    //    //tStartCoroutine(CreateActor());
+    //}
+    //void OnLevelWasLoaded() {
+    //    if (GameManager.IsSceneMenu()) {
+    //        //myActorSpawned = false;
 
-            UIPauseSpawn.PlayerDied();
-            GameManager.singleton.SetPlayerMenu(false);
-            GameManager.SetCursorVisibility(true);
+    //        //UIPauseSpawn.PlayerDied();
+    //        //GameManager.singleton.SetPlayerMenu(false);
+    //        //GameManager.SetCursorVisibility(true);
 
-            cameraMove = null;
-            spawnPoints = null;
+    //        //cameraMove = null;
+    //        //spawnPoints = null;
 
-            if (Network.isClient || Network.isServer) {
-                actorManager.DisableActor(); // Should only disable if connected
-            } else {
-                lookers = null; // If not connected, clear
-            }
-        } else {
-            cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
-            spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
-            
-            float wait = lookers == null ? 0.5f : 0.0f;
-            StartCoroutine(LookerLevelStart(wait));
-        }
-    }
-    IEnumerator LookerLevelStart(float wait) {
-        yield return new WaitForSeconds(wait);
-        foreach (MouseLook look in lookers) {
-            look.LevelStart();
-        }
-    }
-    IEnumerator CreateActor() {
-        yield return new WaitForSeconds(0.1f);
-        // Spawn a new player object
-        actor = Network.Instantiate(playerPrefab, new Vector3(100, 100, 100), Quaternion.identity, 0) as GameObject; // Spawn player way out, middle of nowhere
-        lookers = actor.GetComponentsInChildren<MouseLook>();
-        actor.GetComponentInChildren<MeshRenderer>().enabled = false;
+    //        //if (.isClient || .isServer) {
+    //        //    actorManager.DisableActor(); // Should only disable if connected
+    //        //} else {
+    //        //    lookers = null; // If not connected, clear
+    //        //}
+    //    } else {
+    //        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+    //        spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 
-        GameObject temp = Network.Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
-        actorManager = temp.GetComponent<ActorEnableManager>();
-        actorManager.SetActor(actor);
-        DynamicCrosshair.myActor = actor.GetComponent<Collider>();
-        
-        DisableLookers();
-        StartCoroutine(RemoveActor());
-    }
-    void DisableLookers() {
-        foreach(MouseLook look in lookers) {
-            look.Ragdoll(true); // Disable input
-        }
-    }
-    IEnumerator RemoveActor() {
-        yield return null;
-        actorManager.DisableActor();
-        GameManager.singleton.SetPlayerMenu(false);
-    }
+    //        float wait = lookers == null ? 0.5f : 0.0f;
+    //        StartCoroutine(LookerLevelStart(wait));
+    //    }
+    //}
+    //IEnumerator LookerLevelStart(float wait) {
+    //    yield return new WaitForSeconds(wait);
+    //    foreach (MouseLook look in lookers) {
+    //        look.LevelStart();
+    //    }
+    //}
+    //IEnumerator CreateActor() {
+    //    yield return new WaitForSeconds(0.1f);
+    //    // Spawn a new player object
+    //    actor = .Instantiate(playerPrefab, new Vector3(100, 100, 100), Quaternion.identity, 0) as GameObject; // Spawn player way out, middle of nowhere
+    //    lookers = actor.GetComponentsInChildren<MouseLook>();
+    //    actor.GetComponentInChildren<MeshRenderer>().enabled = false;
+
+    //    GameObject temp = .Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+    //    actorManager = temp.GetComponent<ActorEnableManager>();
+    //    actorManager.SetActor(actor);
+    //    DynamicCrosshair.myActor = actor.GetComponent<Collider>();
+
+    //    DisableLookers();
+    //    StartCoroutine(RemoveActor());
+    //}
+    //void DisableLookers() {
+    //    foreach(MouseLook look in lookers) {
+    //        look.Ragdoll(true); // Disable input
+    //    }
+    //}
+    //IEnumerator RemoveActor() {
+    //    yield return null;
+    //    actorManager.DisableActor();
+    //    GameManager.singleton.SetPlayerMenu(false);
+    //}
 
     public void SpawnActor() {
         // Activate Actor
@@ -114,15 +113,6 @@ public class PlayerManager : MonoBehaviour {
         UIPauseSpawn.PlayerSpawned();
 
         myActorSpawned = true;
-    }
-
-    private IEnumerator CoSpawnActor() {
-
-        //yield return null; // Hold for 1 frame
-
-
-
-        yield return null; // Hold for 1 frame
     }
 
     private void MovePlayerToSpawnPoint() {
