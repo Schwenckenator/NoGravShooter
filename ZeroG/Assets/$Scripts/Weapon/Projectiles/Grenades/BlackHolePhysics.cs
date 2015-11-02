@@ -54,10 +54,10 @@ public class BlackHolePhysics : MonoBehaviour {
 						hitsRigid.Add(hit.GetComponent<Rigidbody>());
 					}
 				}
-                if (hit.CompareTag("Player") && hit.GetComponent<NetworkView>().isMine) {
+                //if (hit.CompareTag("Player") && hit.GetComponent<NetworkView>().isMine) {
                     actorRigid = hit.GetComponent<Rigidbody>();
                     actor = hit.GetComponent<ActorMotorManager>();
-                }
+                //}
 			}
 
 			yield return new WaitForSeconds(0.5f);

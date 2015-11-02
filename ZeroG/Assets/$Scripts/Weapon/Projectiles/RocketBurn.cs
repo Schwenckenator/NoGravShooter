@@ -2,7 +2,6 @@
 using System.Collections;
 
 [RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof (NetworkView))]
 [RequireComponent (typeof (Owner))]
 
 public class RocketBurn : MonoBehaviour {
@@ -44,9 +43,9 @@ public class RocketBurn : MonoBehaviour {
     private Vector3 GetPlayerVelocity(bool fullRelative) {
         Vector3 playerVel = Vector3.zero;
         foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
-            if (player.GetComponent<NetworkView>().owner == GetComponent<Owner>().ID) {
-                playerVel = fullRelative ? player.GetComponent<Rigidbody>().velocity : StripXYaxisFromPlayerVelocity(player);
-            }
+            //if (player.GetComponent<//NetworkView>().owner == GetComponent<Owner>().ID) {
+            //    playerVel = fullRelative ? player.GetComponent<Rigidbody>().velocity : StripXYaxisFromPlayerVelocity(player);
+            //}
         }
         return playerVel;
     }

@@ -28,7 +28,7 @@ public class BonusGrenadePackPickup : MonoBehaviour {
 			}
 			actorGrenade.PickUpGrenades(amount, grenadeType);
 			
-			GetComponent<ObjectCleanUp>().KillMe();
+			////GetComponent<ObjectCleanUp>().KillMe();
 		}
 	}
 }

@@ -15,10 +15,10 @@ public class MineDetonation : MonoBehaviour, IDamageable {
     private bool detonated;
     private bool activated;
 
-    NetworkView networkView;
+    ////NetworkView //NetworkView;
 	// Use this for initialization
 	void Start () {
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
 		StartCoroutine(CheckForPlayers(initialWaitTime, tickWaitTime));
 	}
 
@@ -97,11 +97,11 @@ public class MineDetonation : MonoBehaviour, IDamageable {
             ChatManager.DebugMessage(NetworkManager.MyPlayer().Name + " says " + gameObject.ToString() + " goes boom.");
 
             SpawnExplosion(transform.position, Quaternion.identity, GetComponent<Owner>().ID);
-            GetComponent<ObjectCleanUp>().KillMe();
+            ////GetComponent<ObjectCleanUp>().KillMe();
         }
 	}
 
-    [RPC]
+    //[RPC]
     void SpawnExplosion(Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
             GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
@@ -110,7 +110,7 @@ public class MineDetonation : MonoBehaviour, IDamageable {
             }
 
         } else {
-            networkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
+            ////NetworkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);
         }
     }
 

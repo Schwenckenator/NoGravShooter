@@ -19,10 +19,10 @@ public class WeaponInventory : MonoBehaviour {
 
     private AudioSource audioSource;
 
-    NetworkView networkView;
+    //NetworkView //NetworkView;
 	// Use this for initialization
 	void Awake () {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
         heldWeapons = new List<Weapon>();
         weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
         audioSource = GetComponent<AudioSource>();
@@ -36,17 +36,17 @@ public class WeaponInventory : MonoBehaviour {
         SetWeaponLoadout();
         currentInventorySlot = -1; // Bad value, will change
         currentWeapon = null;
-        if (networkView.isMine) {
+        //if (NetworkView.isMine) {
             ChangeWeapon(0);
-        }
+        //}
     }
     void Start() {
-        if (networkView.isMine) {
+        //if (NetworkView.isMine) {
             ChangeWeapon(0);
-        } else {
-            this.enabled = false;
-            return;
-        }
+        //} else {
+        //    this.enabled = false;
+        //    return;
+        //}
         initialised = true;
     }
 
@@ -178,11 +178,11 @@ public class WeaponInventory : MonoBehaviour {
         audioSource.Play();
         float waitTime = 1.0f;
         weaponReloadRotation.ReloadRotation(waitTime, currentWeapon);
-        networkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, currentWeapon.id);
+        //NetworkView.RPC("NetworkWeaponChange", RPCMode.Others, waitTime, currentWeapon.id);
         yield return new WaitForSeconds(waitTime);
         isChanging = false;
     }
-    [RPC]
+    //[RPC]
     void NetworkWeaponChange(float waitTime, int currentWeaponID) {
         weaponReloadRotation.ReloadRotation(waitTime, GameManager.weapon[currentWeaponID]);
     }

@@ -13,15 +13,15 @@ public class ActorTeam : MonoBehaviour {
     }
     public void SetTeam(TeamColour newTeam) {
         team = newTeam;
-        networkView.RPC("RPCSetTeam", RPCMode.OthersBuffered, (int)newTeam);
+       ////NetworkView.RPC("RPCSetTeam", RPCMode.OthersBuffered, (int)newTeam);
     }
-    [RPC]
+    ////[RPC]
     private void RPCSetTeam(int newTeam) {
         team = (TeamColour)newTeam;
     }
 
-    NetworkView networkView;
+    ////NetworkView //NetworkView;
     void Awake() {
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
     }
 }

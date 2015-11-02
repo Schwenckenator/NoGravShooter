@@ -30,9 +30,9 @@ public class WeaponResources : MonoBehaviour {
         smoke.emissionRate = 0;
         smoke.Play();
 
-        if (!GetComponent<NetworkView>().isMine) {
-            this.enabled = false;
-        }
+        //if (!GetComponent<NetworkView>().isMine) {
+        //    this.enabled = false;
+        //}
 	}
 
 	// Update is called once per frame

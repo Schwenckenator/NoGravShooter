@@ -11,9 +11,9 @@ public class DEBUGSummonBoxes : MonoBehaviour {
 			GameObject currentPlayer = null;
 			GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 			foreach(GameObject player in players){
-				if(player.GetComponent<NetworkView>().isMine){
-					currentPlayer = player;
-				}
+				//if(player.GetComponent<//NetworkView>().isMine){
+				//	currentPlayer = player;
+				//}
 			}
 			if(currentPlayer == null) return;
 

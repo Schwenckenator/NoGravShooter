@@ -45,10 +45,10 @@ public class NetworkManager : MonoBehaviour {
     private static bool rpcDisabled;
     public static int lastLevelPrefix = 0;
     #endregion
-    NetworkView networkView;
+    //NetworkView //NetworkView;
     static List<NetworkPlayer> actorOwners;
     void Start() {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
         actorOwners = new List<NetworkPlayer>();
     }
     void Update() {
@@ -74,9 +74,9 @@ public class NetworkManager : MonoBehaviour {
     
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
         UIChat.UpdatePlayerLists();
-        networkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
+        //NetworkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
-    [RPC]
+    //[RPC]
     private void RPCPlayerChangedTeam(NetworkPlayer player, int newTeam) {
         GetPlayer(player).ChangeTeam((TeamColour)newTeam, false);
         UIChat.UpdatePlayerLists();
@@ -140,7 +140,7 @@ public class NetworkManager : MonoBehaviour {
     #region OnEvent
     void OnPlayerConnected(NetworkPlayer connectedPlayer) {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            networkView.RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
+            //NetworkView.RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
         }
     }
     void OnPlayerDisconnected(NetworkPlayer disconnectedPlayer) {
@@ -152,7 +152,7 @@ public class NetworkManager : MonoBehaviour {
         Network.RemoveRPCs(disconnectedPlayer);
         Network.DestroyPlayerObjects(disconnectedPlayer);
 
-        networkView.RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
+        //NetworkView.RPC("RemovePlayerFromList", RPCMode.AllBuffered, disconnectedPlayer);
     }
     void OnApplicationQuit() {
         if (Network.isClient || Network.isServer) {
@@ -191,7 +191,7 @@ public class NetworkManager : MonoBehaviour {
         }
     }
     void OnServerInitialized() {
-        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+        //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         SettingsManager.instance.RelayServerName();
         AssignMyPlayerToTeam();
 
@@ -205,7 +205,7 @@ public class NetworkManager : MonoBehaviour {
 
         // Set window to lobby
         UIManager.instance.SetMenuWindow(Menu.Lobby);
-        networkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
+        //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, Network.player, SettingsManager.instance.PlayerName);
         
         string message = SettingsManager.instance.PlayerName + " has connected.";
         ChatManager.instance.AddToChat(message);
@@ -239,13 +239,13 @@ public class NetworkManager : MonoBehaviour {
             if (Network.isServer) {
                 FindTeamWithLeastPlayers(Network.player);
             } else { // Is client
-                networkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
+                //NetworkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
             }
         } else if(!SettingsManager.instance.IsTeamGameMode()){
             NetworkManager.MyPlayer().ChangeTeam();
         }
     }
-    [RPC]
+    //[RPC]
     void FindTeamWithLeastPlayers(NetworkPlayer networkPlayer, bool callback = false) {
         // This should only be called on server
         if(Network.isClient) throw new ClientRunningServerCodeException();
@@ -265,24 +265,24 @@ public class NetworkManager : MonoBehaviour {
 
         //Callback
         if (callback) {
-            networkView.RPC("ChangeTeamFromIndex", networkPlayer, smallestTeamIndex);
+            //NetworkView.RPC("ChangeTeamFromIndex", networkPlayer, smallestTeamIndex);
         } else {
             ChangeTeamFromIndex(smallestTeamIndex);
         }
     }
-    [RPC]
+    //[RPC]
     void ChangeTeamFromIndex(int newTeamIndex) {
         NetworkManager.MyPlayer().ChangeTeam(ScoreVictoryManager.instance.Teams[newTeamIndex].Type);
     }
 
     #region RPC
-    [RPC]
+    //[RPC]
     void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
         NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
 
         UIChat.UpdatePlayerLists();
     }
-    [RPC]
+    //[RPC]
     void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
         NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
         UIChat.UpdatePlayerLists();
@@ -295,13 +295,13 @@ public class NetworkManager : MonoBehaviour {
         return isReadyToSpawn;
     }
 
-    public static void ReserveObject(NetworkMessageInfo info, NetworkView nView, GameObject obj) {
-        DontDestroyOnLoad(obj);
+    //public static void ReserveObject(NetworkMessageInfo info, //NetworkView nView, GameObject obj) {
+    //    DontDestroyOnLoad(obj);
 
-        if (actorOwners.Contains(info.sender)) {
-        } else {
-            actorOwners.Add(info.sender);
-        }
-    }
+    //    if (actorOwners.Contains(info.sender)) {
+    //    } else {
+    //        actorOwners.Add(info.sender);
+    //    }
+    //}
 
 }

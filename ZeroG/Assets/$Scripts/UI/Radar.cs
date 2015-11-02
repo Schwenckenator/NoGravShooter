@@ -32,9 +32,9 @@ public class Radar : MonoBehaviour {
     List<RadarDot> dots = new List<RadarDot>();
     List<RadarDot> deadDots = new List<RadarDot>();
 
-    NetworkView networkView;
+    //NetworkView //NetworkView;
     void Start() {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
     }
 
     void OnGUI() {
@@ -44,24 +44,24 @@ public class Radar : MonoBehaviour {
     }
 
     public void ActorsChanged() {
-        networkView.RPC("GatherDots", RPCMode.Others);
+        //NetworkView.RPC("GatherDots", RPCMode.Others);
         GatherDots();
     }
-    [RPC]
+    //[RPC]
     void GatherDots() {
         dots.Clear();
         ChatManager.DebugMessage("Gathering Dots.");
         GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject obj in actors) {
-            if (obj.GetComponent<NetworkView>().isMine) {
-                RadarDot.myTransform = obj.transform;
-                RadarDot newDot = new RadarDot(obj, "Me");
-                dots.Add(newDot);
-            } else {
+            //if (obj.GetComponent<//NetworkView>().isMine) {
+            //    RadarDot.myTransform = obj.transform;
+            //    RadarDot newDot = new RadarDot(obj, "Me");
+            //    dots.Add(newDot);
+            //} else {
                 string dotType = RadarDot.DotType(obj.tag, obj.GetComponent<ActorTeam>().GetTeam());
                 RadarDot newDot = new RadarDot(obj, dotType);
                 dots.Add(newDot);
-            }
+           // }
         }
         if (!detectItems) return;
         GameObject[] items = GameObject.FindGameObjectsWithTag("BonusPickup");

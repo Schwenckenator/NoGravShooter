@@ -11,15 +11,15 @@ public class Assassinations : MonoBehaviour {
 	private IDamageable playerResource;
 	private Vector3 heading;
 
-    private NetworkView myActorView;
+    //NetworkView myActorView;
     private Collider myActorCollider;
 
     void Start() {
-        myActorView = GetComponent<NetworkView>();
+        //myActorView = GetComponent<//NetworkView>();
         myActorCollider = GetComponent<Collider>();
-        if (!myActorView.isMine) {
-            this.enabled = false;
-        }
+        //if (!myActorView.isMine) {
+        //    this.enabled = false;
+        //}
     }
 
 	void Update () {

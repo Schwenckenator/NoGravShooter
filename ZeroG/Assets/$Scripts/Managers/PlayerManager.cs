@@ -16,11 +16,11 @@ public class PlayerManager : MonoBehaviour {
 
     public static PlayerManager instance;
 
-    private new NetworkView networkView;
+    //private new //NetworkView //NetworkView;
 
     void Start() {
         instance = this;
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
     }
 
     public void Init() {

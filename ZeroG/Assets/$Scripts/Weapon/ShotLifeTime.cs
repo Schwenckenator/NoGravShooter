@@ -22,7 +22,7 @@ public class ShotLifeTime : MonoBehaviour {
 	void Update () {
         if(cleanUp && Time.time > deathTime && !killed){
             killed = true;
-            GetComponent<ObjectCleanUp>().KillMe();
+            //GetComponent<ObjectCleanUp>().KillMe();
         }
 	}
 }

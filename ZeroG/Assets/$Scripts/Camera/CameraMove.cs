@@ -7,12 +7,12 @@ public class CameraMove : MonoBehaviour {
 
 	public void PlayerSpawned(){
 		GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject player in players){
-            if (player.GetComponent<NetworkView>().isMine) {
-				myAnchor = player.transform.GetChild(0).GetChild(0);
-				AttachCamera();
-			}
-		}
+		//foreach(GameObject player in players){
+  // //         if (player.GetComponent<//NetworkView>().isMine) {
+		//	//	myAnchor = player.transform.GetChild(0).GetChild(0);
+		//	//	AttachCamera();
+		//	//}
+		//}
 	}
 
 	void AttachCamera(){

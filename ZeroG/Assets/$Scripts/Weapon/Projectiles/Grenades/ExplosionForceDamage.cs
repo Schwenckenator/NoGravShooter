@@ -28,10 +28,10 @@ public class ExplosionForceDamage : MonoBehaviour {
 		foreach(Collider hit in hits){
 			if(hit.CompareTag("ForceProjectile")) continue; // Don't touch the force
 
-            if (hit.CompareTag("Player") && hit.GetComponent<NetworkView>().isMine) { // Did it hit my player?
+            //if (hit.CompareTag("Player") && hit.GetComponent<NetworkView>().isMine) { // Did it hit my player?
                 // Better push myself off the ground
-                hit.GetComponent<ActorMotorManager>().PushOffGround();
-            }
+            //    hit.GetComponent<ActorMotorManager>().PushOffGround();
+            //}
 
             if (hit.GetComponent<Rigidbody>()) {
                 hit.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, transform.position, explosionRadius);

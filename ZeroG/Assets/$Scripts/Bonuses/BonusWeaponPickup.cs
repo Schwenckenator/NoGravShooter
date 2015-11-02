@@ -18,17 +18,17 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private bool hasAmmo = true;
 
-    NetworkView networkView;
+    ////NetworkView //NetworkView;
 	void Start(){
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
         if (DebugManager.IsAllWeapon()) {
 			maxweaponcount = 99;
 		}
 		if(Network.isServer){
 			if(randomid){
-				networkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,8));
+				////NetworkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,8));
 			} else {
-				networkView.RPC("ChangeId", RPCMode.AllBuffered, id);
+				////NetworkView.RPC("ChangeId", RPCMode.AllBuffered, id);
 			}
 			UpdateModel();
 		}
@@ -38,45 +38,45 @@ public class BonusWeaponPickup : MonoBehaviour {
 	//
 	void UpdateModel(){
 		if(currentWeaponModel != null){
-			networkView.RPC("DeleteOldModel", RPCMode.AllBuffered);
+			////NetworkView.RPC("DeleteOldModel", RPCMode.AllBuffered);
 		}
-		networkView.RPC ("CreateNewModel", RPCMode.AllBuffered);
+		////NetworkView.RPC ("CreateNewModel", RPCMode.AllBuffered);
 	}
 
-	[RPC]
+	////[RPC]
 	void DeleteOldModel(){
 		Debug.Log (transform.GetChild(0).ToString());
 		Destroy(transform.GetChild(0).gameObject);
 		currentWeaponModel = null;
 	}
-	[RPC]
+	////[RPC]
 	void CreateNewModel(){
 		currentWeaponModel = Instantiate(GameManager.weapon[id].model, transform.position, transform.rotation) as GameObject;
 		currentWeaponModel.transform.parent = transform;
 	}
 
-	[RPC]
+	////[RPC]
 	void ChangeId(int newId){
 		id = newId;
 	}
 	
 	void OnTriggerEnter(Collider info){
 		if(info.CompareTag("Player")){
-            if (info.GetComponent<NetworkView>().isMine) {
-				playerColliding = true;
-                inventory = info.GetComponent<WeaponInventory>();
-                weaponcount = inventory.NumWeaponsHeld();
-				maxweaponcount = GameManager.GetMaxStartingWeapons();
-				currentInventorySlot = inventory.currentInventorySlot;
-			}
+   //         if (info.GetComponent<//NetworkView>().isMine) {
+			//	playerColliding = true;
+   //             inventory = info.GetComponent<WeaponInventory>();
+   //             weaponcount = inventory.NumWeaponsHeld();
+			//	maxweaponcount = GameManager.GetMaxStartingWeapons();
+			//	currentInventorySlot = inventory.currentInventorySlot;
+			//}
 		}
 	}
 	
 	void OnTriggerExit(Collider info){
 		if(info.CompareTag("Player")){
-            if (info.GetComponent<NetworkView>().isMine) {
-				playerColliding = false;
-			}
+   //         if (info.GetComponent<//NetworkView>().isMine) {
+			//	playerColliding = false;
+			//}
 		}
 	}
 	
@@ -116,7 +116,7 @@ public class BonusWeaponPickup : MonoBehaviour {
                 inventory.AddWeapon(id, inventory.currentInventorySlot);
                 inventory.ChangeWeapon(currentInventorySlot, true);
                 
-                networkView.RPC("ChangeId", RPCMode.AllBuffered, i);
+                ////NetworkView.RPC("ChangeId", RPCMode.AllBuffered, i);
                 swapTimeout = Time.time + weaponSwapCooldown;
 
                 //Change the weapon box model to the new weapon
@@ -134,7 +134,7 @@ public class BonusWeaponPickup : MonoBehaviour {
             inventory.ChangeWeapon(weaponcount);
         }
         Debug.Log("Not at maximum weapons, auto picking up");
-        GetComponent<ObjectCleanUp>().KillMe();
+        ////GetComponent<ObjectCleanUp>().KillMe();
         hasAmmo = false;
     }
 
@@ -146,7 +146,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 			GameManager.weapon[id].remainingAmmo += (GameManager.weapon[id].clipSize + GameManager.weapon[id].defaultRemainingAmmo);
 		}
         Debug.Log("Already own, adding ammo");
-        GetComponent<ObjectCleanUp>().KillMe();
+        ////GetComponent<ObjectCleanUp>().KillMe();
         hasAmmo = false;
     }
 }

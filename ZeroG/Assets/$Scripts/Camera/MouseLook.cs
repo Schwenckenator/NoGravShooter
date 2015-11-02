@@ -39,9 +39,9 @@ public class MouseLook : MonoBehaviour {
     private bool active = false;
 
     void Awake() {
-        if (!transform.root.GetComponent<NetworkView>().isMine) {
-            this.enabled = false;
-        }
+        //if (!transform.root.GetComponent<//NetworkView>().isMine) {
+        //    this.enabled = false;
+        //}
 
         // Base sensitivity is a fraction of maximum
         // Set true value here

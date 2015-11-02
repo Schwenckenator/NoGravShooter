@@ -129,7 +129,7 @@ public class UILobby : MonoBehaviour {
         serverSettings.text = text;
     }
 
-    [RPC]
+    //[RPC]
     void SetPauseMenuText() {
         UIPauseSpawn.SetServerNameText();
     }

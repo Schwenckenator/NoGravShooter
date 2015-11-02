@@ -13,7 +13,7 @@ public class DestroyOnNextFrame : MonoBehaviour, IDamageable {
 
 	IEnumerator KillOnNextFrame(){
 		yield return null;
-		GetComponent<ObjectCleanUp>().KillMe();
+		//GetComponent<ObjectCleanUp>().KillMe();
 	}
 
     public int GetHealth() {

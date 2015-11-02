@@ -15,7 +15,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     bool isDamageSound = false;
     bool isDying = false;
 
-    private NetworkView networkView;
+    //private //NetworkView //NetworkView;
     IActorStats stats;
 
     private int suicideDamage = 9; // How much damage K does
@@ -23,17 +23,17 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 	// Use this for initialization
 	void Awake () {
         stats = gameObject.GetInterface<IActorStats>();
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
         Reset();
 	}
     void Update() {
-        if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && networkView.isMine) { //K is for kill! // This is for testing purposes only
-            TakeDamage(suicideDamage, Network.player);
-        }
+        //if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && //NetworkView.isMine) { //K is for kill! // This is for testing purposes only
+        //    TakeDamage(suicideDamage, Network.player);
+        //}
     }
     // Interface Implementation
     public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
-        networkView.RPC("Damage", RPCMode.All, damage, from, weaponId);
+        ////NetworkView.RPC("Damage", RPCMode.All, damage, from, weaponId);
     }
     public void RestoreHealth(int restore) {
         health += restore;
@@ -52,7 +52,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         return health == maxHealth;
     }
 
-    [RPC]
+    ////[RPC]
     void Damage(int damage, NetworkPlayer fromPlayer, int weaponID) {
         if (isDying) return; // Don't bother if you are already dying
 
@@ -95,7 +95,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         health = 0;
 		isDying = true;//You is dead nigs
 
-        if (networkView.isMine) {
+        //if (//NetworkView.isMine) {
 			if(killer != null){
                 string killMessage;
 				if(killer.ID != Network.player){
@@ -122,17 +122,17 @@ public class ActorHealth : MonoBehaviour, IDamageable {
 			}
             gameObject.SendMessage("OnDeath");
 			StartCoroutine(PlayerCleanup());
-		}
+		//}
     }
 
     void WillPlayTakeDamageSound() {
-        if (networkView.isMine && !isDamageSound) {
+        //if (//NetworkView.isMine && !isDamageSound) {
             isDamageSound = true;
             StartCoroutine(PlaySoundTakeDamage());
             if (!CheckHealthForWaver()) {
                 BloodyScreen.Flash();
             }
-        }
+        //}
     }
 
     IEnumerator PlaySoundTakeDamage() {
@@ -172,7 +172,7 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         }
     }
 
-    [RPC]
+    //[RPC]
     void BloodyPlayer(bool sendRPC = true) {
         //Rotate blood to angle TODO
         GameObject newBlood = Instantiate(bloodParticle) as GameObject;
@@ -183,9 +183,9 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         newBloodParticle.Play();
         killBlood = newBloodParticle.GetComponent<DestroyParticleEffect>();
         Invoke("DetachBlood", 2.9f); // Just shy of player deletion time
-        if (sendRPC) {
-            networkView.RPC("BloodyPlayer", RPCMode.Others, false);
-        }
+        //if (sendRPC) {
+        //    GetComponent<//NetworkView>().RPC("BloodyPlayer", RPCMode.Others, false);
+        //}
     }
     void DetachBlood() {
         killBlood.DestroyAfterDelay();

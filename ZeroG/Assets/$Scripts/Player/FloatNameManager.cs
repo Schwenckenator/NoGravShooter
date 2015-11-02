@@ -2,13 +2,13 @@
 using System.Collections;
 
 public class FloatNameManager : MonoBehaviour {
-    NetworkView networkView;
+    ////NetworkView //NetworkView;
 	void Start(){
-        networkView = GetComponent<NetworkView>();
-		if(networkView.isMine){
-            networkView.RPC("SetName", RPCMode.AllBuffered, SettingsManager.instance.PlayerName);
+        ////NetworkView = GetComponent<//NetworkView>();
+		//if(//NetworkView.isMine){
+            ////NetworkView.RPC("SetName", RPCMode.AllBuffered, SettingsManager.instance.PlayerName);
 			StartCoroutine(SelfNameDelete());
-		}
+		//}
 	}
 
 	IEnumerator SelfNameDelete(){
@@ -17,15 +17,15 @@ public class FloatNameManager : MonoBehaviour {
 	}
 
 	void Update(){
-		if(networkView.isMine){
-			return;
-		}
+		//if(//NetworkView.isMine){
+		//	return;
+		//}
 		// This code now messes with the floating text names of other players
 		// We will now set the rotation of the text toward the current player.
 		transform.FindChild("NameText").transform.LookAt(Camera.main.transform, Camera.main.transform.up);
 	}
 
-	[RPC]
+	////[RPC]
 	void SetName(string newName){
 		transform.FindChild("NameText").GetComponent<TextMesh>().text = newName;
 	}

@@ -28,16 +28,16 @@ public class ActorJetpackFuel : MonoBehaviour {
     private bool isJetpackDisabled = false;
     private bool glitched = false;
 
-    new NetworkView networkView;
+    //NetworkView //NetworkView;
 
     // Use this for initialization
     void Awake () {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
         fuel = maxFuel;
         rechargeWaitTime = 0;
-        if (!networkView.isMine) {
-            this.enabled = false;
-        }
+        //if (!//NetworkView.isMine) {
+        //    this.enabled = false;
+        //}
     }
 	
 	// Update is called once per frame
@@ -134,12 +134,12 @@ public class ActorJetpackFuel : MonoBehaviour {
     }
     void OnGUI() {
         if (!glitched) return;
-        if (!GameManager.IsPlayerMenu() && networkView.isMine) {
-            GUI.depth = 0;
-            GUI.DrawTexture(new Rect(20 + Random.Range(-10, 11), Screen.height - 240 + Random.Range(-10, 11), 220, 220), empRadar[Random.Range(0, 5)]);
-            GUI.DrawTexture(new Rect(Screen.width / 2 - 55 / 2, Screen.height / 2 - 45 / 2, 55, 45), empCursor[Random.Range(0, 4)]);
-            GUI.DrawTexture(new Rect(Screen.width - 330, Screen.height - 285 + Random.Range(-5, 6), 330, 285), empStats[Random.Range(0, 4)]);
-        }
+        //if (!GameManager.IsPlayerMenu() && //NetworkView.isMine) {
+        //    GUI.depth = 0;
+        //    GUI.DrawTexture(new Rect(20 + Random.Range(-10, 11), Screen.height - 240 + Random.Range(-10, 11), 220, 220), empRadar[Random.Range(0, 5)]);
+        //    GUI.DrawTexture(new Rect(Screen.width / 2 - 55 / 2, Screen.height / 2 - 45 / 2, 55, 45), empCursor[Random.Range(0, 4)]);
+        //    GUI.DrawTexture(new Rect(Screen.width - 330, Screen.height - 285 + Random.Range(-5, 6), 330, 285), empStats[Random.Range(0, 4)]);
+        //}
     }
 
     void DisableJetpack(bool disable) {

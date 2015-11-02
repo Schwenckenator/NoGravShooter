@@ -3,42 +3,42 @@ using System.Collections;
 
 public class ActorEnableManager : MonoBehaviour {
 
-    new NetworkView networkView;
+    //new //NetworkView //NetworkView;
     private GameObject myActor;
 
     void Awake() {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
         DontDestroyOnLoad(gameObject);
     }
 
     public void SetActor(GameObject actor) {
         myActor = actor;
         DontDestroyOnLoad(myActor);
-        networkView.RPC("SetActorByViewID", RPCMode.OthersBuffered, actor.GetComponent<NetworkView>().viewID);
+        //NetworkView.RPC("SetActorByViewID", RPCMode.OthersBuffered, actor.GetComponent<//NetworkView>().viewID);
     }
 
-    [RPC]
-    void SetActorByViewID(NetworkViewID viewID) {
-        myActor = NetworkView.Find(viewID).gameObject;
-        DontDestroyOnLoad(myActor);
-    }
+    ////[RPC]
+    //void SetActorByViewID(NetworkViewID viewID) {
+    //    myActor = //NetworkView.Find(viewID).gameObject;
+    //    DontDestroyOnLoad(myActor);
+    //}
 
-    [RPC]
+    //[RPC]
     public void DisableActor(bool sendRPC = true) {
-        ChatManager.DebugMessage("Disabling actor." + networkView.viewID);
+        //ChatManager.DebugMessage("Disabling actor." + //NetworkView.viewID);
         if (sendRPC) {
-            networkView.RPC("DisableActor", RPCMode.Others, false);
+            //NetworkView.RPC("DisableActor", RPCMode.Others, false);
         }
 
         myActor.SetActive(false);
     }
 
-    [RPC]
+    //[RPC]
     public void EnableActor(bool sendRPC = true) {
-        ChatManager.DebugMessage("Enabling actor." + networkView.viewID);
+        //ChatManager.DebugMessage("Enabling actor." + //NetworkView.viewID);
         myActor.SetActive(true);
         if (sendRPC) {
-            networkView.RPC("EnableActor", RPCMode.Others, false);
+            //NetworkView.RPC("EnableActor", RPCMode.Others, false);
         }
     }
 

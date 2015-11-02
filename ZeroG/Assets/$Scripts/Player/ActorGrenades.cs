@@ -7,11 +7,11 @@ public class ActorGrenades : MonoBehaviour {
     private int grenadeTypes = 3;               // Black Hole, EMP, Frag
     private static int currentGrenadeType = 0;  //      0       1     2
 
-    new NetworkView networkView;
+    //NetworkView //NetworkView;
 
     // Use this for initialization
     void Awake () {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
         Reset();
 	}
 
@@ -20,9 +20,9 @@ public class ActorGrenades : MonoBehaviour {
         for (int i = 0; i < grenadeTypes; i++) {
             grenades[i] = 0;
         }
-        if (!networkView.isMine) {
-            this.enabled = false;
-        }
+        //if (!//NetworkView.isMine) {
+        //    this.enabled = false;
+        //}
     }
 	
 	// Update is called once per frame

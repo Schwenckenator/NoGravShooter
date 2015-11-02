@@ -25,9 +25,9 @@ public class DestroyManager : MonoBehaviour {
     private List<NetworkViewID> DestroyedPlayers;
     private bool willDestroy = false;
 
-    NetworkView networkView;
+    ////NetworkView //NetworkView;
     void Start() {
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
         DestroyBuffer = new List<NetworkViewID>();
         DestroyedObjects = new List<NetworkViewID>();
         DestroyedPlayers = new List<NetworkViewID>();
@@ -38,15 +38,15 @@ public class DestroyManager : MonoBehaviour {
     /// </summary>
     /// <param name="obj"></param>
     public void CleanUp(GameObject obj) {
-        AddToDestroyList(obj.GetComponent<NetworkView>().viewID);
+        //AddToDestroyList(obj.GetComponent<//NetworkView>().viewID);
     }
-    [RPC]
+    ////[RPC]
     void AddToDestroyList(NetworkViewID viewID) {
         if (Network.isServer) {
             AddToDestroyBufferIfUnique(viewID);
         } else {
             ChatManager.DebugMessage("I am a client.");
-            networkView.RPC("AddToDestroyList", RPCMode.Server, viewID);
+            ////NetworkView.RPC("AddToDestroyList", RPCMode.Server, viewID);
         }
 
     }
@@ -80,9 +80,9 @@ public class DestroyManager : MonoBehaviour {
         //Tell server to also remove RPC
         //Network.RemoveRPCs(viewID);
         Network.Destroy(viewID);
-        networkView.RPC("ServerCallRemoveRPC", RPCMode.Server, viewID);
+        ////NetworkView.RPC("ServerCallRemoveRPC", RPCMode.Server, viewID);
     }
-    [RPC]
+    ////[RPC]
     void ServerCallRemoveRPC(NetworkViewID viewID) {
         Network.RemoveRPCs(viewID);
         DestroyedPlayers.Add(viewID);
@@ -114,15 +114,15 @@ public class DestroyManager : MonoBehaviour {
         yield return new WaitForSeconds(waitTime);
 
         foreach(NetworkViewID id in DestroyedPlayers){
-            networkView.RPC("DestroyGhostPlayer", connectedPlayer, id);
+            ////NetworkView.RPC("DestroyGhostPlayer", connectedPlayer, id);
         }
     }
 
-    [RPC]
+    ////[RPC]
     void DestroyGhostPlayer(NetworkViewID id) {
-        NetworkView nView = NetworkView.Find(id);
-        if (nView != null) {
-            Destroy(nView.gameObject);
-        }
+        ////NetworkView nView = //NetworkView.Find(id);
+        //if (nView != null) {
+        //    Destroy(nView.gameObject);
+        //}
     }
 }

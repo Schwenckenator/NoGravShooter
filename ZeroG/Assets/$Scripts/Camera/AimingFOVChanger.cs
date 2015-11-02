@@ -22,11 +22,11 @@ public class AimingFOVChanger : MonoBehaviour {
 	    maxFOV = SettingsManager.instance.FieldOfView;
 
 	    GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
-		foreach(GameObject player in list){
-            if (player.GetComponent<NetworkView>().isMine) {
-				inventory = player.GetComponent<WeaponInventory>();
-			}
-		}
+		//foreach(GameObject player in list){
+  //          //if (player.GetComponent<NetworkView>().isMine) {
+		//	//	inventory = player.GetComponent<WeaponInventory>();
+		//	//}
+		//}
 
         float zoomFov = GetZoomFOV();
         if (Input.GetMouseButton(1)) {

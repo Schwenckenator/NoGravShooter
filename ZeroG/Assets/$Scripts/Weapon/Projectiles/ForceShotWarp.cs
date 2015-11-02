@@ -30,13 +30,13 @@ public class ForceShotWarp : MonoBehaviour {
 
 		if(hit.CompareTag("Player")){ // Hit a player!
 			//If you hit yourself, don't do anything
-            if (hit.GetComponent<NetworkView>().owner == GetComponent<Owner>().ID) {
-				push = false;
-			}else{
+            //if (hit.GetComponent<NetworkView>().owner == GetComponent<Owner>().ID) {
+				//push = false;
+			//}else{
 				DamagePlayer(hit.gameObject.GetInterface<IDamageable>());
                 // Add Push off ground here
                 hit.GetComponent<ActorMotorManager>().PushOffGround();
-			}
+			//}
 		}
 		if(push && hit.GetComponent<Rigidbody>()){
 			PushObject(hit.GetComponent<Rigidbody>());

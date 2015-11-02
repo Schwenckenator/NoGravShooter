@@ -14,17 +14,17 @@ public class FireWeapon : MonoBehaviour {
 
 	float nextFire = 0;
 
-    NetworkView networkView;
+    ////NetworkView //NetworkView;
     public AudioSource audioSource; // Assign in inspector
 	// Use this for initialization
 	void Awake () {
 		motor = GetComponent<ActorMotorManager>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
 
-        if (!networkView.isMine)
-            this.enabled = false;
+        //if (!//NetworkView.isMine)
+           // this.enabled = false;
 	}
 	void Update(){
         if (inventory.HasNoWeapons()) return;
@@ -110,14 +110,14 @@ public class FireWeapon : MonoBehaviour {
 
         //Render shot everywhere else
         for (i = 0; i < inventory.currentWeapon.rayNum; i++) {
-            networkView.RPC("NetworkShotRender", RPCMode.Others, inventory.currentWeapon.id, gunFirePoint.position, endPoints[i]);
+            ////NetworkView.RPC("NetworkShotRender", RPCMode.Others, inventory.currentWeapon.id, gunFirePoint.position, endPoints[i]);
         }
         foreach (Vector3 hitPoint in hitParticlePoints) {
-            networkView.RPC("SpawnHitParticle", RPCMode.Others, inventory.currentWeapon.id, hitPoint);
+            ////NetworkView.RPC("SpawnHitParticle", RPCMode.Others, inventory.currentWeapon.id, hitPoint);
         }
     }
 
-    [RPC]
+    ////[RPC]
     void SpawnProjectile(int weaponID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
             GameObject newObj = Network.Instantiate(GameManager.weapon[weaponID].projectile, position, rotation, 0) as GameObject;
@@ -126,11 +126,11 @@ public class FireWeapon : MonoBehaviour {
             }
 
         } else {
-            networkView.RPC("SpawnProjectile", RPCMode.Server, weaponID, position, rotation, owner);
+            ////NetworkView.RPC("SpawnProjectile", RPCMode.Server, weaponID, position, rotation, owner);
         }
     }
 
-    [RPC]
+    ////[RPC]
     void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
         Weapon weapon = GameManager.weapon[weaponID];
 
@@ -141,7 +141,7 @@ public class FireWeapon : MonoBehaviour {
         render.SetPosition(1, end);
     }
 
-    [RPC]
+    ////[RPC]
     void SpawnHitParticle(int weaponID, Vector3 position) {
         Weapon weapon = GameManager.weapon[weaponID];
 
@@ -173,13 +173,13 @@ public class FireWeapon : MonoBehaviour {
     }
 	
     void PlayFireWeaponSound() {
-        if (networkView.isMine) {
+        //if (//NetworkView.isMine) {
             audioSource.PlayOneShot(inventory.currentWeapon.fireSound);
 
-            networkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, inventory.currentWeapon.id);
-        }
+            ////NetworkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, inventory.currentWeapon.id);
+        //}
     }
-    [RPC]
+    ////[RPC]
     void RPCPlayFireWeaponSound(int weaponID) {
         Weapon weapon = GameManager.weapon[weaponID];
         audioSource.PlayOneShot(weapon.fireSound);

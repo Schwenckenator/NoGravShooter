@@ -170,9 +170,9 @@ public class SettingsManager : MonoBehaviour {
 
     #endregion
 
-    NetworkView networkView;
+    //NetworkView //NetworkView;
     void Awake() {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
         RetrieveKeyBinds();
         RetrieveSettings();
     }
@@ -345,27 +345,27 @@ public class SettingsManager : MonoBehaviour {
 
     #region RPCSettings
     public void RelayServerName() {
-        networkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
+        //NetworkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
         UILobby.instance.SetServerName();// Writes to lobby title
     }
-    [RPC]
+    //[RPC]
     private void RPC_RelayServerName(string inServerName) {
         this.ServerNameClient = inServerName;
         UILobby.instance.SetServerName(); // Writes to lobby title
     }
 
     public void RelayScoreToWin() {
-        networkView.RPC("RPC_RelayScoreToWin", RPCMode.OthersBuffered, this.ScoreToWinServer);
+        //NetworkView.RPC("RPC_RelayScoreToWin", RPCMode.OthersBuffered, this.ScoreToWinServer);
     }
-    [RPC]
+    //[RPC]
     private void RPC_RelayScoreToWin(int inScoreToWin) {
         this.ScoreToWinClient = inScoreToWin;
     }
     
     public void RelayGameMode() {
-        networkView.RPC("RPC_RelayGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndexServer);
+        //NetworkView.RPC("RPC_RelayGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndexServer);
     }
-    [RPC]
+    //[RPC]
     void RPC_RelayGameMode(int index) {
         SettingsManager.instance.GameModeIndexClient = index;
         NetworkManager.instance.AssignMyPlayerToTeam();

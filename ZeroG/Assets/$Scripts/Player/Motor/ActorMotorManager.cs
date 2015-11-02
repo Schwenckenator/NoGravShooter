@@ -9,8 +9,8 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
 
     ActorCameraMotor cameraMotor;
 
-    Rigidbody rigidbody;
-    NetworkView networkView;
+    new Rigidbody rigidbody;
+    ////NetworkView //NetworkView;
 
     float footRayDistance;
     public float maxLandingAngle = 60f;
@@ -22,16 +22,16 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
 
 	// Use this for initialization
 	void Start () {
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
 
-        if (!networkView.isMine) {
-            GetComponent<ActorJetpackMotor>().enabled = false;
-            GetComponent<ActorWalkingMotor>().enabled = false;
-            GetComponent<ActorCameraMotor>().NotMine();
-            this.enabled = false;
+        //if (!//NetworkView.isMine) {
+        //    GetComponent<ActorJetpackMotor>().enabled = false;
+        //    GetComponent<ActorWalkingMotor>().enabled = false;
+        //    GetComponent<ActorCameraMotor>().NotMine();
+        //    this.enabled = false;
             
-            return;
-        }
+        //    return;
+        //}
 
         active = true; // If I get here, it's mine
 
@@ -190,7 +190,7 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
 
     bool ValidLanding(Collision colInfo) {
         // If not mine, don't bother
-        if (!networkView.isMine) return false;
+        //if (!//NetworkView.isMine) return false;
         
 
         Vector3 colNormal = LargestValidAngleNormal(colInfo);

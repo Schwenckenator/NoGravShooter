@@ -17,14 +17,13 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
     float sqrWalkingSoundVelocity;
     bool playWalkingSound;
     IActorStats stats;
-    Rigidbody rigidbody;
     IControllerInput input;
+    new Rigidbody rigidbody;
+    ////NetworkView //NetworkView;
 
-    NetworkView networkView;
-
-	// Use this for initialization
+    // Use this for initialization
     void Awake() {
-        networkView = GetComponent<NetworkView>();
+        ////NetworkView = GetComponent<//NetworkView>();
     }
 	void Start () {
         rigidbody = GetComponent<Rigidbody>();
@@ -176,14 +175,14 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
         }
     }
 
-    [RPC]
+    ////[RPC]
     void PlayFootstep(int stepNum) {
         feetAudio.clip = soundFootsteps[stepNum];
         feetAudio.Play();
 
-        if (networkView.isMine) {
-            networkView.RPC("PlayFootstep", RPCMode.Others, stepNum);
-        }
+        //if (//NetworkView.isMine) {
+        //    //NetworkView.RPC("PlayFootstep", RPCMode.Others, stepNum);
+        //}
     }
     
 

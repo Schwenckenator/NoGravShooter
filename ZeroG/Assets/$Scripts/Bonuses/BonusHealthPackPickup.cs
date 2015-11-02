@@ -13,7 +13,7 @@ public class BonusHealthPackPickup : MonoBehaviour {
 
             if (!health.IsFullHealth()) {
                 health.RestoreHealth(healStrength);
-				GetComponent<ObjectCleanUp>().KillMe();
+				//GetComponent<ObjectCleanUp>().KillMe();
 			}
 		}
 	}

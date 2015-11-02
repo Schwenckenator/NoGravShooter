@@ -86,11 +86,11 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     #region Variable mutators
-    [RPC]
+    //[RPC]
     private void SetStartingWeapons(int[] selection) {
         startingWeapons = selection;
     }
-    [RPC]
+    //[RPC]
     public void SetEndTime(float remainingSeconds) {
         endTime = Time.time + remainingSeconds;
         GameClock.SetEndTime(endTime);
@@ -103,13 +103,13 @@ public class GameManager : MonoBehaviour {
 
     public const int MaxPlayers = 15;
 
-    new NetworkView networkView;
+    //new //NetworkView //NetworkView;
 
     void Awake(){
 
 		DontDestroyOnLoad(gameObject);
 
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
 	}
 
 	void OnLevelWasLoaded(int level){
@@ -135,11 +135,11 @@ public class GameManager : MonoBehaviour {
 
     private IEnumerator SetStartingWeaponsDelay(int[] weapons) {
         yield return new WaitForSeconds(0.1f); // Small delay
-        networkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
-        networkView.RPC("SetCheats", RPCMode.AllBuffered, DebugManager.IsAllWeapon(), DebugManager.IsAllAmmo(), DebugManager.IsAllGrenade(), DebugManager.IsAllFuel());
+        //NetworkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
+        //NetworkView.RPC("SetCheats", RPCMode.AllBuffered, DebugManager.IsAllWeapon(), DebugManager.IsAllAmmo(), DebugManager.IsAllGrenade(), DebugManager.IsAllFuel());
     }
 
-    [RPC]
+    //[RPC]
     private void SetCheats(bool allWeapon, bool allAmmo, bool allGrenade, bool allFuel) {
         DebugManager.SetAllWeapon(allWeapon);
         DebugManager.SetAllAmmo(allAmmo);
@@ -156,13 +156,13 @@ public class GameManager : MonoBehaviour {
     void OnPlayerConnected(NetworkPlayer connectingPlayer) {
         if (GameInProgress) {
             ChatManager.AddToLocalChat(NetworkManager.lastLevelPrefix.ToString());
-            networkView.RPC("RPCLoadLevel", connectingPlayer,
-                SettingsManager.instance.LevelName,
-                NetworkManager.lastLevelPrefix,
-                SettingsManager.instance.TimeLimitSec,
-                SettingsManager.instance.GameModeIndexServer);
+            //NetworkView.RPC("RPCLoadLevel", connectingPlayer,
+                //SettingsManager.instance.LevelName,
+                //NetworkManager.lastLevelPrefix,
+                //SettingsManager.instance.TimeLimitSec,
+                //SettingsManager.instance.GameModeIndexServer);
 
-            networkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
+            //NetworkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
         }
     }
     void OnDisconnectedFromServer() {
@@ -196,22 +196,22 @@ public class GameManager : MonoBehaviour {
         DestroyManager.instance.ClearDestroyLists();
         SettingsManager.instance.RelayScoreToWin();
 
-        networkView.RPC("RPCLoadLevel", RPCMode.All, 
-            SettingsManager.instance.LevelName, 
-            NetworkManager.lastLevelPrefix + 1, 
-            SettingsManager.instance.TimeLimitSec, 
-            SettingsManager.instance.GameModeIndexServer);
+        ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
+        //    SettingsManager.instance.LevelName, 
+        //    NetworkManager.lastLevelPrefix + 1, 
+        //    SettingsManager.instance.TimeLimitSec, 
+        //    SettingsManager.instance.GameModeIndexServer);
     }
     private void LoadLevelTutorial() {
-        int dummyValue = 0; // Just to keep the method happy
-        networkView.RPC("RPCLoadLevel", RPCMode.All, 
-            "Tutorial", 
-            NetworkManager.lastLevelPrefix + 1, 
-            dummyValue,
-            dummyValue);
+        //int dummyValue = 0; // Just to keep the method happy
+        //NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
+            //"Tutorial", 
+            //NetworkManager.lastLevelPrefix + 1, 
+            //dummyValue,
+            //dummyValue);
     }
 
-    [RPC]
+    //[RPC]
     private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
 
         SettingsManager.instance.GameModeIndexClient = gameModeIndex;
@@ -313,13 +313,13 @@ public class GameManager : MonoBehaviour {
 
     public void ReturnToLobby() {
 
-        networkView.RPC("RPCReturnToLobby", RPCMode.All);
+        //NetworkView.RPC("RPCReturnToLobby", RPCMode.All);
 
-        int dummy = 0; // Dummy is just to keep the code happy. Has no effect
-        networkView.RPC("RPCLoadLevel", RPCMode.All, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
+        //int dummy = 0; // Dummy is just to keep the code happy. Has no effect
+        //NetworkView.RPC("RPCLoadLevel", RPCMode.All, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
     }
 
-    [RPC]
+    //[RPC]
     void RPCReturnToLobby() {
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.instance.ClearScoreData();

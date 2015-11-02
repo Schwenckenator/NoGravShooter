@@ -5,9 +5,9 @@ public class PlayerColour : MonoBehaviour {
 
     public string playerGraphicsName = "Test_Rig";
 
-    NetworkView networkView;
+    //NetworkView //NetworkView;
     void Awake() {
-        networkView = GetComponent<NetworkView>();
+        //NetworkView = GetComponent<//NetworkView>();
     }
 	
     public void AssignPlayerColour() {
@@ -23,10 +23,10 @@ public class PlayerColour : MonoBehaviour {
 
         Color newColour = PlayerColourManager.instance.LimitTeamColour(team, SettingsManager.instance.GetPlayerColour());
 
-        networkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, newColour.r, newColour.g, newColour.b);
+        //NetworkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, newColour.r, newColour.g, newColour.b);
     }
 
-    [RPC]
+    //[RPC]
     private void RPCAssignPlayerColour(float RedVal, float GreenVal, float BlueVal) {
 		transform.FindChild(playerGraphicsName).GetComponent<Renderer>().material.color = new Color(RedVal, GreenVal, BlueVal);
     }
