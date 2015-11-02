@@ -42,7 +42,7 @@ public class Player {
         this.Team = newTeam;
 
         if (sendRPC) { // Sends RPC by default
-            NetworkManager.singleton.PlayerChangedTeam(this, newTeam);
+            NetworkManager.single.PlayerChangedTeam(this, newTeam);
         }
     }
     public void ChangeTeam(bool sendRPC = true) {
@@ -53,7 +53,7 @@ public class Player {
         }
 
         if (sendRPC) { // Sends RPC by default
-            NetworkManager.singleton.PlayerChangedTeam(this, this.Team);
+            NetworkManager.single.PlayerChangedTeam(this, this.Team);
         }
     }
     private void SwapTeam() {

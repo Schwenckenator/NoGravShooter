@@ -28,8 +28,8 @@ public class UICreateGame : MonoBehaviour {
         }
          
         UIManager.singleton.SetMenuWindow(Menu.Lobby);
-        NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum, online);
-        NetworkManager.InitialiseServer();
+        NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum);
+        NetworkManager.single.StartHost();
         SettingsManager.singleton.SaveSettings();
         
     }

@@ -354,7 +354,7 @@ public class SettingsManager : MonoBehaviour {
     //[RPC]
     void RPC_RelayGameMode(int index) {
         SettingsManager.singleton.GameModeIndexClient = index;
-        NetworkManager.singleton.AssignMyPlayerToTeam();
+        NetworkManager.single.AssignMyPlayerToTeam();
         UIChat.UpdatePlayerLists();
     }
     #endregion

@@ -41,13 +41,14 @@ public class UIManager : MonoBehaviour {
     private static SelectableHideFromConnectionType[] buttonHiders;
 
     void Awake() {
+        singleton = this;
         DontDestroyOnLoad(gameObject);
 
         windows = new List<GameObject>();
         foreach (GameObject menu in menus) {
             //Create, then hide menu windows
             GameObject newMenu = Instantiate(menu) as GameObject;
-            DontDestroyOnLoad(newMenu);
+            newMenu.transform.SetParent(transform);
             windows.Add(newMenu);
         }
         ListInit();

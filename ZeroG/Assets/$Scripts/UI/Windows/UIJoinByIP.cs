@@ -31,7 +31,7 @@ public class UIJoinByIP : MonoBehaviour {
             SettingsManager.singleton.SaveSettings();
 
             NetworkManager.SetClientDetails(SettingsManager.singleton.IpAddress, SettingsManager.singleton.PortNum);
-            NetworkManager.ConnectToServer();
+            NetworkManager.single.StartClient();
         }
         UIManager.singleton.GoJoinByIP(false);
         UIMessage.ShowMessage("Connecting To Server", false);

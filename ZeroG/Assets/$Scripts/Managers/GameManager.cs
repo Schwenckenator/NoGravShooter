@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour {
     //new //NetworkView //NetworkView;
 
     void Awake(){
-
+        singleton = this;
 		DontDestroyOnLoad(gameObject);
 
         //NetworkView = GetComponent<//NetworkView>();
@@ -141,7 +141,6 @@ public class GameManager : MonoBehaviour {
     // we need to send an updated remaining time
     void OnPlayerConnected(NetworkPlayer connectingPlayer) {
         if (GameInProgress) {
-            ChatManager.AddToLocalChat(NetworkManager.lastLevelPrefix.ToString());
             //NetworkView.RPC("RPCLoadLevel", connectingPlayer,
                 //SettingsManager.singleton.LevelName,
                 //NetworkManager.lastLevelPrefix,
@@ -198,7 +197,7 @@ public class GameManager : MonoBehaviour {
     }
 
     //[RPC]
-    private void RPCLoadLevel(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
+    private void RPCLoadLevel(string levelName, int secondsOfGame, int gameModeIndex) {
 
         SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
         UIChat.UpdatePlayerLists();
@@ -226,55 +225,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        NetworkManager.lastLevelPrefix = levelPrefix;
-        NetworkManager.DisableRPC();
-        Network.SetLevelPrefix(levelPrefix);
         Application.LoadLevel(levelName);
-    }
-
-    private IEnumerator LoadLevelCoRoutine(string levelName, int levelPrefix, int secondsOfGame, int gameModeIndex) {
-
-        yield return new WaitForSeconds(1.0f);
-
-        NetworkManager.lastLevelPrefix = levelPrefix;
-        Network.SetSendingEnabled(0, false);
-        Network.isMessageQueueRunning = false;
-
-        SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
-        //stuff for timer. Don't set up if it's tutorial or the menu.
-        if (levelName != "MenuScene" && levelName != "Tutorial") {
-            GameInProgress = true;
-            UIPauseSpawn.TutorialModeActive(false);
-            UIPauseSpawn.SetServerNameText();
-            UIChat.UpdatePlayerLists();
-            if (secondsOfGame > 0) {
-                endTime = Time.time + secondsOfGame;
-                GameClock.SetEndTime(endTime);
-                ScoreVictoryManager.singleton.StartTimer();
-                this.IsUseTimer = true;
-            } else {
-                this.IsUseTimer = false;
-            }
-
-            ChatManager.ClearAllChat();
-            GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
-            gameMode = temp.GetInterface<IGameMode>();
-        } else {
-            GameInProgress = false;
-            if (levelName == "Tutorial") {
-                UIPauseSpawn.TutorialModeActive(true);
-            }
-        }
-
-
-        //Network.SetLevelPrefix(levelPrefix);
-        Application.LoadLevel(levelName);
-        Network.SetLevelPrefix(levelPrefix);
-
-        yield return null;
-
-        Network.isMessageQueueRunning = true;
-        Network.SetSendingEnabled(0, true);
     }
 
     //load the tutorial level
@@ -283,8 +234,8 @@ public class GameManager : MonoBehaviour {
         int portNum = 25000; // Dummy values for server creation
         int maxTutorialConnections = 1;
 
-        NetworkManager.SetServerDetails(maxTutorialConnections, portNum, false);
-        NetworkManager.InitialiseServer();
+        NetworkManager.SetServerDetails(maxTutorialConnections, portNum);
+        //NetworkManager.InitialiseServer();
 
         yield return new WaitForSeconds(1f);
 

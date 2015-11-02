@@ -24,7 +24,7 @@ public class PlayerManager : MonoBehaviour {
     }
 
     public void Init() {
-        StartCoroutine(CreateActor());
+        //tStartCoroutine(CreateActor());
     }
     void OnLevelWasLoaded() {
         if (GameManager.IsSceneMenu()) {

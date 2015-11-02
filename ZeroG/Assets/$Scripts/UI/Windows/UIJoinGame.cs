@@ -92,6 +92,6 @@ public class UIJoinGame : MonoBehaviour {
     }
     public void ConnectToServer() {
         NetworkManager.SetClientDetailsMasterServer(masterServerData);
-        NetworkManager.ConnectToServer();
+        NetworkManager.single.StartClient();
     }
 }
