@@ -21,8 +21,6 @@ public class UILobby : MonoBehaviour {
         singleton = this;
         LobbyInit();
 
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
 	}
     void Update() {
         if (teamGame != SettingsManager.singleton.IsTeamGameMode()) {

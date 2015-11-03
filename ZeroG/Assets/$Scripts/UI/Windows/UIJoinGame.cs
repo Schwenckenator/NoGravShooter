@@ -35,8 +35,6 @@ public class UIJoinGame : MonoBehaviour {
         serverList = new List<ServerListEntry>();
         JoinGameInit();
 
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
 	}
     void JoinGameInit() {
         

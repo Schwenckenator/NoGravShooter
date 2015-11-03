@@ -23,8 +23,6 @@ public class UIPlayerSettings : MonoBehaviour {
         InputFieldUpdate();
         ColoursUpdate();
         ToggleUpdate();
-
-        gameObject.SetActive(false);
 	}
 
     private void InputFieldUpdate() {

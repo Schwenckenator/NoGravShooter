@@ -14,8 +14,6 @@ public class UIAudioSettings : MonoBehaviour {
 
         SliderUpdate();
         InputFieldUpdate();
-
-        gameObject.SetActive(false);
 	}
 
     private void InputFieldUpdate() {

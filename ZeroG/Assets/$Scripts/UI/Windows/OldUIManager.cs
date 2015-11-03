@@ -93,9 +93,9 @@ public class OldUIManager : MonoBehaviour {
         }
     }
 
-    public static bool IsChangeKeybindWindow() {
-        return windows[(int)Menu.ChangeKeybind].activeInHierarchy;
-    }
+    //public static bool IsChangeKeybindWindow() {
+    //    return windows[(int)Menu.ChangeKeybind].activeInHierarchy;
+    //}
     public static bool IsCurrentMenuWindow(Menu value) {
         return currentWindow == (int)value;
     }

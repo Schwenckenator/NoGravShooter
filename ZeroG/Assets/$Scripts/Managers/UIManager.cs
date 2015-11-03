@@ -10,14 +10,18 @@ public class UIManager : MonoBehaviour {
 
     private GameObject currentlyOpen;
 
+    public bool debugMode = true;
+
     void Start() {
         singleton = this;
+        currentlyOpen = initiallyOpen;
         Open(initiallyOpen);
     }
 
     public void OpenReplace(GameObject menu) {
         currentlyOpen.SetActive(false);
         menu.SetActive(true);
+        currentlyOpen = menu;
     }
     public void Open(GameObject menu) {
         menu.SetActive(true);

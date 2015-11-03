@@ -9,27 +9,20 @@ public class UIKeybindSettings : MonoBehaviour {
 
     private static List<Text> keybindButtonText;
     private static int editedBinding = 0;
-
-    
-
 	// Use this for initialization
 	void Awake () {
         keybindButtonText = new List<Text>();
         EditKeybindInit();
-
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
 	}
 
     void OnGUI() { // Dirty old system, but I can't see a way around it
-        if (OldUIManager.IsChangeKeybindWindow()) {
+        if (changeKeybind.activeInHierarchy) {
             ChangeKeybindUpdate();
         }
     }
 
     void EditKeybindInit() {
-        Canvas editKeybind = GetComponent<Canvas>();
-        Button[] buttons = editKeybind.gameObject.GetComponentsInChildren<Button>(true);
+        Button[] buttons = gameObject.GetComponentsInChildren<Button>(true);
         foreach (Button button in buttons) {
             Text butText = button.GetComponentInChildren<Text>();
             if (butText.text == "Back") continue;

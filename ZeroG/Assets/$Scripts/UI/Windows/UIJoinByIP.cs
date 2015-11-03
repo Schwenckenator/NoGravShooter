@@ -11,8 +11,6 @@ public class UIJoinByIP : MonoBehaviour {
         fields[0].text = SettingsManager.singleton.IpAddress;
         fields[1].text = SettingsManager.singleton.PortNumStr;
 
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
     }
 
     public void SetIPAddress(string value) {

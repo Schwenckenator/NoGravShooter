@@ -11,8 +11,6 @@ public class UICreateGame : MonoBehaviour {
         inputs[1].text = SettingsManager.singleton.PortNumStr;
         inputs[2].text = SettingsManager.singleton.PasswordServer;
 
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
 	}
 
     public void CreateGame(bool online) {
