@@ -28,11 +28,11 @@ public class GameManager : NetworkBehaviour {
 	private GameObject[] spawnPoints;
 
 
-    public static List<Weapon> weapon = new List<Weapon>();
+    //public static List<Weapon> weapon = new List<Weapon>();
 
     public float endTime;
     public bool IsUseTimer { get; private set; }
-    public NetworkPlayer currentPlayer;
+    //public NetworkPlayer currentPlayer;
     // For Game Settings
 
     private bool gameInProgress = false;
@@ -57,20 +57,11 @@ public class GameManager : NetworkBehaviour {
     public static bool IsPlayerMenu() {
         return playerMenu;
     }
-    public static int GetMaxStartingWeapons() {
-        return maxStartingWeapons;
-    }
     public static void SetCursorVisibility(bool visible) {
         Cursor.visible = visible;
         Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
     }
     #endregion 
-
-    #region Variable accessors
-    public int[] GetStartingWeapons() {
-        return startingWeapons;
-    }
-    #endregion
 
     #region Variable mutators
     //[RPC]
@@ -94,9 +85,6 @@ public class GameManager : NetworkBehaviour {
 
     void Awake(){
         singleton = this;
-		DontDestroyOnLoad(gameObject);
-
-        //NetworkView = GetComponent<//NetworkView>();
 	}
 
 	void OnLevelWasLoaded(int level){
@@ -177,6 +165,7 @@ public class GameManager : NetworkBehaviour {
     [Server]
     public void LoadLevel() {
         NetworkManager.single.ServerChangeScene(SettingsManager.singleton.LevelName);
+        GameInProgress = true;
         ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
         //    SettingsManager.eu.LevelName, 
         //    NetworkManager.lastLevelPrefix + 1, 

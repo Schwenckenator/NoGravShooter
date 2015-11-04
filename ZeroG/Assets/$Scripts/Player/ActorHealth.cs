@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
+using System;
 
-
-public class ActorHealth : MonoBehaviour, IDamageable {
+public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
 
     public AudioClip SoundTakeDamage;
     public AudioSource helmetAudio;
@@ -10,83 +11,70 @@ public class ActorHealth : MonoBehaviour, IDamageable {
     private DestroyParticleEffect killBlood;
 
     int maxHealth = 100;
-    int health;
+    
 
     bool isDamageSound = false;
     bool isDying = false;
 
-    //private //NetworkView //NetworkView;
     IActorStats stats;
 
     private int suicideDamage = 9; // How much damage K does
 
-	// Use this for initialization
-	void Awake () {
+    [SyncVar]
+    int health;
+
+    public int Health {
+        get {
+            return health;
+        }
+    }
+    public int MaxHealth {
+        get {
+            return maxHealth;
+        }
+    }
+    public bool IsFullHealth {
+        get {
+            return health == maxHealth;
+        }
+    }
+
+    // Use this for initialization
+    public override void OnStartLocalPlayer() {
         stats = gameObject.GetInterface<IActorStats>();
-        ////NetworkView = GetComponent<//NetworkView>();
         Reset();
-	}
-    void Update() {
-        //if (Input.GetKeyDown(KeyCode.K) && !GameManager.IsPlayerMenu() && //NetworkView.isMine) { //K is for kill! // This is for testing purposes only
-        //    TakeDamage(suicideDamage, Network.player);
-        //}
     }
-    // Interface Implementation
-    public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
-        ////NetworkView.RPC("Damage", RPCMode.All, damage, from, weaponId);
-    }
-    public void RestoreHealth(int restore) {
-        health += restore;
-        if (health > maxHealth) {
-            health = maxHealth;
-        }
-        CheckHealthForWaver();
-    }
-    public int GetHealth() {
-        return health;
-    }
-    public int GetMaxHealth() {
-        return maxHealth;
-    }
-    public bool IsFullHealth() {
-        return health == maxHealth;
-    }
-
-    ////[RPC]
-    void Damage(int damage, NetworkPlayer fromPlayer, int weaponID) {
-        if (isDying) return; // Don't bother if you are already dying
-
-        WillPlayTakeDamageSound();
-        health -= damage;
-        if (health <= 0) {
-            Die(NetworkManager.GetPlayer(fromPlayer), weaponID);
-        }
-    }
-
-    bool CheckHealthForWaver() {
-        bool willWaver = true;
-        if (health <= 40) {
-            BloodyScreen.Waver(0.5f, .25f);
-        } else if (health <= 30) {
-            BloodyScreen.Waver(0.5f, .5f);
-        } else if (health <= 20) {
-            BloodyScreen.Waver(0.75f, .75f);
-        } else if (health <= 10) {
-            BloodyScreen.Waver(1.25f, 1f);
-        }else{
-            BloodyScreen.StopWaver();
-            willWaver = false;
-	    }
-        return willWaver;
-    }
-
     public void Reset() {
         maxHealth = stats.maxHealth;
         health = maxHealth;
         isDying = false;
     }
+    void Update() {
+        if (!isLocalPlayer) return;
+        if (Input.GetKeyDown(KeyCode.K) && !UIPauseSpawn.IsShown) { //K is for kill! // This is for testing purposes only
+            TakeDamage(suicideDamage);
+        }
+    }
+   
+    [Server]
+    public void TakeDamage(int damage, int weaponID = -1) {
+        if (isDying) return; // Don't bother if you are already dying
 
-    private void Die(Player killer, int weaponID) {
+        WillPlayTakeDamageSound();
+        health -= damage;
+        if (health <= 0) {
+            Die(weaponID);
+        }
+    }
+    [Server]
+    public void RestoreHealth(int restore) {
+        health += restore;
+        if (health > maxHealth) {
+            health = maxHealth;
+        }
+    }
+
+    private void Die(int weaponID) {
         if (GameManager.IsSceneTutorial()) {
             // Can't die in tutorial.
             health = 10;
@@ -94,45 +82,15 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         }
         health = 0;
 		isDying = true;//You is dead nigs
-
-        //if (//NetworkView.isMine) {
-			if(killer != null){
-                string killMessage;
-				if(killer.ID != Network.player){
-                    GameManager.gameMode.Kill(killer, NetworkManager.MyPlayer());
-                    GameManager.gameMode.PlayerDied(NetworkManager.MyPlayer());
-
-                    killMessage = killer.Name;
-
-                    if (killer.IsOnTeam(NetworkManager.MyPlayer().Team)) {
-                            
-                        killMessage += KillMessageGenerator(teamKillID);
-                    } else {
-                        killMessage += KillMessageGenerator(weaponID);
-                    }
-                    killMessage += SettingsManager.singleton.PlayerName;
-
-                        
-				} else {
-                    killMessage = killer.Name + KillMessageGenerator(weaponID) + "themselves.";
-                    GameManager.gameMode.Suicide(killer);
-                        
-				}
-                ChatManager.singleton.AddToChat(killMessage);
-			}
-            gameObject.SendMessage("OnDeath");
-			StartCoroutine(PlayerCleanup());
-		//}
+		StartCoroutine(PlayerCleanup());
     }
 
     void WillPlayTakeDamageSound() {
-        //if (//NetworkView.isMine && !isDamageSound) {
+        if(isLocalPlayer && !isDamageSound) {
             isDamageSound = true;
             StartCoroutine(PlaySoundTakeDamage());
-            if (!CheckHealthForWaver()) {
-                BloodyScreen.Flash();
-            }
-        //}
+            BloodyScreen.Flash();
+        }
     }
 
     IEnumerator PlaySoundTakeDamage() {
@@ -153,12 +111,13 @@ public class ActorHealth : MonoBehaviour, IDamageable {
                     return " assassinated ";
             }
         } else {
-            return " " + GameManager.weapon[weaponId].killMessage + " ";
+            return " " + WeaponManager.weapon[weaponId].killMessage + " ";
         }
         return " killed ";
 
     }
 
+    [Client]
     IEnumerator PlayerCleanup() {
         float playerDyingTime = 3.0f;
         BloodyPlayer();

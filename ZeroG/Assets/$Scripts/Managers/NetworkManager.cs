@@ -97,15 +97,16 @@ public class NetworkManager : NetworkLobbyManager {
         base.OnLobbyServerConnect(conn);
         Debug.Log(conn.connectionId.ToString() + ", OnConnect");
     }
-    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
-        base.OnServerAddPlayer(conn, playerControllerId);
-        GameObject player = (GameObject)Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+    //public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
+    //    base.OnServerAddPlayer(conn, playerControllerId);
+    //    GameObject player = (GameObject)Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
 
-        NetworkServer.ReplacePlayerForConnection(conn, player, playerControllerId);
-    }
-    public override void OnLobbyClientConnect(NetworkConnection conn) {
-        ClientScene.AddPlayer(0);
-    }
+    //    NetworkServer.ReplacePlayerForConnection(conn, player, playerControllerId);
+    //}
+    //public override void OnLobbyClientConnect(NetworkConnection conn) {
+    //    ClientScene.AddPlayer(0);
+    //}
+
     //void OnPlayerConnected(NetworkPlayer connectedPlayer) {
     //    foreach (Player player in NetworkManager.connectedPlayers) {
     //        //NetworkView.RPC("RPCPlayerChangedTeam", connectedPlayer, player.ID, (int)player.Team);
@@ -153,7 +154,7 @@ public class NetworkManager : NetworkLobbyManager {
     }
 
     public override void OnClientConnect(NetworkConnection conn) {
-    //    base.OnClientConnect(conn);
+        base.OnClientConnect(conn);
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
 
@@ -249,15 +250,6 @@ public class NetworkManager : NetworkLobbyManager {
     public static bool IsReadyToSpawn() {
         return isReadyToSpawn;
     }
-
-    //public static void ReserveObject(NetworkMessageInfo info, //NetworkView nView, GameObject obj) {
-    //    DontDestroyOnLoad(obj);
-
-    //    if (actorOwners.Contains(info.sender)) {
-    //    } else {
-    //        actorOwners.Add(info.sender);
-    //    }
-    //}
 
     private void MoveToLobby() {
         UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);

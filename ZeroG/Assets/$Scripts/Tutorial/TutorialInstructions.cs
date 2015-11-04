@@ -70,7 +70,6 @@ public class TutorialInstructions : MonoBehaviour {
 
 
     void Start() {
-        OldUIManager.RemoveAllGUI(); // Hide the main menu while the player loads
         lookingDot = GameObject.Find("LookAtDot");
         platform = GameObject.Find("PlatformFront1");
         platform.transform.GetComponent<Renderer>().material.color = new Color(0, 1, 0);

@@ -4,7 +4,7 @@ using System.Collections;
 static class DebugManager {
     
     private static bool debugMode = false;
-    private static bool adminMode = false;
+    private static bool adminMode = true;
     private static bool allWeapon = false;
     private static bool allAmmo = false;
     private static bool allGrenade = false;

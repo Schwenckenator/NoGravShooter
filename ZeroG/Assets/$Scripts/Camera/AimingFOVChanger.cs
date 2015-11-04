@@ -16,7 +16,7 @@ public class AimingFOVChanger : MonoBehaviour {
     }
 	
 	void FixedUpdate(){
-        if (OldUIManager.IsCurrentMenuWindow(Menu.PauseMenu)) return;
+        //if () return;
         // What is all this doing in an update loop?
         // TODO: Cache the results
 	    maxFOV = SettingsManager.singleton.FieldOfView;

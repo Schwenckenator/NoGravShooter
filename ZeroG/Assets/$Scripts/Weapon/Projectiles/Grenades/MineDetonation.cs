@@ -114,19 +114,19 @@ public class MineDetonation : MonoBehaviour, IDamageable {
         }
     }
 
-    public int GetHealth() {
-        return 1;
+    public int Health {
+        get { return 1; }
     }
 
-    public int GetMaxHealth() {
-        return 1;
+    public int MaxHealth {
+        get { return 1; }
     }
 
-    public bool IsFullHealth() {
-        return true;
+    public bool IsFullHealth {
+        get { return true; }
     }
 
-    public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
+    public void TakeDamage(int damage, int weaponId = -1) {
         ForceDetonate();
     }
 

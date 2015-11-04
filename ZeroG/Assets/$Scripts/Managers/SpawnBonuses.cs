@@ -75,7 +75,7 @@ public class SpawnBonuses : MonoBehaviour {
 
     private static void SpawnBonus(GameObject bonus, Vector3 position, Quaternion rotation) {
         Network.Instantiate(bonus, position, rotation, 0);
-        Radar.instance.ActorsChanged();
+        Radar.singleton.ActorsChanged();
     }
     public static void SpawnRandomBonus(Vector3 position, Quaternion rotation) {
         if (spawnableBonuses.Count == 0) {

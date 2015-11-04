@@ -4,22 +4,37 @@ using System.Collections;
 
 public class UIPauseSpawn : MonoBehaviour {
 
+    // TODO
+    public static bool IsShown {
+        get {
+            if (myObj == null) return false;
+            return myObj.activeInHierarchy;
+        }
+    }
+    public GameObject playerHUD;
+    public Toggle AutoSpawn;
+
     private static ChangeableText spawnButton;
     private static string spawn = "Spawn";
     private static string unpause = "Return to Game";
 
     private static ChangeableText serverName;
-    public Toggle AutoSpawn;
+    
 
     private static IHideable playerList;
     private static IHideable returnToLobby;
 
-    void Start() {
-        Init();
+    static GameObject myObj;
+    static UIPauseSpawn singleton;
 
+    void Start() {
+        singleton = this;
+        myObj = gameObject;
+        Init();
     }
 
     public void Init() {
+        
         FindTexts();
         FindHideables();
         SetToggle();
@@ -89,7 +104,7 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     private static void ReturnToGame() {
         GameManager.SetCursorVisibility(false);
-        GameManager.singleton.SetPlayerMenu(false);
+        UIManager.singleton.OpenReplace(singleton.playerHUD);
     }
     private static void PauseMenu(bool isTutorial = false) {
         if (!isTutorial) {
@@ -103,7 +118,7 @@ public class UIPauseSpawn : MonoBehaviour {
     /// Switches between paused and not paused, based on state
     /// </summary>
     public static void PauseMenuSwitch() {
-        if(OldUIManager.IsCurrentMenuWindow(Menu.PlayerHUD)){
+        if(!IsShown){
             PauseMenu(GameManager.IsSceneTutorial()); 
         } else {
             ReturnToGame();

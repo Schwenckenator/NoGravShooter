@@ -1,192 +1,192 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿//using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine.UI;
 
-public enum Menu { 
-    ChangeKeybind, 
-    Message, 
-    CreateGame, 
-    Debug, 
-    EditKeybind, 
-    GameSettings, 
-    GraphicsSettings, 
-    JoinByIP, 
-    JoinGame, 
-    Lobby, 
-    MainMenu, 
-    Options, 
-    PasswordInput, 
-    PauseMenu, 
-    PlayerHUD, 
-    TutorialMenu,
-    GameClock,
-    BloodyScreen,
-    PlayerSettings,
-    AudioSettings,
-    WinnerSplash,
-    SniperScope
-}
+//public enum Menu { 
+//    ChangeKeybind, 
+//    Message, 
+//    CreateGame, 
+//    Debug, 
+//    EditKeybind, 
+//    GameSettings, 
+//    GraphicsSettings, 
+//    JoinByIP, 
+//    JoinGame, 
+//    Lobby, 
+//    MainMenu, 
+//    Options, 
+//    PasswordInput, 
+//    PauseMenu, 
+//    PlayerHUD, 
+//    TutorialMenu,
+//    GameClock,
+//    BloodyScreen,
+//    PlayerSettings,
+//    AudioSettings,
+//    WinnerSplash,
+//    SniperScope
+//}
 
-public class OldUIManager : MonoBehaviour {
+//public class OldUIManager : MonoBehaviour {
 
-    //public static OldUIManager singleton { get; private set; }
+//    //public static OldUIManager singleton { get; private set; }
 
 
-    public GameObject[] menus; // Only for initialisation
-    private static List<GameObject> windows;
-    private static int currentWindow = 0;
+//    public GameObject[] menus; // Only for initialisation
+//    private static List<GameObject> windows;
+//    private static int currentWindow = 0;
 
-    private static TextChangeFromConnectionType[] textChangers;
-    private static SelectableHideFromConnectionType[] buttonHiders;
+//    private static TextChangeFromConnectionType[] textChangers;
+//    private static SelectableHideFromConnectionType[] buttonHiders;
 
-    void Awake() {
-        //singleton = this;
-        DontDestroyOnLoad(gameObject);
+//    void Awake() {
+//        //singleton = this;
+//        DontDestroyOnLoad(gameObject);
 
-        windows = new List<GameObject>();
-        foreach (GameObject menu in menus) {
-            //Create, then hide menu windows
-            GameObject newMenu = Instantiate(menu) as GameObject;
-            newMenu.transform.SetParent(transform);
-            windows.Add(newMenu);
-        }
-        ListInit();
-    }
+//        windows = new List<GameObject>();
+//        foreach (GameObject menu in menus) {
+//            //Create, then hide menu windows
+//            GameObject newMenu = Instantiate(menu) as GameObject;
+//            newMenu.transform.SetParent(transform);
+//            windows.Add(newMenu);
+//        }
+//        ListInit();
+//    }
 
-    void Start() {
-        windows[(int)Menu.Debug].gameObject.SetActive(false); // Don't show debug
-        SetMenuWindow(Menu.MainMenu);
+//    void Start() {
+//        windows[(int)Menu.Debug].gameObject.SetActive(false); // Don't show debug
+//        SetMenuWindow(Menu.MainMenu);
         
-    }
+//    }
 
-    void Update() {
-        GetKeyStrokes();
-        GetDebugKeyStrokes();
-    }
-    void OnGUI() {
-        if (DebugManager.IsAdminMode()) {
-            GUI.Label(new Rect(Screen.width -100, 70, 100, 20), "ADMIN MODE");
-        }
-        if (DebugManager.IsDebugMode()) {
-            GUI.Label(new Rect(Screen.width -100, 100, 100, 20), "DEBUG: On");
-        }
-        if (DebugManager.IsPaintballMode()) {
-            GUI.Label(new Rect(Screen.width - 200, 70, 100, 20), "Paintball: On");
-        }
+//    void Update() {
+//        GetKeyStrokes();
+//        GetDebugKeyStrokes();
+//    }
+//    void OnGUI() {
+//        if (DebugManager.IsAdminMode()) {
+//            GUI.Label(new Rect(Screen.width -100, 70, 100, 20), "ADMIN MODE");
+//        }
+//        if (DebugManager.IsDebugMode()) {
+//            GUI.Label(new Rect(Screen.width -100, 100, 100, 20), "DEBUG: On");
+//        }
+//        if (DebugManager.IsPaintballMode()) {
+//            GUI.Label(new Rect(Screen.width - 200, 70, 100, 20), "Paintball: On");
+//        }
 
-    }
-    private static void GetDebugKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.F12)) {
-            UIDebugMenu.ToggleShow();
-        }
-        if (Input.GetKeyDown(KeyCode.F1)) {
-            DebugManager.SetPaintballMode(!DebugManager.IsPaintballMode());
-        }
+//    }
+//    private static void GetDebugKeyStrokes() {
+//        if (Input.GetKeyDown(KeyCode.F12)) {
+//            UIDebugMenu.ToggleShow();
+//        }
+//        if (Input.GetKeyDown(KeyCode.F1)) {
+//            DebugManager.SetPaintballMode(!DebugManager.IsPaintballMode());
+//        }
 
-    }
-    private void GetKeyStrokes() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-        }
-    }
+//    }
+//    private void GetKeyStrokes() {
+//        if (Input.GetKeyDown(KeyCode.Escape)) {
+//        }
+//    }
 
-    //public static bool IsChangeKeybindWindow() {
-    //    return windows[(int)Menu.ChangeKeybind].activeInHierarchy;
-    //}
-    public static bool IsCurrentMenuWindow(Menu value) {
-        return currentWindow == (int)value;
-    }
+//    //public static bool IsChangeKeybindWindow() {
+//    //    return windows[(int)Menu.ChangeKeybind].activeInHierarchy;
+//    //}
+//    public static bool IsCurrentMenuWindow(Menu value) {
+//        return currentWindow == (int)value;
+//    }
 
-    void ListInit() {
-        textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
-        buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
-    }
+//    void ListInit() {
+//        textChangers = GameObject.FindObjectsOfType<TextChangeFromConnectionType>();
+//        buttonHiders = GameObject.FindObjectsOfType<SelectableHideFromConnectionType>();
+//    }
 
-    #region SetWindow
-    public void SetMenuWindow(Menu newWindow) {
-        SetMenuWindow((int)newWindow);
-    }
-    public void ShowMenuWindow(Menu newWindow, bool show) {
-        ShowMenuWindow((int)newWindow, show);
-    }
+//    #region SetWindow
+//    public void SetMenuWindow(Menu newWindow) {
+//        SetMenuWindow((int)newWindow);
+//    }
+//    public void ShowMenuWindow(Menu newWindow, bool show) {
+//        ShowMenuWindow((int)newWindow, show);
+//    }
     
-    private void SetMenuWindow(int newWindow) {
-        windows[currentWindow].gameObject.SetActive(false);
-        windows[newWindow].gameObject.SetActive(true);
+//    private void SetMenuWindow(int newWindow) {
+//        windows[currentWindow].gameObject.SetActive(false);
+//        windows[newWindow].gameObject.SetActive(true);
 
-        currentWindow = newWindow;
-    }
-    private void ShowMenuWindow(int newWindow, bool show) {
-        windows[newWindow].gameObject.SetActive(show);
-        windows[currentWindow].GetComponent<CanvasGroup>().interactable = !show;
-    }
-    #endregion
+//        currentWindow = newWindow;
+//    }
+//    private void ShowMenuWindow(int newWindow, bool show) {
+//        windows[newWindow].gameObject.SetActive(show);
+//        windows[currentWindow].GetComponent<CanvasGroup>().interactable = !show;
+//    }
+//    #endregion
 
-    #region MenuWindowMethods
-    public void GoMessage(bool value) {
-        ShowMenuWindow(Menu.Message, value);
-    }
-    public void GoCreateGame() {
-        SetMenuWindow(Menu.CreateGame);
-    }
-    public void GoDebug(bool value) {
-        ShowMenuWindow(Menu.Debug, value);
-    }
-    public void GoEditKeybind() {
-        SetMenuWindow(Menu.EditKeybind);
-    }
-    public void GoGameSettings(bool value) {
-        ShowMenuWindow(Menu.GameSettings, value);
-    }
-    public void GoGraphicsSettings() {
-        SetMenuWindow(Menu.GraphicsSettings);
-    }
-    public void GoJoinByIP(bool value) {
-        ShowMenuWindow(Menu.JoinByIP, value);
-    }
-    public void GoJoinGame() {
-        SetMenuWindow(Menu.JoinGame);
-    }
-    public void GoLobby() {
-        SetMenuWindow(Menu.Lobby);
-    }
-    public void GoMainMenu() {
-        SetMenuWindow(Menu.MainMenu);
-    }
-    public void GoOptions() {
-        SetMenuWindow(Menu.Options);
-    }
-    public void GoPasswordInput(bool value) {
-        ShowMenuWindow(Menu.PasswordInput, value);
-    }
-    public void GoPauseMenu() {
-        SetMenuWindow(Menu.PauseMenu);
-    }
-    public void GoPlayerHUD() {
-        SetMenuWindow(Menu.PlayerHUD);
-    }
-    #endregion
+//    #region MenuWindowMethods
+//    public void GoMessage(bool value) {
+//        ShowMenuWindow(Menu.Message, value);
+//    }
+//    public void GoCreateGame() {
+//        SetMenuWindow(Menu.CreateGame);
+//    }
+//    public void GoDebug(bool value) {
+//        ShowMenuWindow(Menu.Debug, value);
+//    }
+//    public void GoEditKeybind() {
+//        SetMenuWindow(Menu.EditKeybind);
+//    }
+//    public void GoGameSettings(bool value) {
+//        ShowMenuWindow(Menu.GameSettings, value);
+//    }
+//    public void GoGraphicsSettings() {
+//        SetMenuWindow(Menu.GraphicsSettings);
+//    }
+//    public void GoJoinByIP(bool value) {
+//        ShowMenuWindow(Menu.JoinByIP, value);
+//    }
+//    public void GoJoinGame() {
+//        SetMenuWindow(Menu.JoinGame);
+//    }
+//    public void GoLobby() {
+//        SetMenuWindow(Menu.Lobby);
+//    }
+//    public void GoMainMenu() {
+//        SetMenuWindow(Menu.MainMenu);
+//    }
+//    public void GoOptions() {
+//        SetMenuWindow(Menu.Options);
+//    }
+//    public void GoPasswordInput(bool value) {
+//        ShowMenuWindow(Menu.PasswordInput, value);
+//    }
+//    public void GoPauseMenu() {
+//        SetMenuWindow(Menu.PauseMenu);
+//    }
+//    public void GoPlayerHUD() {
+//        SetMenuWindow(Menu.PlayerHUD);
+//    }
+//    #endregion
 
-    public void SetPlayerName(string value) {
-        SettingsManager.singleton.PlayerName = value;
-    }
-    /// <summary>
-    /// For the arrays with changing text based of network connection type, loop through and update the text for all.
-    /// </summary>
-    public void UpdateArraysFromNetworkConnection() {
-        foreach (var text in textChangers) {
-            text.UpdateText();
-        }
-        foreach (var hider in buttonHiders) {
-            hider.UpdateVisibility();
-        }
-    }
+//    public void SetPlayerName(string value) {
+//        SettingsManager.singleton.PlayerName = value;
+//    }
+//    /// <summary>
+//    /// For the arrays with changing text based of network connection type, loop through and update the text for all.
+//    /// </summary>
+//    public void UpdateArraysFromNetworkConnection() {
+//        foreach (var text in textChangers) {
+//            text.UpdateText();
+//        }
+//        foreach (var hider in buttonHiders) {
+//            hider.UpdateVisibility();
+//        }
+//    }
 
-    public static void RemoveAllGUI() {
-        // Clear instantiated windows
-        // Because I want to look at something I made.
-        foreach (GameObject canvas in windows) {
-            canvas.SetActive(false);
-        }
-    }
-}
+//    public static void RemoveAllGUI() {
+//        // Clear instantiated windows
+//        // Because I want to look at something I made.
+//        foreach (GameObject canvas in windows) {
+//            canvas.SetActive(false);
+//        }
+//    }
+//}

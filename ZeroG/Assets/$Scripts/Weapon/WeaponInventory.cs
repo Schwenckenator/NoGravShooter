@@ -56,11 +56,11 @@ public class WeaponInventory : MonoBehaviour {
         heldWeapons.Clear();
 
         if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
-        int[] temp = GameManager.singleton.GetStartingWeapons();
+        int[] temp = WeaponManager.singleton.GetStartingWeapons();
 
         foreach (int id in temp) {
             //Debug.Log(id.ToString());
-            if (id >= 0 && id < GameManager.weapon.Count) {
+            if (id >= 0 && id < WeaponManager.weapon.Count) {
                 AddWeapon(id);
             }
         }
@@ -116,7 +116,7 @@ public class WeaponInventory : MonoBehaviour {
     }
     int GetMaxWeapon() {
         if (DebugManager.IsAllWeapon()) {
-            return GameManager.weapon.Count;
+            return WeaponManager.weapon.Count;
         } else {
             return heldWeapons.Count;
         }
@@ -129,11 +129,11 @@ public class WeaponInventory : MonoBehaviour {
         return heldWeapons.Count;
     }
     public bool IsWeaponHeld(int weaponId) {
-        return heldWeapons.Contains(GameManager.weapon[weaponId]);
+        return heldWeapons.Contains(WeaponManager.weapon[weaponId]);
     }
 
     public bool IsCurrentWeapon(int weaponId) {
-        return currentWeapon == GameManager.weapon[weaponId];
+        return currentWeapon == WeaponManager.weapon[weaponId];
     }
 
     public void ChangeWeapon(int weaponId, bool force = false) {
@@ -141,9 +141,9 @@ public class WeaponInventory : MonoBehaviour {
 
         StopCoroutine("WeaponChange");
         if (DebugManager.IsAllWeapon()) {
-            if (weaponId < GameManager.weapon.Count) {
+            if (weaponId < WeaponManager.weapon.Count) {
                 currentInventorySlot = weaponId;
-                currentWeapon = GameManager.weapon[weaponId];
+                currentWeapon = WeaponManager.weapon[weaponId];
                 StartCoroutine("WeaponChange");
             }
         } else {
@@ -157,7 +157,7 @@ public class WeaponInventory : MonoBehaviour {
 
     public void AddWeapon(int weaponID, int index) {
         bool hadNoWeapons = HasNoWeapons();
-        heldWeapons.Insert(index, GameManager.weapon[weaponID]);
+        heldWeapons.Insert(index, WeaponManager.weapon[weaponID]);
 
         if (hadNoWeapons) {
             ChangeWeapon(0, true);
@@ -184,6 +184,6 @@ public class WeaponInventory : MonoBehaviour {
     }
     //[RPC]
     void NetworkWeaponChange(float waitTime, int currentWeaponID) {
-        weaponReloadRotation.ReloadRotation(waitTime, GameManager.weapon[currentWeaponID]);
+        weaponReloadRotation.ReloadRotation(waitTime, WeaponManager.weapon[currentWeaponID]);
     }
 }

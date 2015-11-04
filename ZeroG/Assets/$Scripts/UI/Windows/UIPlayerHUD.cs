@@ -5,8 +5,14 @@ using System.Collections.Generic;
 
 public class UIPlayerHUD : MonoBehaviour {
 
-    static MovingBar health;
-    static MovingBar fuel;
+    public static bool IsShown {
+        get {
+            return playerUI.gameObject.activeInHierarchy;
+        }
+    }
+
+    public static UIPlayerHUD singleton { get; private set; }
+
     static ChangeableText ammo;
     static ChangeableText grenade;
     static ChangeableText promptText;
@@ -22,7 +28,7 @@ public class UIPlayerHUD : MonoBehaviour {
     static ActorGrenades actorGrenades;
     static WeaponInventory weaponInventory;
     static IDamageable playerHealth;
-    static IActorStats ActorStats;
+    static IActorStats actorStats;
 
     static Canvas playerUI;
     static Canvas sniperUI;
@@ -33,6 +39,12 @@ public class UIPlayerHUD : MonoBehaviour {
     static bool tutorialPromptActive = false;
 
     public Sprite testSprite;
+    public MovingBar healthBar;
+    public MovingBar fuelBar;
+
+    void Awake() {
+        singleton = this;
+    }
 
     void Start() {
         Init();
@@ -46,9 +58,7 @@ public class UIPlayerHUD : MonoBehaviour {
         IChangeable[] changers = gameObject.GetInterfacesInChildren<IChangeable>();
 
         foreach (IChangeable changer in changers) {
-            if (changer.IsType("fuel")) fuel = changer as MovingBar;
-            else if (changer.IsType("health")) health = changer as MovingBar;
-            else if (changer.IsType("ammo")) ammo = changer as ChangeableText;
+            if (changer.IsType("ammo")) ammo = changer as ChangeableText;
             else if (changer.IsType("grenade")) grenade = changer as ChangeableText;
             else if (changer.IsType("promptText")) promptText = changer as ChangeableText;
             else if (changer.IsType("promptHide")) promptUI = changer as HideableUI;
@@ -58,32 +68,30 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("fuelBarBack")) fuelBarBack = changer as ChangeableImage;
             else if (changer.IsType("chat") || changer.IsType("playerList")) UIChat.ConnectChatBox(changer as ChangeableText);
         }
-
-        health.SetMaxValue(ActorHealth.GetDefaultMaxHealth());
-        fuel.SetMaxValue(ActorJetpackFuel.GetDefaultMaxFuel());
     }
 
 
 
     public static void ShowSniperScope(bool showSniper) {
         GameClock.ShowClock(!showSniper);
-        Menu window = showSniper ? Menu.SniperScope : Menu.PlayerHUD;
+        // TODO
     }
 
-    public static void SetupPlayer(GameObject actor) {
+    public void SetupPlayer(GameObject actor) {
         jetpackFuel = actor.GetComponent<ActorJetpackFuel>();
         actorGrenades = actor.GetComponent<ActorGrenades>();
         playerHealth = actor.GetInterface<IDamageable>();
         weaponInventory = actor.GetComponent<WeaponInventory>();
 
-        health.SetMaxValue(playerHealth.GetMaxHealth());
+        healthBar.SetMaxValue(playerHealth.MaxHealth);
+        fuelBar.SetMaxValue(ActorJetpackFuel.GetDefaultMaxFuel());
     }
 
     void Update() {
         if(PlayerManager.isMyActorSpawned) {
-            float temp = playerHealth.GetHealth();
-            health.SetValue(temp);
-            fuel.SetValue(jetpackFuel.GetFuel());
+            float temp = playerHealth.Health;
+            healthBar.SetValue(temp);
+            fuelBar.SetValue(jetpackFuel.GetFuel());
 
             ammo.SetText(MakeAmmoString());
             grenade.SetText(MakeGrenadeString());

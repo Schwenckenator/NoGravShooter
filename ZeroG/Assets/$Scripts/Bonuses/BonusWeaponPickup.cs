@@ -51,7 +51,7 @@ public class BonusWeaponPickup : MonoBehaviour {
 	}
 	////[RPC]
 	void CreateNewModel(){
-		currentWeaponModel = Instantiate(GameManager.weapon[id].model, transform.position, transform.rotation) as GameObject;
+		currentWeaponModel = Instantiate(WeaponManager.weapon[id].model, transform.position, transform.rotation) as GameObject;
 		currentWeaponModel.transform.parent = transform;
 	}
 
@@ -112,7 +112,7 @@ public class BonusWeaponPickup : MonoBehaviour {
         for (int i = 0; i < 7; i++) {
             if (inventory.IsCurrentWeapon(i)) {
                 
-                inventory.RemoveWeapon(GameManager.weapon[i]);
+                inventory.RemoveWeapon(WeaponManager.weapon[i]);
                 inventory.AddWeapon(id, inventory.currentInventorySlot);
                 inventory.ChangeWeapon(currentInventorySlot, true);
                 
@@ -140,10 +140,10 @@ public class BonusWeaponPickup : MonoBehaviour {
 
     private void AddAmmo() {
         if (!hasAmmo) return;
-		if(GameManager.weapon[id].isEnergy){
-			GameManager.weapon[id].currentClip += (GameManager.weapon[id].defaultRemainingAmmo);
+		if(WeaponManager.weapon[id].isEnergy){
+			WeaponManager.weapon[id].currentClip += (WeaponManager.weapon[id].defaultRemainingAmmo);
 		} else {
-			GameManager.weapon[id].remainingAmmo += (GameManager.weapon[id].clipSize + GameManager.weapon[id].defaultRemainingAmmo);
+			WeaponManager.weapon[id].remainingAmmo += (WeaponManager.weapon[id].clipSize + WeaponManager.weapon[id].defaultRemainingAmmo);
 		}
         Debug.Log("Already own, adding ammo");
         ////GetComponent<ObjectCleanUp>().KillMe();

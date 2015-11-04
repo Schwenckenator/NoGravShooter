@@ -120,6 +120,7 @@
     <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
     <Compile Include="Assets\$Scripts\Managers\UIManager.cs" />
+    <Compile Include="Assets\$Scripts\Managers\WeaponManager.cs" />
     <Compile Include="Assets\$Scripts\Player.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorEnableManager.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorGrenades.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="Assets\$Scripts\Player\PlayerColourManager.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerKillOnContact.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerResources.cs" />
+    <Compile Include="Assets\$Scripts\PreserveObject.cs" />
     <Compile Include="Assets\$Scripts\RadarDot.cs" />
     <Compile Include="Assets\$Scripts\Team.cs" />
     <Compile Include="Assets\$Scripts\Tutorial\ScreenFadeInOut.cs" />
@@ -223,7 +225,6 @@
     <Compile Include="Assets\$Scripts\Weapon\WeaponSettings\Shotgun.cs" />
     <Compile Include="Assets\$Scripts\Weapon\WeaponSettings\SlugPistol.cs" />
     <Compile Include="Assets\$Scripts\Weapon\WeaponSettings\Weapon.cs" />
-    <Compile Include="Assets\$Scripts\Weapon\WeaponSettings\WeaponValueInitialiser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art Assets\Materials\3dTextShader.shader" />

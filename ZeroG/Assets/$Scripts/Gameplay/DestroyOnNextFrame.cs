@@ -1,10 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class DestroyOnNextFrame : MonoBehaviour, IDamageable {
 	private bool willBeKilled = false;
 
-	public void DestroyMe(){
+    public int Health {
+        get {
+            return 1;
+        }
+    }
+
+    public int MaxHealth {
+        get {
+            return 1;
+        }
+    }
+
+    public bool IsFullHealth {
+        get {
+            return true;
+        }
+    }
+
+    public void DestroyMe(){
 		if(!willBeKilled){
 			StartCoroutine(KillOnNextFrame());
 			willBeKilled = true;
@@ -16,23 +35,15 @@ public class DestroyOnNextFrame : MonoBehaviour, IDamageable {
 		//GetComponent<ObjectCleanUp>().KillMe();
 	}
 
-    public int GetHealth() {
-        return 1;
-    }
-
-    public int GetMaxHealth() {
-        return 1;
-    }
-
-    public bool IsFullHealth() {
-        return true;
-    }
-
     public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
         DestroyMe();
     }
 
     public void RestoreHealth(int restore) {
         // Do nothing
+    }
+
+    public void TakeDamage(int damage, int weaponId = -1) {
+        throw new NotImplementedException();
     }
 }

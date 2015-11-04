@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 /// MouseLook rotates the transform based on the mouse delta.
 /// Minimum and Maximum values can be used to constrain the possible rotation
@@ -37,6 +38,7 @@ public class MouseLook : MonoBehaviour {
 	private float zoomCameraSlow;
 
     private bool active = false;
+    private bool isMine = false;
 
     void Awake() {
         //if (!transform.root.GetComponent<//NetworkView>().isMine) {
@@ -51,6 +53,13 @@ public class MouseLook : MonoBehaviour {
         //this.enabled = false;
     }
 
+    void Start() {
+        if (!transform.root.GetComponent<NetworkIdentity>().isLocalPlayer) {
+            enabled = false;
+        }
+    }
+
+
     public void LevelStart() {
         cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
     }
@@ -58,12 +67,8 @@ public class MouseLook : MonoBehaviour {
 	void Update ()
 	{
         if (!active) return;
-        //Debug.Log("Time is: " + Time.time.ToString());
-        //Debug.Log("MouseLook is active.");
-        //string temp = transform != null ? "Transform "+ transform.ToString()+"is not null" : "Transform is NULL!";
-        //Debug.Log(temp);
 
-		if(!GameManager.IsSceneMenu() && !GameManager.IsPlayerMenu() && Time.timeScale != 0 && cameraFOV != null){
+		if(!UIPauseSpawn.IsShown && Time.timeScale != 0 && cameraFOV != null){
 
             zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)
@@ -114,7 +119,6 @@ public class MouseLook : MonoBehaviour {
 	}
 
 	public void Ragdoll(bool state){
-		//this.enabled = !state;
         active = !state;
 	}
 

@@ -2,17 +2,82 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerManager : NetworkBehaviour {
 
     public static PlayerManager singleton { get; private set; }
     public static bool isMyActorSpawned { get; private set; }
 
+    Collider myCollider;
+    Renderer myRenderer;
+    Rigidbody myRigidbody;
+
+    CameraMove cameraMove;
+
     void Awake() {
         singleton = this;
+        myCollider = GetComponent<Collider>();
+        myRenderer = GetComponentInChildren<Renderer>();
+        myRigidbody = GetComponent<Rigidbody>();
+
+        ChangeActorState(false);
+    }
+
+    public override void OnStartLocalPlayer() {
+        base.OnStartLocalPlayer();
+        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
     }
 
     public void SpawnActor() {
-        ClientScene.AddPlayer(0);
+        ChangeActorState(true);
+        CmdSpawnActor();
+    }
+
+    [Command]
+    void CmdSpawnActor() {
+        ChangeActorState(true);
+    }
+    [ClientRpc]
+    void RpcSpawnActor() {
+        ChangeActorState(false);
+    }
+
+    [Server]
+    public void ActorDied() {
+        RpcActorDied();
+    }
+
+    [ClientRpc]
+    void RpcActorDied() {
+        ChangeActorState(false);
+    }
+
+    void ChangeActorState(bool alive) {
+        myCollider.enabled = alive;
+        myRenderer.enabled = alive;
+        myRigidbody.isKinematic = !alive;
+
+        if (isLocalPlayer) {
+            isMyActorSpawned = alive;
+            if (alive) {
+                UIPauseSpawn.PlayerSpawned();
+                UIPlayerHUD.singleton.SetupPlayer(gameObject);
+
+                GetComponent<ActorHealth>().Reset(); // SHould interface this shit
+                GetComponent<WeaponInventory>().Reset();
+                GetComponent<ActorMotorManager>().Reset();
+                GetComponent<ActorGrenades>().Reset();
+
+                GameManager.SetCursorVisibility(false);
+
+                foreach (MouseLook look in GetComponentsInChildren<MouseLook>()) {
+                    look.SetYDirection(SettingsManager.singleton.MouseYDirection);
+                }
+                //        actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
+                DynamicCrosshair.SetInventory(GetComponent<WeaponInventory>());
+                
+                cameraMove.AttachToPlayer(gameObject);
+            }
+        }
     }
 
 //    static bool myActorSpawned;
@@ -95,7 +160,7 @@ public class PlayerManager : MonoBehaviour {
 //        actorManager.EnableActor();
 
 //        // Reset all stats
-//        foreach (Weapon weap in GameManager.weapon) {
+//        foreach (Weapon weap in WeaponManager.weapon) {
 //            weap.ResetVariables();
 //        }
 //        actor.GetComponent<ActorHealth>().Reset(); // SHould interface this shit

@@ -36,8 +36,8 @@ public class WeaponReloadRotation : MonoBehaviour {
 	}
 
     private void NewModelPrep(Weapon newWeapon) {
-		for(int i=0; i < GameManager.weapon.Count; i++){
-			if(GameManager.weapon[i].Equals(newWeapon)){
+		for(int i=0; i < WeaponManager.weapon.Count; i++){
+			if(WeaponManager.weapon[i].Equals(newWeapon)){
 				newModelNum = i;
 				newModel = true;
 			}
@@ -51,7 +51,7 @@ public class WeaponReloadRotation : MonoBehaviour {
 		if(weaponModel != null){
 			Destroy(weaponModel);
 		}
-		weaponModel = Instantiate(GameManager.weapon[newModelNum].model) as GameObject;
+		weaponModel = Instantiate(WeaponManager.weapon[newModelNum].model) as GameObject;
 
         //if (transform.root.GetComponent<//NetworkView>().isMine)
         //    SetLayers(weaponModel);

@@ -18,6 +18,12 @@ public class UIManager : MonoBehaviour {
         Open(initiallyOpen);
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.F12)) {
+            UIDebugMenu.ToggleShow();
+        }
+    }
+
     public void OpenReplace(GameObject menu) {
         currentlyOpen.SetActive(false);
         menu.SetActive(true);

@@ -50,10 +50,10 @@ public class ExplosionForceDamage : MonoBehaviour {
             if (hit.CompareTag("Player")) {
                 //Find distance
                 float distance = (hit.transform.position - transform.position).magnitude;
-                float damage = GameManager.weapon[weaponId].damage / (Mathf.Max(distance * distanceReduction, 1));
+                float damage = WeaponManager.weapon[weaponId].damage / (Mathf.Max(distance * distanceReduction, 1));
 
                 IDamageable damageable = hit.gameObject.GetInterface<IDamageable>();
-                damageable.TakeDamage((int)damage, GetComponent<Owner>().ID, weaponId);
+                damageable.TakeDamage((int)damage, weaponId);
             }
 		}
 	}

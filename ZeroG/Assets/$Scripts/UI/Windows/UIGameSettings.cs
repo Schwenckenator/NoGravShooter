@@ -80,11 +80,11 @@ public class UIGameSettings : MonoBehaviour {
     }
     public void Weapon1Set(int id) {
         SettingsManager.singleton.SpawnWeapon1 = id;
-        weapon1.SetText(GameManager.weapon[id].name);
+        weapon1.SetText(WeaponManager.weapon[id].name);
     }
     public void Weapon2Set(int id) {
         SettingsManager.singleton.SpawnWeapon2 = id;
-        weapon2.SetText(GameManager.weapon[id].name);
+        weapon2.SetText(WeaponManager.weapon[id].name);
     }
     public void TimeLimit(string min) {
         if (min != "") {

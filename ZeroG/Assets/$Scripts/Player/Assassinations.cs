@@ -8,7 +8,7 @@ public class Assassinations : MonoBehaviour {
 
 	private Transform target = null;
 	
-	private IDamageable playerResource;
+	private IDamageable playerHealth;
 	private Vector3 heading;
 
     //NetworkView myActorView;
@@ -46,9 +46,9 @@ public class Assassinations : MonoBehaviour {
         target = hit.transform;
         heading = transform.position - target.position;
         Vector3 toTarget = (heading).normalized;
-        playerResource = hit.gameObject.GetInterface<IDamageable>();
+        playerHealth = hit.gameObject.GetInterface<IDamageable>();
         //checks if the player is actually facing the player they want to melee
-        if (Vector3.Dot(toTarget, transform.forward) < -0.75 && playerResource.GetHealth() > 0) {
+        if (Vector3.Dot(toTarget, transform.forward) < -0.75 && playerHealth.Health > 0) {
             //checks if the player is behind the player they want to melee
 			if (Vector3.Dot(toPlayer, target.forward) > 0.75) {
 				UIPlayerHUD.Prompt(InputConverter.GetKeyName(KeyBind.Interact) + " - Assassinate");
@@ -62,14 +62,14 @@ public class Assassinations : MonoBehaviour {
 
     private void Assassinate() {
         if (InputConverter.GetKey(KeyBind.Interact)) {
-            playerResource.TakeDamage(100, Network.player, 200); // 200 is assassination ID
+            playerHealth.TakeDamage(100, 200); // 200 is assassination ID
         }
     }
 	private int pushstrength = 2;
 	private float meleecooldown = 0f;
     private void MeleeAttack(Collider hit) {
         if (InputConverter.GetKey(KeyBind.Interact) && Time.time > meleecooldown) {
-            playerResource.TakeDamage(10, Network.player);
+            playerHealth.TakeDamage(10);
 			//hit.GetComponent<ActorMotorManager>().PushOffGround();
 			//hit.GetComponent<Rigidbody>().AddForce(transform.forward * pushstrength, ForceMode.Impulse);
 			meleecooldown = Time.time + 0.5F;

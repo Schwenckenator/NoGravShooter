@@ -1,23 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class Radar : MonoBehaviour {
-    #region Instance
-    //Here is a private reference only this class can access
-    private static Radar _instance;
-    //This is the public reference that other classes will use
-    public static Radar instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<Radar>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+public class Radar : NetworkBehaviour {
+    
+    public static Radar singleton { get; private set; }
 
     public GUIStyle radarGui;
     public Texture2D radar;
@@ -32,13 +20,14 @@ public class Radar : MonoBehaviour {
     List<RadarDot> dots = new List<RadarDot>();
     List<RadarDot> deadDots = new List<RadarDot>();
 
-    //NetworkView //NetworkView;
-    void Start() {
-        //NetworkView = GetComponent<//NetworkView>();
+
+    public override void OnStartLocalPlayer() {
+        base.OnStartLocalPlayer();
+        singleton = this;
     }
 
     void OnGUI() {
-        if (OldUIManager.IsCurrentMenuWindow(Menu.PlayerHUD)) {
+        if (!UIPauseSpawn.IsShown) {
             DrawRadar();
         }
     }

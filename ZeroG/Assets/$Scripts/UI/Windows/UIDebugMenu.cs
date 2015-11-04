@@ -8,10 +8,10 @@ public class UIDebugMenu : MonoBehaviour {
 
     void Awake() {
         instance = gameObject;
-        UIDebugMenu.Show(false);
+        Show(false);
     }
     public static void ToggleShow() {
-        UIDebugMenu.Show(!showWindow);
+        Show(!showWindow);
     }
     static void Show(bool show) {
         showWindow = show;

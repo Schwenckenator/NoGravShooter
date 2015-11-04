@@ -93,7 +93,7 @@ public class FireWeapon : MonoBehaviour {
                 spawnHitParticle = true;
                 IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
                 if (damageable != null) {
-                    damageable.TakeDamage(inventory.currentWeapon.damage, Network.player, inventory.currentWeapon.id);
+                    damageable.TakeDamage(inventory.currentWeapon.damage, inventory.currentWeapon.id);
                 }
             }
 
@@ -120,7 +120,7 @@ public class FireWeapon : MonoBehaviour {
     ////[RPC]
     void SpawnProjectile(int weaponID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
         if (Network.isServer) {
-            GameObject newObj = Network.Instantiate(GameManager.weapon[weaponID].projectile, position, rotation, 0) as GameObject;
+            GameObject newObj = Network.Instantiate(WeaponManager.weapon[weaponID].projectile, position, rotation, 0) as GameObject;
             if (newObj.GetComponent<Owner>() != null) {
                 newObj.GetComponent<Owner>().ID = owner;
             }
@@ -132,7 +132,7 @@ public class FireWeapon : MonoBehaviour {
 
     ////[RPC]
     void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
-        Weapon weapon = GameManager.weapon[weaponID];
+        Weapon weapon = WeaponManager.weapon[weaponID];
 
         GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
         LineRenderer render = shot.GetComponent<LineRenderer>();
@@ -143,7 +143,7 @@ public class FireWeapon : MonoBehaviour {
 
     ////[RPC]
     void SpawnHitParticle(int weaponID, Vector3 position) {
-        Weapon weapon = GameManager.weapon[weaponID];
+        Weapon weapon = WeaponManager.weapon[weaponID];
 
         Instantiate(weapon.hitParticle, position, Quaternion.identity);
     }
@@ -181,7 +181,7 @@ public class FireWeapon : MonoBehaviour {
     }
     ////[RPC]
     void RPCPlayFireWeaponSound(int weaponID) {
-        Weapon weapon = GameManager.weapon[weaponID];
+        Weapon weapon = WeaponManager.weapon[weaponID];
         audioSource.PlayOneShot(weapon.fireSound);
     }
 }
