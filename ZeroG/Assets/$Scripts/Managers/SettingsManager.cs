@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, GrenadeSwitch, Interact, StopMovement };
 
-public class SettingsManager : MonoBehaviour {
+public class SettingsManager : NetworkBehaviour {
 
     public static SettingsManager singleton { get; private set; }
 
@@ -35,7 +36,9 @@ public class SettingsManager : MonoBehaviour {
             ServerNameClient = value;
         }
     }
-    public string ServerNameClient { get; set; }
+
+
+    
     #endregion
 
     public string PlayerName { get; set; }
@@ -120,7 +123,7 @@ public class SettingsManager : MonoBehaviour {
             ScoreToWinClient = value;
         }
     }
-    public int ScoreToWinClient { get; set; }
+    
 
     // Bonus spawning
     public int MedkitCanSpawn { get; set; }
@@ -155,6 +158,12 @@ public class SettingsManager : MonoBehaviour {
     private int i_True = 1;
 
     #endregion
+
+    [SyncVar]
+    public string ServerNameClient;
+
+    [SyncVar]
+    public int ScoreToWinClient;
 
     //NetworkView //NetworkView;
     void Awake() {
@@ -201,9 +210,6 @@ public class SettingsManager : MonoBehaviour {
         PlayerPrefs.SetInt("bindGrenadeSwitch", (int)SettingsManager.keyBindings[(int)KeyBind.GrenadeSwitch]);
     }
 
-    /// <summary>
-    /// Retrieves settings from PlayerPrefs and stores in properties
-    /// </summary>
     void RetrieveSettings() {
         // Network Settings
         ServerNameServer = PlayerPrefs.GetString("ServerName");
@@ -247,9 +253,6 @@ public class SettingsManager : MonoBehaviour {
         ConvertSettingsIntToBool();
     }
     
-    /// <summary>
-    /// Saves current settings to PlayerPrefs
-    /// </summary>
     public void SaveSettings() {
         
         ConvertSettingsBoolToInt();
@@ -332,12 +335,10 @@ public class SettingsManager : MonoBehaviour {
     #region RPCSettings
     public void RelayServerName() {
         //NetworkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
-        UILobby.singleton.SetServerName();// Writes to lobby title
     }
     //[RPC]
     private void RPC_RelayServerName(string inServerName) {
         this.ServerNameClient = inServerName;
-        UILobby.singleton.SetServerName(); // Writes to lobby title
     }
 
     public void RelayScoreToWin() {

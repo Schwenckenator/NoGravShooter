@@ -19,9 +19,6 @@ public class UIMessage : MonoBehaviour {
         button = myButton;
         messageText = myText;
         buttonText = button.GetComponentInChildren<Text>();
-
-        // Hide this
-        myObj.SetActive(false);
 	}
 
     public static void ShowMessage(string message, bool buttonAvailable) {
@@ -36,6 +33,7 @@ public class UIMessage : MonoBehaviour {
 
     public static void CloseMessage() {
         // Hide message canvas
+        if (myObj == null) return;
         myObj.SetActive(false);
     }
     public void CloseMessagePress() {

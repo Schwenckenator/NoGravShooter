@@ -17,8 +17,6 @@ public class UIPauseSpawn : MonoBehaviour {
     void Start() {
         Init();
 
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
     }
 
     public void Init() {
@@ -113,7 +111,7 @@ public class UIPauseSpawn : MonoBehaviour {
     }
 
     public void PauseSpawnPress() {
-        if (PlayerManager.IsActorSpawned()) {
+        if (PlayerManager.isMyActorSpawned) {
             PauseMenuSwitch();
         } else {
             PlayerManager.singleton.SpawnActor();

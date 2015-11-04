@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 /// <summary>
 /// Handles player, level loading and game interacitons
 /// </summary>
-public class GameManager : MonoBehaviour {
+public class GameManager : NetworkBehaviour {
 
     public static GameManager singleton { get; private set; }
 
@@ -173,13 +174,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    [Server]
     public void LoadLevel() {
-        if (Network.isClient) {
-            throw new ClientRunningServerCodeException("Thrown in GameManager.");
-        }
-        DestroyManager.singleton.ClearDestroyLists();
-        SettingsManager.singleton.RelayScoreToWin();
-
+        NetworkManager.single.ServerChangeScene(SettingsManager.singleton.LevelName);
         ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
         //    SettingsManager.eu.LevelName, 
         //    NetworkManager.lastLevelPrefix + 1, 

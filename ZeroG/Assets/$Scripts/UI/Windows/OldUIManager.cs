@@ -87,9 +87,6 @@ public class OldUIManager : MonoBehaviour {
     }
     private void GetKeyStrokes() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (PlayerManager.IsActorSpawned()) {
-                UIPauseSpawn.PauseMenuSwitch();
-            }
         }
     }
 

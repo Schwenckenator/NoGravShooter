@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class UILobby : MonoBehaviour {
 
     public static UILobby singleton { get; private set; }
 
+    public Text serverNameText;
     public Text serverSettings;
-    private static Text startButtonText;
-    private static ChangeableText serverNameText;
-    private static Button[] buttons;
-    private static Button changeTeamButton;
+    public Text startButtonText;
+    public Text disconnectButtonText;
+    public Button changeTeamButton;
 
     private static bool countdown = false;
 
@@ -22,6 +23,19 @@ public class UILobby : MonoBehaviour {
         LobbyInit();
 
 	}
+    void OnEnable() {
+        SetServerName();
+        SetShutdownButtonText();
+    }
+
+    private void SetShutdownButtonText() {
+        if (NetworkManager.isServer) {
+            disconnectButtonText.text = "Shutdown";
+        } else {
+            disconnectButtonText.text = "Disconnect";
+        }
+    }
+
     void Update() {
         if (teamGame != SettingsManager.singleton.IsTeamGameMode()) {
             ShowChangeTeamButton(SettingsManager.singleton.IsTeamGameMode());
@@ -34,14 +48,6 @@ public class UILobby : MonoBehaviour {
     }
 
     void LobbyInit() {
-        buttons = GetComponentsInChildren<Button>();
-        startButtonText = buttons[0].GetComponentInChildren<Text>();
-        changeTeamButton = buttons[2];
-        ChangeableText[] texts = GetComponentsInChildren<ChangeableText>();
-        foreach (var text in texts) {
-            if (text.IsType("serverName")) serverNameText = text;
-            if (text.IsType("chat") || text.IsType("playerList")) UIChat.ConnectChatBox(text);
-        }
         ShowChangeTeamButton(false);
     }
     #region StartGame
@@ -96,8 +102,6 @@ public class UILobby : MonoBehaviour {
     public void GoGameSettings() {
         UILobby.singleton.StopCountdown();
     }
-
-
     
     private void DisconnectStatic() {
         NetworkManager.Disconnect();
@@ -106,10 +110,10 @@ public class UILobby : MonoBehaviour {
 
     public void SetServerName() {
         Debug.Log("Server Name is: " + SettingsManager.singleton.ServerNameClient);
-        serverNameText.SetText(SettingsManager.singleton.ServerNameClient);
+        serverNameText.text = SettingsManager.singleton.ServerNameClient;
 
-        string text = "IP: " + Network.player.ipAddress;
-        text += ", Port: " + Network.player.port;
+        string text = "IP: " + NetworkManager.single.networkAddress;
+        text += ", Port: " + NetworkManager.single.networkPort;
         serverSettings.text = text;
     }
 

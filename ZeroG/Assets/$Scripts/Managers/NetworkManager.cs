@@ -10,6 +10,11 @@ using UnityEngine.Networking;
 public class NetworkManager : NetworkLobbyManager {
 
     public static NetworkManager single { get; private set; }
+    public static bool isServer {
+        get {
+            return NetworkServer.active;
+        }
+    }
 
     //public const string GameType = "NoGravShooter";
     
@@ -90,7 +95,16 @@ public class NetworkManager : NetworkLobbyManager {
 
     public override void OnLobbyServerConnect(NetworkConnection conn) {
         base.OnLobbyServerConnect(conn);
-        Debug.Log(conn.connectionId);
+        Debug.Log(conn.connectionId.ToString() + ", OnConnect");
+    }
+    public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
+        base.OnServerAddPlayer(conn, playerControllerId);
+        GameObject player = (GameObject)Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
+
+        NetworkServer.ReplacePlayerForConnection(conn, player, playerControllerId);
+    }
+    public override void OnLobbyClientConnect(NetworkConnection conn) {
+        ClientScene.AddPlayer(0);
     }
     //void OnPlayerConnected(NetworkPlayer connectedPlayer) {
     //    foreach (Player player in NetworkManager.connectedPlayers) {
@@ -132,19 +146,19 @@ public class NetworkManager : NetworkLobbyManager {
     public override void OnStartServer() {
         base.OnStartServer();
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
-        SettingsManager.singleton.RelayServerName();
-        AssignMyPlayerToTeam();
+        //SettingsManager.singleton.RelayServerName();
+        //AssignMyPlayerToTeam();
 
         //PlayerManager.singleton.Init(); // Initialise player
     }
 
-    //public override void OnClientConnect(NetworkConnection conn) {
+    public override void OnClientConnect(NetworkConnection conn) {
     //    base.OnClientConnect(conn);
-    //    UIMessage.CloseMessage();
-    //    SettingsManager.singleton.ClearPasswordClient();
+        UIMessage.CloseMessage();
+        SettingsManager.singleton.ClearPasswordClient();
 
-    //    // Set window to lobby
-    //    UIManager.singleton.SetMenuWindow(Menu.Lobby);
+        //    // Set window to lobby
+        UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
     //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
 
     //    string message = SettingsManager.singleton.PlayerName + " has connected.";
@@ -154,7 +168,7 @@ public class NetworkManager : NetworkLobbyManager {
     //    PlayerManager.singleton.Init(); // Initialise players
 
     //    UIManager.singleton.UpdateArraysFromNetworkConnection();
-    //}
+    }
 
     public override void OnClientError(NetworkConnection conn, int errorCode) {
         base.OnClientError(conn, errorCode);

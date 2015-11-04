@@ -38,13 +38,8 @@ public class UIPlayerHUD : MonoBehaviour {
         Init();
         playerUI = GetComponent<Canvas>();
 
-        GameClock.ShowClock(true);
-
         tutorialPromptUI.Show(false);
         RemovePrompt();
-
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
     }
 
     public void Init() {
@@ -85,7 +80,7 @@ public class UIPlayerHUD : MonoBehaviour {
     }
 
     void Update() {
-        if(PlayerManager.IsActorSpawned()){
+        if(PlayerManager.isMyActorSpawned) {
             float temp = playerHealth.GetHealth();
             health.SetValue(temp);
             fuel.SetValue(jetpackFuel.GetFuel());

@@ -165,10 +165,10 @@ public class ActorHealth : MonoBehaviour, IDamageable {
         BloodyScreen.Show(true);
         yield return new WaitForSeconds(playerDyingTime);
         BloodyScreen.Show(false);
-        PlayerManager.singleton.ActorDied();
+        //PlayerManager.singleton.ActorDied();
 
         if (SettingsManager.singleton.AutoSpawn) {
-            PlayerManager.singleton.SpawnActor();
+            //PlayerManager.singleton.SpawnActor();
         }
     }
 
