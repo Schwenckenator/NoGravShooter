@@ -23,7 +23,7 @@ public class DynamicCrosshair : MonoBehaviour {
         }
     }
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         if (UIPauseSpawn.IsShown) return;
         if (inventory == null) return;
         if (inventory.currentWeapon == null) return;

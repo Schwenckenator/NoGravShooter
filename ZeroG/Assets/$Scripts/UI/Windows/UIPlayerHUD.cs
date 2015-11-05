@@ -96,6 +96,10 @@ public class UIPlayerHUD : MonoBehaviour {
             ammo.SetText(MakeAmmoString());
             grenade.SetText(MakeGrenadeString());
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            UIManager.singleton.OpenReplace(UIManager.singleton.initiallyOpen); // Initially open is menu
+            GameManager.SetCursorVisibility(true);
+        }
 
         // TEST
         if (Input.GetKeyDown(KeyCode.F5)) {

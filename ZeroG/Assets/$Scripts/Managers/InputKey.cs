@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InputConverter {
+public class InputKey {
 
     public static bool GetKeyDown(KeyBind input) {
         return Input.GetKeyDown(SettingsManager.keyBindings[(int)input]);

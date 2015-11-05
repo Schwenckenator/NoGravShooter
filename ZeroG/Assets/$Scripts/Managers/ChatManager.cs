@@ -22,7 +22,7 @@ public class ChatManager : MonoBehaviour {
     }
 
     ////NetworkView //NetworkView;
-    void Start() {
+    void Awake() {
         singleton = this;
         currentChat = "";
         submittedChatList = new List<string>();

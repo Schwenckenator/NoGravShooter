@@ -68,7 +68,7 @@ public class WeaponInventory : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (GameManager.IsPlayerMenu() || HasNoWeapons()) return;
+        if (!UIPauseSpawn.IsShown || HasNoWeapons()) return;
         GetKeyStrokes();
         MouseWheelWeaponChange();
 

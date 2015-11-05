@@ -57,7 +57,7 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
             IsDown(KeyBind.MoveBack);
     }
     private bool IsDown(KeyBind key) {
-        return InputConverter.GetKey(key);
+        return InputKey.GetKey(key);
     }
 
     #endregion
@@ -78,8 +78,8 @@ public class KeyboardInput : MonoBehaviour, IControllerInput{
 
     float UpdateMovement(KeyBind positive, KeyBind negative, float axis) {
         int direction = 0;
-        if (InputConverter.GetKey(positive)) direction++;
-        if (InputConverter.GetKey(negative)) direction--;
+        if (InputKey.GetKey(positive)) direction++;
+        if (InputKey.GetKey(negative)) direction--;
 
         axis = SnapInput(axis, direction);
 

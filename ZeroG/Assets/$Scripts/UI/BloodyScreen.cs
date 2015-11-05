@@ -81,9 +81,4 @@ public class BloodyScreen : MonoBehaviour {
             yield return null;
         }
     }
-
-
-    void OnLevelWasLoaded() {
-        BloodyScreen.Show(false);
-    }
 }

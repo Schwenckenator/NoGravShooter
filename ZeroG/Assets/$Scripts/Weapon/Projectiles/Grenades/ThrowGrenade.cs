@@ -19,7 +19,7 @@ public class ThrowGrenade : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (InputConverter.GetKeyDown(KeyBind.Grenade) && !GameManager.IsPlayerMenu() && Time.time > nextThrow /*&& NetworkView.isMine*/) {
+        if (InputKey.GetKeyDown(KeyBind.Grenade) && !UIPauseSpawn.IsShown && Time.time > nextThrow /*&& NetworkView.isMine*/) {
 			if(actorGrenade.CanThrowGrenade()){
                 SpawnGrenade(actorGrenade.GetCurrentGrenadeType(), grenadeSpawn.position, grenadeSpawn.rotation, Network.player);
 				nextThrow = Time.time + throwDelay;

@@ -111,9 +111,10 @@
     <Compile Include="Assets\$Scripts\Managers\Game Mode\TeamSkirmish.cs" />
     <Compile Include="Assets\$Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\GuiManager.cs" />
-    <Compile Include="Assets\$Scripts\Managers\InputConverter.cs" />
+    <Compile Include="Assets\$Scripts\Managers\InputKey.cs" />
     <Compile Include="Assets\$Scripts\Managers\NetworkManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\OnGameOpen.cs" />
+    <Compile Include="Assets\$Scripts\Managers\OnLevelOpen.cs" />
     <Compile Include="Assets\$Scripts\Managers\PingDisplay.cs" />
     <Compile Include="Assets\$Scripts\Managers\PlayerManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\ScoreVictoryManager.cs" />

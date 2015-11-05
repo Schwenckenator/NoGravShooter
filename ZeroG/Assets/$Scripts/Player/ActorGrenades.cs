@@ -27,7 +27,7 @@ public class ActorGrenades : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (InputConverter.GetKeyDown(KeyBind.GrenadeSwitch)) {
+        if (InputKey.GetKeyDown(KeyBind.GrenadeSwitch)) {
             ChangeGrenade();
         }
     }

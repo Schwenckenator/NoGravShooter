@@ -186,17 +186,17 @@ public class ScoreVictoryManager : MonoBehaviour {
     private static List<Team> SortTeams() {
         List<Team> teamBuffer = new List<Team>();
 
-        foreach (Team team in ScoreVictoryManager.singleton.Teams) {
-            int score = team.Score;
-            int i = 0;
-            foreach (Team buffer in teamBuffer) {
-                if (score > buffer.Score) {
-                    break;
-                }
-                i++;
-            }
-            teamBuffer.Insert(i, team);
-        }
+        //foreach (Team team in ScoreVictoryManager.singleton.Teams) {
+        //    int score = team.Score;
+        //    int i = 0;
+        //    foreach (Team buffer in teamBuffer) {
+        //        if (score > buffer.Score) {
+        //            break;
+        //        }
+        //        i++;
+        //    }
+        //    teamBuffer.Insert(i, team);
+        //}
 
         return teamBuffer;
     }

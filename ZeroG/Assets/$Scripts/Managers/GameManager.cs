@@ -13,8 +13,6 @@ public class GameManager : NetworkBehaviour {
     public GameObject[] gameModes;
     #region Variable Declarations
 
-    private static bool playerMenu;
-
 	private CameraMove cameraMove;
 
     [SerializeField]
@@ -54,9 +52,6 @@ public class GameManager : NetworkBehaviour {
     public static bool IsSceneTutorial() {
         return Application.loadedLevelName == "Tutorial";
     }
-    public static bool IsPlayerMenu() {
-        return playerMenu;
-    }
     public static void SetCursorVisibility(bool visible) {
         Cursor.visible = visible;
         Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
@@ -72,9 +67,6 @@ public class GameManager : NetworkBehaviour {
     public void SetEndTime(float remainingSeconds) {
         endTime = Time.time + remainingSeconds;
         GameClock.SetEndTime(endTime);
-    }
-    public void SetPlayerMenu(bool input) {
-        playerMenu = input;
     }
     #endregion
 	

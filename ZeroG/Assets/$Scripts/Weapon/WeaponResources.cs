@@ -37,7 +37,7 @@ public class WeaponResources : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (InputConverter.GetKeyDown(KeyBind.Reload) && !GameManager.IsPlayerMenu() && !WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull()) {
+        if (InputKey.GetKeyDown(KeyBind.Reload) && !UIPauseSpawn.IsShown && !WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull()) {
             StartCoroutine("WeaponReload");
         }
         WeaponSmokeCheck();

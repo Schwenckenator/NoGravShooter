@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(CapsuleCollider))]
@@ -16,23 +17,17 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor, IResetable {
     public float volumeJetpackShutoff;
     public float rollSpeed = 3.0f;
 
-    bool ragdoll = false;
+    //bool ragdoll = false;
     bool jetpackSoundWasPlayed = false;
     bool playJetSound = false;
-    
+
     new Rigidbody rigidbody;
     ActorJetpackFuel jetpack;
 
     IControllerInput input;
     IActorStats stats;
 
-    ////NetworkView //NetworkView;
-
-	// Use this for initialization
-    void Awake() {
-        ////NetworkView = GetComponent<//NetworkView>();
-    }
-	void Start () {
+    void Start() {
         stats = gameObject.GetInterface<IActorStats>();
 
         rigidbody = GetComponent<Rigidbody>();
@@ -47,13 +42,13 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor, IResetable {
 
     public void Reset() {
         StopAllCoroutines();
-        StartCoroutine(PlayJetpackSound());
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        playJetSound = false;
-	}
+
+    // Update is called once per frame
+    void Update() {
+        Sound();
+    }
+
     public void Movement() {
         Vector3 torque = GetJetpackTorque();
         transform.Rotate(torque);
@@ -61,32 +56,27 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor, IResetable {
         Vector3 force = GetJetpackForce();
 
         // If non-zero force, spend fuel
-        if (force.sqrMagnitude > 0) {
-            if ((input.IsMovementKeys() || input.IsStopKey()) && !GameManager.IsPlayerMenu()) {
-                if (jetpack.SpendFuel(stats.fuelSpend)) {
-                    playJetSound = true;
-                    rigidbody.AddRelativeForce(force);
-                } else {
-                    jetpackSoundWasPlayed = false;
-                }
+        if (force.sqrMagnitude > 0 && (input.IsMovementKeys() || input.IsStopKey()) && !UIPauseSpawn.IsShown) {
+            if (jetpack.SpendFuel(stats.fuelSpend)) {
+                playJetSound = true;
+                rigidbody.AddRelativeForce(force);
+            } else {
+                playJetSound = false;
             }
+        } else {
+            playJetSound = false;
         }
     }
     private Vector3 GetJetpackTorque() {
         Vector3 torque;
-        if (GameManager.IsPlayerMenu()) {
-            torque = Vector3.zero;
-        } else {
-            torque = new Vector3(0, 0, input.GetRollMovement()); // the change wanted
-        }
+
+        torque = new Vector3(0, 0, input.GetRollMovement()); // the change wanted
         torque = torque * rollSpeed;
         return torque;
     }
     private Vector3 GetJetpackForce() {
         Vector3 force = Vector3.zero;
-        if (GameManager.IsPlayerMenu()) {
-
-        } else if (input.IsMovementKeys()) {
+        if (input.IsMovementKeys()) {
             force = new Vector3(input.GetXMovement(), input.GetYMovement(), input.GetZMovement());
             force = Vector3.ClampMagnitude(force, 1.0f);
         } else if (input.IsStopKey()) {
@@ -118,43 +108,31 @@ public class ActorJetpackMotor : MonoBehaviour, IActorMotor, IResetable {
         return value;
     }
 
-    IEnumerator PlayJetpackSound() {
-        while (true) {
-            if (playJetSound) {
-                jetpackSoundWasPlayed = true;
-                if (!jetpackAudioSource.isPlaying || jetpackAudioSource.clip != soundJetpackBurn) {
-                    PlaySoundBurn();
-                }
-            } else if (jetpackSoundWasPlayed) {
-                PlaySoundShutoff();
-                jetpackSoundWasPlayed = false;
+    private void Sound() {
+        if (playJetSound) {
+            jetpackSoundWasPlayed = true;
+            if (!jetpackAudioSource.isPlaying || jetpackAudioSource.clip != soundJetpackBurn) {
+                PlaySoundBurn();
             }
-            yield return null;
+        } else if (jetpackSoundWasPlayed) {
+            PlaySoundShutoff();
+            jetpackSoundWasPlayed = false;
         }
-
     }
-    ////[RPC]
+
     private void PlaySoundBurn() {
         jetpackAudioSource.clip = soundJetpackBurn;
         jetpackAudioSource.volume = volumeJetpackBurn;
         jetpackAudioSource.Play();
-
-        //if (//NetworkView.isMine) {
-        //    //NetworkView.RPC("PlaySoundBurn", RPCMode.Others);
-        //}
     }
-    ////[RPC]
+
     private void PlaySoundShutoff() {
         jetpackAudioSource.clip = soundJetpackShutoff;
         jetpackAudioSource.volume = volumeJetpackShutoff;
         jetpackAudioSource.Play();
-
-        //if (//NetworkView.isMine) {
-        //    //NetworkView.RPC("PlaySoundShutoff", RPCMode.Others);
-        //}
     }
 
     public void OnDeactivate() {
-        // Nothing
+        playJetSound = false;
     }
 }

@@ -57,10 +57,6 @@ public class MouseLook : MonoBehaviour {
         if (!transform.root.GetComponent<NetworkIdentity>().isLocalPlayer) {
             enabled = false;
         }
-    }
-
-
-    public void LevelStart() {
         cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();
     }
 
@@ -68,7 +64,7 @@ public class MouseLook : MonoBehaviour {
 	{
         if (!active) return;
 
-		if(!UIPauseSpawn.IsShown && Time.timeScale != 0 && cameraFOV != null){
+		if(!UIPauseSpawn.IsShown && Time.timeScale != 0){
 
             zoomCameraSlow = cameraFOV.zoomRotationRatio();
 			if (axes == RotationAxes.MouseXAndY)

@@ -10,7 +10,7 @@ public class ActorCameraMotor : MonoBehaviour, IResetable {
     MouseLook characterMouseLook;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         cameraMouseLook = cameraTransform.GetComponent<MouseLook>();
         characterMouseLook = GetComponent<MouseLook>();
 
@@ -68,24 +68,9 @@ public class ActorCameraMotor : MonoBehaviour, IResetable {
         //Adjust Camera
         smoothMove.SmoothAdjust();
     }
-
-    void OnDeath() {
-        cameraMouseLook.Ragdoll(true);
-        characterMouseLook.Ragdoll(true);
-    }
     public void Reset() {
-        //cameraMouseLook.Ragdoll(false);
-        //characterMouseLook.Ragdoll(false);
-        StartCoroutine(CoUnRagdoll());
-    }
-    IEnumerator CoUnRagdoll() {
-        //yield return new WaitForSeconds(0.1f);
-        
-        Debug.Log("Unragdolling");
         cameraMouseLook.Ragdoll(false);
         characterMouseLook.Ragdoll(false);
-
-        yield return null;
     }
 
     public void Recoil(float angle) {

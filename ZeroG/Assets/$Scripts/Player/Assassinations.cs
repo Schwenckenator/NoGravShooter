@@ -51,24 +51,24 @@ public class Assassinations : MonoBehaviour {
         if (Vector3.Dot(toTarget, transform.forward) < -0.75 && playerHealth.Health > 0) {
             //checks if the player is behind the player they want to melee
 			if (Vector3.Dot(toPlayer, target.forward) > 0.75) {
-				UIPlayerHUD.Prompt(InputConverter.GetKeyName(KeyBind.Interact) + " - Assassinate");
+				UIPlayerHUD.Prompt(InputKey.GetKeyName(KeyBind.Interact) + " - Assassinate");
 				Assassinate();
 			} else {
-				UIPlayerHUD.Prompt(InputConverter.GetKeyName(KeyBind.Interact) + " - Melee");
+				UIPlayerHUD.Prompt(InputKey.GetKeyName(KeyBind.Interact) + " - Melee");
 				MeleeAttack(hit);
 			}
         }
     }
 
     private void Assassinate() {
-        if (InputConverter.GetKey(KeyBind.Interact)) {
+        if (InputKey.GetKey(KeyBind.Interact)) {
             playerHealth.TakeDamage(100, 200); // 200 is assassination ID
         }
     }
 	private int pushstrength = 2;
 	private float meleecooldown = 0f;
     private void MeleeAttack(Collider hit) {
-        if (InputConverter.GetKey(KeyBind.Interact) && Time.time > meleecooldown) {
+        if (InputKey.GetKey(KeyBind.Interact) && Time.time > meleecooldown) {
             playerHealth.TakeDamage(10);
 			//hit.GetComponent<ActorMotorManager>().PushOffGround();
 			//hit.GetComponent<Rigidbody>().AddForce(transform.forward * pushstrength, ForceMode.Impulse);

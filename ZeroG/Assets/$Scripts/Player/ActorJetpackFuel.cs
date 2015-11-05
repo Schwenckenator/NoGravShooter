@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class ActorJetpackFuel : MonoBehaviour {
+public class ActorJetpackFuel : NetworkBehaviour {
 
     public Texture[] empRadar;
     public Texture[] empStats;
@@ -24,24 +25,20 @@ public class ActorJetpackFuel : MonoBehaviour {
     private float fuel;
     private float rechargeWaitTime;
 
-    private bool isRecharging = true;
+    private bool isRecharging = false;
     private bool isJetpackDisabled = false;
     private bool glitched = false;
 
-    //NetworkView //NetworkView;
-
     // Use this for initialization
     void Awake () {
-        //NetworkView = GetComponent<//NetworkView>();
         fuel = maxFuel;
         rechargeWaitTime = 0;
-        //if (!//NetworkView.isMine) {
-        //    this.enabled = false;
-        //}
     }
 	
 	// Update is called once per frame
 	void Update () {
+        if (!isLocalPlayer) return;
+
         if (isRecharging) {
             RechargeFuel(fuelRecharge);
         }

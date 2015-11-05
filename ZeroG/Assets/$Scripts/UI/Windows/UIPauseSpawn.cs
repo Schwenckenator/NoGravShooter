@@ -111,7 +111,7 @@ public class UIPauseSpawn : MonoBehaviour {
             returnToLobby.Show(Network.isServer);
         }
         GameManager.SetCursorVisibility(true);
-        GameManager.singleton.SetPlayerMenu(true);
+        UIManager.singleton.OpenReplace(myObj);
     }
 
     /// <summary>

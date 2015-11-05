@@ -17,15 +17,16 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
     float sqrWalkingSoundVelocity;
     bool playWalkingSound;
     IActorStats stats;
-    IControllerInput input;
     new Rigidbody rigidbody;
-    ////NetworkView //NetworkView;
+    IControllerInput input;
+
+    //NetworkView networkView;
 
     // Use this for initialization
     void Awake() {
-        ////NetworkView = GetComponent<//NetworkView>();
+        //networkView = GetComponent<NetworkView>();
     }
-	void Start () {
+    void Start() {
         rigidbody = GetComponent<Rigidbody>();
         stats = gameObject.GetInterface<IActorStats>();
         input = gameObject.GetInterface<IControllerInput>();
@@ -35,14 +36,17 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
         Reset();
     }
 
+    void Update() {
+        Sound();
+    }
+
     public void Reset() {
         StopAllCoroutines();
-        StartCoroutine(PlayFeetSound());
     }
 
     public void Movement() {
         Vector3 targetVelocity;
-        if (GameManager.IsPlayerMenu()) {
+        if (UIPauseSpawn.IsShown) {
             targetVelocity = Vector3.zero;
         } else {
             targetVelocity = new Vector3(input.GetXMovement(), 0, input.GetZMovement());
@@ -71,7 +75,7 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
     }
 
     void Jump() {
-        if (input.GetYMovement() > 0 && !GameManager.IsPlayerMenu()) {
+        if (input.GetYMovement() > 0) {
             rigidbody.AddRelativeForce(jumpVector, ForceMode.Impulse);
         }
     }
@@ -81,7 +85,7 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
     /// </summary>
     private Vector3 EdgeDetection(Vector3 targetVelocity) {
         // If not sneaking, don't bother
-        if (!InputConverter.GetKey(KeyBind.JetDown)) {
+        if (!InputKey.GetKey(KeyBind.JetDown)) {
             return targetVelocity;
         }
 
@@ -98,7 +102,7 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
         totalPushBackDir = new Vector3(1 - Mathf.Abs(totalPushBackDir.x), 1 - Mathf.Abs(totalPushBackDir.y), 1 - Mathf.Abs(totalPushBackDir.z));
 
         // Return scaled vector
-        return(Vector3.Scale(targetVelocity, totalPushBackDir));
+        return (Vector3.Scale(targetVelocity, totalPushBackDir));
     }
 
     private Vector3 FindEdges() {
@@ -159,32 +163,27 @@ public class ActorWalkingMotor : MonoBehaviour, IActorMotor, IResetable {
 
         return totalPushBackDir;
     }
-    
-    IEnumerator PlayFeetSound() {
-        int stepKind = 0;
-        while (true) {
-            if (playWalkingSound) {
-                PlayFootstep(stepKind);
-                yield return new WaitForSeconds(soundFootsteps[stepKind].length);
-                stepKind = (++stepKind) % soundFootsteps.Length;
-            } else {
-                stepKind = 0;
-                feetAudio.Stop();
-            }
-            yield return null;
+
+    int stepKind = 0;
+    float nextStepTime = 0;
+    private void Sound() {
+        if (nextStepTime > Time.time) return;
+
+        if (playWalkingSound) {
+            PlayFootstep(stepKind);
+            nextStepTime = Time.time + soundFootsteps[stepKind].length;
+            stepKind = (++stepKind) % soundFootsteps.Length;
+        } else {
+            stepKind = 0;
+            feetAudio.Stop();
         }
     }
 
-    ////[RPC]
     void PlayFootstep(int stepNum) {
         feetAudio.clip = soundFootsteps[stepNum];
         feetAudio.Play();
-
-        //if (//NetworkView.isMine) {
-        //    //NetworkView.RPC("PlayFootstep", RPCMode.Others, stepNum);
-        //}
     }
-    
+
 
     public void OnDeactivate() {
         playWalkingSound = false;

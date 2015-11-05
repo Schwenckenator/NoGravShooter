@@ -1,7 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
-public class ActorMotorManager : MonoBehaviour, IResetable {
+public class ActorMotorManager : NetworkBehaviour, IResetable {
+
+    private delegate void OnUpdate();
+    private OnUpdate update;
+    private OnUpdate ready;
 
     IActorMotor walkingMotor;
     IActorMotor jetpackMotor;
@@ -10,93 +15,86 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
     ActorCameraMotor cameraMotor;
 
     new Rigidbody rigidbody;
-    ////NetworkView //NetworkView;
 
     float footRayDistance;
     public float maxLandingAngle = 60f;
     float maxWalkingAngle = 105f;
     private float currentLandingAngle;
 
-    bool grounded = false;
+    //bool grounded = false;
     bool active = false;
 
-	// Use this for initialization
-	void Start () {
-        ////NetworkView = GetComponent<//NetworkView>();
+    void Awake() {
+        update = NotReady;
+    }
 
-        //if (!//NetworkView.isMine) {
-        //    GetComponent<ActorJetpackMotor>().enabled = false;
-        //    GetComponent<ActorWalkingMotor>().enabled = false;
-        //    GetComponent<ActorCameraMotor>().NotMine();
-        //    this.enabled = false;
-            
-        //    return;
-        //}
-
-        active = true; // If I get here, it's mine
-
+    public override void OnStartLocalPlayer() {
+        base.OnStartAuthority();
         jetpackMotor = GetComponent<ActorJetpackMotor>();
         walkingMotor = GetComponent<ActorWalkingMotor>();
         cameraMotor = GetComponent<ActorCameraMotor>();
         rigidbody = GetComponent<Rigidbody>();
-        
+
         footRayDistance = (GetComponent<CapsuleCollider>().height * (2f / 3f));
+        Debug.Log("Foot Ray is " + footRayDistance.ToString());
 
         Reset();
-	}
+        update = Ready;
+    }
 
     public void Reset() {
-        this.enabled = true;
+
+        enabled = true;
         active = true;
 
         rigidbody.constraints = RigidbodyConstraints.FreezeRotation;
 
-        cameraMotor.Reset();
-        walkingMotor.Reset();
-        jetpackMotor.Reset();
-
         currentMotor = jetpackMotor;
-        cameraMotor.LockMouseLook(true);
-        StartCoroutine(MagnetBoots());
-        StartCoroutine(SpawnMove());
+        InAir();
+
+        rigidbody.AddRelativeForce(0, -4, 0, ForceMode.Impulse);
     }
 
     IEnumerator SpawnMove() {
         yield return null;
         rigidbody.AddRelativeForce(Vector3.down * 2, ForceMode.Impulse);
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-        grounded = false;
+
+    // Update is called once per frame
+    void FixedUpdate() {
+        update();
+    }
+    void NotReady() {
+
+    }
+    void Ready() {
         UpdateLandingAngle();
         currentMotor.Movement();
-	}
+        MagnetBoots();
+    }
+
     void UpdateLandingAngle() {
-        if (currentMotor == walkingMotor && InputConverter.GetKey(KeyBind.MoveForward) && !InputConverter.GetKey(KeyBind.JetDown)) {
+        if (currentMotor == walkingMotor && InputKey.GetKey(KeyBind.MoveForward) && !InputKey.GetKey(KeyBind.JetDown)) {
             currentLandingAngle = maxWalkingAngle;
         } else {
             currentLandingAngle = maxLandingAngle;
         }
-        //Debug.Log(currentLandingAngle);
     }
-    IEnumerator MagnetBoots() {
-        while (true) {
-            yield return new WaitForFixedUpdate();
+    void MagnetBoots() {
 
-            if (currentMotor != walkingMotor) continue;
-            if (grounded) continue;
+        if (currentMotor != walkingMotor) return;
 
-            if (Physics.Raycast(CollisionRay(), footRayDistance)) {
-                rigidbody.AddRelativeForce(Vector3.down, ForceMode.Impulse);
-            } else {
-                // In the air now
-                InAir();
-            }
+        if (Physics.Raycast(CollisionRay(), footRayDistance)) {
+            rigidbody.AddRelativeForce(Vector3.down, ForceMode.Impulse);
+        } else {
+            // In the air now
+            InAir();
         }
     }
 
     void Landed() {
+        Debug.Log("Landed!");
+
         // Deactivate current motor
         currentMotor.OnDeactivate();
 
@@ -107,6 +105,8 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
         cameraMotor.LockMouseLook(false);
     }
     void InAir() {
+        Debug.Log("In Air!");
+
         // Deactivate current motor
         currentMotor.OnDeactivate();
 
@@ -128,9 +128,9 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
     void OnCollisionStay(Collision colInfo) {
         if (!active) return; // Which means this'll probably be here forever.
 
-        grounded = true;
+        //grounded = true;
 
-        if (ValidLanding(colInfo)){
+        if (ValidLanding(colInfo)) {
             //Snap to surface
             cameraMotor.SnapToSurface(LargestValidAngleNormal(colInfo)); // Getting collision normal twice, might cause problems
         }
@@ -142,7 +142,7 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
             // Hit weird angle, push away
             rigidbody.AddForce(colInfo.contacts[0].normal, ForceMode.Impulse);
         }
-        
+
     }
     // Returns Zero vector with no hit
     private Vector3 CollisionNormal(Collision colInfo) {
@@ -163,7 +163,7 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
         float[] angles = new float[colInfo.contacts.Length];
 
         for (int i = 0; i < angles.Length; i++) {
-            
+
             if (colInfo.contacts[i].otherCollider.CompareTag("Player")) { // If player contact, don't count it
                 angles[i] = -10f; // Lower value than what is possible
                 continue;
@@ -190,8 +190,8 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
 
     bool ValidLanding(Collision colInfo) {
         // If not mine, don't bother
-        //if (!//NetworkView.isMine) return false;
-        
+        if (!hasAuthority) return false;
+
 
         Vector3 colNormal = LargestValidAngleNormal(colInfo);
 
@@ -200,7 +200,7 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
 
         float angle = Vector3.Angle(transform.up, colNormal);
 
-        if(angle > 0){
+        if (angle > 0) {
             Debug.Log(angle);
         }
 
@@ -213,17 +213,17 @@ public class ActorMotorManager : MonoBehaviour, IResetable {
         //StopAllCoroutines();
         rigidbody.constraints = RigidbodyConstraints.None;
         rigidbody.AddTorque(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f), ForceMode.Impulse);
-        
+
         active = false;
         this.enabled = false;
     }
 
     public void Recoil(float angle) {
-        if (grounded) {
-            cameraMotor.Recoil(angle);
-        } else {
-            transform.Rotate(-angle, 0, 0);
-        }
+        //if (grounded) {
+        //    cameraMotor.Recoil(angle);
+        //} else {
+        //    transform.Rotate(-angle, 0, 0);
+        //}
     }
 
     public void PushOffGround() {

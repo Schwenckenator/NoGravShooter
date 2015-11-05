@@ -18,7 +18,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
 
     IActorStats stats;
 
-    private int suicideDamage = 9; // How much damage K does
+    private int suicideDamage = 100; // How much damage K does
 
     [SyncVar]
     int health;
@@ -85,6 +85,14 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
 		StartCoroutine(PlayerCleanup());
     }
 
+    [ClientRpc]
+    void RpcDie() {
+        StartCoroutine(PlayerCleanup());
+        if (isLocalPlayer) {
+            StartCoroutine(LocalPlayerCleanup());
+        }
+    }
+
     void WillPlayTakeDamageSound() {
         if(isLocalPlayer && !isDamageSound) {
             isDamageSound = true;
@@ -116,19 +124,22 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         return " killed ";
 
     }
-
-    [Client]
+    float playerDyingTime = 3.0f;
     IEnumerator PlayerCleanup() {
-        float playerDyingTime = 3.0f;
         BloodyPlayer();
+        
+        yield return new WaitForSeconds(playerDyingTime);
+
+        if (NetworkServer.active) {
+            PlayerManager.singleton.ActorDied();
+        }
+
+    }
+
+    IEnumerator LocalPlayerCleanup() {
         BloodyScreen.Show(true);
         yield return new WaitForSeconds(playerDyingTime);
         BloodyScreen.Show(false);
-        //PlayerManager.singleton.ActorDied();
-
-        if (SettingsManager.singleton.AutoSpawn) {
-            //PlayerManager.singleton.SpawnActor();
-        }
     }
 
     //[RPC]

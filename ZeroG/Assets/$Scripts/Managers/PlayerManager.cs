@@ -14,7 +14,6 @@ public class PlayerManager : NetworkBehaviour {
     CameraMove cameraMove;
 
     void Awake() {
-        singleton = this;
         myCollider = GetComponent<Collider>();
         myRenderer = GetComponentInChildren<Renderer>();
         myRigidbody = GetComponent<Rigidbody>();
@@ -24,7 +23,10 @@ public class PlayerManager : NetworkBehaviour {
 
     public override void OnStartLocalPlayer() {
         base.OnStartLocalPlayer();
+        singleton = this;
+        Debug.Log("Player Manager Start Local player.");
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+        myRenderer.enabled = false;
     }
 
     public void SpawnActor() {
@@ -49,175 +51,196 @@ public class PlayerManager : NetworkBehaviour {
     [ClientRpc]
     void RpcActorDied() {
         ChangeActorState(false);
+
+        if(isLocalPlayer && SettingsManager.singleton.AutoSpawn) {
+            SpawnActor();
+        }
     }
 
     void ChangeActorState(bool alive) {
         myCollider.enabled = alive;
-        myRenderer.enabled = alive;
         myRigidbody.isKinematic = !alive;
 
         if (isLocalPlayer) {
+            // My player
             isMyActorSpawned = alive;
             if (alive) {
-                UIPauseSpawn.PlayerSpawned();
-                UIPlayerHUD.singleton.SetupPlayer(gameObject);
-
-                GetComponent<ActorHealth>().Reset(); // SHould interface this shit
-                GetComponent<WeaponInventory>().Reset();
-                GetComponent<ActorMotorManager>().Reset();
-                GetComponent<ActorGrenades>().Reset();
-
-                GameManager.SetCursorVisibility(false);
-
-                foreach (MouseLook look in GetComponentsInChildren<MouseLook>()) {
-                    look.SetYDirection(SettingsManager.singleton.MouseYDirection);
-                }
-                //        actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
-                DynamicCrosshair.SetInventory(GetComponent<WeaponInventory>());
-                
-                cameraMove.AttachToPlayer(gameObject);
+                // Is alive
+                MyActorAlive();
+            } else {
+                // Is Dead
+                MyActorDead();
             }
+        } else {
+            // Not my player
+            myRenderer.enabled = alive;
         }
     }
 
-//    static bool myActorSpawned;
-//    private GameObject[] spawnPoints;
-//    private CameraMove cameraMove;
-//    MouseLook[] lookers;
+    private void MyActorAlive() {
+        UIPauseSpawn.PlayerSpawned();
+        UIPlayerHUD.singleton.SetupPlayer(gameObject);
 
-//    IResetable[] myResetables;
+        foreach (IResetable reset in gameObject.GetInterfacesInChildren<IResetable>()) {
+            reset.Reset();
+        }
 
-//    public static PlayerManager singleton;
+        GameManager.SetCursorVisibility(false);
 
-//    ////private new //NetworkView //NetworkView;
+        foreach (MouseLook look in GetComponentsInChildren<MouseLook>()) {
+            look.SetYDirection(SettingsManager.singleton.MouseYDirection);
+        }
+        //        actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
+        DynamicCrosshair.SetInventory(GetComponent<WeaponInventory>());
 
-//    void Start() {
-//        singleton = this;
-        
-//    }
+        cameraMove.AttachToPlayer(gameObject);
+    }
 
-//    //public void Init() {
-//    //    //tStartCoroutine(CreateActor());
-//    //}
-//    //void OnLevelWasLoaded() {
-//    //    if (GameManager.IsSceneMenu()) {
-//    //        //myActorSpawned = false;
+    private void MyActorDead() {
+        cameraMove.DetachCamera();
+        GameManager.SetCursorVisibility(true);
+        UIPauseSpawn.PlayerDied();
 
-//    //        //UIPauseSpawn.PlayerDied();
-//    //        //GameManager.singleton.SetPlayerMenu(false);
-//    //        //GameManager.SetCursorVisibility(true);
+    }
 
-//    //        //cameraMove = null;
-//    //        //spawnPoints = null;
+    //    static bool myActorSpawned;
+    //    private GameObject[] spawnPoints;
+    //    private CameraMove cameraMove;
+    //    MouseLook[] lookers;
 
-//    //        //if (.isClient || .isServer) {
-//    //        //    actorManager.DisableActor(); // Should only disable if connected
-//    //        //} else {
-//    //        //    lookers = null; // If not connected, clear
-//    //        //}
-//    //    } else {
-//    //        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
-//    //        spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+    //    IResetable[] myResetables;
 
-//    //        float wait = lookers == null ? 0.5f : 0.0f;
-//    //        StartCoroutine(LookerLevelStart(wait));
-//    //    }
-//    //}
-//    //IEnumerator LookerLevelStart(float wait) {
-//    //    yield return new WaitForSeconds(wait);
-//    //    foreach (MouseLook look in lookers) {
-//    //        look.LevelStart();
-//    //    }
-//    //}
-//    //IEnumerator CreateActor() {
-//    //    yield return new WaitForSeconds(0.1f);
-//    //    // Spawn a new player object
-//    //    actor = .Instantiate(playerPrefab, new Vector3(100, 100, 100), Quaternion.identity, 0) as GameObject; // Spawn player way out, middle of nowhere
-//    //    lookers = actor.GetComponentsInChildren<MouseLook>();
-//    //    actor.GetComponentInChildren<MeshRenderer>().enabled = false;
+    //    public static PlayerManager singleton;
 
-//    //    GameObject temp = .Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
-//    //    actorManager = temp.GetComponent<ActorEnableManager>();
-//    //    actorManager.SetActor(actor);
-//    //    DynamicCrosshair.myActor = actor.GetComponent<Collider>();
+    //    ////private new //NetworkView //NetworkView;
 
-//    //    DisableLookers();
-//    //    StartCoroutine(RemoveActor());
-//    //}
-//    //void DisableLookers() {
-//    //    foreach(MouseLook look in lookers) {
-//    //        look.Ragdoll(true); // Disable input
-//    //    }
-//    //}
-//    //IEnumerator RemoveActor() {
-//    //    yield return null;
-//    //    actorManager.DisableActor();
-//    //    GameManager.singleton.SetPlayerMenu(false);
-//    //}
+    //    void Start() {
+    //        singleton = this;
 
-//    public void SpawnActor() {
-//        // Activate Actor
-//        actorManager.EnableActor();
+    //    }
 
-//        // Reset all stats
-//        foreach (Weapon weap in WeaponManager.weapon) {
-//            weap.ResetVariables();
-//        }
-//        actor.GetComponent<ActorHealth>().Reset(); // SHould interface this shit
-//        actor.GetComponent<WeaponInventory>().Reset();
-//        actor.GetComponent<ActorMotorManager>().Reset();
-//        actor.GetComponent<ActorGrenades>().Reset();
+    //    //public void Init() {
+    //    //    //tStartCoroutine(CreateActor());
+    //    //}
+    //    //void OnLevelWasLoaded() {
+    //    //    if (GameManager.IsSceneMenu()) {
+    //    //        //myActorSpawned = false;
 
-//        GameManager.SetCursorVisibility(false);
+    //    //        //UIPauseSpawn.PlayerDied();
+    //    //        //GameManager.singleton.SetPlayerMenu(false);
+    //    //        //GameManager.SetCursorVisibility(true);
 
-//        GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.singleton.MouseYDirection);
-//        actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.singleton.MouseYDirection);
+    //    //        //cameraMove = null;
+    //    //        //spawnPoints = null;
 
-//        actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
+    //    //        //if (.isClient || .isServer) {
+    //    //        //    actorManager.DisableActor(); // Should only disable if connected
+    //    //        //} else {
+    //    //        //    lookers = null; // If not connected, clear
+    //    //        //}
+    //    //    } else {
+    //    //        cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
+    //    //        spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 
-//        UIPlayerHUD.SetupPlayer(actor);
-//        DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
-//        PlayerColourManager.singleton.AssignColour(actor);
+    //    //        float wait = lookers == null ? 0.5f : 0.0f;
+    //    //        StartCoroutine(LookerLevelStart(wait));
+    //    //    }
+    //    //}
+    //    //IEnumerator LookerLevelStart(float wait) {
+    //    //    yield return new WaitForSeconds(wait);
+    //    //    foreach (MouseLook look in lookers) {
+    //    //        look.LevelStart();
+    //    //    }
+    //    //}
+    //    //IEnumerator CreateActor() {
+    //    //    yield return new WaitForSeconds(0.1f);
+    //    //    // Spawn a new player object
+    //    //    actor = .Instantiate(playerPrefab, new Vector3(100, 100, 100), Quaternion.identity, 0) as GameObject; // Spawn player way out, middle of nowhere
+    //    //    lookers = actor.GetComponentsInChildren<MouseLook>();
+    //    //    actor.GetComponentInChildren<MeshRenderer>().enabled = false;
 
-//        MovePlayerToSpawnPoint();
+    //    //    GameObject temp = .Instantiate(managerPrefab, Vector3.zero, Quaternion.identity, 0) as GameObject;
+    //    //    actorManager = temp.GetComponent<ActorEnableManager>();
+    //    //    actorManager.SetActor(actor);
+    //    //    DynamicCrosshair.myActor = actor.GetComponent<Collider>();
 
-//        cameraMove.PlayerSpawned();
+    //    //    DisableLookers();
+    //    //    StartCoroutine(RemoveActor());
+    //    //}
+    //    //void DisableLookers() {
+    //    //    foreach(MouseLook look in lookers) {
+    //    //        look.Ragdoll(true); // Disable input
+    //    //    }
+    //    //}
+    //    //IEnumerator RemoveActor() {
+    //    //    yield return null;
+    //    //    actorManager.DisableActor();
+    //    //    GameManager.singleton.SetPlayerMenu(false);
+    //    //}
 
-//        Radar.instance.ActorsChanged();
-//        UIPauseSpawn.PlayerSpawned();
+    //    public void SpawnActor() {
+    //        // Activate Actor
+    //        actorManager.EnableActor();
 
-//        myActorSpawned = true;
-//    }
+    //        // Reset all stats
+    //        foreach (Weapon weap in WeaponManager.weapon) {
+    //            weap.ResetVariables();
+    //        }
+    //        actor.GetComponent<ActorHealth>().Reset(); // SHould interface this shit
+    //        actor.GetComponent<WeaponInventory>().Reset();
+    //        actor.GetComponent<ActorMotorManager>().Reset();
+    //        actor.GetComponent<ActorGrenades>().Reset();
 
-//    private void MovePlayerToSpawnPoint() {
-//        int point = Random.Range(0, spawnPoints.Length);
+    //        GameManager.SetCursorVisibility(false);
 
-//        // Freeze movement and rotation
-//        actor.GetComponent<Rigidbody>().velocity = Vector3.zero;
-//        actor.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+    //        GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.singleton.MouseYDirection);
+    //        actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.singleton.MouseYDirection);
 
-//        actor.transform.position = spawnPoints[point].transform.position;
-//        actor.transform.rotation = spawnPoints[point].transform.rotation;
-//        //actor.transform.position = new Vector3(5, 0, 0);
-//    }
+    //        actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
 
-//    public void ActorDied() {
-//        myActorSpawned = false;
+    //        UIPlayerHUD.SetupPlayer(actor);
+    //        DynamicCrosshair.SetInventory(actor.GetComponent<WeaponInventory>());
+    //        PlayerColourManager.singleton.AssignColour(actor);
 
-//        UIPauseSpawn.PlayerDied();
-//        GameManager.singleton.SetPlayerMenu(false);
-//        cameraMove.DetachCamera();
-//        GameManager.SetCursorVisibility(true);
+    //        MovePlayerToSpawnPoint();
 
-//        actorManager.DisableActor();
+    //        cameraMove.PlayerSpawned();
 
-//    }
+    //        Radar.instance.ActorsChanged();
+    //        UIPauseSpawn.PlayerSpawned();
 
-//    public static bool IsActorSpawned() {
-//        return myActorSpawned;
-//    }
+    //        myActorSpawned = true;
+    //    }
 
-//    private MouseLook GetPlayerCameraMouseLook(GameObject player) {
-//        return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
-//    }
+    //    private void MovePlayerToSpawnPoint() {
+    //        int point = Random.Range(0, spawnPoints.Length);
+
+    //        // Freeze movement and rotation
+    //        actor.GetComponent<Rigidbody>().velocity = Vector3.zero;
+    //        actor.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+    //        actor.transform.position = spawnPoints[point].transform.position;
+    //        actor.transform.rotation = spawnPoints[point].transform.rotation;
+    //        //actor.transform.position = new Vector3(5, 0, 0);
+    //    }
+
+    //    public void ActorDied() {
+    //        myActorSpawned = false;
+
+    //        UIPauseSpawn.PlayerDied();
+    //        GameManager.singleton.SetPlayerMenu(false);
+    //        cameraMove.DetachCamera();
+    //        GameManager.SetCursorVisibility(true);
+
+    //        actorManager.DisableActor();
+
+    //    }
+
+    //    public static bool IsActorSpawned() {
+    //        return myActorSpawned;
+    //    }
+
+    //    private MouseLook GetPlayerCameraMouseLook(GameObject player) {
+    //        return player.transform.FindChild("CameraPos").GetComponent<MouseLook>();
+    //    }
 }
