@@ -14,6 +14,8 @@ public class UIPauseSpawn : MonoBehaviour {
     public GameObject playerHUD;
     public Toggle AutoSpawn;
 
+    public Text ShutdownButtonText;
+
     private static ChangeableText spawnButton;
     private static string spawn = "Spawn";
     private static string unpause = "Return to Game";
@@ -108,7 +110,8 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     private static void PauseMenu(bool isTutorial = false) {
         if (!isTutorial) {
-            returnToLobby.Show(Network.isServer);
+            returnToLobby.Show(NetworkManager.isServer);
+            singleton.ShutdownButtonText.text = NetworkManager.isServer ? "Shutdown Server" : "Disconnect";
         }
         GameManager.SetCursorVisibility(true);
         UIManager.singleton.OpenReplace(myObj);

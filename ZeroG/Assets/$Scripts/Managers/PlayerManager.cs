@@ -8,14 +8,13 @@ public class PlayerManager : NetworkBehaviour {
     public static bool isMyActorSpawned { get; private set; }
 
     Collider myCollider;
-    Renderer myRenderer;
+    public Renderer myRenderer;
     Rigidbody myRigidbody;
 
     CameraMove cameraMove;
 
     void Awake() {
         myCollider = GetComponent<Collider>();
-        myRenderer = GetComponentInChildren<Renderer>();
         myRigidbody = GetComponent<Rigidbody>();
 
         ChangeActorState(false);

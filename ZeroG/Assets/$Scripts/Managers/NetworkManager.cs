@@ -93,15 +93,15 @@ public class NetworkManager : NetworkLobbyManager {
 
     }
 
-    public override void OnLobbyServerConnect(NetworkConnection conn) {
-        base.OnLobbyServerConnect(conn);
-        Debug.Log(conn.connectionId.ToString() + ", OnConnect");
-    }
+    //public override void OnLobbyServerConnect(NetworkConnection conn) {
+    //    base.OnLobbyServerConnect(conn);
+    //    Debug.Log(conn.connectionId.ToString() + ", OnConnect");
+    //}
     //public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId) {
     //    base.OnServerAddPlayer(conn, playerControllerId);
     //    GameObject player = (GameObject)Instantiate(lobbyPlayerPrefab.gameObject, Vector3.zero, Quaternion.identity);
 
-    //    NetworkServer.ReplacePlayerForConnection(conn, player, playerControllerId);
+    //    .ReplacePlayerForConnection(conn, player, playerControllerId);
     //}
     //public override void OnLobbyClientConnect(NetworkConnection conn) {
     //    ClientScene.AddPlayer(0);

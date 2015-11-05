@@ -130,7 +130,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         
         yield return new WaitForSeconds(playerDyingTime);
 
-        if (NetworkServer.active) {
+        if (NetworkManager.isServer) {
             PlayerManager.singleton.ActorDied();
         }
 
