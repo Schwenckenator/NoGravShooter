@@ -35,15 +35,19 @@ public class PlayerManager : NetworkBehaviour {
 
     [Command]
     void CmdSpawnActor() {
+        Debug.Log("Rpc Spawn Actor");
         ChangeActorState(true);
+        RpcSpawnActor();
     }
     [ClientRpc]
     void RpcSpawnActor() {
-        ChangeActorState(false);
+        Debug.Log("Rpc Spawn Actor");
+        ChangeActorState(true);
     }
 
     [Server]
     public void ActorDied() {
+        Debug.Log("Server Actor Died.");
         RpcActorDied();
     }
 
@@ -72,27 +76,32 @@ public class PlayerManager : NetworkBehaviour {
             }
         } else {
             // Not my player
+            //Debug.Log("Renderer changed to "+alive.ToString());
             myRenderer.enabled = alive;
         }
     }
 
     private void MyActorAlive() {
-        UIPauseSpawn.PlayerSpawned();
+        
         UIPlayerHUD.singleton.SetupPlayer(gameObject);
-
-        foreach (IResetable reset in gameObject.GetInterfacesInChildren<IResetable>()) {
-            reset.Reset();
-        }
-
         GameManager.SetCursorVisibility(false);
+        UIPauseSpawn.PlayerSpawned();
 
         foreach (MouseLook look in GetComponentsInChildren<MouseLook>()) {
             look.SetYDirection(SettingsManager.singleton.MouseYDirection);
         }
-        //        actor.GetComponent<ActorTeam>().SetTeam(NetworkManager.MyPlayer().Team); // Apply team to Actor
         DynamicCrosshair.SetInventory(GetComponent<WeaponInventory>());
 
         cameraMove.AttachToPlayer(gameObject);
+
+        Transform pos = NetworkManager.single.GetStartPosition();
+        transform.position = pos.position;
+        transform.rotation = pos.rotation;
+
+        // Reset everything last
+        foreach (IResetable reset in gameObject.GetInterfacesInChildren<IResetable>()) {
+            reset.Reset();
+        }
     }
 
     private void MyActorDead() {

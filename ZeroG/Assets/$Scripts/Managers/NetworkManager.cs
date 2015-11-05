@@ -251,7 +251,7 @@ public class NetworkManager : NetworkLobbyManager {
         return isReadyToSpawn;
     }
 
-    private void MoveToLobby() {
+    private void ShowLobbyScreen() {
         UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
     }
 }

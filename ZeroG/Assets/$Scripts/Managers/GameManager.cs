@@ -84,7 +84,7 @@ public class GameManager : NetworkBehaviour {
 		if(!GameManager.IsSceneMenu()){
             
 			//
-			if(Network.isServer){
+			if(NetworkManager.isServer){
                 int[] temp = new int[2];
 
                 temp[0] = SettingsManager.singleton.SpawnWeapon1;
@@ -119,26 +119,26 @@ public class GameManager : NetworkBehaviour {
 
     // If a player connects mid game,
     // we need to send an updated remaining time
-    void OnPlayerConnected(NetworkPlayer connectingPlayer) {
-        if (GameInProgress) {
-            //NetworkView.RPC("RPCLoadLevel", connectingPlayer,
-                //SettingsManager.singleton.LevelName,
-                //NetworkManager.lastLevelPrefix,
-                //SettingsManager.sin.TimeLimitSec,
-                //SettingsManager.oeu.GameModeIndexServer);
+    //void OnPlayerConnected(NetworkPlayer connectingPlayer) {
+    //    if (GameInProgress) {
+    //        //NetworkView.RPC("RPCLoadLevel", connectingPlayer,
+    //            //SettingsManager.singleton.LevelName,
+    //            //NetworkManager.lastLevelPrefix,
+    //            //SettingsManager.sin.TimeLimitSec,
+    //            //SettingsManager.oeu.GameModeIndexServer);
 
-            //NetworkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
-        }
-    }
-    void OnDisconnectedFromServer() {
-        GameInProgress = false;
-        IsUseTimer = false;
+    //        //NetworkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
+    //    }
+    //}
+    //void OnDisconnectedFromServer() {
+    //    GameInProgress = false;
+    //    IsUseTimer = false;
 
-        //foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
-        //    Debug.Log("Destroyed actor");
-        //    Destroy(actor);
-        //}
-    }
+    //    //foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
+    //    //    Debug.Log("Destroyed actor");
+    //    //    Destroy(actor);
+    //    //}
+    //}
     public void EndGame() {
         gameInProgress = false;
         

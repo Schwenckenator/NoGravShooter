@@ -167,6 +167,7 @@
     <Compile Include="Assets\$Scripts\UI\ChatSubmitEvent.cs" />
     <Compile Include="Assets\$Scripts\UI\FromConnectionType\SelectableHideFromConnectionType.cs" />
     <Compile Include="Assets\$Scripts\UI\FromConnectionType\TextChangeFromConnectionType.cs" />
+    <Compile Include="Assets\$Scripts\UI\GameMenu.cs" />
     <Compile Include="Assets\$Scripts\UI\HideableUI.cs" />
     <Compile Include="Assets\$Scripts\UI\IChangeable.cs" />
     <Compile Include="Assets\$Scripts\UI\IHideable.cs" />

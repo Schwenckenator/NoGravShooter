@@ -9,7 +9,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     public AudioSource helmetAudio;
     public GameObject bloodParticle;
     private DestroyParticleEffect killBlood;
-
+    private PlayerManager myManager;
     int maxHealth = 100;
     
 
@@ -38,7 +38,9 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
             return health == maxHealth;
         }
     }
-
+    void Awake() {
+        myManager = GetComponent<PlayerManager>();
+    }
     // Use this for initialization
     public override void OnStartLocalPlayer() {
         stats = gameObject.GetInterface<IActorStats>();
@@ -52,8 +54,13 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     void Update() {
         if (!isLocalPlayer) return;
         if (Input.GetKeyDown(KeyCode.K) && !UIPauseSpawn.IsShown) { //K is for kill! // This is for testing purposes only
-            TakeDamage(suicideDamage);
+            CmdDamageSelf(suicideDamage);
         }
+    }
+
+    [Command]
+    void CmdDamageSelf(int damage) {
+        TakeDamage(damage);
     }
    
     [Server]
@@ -82,7 +89,8 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
         health = 0;
 		isDying = true;//You is dead nigs
-		StartCoroutine(PlayerCleanup());
+        RpcDie();
+		//StartCoroutine(PlayerCleanup());
     }
 
     [ClientRpc]
@@ -131,7 +139,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         yield return new WaitForSeconds(playerDyingTime);
 
         if (NetworkManager.isServer) {
-            PlayerManager.singleton.ActorDied();
+            myManager.ActorDied();
         }
 
     }

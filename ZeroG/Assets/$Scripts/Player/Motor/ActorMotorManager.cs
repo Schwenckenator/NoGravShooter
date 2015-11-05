@@ -52,6 +52,9 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
         currentMotor = jetpackMotor;
         InAir();
 
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+
         rigidbody.AddRelativeForce(0, -4, 0, ForceMode.Impulse);
     }
 

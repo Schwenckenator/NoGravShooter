@@ -40,7 +40,6 @@ public class UIPauseSpawn : MonoBehaviour {
         FindTexts();
         FindHideables();
         SetToggle();
-
         
         PlayerDied(); // Initialises button text
     }
@@ -86,13 +85,11 @@ public class UIPauseSpawn : MonoBehaviour {
 
     public static void PlayerSpawned() {
         spawnButton.SetText(unpause);
-        if (GameManager.singleton.GameInProgress || GameManager.IsSceneTutorial())
-            ReturnToGame();
+        GameMenu.OpenHUD();
     }
     public static void PlayerDied() {
         spawnButton.SetText(spawn);
-        if (GameManager.singleton.GameInProgress || GameManager.IsSceneTutorial())
-            PauseMenu();
+        PauseMenu();
     }
 
     public static void SetServerNameText() {
@@ -104,17 +101,12 @@ public class UIPauseSpawn : MonoBehaviour {
         playerList.Show(!isTutorial);
         returnToLobby.Show(!isTutorial);
     }
-    private static void ReturnToGame() {
-        GameManager.SetCursorVisibility(false);
-        UIManager.singleton.OpenReplace(singleton.playerHUD);
-    }
     private static void PauseMenu(bool isTutorial = false) {
         if (!isTutorial) {
             returnToLobby.Show(NetworkManager.isServer);
             singleton.ShutdownButtonText.text = NetworkManager.isServer ? "Shutdown Server" : "Disconnect";
         }
-        GameManager.SetCursorVisibility(true);
-        UIManager.singleton.OpenReplace(myObj);
+        GameMenu.OpenMenu();
     }
 
     /// <summary>
@@ -124,7 +116,7 @@ public class UIPauseSpawn : MonoBehaviour {
         if(!IsShown){
             PauseMenu(GameManager.IsSceneTutorial()); 
         } else {
-            ReturnToGame();
+            GameMenu.OpenHUD();
         }
     }
 
@@ -140,7 +132,5 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     public void Disconnect() {
         NetworkManager.Disconnect();
-    }
-    public void GoOptions() {
     }
 }
