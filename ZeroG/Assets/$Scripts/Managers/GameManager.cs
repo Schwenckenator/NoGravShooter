@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Handles player, level loading and game interacitons
 /// </summary>
-public class GameManager : NetworkBehaviour {
+public class GameManager : MonoBehaviour {
 
     public static GameManager singleton { get; private set; }
 
@@ -13,20 +13,12 @@ public class GameManager : NetworkBehaviour {
     public GameObject[] gameModes;
     #region Variable Declarations
 
-	private CameraMove cameraMove;
-
-    [SerializeField]
-	private static int maxStartingWeapons = 2;
-	private int[] startingWeapons = new int[maxStartingWeapons];
-
 	private bool myPlayerSpawned = false;
 
     [SerializeField]
 	private GameObject playerPrefab;
 	private GameObject[] spawnPoints;
 
-
-    //public static List<Weapon> weapon = new List<Weapon>();
 
     public float endTime;
     public bool IsUseTimer { get; private set; }
@@ -60,9 +52,9 @@ public class GameManager : NetworkBehaviour {
 
     #region Variable mutators
     //[RPC]
-    private void SetStartingWeapons(int[] selection) {
-        startingWeapons = selection;
-    }
+    //private void SetStartingWeapons(int[] selection) {
+    //    startingWeapons = selection;
+    //}
     //[RPC]
     public void SetEndTime(float remainingSeconds) {
         endTime = Time.time + remainingSeconds;
@@ -81,40 +73,11 @@ public class GameManager : NetworkBehaviour {
 
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
-		if(!GameManager.IsSceneMenu()){
-            
-			//
-			if(NetworkManager.isServer){
-                int[] temp = new int[2];
 
-                temp[0] = SettingsManager.singleton.SpawnWeapon1;
-				if(SettingsManager.singleton.SpawnWeapon1 == SettingsManager.singleton.SpawnWeapon2){
-					Debug.Log("same weapon twice");
-					temp[1] = 99;
-				} else {
-					temp[1] = SettingsManager.singleton.SpawnWeapon2;
-				}
-                StartCoroutine(SetStartingWeaponsDelay(temp));
-			}
+        if (NetworkManager.isServer && GameInProgress) {
+            NetworkInfoWrapper.singleton.RpcSetCheats(DebugManager.allWeapon, DebugManager.allAmmo, DebugManager.allGrenade, DebugManager.allFuel);
+            NetworkInfoWrapper.singleton.RefreshValues();
         }
-	}
-
-    private IEnumerator SetStartingWeaponsDelay(int[] weapons) {
-        yield return new WaitForSeconds(0.1f); // Small delay
-        //NetworkView.RPC("SetStartingWeapons", RPCMode.AllBuffered, weapons);
-        //NetworkView.RPC("SetCheats", RPCMode.AllBuffered, DebugManager.IsAllWeapon(), DebugManager.IsAllAmmo(), DebugManager.IsAllGrenade(), DebugManager.IsAllFuel());
-    }
-
-    //[RPC]
-    private void SetCheats(bool allWeapon, bool allAmmo, bool allGrenade, bool allFuel) {
-        DebugManager.SetAllWeapon(allWeapon);
-        DebugManager.SetAllAmmo(allAmmo);
-        DebugManager.SetAllGrenade(allGrenade);
-        DebugManager.SetAllFuel(allFuel);
-    }
-
-	public void ManagerDetachCamera(){
-		cameraMove.DetachCamera();
 	}
 
     // If a player connects mid game,
@@ -154,8 +117,10 @@ public class GameManager : NetworkBehaviour {
         }
     }
 
-    [Server]
     public void LoadLevel() {
+        if (!NetworkManager.isServer) {
+            throw new ClientRunningServerCodeException();
+        }
         NetworkManager.single.ServerChangeScene(SettingsManager.singleton.LevelName);
         GameInProgress = true;
         ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
@@ -176,7 +141,7 @@ public class GameManager : NetworkBehaviour {
     //[RPC]
     private void RPCLoadLevel(string levelName, int secondsOfGame, int gameModeIndex) {
 
-        SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
+        //SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
         UIChat.UpdatePlayerLists();
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {

@@ -4,10 +4,10 @@ using System.Collections;
 
 public class UIGameSettings : MonoBehaviour {
 
-    static ChangeableText gameMode;
-    static ChangeableText mapSelect;
-    static ChangeableText weapon1;
-    static ChangeableText weapon2;
+    public Dropdown gameMode;
+    public Dropdown mapSelect;
+    public Dropdown weapon1;
+    public Dropdown weapon2;
 
     static ChangeableInputField timeLimit;
     static ChangeableInputField scoreLimit;
@@ -18,32 +18,27 @@ public class UIGameSettings : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        TextSetup();
         InputSetup();
         ToggleSetup();
-
-        // Turn self off after initialsation
-        gameObject.SetActive(false);
-	}
-
-    #region Setup
-    private void TextSetup() {
-        ChangeableText[] texts = GetComponentsInChildren<ChangeableText>();
-
-        foreach (var text in texts) {
-            if (text.IsType("gameModeSelect")) gameMode = text;
-            else if (text.IsType("mapSelect")) mapSelect = text;
-            else if (text.IsType("weaponSelect1")) weapon1 = text;
-            else if (text.IsType("weaponSelect2")) weapon2 = text;
-
-        }
-        GameModeSelect(SettingsManager.singleton.GameModeIndexServer);
-        MapSelect(SettingsManager.singleton.LevelIndex);
-        Weapon1Set(SettingsManager.singleton.SpawnWeapon1);
-        Weapon2Set(SettingsManager.singleton.SpawnWeapon2);
+        DropdownSetup();
     }
 
-    private void InputSetup() {
+    void DropdownSetup() {
+        //gameMode.captionText.text = SettingsManager.singleton.GameModeList[SettingsManager.singleton.GameModeIndex];
+        gameMode.value = SettingsManager.singleton.GameModeIndex;
+
+        //mapSelect.captionText.text = SettingsManager.singleton.LevelName;
+
+        mapSelect.value = SettingsManager.singleton.LevelIndex;
+        //weapon1.captionText.text = WeaponManager.weapon[SettingsManager.singleton.SpawnWeapon1].name;
+
+        //weapon2.captionText.text = WeaponManager.weapon[SettingsManager.singleton.SpawnWeapon2].name;
+        weapon1.value = SettingsManager.singleton.SpawnWeapon1;
+        weapon2.value = SettingsManager.singleton.SpawnWeapon2;
+    }
+
+    #region Setup
+        private void InputSetup() {
         ChangeableInputField[] inputs = GetComponentsInChildren<ChangeableInputField>();
 
         foreach (var input in inputs) {
@@ -52,7 +47,7 @@ public class UIGameSettings : MonoBehaviour {
         }
 
         timeLimit.SetText(SettingsManager.singleton.TimeLimitMin.ToString());
-        scoreLimit.SetText(SettingsManager.singleton.ScoreToWinServer.ToString());
+        scoreLimit.SetText(SettingsManager.singleton.ScoreToWin.ToString());
     }
     
     private void ToggleSetup() {
@@ -66,25 +61,17 @@ public class UIGameSettings : MonoBehaviour {
     }
     #endregion
     #region ButtonPushes
-    public void SaveSettings() {
-        SettingsManager.singleton.SaveSettings();
-        SettingsManager.singleton.RelayGameMode();
-    }
     public void GameModeSelect(int id) {
-        SettingsManager.singleton.GameModeIndexServer = id;
-        gameMode.SetText(SettingsManager.singleton.GameModeList[id]);
+        SettingsManager.singleton.GameModeIndex = id;
     }
     public void MapSelect(int id) {
         SettingsManager.singleton.LevelIndex = id;
-        mapSelect.SetText(SettingsManager.singleton.LevelName);
     }
     public void Weapon1Set(int id) {
         SettingsManager.singleton.SpawnWeapon1 = id;
-        weapon1.SetText(WeaponManager.weapon[id].name);
     }
     public void Weapon2Set(int id) {
         SettingsManager.singleton.SpawnWeapon2 = id;
-        weapon2.SetText(WeaponManager.weapon[id].name);
     }
     public void TimeLimit(string min) {
         if (min != "") {
@@ -93,7 +80,7 @@ public class UIGameSettings : MonoBehaviour {
     }
     public void ScoreLimit(string score) {
         if (score != "") { 
-            SettingsManager.singleton.ScoreToWinServer = int.Parse(score); 
+            SettingsManager.singleton.ScoreToWin = int.Parse(score); 
         }
     }
     public void MedkitToggle(bool value) {
@@ -106,16 +93,16 @@ public class UIGameSettings : MonoBehaviour {
         SettingsManager.singleton.WeaponCanSpawn = value ? 1 : 0;
     }
     public void AllWeaponToggle(bool value) {
-        DebugManager.SetAllWeapon(value);
+        DebugManager.allWeapon = value;
     }
     public void AllAmmoToggle(bool value) {
-        DebugManager.SetAllAmmo(value);
+        DebugManager.allAmmo = value;
     }
     public void AllGrenadeToggle(bool value) {
-        DebugManager.SetAllGrenade(value);
+        DebugManager.allGrenade = value;
     }
     public void AllFuelToggle(bool value) {
-        DebugManager.SetAllFuel(value);
+        DebugManager.allFuel = value;
     }
     #endregion
 }

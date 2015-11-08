@@ -10,11 +10,7 @@ public class WeaponResources : MonoBehaviour {
 
     // Set in editor
     public int maxHeat;
-    public float coolRate;
     public float overheatWaitTime;
-
-    //private float heat;
-    //private float coolTime;
 
     private ParticleSystem smoke;
 
@@ -29,21 +25,17 @@ public class WeaponResources : MonoBehaviour {
         smoke = GetComponentInChildren<ParticleSystem>();
         smoke.emissionRate = 0;
         smoke.Play();
-
-        //if (!GetComponent<NetworkView>().isMine) {
-        //    this.enabled = false;
-        //}
 	}
 
 	// Update is called once per frame
 	void Update () {
-        if (InputKey.GetKeyDown(KeyBind.Reload) && !UIPauseSpawn.IsShown && !WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull()) {
+        if (InputKey.GetKeyDown(KeyBind.Reload) && !UIPauseSpawn.IsShown && !WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull) {
             StartCoroutine("WeaponReload");
         }
         WeaponSmokeCheck();
 	}
     void OnGUI() {
-        if (DebugManager.IsDebugMode()) {
+        if (DebugManager.debugMode) {
             GUI.Label(new Rect(Screen.width - 200, 150, 180, 20), "Weapon Heat: " + inventory.currentWeapon.heat.ToString());
             GUI.Label(new Rect(Screen.width - 200, 170, 180, 20), "Cool Time: " + inventory.currentWeapon.coolTime.ToString());
             GUI.Label(new Rect(Screen.width - 200, 190, 180, 20), "Time: " + Time.time.ToString());
@@ -51,18 +43,13 @@ public class WeaponResources : MonoBehaviour {
     }
 
     public bool WeaponCanFire() {
-        return !( inventory.currentWeapon.isEmpty() || isWeaponOverheated() || isReloading);
+        return !(isReloading);
     }
 
-    private bool isWeaponOverheated() {
-        return inventory.currentWeapon.heat >= maxHeat;
-    }
-
-    public void WeaponFired(float addedHeat) {
+    public void WeaponFired() {
         StopCoroutine("WeaponReload");
         audioSource.Stop();
-        inventory.currentWeapon.Fire();
-        if (isWeaponOverheated()) {
+        if (inventory.currentWeapon.isOverheat) {
             //Gun overheated
             audioSource.PlayOneShot(soundOverheat);
             inventory.currentWeapon.heat = maxHeat;
@@ -77,7 +64,7 @@ public class WeaponResources : MonoBehaviour {
     private void WeaponSmokeCheck() {
         if (inventory.currentWeapon == null) return;
 
-        if (isWeaponOverheated()) {
+        if (inventory.currentWeapon.isOverheat) {
             smoke.emissionRate = 15;
             smoke.startColor = Color.black;
         } else if (inventory.currentWeapon.heat > maxHeat * 2 / 3) {
@@ -93,7 +80,7 @@ public class WeaponResources : MonoBehaviour {
     IEnumerator WeaponReload() {
 
         // If no remaining ammo and NOT testmode, don't attempt to reload
-        if (inventory.currentWeapon.remainingAmmo <= 0 && !DebugManager.IsAllAmmo()) {
+        if (inventory.currentWeapon.remainingAmmo <= 0 && !DebugManager.allAmmo) {
             if (inventory.currentWeapon.currentClip <= 0) {
                 // Remove weapon?
             }
@@ -113,7 +100,7 @@ public class WeaponResources : MonoBehaviour {
             yield return null;
         }
         int newBullets = inventory.currentWeapon.clipSize - inventory.currentWeapon.currentClip;
-        if (DebugManager.IsAllAmmo()) {
+        if (DebugManager.allAmmo) {
             inventory.currentWeapon.currentClip = inventory.currentWeapon.clipSize;
         } else {
             inventory.currentWeapon.currentClip = Mathf.Min(inventory.currentWeapon.clipSize, inventory.currentWeapon.remainingAmmo + inventory.currentWeapon.currentClip);
@@ -124,7 +111,7 @@ public class WeaponResources : MonoBehaviour {
         isReloading = false;
     }
     public void SafeStartReload() {
-        if (!WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull()) {
+        if (!WeaponInventory.isChanging && !isReloading && !inventory.currentWeapon.isFull) {
             StartCoroutine("WeaponReload");
         }
     }

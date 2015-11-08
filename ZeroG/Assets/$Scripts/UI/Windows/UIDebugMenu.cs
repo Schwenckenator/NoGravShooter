@@ -19,22 +19,22 @@ public class UIDebugMenu : MonoBehaviour {
     }
 
     public void ToggleAdminMode(bool value) {
-        DebugManager.SetAdminMode(value);
+        DebugManager.adminMode = value;
     }
     public void ToggleDebugMode(bool value) {
-        DebugManager.SetDebugMode(value);
+        DebugManager.debugMode = value;
     }
     public void ToggleAllWeapon(bool value) {
-        DebugManager.SetAllWeapon(value);
+        DebugManager.allWeapon = value;
     }
     public void ToggleAllAmmo(bool value) {
-        DebugManager.SetAllAmmo(value);
+        DebugManager.allAmmo = value;
     }
     public void ToggleAllGrenade(bool value) {
-        DebugManager.SetAllGrenade(value);
+        DebugManager.allGrenade = value;
     }
     public void ToggleAllFuel(bool value) {
-        DebugManager.SetAllFuel(value);
+        DebugManager.allFuel = value;
     }
     public void ClearPlayerPrefs() {
         PlayerPrefs.DeleteAll();

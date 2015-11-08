@@ -4,7 +4,7 @@ using System.Collections;
 
 public enum KeyBind { MoveForward, MoveBack, MoveLeft, MoveRight, RollLeft, RollRight, JetUp, JetDown, Reload, Grenade, GrenadeSwitch, Interact, StopMovement };
 
-public class SettingsManager : NetworkBehaviour {
+public class SettingsManager : MonoBehaviour {
 
     public static SettingsManager singleton { get; private set; }
 
@@ -25,22 +25,7 @@ public class SettingsManager : NetworkBehaviour {
     // Changing ~~Server automatically changed ~~Client for some properties
 
     #region Networking Settings
-    #region ServerName
-    private string serverNameServer;
-    public string ServerNameServer {
-        get {
-            return serverNameServer;
-        }
-        set {
-            serverNameServer = value;
-            ServerNameClient = value;
-        }
-    }
-
-
-    
-    #endregion
-
+    public string ServerName {get; set;}
     public string PlayerName { get; set; }
     public string PortNumStr { get; set; }
     public int PortNum { get; set; }
@@ -76,21 +61,12 @@ public class SettingsManager : NetworkBehaviour {
     #endregion
     #region GameMode
     private int gameModeIndex;
-    public int GameModeIndexServer {
+    public int GameModeIndex {
         get {
             return gameModeIndex;
         }
         set {
             gameModeIndex = value;
-            GameModeIndexClient = value;
-        }
-    }
-
-    private int gameModeIndexClient;
-    public int GameModeIndexClient {
-        get { return gameModeIndexClient; }
-        set {
-            gameModeIndexClient = value;
             GameModeName = GameModeList[value];
         }
     }
@@ -113,14 +89,13 @@ public class SettingsManager : NetworkBehaviour {
     public int TimeLimitSec { get; protected set;}
 
     private int _scoreToWin;
-    public int ScoreToWinServer {
+    public int ScoreToWin {
         get {
             return _scoreToWin;
         }
         set {
             value = Mathf.Max(value, 0);
             _scoreToWin = value;
-            ScoreToWinClient = value;
         }
     }
     
@@ -158,12 +133,6 @@ public class SettingsManager : NetworkBehaviour {
     private int i_True = 1;
 
     #endregion
-
-    [SyncVar]
-    public string ServerNameClient;
-
-    [SyncVar]
-    public int ScoreToWinClient;
 
     //NetworkView //NetworkView;
     void Awake() {
@@ -212,7 +181,7 @@ public class SettingsManager : NetworkBehaviour {
 
     void RetrieveSettings() {
         // Network Settings
-        ServerNameServer = PlayerPrefs.GetString("ServerName");
+        ServerName = PlayerPrefs.GetString("ServerName");
         PlayerName = PlayerPrefs.GetString("PlayerName", defaultPlayerName);
         PortNumStr = PlayerPrefs.GetString("PortNumStr", defaultPortNumStr);
         IpAddress = PlayerPrefs.GetString("IpAddress", defaultIpAddress);
@@ -229,7 +198,7 @@ public class SettingsManager : NetworkBehaviour {
 
         //Game Settings
         LevelIndex = PlayerPrefs.GetInt("LevelIndex", 0);
-        GameModeIndexServer = PlayerPrefs.GetInt("GameModeIndex", 0);
+        GameModeIndex = PlayerPrefs.GetInt("GameModeIndex", 0);
         SpawnWeapon1 = PlayerPrefs.GetInt("SpawnWeapon1", laserRifleIndex);
         SpawnWeapon2 = PlayerPrefs.GetInt("SpawnWeapon2", noWeaponIndex);
         MedkitCanSpawn = PlayerPrefs.GetInt("MedkitCanSpawn", i_True);
@@ -247,7 +216,7 @@ public class SettingsManager : NetworkBehaviour {
         VolumeMusic = PlayerPrefs.GetFloat("VolumeMusic", 1.0f);
         VolumeEffects = PlayerPrefs.GetFloat("VolumeEffects", 1.0f);
 
-        ScoreToWinServer = PlayerPrefs.GetInt("ScoreToWin", 20);
+        ScoreToWin = PlayerPrefs.GetInt("ScoreToWin", 20);
         TimeLimitMin = PlayerPrefs.GetInt("TimeLimitMin", 15);
 
         ConvertSettingsIntToBool();
@@ -258,7 +227,7 @@ public class SettingsManager : NetworkBehaviour {
         ConvertSettingsBoolToInt();
 
         // Network Settings
-        PlayerPrefs.SetString("ServerName", ServerNameServer);
+        PlayerPrefs.SetString("ServerName", ServerName);
         PlayerPrefs.SetString("PlayerName", PlayerName);
         PlayerPrefs.SetString("PortNumStr", PortNumStr);
         PlayerPrefs.SetString("IpAddress", IpAddress);
@@ -274,7 +243,7 @@ public class SettingsManager : NetworkBehaviour {
         
         //Game Settings
         PlayerPrefs.SetInt("LevelIndex", LevelIndex); 
-        PlayerPrefs.SetInt("GameModeIndex", GameModeIndexServer);
+        PlayerPrefs.SetInt("GameModeIndex", GameModeIndex);
         PlayerPrefs.SetInt("SpawnWeapon1", SpawnWeapon1);
         PlayerPrefs.SetInt("SpawnWeapon2", SpawnWeapon2);
         PlayerPrefs.SetInt("MedkitCanSpawn", MedkitCanSpawn);
@@ -291,7 +260,7 @@ public class SettingsManager : NetworkBehaviour {
         PlayerPrefs.SetFloat("VolumeMusic", VolumeMusic);
         PlayerPrefs.SetFloat("VolumeEffects", VolumeEffects);
 
-        PlayerPrefs.SetInt("ScoreToWin", ScoreToWinServer);
+        PlayerPrefs.SetInt("ScoreToWin", ScoreToWin);
         PlayerPrefs.SetInt("TimeLimitMin", TimeLimitMin);
     }
 
@@ -329,34 +298,13 @@ public class SettingsManager : NetworkBehaviour {
     public bool IsTeamGameMode() {
         // Team : Team Deathmatch, Capture the Flag, Extraction, Team Skirmish
         // No Team: Deathmatch, Skirmish, Elimination, Infection <- There are teams but no choice.
-        return (GameModeIndexClient == 1 || GameModeIndexClient == 3 || GameModeIndexClient == 4 || GameModeIndexClient == 5);
+        return (GameModeIndex == 1 || GameModeIndex == 3 || GameModeIndex == 4 || GameModeIndex == 5);
     }
 
-    #region RPCSettings
-    public void RelayServerName() {
-        //NetworkView.RPC("RPC_RelayServerName", RPCMode.OthersBuffered, this.ServerNameServer);
-    }
-    //[RPC]
-    private void RPC_RelayServerName(string inServerName) {
-        this.ServerNameClient = inServerName;
-    }
-
-    public void RelayScoreToWin() {
-        //NetworkView.RPC("RPC_RelayScoreToWin", RPCMode.OthersBuffered, this.ScoreToWinServer);
-    }
-    //[RPC]
-    private void RPC_RelayScoreToWin(int inScoreToWin) {
-        this.ScoreToWinClient = inScoreToWin;
-    }
-    
-    public void RelayGameMode() {
-        //NetworkView.RPC("RPC_RelayGameMode", RPCMode.AllBuffered, SettingsManager.instance.GameModeIndexServer);
-    }
     //[RPC]
     void RPC_RelayGameMode(int index) {
-        SettingsManager.singleton.GameModeIndexClient = index;
+        //SettingsManager.singleton.GameModeIndexClient = index;
         NetworkManager.single.AssignMyPlayerToTeam();
         UIChat.UpdatePlayerLists();
     }
-    #endregion
 }

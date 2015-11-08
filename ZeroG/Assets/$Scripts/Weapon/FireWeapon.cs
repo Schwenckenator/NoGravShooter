@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
-public class FireWeapon : MonoBehaviour {
+public class FireWeapon : NetworkBehaviour {
     public GameObject paintSplat;
 	public Transform gunFirePoint;
 	public Transform cameraAnchor;
@@ -14,148 +15,162 @@ public class FireWeapon : MonoBehaviour {
 
 	float nextFire = 0;
 
-    ////NetworkView //NetworkView;
     public AudioSource audioSource; // Assign in inspector
 	// Use this for initialization
 	void Awake () {
 		motor = GetComponent<ActorMotorManager>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
-        ////NetworkView = GetComponent<//NetworkView>();
-
-        //if (!//NetworkView.isMine)
-           // this.enabled = false;
 	}
 	void Update(){
-        if (inventory.HasNoWeapons()) return;
-        
-
-        if (inventory.currentWeapon.type != WeaponType.Ray && IsWeaponFiring() && CanWeaponFire()) {
-            WeaponFired();
-        }
-
+        if (!isLocalPlayer) return;
+        CheckForFire(WeaponType.Projectile);
         // Check for dry fire
-        if (IsWeaponFiring() && inventory.currentWeapon.isEmpty()) {
+        if (IsWantToFire() && !inventory.HasNoWeapons() && inventory.currentWeapon.isEmpty) {
            weaponResources.SafeStartReload();
         }
 	}
 
     void FixedUpdate() {
-        if (inventory.HasNoWeapons()) return;
-        if (inventory.currentWeapon.type == WeaponType.Ray && IsWeaponFiring() && CanWeaponFire()) {
-            WeaponFired();
-        } 
+        if (!isLocalPlayer) return;
+        CheckForFire(WeaponType.Ray);
     }
 
-    private bool IsWeaponFiring() {
+    // Check for fire
+    void CheckForFire(WeaponType type) {
+        if (inventory.HasNoWeapons()) return;
+        if (inventory.currentWeapon.type == type && IsWantToFire() && CanWeaponFire()) {
+            if (inventory.currentWeapon.TryFire()) {
+                WeaponFired();
+            }
+        }
+    }
+
+    private bool IsWantToFire() {
         return (Input.GetAxisRaw("Fire1") > 0);
     }
     private bool CanWeaponFire() {
-        return (Time.time > nextFire) && weaponResources.WeaponCanFire() && !WeaponInventory.isChanging && !UIPauseSpawn.IsShown;
+        return weaponResources.WeaponCanFire() && !WeaponInventory.isChanging && !UIPauseSpawn.IsShown;
     }
 
     private void WeaponFired() {
         // Play sounds
         PlayFireWeaponSound();
-        nextFire = Time.time + inventory.currentWeapon.fireDelay;
 
         if (inventory.currentWeapon.type == WeaponType.Ray) { //Does this weapon use a ray to hit?
             FireRay(inventory.currentWeapon.rayNum);
         } else {
-            SpawnProjectile(inventory.currentWeapon.id, gunFirePoint.position, cameraAnchor.rotation, Network.player);
+            CmdSpawnProjectile(inventory.currentWeapon.id, cameraAnchor.rotation);
         }
-        weaponResources.WeaponFired(inventory.currentWeapon.heatPerShot);
+        weaponResources.WeaponFired();
         if (inventory.currentWeapon.hasRecoil) {
             motor.Recoil(inventory.currentWeapon.recoil);
         }
     }
 	
 	private void FireRay(int rayNum) {
-        List<Vector3> endPoints = new List<Vector3>();
-        List<Vector3> hitParticlePoints = new List<Vector3>();
+        List<Vector3> dirs = new List<Vector3>();
 
         int i = 0;
         do {
-            RaycastHit hit = new RaycastHit();
+            //RaycastHit hit = new RaycastHit();
             //Find direction after shot spread
             Vector3 shotDir = cameraAnchor.forward;
             //Apply two rotations
             Vector2 angle = Random.insideUnitCircle * inventory.currentWeapon.shotSpread;
 
             shotDir = Quaternion.AngleAxis(angle.x, cameraAnchor.up) * Quaternion.AngleAxis(angle.y, cameraAnchor.right) * shotDir;
-
-            Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
+            dirs.Add(shotDir);
+            //Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
             
             //Deal with the shot
-            bool spawnHitParticle = false;
+            //bool spawnHitParticle = false;
+            //Collider col = hit.collider;
+            //if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
+            //    spawnHitParticle = true;
+            //    IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
+            //    if (damageable != null) {
+            //        damageable.TakeDamage(inventory.currentWeapon.damage, inventory.currentWeapon.id);
+            //    }
+            //}
+
+            //endPoints.Add(hit.point);
+            //if (spawnHitParticle) {
+            //    hitParticlePoints.Add(hit.point);
+            //}
+            //if (DebugManager.paintballMode){
+            //    Instantiate(paintSplat, hit.point, Quaternion.identity);
+            //}
+
+        } while (inventory.currentWeapon.rayNum > ++i);
+
+        //ShotRender(gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
+
+        //Render shot everywhere else
+        //for (i = 0; i < inventory.currentWeapon.rayNum; i++) {
+        //    ////NetworkView.RPC("NetworkShotRender", RPCMode.Others, inventory.currentWeapon.id, gunFirePoint.position, endPoints[i]);
+        //}
+        //foreach (Vector3 hitPoint in hitParticlePoints) {
+        //    ////NetworkView.RPC("SpawnHitParticle", RPCMode.Others, inventory.currentWeapon.id, hitPoint);
+        //}
+    }
+
+    [Command]
+    void CmdFireRays(int weaponID, Vector3[] dirs) {
+
+        List<Vector3> endPoints = new List<Vector3>();
+        List<Vector3> spawnHitParticlePoints = new List<Vector3>();
+
+        foreach(Vector3 dir in dirs) {
+            RaycastHit hit = new RaycastHit();
+            Physics.Raycast(cameraAnchor.position, dir, out hit, Mathf.Infinity);
+            endPoints.Add(hit.point);
             Collider col = hit.collider;
             if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
-                spawnHitParticle = true;
+                spawnHitParticlePoints.Add(hit.point);
                 IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
                 if (damageable != null) {
                     damageable.TakeDamage(inventory.currentWeapon.damage, inventory.currentWeapon.id);
                 }
             }
-
-            endPoints.Add(hit.point);
-            if (spawnHitParticle) {
-                hitParticlePoints.Add(hit.point);
-            }
-            if (DebugManager.IsPaintballMode()) {
-                Instantiate(paintSplat, hit.point, Quaternion.identity);
-            }
-        } while (inventory.currentWeapon.rayNum > ++i);
-
-        ShotRender(gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
-
-        //Render shot everywhere else
-        for (i = 0; i < inventory.currentWeapon.rayNum; i++) {
-            ////NetworkView.RPC("NetworkShotRender", RPCMode.Others, inventory.currentWeapon.id, gunFirePoint.position, endPoints[i]);
         }
-        foreach (Vector3 hitPoint in hitParticlePoints) {
-            ////NetworkView.RPC("SpawnHitParticle", RPCMode.Others, inventory.currentWeapon.id, hitPoint);
-        }
+        RenderRays(weaponID, gunFirePoint.position, endPoints.ToArray());
     }
 
-    ////[RPC]
-    void SpawnProjectile(int weaponID, Vector3 position, Quaternion rotation, NetworkPlayer owner) {
-        if (Network.isServer) {
-            GameObject newObj = Network.Instantiate(WeaponManager.weapon[weaponID].projectile, position, rotation, 0) as GameObject;
-            if (newObj.GetComponent<Owner>() != null) {
-                newObj.GetComponent<Owner>().ID = owner;
-            }
-
-        } else {
-            ////NetworkView.RPC("SpawnProjectile", RPCMode.Server, weaponID, position, rotation, owner);
-        }
-    }
-
-    ////[RPC]
-    void NetworkShotRender(int weaponID, Vector3 start, Vector3 end) {
+    void RenderRays(int weaponID, Vector3 start, Vector3[] ends) {
         Weapon weapon = WeaponManager.weapon[weaponID];
-
-        GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
-        LineRenderer render = shot.GetComponent<LineRenderer>();
-        render.useWorldSpace = true;
-        render.SetPosition(0, start);
-        render.SetPosition(1, end);
-    }
-
-    ////[RPC]
-    void SpawnHitParticle(int weaponID, Vector3 position) {
-        Weapon weapon = WeaponManager.weapon[weaponID];
-
-        Instantiate(weapon.hitParticle, position, Quaternion.identity);
-    }
-
-    void ShotRender(Vector3 start, Vector3[] endPoints, Vector3[] hitParticle) {
-        // Spawn hit particle
-        foreach(Vector3 hit in hitParticle){
-            Instantiate(inventory.currentWeapon.hitParticle, hit, Quaternion.identity);
+        if (isLocalPlayer) {
+            ShotRender(gunFirePoint.position, ends); // Local render
         }
+        foreach (Vector3 end in ends) { // Other's render
+            GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
+            LineRenderer render = shot.GetComponent<LineRenderer>();
+            render.useWorldSpace = true;
+            render.SetPosition(0, start);
+            render.SetPosition(1, end);
+        }
+    }
 
-        // Render shot line
+    [ClientRpc]
+    void RpcRenderRays(int weaponID, Vector3 start, Vector3[] ends) {
+        RenderRays(weaponID, start, ends);
+    }
 
+    [Command]
+    void CmdSpawnProjectile(int weaponID, Quaternion rotation) {
+        GameObject newObj = Network.Instantiate(WeaponManager.weapon[weaponID].projectile, gunFirePoint.position, rotation, 0) as GameObject;
+        NetworkServer.Spawn(newObj);
+    }
+
+    [ClientRpc]
+    void RpcSpawnHitParticles(int weaponID, Vector3[] positions) {
+        Weapon weapon = WeaponManager.weapon[weaponID];
+        foreach(Vector3 pos in positions) {
+            Instantiate(weapon.hitParticle, pos, Quaternion.identity);
+        }
+    }
+
+    void ShotRender(Vector3 start, Vector3[] endPoints) {
         // Modify start point once
         start = cameraAnchor.InverseTransformPoint(start);
 
@@ -171,16 +186,15 @@ public class FireWeapon : MonoBehaviour {
             lineRenderer.SetPosition(1, newEnd);
         }
     }
-	
-    void PlayFireWeaponSound() {
-        //if (//NetworkView.isMine) {
-            audioSource.PlayOneShot(inventory.currentWeapon.fireSound);
 
-            ////NetworkView.RPC("RPCPlayFireWeaponSound", RPCMode.Others, inventory.currentWeapon.id);
-        //}
+    void PlayFireWeaponSound() {
+        if (isLocalPlayer) {
+            audioSource.PlayOneShot(inventory.currentWeapon.fireSound);
+        }
     }
-    ////[RPC]
-    void RPCPlayFireWeaponSound(int weaponID) {
+    [ClientRpc]
+    void RpcPlayFireWeaponSound(int weaponID) {
+        if (isLocalPlayer) return;
         Weapon weapon = WeaponManager.weapon[weaponID];
         audioSource.PlayOneShot(weapon.fireSound);
     }

@@ -89,7 +89,7 @@ public class ChatManager : MonoBehaviour {
     }
     
     public static void DebugMessage(string message) {
-        if (!DebugManager.IsDebugMode()) return;
+        if (!DebugManager.debugMode) return;
         
         if (Application.isEditor) { Debug.Log(message); }
         ChatManager.AddToLocalChat(message);

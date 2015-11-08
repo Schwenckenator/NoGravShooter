@@ -40,7 +40,7 @@ public class UIGraphicsSettings : MonoBehaviour {
         }
     }
     public void GraphicsOptionsButtonRefresh() {
-        dropdown.captionText.text = resolutions[resolutionIndex].width.ToString() + " x " + resolutions[resolutionIndex].height.ToString();
+        dropdown.value = resolutionIndex;
     }
     public void ResolutionChange(int index) {
         resolutionIndex = index;

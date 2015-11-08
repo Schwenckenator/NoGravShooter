@@ -21,10 +21,10 @@ public class BonusWeaponPickup : MonoBehaviour {
     ////NetworkView //NetworkView;
 	void Start(){
         ////NetworkView = GetComponent<//NetworkView>();
-        if (DebugManager.IsAllWeapon()) {
+        if (DebugManager.allWeapon) {
 			maxweaponcount = 99;
 		}
-		if(Network.isServer){
+		if(NetworkManager.isServer){
 			if(randomid){
 				////NetworkView.RPC("ChangeId", RPCMode.AllBuffered, Random.Range(0,8));
 			} else {

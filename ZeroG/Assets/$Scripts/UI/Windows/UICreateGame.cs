@@ -7,7 +7,7 @@ public class UICreateGame : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         InputField[] inputs = GetComponentsInChildren<InputField>(true);
-        inputs[0].text = SettingsManager.singleton.ServerNameServer;
+        inputs[0].text = SettingsManager.singleton.ServerName;
         inputs[1].text = SettingsManager.singleton.PortNumStr;
         inputs[2].text = SettingsManager.singleton.PasswordServer;
 
@@ -16,7 +16,7 @@ public class UICreateGame : MonoBehaviour {
     public void CreateGame(bool online) {
         SettingsManager.singleton.ParsePortNumber();
         // Check for error
-        if (SettingsManager.singleton.ServerNameServer == "") {
+        if (SettingsManager.singleton.ServerName == "") {
             UIMessage.ShowMessage("Server name required. Please enter a name.", true);
             return;
         }
@@ -33,7 +33,7 @@ public class UICreateGame : MonoBehaviour {
     }
 
     public void SetServerName(string value) {
-        SettingsManager.singleton.ServerNameServer = value;
+        SettingsManager.singleton.ServerName = value;
     }
     public void SetPortNum(string value) {
         SettingsManager.singleton.PortNumStr = value;

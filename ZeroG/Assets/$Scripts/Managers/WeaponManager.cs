@@ -1,34 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class WeaponManager : MonoBehaviour {
 
     public static WeaponManager singleton { get; private set; }
-    public static List<Weapon> weapon = new List<Weapon>();
+    public static List<Weapon> weapon;
 
     static int maxStartingWeapons = 2;
-    public int GetMaxStartingWeapons() { return maxStartingWeapons; }
+    public static int GetMaxStartingWeapons() { return maxStartingWeapons; }
 
-    private int[] startingWeapons = new int[maxStartingWeapons];
-    public int[] GetStartingWeapons() {
-        return startingWeapons;
+    public SyncListInt GetStartingWeapons() {
+        return NetworkInfoWrapper.singleton.startingWeapons;
     }
 
     // Use this for initialization
-    void Awake () {
+    void Start () {
         singleton = this;
+        weapon = new List<Weapon>();
 
-		Weapon[] weapons = GetComponents<Weapon>();
+        Weapon[] weapons = GetComponents<Weapon>();
+        Debug.Log(weapons.Length);
+        int index = 0;
         foreach (Weapon weap in weapons) {
-            //Debug.Log(weap.ToString());
             weapon.Add(weap);
-            
-        }
-        for (int i = 0; i < weapon.Count; i++) {
-            weapon[i].id = i;
-            weapon[i].Init();
-            
+            weap.id = index++;
+            weap.Init();
         }
 	}
+
+    public void ResetWeapons() {
+        foreach (Weapon weap in weapon) {
+            weap.ResetVariables();
+        }
+    }
 }

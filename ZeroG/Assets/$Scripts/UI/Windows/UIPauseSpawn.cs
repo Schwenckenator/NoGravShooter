@@ -93,8 +93,8 @@ public class UIPauseSpawn : MonoBehaviour {
     }
 
     public static void SetServerNameText() {
-        string newText = SettingsManager.singleton.ServerNameClient;
-        newText += ", " + SettingsManager.singleton.GameModeName;
+        string newText = NetworkInfoWrapper.singleton.ServerName;
+        newText += ", " + NetworkInfoWrapper.singleton.GameModeName;
         serverName.SetText(newText);
     }
     public static void TutorialModeActive(bool isTutorial) {

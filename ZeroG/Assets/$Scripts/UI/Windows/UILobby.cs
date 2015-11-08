@@ -9,23 +9,29 @@ public class UILobby : MonoBehaviour {
 
     public Text serverNameText;
     public Text serverSettings;
-    public Text startButtonText;
     public Text disconnectButtonText;
+
+    public Button startGameButton;
     public Button changeTeamButton;
+
+    private Text startButtonText;
 
     private static bool countdown = false;
 
     private static bool teamGame = false;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         singleton = this;
-        LobbyInit();
 
+        ShowChangeTeamButton(false);
+        startButtonText = startGameButton.GetComponentInChildren<Text>();
 	}
     void OnEnable() {
         SetServerName();
         SetShutdownButtonText();
+        ChangeButtonText(false);
+        startGameButton.interactable = true;
     }
 
     private void SetShutdownButtonText() {
@@ -46,13 +52,9 @@ public class UILobby : MonoBehaviour {
         teamGame = show;
         changeTeamButton.gameObject.SetActive(show);
     }
-
-    void LobbyInit() {
-        ShowChangeTeamButton(false);
-    }
     #region StartGame
     public void StartCountdown() {
-        UILobby.singleton.StartCountdownStatic();
+        StartCountdownStatic();
     }
     private void StartCountdownStatic() {
         if (countdown) {
@@ -73,7 +75,7 @@ public class UILobby : MonoBehaviour {
         ChangeButtonText(countdown);
     }
     IEnumerator CountdownStartGame() {
-        if (DebugManager.IsAdminMode()) {
+        if (DebugManager.adminMode) {
             GameManager.singleton.LoadLevel();
             yield break;
         }
@@ -86,7 +88,7 @@ public class UILobby : MonoBehaviour {
         } while (waitSeconds-- > 0);
         GameManager.singleton.LoadLevel();
         countdown = false;
-        ChangeButtonText(countdown);
+        startGameButton.interactable = false;
     }
     #endregion
 
@@ -97,10 +99,7 @@ public class UILobby : MonoBehaviour {
         NetworkManager.MyPlayer().ChangeTeam();
     }
     public void Disconnect() {
-        UILobby.singleton.DisconnectStatic();
-    }
-    public void GoGameSettings() {
-        UILobby.singleton.StopCountdown();
+        DisconnectStatic();
     }
     
     private void DisconnectStatic() {
@@ -109,8 +108,8 @@ public class UILobby : MonoBehaviour {
     }
 
     public void SetServerName() {
-        Debug.Log("Server Name is: " + SettingsManager.singleton.ServerNameClient);
-        serverNameText.text = SettingsManager.singleton.ServerNameClient;
+        Debug.Log("Server Name is: " + NetworkInfoWrapper.singleton.ServerName);
+        serverNameText.text = NetworkInfoWrapper.singleton.ServerName;
 
         string text = "IP: " + NetworkManager.single.networkAddress;
         text += ", Port: " + NetworkManager.single.networkPort;

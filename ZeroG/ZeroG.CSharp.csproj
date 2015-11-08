@@ -112,6 +112,7 @@
     <Compile Include="Assets\$Scripts\Managers\GameManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\GuiManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\InputKey.cs" />
+    <Compile Include="Assets\$Scripts\Managers\NetworkInfoWrapper.cs" />
     <Compile Include="Assets\$Scripts\Managers\NetworkManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\OnGameOpen.cs" />
     <Compile Include="Assets\$Scripts\Managers\OnLevelOpen.cs" />

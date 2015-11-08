@@ -33,7 +33,7 @@ public class ActorGrenades : MonoBehaviour {
     }
     public bool CanThrowGrenade() {
 
-        if (DebugManager.IsAllGrenade()) grenades[currentGrenadeType]++;
+        if (DebugManager.allGrenade) grenades[currentGrenadeType]++;
 
         if (grenades[currentGrenadeType] > 0) {
             grenades[currentGrenadeType]--;

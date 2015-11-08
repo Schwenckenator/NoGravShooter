@@ -33,7 +33,7 @@ public class NetworkManager : NetworkLobbyManager {
     }
 
     void Update() {
-        if (DebugManager.IsAdminMode() && Input.GetKeyDown(KeyCode.F4)) {
+        if (DebugManager.adminMode && Input.GetKeyDown(KeyCode.F4)) {
             foreach (Player player in connectedPlayers) {
                 ChatManager.DebugMessage("Player \"" + player.Name + "\" with ID \"" + player.ID+"\"");
             }

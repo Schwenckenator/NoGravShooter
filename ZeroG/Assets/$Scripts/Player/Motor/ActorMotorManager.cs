@@ -203,9 +203,9 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
 
         float angle = Vector3.Angle(transform.up, colNormal);
 
-        if (angle > 0) {
-            Debug.Log(angle);
-        }
+        //if (angle > 0) {
+        //    Debug.Log(angle);
+        //}
 
         return (angle > 0f && angle < currentLandingAngle);
     }

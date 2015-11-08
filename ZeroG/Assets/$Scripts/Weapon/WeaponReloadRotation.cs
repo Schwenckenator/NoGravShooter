@@ -119,7 +119,7 @@ public class WeaponReloadRotation : MonoBehaviour {
     }
 
     void LogRotation() {
-        if (DebugManager.IsDebugMode()) {
+        if (DebugManager.debugMode) {
             Debug.Log(transform.localEulerAngles);
         }
     }

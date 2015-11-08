@@ -4,7 +4,7 @@ using System.Collections;
 public enum WeaponType { Ray, Projectile};
 public abstract class Weapon: MonoBehaviour {
     private static float coolRate = 30;
-
+    private static float maxHeat = 100;
     /// 
     /// Weapon Stats
     /// 
@@ -43,6 +43,11 @@ public abstract class Weapon: MonoBehaviour {
     public int currentClip{ get; set;}
     public int remainingAmmo {get; set;}
     public float shotSpread { get; set; }
+    public float nextFire { get; set; }
+
+    void Awake() {
+        update = PlayWithBalls;
+    }
 
     public void ResetVariables() {
         if (isEnergy) {
@@ -58,17 +63,35 @@ public abstract class Weapon: MonoBehaviour {
 
     public abstract void Init();
 
-    public bool isFull() {
-        return currentClip == clipSize;
+    public bool isFull {
+        get {
+            return currentClip == clipSize;
+        }
     }
-    public bool isEmpty() {
-        return currentClip <= 0;
+    public bool isEmpty {
+        get {
+            return currentClip <= 0;
+        }
+    }
+    public bool isOverheat {
+        get {
+            return heat >= maxHeat;
+        }
     }
 
-    public virtual void Fire() {
+    // True if fired, false if cannot
+    public virtual bool TryFire() {
+
+        if (nextFire > Time.time) return false;
+        if (isEmpty) return false;
+        if (isOverheat) return false;
+
+        // Can fire! Do stuff now
+
         currentClip--;
         
         heat += heatPerShot;
+        nextFire = Time.time + fireDelay;
 
         // Add the fire delay as a cooldown time
         // Sustained fire will quickly heat up your weapon, but taking small breaks will help it cool
@@ -79,6 +102,7 @@ public abstract class Weapon: MonoBehaviour {
             shotSpread = maxSpread;
         }
 
+        return true;
     }
     public virtual void Aim(bool aiming) {
 
@@ -123,4 +147,6 @@ public abstract class Weapon: MonoBehaviour {
     protected void PlayWithBalls() {
         // Do nothing
     }
+
+
 }

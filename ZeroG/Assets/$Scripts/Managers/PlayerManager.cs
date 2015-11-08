@@ -102,6 +102,7 @@ public class PlayerManager : NetworkBehaviour {
         foreach (IResetable reset in gameObject.GetInterfacesInChildren<IResetable>()) {
             reset.Reset();
         }
+        WeaponManager.singleton.ResetWeapons();
     }
 
     private void MyActorDead() {

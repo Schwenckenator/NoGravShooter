@@ -57,7 +57,7 @@ public class ActorJetpackFuel : NetworkBehaviour {
     /// <param name="forceSpend"></param>
     /// <returns></returns>
     public bool SpendFuel(float spentFuel, bool forceSpend = false) {
-        if (DebugManager.IsAllFuel()) {
+        if (DebugManager.allFuel) {
             return true;
         }
 

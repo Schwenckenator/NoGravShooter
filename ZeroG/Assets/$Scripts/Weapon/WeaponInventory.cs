@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking;
 
 /// <summary>
 /// The currently held weapons
 /// </summary>
-public class WeaponInventory : MonoBehaviour {
+public class WeaponInventory : NetworkBehaviour {
     public int maxHeldWeapons = 2;
     public Weapon currentWeapon { get; set; }
     public int currentInventorySlot {get; private set;}
@@ -19,10 +20,8 @@ public class WeaponInventory : MonoBehaviour {
 
     private AudioSource audioSource;
 
-    //NetworkView //NetworkView;
 	// Use this for initialization
 	void Awake () {
-        //NetworkView = GetComponent<//NetworkView>();
         heldWeapons = new List<Weapon>();
         weaponReloadRotation = GetComponentInChildren<WeaponReloadRotation>();
         audioSource = GetComponent<AudioSource>();
@@ -36,17 +35,18 @@ public class WeaponInventory : MonoBehaviour {
         SetWeaponLoadout();
         currentInventorySlot = -1; // Bad value, will change
         currentWeapon = null;
-        //if (NetworkView.isMine) {
+        if (isLocalPlayer) {
             ChangeWeapon(0);
-        //}
+        }
     }
     void Start() {
-        //if (NetworkView.isMine) {
+        if (isLocalPlayer) {
             ChangeWeapon(0);
-        //} else {
-        //    this.enabled = false;
-        //    return;
-        //}
+        } else {
+            enabled = false;
+            return;
+        }
+     
         initialised = true;
     }
 
@@ -56,19 +56,19 @@ public class WeaponInventory : MonoBehaviour {
         heldWeapons.Clear();
 
         if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
-        int[] temp = WeaponManager.singleton.GetStartingWeapons();
+        SyncListInt IDs = WeaponManager.singleton.GetStartingWeapons();
 
-        foreach (int id in temp) {
+        for(int i=0; i<IDs.Count; i++) { 
             //Debug.Log(id.ToString());
-            if (id >= 0 && id < WeaponManager.weapon.Count) {
-                AddWeapon(id);
+            if (IDs[i] >= 0 && IDs[i] < WeaponManager.weapon.Count) {
+                AddWeapon(IDs[i]);
             }
         }
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (!UIPauseSpawn.IsShown || HasNoWeapons()) return;
+        if (UIPauseSpawn.IsShown || HasNoWeapons()) return;
         GetKeyStrokes();
         MouseWheelWeaponChange();
 
@@ -115,7 +115,7 @@ public class WeaponInventory : MonoBehaviour {
         }
     }
     int GetMaxWeapon() {
-        if (DebugManager.IsAllWeapon()) {
+        if (DebugManager.allWeapon) {
             return WeaponManager.weapon.Count;
         } else {
             return heldWeapons.Count;
@@ -140,7 +140,7 @@ public class WeaponInventory : MonoBehaviour {
         if (currentInventorySlot == weaponId && !force) { return; } // If you're already here, do nothing
 
         StopCoroutine("WeaponChange");
-        if (DebugManager.IsAllWeapon()) {
+        if (DebugManager.allWeapon) {
             if (weaponId < WeaponManager.weapon.Count) {
                 currentInventorySlot = weaponId;
                 currentWeapon = WeaponManager.weapon[weaponId];

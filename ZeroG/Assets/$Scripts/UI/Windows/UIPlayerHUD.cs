@@ -13,8 +13,6 @@ public class UIPlayerHUD : MonoBehaviour {
 
     public static UIPlayerHUD singleton { get; private set; }
 
-    static ChangeableText ammo;
-    static ChangeableText grenade;
     static ChangeableText promptText;
     static ChangeableText tutorialPromptText;
     
@@ -41,6 +39,8 @@ public class UIPlayerHUD : MonoBehaviour {
     public Sprite testSprite;
     public MovingBar healthBar;
     public MovingBar fuelBar;
+    public Text ammo;
+    public Text grenade;
 
     void Awake() {
         singleton = this;
@@ -58,9 +58,7 @@ public class UIPlayerHUD : MonoBehaviour {
         IChangeable[] changers = gameObject.GetInterfacesInChildren<IChangeable>();
 
         foreach (IChangeable changer in changers) {
-            if (changer.IsType("ammo")) ammo = changer as ChangeableText;
-            else if (changer.IsType("grenade")) grenade = changer as ChangeableText;
-            else if (changer.IsType("promptText")) promptText = changer as ChangeableText;
+            if (changer.IsType("promptText")) promptText = changer as ChangeableText;
             else if (changer.IsType("promptHide")) promptUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptText")) tutorialPromptText = changer as ChangeableText;
             else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
@@ -93,8 +91,8 @@ public class UIPlayerHUD : MonoBehaviour {
             healthBar.SetValue(temp);
             fuelBar.SetValue(jetpackFuel.GetFuel());
 
-            ammo.SetText(MakeAmmoString());
-            grenade.SetText(MakeGrenadeString());
+            ammo.text = MakeAmmoString();
+            grenade.text = MakeGrenadeString();
         }
 
         // TEST

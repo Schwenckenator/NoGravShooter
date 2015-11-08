@@ -64,7 +64,7 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     void CheckForScoreVictory() {
 
-        if (SettingsManager.singleton.ScoreToWinClient <= 0) return; // If score disabled, don't bother
+        if (NetworkInfoWrapper.singleton.ScoreToWin <= 0) return; // If score disabled, don't bother
 
         if (SettingsManager.singleton.IsTeamGameMode()) {
             TeamCheckForScoreVictory();
@@ -75,14 +75,14 @@ public class ScoreVictoryManager : MonoBehaviour {
     // Bad bad code duplication. Bad Matt! *smack*
     void TeamCheckForScoreVictory() {
         foreach (Team team in Teams) {
-            if (team.IsScoreEqualOrOverAmount(SettingsManager.singleton.ScoreToWinClient)) {
+            if (team.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
                 DeclareWinner(team.Name);
             }
         }
     }
     void FFACheckForScoreVictory() {
         foreach (Player player in NetworkManager.connectedPlayers) {
-            if (player.IsScoreEqualOrOverAmount(SettingsManager.singleton.ScoreToWinClient)) {
+            if (player.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
                 DeclareWinner(player.Name);
                 break;
             }
