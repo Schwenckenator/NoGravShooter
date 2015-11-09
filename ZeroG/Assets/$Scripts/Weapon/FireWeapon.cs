@@ -11,9 +11,6 @@ public class FireWeapon : NetworkBehaviour {
 	
     WeaponInventory inventory;
     WeaponResources weaponResources;
-	//GameObject shot;
-
-	float nextFire = 0;
 
     public AudioSource audioSource; // Assign in inspector
 	// Use this for initialization

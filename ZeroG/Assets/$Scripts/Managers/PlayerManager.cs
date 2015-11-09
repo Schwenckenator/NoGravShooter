@@ -35,7 +35,7 @@ public class PlayerManager : NetworkBehaviour {
 
     [Command]
     void CmdSpawnActor() {
-        Debug.Log("Rpc Spawn Actor");
+        Debug.Log("Cmd Spawn Actor");
         ChangeActorState(true);
         RpcSpawnActor();
     }

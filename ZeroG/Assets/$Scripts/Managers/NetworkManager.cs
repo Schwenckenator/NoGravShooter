@@ -146,6 +146,7 @@ public class NetworkManager : NetworkLobbyManager {
 
     public override void OnStartServer() {
         base.OnStartServer();
+        NetworkInfoWrapper.singleton.ServerStarted();
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
         //SettingsManager.singleton.RelayServerName();
         //AssignMyPlayerToTeam();
@@ -157,18 +158,18 @@ public class NetworkManager : NetworkLobbyManager {
         base.OnClientConnect(conn);
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
-
-        //    // Set window to lobby
         UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
-    //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
+        //    // Set window to lobby
 
-    //    string message = SettingsManager.singleton.PlayerName + " has connected.";
-    //    ChatManager.singleton.AddToChat(message);
-    //    AssignMyPlayerToTeam();
+        //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
 
-    //    PlayerManager.singleton.Init(); // Initialise players
+        //    string message = SettingsManager.singleton.PlayerName + " has connected.";
+        //    ChatManager.singleton.AddToChat(message);
+        //    AssignMyPlayerToTeam();
 
-    //    UIManager.singleton.UpdateArraysFromNetworkConnection();
+        //    PlayerManager.singleton.Init(); // Initialise players
+
+        //    UIManager.singleton.UpdateArraysFromNetworkConnection();
     }
 
     public override void OnClientError(NetworkConnection conn, int errorCode) {
@@ -249,9 +250,5 @@ public class NetworkManager : NetworkLobbyManager {
     private static bool isReadyToSpawn = false;
     public static bool IsReadyToSpawn() {
         return isReadyToSpawn;
-    }
-
-    private void ShowLobbyScreen() {
-        UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
     }
 }

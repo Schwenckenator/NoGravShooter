@@ -36,17 +36,12 @@ public class WeaponInventory : NetworkBehaviour {
         currentInventorySlot = -1; // Bad value, will change
         currentWeapon = null;
         if (isLocalPlayer) {
-            ChangeWeapon(0);
+            ChangeWeapon(0, true);
         }
     }
-    void Start() {
-        if (isLocalPlayer) {
-            ChangeWeapon(0);
-        } else {
-            enabled = false;
-            return;
-        }
-     
+    public override void OnStartLocalPlayer() {
+        base.OnStartLocalPlayer();
+        ChangeWeapon(0, true);
         initialised = true;
     }
 
@@ -140,18 +135,13 @@ public class WeaponInventory : NetworkBehaviour {
         if (currentInventorySlot == weaponId && !force) { return; } // If you're already here, do nothing
 
         StopCoroutine("WeaponChange");
-        if (DebugManager.allWeapon) {
-            if (weaponId < WeaponManager.weapon.Count) {
-                currentInventorySlot = weaponId;
-                currentWeapon = WeaponManager.weapon[weaponId];
-                StartCoroutine("WeaponChange");
-            }
-        } else {
-            if (weaponId < heldWeapons.Count) {
-                currentInventorySlot = weaponId;
-                currentWeapon = heldWeapons[weaponId];
-                StartCoroutine("WeaponChange");
-            }
+        int max = DebugManager.allWeapon ? WeaponManager.weapon.Count : heldWeapons.Count;
+        List<Weapon> list = DebugManager.allWeapon ? WeaponManager.weapon : heldWeapons;
+
+        if (weaponId < max) {
+            currentInventorySlot = weaponId;
+            currentWeapon = list[weaponId];
+            StartCoroutine("WeaponChange");
         }
     }
 

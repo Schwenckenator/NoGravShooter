@@ -76,6 +76,7 @@ public class UILobby : MonoBehaviour {
     }
     IEnumerator CountdownStartGame() {
         if (DebugManager.adminMode) {
+            startGameButton.interactable = false;
             GameManager.singleton.LoadLevel();
             yield break;
         }
@@ -86,9 +87,9 @@ public class UILobby : MonoBehaviour {
             ChatManager.singleton.AddToChat(waitSeconds.ToString() + "...");
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
+        startGameButton.interactable = false;
         GameManager.singleton.LoadLevel();
         countdown = false;
-        startGameButton.interactable = false;
     }
     #endregion
 

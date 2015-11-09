@@ -2,29 +2,31 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class NetworkInfoWrapper : NetworkBehaviour{
+public class NetworkInfoWrapper : NetworkBehaviour {
     // Holds info that needs to be networked
 
     public static NetworkInfoWrapper singleton { get; private set; }
 
+    [SyncVar(hook = "OnServerName")]
+    public string ServerName = "";
     [SyncVar]
-    public string ServerName;
+    public int ScoreToWin = 0;
     [SyncVar]
-    public int ScoreToWin;
+    public int GameMode = 0;
     [SyncVar]
-    public int GameMode;
+    public string GameModeName = "";
     [SyncVar]
-    public string GameModeName;
-    [SyncVar]
-    public int SecondsLeft;
+    public int SecondsLeft = 0;
 
     public SyncListInt startingWeapons = new SyncListInt();
 
-    // Initialisation methods
-    public override void OnStartClient() {
+    void Awake() {
         singleton = this;
     }
-    public override void OnStartServer() {
+
+    public void ServerStarted() {
+        Debug.Log("NetworkInfoWrapper ServerStarted");
+
         ServerName = SettingsManager.singleton.ServerName;
         GameMode = SettingsManager.singleton.GameModeIndex;
         GameModeName = SettingsManager.singleton.GameModeName;
@@ -47,6 +49,12 @@ public class NetworkInfoWrapper : NetworkBehaviour{
         SecondsLeft = SettingsManager.singleton.TimeLimitSec;
 
         SetStartingWeapons();
+    }
+
+    // HOOKS
+    private void OnServerName(string value) {
+        ServerName = value;
+        UILobby.singleton.SetServerName();
     }
 
     // RPC and Commands

@@ -21,7 +21,6 @@ public class WeaponManager : MonoBehaviour {
         weapon = new List<Weapon>();
 
         Weapon[] weapons = GetComponents<Weapon>();
-        Debug.Log(weapons.Length);
         int index = 0;
         foreach (Weapon weap in weapons) {
             weapon.Add(weap);
