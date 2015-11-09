@@ -16,10 +16,10 @@ public class NetworkManager : NetworkLobbyManager {
         }
     }
 
-    //public const string GameType = "NoGravShooter";
+    public GameObject InfoPrefab;
     
     public static List<Player> connectedPlayers = new List<Player>();
-    private static Player myPlayer;
+    public static Player myPlayer;
 
     private static bool useMatchmaking = false;
     
@@ -40,28 +40,19 @@ public class NetworkManager : NetworkLobbyManager {
         }
     }
 
-    public static Player GetPlayer(NetworkPlayer value) {
-        return NetworkManager.connectedPlayers.Find(x => x.ID.Equals(value));
+    public static Player GetPlayer(int value) {
+        return connectedPlayers.Find(x => x.ID.Equals(value));
     }
     public static Player MyPlayer() {
-        if (myPlayer == null) {
-            //myPlayer = GetPlayer(Network.player);
-            
-        }
         return myPlayer;
     }
-    public static bool DoesPlayerExist(NetworkPlayer value) {
+    public static bool DoesPlayerExist(int value) {
         return NetworkManager.connectedPlayers.Exists(x => x.ID.Equals(value));
     }
     
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
         UIChat.UpdatePlayerLists();
         //NetworkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
-    }
-    //[RPC]
-    private void RPCPlayerChangedTeam(NetworkPlayer player, int newTeam) {
-        GetPlayer(player).ChangeTeam((TeamColour)newTeam, false);
-        UIChat.UpdatePlayerLists();
     }
 
     public static void Disconnect() {
@@ -146,12 +137,17 @@ public class NetworkManager : NetworkLobbyManager {
 
     public override void OnStartServer() {
         base.OnStartServer();
-        NetworkInfoWrapper.singleton.ServerStarted();
+        Instantiate(InfoPrefab);
+        
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
         //SettingsManager.singleton.RelayServerName();
         //AssignMyPlayerToTeam();
 
         //PlayerManager.singleton.Init(); // Initialise player
+    }
+    public override void OnServerConnect(NetworkConnection conn) {
+        base.OnServerConnect(conn);
+        SearchForPlayers();
     }
 
     public override void OnClientConnect(NetworkConnection conn) {
@@ -159,6 +155,7 @@ public class NetworkManager : NetworkLobbyManager {
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
         UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
+        SearchForPlayers();
         //    // Set window to lobby
 
         //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
@@ -234,21 +231,35 @@ public class NetworkManager : NetworkLobbyManager {
 
     #region RPC
     //[RPC]
-    void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
-        NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
+    //void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
+    //    NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
 
-        UIChat.UpdatePlayerLists();
-    }
-    //[RPC]
-    void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
-        NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
-        UIChat.UpdatePlayerLists();
-    }
+    //    UIChat.UpdatePlayerLists();
+    //}
+    ////[RPC]
+    //void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
+    //    NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
+    //    UIChat.UpdatePlayerLists();
+    //}
     #endregion
 
     // Spawning Data Structure
     private static bool isReadyToSpawn = false;
     public static bool IsReadyToSpawn() {
         return isReadyToSpawn;
+    }
+
+    
+
+    public void SearchForPlayers() {
+        Player[] players = FindObjectsOfType<Player>();
+        int index = 0;
+        foreach(Player player in players) {
+            connectedPlayers.Add(player);
+            if (isServer) {
+                player.ID = index++;
+            }
+        }
+        PlayerList.listDirty = true;
     }
 }

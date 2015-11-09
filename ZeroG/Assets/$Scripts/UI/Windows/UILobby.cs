@@ -17,18 +17,20 @@ public class UILobby : MonoBehaviour {
     private Text startButtonText;
 
     private static bool countdown = false;
-
     private static bool teamGame = false;
+
+    private static Canvas myCanvas;
 
 	// Use this for initialization
 	void Awake () {
         singleton = this;
+        myCanvas = GetComponent<Canvas>();
 
         ShowChangeTeamButton(false);
         startButtonText = startGameButton.GetComponentInChildren<Text>();
 	}
     void OnEnable() {
-        SetServerName();
+        myCanvas.enabled = false;
         SetShutdownButtonText();
         ChangeButtonText(false);
         startGameButton.interactable = true;
@@ -108,13 +110,15 @@ public class UILobby : MonoBehaviour {
         StopCountdown();
     }
 
-    public void SetServerName() {
+    public void SetServerName() { // Only call when NetworkInfoWrapper is ready
         Debug.Log("Server Name is: " + NetworkInfoWrapper.singleton.ServerName);
         serverNameText.text = NetworkInfoWrapper.singleton.ServerName;
 
         string text = "IP: " + NetworkManager.single.networkAddress;
         text += ", Port: " + NetworkManager.single.networkPort;
         serverSettings.text = text;
+
+        myCanvas.enabled = true; // Show canvas, it's ready
     }
 
     //[RPC]

@@ -1,64 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-
-
-public class Player {
-    public NetworkPlayer ID { get; protected set; }
-    public string Name { get; protected set; }
-    public int Score { get; protected set; }
-    public TeamColour Team { get; protected set; }
-
-    public Player(NetworkPlayer id, string name) {
-        this.ID = id;
-        this.Name = name;
-        this.Score = 0;
-        this.Team = TeamColour.None;
-    }
-    public Player() {
-        this.Name = "";
-        this.Score = 0;
-        this.Team = TeamColour.None;
-    }
+public class Player : NetworkBehaviour{
+    [SyncVar]
+    public int ID;
+    [SyncVar]
+    public string Name;
+    [SyncVar]
+    public int Score;
+    [SyncVar(hook ="OnTeamChange")]
+    private int i_Team;
+    public TeamColour Team {get; private set;}
 
     #region Score
     public bool IsScoreEqualOrOverAmount(int amount) {
-        return (this.Score >= amount);
+        return (Score >= amount);
     }
+    [Server]
     public void AddScore(int addAmount) {
-        this.Score += addAmount;
+        Score += addAmount;
     }
+    [Server]
     public void MinusScore(int minusAmount) {
-        this.Score -= minusAmount;
+        Score -= minusAmount;
     }
+    [Server]
     public void ClearScore() {
-        this.Score = 0;
+        Score = 0;
     }
     #endregion
 
     #region Team
-    public void ChangeTeam(TeamColour newTeam, bool sendRPC = true) {
-        this.Team = newTeam;
-
-        if (sendRPC) { // Sends RPC by default
-            NetworkManager.single.PlayerChangedTeam(this, newTeam);
-        }
+    public void ChangeTeam(TeamColour newTeam) {
+        Team = newTeam;
     }
     public void ChangeTeam(bool sendRPC = true) {
         if (SettingsManager.singleton.IsTeamGameMode()) {
             SwapTeam();
         } else {
-            this.Team = TeamColour.None;
+            Team = TeamColour.None;
         }
 
         if (sendRPC) { // Sends RPC by default
-            NetworkManager.single.PlayerChangedTeam(this, this.Team);
+            NetworkManager.single.PlayerChangedTeam(this, Team);
         }
     }
     private void SwapTeam() {
-        if (this.Team == TeamColour.Red) this.Team = TeamColour.Blue;
-        else this.Team = TeamColour.Red;
+        if (Team == TeamColour.Red) Team = TeamColour.Blue;
+        else Team = TeamColour.Red;
     }
     /// <summary>
     /// Returns false if this.Team = Team.None
@@ -66,10 +57,36 @@ public class Player {
     /// <param name="team"></param>
     /// <returns>If team == this.team true</returns>
     public bool IsOnTeam(TeamColour team) {
-        return this.Team != TeamColour.None && this.Team == team;
+        return Team != TeamColour.None && Team == team;
     }
     public bool HasNoTeam() {
-        return this.Team == TeamColour.None;
+        return Team == TeamColour.None;
     }
     #endregion
+
+    public override void OnStartLocalPlayer() {
+        base.OnStartClient();
+        CmdSetName(SettingsManager.singleton.PlayerName);
+        NetworkManager.myPlayer = this;
+        
+    }
+
+    [Command]
+    private void CmdSetName(string name) {
+        Name = name;
+    }
+    [Command]
+    public void CmdChangeTeam(int newTeam) {
+        if (SettingsManager.singleton.IsTeamGameMode()) {
+            i_Team = newTeam;
+        } else {
+            i_Team = 0;
+        }
+        OnTeamChange(i_Team);
+    }
+
+    private void OnTeamChange(int newTeam) {
+        i_Team = newTeam;
+        Team = (TeamColour)i_Team;
+    }
 }

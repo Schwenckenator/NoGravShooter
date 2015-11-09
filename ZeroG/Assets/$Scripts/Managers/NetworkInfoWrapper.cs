@@ -22,11 +22,19 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     void Awake() {
         singleton = this;
+        StartCoroutine(SpawnMe());
     }
 
-    public void ServerStarted() {
-        Debug.Log("NetworkInfoWrapper ServerStarted");
+    public IEnumerator SpawnMe() {
+        yield return null;
+        if (NetworkManager.isServer) {
+            NetworkServer.Spawn(gameObject);
+            UILobby.singleton.SetServerName();
+        }
+    }
 
+    public override void OnStartServer() {
+        Debug.Log("NetworkInfoWrapper OnStartServer");
         ServerName = SettingsManager.singleton.ServerName;
         GameMode = SettingsManager.singleton.GameModeIndex;
         GameModeName = SettingsManager.singleton.GameModeName;
@@ -34,6 +42,11 @@ public class NetworkInfoWrapper : NetworkBehaviour {
         SecondsLeft = SettingsManager.singleton.TimeLimitSec;
 
         SetStartingWeapons();
+    }
+
+    public override void OnStartClient() {
+        base.OnStartClient();
+        UILobby.singleton.SetServerName();
     }
 
     private void SetStartingWeapons() {
@@ -53,6 +66,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     // HOOKS
     private void OnServerName(string value) {
+        Debug.Log("On Server Name.");
         ServerName = value;
         UILobby.singleton.SetServerName();
     }

@@ -27,21 +27,21 @@ public class ScoreVictoryManager : MonoBehaviour {
         StartCoroutine(CheckForGameEnd());
     }
 
-    public void PointScored(NetworkPlayer player) {
+    public void PointScored(int player) {
         //NetworkView.RPC("RPCPointScored", RPCMode.All, player, 1);
     }
-    public void PointLost(NetworkPlayer player) {
+    public void PointLost(int player) {
         //NetworkView.RPC("RPCPointScored", RPCMode.All, player, -1);
     }
 
-    void OnPlayerConnected(NetworkPlayer connectingPlayer) {
-        foreach (Player player in NetworkManager.connectedPlayers) {
-            //NetworkView.RPC("RPCPointScored", connectingPlayer, player.ID, player.Score);
-        }
-    }
+    //void OnPlayerConnected(int connectingPlayer) {
+    //    foreach (Player player in NetworkManager.connectedPlayers) {
+    //        //NetworkView.RPC("RPCPointScored", connectingPlayer, player.ID, player.Score);
+    //    }
+    //}
 
     //[RPC]
-    private void RPCPointScored(NetworkPlayer playerID, int score) {
+    private void RPCPointScored(int playerID, int score) {
         ChatManager.DebugMessage("RPCPointScored called");
 
         if (!NetworkManager.DoesPlayerExist(playerID)) {
