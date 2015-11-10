@@ -78,47 +78,27 @@ public class FireWeapon : NetworkBehaviour {
 
             shotDir = Quaternion.AngleAxis(angle.x, cameraAnchor.up) * Quaternion.AngleAxis(angle.y, cameraAnchor.right) * shotDir;
             dirs.Add(shotDir);
-            //Physics.Raycast(cameraAnchor.position, shotDir, out hit, Mathf.Infinity);
-            
-            //Deal with the shot
-            //bool spawnHitParticle = false;
-            //Collider col = hit.collider;
-            //if (col.CompareTag("Player") || col.CompareTag("BonusPickup") || col.CompareTag("Grenade")) {
-            //    spawnHitParticle = true;
-            //    IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
-            //    if (damageable != null) {
-            //        damageable.TakeDamage(inventory.currentWeapon.damage, inventory.currentWeapon.id);
-            //    }
-            //}
-
-            //endPoints.Add(hit.point);
-            //if (spawnHitParticle) {
-            //    hitParticlePoints.Add(hit.point);
-            //}
             //if (DebugManager.paintballMode){
             //    Instantiate(paintSplat, hit.point, Quaternion.identity);
             //}
 
         } while (inventory.currentWeapon.rayNum > ++i);
 
-        //ShotRender(gunFirePoint.position, endPoints.ToArray(), hitParticlePoints.ToArray());
-
-        //Render shot everywhere else
-        //for (i = 0; i < inventory.currentWeapon.rayNum; i++) {
-        //    ////NetworkView.RPC("NetworkShotRender", RPCMode.Others, inventory.currentWeapon.id, gunFirePoint.position, endPoints[i]);
-        //}
-        //foreach (Vector3 hitPoint in hitParticlePoints) {
-        //    ////NetworkView.RPC("SpawnHitParticle", RPCMode.Others, inventory.currentWeapon.id, hitPoint);
-        //}
+        CmdFireRays(inventory.currentWeapon.id, dirs.ToArray());
     }
 
     [Command]
     void CmdFireRays(int weaponID, Vector3[] dirs) {
+        StartCoroutine(FixedFireRay(weaponID, dirs));
+    }
 
+    IEnumerator FixedFireRay(int weaponID, Vector3[] dirs) {
+        yield return new WaitForFixedUpdate();
+        Weapon weapon = WeaponManager.weapon[weaponID];
         List<Vector3> endPoints = new List<Vector3>();
         List<Vector3> spawnHitParticlePoints = new List<Vector3>();
 
-        foreach(Vector3 dir in dirs) {
+        foreach (Vector3 dir in dirs) {
             RaycastHit hit = new RaycastHit();
             Physics.Raycast(cameraAnchor.position, dir, out hit, Mathf.Infinity);
             endPoints.Add(hit.point);
@@ -127,24 +107,26 @@ public class FireWeapon : NetworkBehaviour {
                 spawnHitParticlePoints.Add(hit.point);
                 IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
                 if (damageable != null) {
-                    damageable.TakeDamage(inventory.currentWeapon.damage, inventory.currentWeapon.id);
+                    damageable.TakeDamage(weapon.damage, weapon.id);
                 }
             }
         }
-        RenderRays(weaponID, gunFirePoint.position, endPoints.ToArray());
+        RenderRays(weaponID, gunFirePoint.position, endPoints.ToArray()); // Render on server
+        RpcRenderRays(weaponID, gunFirePoint.position, endPoints.ToArray()); // Render everywhere else
     }
 
     void RenderRays(int weaponID, Vector3 start, Vector3[] ends) {
         Weapon weapon = WeaponManager.weapon[weaponID];
         if (isLocalPlayer) {
             ShotRender(gunFirePoint.position, ends); // Local render
-        }
-        foreach (Vector3 end in ends) { // Other's render
-            GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
-            LineRenderer render = shot.GetComponent<LineRenderer>();
-            render.useWorldSpace = true;
-            render.SetPosition(0, start);
-            render.SetPosition(1, end);
+        } else {
+            foreach (Vector3 end in ends) { // Other's render
+                GameObject shot = Instantiate(weapon.projectile, start, Quaternion.identity) as GameObject;
+                LineRenderer render = shot.GetComponent<LineRenderer>();
+                render.useWorldSpace = true;
+                render.SetPosition(0, start);
+                render.SetPosition(1, end);
+            }
         }
     }
 

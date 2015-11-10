@@ -14,14 +14,17 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     
 
     bool isDamageSound = false;
-    bool isDying = false;
 
     IActorStats stats;
 
     private int suicideDamage = 100; // How much damage K does
 
+    [SerializeField]
     [SyncVar]
-    int health;
+    int health; //Public for monitoring only
+
+    [SyncVar]
+    bool isDying = false;
 
     public int Health {
         get {
@@ -48,8 +51,12 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     }
     public void Reset() {
         maxHealth = stats.maxHealth;
-        health = maxHealth;
+        CmdReset(maxHealth);
+    }
+    [Command]
+    public void CmdReset(int maxHealth) {
         isDying = false;
+        health = maxHealth;
     }
     void Update() {
         if (!isLocalPlayer) return;

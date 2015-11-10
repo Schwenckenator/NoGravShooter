@@ -100,6 +100,7 @@ public class PlayerManager : NetworkBehaviour {
 
         // Reset everything last
         foreach (IResetable reset in gameObject.GetInterfacesInChildren<IResetable>()) {
+            Debug.Log(reset.ToString());
             reset.Reset();
         }
         WeaponManager.singleton.ResetWeapons();

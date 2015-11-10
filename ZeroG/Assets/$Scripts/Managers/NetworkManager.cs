@@ -252,6 +252,7 @@ public class NetworkManager : NetworkLobbyManager {
     
 
     public void SearchForPlayers() {
+        connectedPlayers.Clear();
         Player[] players = FindObjectsOfType<Player>();
         int index = 0;
         foreach(Player player in players) {
