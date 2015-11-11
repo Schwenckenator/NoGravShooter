@@ -86,10 +86,11 @@ public abstract class Weapon: MonoBehaviour {
         if (isEmpty) return false;
         if (isOverheat) return false;
 
-        // Can fire! Do stuff now
-
+        return true;
+    }
+    public virtual void AfterFire() {
         currentClip--;
-        
+
         heat += heatPerShot;
         nextFire = Time.time + fireDelay;
 
@@ -101,8 +102,6 @@ public abstract class Weapon: MonoBehaviour {
         if (shotSpread > maxSpread) {
             shotSpread = maxSpread;
         }
-
-        return true;
     }
     public virtual void Aim(bool aiming) {
 

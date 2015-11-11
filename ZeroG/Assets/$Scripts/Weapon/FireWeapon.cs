@@ -59,6 +59,7 @@ public class FireWeapon : NetworkBehaviour {
         } else {
             CmdSpawnProjectile(inventory.currentWeapon.id, cameraAnchor.rotation);
         }
+        inventory.currentWeapon.AfterFire();
         weaponResources.WeaponFired();
         if (inventory.currentWeapon.hasRecoil) {
             motor.Recoil(inventory.currentWeapon.recoil);

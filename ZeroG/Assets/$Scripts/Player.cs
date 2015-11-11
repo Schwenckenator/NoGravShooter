@@ -65,15 +65,14 @@ public class Player : NetworkBehaviour{
     #endregion
 
     public override void OnStartLocalPlayer() {
-        base.OnStartClient();
         CmdSetName(SettingsManager.singleton.PlayerName);
         NetworkManager.myPlayer = this;
-        
     }
 
     [Command]
     private void CmdSetName(string name) {
         Name = name;
+        NetworkInfoWrapper.singleton.AddPlayerName(name);
     }
     [Command]
     public void CmdChangeTeam(int newTeam) {
@@ -88,5 +87,16 @@ public class Player : NetworkBehaviour{
     private void OnTeamChange(int newTeam) {
         i_Team = newTeam;
         Team = (TeamColour)i_Team;
+    }
+
+    [Command]
+    public void CmdSendChatMessage(string message, bool addPrefix) {
+        string newMessage = "";
+        if (addPrefix) {
+            newMessage += Name + ": ";
+        }
+        newMessage += message;
+
+        NetworkInfoWrapper.singleton.RpcChatMessage(newMessage);
     }
 }

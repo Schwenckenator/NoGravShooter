@@ -14,8 +14,8 @@ public class UIManager : MonoBehaviour {
 
     void Start() {
         singleton = this;
-        currentlyOpen = initiallyOpen;
-        Open(initiallyOpen);
+        currentlyOpen = NetworkManager.single.isNetworkActive ? connectedOpen : initiallyOpen;
+        Open(currentlyOpen);
     }
 
     void Update() {

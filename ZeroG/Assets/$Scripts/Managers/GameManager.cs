@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 /// <summary>
@@ -14,11 +13,6 @@ public class GameManager : MonoBehaviour {
     #region Variable Declarations
 
 	private bool myPlayerSpawned = false;
-
-    [SerializeField]
-	private GameObject playerPrefab;
-	private GameObject[] spawnPoints;
-
 
     public float endTime;
     public bool IsUseTimer { get; private set; }
@@ -56,10 +50,6 @@ public class GameManager : MonoBehaviour {
     //    startingWeapons = selection;
     //}
     //[RPC]
-    public void SetEndTime(float remainingSeconds) {
-        endTime = Time.time + remainingSeconds;
-        GameClock.SetEndTime(endTime);
-    }
     #endregion
 	
 
@@ -77,6 +67,8 @@ public class GameManager : MonoBehaviour {
         if (NetworkManager.isServer && GameInProgress) {
             NetworkInfoWrapper.singleton.RpcSetCheats(DebugManager.allWeapon, DebugManager.allAmmo, DebugManager.allGrenade, DebugManager.allFuel);
             NetworkInfoWrapper.singleton.RefreshValues();
+            GameClock.SetEndTime(SettingsManager.singleton.TimeLimitSec);
+            ScoreVictoryManager.singleton.StartTimer();
         }
 	}
 
@@ -104,9 +96,9 @@ public class GameManager : MonoBehaviour {
     //}
     public void EndGame() {
         gameInProgress = false;
-        
-        SetEndTime(secondsUntilKick);
-        if (Network.isServer) {
+
+        GameClock.SetEndTime(secondsUntilKick);
+        if (NetworkManager.isServer) {
             StartCoroutine(KickPlayersAfterGameEnd());
         }
     }
@@ -150,7 +142,7 @@ public class GameManager : MonoBehaviour {
             UIPauseSpawn.SetServerNameText();
             if (secondsOfGame > 0) {
                 endTime = Time.time + secondsOfGame;
-                GameClock.SetEndTime(endTime);
+                //GameClock.SetEndTime(endTime);
                 ScoreVictoryManager.singleton.StartTimer();
                 this.IsUseTimer = true;
             } else {

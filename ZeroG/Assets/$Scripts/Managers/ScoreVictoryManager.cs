@@ -138,7 +138,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         
         while(GameManager.singleton.GameInProgress){
             yield return new WaitForSeconds(waitTime);
-            if (Time.time >= GameManager.singleton.endTime && GameManager.singleton.GameInProgress) {
+            if (GameClock.TimeUp() && GameManager.singleton.GameInProgress) {
                 TimeVictory();
                 break;
             }

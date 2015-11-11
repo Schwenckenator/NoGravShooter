@@ -9,7 +9,6 @@ public class GameClock : MonoBehaviour {
     static Canvas myCanvas;
     static int minsLeft;
     static int secsLeft;
-    static float endTime;
     static bool counting;
 
     static GameClock singleton;
@@ -20,12 +19,13 @@ public class GameClock : MonoBehaviour {
         ShowClock(false);
     }
     
-    public static void SetEndTime(float endTime) {
-        singleton.gameObject.SetActive(true);
+    public static void SetEndTime(int seconds) {
+        Debug.Log("Set End Time: " + seconds.ToString());
+        ShowClock(true);
         singleton.StopAllCoroutines();
-        GameClock.endTime = endTime;
-        minsLeft = Mathf.FloorToInt((endTime - Time.time) / 60);
-        secsLeft = Mathf.FloorToInt((endTime - Time.time) - (minsLeft * 60));
+        NetworkInfoWrapper.singleton.SecondsLeft = seconds;
+        minsLeft = Mathf.FloorToInt((seconds) / 60);
+        secsLeft = Mathf.FloorToInt((seconds) - (minsLeft * 60));
         
         counting = true;
         singleton.StartCoroutine(singleton.DecrementTimer());
@@ -36,6 +36,7 @@ public class GameClock : MonoBehaviour {
             //Debug.Log("Tick");
             UpdateText();
             yield return new WaitForSeconds(1f);
+            NetworkInfoWrapper.singleton.SecondsLeft--;
             secsLeft--;
             if (secsLeft >= 0) continue; // Seconds are fine
             
@@ -59,6 +60,15 @@ public class GameClock : MonoBehaviour {
     }
 
     public static void ShowClock(bool show) {
-        myCanvas.enabled = show && GameManager.singleton.IsUseTimer;
+        myCanvas.enabled = show/* && GameManager.singleton.IsUseTimer*/;
+    }
+
+    public static bool TimeUp() {
+        return NetworkInfoWrapper.singleton.SecondsLeft <= 0;
+    }
+
+    public static void ClientUpdateText() {
+        ShowClock(true);
+        singleton.UpdateText();
     }
 }
