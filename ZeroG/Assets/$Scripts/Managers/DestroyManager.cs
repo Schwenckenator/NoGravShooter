@@ -92,7 +92,7 @@ public class DestroyManager : MonoBehaviour {
     }
 
     void OnPlayerConnected(NetworkPlayer connectedPlayer) {
-        if(GameManager.singleton.GameInProgress){
+        if(NetworkInfoWrapper.singleton.GameInProgress) {
             StartCoroutine(SendDestroyedPlayerIDs(1.0f, connectedPlayer));
         }
     }

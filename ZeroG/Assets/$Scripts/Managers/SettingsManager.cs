@@ -305,6 +305,5 @@ public class SettingsManager : MonoBehaviour {
     void RPC_RelayGameMode(int index) {
         //SettingsManager.singleton.GameModeIndexClient = index;
         NetworkManager.single.AssignMyPlayerToTeam();
-        UIChat.UpdatePlayerLists();
     }
 }

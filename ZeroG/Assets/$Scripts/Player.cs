@@ -65,6 +65,7 @@ public class Player : NetworkBehaviour{
     #endregion
 
     public override void OnStartLocalPlayer() {
+        Debug.Log("Player started");
         CmdSetName(SettingsManager.singleton.PlayerName);
         NetworkManager.myPlayer = this;
     }
@@ -91,6 +92,7 @@ public class Player : NetworkBehaviour{
 
     [Command]
     public void CmdSendChatMessage(string message, bool addPrefix) {
+        Debug.Log("CmdSendChatMessage called");
         string newMessage = "";
         if (addPrefix) {
             newMessage += Name + ": ";

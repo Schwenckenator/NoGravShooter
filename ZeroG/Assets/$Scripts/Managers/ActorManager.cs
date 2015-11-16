@@ -2,9 +2,9 @@
 using UnityEngine.Networking;
 using System.Collections;
 
-public class PlayerManager : NetworkBehaviour {
+public class ActorManager : NetworkBehaviour {
 
-    public static PlayerManager singleton { get; private set; }
+    public static ActorManager singleton { get; private set; }
     public static bool isMyActorSpawned { get; private set; }
 
     Collider myCollider;

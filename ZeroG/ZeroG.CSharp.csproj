@@ -100,6 +100,7 @@
     <Compile Include="Assets\$Scripts\Interfaces\IDisableable.cs" />
     <Compile Include="Assets\$Scripts\Interfaces\IResetable.cs" />
     <Compile Include="Assets\$Scripts\LoadMenuScene.cs" />
+    <Compile Include="Assets\$Scripts\Managers\ActorManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\ChatManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\DebugManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\DestroyManager.cs" />
@@ -117,18 +118,15 @@
     <Compile Include="Assets\$Scripts\Managers\OnGameOpen.cs" />
     <Compile Include="Assets\$Scripts\Managers\OnLevelOpen.cs" />
     <Compile Include="Assets\$Scripts\Managers\PingDisplay.cs" />
-    <Compile Include="Assets\$Scripts\Managers\PlayerManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\ScoreVictoryManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
     <Compile Include="Assets\$Scripts\Managers\UIManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\WeaponManager.cs" />
     <Compile Include="Assets\$Scripts\Player.cs" />
-    <Compile Include="Assets\$Scripts\Player\ActorEnableManager.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorGrenades.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorHealth.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorJetpackFuel.cs" />
-    <Compile Include="Assets\$Scripts\Player\ActorOnInstantiate.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorStats.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorTeam.cs" />
     <Compile Include="Assets\$Scripts\Player\Assassinations.cs" />
@@ -165,6 +163,7 @@
     <Compile Include="Assets\$Scripts\UI\ChangeableImage.cs" />
     <Compile Include="Assets\$Scripts\UI\ChangeableInputField.cs" />
     <Compile Include="Assets\$Scripts\UI\ChangeableText.cs" />
+    <Compile Include="Assets\$Scripts\UI\ChatBox.cs" />
     <Compile Include="Assets\$Scripts\UI\ChatSubmitEvent.cs" />
     <Compile Include="Assets\$Scripts\UI\FromConnectionType\SelectableHideFromConnectionType.cs" />
     <Compile Include="Assets\$Scripts\UI\FromConnectionType\TextChangeFromConnectionType.cs" />

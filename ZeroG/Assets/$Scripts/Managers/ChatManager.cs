@@ -30,15 +30,7 @@ public class ChatManager : MonoBehaviour {
 
 
     public void AddToChat(string input, bool addPlayerPrefix = false) {
-        if (input != "") {
-            string newChat = "";
-            if (addPlayerPrefix) {
-                newChat += SettingsManager.singleton.PlayerName + ": ";
-            }
-            newChat += input;
-
-            ////NetworkView.RPC("UpdateChatRPC", RPCMode.All, newChat);
-        }
+        NetworkManager.MyPlayer().CmdSendChatMessage(input, addPlayerPrefix);
     }
     public static void TutorialChat(string input) {
         if (input == "") return;
@@ -55,12 +47,8 @@ public class ChatManager : MonoBehaviour {
             UpdateChat(input);
         }
     }
-    ////[RPC]
-    private void UpdateChatRPC(string newChat) {
-        UpdateChat(newChat);
-    }
 
-    private static void UpdateChat(string newChat) {
+    public static void UpdateChat(string newChat) {
         submittedChatList.Add(newChat);
         PruneChatList(maxChatLines);
         UpdateChatString();
@@ -76,13 +64,16 @@ public class ChatManager : MonoBehaviour {
         foreach (string line in submittedChatList) {
             submittedChat += line + "\n";
         }
-        UIChat.UpdateChatBoxes();
+        ChatBox.Dirty();
     }
     public static void ClearAllChat() {
         submittedChat = "";
         currentChat = "";
         submittedChatList.Clear();
-        UIChat.UpdateChatBoxes();
+        ChatBox.Dirty();
+        if (NetworkManager.isServer) {
+            NetworkInfoWrapper.singleton.RpcClearChat();
+        }
     }
     public static void ClearCurrentChat() {
         currentChat = "";

@@ -59,7 +59,6 @@ public class ScoreVictoryManager : MonoBehaviour {
             CheckForScoreVictory();
         }
 
-        UIChat.UpdatePlayerLists();
     }
 
     void CheckForScoreVictory() {
@@ -136,9 +135,9 @@ public class ScoreVictoryManager : MonoBehaviour {
     IEnumerator CheckForGameEnd() {
         float waitTime = 1.0f;
         
-        while(GameManager.singleton.GameInProgress){
+        while(NetworkInfoWrapper.singleton.GameInProgress) {
             yield return new WaitForSeconds(waitTime);
-            if (GameClock.TimeUp() && GameManager.singleton.GameInProgress) {
+            if (GameClock.TimeUp() && NetworkInfoWrapper.singleton.GameInProgress) {
                 TimeVictory();
                 break;
             }

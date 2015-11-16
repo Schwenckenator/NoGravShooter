@@ -30,7 +30,7 @@ public class UILobby : MonoBehaviour {
         startButtonText = startGameButton.GetComponentInChildren<Text>();
 	}
     void OnEnable() {
-        myCanvas.enabled = false;
+        //myCanvas.enabled = false;
         SetShutdownButtonText();
         ChangeButtonText(false);
         startGameButton.interactable = true;

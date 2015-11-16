@@ -51,7 +51,6 @@ public class NetworkManager : NetworkLobbyManager {
     }
     
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
-        UIChat.UpdatePlayerLists();
         //NetworkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
 

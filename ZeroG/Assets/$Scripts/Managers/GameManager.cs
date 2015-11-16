@@ -19,13 +19,6 @@ public class GameManager : MonoBehaviour {
     //public NetworkPlayer currentPlayer;
     // For Game Settings
 
-    private bool gameInProgress = false;
-
-    public bool GameInProgress {
-        get { return gameInProgress; }
-        set { gameInProgress = value; }
-    }
-
     [SerializeField]
     private int secondsUntilKick = 10;
 
@@ -64,7 +57,7 @@ public class GameManager : MonoBehaviour {
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
 
-        if (NetworkManager.isServer && GameInProgress) {
+        if (NetworkManager.isServer && NetworkInfoWrapper.singleton.GameInProgress) {
             NetworkInfoWrapper.singleton.RpcSetCheats(DebugManager.allWeapon, DebugManager.allAmmo, DebugManager.allGrenade, DebugManager.allFuel);
             NetworkInfoWrapper.singleton.RefreshValues();
             GameClock.SetEndTime(SettingsManager.singleton.TimeLimitSec);
@@ -95,7 +88,7 @@ public class GameManager : MonoBehaviour {
     //    //}
     //}
     public void EndGame() {
-        gameInProgress = false;
+        NetworkInfoWrapper.singleton.GameInProgress = false;
 
         GameClock.SetEndTime(secondsUntilKick);
         if (NetworkManager.isServer) {
@@ -104,8 +97,8 @@ public class GameManager : MonoBehaviour {
     }
     IEnumerator KickPlayersAfterGameEnd() {
         yield return new WaitForSeconds(secondsUntilKick);
-        if (!gameInProgress && !IsSceneMenu()) {
-            ReturnToLobby();
+        if (!NetworkInfoWrapper.singleton.GameInProgress && !IsSceneMenu()) {
+            NetworkManager.single.ServerReturnToLobby();
         }
     }
 
@@ -113,8 +106,9 @@ public class GameManager : MonoBehaviour {
         if (!NetworkManager.isServer) {
             throw new ClientRunningServerCodeException();
         }
+        ChatManager.ClearAllChat();
         NetworkManager.single.ServerChangeScene(SettingsManager.singleton.LevelName);
-        GameInProgress = true;
+        NetworkInfoWrapper.singleton.GameInProgress = true;
         ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
         //    SettingsManager.eu.LevelName, 
         //    NetworkManager.lastLevelPrefix + 1, 
@@ -134,10 +128,9 @@ public class GameManager : MonoBehaviour {
     private void RPCLoadLevel(string levelName, int secondsOfGame, int gameModeIndex) {
 
         //SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
-        UIChat.UpdatePlayerLists();
         //stuff for timer. Don't set up if it's tutorial or the menu.
         if (levelName != "MenuScene" && levelName != "Tutorial") {
-            GameInProgress = true;
+            NetworkInfoWrapper.singleton.GameInProgress = true;
             UIPauseSpawn.TutorialModeActive(false);
             UIPauseSpawn.SetServerNameText();
             if (secondsOfGame > 0) {
@@ -153,7 +146,7 @@ public class GameManager : MonoBehaviour {
             GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
             gameMode = temp.GetInterface<IGameMode>();
         } else {
-            GameInProgress = false;
+            NetworkInfoWrapper.singleton.GameInProgress = false;
             if (levelName == "Tutorial") {
                 UIPauseSpawn.TutorialModeActive(true);
             }
@@ -182,17 +175,14 @@ public class GameManager : MonoBehaviour {
         StartCoroutine(LoadTutorialCoRoutine());
     }
 
-    public void ReturnToLobby() {
-
-        //NetworkView.RPC("RPCReturnToLobby", RPCMode.All);
-
-        //int dummy = 0; // Dummy is just to keep the code happy. Has no effect
-        //NetworkView.RPC("RPCLoadLevel", RPCMode.All, "MenuScene", NetworkManager.lastLevelPrefix + 1, dummy, dummy);
-    }
-
     //[RPC]
     void RPCReturnToLobby() {
         //Clear data about a winner, the games over yo
         ScoreVictoryManager.singleton.ClearScoreData();
+    }
+
+    public void ReturnToLobby() {
+        NetworkInfoWrapper.singleton.GameInProgress = false;
+        NetworkManager.single.SendReturnToLobby();
     }
 }

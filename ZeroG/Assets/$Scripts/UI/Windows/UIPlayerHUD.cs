@@ -64,7 +64,6 @@ public class UIPlayerHUD : MonoBehaviour {
             else if (changer.IsType("tutorialPromptUI")) tutorialPromptUI = changer as HideableUI;
             else if (changer.IsType("tutorialPromptImage")) tutorialPromptImage = changer as ChangeableImage;
             else if (changer.IsType("fuelBarBack")) fuelBarBack = changer as ChangeableImage;
-            else if (changer.IsType("chat") || changer.IsType("playerList")) UIChat.ConnectChatBox(changer as ChangeableText);
         }
     }
 
@@ -86,7 +85,7 @@ public class UIPlayerHUD : MonoBehaviour {
     }
 
     void Update() {
-        if(PlayerManager.isMyActorSpawned) {
+        if(ActorManager.isMyActorSpawned) {
             float temp = playerHealth.Health;
             healthBar.SetValue(temp);
             fuelBar.SetValue(jetpackFuel.GetFuel());

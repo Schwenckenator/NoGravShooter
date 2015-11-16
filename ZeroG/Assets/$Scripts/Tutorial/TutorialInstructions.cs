@@ -321,7 +321,7 @@ public class TutorialInstructions : MonoBehaviour {
     }
     IEnumerator SearchForPlayer() {
         yield return new WaitForSeconds(0.1f);
-        PlayerManager.singleton.SpawnActor();
+        ActorManager.singleton.SpawnActor();
         while (player == null) {
             player = GameObject.FindGameObjectWithTag("Player");
             yield return null;

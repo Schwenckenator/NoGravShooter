@@ -9,7 +9,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     public AudioSource helmetAudio;
     public GameObject bloodParticle;
     private DestroyParticleEffect killBlood;
-    private PlayerManager myManager;
+    private ActorManager myManager;
     int maxHealth = 100;
     
 
@@ -42,7 +42,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
     }
     void Awake() {
-        myManager = GetComponent<PlayerManager>();
+        myManager = GetComponent<ActorManager>();
     }
     // Use this for initialization
     public override void OnStartLocalPlayer() {

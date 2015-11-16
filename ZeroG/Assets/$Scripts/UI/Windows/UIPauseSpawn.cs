@@ -56,8 +56,6 @@ public class UIPauseSpawn : MonoBehaviour {
                 spawnButton = text;
             } else if (text.IsType("serverName")) {
                 serverName = text;
-            } else if (text.IsType("chat") || text.IsType("playerList")) {
-                UIChat.ConnectChatBox(text);
             }
         }
     }
@@ -121,10 +119,10 @@ public class UIPauseSpawn : MonoBehaviour {
     }
 
     public void PauseSpawnPress() {
-        if (PlayerManager.isMyActorSpawned) {
+        if (ActorManager.isMyActorSpawned) {
             PauseMenuSwitch();
         } else {
-            PlayerManager.singleton.SpawnActor();
+            ActorManager.singleton.SpawnActor();
         }
     }
     public void ReturnToLobbyPress() {

@@ -12,6 +12,8 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     [SyncVar]
     public int ScoreToWin = 0;
     [SyncVar]
+    public bool GameInProgress = false;
+    [SyncVar]
     public int GameMode = 0;
     [SyncVar]
     public string GameModeName = "";
@@ -107,6 +109,12 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcChatMessage(string message) {
-        ChatManager.singleton.AddToChat(message);
+        Debug.Log("RpcChatMessage");
+        ChatManager.UpdateChat(message);
+    }
+
+    [ClientRpc]
+    public void RpcClearChat() {
+        ChatManager.ClearAllChat();
     }
 }
