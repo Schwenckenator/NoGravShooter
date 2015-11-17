@@ -8,22 +8,12 @@ public class PlayerList : MonoBehaviour {
 
     void Update() {
         if (listDirty) {
-            PopulateList();
+            listDirty = false;
+            Invoke("PopulateList", 0.25f);
         }
     }
 
-    //IEnumerator PopulateList() {
-    //    listDirty = false;
-    //    yield return null;
-    //    string text = "Players:\n";
-    //    foreach(string name in NetworkInfoWrapper.singleton.playerNames) {
-    //        text += name + "\n";
-    //    }
-    //    myText.text = text;
-    //}
-
     void PopulateList() {
-        listDirty = false;
         string text = "Players:\n";
         foreach (string name in NetworkInfoWrapper.singleton.playerNames) {
             text += name + "\n";

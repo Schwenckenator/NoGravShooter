@@ -21,7 +21,7 @@ public class PlayerColour : MonoBehaviour {
 		//just an idea i had while watching redvsblue, can always take it out later
 		//allows multiple shades while keeping within the general colour pallet of the team
 
-        Color newColour = PlayerColourManager.singleton.LimitTeamColour(team, SettingsManager.singleton.GetPlayerColour());
+        //Color newColour = PlayerColourManager.singleton.LimitTeamColour(team, SettingsManager.singleton.GetPlayerColour());
 
         //NetworkView.RPC("RPCAssignPlayerColour", RPCMode.AllBuffered, newColour.r, newColour.g, newColour.b);
     }

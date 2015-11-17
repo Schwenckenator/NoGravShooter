@@ -3,7 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class UIPlayerSettings : MonoBehaviour {
-    static GameObject instance;
 
     private static InputField[] inputFields;
     private static Slider[] sliders;
@@ -12,7 +11,6 @@ public class UIPlayerSettings : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        instance = gameObject;
 
         sliders = GetComponentsInChildren<Slider>(true);
         inputFields = GetComponentsInChildren<InputField>(true);

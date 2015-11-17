@@ -23,7 +23,7 @@ public class UIMessage : MonoBehaviour {
         gameObject.SetActive(false);
 	}
 
-    public static void ShowMessage(string message, bool buttonAvailable) {
+    public static void ShowMessage(string message, bool buttonAvailable, string buttonMessage = "OK") {
         //Enable message canvas
         myObj.SetActive(true);
         
@@ -31,6 +31,9 @@ public class UIMessage : MonoBehaviour {
         messageText.text = message;
         //Hide or show button
         button.gameObject.SetActive(buttonAvailable);
+        if (buttonAvailable) {
+            buttonText.text = buttonMessage;
+        }
     }
 
     public static void CloseMessage() {

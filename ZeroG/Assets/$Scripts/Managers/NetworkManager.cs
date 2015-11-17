@@ -148,7 +148,10 @@ public class NetworkManager : NetworkLobbyManager {
         base.OnServerConnect(conn);
         SearchForPlayers();
     }
-
+    public override void OnServerDisconnect(NetworkConnection conn) {
+        base.OnServerDisconnect(conn);
+        SearchForPlayers();
+    }
     public override void OnClientConnect(NetworkConnection conn) {
         base.OnClientConnect(conn);
         UIMessage.CloseMessage();
@@ -228,27 +231,11 @@ public class NetworkManager : NetworkLobbyManager {
         NetworkManager.MyPlayer().ChangeTeam(ScoreVictoryManager.singleton.Teams[newTeamIndex].Type);
     }
 
-    #region RPC
-    //[RPC]
-    //void AddPlayerToList(NetworkPlayer newPlayer, string newPlayerName) {
-    //    NetworkManager.connectedPlayers.Add(new Player(newPlayer, newPlayerName));
-
-    //    UIChat.UpdatePlayerLists();
-    //}
-    ////[RPC]
-    //void RemovePlayerFromList(NetworkPlayer disconnectedPlayer) {
-    //    NetworkManager.connectedPlayers.Remove(GetPlayer(disconnectedPlayer));
-    //    UIChat.UpdatePlayerLists();
-    //}
-    #endregion
-
     // Spawning Data Structure
     private static bool isReadyToSpawn = false;
     public static bool IsReadyToSpawn() {
         return isReadyToSpawn;
     }
-
-    
 
     public void SearchForPlayers() {
         connectedPlayers.Clear();

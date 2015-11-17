@@ -6,6 +6,8 @@ using System.Collections;
 
 public class RocketBurn : MonoBehaviour {
 
+    private GameObject myPlayer;
+
 	public float rocketAccel;
 	public float startVelocity;
     public bool fullyRelative; // Is fully relative, or just Z relative?
@@ -42,11 +44,11 @@ public class RocketBurn : MonoBehaviour {
 
     private Vector3 GetPlayerVelocity(bool fullRelative) {
         Vector3 playerVel = Vector3.zero;
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
-            //if (player.GetComponent<//NetworkView>().owner == GetComponent<Owner>().ID) {
-            //    playerVel = fullRelative ? player.GetComponent<Rigidbody>().velocity : StripXYaxisFromPlayerVelocity(player);
-            //}
-        }
+        //foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+        //    if (player.GetComponent <Player>().owner == GetComponent<Owner>().ID) {
+        //        playerVel = fullRelative ? player.GetComponent<Rigidbody>().velocity : StripXYaxisFromPlayerVelocity(player);
+        //    }
+        //}
         return playerVel;
     }
 

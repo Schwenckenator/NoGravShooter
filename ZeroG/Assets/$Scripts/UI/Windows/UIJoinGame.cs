@@ -25,7 +25,7 @@ public class UIJoinGame : MonoBehaviour {
     private static List<ServerListEntry> serverList;
     private static ServerListManager listManager;
 
-    private static HostData masterServerData;
+    //private static HostData masterServerData;
 
     //private bool connectionError = false;
     //private string connectionErrorMessage;
@@ -78,18 +78,18 @@ public class UIJoinGame : MonoBehaviour {
         for (int i = 0; i < serverList.Count; i++) {
             if (serverList[i].IsPressed()) {
                 //masterServerData = serverList[i].hostData;
-                if (masterServerData.passwordProtected) {
+                //if (masterServerData.passwordProtected) {
                     // Need password
                     //OldUIManager.singleton.ShowMenuWindow(Menu.PasswordInput, true);
-                } else {
+                //} else {
                     // Ready to connect
                     ConnectToServer();
-                }
+                //}
             }
         }
     }
     public void ConnectToServer() {
-        NetworkManager.SetClientDetailsMasterServer(masterServerData);
+        //NetworkManager.SetClientDetailsMasterServer(masterServerData);
         NetworkManager.single.StartClient();
     }
 }

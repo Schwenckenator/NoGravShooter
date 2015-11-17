@@ -14,8 +14,8 @@ public class SettingsManager : MonoBehaviour {
 
     private string[] levelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation", "Arena", "TestZone", "AsteroidBunker" };
     private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
-    private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Team DeathMatch", "Team Skirmish", "DeathMatch", "Skirmish" };
-    private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
+    //private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Team DeathMatch", "Team Skirmish", "DeathMatch", "Skirmish" };
+    //private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
 
     public string[] LevelList { get { return levelList; } }
     public string[] GameModeList { get { return gameModeList; } }

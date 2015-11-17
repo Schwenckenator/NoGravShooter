@@ -95,6 +95,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     }
 
     private void OnPlayerName(SyncListString.Operation op, int index) {
+        Debug.Log("OnPlayerName List CHanged");
         PlayerList.listDirty = true;
     }
 

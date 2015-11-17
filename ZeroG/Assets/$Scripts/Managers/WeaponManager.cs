@@ -8,8 +8,8 @@ public class WeaponManager : MonoBehaviour {
     public static WeaponManager singleton { get; private set; }
     public static List<Weapon> weapon;
 
-    static int maxStartingWeapons = 2;
-    public static int GetMaxStartingWeapons() { return maxStartingWeapons; }
+    static int maxHeldWeapons = 2;
+    public static int GetMaxHeldWeapons() { return maxHeldWeapons; }
 
     public SyncListInt GetStartingWeapons() {
         return NetworkInfoWrapper.singleton.startingWeapons;

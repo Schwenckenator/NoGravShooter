@@ -38,19 +38,12 @@ public class MouseLook : MonoBehaviour {
 	private float zoomCameraSlow;
 
     private bool active = false;
-    private bool isMine = false;
 
     void Awake() {
-        //if (!transform.root.GetComponent<//NetworkView>().isMine) {
-        //    this.enabled = false;
-        //}
-
         // Base sensitivity is a fraction of maximum
         // Set true value here
         sensitivityX = SettingsManager.singleton.MouseSensitivityX * maxSensitivity;
         sensitivityY = SettingsManager.singleton.MouseSensitivityY * maxSensitivity;
-
-        //this.enabled = false;
     }
 
     void Start() {

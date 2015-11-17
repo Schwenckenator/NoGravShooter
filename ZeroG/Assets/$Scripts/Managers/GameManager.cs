@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour {
     public GameObject[] gameModes;
     #region Variable Declarations
 
-	private bool myPlayerSpawned = false;
-
     public float endTime;
     public bool IsUseTimer { get; private set; }
     //public NetworkPlayer currentPlayer;

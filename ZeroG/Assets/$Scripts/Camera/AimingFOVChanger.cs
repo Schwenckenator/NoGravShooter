@@ -16,17 +16,8 @@ public class AimingFOVChanger : MonoBehaviour {
     }
 	
 	void FixedUpdate(){
-        //if () return;
-        // What is all this doing in an update loop?
-        // TODO: Cache the results
 	    maxFOV = SettingsManager.singleton.FieldOfView;
 
-	    GameObject[] list = GameObject.FindGameObjectsWithTag("Player");
-		//foreach(GameObject player in list){
-  //          //if (player.GetComponent<NetworkView>().isMine) {
-		//	//	inventory = player.GetComponent<WeaponInventory>();
-		//	//}
-		//}
 
         float zoomFov = GetZoomFOV();
         if (Input.GetMouseButton(1)) {
