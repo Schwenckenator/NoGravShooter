@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Networking.Match;
 
 public class ServerListEntry : MonoBehaviour {
 
@@ -10,7 +11,7 @@ public class ServerListEntry : MonoBehaviour {
     public Text PlayerCount;
     public Button JoinServer;
 
-    //public HostData hostData;
+    public MatchDesc match;
 
     private bool pressed;
 
@@ -23,7 +24,7 @@ public class ServerListEntry : MonoBehaviour {
 
     public void JoinButtonPressed() {
         pressed = true;
-        UIJoinGame.instance.JoinButtonPressed();
+        UIJoinGame.singleton.JoinButtonPressed();
     }
 
 }

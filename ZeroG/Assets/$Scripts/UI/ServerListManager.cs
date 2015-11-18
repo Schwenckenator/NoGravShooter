@@ -1,18 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking.Match;
 
 public class ServerListManager : MonoBehaviour {
 
     public GameObject serverListObj;
 
-    public ServerListEntry AddServer(string name, string status, string player) {
+    public ServerListEntry AddServer(MatchDesc match) {
+
         GameObject newServerObj = Instantiate(serverListObj) as GameObject;
         newServerObj.transform.SetParent(this.transform); // Become child of this
         
         ServerListEntry newServer = newServerObj.GetComponent<ServerListEntry>();
-        newServer.Name.text = name;
-        newServer.Status.text = status;
-        newServer.PlayerCount.text = player;
+        newServer.match = match;
+        newServer.Name.text = match.name;
+        newServer.PlayerCount.text = match.currentSize + "/" + match.maxSize;
         
         return newServer;
     }

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using UnityEngine.Networking.Match;
 
 ///<summary>
 /// Manages connections with the network
@@ -21,6 +22,7 @@ public class NetworkManager : NetworkLobbyManager {
     public static List<Player> connectedPlayers = new List<Player>();
     public static Player myPlayer;
 
+    private static MatchDesc matchData;
     private static bool useMatchmaking = false;
     
 
@@ -30,6 +32,7 @@ public class NetworkManager : NetworkLobbyManager {
         if (dontDestroyOnLoad) {
             DontDestroyOnLoad(gameObject);
         }
+        single.StartMatchMaker();
     }
 
     void Update() {
@@ -64,24 +67,15 @@ public class NetworkManager : NetworkLobbyManager {
         single.networkPort = _portNum;
 
     }
-    public static void SetClientDetailsMasterServer(HostData _masterServerData) {
-        //masterServerData = _masterServerData;
-        //useMasterServer = true;
+    public static void SetClientDetailsMatch(MatchDesc match) {
+        matchData = match;
+        useMatchmaking = true;
     }
     public static void SetServerDetails(int _maxPlayers, int _portNum) {
         single.maxPlayers = _maxPlayers;
         single.networkPort = _portNum;
     }
     #endregion
-
-    public static void InitialseServer() {
-        single.StartHost();
-
-        if (useMatchmaking) {
-            single.StartMatchMaker();   
-        }
-
-    }
 
     //public override void OnLobbyServerConnect(NetworkConnection conn) {
     //    base.OnLobbyServerConnect(conn);
@@ -188,9 +182,9 @@ public class NetworkManager : NetworkLobbyManager {
         //        break;
         //}
         string message = "Shit went wrong yo.";
-        UIMessage.ShowMessage(message, true);
+        UIMessage.ShowMessage(message);
     }
-    
+
     public void AssignMyPlayerToTeam() {
         if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().HasNoTeam()) {
             //if (Network.isServer) {

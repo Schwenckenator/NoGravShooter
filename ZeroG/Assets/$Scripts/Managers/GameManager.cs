@@ -35,18 +35,7 @@ public class GameManager : MonoBehaviour {
     }
     #endregion 
 
-    #region Variable mutators
-    //[RPC]
-    //private void SetStartingWeapons(int[] selection) {
-    //    startingWeapons = selection;
-    //}
-    //[RPC]
-    #endregion
-	
-
-    public const int MaxPlayers = 15;
-
-    //new //NetworkView //NetworkView;
+    public const int MaxPlayers = 16;
 
     void Awake(){
         singleton = this;
@@ -63,28 +52,6 @@ public class GameManager : MonoBehaviour {
         }
 	}
 
-    // If a player connects mid game,
-    // we need to send an updated remaining time
-    //void OnPlayerConnected(NetworkPlayer connectingPlayer) {
-    //    if (GameInProgress) {
-    //        //NetworkView.RPC("RPCLoadLevel", connectingPlayer,
-    //            //SettingsManager.singleton.LevelName,
-    //            //NetworkManager.lastLevelPrefix,
-    //            //SettingsManager.sin.TimeLimitSec,
-    //            //SettingsManager.oeu.GameModeIndexServer);
-
-    //        //NetworkView.RPC("SetEndTime", connectingPlayer, endTime - Time.time);
-    //    }
-    //}
-    //void OnDisconnectedFromServer() {
-    //    GameInProgress = false;
-    //    IsUseTimer = false;
-
-    //    //foreach (GameObject actor in GameObject.FindGameObjectsWithTag("Player")) {
-    //    //    Debug.Log("Destroyed actor");
-    //    //    Destroy(actor);
-    //    //}
-    //}
     public void EndGame() {
         NetworkInfoWrapper.singleton.GameInProgress = false;
 
@@ -107,11 +74,6 @@ public class GameManager : MonoBehaviour {
         ChatManager.ClearAllChat();
         NetworkManager.single.ServerChangeScene(SettingsManager.singleton.LevelName);
         NetworkInfoWrapper.singleton.GameInProgress = true;
-        ////NetworkView.RPC("RPCLoadLevel", RPCMode.All, 
-        //    SettingsManager.eu.LevelName, 
-        //    NetworkManager.lastLevelPrefix + 1, 
-        //    SettingsManager.eu.TimeLimitSec, 
-        //    SettingsManager.eu.GameModeIndexServer);
     }
     private void LoadLevelTutorial() {
         //int dummyValue = 0; // Just to keep the method happy

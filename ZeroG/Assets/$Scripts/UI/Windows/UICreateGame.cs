@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking.Match;
 using System.Collections;
 
 public class UICreateGame : MonoBehaviour {
@@ -17,17 +18,24 @@ public class UICreateGame : MonoBehaviour {
         SettingsManager.singleton.ParsePortNumber();
         // Check for error
         if (SettingsManager.singleton.ServerName == "") {
-            UIMessage.ShowMessage("Server name required. Please enter a name.", true);
+            UIMessage.ShowMessage("Server name required. Please enter a name.");
             return;
         }
         if (SettingsManager.singleton.PortNum < 0) {
-            UIMessage.ShowMessage("Port number invalid. Please enter a valid port number.", true);
+            UIMessage.ShowMessage("Port number invalid. Please enter a valid port number.");
             return;
         }
          
 
         NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum);
-        NetworkManager.single.StartHost();
+        if (online) {
+            CreateMatchRequest req = new CreateMatchRequest();
+            req.name = SettingsManager.singleton.ServerName;
+            req.size = GameManager.MaxPlayers;
+            req.advertise = true;
+            req.password = "";
+            NetworkManager.single.matchMaker.CreateMatch(req, NetworkManager.single.OnMatchCreate);
+        }
         SettingsManager.singleton.SaveSettings();
         
     }

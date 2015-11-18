@@ -1,37 +1,21 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking.Match;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class UIJoinGame : MonoBehaviour {
-    #region Instance
-    //Here is a private reference only this class can access
-    private static UIJoinGame _instance;
-    //This is the public reference that other classes will use
-    public static UIJoinGame instance {
-        get {
-            //If _instance hasn't been set yet, we grab it from the scene!
-            //This will only happen the first time this reference is used.
-            if (_instance == null) {
-                _instance = GameObject.FindObjectOfType<UIJoinGame>();
-            }
-            return _instance;
-        }
-    }
-    #endregion
+
+    public static UIJoinGame singleton { get; private set; }
 
 
     private const string GameType = "NoGravShooter";
     private static List<ServerListEntry> serverList;
     private static ServerListManager listManager;
 
-    //private static HostData masterServerData;
-
-    //private bool connectionError = false;
-    //private string connectionErrorMessage;
-
 	// Use this for initialization
 	void Start () {
+        singleton = this;
         serverList = new List<ServerListEntry>();
         JoinGameInit();
 
@@ -43,28 +27,25 @@ public class UIJoinGame : MonoBehaviour {
     }
 	
     public void RefreshPress() {
-        UIJoinGame.instance.StartRefresh();
+        UIJoinGame.singleton.PollServerList();
     }
-    public void StartRefresh() {
-        StartCoroutine(PollServerList());
-    }
-    IEnumerator PollServerList() {
-        float waitTime = 0.5f;
+    public void PollServerList() {
         ClearServerList();
-        //Debug.Log("Request Host list");
+        NetworkManager.single.StartMatchMaker();
+        NetworkManager.single.matchMaker.ListMatches(0, 10, "", RefreshServerList);
         
-        MasterServer.RequestHostList(GameType);
-        yield return new WaitForSeconds(waitTime);
-        RefreshServerList();
     }
-    private static void RefreshServerList() {
-        HostData[] servers = MasterServer.PollHostList();
-        foreach (HostData server in servers) {
-            ServerListEntry newServer = listManager.AddServer(server.gameName, server.comment, server.connectedPlayers + "/" + server.playerLimit);
-            //newServer.hostData = server;
+
+    private static void RefreshServerList(ListMatchResponse response) {
+        if (!response.success) {
+            UIMessage.ShowMessage("Cannot refresh list!");
+            return;
+        }
+        
+        foreach (MatchDesc match in response.matches) {
+            ServerListEntry newServer = listManager.AddServer(match);
             serverList.Add(newServer);
         }
-        MasterServer.ClearHostList();
     }
 
     public static void ClearServerList() {
@@ -77,19 +58,12 @@ public class UIJoinGame : MonoBehaviour {
     public void JoinButtonPressed() {
         for (int i = 0; i < serverList.Count; i++) {
             if (serverList[i].IsPressed()) {
-                //masterServerData = serverList[i].hostData;
-                //if (masterServerData.passwordProtected) {
-                    // Need password
-                    //OldUIManager.singleton.ShowMenuWindow(Menu.PasswordInput, true);
-                //} else {
-                    // Ready to connect
-                    ConnectToServer();
-                //}
+                ConnectToServer(serverList[i].match);
             }
         }
     }
-    public void ConnectToServer() {
-        //NetworkManager.SetClientDetailsMasterServer(masterServerData);
-        NetworkManager.single.StartClient();
+    public void ConnectToServer(MatchDesc match) {
+        NetworkManager.SetClientDetailsMatch(match);
+        NetworkManager.single.matchMaker.JoinMatch(match.networkId, "", NetworkManager.single.OnMatchJoined);
     }
 }

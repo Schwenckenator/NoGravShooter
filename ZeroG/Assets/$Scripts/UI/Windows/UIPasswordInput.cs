@@ -7,6 +7,6 @@ public class UIPasswordInput : MonoBehaviour {
         SettingsManager.singleton.PasswordClient = value;
     }
     public void SubmitPassword() {
-        UIJoinGame.instance.ConnectToServer();
+        //UIJoinGame.singleton.ConnectToServer();
     }
 }

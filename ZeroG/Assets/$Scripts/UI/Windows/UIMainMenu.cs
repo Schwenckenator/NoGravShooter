@@ -16,14 +16,14 @@ public class UIMainMenu : MonoBehaviour {
     public void JoinGame(GameObject menu) {
         if (CheckName()) {
             UIManager.singleton.OpenReplace(menu);
-            UIJoinGame.instance.StartRefresh();
+            UIJoinGame.singleton.PollServerList();
         }
     }
 
     private bool CheckName() {
         bool hasName = SettingsManager.singleton.PlayerName != "";
         if (!hasName) {
-            UIMessage.ShowMessage("Please enter a Player Name.", true);
+            UIMessage.ShowMessage("Please enter a Player Name.");
         }
         return hasName;
     }

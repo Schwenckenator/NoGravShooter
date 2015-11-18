@@ -18,7 +18,6 @@ public class VersionNumber : MonoBehaviour{
     }
 
     void Start (){
-        DontDestroyOnLoad (this);
 	    // Log current version in log file
         Debug.Log (string.Format ("Currently running version is {0}", Version));
 	    position.y = 1f;
