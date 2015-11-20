@@ -3,20 +3,26 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerList : MonoBehaviour {
-    public static bool listDirty = false;
     public Text myText;
+    static float waitTime = 0.2f;
+    static bool listDirty = false;
+
+    public static void Dirty() {
+        listDirty = true;
+    }
 
     void Update() {
         if (listDirty) {
             listDirty = false;
-            Invoke("PopulateList", 0.25f);
+            Invoke("PopulateList", waitTime);
         }
     }
 
     void PopulateList() {
         string text = "Players:\n";
-        foreach (string name in NetworkInfoWrapper.singleton.playerNames) {
-            text += name + "\n";
+        SyncListPlayerInfo players = NetworkInfoWrapper.singleton.GetPlayers();
+        for (int i=0; i< players.Count; i++) {
+            text += "Player: "+ players[i].name + "\n"; // TODO remove "Player: "
         }
         myText.text = text;
     }

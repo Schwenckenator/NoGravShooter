@@ -41,25 +41,25 @@ public class ScoreVictoryManager : MonoBehaviour {
     //}
 
     //[RPC]
-    private void RPCPointScored(int playerID, int score) {
-        ChatManager.DebugMessage("RPCPointScored called");
+    //private void RPCPointScored(int playerID, int score) {
+    //    ChatManager.DebugMessage("RPCPointScored called");
 
-        if (!NetworkManager.DoesPlayerExist(playerID)) {
-            ChatManager.DebugMessage("Can't find Player "+playerID.ToString());
-        }
+    //    if (!NetworkManager.DoesPlayerExist(playerID)) {
+    //        ChatManager.DebugMessage("Can't find Player "+playerID.ToString());
+    //    }
 
-        ChatManager.DebugMessage("RPCPointScored Player exists, will add point.");
+    //    ChatManager.DebugMessage("RPCPointScored Player exists, will add point.");
         
-        if (score != 0) { // If 0, don't bother
-            Player player = NetworkManager.GetPlayer(playerID);
-            player.AddScore(score);
-            if (SettingsManager.singleton.IsTeamGameMode()) {
-                GetTeam(player.Team).AddScore(score);
-            }
-            CheckForScoreVictory();
-        }
+    //    if (score != 0) { // If 0, don't bother
+    //        Player player = NetworkManager.GetPlayer(playerID);
+    //        player.AddScore(score);
+    //        if (SettingsManager.singleton.IsTeamGameMode()) {
+    //            GetTeam(player.Team).AddScore(score);
+    //        }
+    //        CheckForScoreVictory();
+    //    }
 
-    }
+    //}
 
     void CheckForScoreVictory() {
 
@@ -80,12 +80,12 @@ public class ScoreVictoryManager : MonoBehaviour {
         }
     }
     void FFACheckForScoreVictory() {
-        foreach (Player player in NetworkManager.connectedPlayers) {
-            if (player.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
-                DeclareWinner(player.Name);
-                break;
-            }
-        }
+    //    foreach (Player player in NetworkManager.connectedPlayers) {
+    //        if (player.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
+    //            DeclareWinner(player.Name);
+    //            break;
+    //        }
+    //    }
     }
     
     void TimeVictory() {
@@ -119,14 +119,14 @@ public class ScoreVictoryManager : MonoBehaviour {
                 }
             }
         } else {
-            foreach (Player player in NetworkManager.connectedPlayers) {
-                if (player.Score > maxValue) {
-                    maxValue = player.Score;
-                    winningName = player.Name;
-                } else if (player.Score == maxValue) {
-                    winningName += " and " + player.Name;
-                }
-            }
+            //foreach (Player player in NetworkManager.connectedPlayers) {
+            //    if (player.Score > maxValue) {
+            //        maxValue = player.Score;
+            //        winningName = player.Name;
+            //    } else if (player.Score == maxValue) {
+            //        winningName += " and " + player.Name;
+            //    }
+            //}
         }
 
         return winningName;
@@ -159,7 +159,7 @@ public class ScoreVictoryManager : MonoBehaviour {
             }
         }
         foreach (Player player in playerBuffer) {
-            scoreBoardBuffer += Team.ColourTag(player.Team) + player.Name + ": " +Team.ColourEnd() + player.Score + "\n";
+            scoreBoardBuffer += Team.ColourTag(player.Team) + player.info.name + ": " +Team.ColourEnd() + player.Score + "\n";
         }
 
         return scoreBoardBuffer;
@@ -169,17 +169,17 @@ public class ScoreVictoryManager : MonoBehaviour {
     private static List<Player> SortPlayers() {
         List<Player> playerBuffer = new List<Player>();
         // Sort the players descending score
-        foreach (Player player in NetworkManager.connectedPlayers) {
-            int score = player.Score;
-            int i = 0;
-            foreach (Player buffer in playerBuffer) {
-                if (score > buffer.Score) {
-                    break;
-                }
-                i++;
-            }
-            playerBuffer.Insert(i, player);
-        }
+        //foreach (Player player in NetworkManager.connectedPlayers) {
+        //    int score = player.Score;
+        //    int i = 0;
+        //    foreach (Player buffer in playerBuffer) {
+        //        if (score > buffer.Score) {
+        //            break;
+        //        }
+        //        i++;
+        //    }
+        //    playerBuffer.Insert(i, player);
+        //}
         return playerBuffer;
     }
     private static List<Team> SortTeams() {
@@ -202,12 +202,12 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     public void ClearScoreData() {
         VictorName = "";
-        // Keep the players, but wipe the scores
-        foreach (Player player in NetworkManager.connectedPlayers) {
-            player.ClearScore();
-        }
-        foreach (Team team in Teams) {
-            team.ClearScore();
-        }
+        //// Keep the players, but wipe the scores
+        //foreach (Player player in NetworkManager.connectedPlayers) {
+        //    player.ClearScore();
+        //}
+        //foreach (Team team in Teams) {
+        //    team.ClearScore();
+        //}
     }
 }

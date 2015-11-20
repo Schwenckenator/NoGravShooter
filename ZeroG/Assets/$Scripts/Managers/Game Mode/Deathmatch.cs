@@ -5,11 +5,11 @@ namespace GameMode {
     public class Deathmatch : MonoBehaviour, IGameMode {
 
         public void Kill(Player killer, Player corpse) {
-            ScoreVictoryManager.singleton.PointScored(killer.ID);
+            ScoreVictoryManager.singleton.PointScored(killer.info.id);
         }
 
         public void Suicide(Player player) {
-            ScoreVictoryManager.singleton.PointLost(player.ID);
+            ScoreVictoryManager.singleton.PointLost(player.info.id);
         }
 
         public void PlayerDied(Player player) {

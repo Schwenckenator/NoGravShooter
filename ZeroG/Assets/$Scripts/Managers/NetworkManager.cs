@@ -19,12 +19,17 @@ public class NetworkManager : NetworkLobbyManager {
 
     public GameObject InfoPrefab;
     
-    public static List<Player> connectedPlayers = new List<Player>();
     public static Player myPlayer;
+    public static List<Player> players;
+    
 
     private static MatchDesc matchData;
     private static bool useMatchmaking = false;
-    
+
+    private static int nextID = 0;
+    public static int GetNextID() {
+        return nextID++;
+    }
 
     void Awake() {
         single = this;
@@ -33,26 +38,19 @@ public class NetworkManager : NetworkLobbyManager {
             DontDestroyOnLoad(gameObject);
         }
         single.StartMatchMaker();
-    }
-
-    void Update() {
-        if (DebugManager.adminMode && Input.GetKeyDown(KeyCode.F4)) {
-            foreach (Player player in connectedPlayers) {
-                ChatManager.DebugMessage("Player \"" + player.Name + "\" with ID \"" + player.ID+"\"");
-            }
-        }
+        players = new List<Player>();
     }
 
     public static Player GetPlayer(int value) {
-        return connectedPlayers.Find(x => x.ID.Equals(value));
+        return players.Find(x => x.info.id.Equals(value));
     }
     public static Player MyPlayer() {
         return myPlayer;
     }
     public static bool DoesPlayerExist(int value) {
-        return NetworkManager.connectedPlayers.Exists(x => x.ID.Equals(value));
+        return players.Exists(x => x.info.id.Equals(value));
     }
-    
+
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
         //NetworkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
@@ -122,7 +120,6 @@ public class NetworkManager : NetworkLobbyManager {
             Application.LoadLevel("MenuScene");
         }
 
-        connectedPlayers.Clear();
         myPlayer = null;
 
         ChatManager.ClearAllChat();
@@ -130,7 +127,8 @@ public class NetworkManager : NetworkLobbyManager {
 
     public override void OnStartServer() {
         base.OnStartServer();
-        Instantiate(InfoPrefab);
+        GameObject newInfo = Instantiate(InfoPrefab) as GameObject;
+        StartCoroutine(CoSpawnInfo(newInfo));
         
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
         //SettingsManager.singleton.RelayServerName();
@@ -138,20 +136,22 @@ public class NetworkManager : NetworkLobbyManager {
 
         //PlayerManager.singleton.Init(); // Initialise player
     }
+    IEnumerator CoSpawnInfo(GameObject newInfo) {
+        yield return null;
+        NetworkServer.Spawn(newInfo);
+    }
     public override void OnServerConnect(NetworkConnection conn) {
         base.OnServerConnect(conn);
-        SearchForPlayers();
+        
     }
     public override void OnServerDisconnect(NetworkConnection conn) {
         base.OnServerDisconnect(conn);
-        SearchForPlayers();
     }
     public override void OnClientConnect(NetworkConnection conn) {
         base.OnClientConnect(conn);
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
         UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
-        SearchForPlayers();
         //    // Set window to lobby
 
         //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
@@ -201,8 +201,8 @@ public class NetworkManager : NetworkLobbyManager {
         // This should only be called on server
 
         int[] teamCount = new int[2]; 
-        foreach (Player player in connectedPlayers) {
-            if (player.Team == TeamColour.Red) {
+        foreach (PlayerInfo player in NetworkInfoWrapper.singleton.connectedPlayers) {
+            if (player.team == (int)TeamColour.Red) {
                 teamCount[0]++;
             } else {
                 teamCount[1]++;
@@ -231,16 +231,16 @@ public class NetworkManager : NetworkLobbyManager {
         return isReadyToSpawn;
     }
 
-    public void SearchForPlayers() {
-        connectedPlayers.Clear();
-        Player[] players = FindObjectsOfType<Player>();
-        int index = 0;
-        foreach(Player player in players) {
-            connectedPlayers.Add(player);
-            if (isServer) {
-                player.ID = index++;
-            }
-        }
-        PlayerList.listDirty = true;
-    }
+    //public void SearchForPlayers() {
+    //    connectedPlayers.Clear();
+    //    Player[] players = FindObjectsOfType<Player>();
+    //    int index = 0;
+    //    foreach(Player player in players) {
+    //        connectedPlayers.Add(player);
+    //        if (isServer) {
+    //            player.ID = index++;
+    //        }
+    //    }
+    //    PlayerList.listDirty = true;
+    //}
 }

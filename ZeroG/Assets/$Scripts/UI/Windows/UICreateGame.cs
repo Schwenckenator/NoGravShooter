@@ -35,6 +35,8 @@ public class UICreateGame : MonoBehaviour {
             req.advertise = true;
             req.password = "";
             NetworkManager.single.matchMaker.CreateMatch(req, NetworkManager.single.OnMatchCreate);
+        } else {
+            NetworkManager.single.StartHost();
         }
         SettingsManager.singleton.SaveSettings();
         

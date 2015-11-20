@@ -118,7 +118,6 @@
     <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
     <Compile Include="Assets\$Scripts\Managers\WeaponManager.cs" />
-    <Compile Include="Assets\$Scripts\Player.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorGrenades.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorHealth.cs" />
     <Compile Include="Assets\$Scripts\Player\ActorJetpackFuel.cs" />
@@ -139,10 +138,12 @@
     <Compile Include="Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs" />
     <Compile Include="Assets\$Scripts\Player\Motor\ActorMotorManager.cs" />
     <Compile Include="Assets\$Scripts\Player\Motor\ActorWalkingMotor.cs" />
+    <Compile Include="Assets\$Scripts\Player\Player.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerColour.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerColourManager.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerKillOnContact.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerResources.cs" />
+    <Compile Include="Assets\$Scripts\Player\SyncListPlayerInfo.cs" />
     <Compile Include="Assets\$Scripts\PreserveObject.cs" />
     <Compile Include="Assets\$Scripts\RadarDot.cs" />
     <Compile Include="Assets\$Scripts\Team.cs" />
