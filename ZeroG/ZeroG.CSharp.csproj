@@ -143,7 +143,6 @@
     <Compile Include="Assets\$Scripts\Player\PlayerColourManager.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerKillOnContact.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerResources.cs" />
-    <Compile Include="Assets\$Scripts\Player\SyncListPlayerInfo.cs" />
     <Compile Include="Assets\$Scripts\PreserveObject.cs" />
     <Compile Include="Assets\$Scripts\RadarDot.cs" />
     <Compile Include="Assets\$Scripts\Team.cs" />

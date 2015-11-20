@@ -14,14 +14,14 @@ namespace GameMode {
         }
 
         private void LegitKill(Player killer) {
-            ScoreVictoryManager.singleton.PointScored(killer.info.id);
+            ScoreVictoryManager.singleton.PointScored(killer.ID);
         }
         private void FriendlyKill(Player killer) {
-            ScoreVictoryManager.singleton.PointLost(killer.info.id);
+            ScoreVictoryManager.singleton.PointLost(killer.ID);
         }
 
         public void Suicide(Player player) {
-            ScoreVictoryManager.singleton.PointLost(player.info.id);
+            ScoreVictoryManager.singleton.PointLost(player.ID);
         }
 
         public void PlayerDied(Player player) {

@@ -10,6 +10,8 @@ using UnityEngine.Networking.Match;
 /// </summary>
 public class NetworkManager : NetworkLobbyManager {
 
+    public float newPlayerWait = 1.0f;
+
     public static NetworkManager single { get; private set; }
     public static bool isServer {
         get {
@@ -20,7 +22,7 @@ public class NetworkManager : NetworkLobbyManager {
     public GameObject InfoPrefab;
     
     public static Player myPlayer;
-    public static List<Player> players;
+    public static List<Player> connectedPlayers;
     
 
     private static MatchDesc matchData;
@@ -38,17 +40,17 @@ public class NetworkManager : NetworkLobbyManager {
             DontDestroyOnLoad(gameObject);
         }
         single.StartMatchMaker();
-        players = new List<Player>();
+        connectedPlayers = new List<Player>();
     }
 
     public static Player GetPlayer(int value) {
-        return players.Find(x => x.info.id.Equals(value));
+        return connectedPlayers.Find(x => x.ID.Equals(value));
     }
     public static Player MyPlayer() {
         return myPlayer;
     }
     public static bool DoesPlayerExist(int value) {
-        return players.Exists(x => x.info.id.Equals(value));
+        return connectedPlayers.Exists(x => x.ID.Equals(value));
     }
 
     public void PlayerChangedTeam(Player player, TeamColour newTeam) {
@@ -129,6 +131,7 @@ public class NetworkManager : NetworkLobbyManager {
         base.OnStartServer();
         GameObject newInfo = Instantiate(InfoPrefab) as GameObject;
         StartCoroutine(CoSpawnInfo(newInfo));
+        Invoke("OnNewPlayer", newPlayerWait);
         
         //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);
         //SettingsManager.singleton.RelayServerName();
@@ -142,10 +145,11 @@ public class NetworkManager : NetworkLobbyManager {
     }
     public override void OnServerConnect(NetworkConnection conn) {
         base.OnServerConnect(conn);
-        
+        Invoke("OnNewPlayer", newPlayerWait);
     }
     public override void OnServerDisconnect(NetworkConnection conn) {
         base.OnServerDisconnect(conn);
+        Invoke("OnNewPlayer", 0); // Don't have to wait for someone leaving
     }
     public override void OnClientConnect(NetworkConnection conn) {
         base.OnClientConnect(conn);
@@ -201,8 +205,8 @@ public class NetworkManager : NetworkLobbyManager {
         // This should only be called on server
 
         int[] teamCount = new int[2]; 
-        foreach (PlayerInfo player in NetworkInfoWrapper.singleton.connectedPlayers) {
-            if (player.team == (int)TeamColour.Red) {
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            if (player.Team == TeamColour.Red) {
                 teamCount[0]++;
             } else {
                 teamCount[1]++;
@@ -231,16 +235,17 @@ public class NetworkManager : NetworkLobbyManager {
         return isReadyToSpawn;
     }
 
-    //public void SearchForPlayers() {
-    //    connectedPlayers.Clear();
-    //    Player[] players = FindObjectsOfType<Player>();
-    //    int index = 0;
-    //    foreach(Player player in players) {
-    //        connectedPlayers.Add(player);
-    //        if (isServer) {
-    //            player.ID = index++;
-    //        }
-    //    }
-    //    PlayerList.listDirty = true;
-    //}
+    public void OnNewPlayer() {
+        int index = 0;
+        connectedPlayers.Clear();
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+            connectedPlayers.Add(player.GetComponent<Player>());
+            connectedPlayers[index].ID = index++;
+        }
+        string playerList = "";
+        foreach (Player player in connectedPlayers) {
+            playerList += player.Name + "\n";
+        }
+        NetworkInfoWrapper.singleton.playerListString = playerList;
+    }
 }

@@ -19,13 +19,11 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     public string GameModeName = "";
     [SyncVar(hook = "OnSecondsLeft")]
     public int SecondsLeft = 0;
+    [SyncVar(hook = "OnPlayerListString")]
+    public string playerListString;
 
     public SyncListInt startingWeapons = new SyncListInt();
-    public SyncListPlayerInfo connectedPlayers = new SyncListPlayerInfo();
-
-    public SyncListPlayerInfo GetPlayers() {
-        return connectedPlayers;
-    }
+    
 
     void Awake() {
         singleton = this;
@@ -33,14 +31,6 @@ public class NetworkInfoWrapper : NetworkBehaviour {
         StartCoroutine(SetLobbyName());
     }
 
-    void Update() {
-        if (NetworkClient.active) {
-            string message = connectedPlayers == null ? "connectedPlayers is null" : "connectedPlayers found!";
-            Debug.Log(message);
-            //message = startingWeapons == null ? "startingWeapons is null" : "startingWeapons found!";
-            //Debug.Log(message);
-        }
-    }
 
     public IEnumerator SetLobbyName() {
         yield return null;
@@ -79,31 +69,6 @@ public class NetworkInfoWrapper : NetworkBehaviour {
         SetStartingWeapons();
     }
 
-    public void AddPlayer(PlayerInfo player) {
-        connectedPlayers.Add(player);
-        //StartCoroutine(CoAddPlayer(player));
-    }
-
-    private IEnumerator CoAddPlayer(PlayerInfo player) {
-        yield return new WaitForSeconds(1.0f);
-        
-    }
-
-    [Server]
-    public void UpdateInfo(PlayerInfo player) {
-        Debug.Log("Changing ID is " + player.id.ToString());
-        Debug.Log("connectedPlayers.Count is " + connectedPlayers.Count.ToString());
-        for (int i=0; i<connectedPlayers.Count; i++) {
-
-            Debug.Log("List position " + i.ToString() + " is " + connectedPlayers[i].id.ToString());
-
-            if (connectedPlayers[i].id == player.id) {
-                connectedPlayers[i] = player;
-                break;
-            }
-        }
-    }
-
     // HOOKS
     private void OnServerName(string value) {
         Debug.Log("On Server Name.");
@@ -115,9 +80,9 @@ public class NetworkInfoWrapper : NetworkBehaviour {
         SecondsLeft = timeLeft;
         GameClock.ClientUpdateText();
     }
-
-    private void OnPlayerList(SyncListPlayerInfo.Operation op, int index) {
-        Debug.Log("OnPlayerName List Changed");
+    private void OnPlayerListString(string newPlayerList) {
+        Debug.Log("OnPlayerListString");
+        playerListString = newPlayerList;
         PlayerList.Dirty();
     }
 

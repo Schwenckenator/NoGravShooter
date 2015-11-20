@@ -159,7 +159,7 @@ public class ScoreVictoryManager : MonoBehaviour {
             }
         }
         foreach (Player player in playerBuffer) {
-            scoreBoardBuffer += Team.ColourTag(player.Team) + player.info.name + ": " +Team.ColourEnd() + player.Score + "\n";
+            scoreBoardBuffer += Team.ColourTag(player.Team) + player.Name + ": " +Team.ColourEnd() + player.Score + "\n";
         }
 
         return scoreBoardBuffer;

@@ -3,23 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public struct PlayerInfo {
-    public int id;
-    public string name;
-    public int team;
-
-    public PlayerInfo(int id, string name, int team) {
-        this.id = id;
-        this.name = name;
-        this.team = team;
-    }
-}
-
 public class Player : NetworkBehaviour{
     [SyncVar]
-    public int Score;
+    public int ID;
     [SyncVar]
-    public PlayerInfo info;
+    public string Name;
+    [SyncVar(hook ="OnITeam")]
+    private int i_Team;
+    [SyncVar]
+    public int Score;
 
     public TeamColour Team; // Shut up errors
 
@@ -43,22 +35,22 @@ public class Player : NetworkBehaviour{
 
     #region Team
     public void ChangeTeam(TeamColour newTeam) {
-        info.team = (int)newTeam;
+        Team = newTeam;
     }
     public void ChangeTeam(bool sendRPC = true) {
         if (SettingsManager.singleton.IsTeamGameMode()) {
             SwapTeam();
         } else {
-            info.team = (int)TeamColour.None;
+            Team = TeamColour.None;
         }
 
         if (sendRPC) { // Sends RPC by default
-            NetworkManager.single.PlayerChangedTeam(this, (TeamColour)info.team);
+            NetworkManager.single.PlayerChangedTeam(this, Team);
         }
     }
     private void SwapTeam() {
-        if ((TeamColour)info.team == TeamColour.Red) info.team = (int)TeamColour.Blue;
-        else info.team = (int)TeamColour.Red;
+        if (Team == TeamColour.Red) Team = TeamColour.Blue;
+        else Team = TeamColour.Red;
     }
     /// <summary>
     /// Returns false if this.Team = Team.None
@@ -66,17 +58,16 @@ public class Player : NetworkBehaviour{
     /// <param name="team"></param>
     /// <returns>If team == this.team true</returns>
     public bool IsOnTeam(TeamColour team) {
-        return (TeamColour)info.team != TeamColour.None && (TeamColour)info.team == team;
+        return Team != TeamColour.None && Team == team;
     }
     public bool HasNoTeam() {
-        return (TeamColour)info.team == TeamColour.None;
+        return Team == TeamColour.None;
     }
     #endregion
 
     public override void OnStartServer() {
         base.OnStartServer();
-        info.id = NetworkManager.GetNextID();
-        NetworkInfoWrapper.singleton.AddPlayer(info);
+        ID = NetworkManager.GetNextID();
     }
     public override void OnStartLocalPlayer() {
         Debug.Log("Player started");
@@ -86,21 +77,15 @@ public class Player : NetworkBehaviour{
 
     [Command]
     private void CmdSetName(string name) {
-        info.name = name;
-        NetworkInfoWrapper.singleton.UpdateInfo(info);
+        Name = name;
     }
     [Command]
     public void CmdChangeTeam(int newTeam) {
         if (SettingsManager.singleton.IsTeamGameMode()) {
-            info.team = newTeam;
+            i_Team = newTeam;
         } else {
-            info.team = 0;
+            i_Team = 0;
         }
-        //OnTeamChange(info.team);
-    }
-
-    private void OnTeamChange(int newTeam) {
-        info.team = newTeam;
     }
 
     [Command]
@@ -108,10 +93,15 @@ public class Player : NetworkBehaviour{
         Debug.Log("CmdSendChatMessage called");
         string newMessage = "";
         if (addPrefix) {
-            newMessage += info.name + ": ";
+            newMessage += Name + ": ";
         }
         newMessage += message;
 
         NetworkInfoWrapper.singleton.RpcChatMessage(newMessage);
+    }
+
+    private void OnITeam(int newTeam) {
+        i_Team = newTeam;
+        Team = (TeamColour)newTeam;
     }
 }
