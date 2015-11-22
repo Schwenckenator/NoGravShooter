@@ -7,7 +7,7 @@ public interface IDamageable {
     int MaxHealth { get; }
     bool IsFullHealth {get;}
 
-    void TakeDamage(int damage, int weaponId = -1);
+    void TakeDamage(int damage, Player fromPlayer = null, int weaponId = -1);
     void RestoreHealth(int restore);
 
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.Networking;
 
 public class DestroyOnNextFrame : MonoBehaviour, IDamageable {
 	private bool willBeKilled = false;
@@ -32,18 +33,14 @@ public class DestroyOnNextFrame : MonoBehaviour, IDamageable {
 
 	IEnumerator KillOnNextFrame(){
 		yield return null;
-		//GetComponent<ObjectCleanUp>().KillMe();
+        NetworkServer.Destroy(gameObject);
 	}
 
-    public void TakeDamage(int damage, NetworkPlayer from, int weaponId = -1) {
+    public void TakeDamage(int damage, Player from, int weaponId = -1) {
         DestroyMe();
     }
 
     public void RestoreHealth(int restore) {
         // Do nothing
-    }
-
-    public void TakeDamage(int damage, int weaponId = -1) {
-        throw new NotImplementedException();
     }
 }

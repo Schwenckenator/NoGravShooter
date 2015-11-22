@@ -27,39 +27,18 @@ public class ScoreVictoryManager : MonoBehaviour {
         StartCoroutine(CheckForGameEnd());
     }
 
-    public void PointScored(int player) {
-        //NetworkView.RPC("RPCPointScored", RPCMode.All, player, 1);
+    public void PointScored(Player player, int score = 1) {
+        Debug.Log("Point scored!");
+        player.AddScore(score);
+        if (SettingsManager.singleton.IsTeamGameMode()) {
+            GetTeam(player.Team).AddScore(score);
+        }
+        CheckForScoreVictory();
+        NetworkInfoWrapper.singleton.playerListString = UpdateScoreBoard();
     }
-    public void PointLost(int player) {
-        //NetworkView.RPC("RPCPointScored", RPCMode.All, player, -1);
+    public void PointLost(Player player, int score = -1) {
+        PointScored(player, score); // No duplication here!
     }
-
-    //void OnPlayerConnected(int connectingPlayer) {
-    //    foreach (Player player in NetworkManager.connectedPlayers) {
-    //        //NetworkView.RPC("RPCPointScored", connectingPlayer, player.ID, player.Score);
-    //    }
-    //}
-
-    //[RPC]
-    //private void RPCPointScored(int playerID, int score) {
-    //    ChatManager.DebugMessage("RPCPointScored called");
-
-    //    if (!NetworkManager.DoesPlayerExist(playerID)) {
-    //        ChatManager.DebugMessage("Can't find Player "+playerID.ToString());
-    //    }
-
-    //    ChatManager.DebugMessage("RPCPointScored Player exists, will add point.");
-        
-    //    if (score != 0) { // If 0, don't bother
-    //        Player player = NetworkManager.GetPlayer(playerID);
-    //        player.AddScore(score);
-    //        if (SettingsManager.singleton.IsTeamGameMode()) {
-    //            GetTeam(player.Team).AddScore(score);
-    //        }
-    //        CheckForScoreVictory();
-    //    }
-
-    //}
 
     void CheckForScoreVictory() {
 
@@ -80,25 +59,25 @@ public class ScoreVictoryManager : MonoBehaviour {
         }
     }
     void FFACheckForScoreVictory() {
-    //    foreach (Player player in NetworkManager.connectedPlayers) {
-    //        if (player.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
-    //            DeclareWinner(player.Name);
-    //            break;
-    //        }
-    //    }
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            if (player.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
+                DeclareWinner(player.Name);
+                break;
+            }
+        }
     }
     
     void TimeVictory() {
 
         string winningName = WinningName();
-        if (Network.isServer) {
+        if (NetworkManager.isServer) {
             ChatManager.singleton.AddToChat("Time is up.");
         }
         DeclareWinner(winningName);
     }
     void DeclareWinner(string winningName) {
         
-        if (Network.isServer) {
+        if (NetworkManager.isServer) {
             ChatManager.singleton.AddToChat(winningName + " wins!");
         }
         UIWinnerSplash.SetWinner(winningName);
@@ -119,14 +98,14 @@ public class ScoreVictoryManager : MonoBehaviour {
                 }
             }
         } else {
-            //foreach (Player player in NetworkManager.connectedPlayers) {
-            //    if (player.Score > maxValue) {
-            //        maxValue = player.Score;
-            //        winningName = player.Name;
-            //    } else if (player.Score == maxValue) {
-            //        winningName += " and " + player.Name;
-            //    }
-            //}
+            foreach (Player player in NetworkManager.connectedPlayers) {
+                if (player.Score > maxValue) {
+                    maxValue = player.Score;
+                    winningName = player.Name;
+                } else if (player.Score == maxValue) {
+                    winningName += " and " + player.Name;
+                }
+            }
         }
 
         return winningName;
@@ -168,46 +147,46 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     private static List<Player> SortPlayers() {
         List<Player> playerBuffer = new List<Player>();
-        // Sort the players descending score
-        //foreach (Player player in NetworkManager.connectedPlayers) {
-        //    int score = player.Score;
-        //    int i = 0;
-        //    foreach (Player buffer in playerBuffer) {
-        //        if (score > buffer.Score) {
-        //            break;
-        //        }
-        //        i++;
-        //    }
-        //    playerBuffer.Insert(i, player);
-        //}
+        //Sort the players descending score
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            int score = player.Score;
+            int i = 0;
+            foreach (Player buffer in playerBuffer) {
+                if (score > buffer.Score) {
+                    break;
+                }
+                i++;
+            }
+            playerBuffer.Insert(i, player);
+        }
         return playerBuffer;
     }
     private static List<Team> SortTeams() {
         List<Team> teamBuffer = new List<Team>();
 
-        //foreach (Team team in ScoreVictoryManager.singleton.Teams) {
-        //    int score = team.Score;
-        //    int i = 0;
-        //    foreach (Team buffer in teamBuffer) {
-        //        if (score > buffer.Score) {
-        //            break;
-        //        }
-        //        i++;
-        //    }
-        //    teamBuffer.Insert(i, team);
-        //}
+        foreach (Team team in ScoreVictoryManager.singleton.Teams) {
+            int score = team.Score;
+            int i = 0;
+            foreach (Team buffer in teamBuffer) {
+                if (score > buffer.Score) {
+                    break;
+                }
+                i++;
+            }
+            teamBuffer.Insert(i, team);
+        }
 
         return teamBuffer;
     }
 
     public void ClearScoreData() {
         VictorName = "";
-        //// Keep the players, but wipe the scores
-        //foreach (Player player in NetworkManager.connectedPlayers) {
-        //    player.ClearScore();
-        //}
-        //foreach (Team team in Teams) {
-        //    team.ClearScore();
-        //}
+        // Keep the players, but wipe the scores
+        foreach (Player player in NetworkManager.connectedPlayers) {
+            player.ClearScore();
+        }
+        foreach (Team team in Teams) {
+            team.ClearScore();
+        }
     }
 }

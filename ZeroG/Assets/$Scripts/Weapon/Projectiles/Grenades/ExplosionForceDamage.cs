@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ExplosionForceDamage : MonoBehaviour {
+public class ExplosionForceDamage : MonoBehaviour, IOwnable {
 
 	public float distanceReduction;
 	public float explosionPower;
 	public float explosionRadius;
+
+    public Player owner { get; set; }
+
     [SerializeField]
     private int weaponId;
     [SerializeField]
@@ -53,13 +56,13 @@ public class ExplosionForceDamage : MonoBehaviour {
                 float damage = WeaponManager.weapon[weaponId].damage / (Mathf.Max(distance * distanceReduction, 1));
 
                 IDamageable damageable = hit.gameObject.GetInterface<IDamageable>();
-                damageable.TakeDamage((int)damage, weaponId);
+                damageable.TakeDamage((int)damage, owner, weaponId);
             }
 		}
 	}
 
     void PlaySound() {
-        bombAudio = this.GetComponent<AudioSource>();
+        bombAudio = GetComponent<AudioSource>();
         bombAudio.clip = soundExplode;
         bombAudio.PlayOneShot(soundExplode);
     }

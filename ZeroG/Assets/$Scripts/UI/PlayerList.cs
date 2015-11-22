@@ -10,6 +10,10 @@ public class PlayerList : MonoBehaviour {
         listDirty = true;
     }
 
+    void OnEnable() {
+        Dirty();
+    }
+
     void Update() {
         if (listDirty) {
             listDirty = false;

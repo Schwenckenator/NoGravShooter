@@ -2,9 +2,10 @@
 using System.Collections;
 
 [RequireComponent (typeof (Rigidbody))]
-[RequireComponent (typeof (Owner))]
 
-public class RocketBurn : MonoBehaviour {
+public class RocketBurn : MonoBehaviour, IOwnable {
+
+    public Player owner { get; set; }
 
     private GameObject myPlayer;
 

@@ -242,10 +242,10 @@ public class NetworkManager : NetworkLobbyManager {
             connectedPlayers.Add(player.GetComponent<Player>());
             connectedPlayers[index].ID = index++;
         }
-        string playerList = "";
-        foreach (Player player in connectedPlayers) {
-            playerList += player.Name + "\n";
-        }
-        NetworkInfoWrapper.singleton.playerListString = playerList;
+        //string playerList = "";
+        //foreach (Player player in connectedPlayers) {
+        //    playerList += player.Name + "\n";
+        //}
+        NetworkInfoWrapper.singleton.playerListString = ScoreVictoryManager.UpdateScoreBoard();
     }
 }

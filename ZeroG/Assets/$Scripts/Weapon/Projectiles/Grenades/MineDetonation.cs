@@ -3,14 +3,14 @@ using System.Collections;
 using System.Linq;
 [RequireComponent(typeof(ObjectCleanUp))]
 [RequireComponent(typeof(StickyObject))]
-public class MineDetonation : MonoBehaviour, IDamageable {
+public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 
 	public float detectionRadius; 
 	public GameObject explosion;
 	public float initialWaitTime;
 	public float tickWaitTime;
     
-
+    public Player owner { get; set; }
 
     private bool detonated;
     private bool activated;
@@ -96,17 +96,17 @@ public class MineDetonation : MonoBehaviour, IDamageable {
         if (isForced || NetworkManager.isServer) {
            // ChatManager.DebugMessage(NetworkManager.MyPlayer().NAme + " says " + gameObject.ToString() + " goes boom.");
 
-            SpawnExplosion(transform.position, Quaternion.identity, GetComponent<Owner>().ID);
+            SpawnExplosion(transform.position, Quaternion.identity, owner);
             ////GetComponent<ObjectCleanUp>().KillMe();
         }
 	}
 
     //[RPC]
-    void SpawnExplosion(Vector3 position, Quaternion rotation, NetworkPlayer owner) {
+    void SpawnExplosion(Vector3 position, Quaternion rotation, Player owner) {
         if (Network.isServer) {
             GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
-            if (newObj.GetComponent<Owner>() != null) {
-                newObj.GetComponent<Owner>().ID = owner;
+            if (newObj.GetInterface<IOwnable>() != null) {
+                newObj.GetInterface<IOwnable>().owner = owner;
             }
 
         } else {
@@ -126,7 +126,7 @@ public class MineDetonation : MonoBehaviour, IDamageable {
         get { return true; }
     }
 
-    public void TakeDamage(int damage, int weaponId = -1) {
+    public void TakeDamage(int damage, Player fromPlayer = null, int weaponId = -1) {
         ForceDetonate();
     }
 

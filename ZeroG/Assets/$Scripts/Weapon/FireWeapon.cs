@@ -13,11 +13,14 @@ public class FireWeapon : NetworkBehaviour {
     WeaponResources weaponResources;
 
     public AudioSource audioSource; // Assign in inspector
+
+    public Player thisPlayer;
 	// Use this for initialization
 	void Awake () {
 		motor = GetComponent<ActorMotorManager>();
         inventory = GetComponent<WeaponInventory>();
         weaponResources = GetComponent<WeaponResources>();
+        thisPlayer = GetComponent<Player>();
 	}
 	void Update(){
         if (!isLocalPlayer) return;
@@ -108,7 +111,7 @@ public class FireWeapon : NetworkBehaviour {
                 spawnHitParticlePoints.Add(hit.point);
                 IDamageable damageable = hit.collider.gameObject.GetInterface<IDamageable>();
                 if (damageable != null) {
-                    damageable.TakeDamage(weapon.damage, weapon.id);
+                    damageable.TakeDamage(weapon.damage, thisPlayer, weapon.id);
                 }
             }
         }

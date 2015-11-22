@@ -10,10 +10,10 @@ public class ProjectileCollision : MonoBehaviour {
 
         particles.DestroyAfterDelay();
 
-        if (Network.isServer) {
+        if (NetworkManager.isServer) {
 
             GameObject explosion = Network.Instantiate(rocketBlast, transform.position, Quaternion.identity, 0) as GameObject;
-            explosion.GetComponent<Owner>().ID = GetComponent<Owner>().ID;
+            //explosion.GetComponent<Owner>().ID = GetComponent<Owner>().ID;
 
             //GetComponent<ObjectCleanUp>().KillMe();
         }
