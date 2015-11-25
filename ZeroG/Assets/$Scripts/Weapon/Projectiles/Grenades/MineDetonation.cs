@@ -103,11 +103,11 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 
     //[RPC]
     void SpawnExplosion(Vector3 position, Quaternion rotation, Player owner) {
-        if (Network.isServer) {
-            GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
-            if (newObj.GetInterface<IOwnable>() != null) {
-                newObj.GetInterface<IOwnable>().owner = owner;
-            }
+        if (NetworkManager.isServer) { // TODO
+            //GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
+            //if (newObj.GetInterface<IOwnable>() != null) {
+            //    newObj.GetInterface<IOwnable>().owner = owner;
+            //}
 
         } else {
             ////NetworkView.RPC("SpawnExplosion", RPCMode.Server, position, rotation, owner);

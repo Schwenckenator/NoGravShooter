@@ -34,7 +34,7 @@ public class ScoreVictoryManager : MonoBehaviour {
             GetTeam(player.Team).AddScore(score);
         }
         CheckForScoreVictory();
-        NetworkInfoWrapper.singleton.playerListString = UpdateScoreBoard();
+        NetworkInfoWrapper.singleton.SetPlayerListString(UpdateScoreBoard());
     }
     public void PointLost(Player player, int score = -1) {
         PointScored(player, score); // No duplication here!
@@ -130,9 +130,9 @@ public class ScoreVictoryManager : MonoBehaviour {
         string scoreBoardBuffer = "";
 
         playerBuffer = SortPlayers();
-        teamBuffer = SortTeams();
 
         if (SettingsManager.singleton.IsTeamGameMode()) {
+            teamBuffer = SortTeams();
             foreach (Team team in teamBuffer) {
                 scoreBoardBuffer += Team.ColourTag(team.Type) + team.Name + ": " + Team.ColourEnd() + team.Score + "\n";
             }
@@ -187,6 +187,30 @@ public class ScoreVictoryManager : MonoBehaviour {
         }
         foreach (Team team in Teams) {
             team.ClearScore();
+        }
+    }
+
+    public void PlayerDied(Player deadPlayer, Player killer, int weaponID = -1) {
+        if (!NetworkManager.isServer) {
+            throw new ClientRunningServerCodeException();
+        }
+
+        GameManager.gameMode.PlayerDied(deadPlayer);
+
+        string killMessage;
+        killMessage = deadPlayer.Name;
+        if(weaponID >= 0) {
+            killMessage += " " + WeaponManager.weapon[weaponID].killMessage + " ";
+        } else {
+            killMessage += " killed ";
+        }
+
+        if (deadPlayer == killer) {
+            killMessage += "themselves";
+            GameManager.gameMode.Suicide(deadPlayer);
+        } else {
+            killMessage += "themselves";
+            GameManager.gameMode.Kill(killer, deadPlayer);
         }
     }
 }

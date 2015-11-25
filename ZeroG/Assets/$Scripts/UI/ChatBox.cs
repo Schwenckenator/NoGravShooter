@@ -6,7 +6,7 @@ public class ChatBox : MonoBehaviour {
 
     private static bool isDirty = false;
     public static void Dirty() {
-        Debug.Log("Marked Dirty");
+        Debug.Log("ChatBox Marked Dirty");
         isDirty = true;
     }
 

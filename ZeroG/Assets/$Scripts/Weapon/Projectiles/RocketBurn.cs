@@ -25,7 +25,7 @@ public class RocketBurn : MonoBehaviour, IOwnable {
 	}
 
 	void FixedUpdate(){
-        if (!Network.isServer || !moving || (rocketAccel <= 0)) return;
+        if (!NetworkManager.isServer || !moving || (rocketAccel <= 0)) return;
         Push();
         //Rotate();
 	}

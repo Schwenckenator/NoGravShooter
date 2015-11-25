@@ -141,7 +141,7 @@ public class FireWeapon : NetworkBehaviour {
 
     [Command]
     void CmdSpawnProjectile(int weaponID, Quaternion rotation) {
-        GameObject newObj = Network.Instantiate(WeaponManager.weapon[weaponID].projectile, gunFirePoint.position, rotation, 0) as GameObject;
+        GameObject newObj = Instantiate(WeaponManager.weapon[weaponID].projectile, gunFirePoint.position, rotation) as GameObject;
         NetworkServer.Spawn(newObj);
     }
 

@@ -7,6 +7,7 @@ public class PlayerList : MonoBehaviour {
     static bool listDirty = false;
 
     public static void Dirty() {
+        Debug.Log("Player List Marked Dirty");
         listDirty = true;
     }
 
@@ -22,6 +23,7 @@ public class PlayerList : MonoBehaviour {
     }
 
     void UpdateList() {
+        Debug.Log("Player List Update");
         myText.text = "Players: \n" + NetworkInfoWrapper.singleton.playerListString;
     }
 }

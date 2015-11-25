@@ -13,6 +13,8 @@ public class Player : NetworkBehaviour{
     [SyncVar]
     public int Score;
 
+    public NetworkLobbyPlayer myLobbyPlayer;
+
     public TeamColour Team; // Shut up errors
 
     #region Score
@@ -67,11 +69,14 @@ public class Player : NetworkBehaviour{
 
     public override void OnStartServer() {
         base.OnStartServer();
-        ID = NetworkManager.GetNextID();
+        myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
+        ID = myLobbyPlayer.slot;
+        NetworkManager.connectedPlayers.Add(this);
     }
     public override void OnStartLocalPlayer() {
         Debug.Log("Player started");
         CmdSetName(SettingsManager.singleton.PlayerName);
+        myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
         NetworkManager.myPlayer = this;
     }
 
@@ -90,6 +95,7 @@ public class Player : NetworkBehaviour{
 
     [Command]
     public void CmdSendChatMessage(string message, bool addPrefix) {
+        
         Debug.Log("CmdSendChatMessage called");
         string newMessage = "";
         if (addPrefix) {

@@ -80,6 +80,15 @@ public class NetworkInfoWrapper : NetworkBehaviour {
         SecondsLeft = timeLeft;
         GameClock.ClientUpdateText();
     }
+
+    public void SetPlayerListString(string newPlayerList) {
+
+        Debug.Log("Set player list string.");
+        Debug.Log(newPlayerList);
+        playerListString = newPlayerList;
+        PlayerList.Dirty();
+    }
+
     private void OnPlayerListString(string newPlayerList) {
         Debug.Log("OnPlayerListString");
         playerListString = newPlayerList;

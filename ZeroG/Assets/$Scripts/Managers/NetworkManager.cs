@@ -22,6 +22,11 @@ public class NetworkManager : NetworkLobbyManager {
     public GameObject InfoPrefab;
     
     public static Player myPlayer;
+
+    /// <summary>
+    /// SERVER USE ONLY. Is not useable on clients
+    /// </summary>
+    [SerializeField]
     public static List<Player> connectedPlayers;
     
 
@@ -236,16 +241,16 @@ public class NetworkManager : NetworkLobbyManager {
     }
 
     public void OnNewPlayer() {
-        int index = 0;
-        connectedPlayers.Clear();
-        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
-            connectedPlayers.Add(player.GetComponent<Player>());
-            connectedPlayers[index].ID = index++;
-        }
-        //string playerList = "";
-        //foreach (Player player in connectedPlayers) {
-        //    playerList += player.Name + "\n";
+        //int index = 0;
+        //connectedPlayers.Clear();
+        //foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player")) {
+        //    connectedPlayers.Add(player.GetComponent<Player>());
+        //    connectedPlayers[index].ID = index++;
         //}
-        NetworkInfoWrapper.singleton.playerListString = ScoreVictoryManager.UpdateScoreBoard();
+        ////string playerList = "";
+        ////foreach (Player player in connectedPlayers) {
+        ////    playerList += player.Name + "\n";
+        ////}
+        //NetworkInfoWrapper.singleton.playerListString = ScoreVictoryManager.UpdateScoreBoard();
     }
 }

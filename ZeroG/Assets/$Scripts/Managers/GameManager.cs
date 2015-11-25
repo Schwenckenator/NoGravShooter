@@ -87,35 +87,35 @@ public class GameManager : MonoBehaviour {
     }
 
     //[RPC]
-    private void RPCLoadLevel(string levelName, int secondsOfGame, int gameModeIndex) {
+    //private void RPCLoadLevel(string levelName, int secondsOfGame, int gameModeIndex) {
 
-        //SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
-        //stuff for timer. Don't set up if it's tutorial or the menu.
-        if (levelName != "MenuScene" && levelName != "Tutorial") {
-            NetworkInfoWrapper.singleton.GameInProgress = true;
-            UIPauseSpawn.TutorialModeActive(false);
-            UIPauseSpawn.SetServerNameText();
-            if (secondsOfGame > 0) {
-                endTime = Time.time + secondsOfGame;
-                //GameClock.SetEndTime(endTime);
-                ScoreVictoryManager.singleton.StartTimer();
-                this.IsUseTimer = true;
-            } else {
-                this.IsUseTimer = false;
-            }
+    //    //SettingsManager.singleton.GameModeIndexClient = gameModeIndex;
+    //    //stuff for timer. Don't set up if it's tutorial or the menu.
+    //    if (levelName != "MenuScene" && levelName != "Tutorial") {
+    //        NetworkInfoWrapper.singleton.GameInProgress = true;
+    //        UIPauseSpawn.TutorialModeActive(false);
+    //        UIPauseSpawn.SetServerNameText();
+    //        if (secondsOfGame > 0) {
+    //            endTime = Time.time + secondsOfGame;
+    //            //GameClock.SetEndTime(endTime);
+    //            ScoreVictoryManager.singleton.StartTimer();
+    //            this.IsUseTimer = true;
+    //        } else {
+    //            this.IsUseTimer = false;
+    //        }
 
-            ChatManager.ClearAllChat();
-            GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
-            gameMode = temp.GetInterface<IGameMode>();
-        } else {
-            NetworkInfoWrapper.singleton.GameInProgress = false;
-            if (levelName == "Tutorial") {
-                UIPauseSpawn.TutorialModeActive(true);
-            }
-        }
+    //        ChatManager.ClearAllChat();
+    //        GameObject temp = Instantiate(gameModes[gameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
+    //        gameMode = temp.GetInterface<IGameMode>();
+    //    } else {
+    //        NetworkInfoWrapper.singleton.GameInProgress = false;
+    //        if (levelName == "Tutorial") {
+    //            UIPauseSpawn.TutorialModeActive(true);
+    //        }
+    //    }
 
-        Application.LoadLevel(levelName);
-    }
+    //    Application.LoadLevel(levelName);
+    //}
 
     //load the tutorial level
     public IEnumerator LoadTutorialCoRoutine() {

@@ -3,9 +3,10 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class ActorManager : NetworkBehaviour {
-
     public static ActorManager singleton { get; private set; }
     public static bool isMyActorSpawned { get; private set; }
+
+    public Player myPlayer;
 
     Collider myCollider;
     public Renderer myRenderer;
@@ -14,15 +15,23 @@ public class ActorManager : NetworkBehaviour {
     CameraMove cameraMove;
 
     void Awake() {
+        singleton = this;
         myCollider = GetComponent<Collider>();
         myRigidbody = GetComponent<Rigidbody>();
 
         ChangeActorState(false);
     }
 
+    public override void OnStartServer() {
+        base.OnStartServer();
+        foreach(Player player in NetworkManager.connectedPlayers) {
+
+        }
+        connectionToClient.connectionId;
+    }
+
     public override void OnStartLocalPlayer() {
         base.OnStartLocalPlayer();
-        singleton = this;
         Debug.Log("Player Manager Start Local player.");
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         myRenderer.enabled = false;

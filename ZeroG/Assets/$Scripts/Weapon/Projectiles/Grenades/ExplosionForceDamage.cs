@@ -41,7 +41,7 @@ public class ExplosionForceDamage : MonoBehaviour, IOwnable {
             }
 
             // Everything else is server only
-            if (Network.isClient) continue;
+            //if (Network.isClient) continue; TODO
             
             if(hit.CompareTag("BonusPickup")){
 				hit.GetComponent<DestroyOnNextFrame>().DestroyMe();

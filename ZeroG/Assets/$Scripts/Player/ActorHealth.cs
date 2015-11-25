@@ -43,15 +43,25 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     }
     void Awake() {
         myManager = GetComponent<ActorManager>();
+        
     }
     // Use this for initialization
     public override void OnStartLocalPlayer() {
         stats = gameObject.GetInterface<IActorStats>();
         Reset();
     }
+    public override void OnStartServer() {
+        base.OnStartServer();
+
+    }
     public void Reset() {
         maxHealth = stats.maxHealth;
         CmdReset(maxHealth);
+    }
+    [Command]
+    private void CmdSetMyPlayer(int ID) {
+        myPlayer = NetworkManager.GetPlayer(ID);
+        Debug.Log("My player is ID " + myPlayer.ID.ToString() + ", Name " + myPlayer.Name);
     }
     [Command]
     public void CmdReset(int maxHealth) {
@@ -67,14 +77,14 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
 
     [Command]
     void CmdDamageSelf(int damage) {
-        TakeDamage(damage);
+        TakeDamage(damage, myPlayer);
     }
    
     [Server]
-    public void TakeDamage(int damage, Player fromPlayer = null, int weaponID = -1) {
+    public void TakeDamage(int damage, Player fromPlayer, int weaponID = -1) {
         if (isDying) return; // Don't bother if you are already dying
 
-        WillPlayTakeDamageSound();
+        RpcPlayTakeDamageSound();
         health -= damage;
         if (health <= 0) {
             Die(weaponID, fromPlayer);
@@ -96,6 +106,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
         health = 0;
 		isDying = true;//You is dead nigs
+        ScoreVictoryManager.singleton.PlayerDied(myPlayer, fromPlayer, weaponID);
         RpcDie();
 		//StartCoroutine(PlayerCleanup());
     }
@@ -108,7 +119,8 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
     }
 
-    void WillPlayTakeDamageSound() {
+    [ClientRpc]
+    void RpcPlayTakeDamageSound() {
         if(isLocalPlayer && !isDamageSound) {
             isDamageSound = true;
             StartCoroutine(PlaySoundTakeDamage());

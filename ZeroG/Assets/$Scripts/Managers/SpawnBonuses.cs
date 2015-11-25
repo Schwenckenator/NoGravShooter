@@ -20,7 +20,7 @@ public class SpawnBonuses : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		if(Network.isServer){
+		if(Network.isServer){ // TODO
             //Determine what bonuses are being spawned this game
             spawnableBonuses = new List<GameObject>();
 
