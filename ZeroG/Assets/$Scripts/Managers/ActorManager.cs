@@ -6,6 +6,9 @@ public class ActorManager : NetworkBehaviour {
     public static ActorManager singleton { get; private set; }
     public static bool isMyActorSpawned { get; private set; }
 
+    public bool debug = true;
+    private Logger log;
+
     public Player myPlayer;
 
     Collider myCollider;
@@ -15,26 +18,45 @@ public class ActorManager : NetworkBehaviour {
     CameraMove cameraMove;
 
     void Awake() {
-        singleton = this;
+        log = new Logger(debug);
         myCollider = GetComponent<Collider>();
         myRigidbody = GetComponent<Rigidbody>();
 
         ChangeActorState(false);
     }
 
-    public override void OnStartServer() {
-        base.OnStartServer();
-        foreach(Player player in NetworkManager.connectedPlayers) {
-
-        }
-        connectionToClient.connectionId;
-    }
-
     public override void OnStartLocalPlayer() {
         base.OnStartLocalPlayer();
-        Debug.Log("Player Manager Start Local player.");
+        singleton = this;
+        log.Log("Player Manager Start Local player.");
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         myRenderer.enabled = false;
+
+        foreach (GameObject lobbyPlayer in GameObject.FindGameObjectsWithTag("LobbyPlayer")) {
+            log.Log(lobbyPlayer.GetComponent<Player>().ToString());
+            if (lobbyPlayer.GetComponent<Player>().isMine) {
+                AssignMyPlayer(lobbyPlayer);
+                CmdAssignMyPlayer(lobbyPlayer);
+                break;
+            }
+        }
+        if (myPlayer == null) {
+            log.Error("My Player not found.");
+        }
+    }
+
+    private void AssignMyPlayer(GameObject myLobbyPlayer) {
+        myPlayer = myLobbyPlayer.GetComponent<Player>();
+        log.Log(myPlayer.ToString());
+    }
+    [Command]
+    private void CmdAssignMyPlayer(GameObject myLobbyPlayer) {
+        AssignMyPlayer(myLobbyPlayer);
+        RpcAssignMyPlayer(myLobbyPlayer);
+    }
+    [ClientRpc]
+    private void RpcAssignMyPlayer(GameObject myLobbyPlayer) {
+        AssignMyPlayer(myLobbyPlayer);
     }
 
     public void SpawnActor() {
@@ -44,19 +66,19 @@ public class ActorManager : NetworkBehaviour {
 
     [Command]
     void CmdSpawnActor() {
-        Debug.Log("Cmd Spawn Actor");
+        log.Log("Cmd Spawn Actor");
         ChangeActorState(true);
         RpcSpawnActor();
     }
     [ClientRpc]
     void RpcSpawnActor() {
-        Debug.Log("Rpc Spawn Actor");
+        log.Log("Rpc Spawn Actor");
         ChangeActorState(true);
     }
 
     [Server]
     public void ActorDied() {
-        Debug.Log("Server Actor Died.");
+        log.Log("Server Actor Died.");
         RpcActorDied();
     }
 
@@ -85,7 +107,7 @@ public class ActorManager : NetworkBehaviour {
             }
         } else {
             // Not my player
-            //Debug.Log("Renderer changed to "+alive.ToString());
+            //log.Log("Renderer changed to "+alive.ToString());
             myRenderer.enabled = alive;
         }
     }

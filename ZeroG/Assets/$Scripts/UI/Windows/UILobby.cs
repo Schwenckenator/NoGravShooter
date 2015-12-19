@@ -7,6 +7,9 @@ public class UILobby : MonoBehaviour {
 
     public static UILobby singleton { get; private set; }
 
+    public bool isDebug = false;
+    private Logger log;
+
     public Text serverNameText;
     public Text serverSettings;
     public Text disconnectButtonText;
@@ -24,6 +27,7 @@ public class UILobby : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         singleton = this;
+        log = new Logger(isDebug);
         myCanvas = GetComponent<Canvas>();
 
         ShowChangeTeamButton(false);
@@ -111,7 +115,7 @@ public class UILobby : MonoBehaviour {
     }
 
     public void SetServerName() { // Only call when NetworkInfoWrapper is ready
-        Debug.Log("Server Name is: " + NetworkInfoWrapper.singleton.ServerName);
+        log.Log("Server Name is: " + NetworkInfoWrapper.singleton.ServerName);
         serverNameText.text = NetworkInfoWrapper.singleton.ServerName;
 
         string text = "IP: " + NetworkManager.single.networkAddress;

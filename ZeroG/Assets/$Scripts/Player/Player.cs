@@ -3,19 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Player : NetworkBehaviour{
+public class Player : NetworkBehaviour {
     [SyncVar]
     public int ID;
     [SyncVar]
     public string Name;
-    [SyncVar(hook ="OnITeam")]
+    [SyncVar(hook = "OnITeam")]
     private int i_Team;
     [SyncVar]
     public int Score;
 
+    public bool isMine = false;
+
     public NetworkLobbyPlayer myLobbyPlayer;
 
     public TeamColour Team; // Shut up errors
+
+    public bool debug = true;
+    private Logger log;
+
+    void Awake() {
+        log = new Logger(debug);
+    }
 
     #region Score
     public bool IsScoreEqualOrOverAmount(int amount) {
@@ -74,10 +83,11 @@ public class Player : NetworkBehaviour{
         NetworkManager.connectedPlayers.Add(this);
     }
     public override void OnStartLocalPlayer() {
-        Debug.Log("Player started");
+        log.Log("Player started");
         CmdSetName(SettingsManager.singleton.PlayerName);
         myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
         NetworkManager.myPlayer = this;
+        isMine = true;
     }
 
     [Command]
@@ -95,8 +105,8 @@ public class Player : NetworkBehaviour{
 
     [Command]
     public void CmdSendChatMessage(string message, bool addPrefix) {
-        
-        Debug.Log("CmdSendChatMessage called");
+
+        log.Log("CmdSendChatMessage called");
         string newMessage = "";
         if (addPrefix) {
             newMessage += Name + ": ";
@@ -109,5 +119,19 @@ public class Player : NetworkBehaviour{
     private void OnITeam(int newTeam) {
         i_Team = newTeam;
         Team = (TeamColour)newTeam;
+    }
+
+    public override string ToString() {
+        string message = "";
+        message += "Player\n";
+        message += "ID: " + ID.ToString() + "\n";
+        message += "Name: " + Name.ToString() + "\n";
+        message += "Team: " + Team.ToString() + "\n";
+        message += "Score: " + Score.ToString() + "\n";
+        message += "Is Mine? " + isMine.ToString() +"\n";
+        message += "Is local? " + isLocalPlayer.ToString() + "\n";
+        message += "Has Authority? " + hasAuthority.ToString();
+
+        return message;
     }
 }

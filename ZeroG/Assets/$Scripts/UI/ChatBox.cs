@@ -5,8 +5,11 @@ using System.Collections;
 public class ChatBox : MonoBehaviour {
 
     private static bool isDirty = false;
+    static bool debug = false;
     public static void Dirty() {
-        Debug.Log("ChatBox Marked Dirty");
+        if (debug) {
+            Debug.Log("ChatBox Marked Dirty");
+        }
         isDirty = true;
     }
 
@@ -19,12 +22,14 @@ public class ChatBox : MonoBehaviour {
 
     void Update() {
         if (isDirty) {
-            RefreshText();
+            UpdateChatText();
         }
     }
 
-    void RefreshText() {
-        Debug.Log("Refreshing Text.");
+    void UpdateChatText() {
+        if (debug) {
+            Debug.Log("Update Chat Text.");
+        }
         isDirty = false;
 
         myText.text = ChatManager.SubmittedChat;

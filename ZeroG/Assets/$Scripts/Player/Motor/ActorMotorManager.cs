@@ -4,6 +4,9 @@ using System.Collections;
 
 public class ActorMotorManager : NetworkBehaviour, IResetable {
 
+    public bool debug = false;
+    private Logger log;
+
     private delegate void OnUpdate();
     private OnUpdate update;
     private OnUpdate ready;
@@ -26,6 +29,7 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
 
     void Awake() {
         update = NotReady;
+        log = new Logger(debug);
     }
 
     public override void OnStartLocalPlayer() {
@@ -36,7 +40,8 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
         rigidbody = GetComponent<Rigidbody>();
 
         footRayDistance = (GetComponent<CapsuleCollider>().height * (2f / 3f));
-        Debug.Log("Foot Ray is " + footRayDistance.ToString());
+
+        log.Log("Foot Ray is " + footRayDistance.ToString());
 
         Reset();
         update = Ready;
@@ -96,7 +101,7 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
     }
 
     void Landed() {
-        Debug.Log("Landed!");
+        log.Log("Landed!");
 
         // Deactivate current motor
         currentMotor.OnDeactivate();
@@ -108,7 +113,7 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
         cameraMotor.LockMouseLook(false);
     }
     void InAir() {
-        Debug.Log("In Air!");
+        log.Log("In Air!");
 
         // Deactivate current motor
         currentMotor.OnDeactivate();
@@ -203,9 +208,9 @@ public class ActorMotorManager : NetworkBehaviour, IResetable {
 
         float angle = Vector3.Angle(transform.up, colNormal);
 
-        //if (angle > 0) {
-        //    Debug.Log(angle);
-        //}
+        if (angle > 0) {
+            log.Log(angle);
+        }
 
         return (angle > 0f && angle < currentLandingAngle);
     }

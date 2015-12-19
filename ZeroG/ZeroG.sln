@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZeroG.CSharp", "ZeroG.CSharp.csproj", "{38F3CBE1-50BC-EAD5-C309-572356C10C57}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{FE9D75AD-3750-4F2D-BA3C-5D7DEC542A5A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +15,10 @@ Global
 		{38F3CBE1-50BC-EAD5-C309-572356C10C57}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38F3CBE1-50BC-EAD5-C309-572356C10C57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38F3CBE1-50BC-EAD5-C309-572356C10C57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9D75AD-3750-4F2D-BA3C-5D7DEC542A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9D75AD-3750-4F2D-BA3C-5D7DEC542A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9D75AD-3750-4F2D-BA3C-5D7DEC542A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9D75AD-3750-4F2D-BA3C-5D7DEC542A5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

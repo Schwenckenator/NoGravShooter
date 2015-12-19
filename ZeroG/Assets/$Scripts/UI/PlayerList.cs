@@ -6,8 +6,12 @@ public class PlayerList : MonoBehaviour {
     public Text myText;
     static bool listDirty = false;
 
+    static bool debug = false;
+
     public static void Dirty() {
-        Debug.Log("Player List Marked Dirty");
+        if (debug) {
+            Debug.Log("Player List Marked Dirty");
+        }
         listDirty = true;
     }
 
@@ -23,7 +27,9 @@ public class PlayerList : MonoBehaviour {
     }
 
     void UpdateList() {
-        Debug.Log("Player List Update");
-        myText.text = "Players: \n" + NetworkInfoWrapper.singleton.playerListString;
+        if (debug) {
+            Debug.Log("Player List Update");
+        }
+        myText.text = "Players: \n" + NetworkInfoWrapper.singleton.playerListString; // ERROR here on clients
     }
 }

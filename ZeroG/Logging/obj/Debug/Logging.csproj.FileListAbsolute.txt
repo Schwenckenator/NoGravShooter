@@ -1,0 +1,6 @@
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Logging\bin\Debug\Logging.dll
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Logging\bin\Debug\Logging.pdb
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Logging\bin\Debug\UnityEngine.dll
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Logging\bin\Debug\UnityEngine.xml
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Logging\obj\Debug\Logging.dll
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Logging\obj\Debug\Logging.pdb

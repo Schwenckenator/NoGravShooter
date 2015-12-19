@@ -29,6 +29,9 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     public void PointScored(Player player, int score = 1) {
         Debug.Log("Point scored!");
+
+        if(player == null) { Debug.LogError("Point scoring player is null!"); }
+
         player.AddScore(score);
         if (SettingsManager.singleton.IsTeamGameMode()) {
             GetTeam(player.Team).AddScore(score);

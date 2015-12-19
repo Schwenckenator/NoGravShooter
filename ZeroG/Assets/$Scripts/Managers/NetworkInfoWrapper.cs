@@ -7,6 +7,9 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     public static NetworkInfoWrapper singleton { get; private set; }
 
+    public bool debug = true;
+    Logger log;
+
     [SyncVar(hook = "OnServerName")]
     public string ServerName = "";
     [SyncVar]
@@ -27,6 +30,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     void Awake() {
         singleton = this;
+        log = new Logger(debug);
         //connectedPlayers.Callback = OnPlayerList;
         StartCoroutine(SetLobbyName());
     }
@@ -38,7 +42,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     }
 
     public override void OnStartServer() {
-        Debug.Log("NetworkInfoWrapper OnStartServer");
+        log.Log("NetworkInfoWrapper OnStartServer");
 
         ServerName = SettingsManager.singleton.ServerName;
         GameMode = SettingsManager.singleton.GameModeIndex;
@@ -71,7 +75,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     // HOOKS
     private void OnServerName(string value) {
-        Debug.Log("On Server Name.");
+        log.Log("On Server Name.");
         ServerName = value;
         UILobby.singleton.SetServerName();
     }
@@ -83,14 +87,14 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     public void SetPlayerListString(string newPlayerList) {
 
-        Debug.Log("Set player list string.");
-        Debug.Log(newPlayerList);
+        log.Log("Set player list string.");
+        log.Log(newPlayerList);
         playerListString = newPlayerList;
         PlayerList.Dirty();
     }
 
     private void OnPlayerListString(string newPlayerList) {
-        Debug.Log("OnPlayerListString");
+        log.Log("OnPlayerListString");
         playerListString = newPlayerList;
         PlayerList.Dirty();
     }
@@ -106,7 +110,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
 
     [ClientRpc]
     public void RpcChatMessage(string message) {
-        Debug.Log("RpcChatMessage");
+        log.Log("RpcChatMessage");
         ChatManager.UpdateChat(message);
     }
 

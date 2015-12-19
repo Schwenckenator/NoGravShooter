@@ -6,6 +6,9 @@ public class GameClock : MonoBehaviour {
 
     public Text clockText;
 
+    public bool debug = false;
+    private static Logger log;
+
     static Canvas myCanvas;
     static int minsLeft;
     static int secsLeft;
@@ -15,12 +18,13 @@ public class GameClock : MonoBehaviour {
 
     void Awake() {
         singleton = this;
+        log = new Logger(debug);
         myCanvas = GetComponent<Canvas>();
         ShowClock(false);
     }
     
     public static void SetEndTime(int seconds) {
-        Debug.Log("Set End Time: " + seconds.ToString());
+        log.Log("Set End Time: " + seconds.ToString());
         ShowClock(true);
         singleton.StopAllCoroutines();
         NetworkInfoWrapper.singleton.SecondsLeft = seconds;

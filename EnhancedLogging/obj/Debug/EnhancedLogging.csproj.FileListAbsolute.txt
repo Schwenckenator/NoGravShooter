@@ -1,0 +1,6 @@
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\EnhancedLogging\bin\Debug\EnhancedLogging.dll
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\EnhancedLogging\bin\Debug\EnhancedLogging.pdb
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\EnhancedLogging\bin\Debug\UnityEngine.dll
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\EnhancedLogging\bin\Debug\UnityEngine.xml
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\EnhancedLogging\obj\Debug\EnhancedLogging.dll
+C:\Users\Schwenck\Documents\GitHub\NoGravShooter\EnhancedLogging\obj\Debug\EnhancedLogging.pdb

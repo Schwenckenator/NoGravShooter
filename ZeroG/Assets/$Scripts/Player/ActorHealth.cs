@@ -60,8 +60,8 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     }
     [Command]
     private void CmdSetMyPlayer(int ID) {
-        myPlayer = NetworkManager.GetPlayer(ID);
-        Debug.Log("My player is ID " + myPlayer.ID.ToString() + ", Name " + myPlayer.Name);
+        myManager.myPlayer = NetworkManager.GetPlayer(ID);
+        Debug.Log("My player is ID " + myManager.myPlayer.ID.ToString() + ", Name " + myManager.myPlayer.Name);
     }
     [Command]
     public void CmdReset(int maxHealth) {
@@ -77,7 +77,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
 
     [Command]
     void CmdDamageSelf(int damage) {
-        TakeDamage(damage, myPlayer);
+        TakeDamage(damage, myManager.myPlayer);
     }
    
     [Server]
@@ -106,7 +106,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
         health = 0;
 		isDying = true;//You is dead nigs
-        ScoreVictoryManager.singleton.PlayerDied(myPlayer, fromPlayer, weaponID);
+        ScoreVictoryManager.singleton.PlayerDied(myManager.myPlayer, fromPlayer, weaponID);
         RpcDie();
 		//StartCoroutine(PlayerCleanup());
     }
