@@ -17,9 +17,6 @@ public class UIWinnerSplash : MonoBehaviour {
         string newText = winnerText + "\n wins!";
         myText.text = newText;
     }
-    void OnLevelWasLoaded() {
-        myCanvas.enabled = false;
-    }
     void Start() {
         instance = this;
         myCanvas = GetComponent<Canvas>();

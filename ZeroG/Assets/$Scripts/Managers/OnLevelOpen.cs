@@ -9,7 +9,6 @@ public class OnLevelOpen : MonoBehaviour {
     void Awake() {
         Open(true, toOpen);
         StartCoroutine(CoInitialise());
-        Destroy(gameObject, 1f);
     }
 
     IEnumerator CoInitialise() {
