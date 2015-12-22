@@ -160,7 +160,7 @@ public class NetworkManager : NetworkLobbyManager {
         base.OnClientConnect(conn);
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
-        UIManager.singleton.OpenReplace(UIManager.singleton.connectedOpen);
+        UIManager.singleton.OpenReplace(UIManager.singleton.lobbyMenu);
         //    // Set window to lobby
 
         //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);

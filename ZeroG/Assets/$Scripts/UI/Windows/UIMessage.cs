@@ -19,8 +19,6 @@ public class UIMessage : MonoBehaviour {
         button = myButton;
         messageText = myText;
         buttonText = button.GetComponentInChildren<Text>();
-
-        gameObject.SetActive(false);
 	}
 
     public static void ShowMessage(string message, bool buttonAvailable = true, string buttonMessage = "OK") {

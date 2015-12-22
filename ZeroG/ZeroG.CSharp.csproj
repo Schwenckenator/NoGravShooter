@@ -180,6 +180,7 @@
     <Compile Include="Assets\$Scripts\UI\ServerListEntry.cs" />
     <Compile Include="Assets\$Scripts\UI\ServerListManager.cs" />
     <Compile Include="Assets\$Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\$Scripts\UI\Windows\InitWindows.cs" />
     <Compile Include="Assets\$Scripts\UI\Windows\Options\UIAudioSettings.cs" />
     <Compile Include="Assets\$Scripts\UI\Windows\Options\UIControlSettings.cs" />
     <Compile Include="Assets\$Scripts\UI\Windows\Options\UIGraphicsSettings.cs" />

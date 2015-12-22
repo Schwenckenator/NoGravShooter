@@ -5,17 +5,19 @@ public class UIManager : MonoBehaviour {
 
     public static UIManager singleton { get; private set; }
 
-    public GameObject initiallyOpen;
-    public GameObject connectedOpen;
+    public GameObject lobbyMenu;
+    public GameObject mainMenu;
+    public GameObject pauseMenu;
 
     private GameObject currentlyOpen;
 
     public bool debugMode = true;
 
-    void Start() {
+    Logger log;
+
+    void Awake() {
         singleton = this;
-        currentlyOpen = NetworkManager.single.isNetworkActive ? connectedOpen : initiallyOpen;
-        Open(currentlyOpen);
+        log = new Logger(debugMode);
     }
 
     void Update() {
@@ -25,7 +27,11 @@ public class UIManager : MonoBehaviour {
     }
 
     public void OpenReplace(GameObject menu) {
-        currentlyOpen.SetActive(false);
+        
+        if (currentlyOpen) {
+            currentlyOpen.SetActive(false);
+        }
+        
         menu.SetActive(true);
         currentlyOpen = menu;
     }
