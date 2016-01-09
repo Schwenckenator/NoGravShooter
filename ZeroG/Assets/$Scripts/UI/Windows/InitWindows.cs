@@ -6,7 +6,7 @@ public class InitWindows : MonoBehaviour {
     public GameObject[] toInitialise;
     public GameObject[] toOpen;
 
-    void Awake() {
+    void Start() {
         Open(true, toOpen);
         StartCoroutine(CoInitialise());
     }

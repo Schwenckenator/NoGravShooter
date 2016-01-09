@@ -253,4 +253,8 @@ public class NetworkManager : NetworkLobbyManager {
         ////}
         //NetworkInfoWrapper.singleton.playerListString = ScoreVictoryManager.UpdateScoreBoard();
     }
+
+    public void ReturnToLobby() {
+        ServerChangeScene(SettingsManager.singleton.MainMenu);
+    }
 }

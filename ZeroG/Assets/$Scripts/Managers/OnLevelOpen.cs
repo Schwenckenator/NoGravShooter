@@ -7,10 +7,14 @@ public class OnLevelOpen : MonoBehaviour {
     public GameObject game;
 
 
-
     void Start() {
-        // Always starts on menu
-        Invoke("GoMenu", 0.1f); // Wait a god damn second
+        StartCoroutine(StartGame());
+    }
+
+    IEnumerator StartGame() {
+        yield return null; // Wait 2 frames
+        yield return null;
+        GoMenu(); // Always starts on menu
     }
 
     void OnLevelWasLoaded() {

@@ -10,7 +10,7 @@ public class SettingsManager : MonoBehaviour {
 
     public static KeyCode[] keyBindings;
     const int SecondsInMinute = 60;
-    
+    public readonly string MainMenu = "MenuScene";
 
     private string[] levelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation", "Arena", "TestZone", "AsteroidBunker" };
     private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
