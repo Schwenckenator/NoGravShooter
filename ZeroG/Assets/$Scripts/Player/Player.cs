@@ -93,6 +93,7 @@ public class Player : NetworkBehaviour {
     [Command]
     private void CmdSetName(string name) {
         Name = name;
+        gameObject.name = "Lobby" + name;
     }
     [Command]
     public void CmdChangeTeam(int newTeam) {

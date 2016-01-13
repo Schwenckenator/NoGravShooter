@@ -23,7 +23,7 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     [SyncVar(hook = "OnSecondsLeft")]
     public int SecondsLeft = 0;
     [SyncVar(hook = "OnPlayerListString")]
-    public string playerListString;
+    public string playerListString = "";
 
     public SyncListInt startingWeapons = new SyncListInt();
     

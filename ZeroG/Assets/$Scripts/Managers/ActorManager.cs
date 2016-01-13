@@ -28,6 +28,7 @@ public class ActorManager : NetworkBehaviour {
     public override void OnStartLocalPlayer() {
         base.OnStartLocalPlayer();
         singleton = this;
+        isMyActorSpawned = false;
         log.Log("Player Manager Start Local player.");
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         myRenderer.enabled = false;
@@ -47,6 +48,7 @@ public class ActorManager : NetworkBehaviour {
 
     private void AssignMyPlayer(GameObject myLobbyPlayer) {
         myPlayer = myLobbyPlayer.GetComponent<Player>();
+        gameObject.name = "Player" + myPlayer.Name;
         log.Log(myPlayer.ToString());
     }
     [Command]
