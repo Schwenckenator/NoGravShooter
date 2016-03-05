@@ -23,6 +23,10 @@ public class UIJoinGame : MonoBehaviour {
     void JoinGameInit() {
         
         listManager = GetComponentInChildren<ServerListManager>();
+        Invoke("StartMatchmakerDelay", 0.1f);
+    }
+    private void StartMatchmakerDelay() {
+        NetworkManager.single.StartMatchMaker();
         RefreshPress();
     }
 	
@@ -31,7 +35,7 @@ public class UIJoinGame : MonoBehaviour {
     }
     public void PollServerList() {
         ClearServerList();
-        NetworkManager.single.StartMatchMaker();
+        
         NetworkManager.single.matchMaker.ListMatches(0, 10, "", RefreshServerList);
         
     }

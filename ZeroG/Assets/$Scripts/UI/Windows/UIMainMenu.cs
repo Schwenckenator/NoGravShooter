@@ -8,6 +8,10 @@ public class UIMainMenu : MonoBehaviour {
     void Start () {
         playerName.text = SettingsManager.singleton.PlayerName;
 	}
+    public void SetPlayerName(string newName) {
+        SettingsManager.singleton.PlayerName = newName;
+    }
+
     public void CreateGame(GameObject menu) {
         if (CheckName()) {
             UIManager.singleton.OpenReplace(menu);

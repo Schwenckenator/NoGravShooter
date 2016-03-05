@@ -197,7 +197,7 @@ public class NetworkManager : NetworkLobbyManager {
     public void AssignMyPlayerToTeam() {
         if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().HasNoTeam()) {
             //if (Network.isServer) {
-            //    FindTeamWithLeastPlayers(Network.player);
+            //    FindTeamWithLeastPlayers(Network.player);o
             //} else { // Is client
             //    //NetworkView.RPC("FindTeamWithLeastPlayers", RPCMode.Server, Network.player, true); 
             //}

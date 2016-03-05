@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 public class Player : NetworkBehaviour {
     [SyncVar]
     public int ID;
-    [SyncVar]
+    [SyncVar(hook = "OnName")]
     public string Name;
     [SyncVar(hook = "OnITeam")]
     private int i_Team;
@@ -14,16 +14,21 @@ public class Player : NetworkBehaviour {
     public int Score;
 
     public bool isMine = false;
-
     public NetworkLobbyPlayer myLobbyPlayer;
-
     public TeamColour Team; // Shut up errors
+
+    public PlayerListEntry myUI;
 
     public bool debug = true;
     private Logger log;
 
     void Awake() {
         log = new Logger(debug);
+    }
+
+    void Start() {
+        GameObject list = GameObject.FindGameObjectWithTag("PlayerList");
+        myUI.transform.SetParent(list.transform, false);
     }
 
     #region Score
@@ -78,14 +83,14 @@ public class Player : NetworkBehaviour {
 
     public override void OnStartServer() {
         base.OnStartServer();
-        myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
+        //myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
         ID = myLobbyPlayer.slot;
         NetworkManager.connectedPlayers.Add(this);
     }
     public override void OnStartLocalPlayer() {
         log.Log("Player started");
         CmdSetName(SettingsManager.singleton.PlayerName);
-        myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
+        //myLobbyPlayer = GetComponent<NetworkLobbyPlayer>();
         NetworkManager.myPlayer = this;
         isMine = true;
     }
@@ -120,6 +125,10 @@ public class Player : NetworkBehaviour {
     private void OnITeam(int newTeam) {
         i_Team = newTeam;
         Team = (TeamColour)newTeam;
+    }
+    private void OnName(string newName) {
+        Name = newName;
+        myUI.UpdateName();
     }
 
     public override string ToString() {

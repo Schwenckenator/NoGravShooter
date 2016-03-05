@@ -9,12 +9,12 @@ public class PlayerList : MonoBehaviour {
     static bool debug = false;
 
     public static void Dirty() {
-        if (debug) {
-            Debug.Log("Player List Marked Dirty");
-        }
-        if (NetworkManager.single.isNetworkActive) {
-            listDirty = true;
-        }
+        //if (debug) {
+        //    Debug.Log("Player List Marked Dirty");
+        //}
+        //if (NetworkManager.single.isNetworkActive) {
+        //    listDirty = true;
+        //}
     }
 
     void OnEnable() {
