@@ -26,12 +26,11 @@ public class AudioMusicVolume : MonoBehaviour {
 			if (soundtrack.Length > 1){
 				do{
 					currenttrack = Random.Range(0, soundtrack.Length);
-					source.clip = soundtrack[currenttrack];
-					source.Play();
 				}while(currenttrack == prevtrack);
-			} else {
-				source.Play();
+				source.clip = soundtrack[currenttrack];
+				prevtrack = currenttrack;
 			}
+			source.Play();
 		}
 	}
 
