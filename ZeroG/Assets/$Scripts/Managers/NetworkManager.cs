@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 using UnityEngine.Networking.Match;
+using UnityEngine.SceneManagement;
 
 ///<summary>
 /// Manages connections with the network
@@ -118,14 +119,13 @@ public class NetworkManager : NetworkLobbyManager {
             StopHost();
         }
     }
-    public override void OnClientDisconnect(NetworkConnection conn) {
-        base.OnClientDisconnect(conn);
+    public override void OnLobbyClientDisconnect(NetworkConnection conn) {
         GameManager.SetCursorVisibility(true);
         if (!GameManager.IsSceneMenu()) {
             Debug.Log("Setting time back to normal.");
             Time.timeScale = 1.0f; // Make sure time is normal
             UIPlayerHUD.RemoveTutorialPrompt(); // Clear prompt
-            Application.LoadLevel("MenuScene");
+            SceneManager.LoadScene("MenuScene");
         }
 
         myPlayer = null;
@@ -133,8 +133,7 @@ public class NetworkManager : NetworkLobbyManager {
         ChatManager.ClearAllChat();
     }
 
-    public override void OnStartServer() {
-        base.OnStartServer();
+    public override void OnLobbyStartServer() {
         GameObject newInfo = Instantiate(InfoPrefab) as GameObject;
         StartCoroutine(CoSpawnInfo(newInfo));
         Invoke("OnNewPlayer", newPlayerWait);
@@ -149,16 +148,13 @@ public class NetworkManager : NetworkLobbyManager {
         yield return null;
         NetworkServer.Spawn(newInfo);
     }
-    public override void OnServerConnect(NetworkConnection conn) {
-        base.OnServerConnect(conn);
+    public override void OnLobbyServerConnect(NetworkConnection conn) {
         Invoke("OnNewPlayer", newPlayerWait);
     }
-    public override void OnServerDisconnect(NetworkConnection conn) {
-        base.OnServerDisconnect(conn);
+    public override void OnLobbyServerDisconnect(NetworkConnection conn) {
         Invoke("OnNewPlayer", 0); // Don't have to wait for someone leaving
     }
-    public override void OnClientConnect(NetworkConnection conn) {
-        base.OnClientConnect(conn);
+    public override void OnLobbyClientConnect(NetworkConnection conn) {
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
         UIManager.singleton.OpenReplace(UIManager.singleton.lobbyMenu);
@@ -263,8 +259,13 @@ public class NetworkManager : NetworkLobbyManager {
             GameManager.singleton.GameStart();
         }
     }
+    public override bool OnLobbyServerSceneLoadedForPlayer(GameObject lobby, GameObject player) {
 
-    //public override void OnLobbyServerLoadedForPlayer
+        bool success = player != null;
+        Debug.Log("Spawned Player? " + success.ToString());
+        return success;
+    }
+    
 
     //public override void OnLobbyServerPlayersReady() {
     //    StartCoroutine(ServerCountdownCoroutine());

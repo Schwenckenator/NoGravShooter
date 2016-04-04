@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 /// <summary>
 /// Handles player, level loading and game interacitons
 /// </summary>
@@ -24,10 +25,10 @@ public class GameManager : MonoBehaviour {
 
     #region public static methods
     public static bool IsSceneMenu() {
-        return Application.loadedLevelName == "MenuScene";
+        return SceneManager.GetActiveScene().name == "MenuScene";
     }
     public static bool IsSceneTutorial() {
-        return Application.loadedLevelName == "Tutorial";
+        return SceneManager.GetActiveScene().name == "Tutorial";
     }
     public static void SetCursorVisibility(bool visible) {
         Cursor.visible = visible;

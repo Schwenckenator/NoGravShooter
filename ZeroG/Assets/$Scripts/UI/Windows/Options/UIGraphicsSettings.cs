@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class UIGraphicsSettings : MonoBehaviour {
     //Graphics
@@ -68,6 +69,6 @@ public class UIGraphicsSettings : MonoBehaviour {
         Screen.SetResolution(resolutions[resolutionIndex].width, resolutions[resolutionIndex].height, fullscreen);
 
         // This is workaround for Canvas rendering bug
-        Application.LoadLevel(0); // Reloads menu scene
+        SceneManager.LoadScene(0); // Reloads menu scene
     }
 }

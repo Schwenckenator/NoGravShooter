@@ -36,7 +36,7 @@ public class PlayerListEntry : MonoBehaviour {
         if (isReady) {
             myReadyText.text = "Ready!";
         } else {
-            if (myPlayer.isMine) { // Is the player the local client
+            if (myPlayer != null && myPlayer.isMine) { // Is the player the local client
                 myReadyText.text = "Ready?";
             } else {
                 myReadyText.text = "";
@@ -47,9 +47,5 @@ public class PlayerListEntry : MonoBehaviour {
     void ClearToggle() {
         myReadyToggle.isOn = false;
         UpdateReadyText(false);
-    }
-
-    void OnLevelWasLoaded() {
-        ClearToggle();
     }
 }

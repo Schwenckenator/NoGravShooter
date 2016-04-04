@@ -9,14 +9,16 @@ public class BlackHolePhysics : MonoBehaviour {
 	public float radius;
 
 	private List<Rigidbody> hitsRigid;
+    private ParticleSystem particles;
     private ActorMotorManager actor;
     private Rigidbody actorRigid;
 
 	// Use this for initialization
 	void Start () {
 		transform.localScale = new Vector3(radius, radius, radius);
-		GetComponent<ParticleSystem>().startSpeed = -radius;
-		GetComponent<ParticleSystem>().emissionRate = radius;
+        particles = GetComponent<ParticleSystem>();
+        particles.startSpeed = -radius;
+        particles.emissionRate = radius;
 		hitsRigid = new List<Rigidbody>();
 		hitsRigid.Clear();
 		//Find Moveable objects in range
