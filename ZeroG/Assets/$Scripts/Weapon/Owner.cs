@@ -3,5 +3,5 @@ using System.Collections;
 
 public interface IOwnable {
 
-    Player owner { get; set; }
+    LobbyPlayer owner { get; set; }
 }

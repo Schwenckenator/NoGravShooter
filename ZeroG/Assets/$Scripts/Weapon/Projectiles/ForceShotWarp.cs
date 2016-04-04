@@ -13,7 +13,7 @@ public class ForceShotWarp : MonoBehaviour, IOwnable {
 	public float xWarp;
 	public float yWarp;
 
-    public Player owner {get; set;}
+    public LobbyPlayer owner {get; set;}
 
     void Start(){
 		transform.Translate(new Vector3(0, 0, 1), Space.Self);
@@ -34,7 +34,7 @@ public class ForceShotWarp : MonoBehaviour, IOwnable {
 
 		if(hit.CompareTag("Player")){ // Hit a player!
 			//If you hit yourself, don't do anything
-            if (hit.GetComponent<Player>() == owner) {
+            if (hit.GetComponent<LobbyPlayer>() == owner) {
 				push = false;
 			}else{
 				DamagePlayer(hit.gameObject.GetInterface<IDamageable>());

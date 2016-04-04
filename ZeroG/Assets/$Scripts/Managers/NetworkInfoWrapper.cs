@@ -22,8 +22,6 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     public string GameModeName = "";
     [SyncVar(hook = "OnSecondsLeft")]
     public int SecondsLeft = 0;
-    [SyncVar(hook = "OnPlayerListString")]
-    public string playerListString = "";
 
     public SyncListInt startingWeapons = new SyncListInt();
     
@@ -83,20 +81,6 @@ public class NetworkInfoWrapper : NetworkBehaviour {
     private void OnSecondsLeft(int timeLeft) {
         SecondsLeft = timeLeft;
         GameClock.ClientUpdateText();
-    }
-
-    public void SetPlayerListString(string newPlayerList) {
-
-        log.Log("Set player list string.");
-        log.Log(newPlayerList);
-        playerListString = newPlayerList;
-        PlayerList.Dirty();
-    }
-
-    private void OnPlayerListString(string newPlayerList) {
-        log.Log("OnPlayerListString");
-        playerListString = newPlayerList;
-        PlayerList.Dirty();
     }
 
     // RPC and Commands

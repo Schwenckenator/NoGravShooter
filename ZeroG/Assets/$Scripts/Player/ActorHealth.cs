@@ -81,7 +81,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
     }
    
     [Server]
-    public void TakeDamage(int damage, Player fromPlayer, int weaponID = -1) {
+    public void TakeDamage(int damage, LobbyPlayer fromPlayer, int weaponID = -1) {
         if (isDying) return; // Don't bother if you are already dying
 
         RpcPlayTakeDamageSound();
@@ -98,7 +98,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
     }
 
-    private void Die(int weaponID, Player fromPlayer) {
+    private void Die(int weaponID, LobbyPlayer fromPlayer) {
         if (GameManager.IsSceneTutorial()) {
             // Can't die in tutorial.
             health = 10;

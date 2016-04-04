@@ -21,7 +21,7 @@ public class DEBUGSummonBoxes : MonoBehaviour {
     private bool FindMyPlayer() {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in players) {
-            if (player.GetComponent<Player>().isLocalPlayer) {
+            if (player.GetComponent<LobbyPlayer>().isLocalPlayer) {
                 currentPlayer = player;
             }
         }

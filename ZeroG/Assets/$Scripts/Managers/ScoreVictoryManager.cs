@@ -27,7 +27,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         StartCoroutine(CheckForGameEnd());
     }
 
-    public void PointScored(Player player, int score = 1) {
+    public void PointScored(LobbyPlayer player, int score = 1) {
         Debug.Log("Point scored!");
 
         if(player == null) { Debug.LogError("Point scoring player is null!"); }
@@ -37,9 +37,8 @@ public class ScoreVictoryManager : MonoBehaviour {
             GetTeam(player.Team).AddScore(score);
         }
         CheckForScoreVictory();
-        NetworkInfoWrapper.singleton.SetPlayerListString(UpdateScoreBoard());
     }
-    public void PointLost(Player player, int score = -1) {
+    public void PointLost(LobbyPlayer player, int score = -1) {
         PointScored(player, score); // No duplication here!
     }
 
@@ -62,7 +61,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         }
     }
     void FFACheckForScoreVictory() {
-        foreach (Player player in NetworkManager.connectedPlayers) {
+        foreach (LobbyPlayer player in NetworkManager.connectedPlayers) {
             if (player.IsScoreEqualOrOverAmount(NetworkInfoWrapper.singleton.ScoreToWin)) {
                 DeclareWinner(player.Name);
                 break;
@@ -101,7 +100,7 @@ public class ScoreVictoryManager : MonoBehaviour {
                 }
             }
         } else {
-            foreach (Player player in NetworkManager.connectedPlayers) {
+            foreach (LobbyPlayer player in NetworkManager.connectedPlayers) {
                 if (player.Score > maxValue) {
                     maxValue = player.Score;
                     winningName = player.Name;
@@ -128,7 +127,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     }
 
     public static string UpdateScoreBoard() {
-        List<Player> playerBuffer = new List<Player>();
+        List<LobbyPlayer> playerBuffer = new List<LobbyPlayer>();
         List<Team> teamBuffer = new List<Team>();
         string scoreBoardBuffer = "";
 
@@ -140,7 +139,7 @@ public class ScoreVictoryManager : MonoBehaviour {
                 scoreBoardBuffer += Team.ColourTag(team.Type) + team.Name + ": " + Team.ColourEnd() + team.Score + "\n";
             }
         }
-        foreach (Player player in playerBuffer) {
+        foreach (LobbyPlayer player in playerBuffer) {
             scoreBoardBuffer += Team.ColourTag(player.Team) + player.Name + ": " +Team.ColourEnd() + player.Score + "\n";
         }
 
@@ -148,13 +147,13 @@ public class ScoreVictoryManager : MonoBehaviour {
 
     }
 
-    private static List<Player> SortPlayers() {
-        List<Player> playerBuffer = new List<Player>();
+    private static List<LobbyPlayer> SortPlayers() {
+        List<LobbyPlayer> playerBuffer = new List<LobbyPlayer>();
         //Sort the players descending score
-        foreach (Player player in NetworkManager.connectedPlayers) {
+        foreach (LobbyPlayer player in NetworkManager.connectedPlayers) {
             int score = player.Score;
             int i = 0;
-            foreach (Player buffer in playerBuffer) {
+            foreach (LobbyPlayer buffer in playerBuffer) {
                 if (score > buffer.Score) {
                     break;
                 }
@@ -185,7 +184,7 @@ public class ScoreVictoryManager : MonoBehaviour {
     public void ClearScoreData() {
         VictorName = "";
         // Keep the players, but wipe the scores
-        foreach (Player player in NetworkManager.connectedPlayers) {
+        foreach (LobbyPlayer player in NetworkManager.connectedPlayers) {
             player.ClearScore();
         }
         foreach (Team team in Teams) {
@@ -193,7 +192,7 @@ public class ScoreVictoryManager : MonoBehaviour {
         }
     }
 
-    public void PlayerDied(Player deadPlayer, Player killer, int weaponID = -1) {
+    public void PlayerDied(LobbyPlayer deadPlayer, LobbyPlayer killer, int weaponID = -1) {
         if (!NetworkManager.isServer) {
             throw new ClientRunningServerCodeException();
         }

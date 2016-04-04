@@ -7,7 +7,7 @@ public class ExplosionForceDamage : MonoBehaviour, IOwnable {
 	public float explosionPower;
 	public float explosionRadius;
 
-    public Player owner { get; set; }
+    public LobbyPlayer owner { get; set; }
 
     [SerializeField]
     private int weaponId;

@@ -3,7 +3,7 @@
 //using UnityEngine;
 //using UnityEngine.Networking;
 
-//public class Player : NetworkLobbyPlayer {
+//public class PlayerInfo : NetworkLobbyPlayer {
 //    [SyncVar]
 //    public int ID;
 //    [SyncVar(hook = "OnName")]
@@ -136,7 +136,7 @@
 //        message += "Name: " + Name.ToString() + "\n";
 //        message += "Team: " + Team.ToString() + "\n";
 //        message += "Score: " + Score.ToString() + "\n";
-//        message += "Is Mine? " + isMine.ToString() +"\n";
+//        message += "Is Mine? " + isMine.ToString() + "\n";
 //        message += "Is local? " + isLocalPlayer.ToString() + "\n";
 //        message += "Has Authority? " + hasAuthority.ToString();
 

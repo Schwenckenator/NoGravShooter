@@ -45,14 +45,18 @@ public class GameManager : MonoBehaviour {
 		SetCursorVisibility(true);
 
         if (NetworkManager.isServer && NetworkInfoWrapper.singleton.GameInProgress) {
-            NetworkInfoWrapper.singleton.RpcSetCheats(DebugManager.allWeapon, DebugManager.allAmmo, DebugManager.allGrenade, DebugManager.allFuel);
-            NetworkInfoWrapper.singleton.RefreshValues();
-            GameObject temp = Instantiate(gameModes[SettingsManager.singleton.GameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
-            gameMode = temp.GetInterface<IGameMode>();
-            GameClock.SetEndTime(SettingsManager.singleton.TimeLimitSec);
-            ScoreVictoryManager.singleton.StartTimer();
+            GameStart();
         }
-	}
+    }
+
+    public void GameStart() {
+        NetworkInfoWrapper.singleton.RpcSetCheats(DebugManager.allWeapon, DebugManager.allAmmo, DebugManager.allGrenade, DebugManager.allFuel);
+        NetworkInfoWrapper.singleton.RefreshValues();
+        GameObject temp = Instantiate(gameModes[SettingsManager.singleton.GameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
+        gameMode = temp.GetInterface<IGameMode>();
+        GameClock.SetEndTime(SettingsManager.singleton.TimeLimitSec);
+        ScoreVictoryManager.singleton.StartTimer();
+    }
 
     public void EndGame() {
         NetworkInfoWrapper.singleton.GameInProgress = false;

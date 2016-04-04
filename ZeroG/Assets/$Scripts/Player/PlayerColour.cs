@@ -11,7 +11,7 @@ public class PlayerColour : MonoBehaviour {
     }
 	
     public void AssignPlayerColour() {
-        Player currentPlayer = NetworkManager.MyPlayer();
+        LobbyPlayer currentPlayer = NetworkManager.MyPlayer();
         
         // No need to check for team
         ApplyColour(currentPlayer.Team);

@@ -9,7 +9,7 @@ public class ActorManager : NetworkBehaviour {
     public bool debug = true;
     private Logger log;
 
-    public Player myPlayer;
+    public LobbyPlayer myPlayer;
 
     Collider myCollider;
     public Renderer myRenderer;
@@ -34,8 +34,8 @@ public class ActorManager : NetworkBehaviour {
         myRenderer.enabled = false;
 
         foreach (GameObject lobbyPlayer in GameObject.FindGameObjectsWithTag("LobbyPlayer")) {
-            log.Log(lobbyPlayer.GetComponent<Player>().ToString());
-            if (lobbyPlayer.GetComponent<Player>().isMine) {
+            log.Log(lobbyPlayer.GetComponent<LobbyPlayer>().ToString());
+            if (lobbyPlayer.GetComponent<LobbyPlayer>().isMine) {
                 AssignMyPlayer(lobbyPlayer);
                 CmdAssignMyPlayer(lobbyPlayer);
                 break;
@@ -47,7 +47,7 @@ public class ActorManager : NetworkBehaviour {
     }
 
     private void AssignMyPlayer(GameObject myLobbyPlayer) {
-        myPlayer = myLobbyPlayer.GetComponent<Player>();
+        myPlayer = myLobbyPlayer.GetComponent<LobbyPlayer>();
         gameObject.name = "Player" + myPlayer.Name;
         log.Log(myPlayer.ToString());
     }

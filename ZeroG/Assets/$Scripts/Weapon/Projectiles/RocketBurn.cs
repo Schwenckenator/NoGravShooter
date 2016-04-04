@@ -5,7 +5,7 @@ using System.Collections;
 
 public class RocketBurn : MonoBehaviour, IOwnable {
 
-    public Player owner { get; set; }
+    public LobbyPlayer owner { get; set; }
 
     private GameObject myPlayer;
 

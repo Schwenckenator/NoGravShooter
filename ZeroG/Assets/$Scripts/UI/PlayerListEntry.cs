@@ -1,14 +1,20 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using System.Collections;
 
 public class PlayerListEntry : MonoBehaviour {
-    public Player myPlayer;
+    public LobbyPlayer myPlayer;
     public Text myNameText;
     public Text myReadyText;
+    public Toggle myReadyToggle;
 	// Use this for initialization
 	void Start () {
-        UpdateName();   
+        ClearToggle();
+        UpdateName();
+        if (!myPlayer.isMine) {
+            myReadyToggle.enabled = false;
+        }
 	}
 	
     public void UpdateName() {
@@ -16,7 +22,14 @@ public class PlayerListEntry : MonoBehaviour {
     }
 
     public void UpdateToggle(bool ready) {
+        Debug.Log("UpdateToggle!");
         UpdateReadyText(ready);
+        if (ready) {
+            myPlayer.SendReadyToBeginMessage();
+        } else {
+            myPlayer.SendNotReadyToBeginMessage();
+        }
+        
     }
 
     private void UpdateReadyText(bool isReady) {
@@ -29,5 +42,14 @@ public class PlayerListEntry : MonoBehaviour {
                 myReadyText.text = "";
             }
         }
+    }
+
+    void ClearToggle() {
+        myReadyToggle.isOn = false;
+        UpdateReadyText(false);
+    }
+
+    void OnLevelWasLoaded() {
+        ClearToggle();
     }
 }

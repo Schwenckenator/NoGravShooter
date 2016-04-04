@@ -134,6 +134,7 @@
     <Compile Include="Assets\$Scripts\Player\Controller\NewtonianJetpack.cs" />
     <Compile Include="Assets\$Scripts\Player\Controller\NoGravCharacterMotor.cs" />
     <Compile Include="Assets\$Scripts\Player\FloatNameManager.cs" />
+    <Compile Include="Assets\$Scripts\Player\LobbyPlayer.cs" />
     <Compile Include="Assets\$Scripts\Player\Modules\ActorModules.cs" />
     <Compile Include="Assets\$Scripts\Player\Modules\Module.cs" />
     <Compile Include="Assets\$Scripts\Player\Modules\ModuleMoveSpeed.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Assets\$Scripts\Player\Player.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerColour.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerColourManager.cs" />
+    <Compile Include="Assets\$Scripts\Player\PlayerInfo.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerKillOnContact.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerResources.cs" />
     <Compile Include="Assets\$Scripts\PreserveObject.cs" />

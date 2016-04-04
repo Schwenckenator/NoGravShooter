@@ -9,7 +9,7 @@ using UnityEngine.Networking.Match;
 /// Manages connections with the network
 /// </summary>
 public class NetworkManager : NetworkLobbyManager {
-
+    public float prematchCountdown = 5.0f;
     public float newPlayerWait = 1.0f;
 
     public static NetworkManager single { get; private set; }
@@ -21,13 +21,14 @@ public class NetworkManager : NetworkLobbyManager {
 
     public GameObject InfoPrefab;
     
-    public static Player myPlayer;
+    public static LobbyPlayer myLobbyPlayer;
+    public static LobbyPlayer myPlayer;
 
     /// <summary>
     /// SERVER USE ONLY. Is not useable on clients
     /// </summary>
     [SerializeField]
-    public static List<Player> connectedPlayers;
+    public static List<LobbyPlayer> connectedPlayers;
     
 
     private static MatchDesc matchData;
@@ -45,20 +46,20 @@ public class NetworkManager : NetworkLobbyManager {
             DontDestroyOnLoad(gameObject);
         }
         single.StartMatchMaker();
-        connectedPlayers = new List<Player>();
+        connectedPlayers = new List<LobbyPlayer>();
     }
 
-    public static Player GetPlayer(int value) {
+    public static LobbyPlayer GetPlayer(int value) {
         return connectedPlayers.Find(x => x.ID.Equals(value));
     }
-    public static Player MyPlayer() {
+    public static LobbyPlayer MyPlayer() {
         return myPlayer;
     }
     public static bool DoesPlayerExist(int value) {
         return connectedPlayers.Exists(x => x.ID.Equals(value));
     }
 
-    public void PlayerChangedTeam(Player player, TeamColour newTeam) {
+    public void PlayerChangedTeam(LobbyPlayer player, TeamColour newTeam) {
         //NetworkView.RPC("RPCPlayerChangedTeam", RPCMode.Others, player.ID, (int)newTeam);
     }
 
@@ -210,7 +211,7 @@ public class NetworkManager : NetworkLobbyManager {
         // This should only be called on server
 
         int[] teamCount = new int[2]; 
-        foreach (Player player in NetworkManager.connectedPlayers) {
+        foreach (LobbyPlayer player in NetworkManager.connectedPlayers) {
             if (player.Team == TeamColour.Red) {
                 teamCount[0]++;
             } else {
@@ -236,6 +237,7 @@ public class NetworkManager : NetworkLobbyManager {
 
     // Spawning Data Structure
     private static bool isReadyToSpawn = false;
+
     public static bool IsReadyToSpawn() {
         return isReadyToSpawn;
     }
@@ -254,7 +256,47 @@ public class NetworkManager : NetworkLobbyManager {
         //NetworkInfoWrapper.singleton.playerListString = ScoreVictoryManager.UpdateScoreBoard();
     }
 
-    public void ReturnToLobby() {
-        ServerChangeScene(SettingsManager.singleton.MainMenu);
+    public override void OnLobbyServerSceneChanged(string sceneName) {
+        base.OnLobbyServerSceneChanged(sceneName);
+        if(sceneName != "MenuScene" && sceneName != "Tutorial") {
+            NetworkInfoWrapper.singleton.GameInProgress = true;
+            GameManager.singleton.GameStart();
+        }
     }
+
+    //public override void OnLobbyServerLoadedForPlayer
+
+    //public override void OnLobbyServerPlayersReady() {
+    //    StartCoroutine(ServerCountdownCoroutine());
+    //}
+
+    //public IEnumerator ServerCountdownCoroutine() {
+    //    float remainingTime = prematchCountdown;
+    //    int floorTime = Mathf.FloorToInt(remainingTime);
+
+    //    while (remainingTime > 0) {
+    //        yield return null;
+
+    //        remainingTime -= Time.deltaTime;
+    //        int newFloorTime = Mathf.FloorToInt(remainingTime);
+
+    //        if (newFloorTime != floorTime) {//to avoid flooding the network of message, we only send a notice to client when the number of plain seconds change.
+    //            floorTime = newFloorTime;
+
+    //            for (int i = 0; i < lobbySlots.Length; ++i) {
+    //                if (lobbySlots[i] != null) {//there is maxPlayer slots, so some could be == null, need to test it before accessing!
+    //                    (lobbySlots[i] as LobbyPlayer).RpcUpdateCountdown(floorTime);
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //    for (int i = 0; i < lobbySlots.Length; ++i) {
+    //        if (lobbySlots[i] != null) {
+    //            (lobbySlots[i] as LobbyPlayer).RpcUpdateCountdown(0);
+    //        }
+    //    }
+
+    //    ServerChangeScene(playScene);
+    //}
 }

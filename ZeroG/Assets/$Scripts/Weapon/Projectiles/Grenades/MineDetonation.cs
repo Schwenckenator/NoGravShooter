@@ -10,7 +10,7 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 	public float initialWaitTime;
 	public float tickWaitTime;
     
-    public Player owner { get; set; }
+    public LobbyPlayer owner { get; set; }
 
     private bool detonated;
     private bool activated;
@@ -102,7 +102,7 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 	}
 
     //[RPC]
-    void SpawnExplosion(Vector3 position, Quaternion rotation, Player owner) {
+    void SpawnExplosion(Vector3 position, Quaternion rotation, LobbyPlayer owner) {
         if (NetworkManager.isServer) { // TODO
             //GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
             //if (newObj.GetInterface<IOwnable>() != null) {
@@ -126,7 +126,7 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
         get { return true; }
     }
 
-    public void TakeDamage(int damage, Player fromPlayer = null, int weaponId = -1) {
+    public void TakeDamage(int damage, LobbyPlayer fromPlayer = null, int weaponId = -1) {
         ForceDetonate();
     }
 
