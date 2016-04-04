@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Linq;
-[RequireComponent(typeof(ObjectCleanUp))]
 [RequireComponent(typeof(StickyObject))]
 public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 

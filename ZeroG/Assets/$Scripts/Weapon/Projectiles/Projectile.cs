@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 [RequireComponent (typeof (Rigidbody))]
 
-public class RocketBurn : MonoBehaviour, IOwnable {
+public class Projectile : NetworkBehaviour, IOwnable {
 
     public LobbyPlayer owner { get; set; }
 
@@ -15,8 +16,7 @@ public class RocketBurn : MonoBehaviour, IOwnable {
 
     private bool moving = true;
 
-	void Start(){
-		if(!Network.isServer) return;
+    public override void OnStartServer() {
 
 		Vector3 vel = transform.forward * startVelocity;
         vel += GetPlayerVelocity(fullyRelative);

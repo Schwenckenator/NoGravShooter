@@ -17,16 +17,21 @@ public class LobbyPlayer : NetworkLobbyPlayer {
     public TeamColour Team; // Shut up errors
 
     public PlayerListEntry myUI;
-
+    public GameObject playerListEntry;
 
     public bool debug = true;
     private Logger log;
 
     void Awake() {
         log = new Logger(debug);
+        SpawnListEntry();
     }
+    
+    public void SpawnListEntry() {
+        GameObject newEntry = Instantiate(playerListEntry);
+        myUI = newEntry.GetComponent<PlayerListEntry>();
+        myUI.myPlayer = this;
 
-    void Start() {
         GameObject list = GameObject.FindGameObjectWithTag("PlayerList");
         myUI.transform.SetParent(list.transform, false);
     }

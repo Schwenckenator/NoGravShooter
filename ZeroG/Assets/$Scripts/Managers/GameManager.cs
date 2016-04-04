@@ -44,13 +44,13 @@ public class GameManager : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level){
 		SetCursorVisibility(true);
-
-        if (NetworkManager.isServer && NetworkInfoWrapper.singleton.GameInProgress) {
-            GameStart();
-        }
+        //if (NetworkManager.isServer && NetworkInfoWrapper.singleton.GameInProgress) {
+        //    GameStart();
+        //}
     }
 
     public void GameStart() {
+        Debug.Log("Game Start");
         NetworkInfoWrapper.singleton.RpcSetCheats(DebugManager.allWeapon, DebugManager.allAmmo, DebugManager.allGrenade, DebugManager.allFuel);
         NetworkInfoWrapper.singleton.RefreshValues();
         GameObject temp = Instantiate(gameModes[SettingsManager.singleton.GameModeIndex], Vector3.zero, Quaternion.identity) as GameObject;
@@ -150,6 +150,8 @@ public class GameManager : MonoBehaviour {
 
     public void ReturnToLobby() {
         NetworkInfoWrapper.singleton.GameInProgress = false;
+        //NetworkManager.single.ServerReturnToLobby();
+        //NetworkManager.single.ServerChangeScene("MenuScene");
         NetworkManager.single.SendReturnToLobby();
     }
 }

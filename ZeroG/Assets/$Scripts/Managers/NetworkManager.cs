@@ -157,7 +157,7 @@ public class NetworkManager : NetworkLobbyManager {
     public override void OnLobbyClientConnect(NetworkConnection conn) {
         UIMessage.CloseMessage();
         SettingsManager.singleton.ClearPasswordClient();
-        UIManager.singleton.OpenReplace(UIManager.singleton.lobbyMenu);
+        UIManager.singleton.OpenReplace(UIManager.singleton.connectedMenu);
         //    // Set window to lobby
 
         //    //NetworkView.RPC("AddPlayerToList", RPCMode.AllBuffered, .player, SettingsManager.instance.PlayerName);

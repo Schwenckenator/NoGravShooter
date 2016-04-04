@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(ObjectCleanUp))]
 public class BonusHealthPackPickup : NetworkBehaviour{
 	
     public int healStrength;

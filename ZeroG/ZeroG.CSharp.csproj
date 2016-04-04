@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -96,7 +90,6 @@
     <Compile Include="Assets\$Scripts\Gameplay\DEBUGSummonBoxes.cs" />
     <Compile Include="Assets\$Scripts\Gameplay\DestroyOnNextFrame.cs" />
     <Compile Include="Assets\$Scripts\Gameplay\GameClock.cs" />
-    <Compile Include="Assets\$Scripts\Gameplay\ObjectCleanUp.cs" />
     <Compile Include="Assets\$Scripts\Gameplay\WalkableMovingObject.cs" />
     <Compile Include="Assets\$Scripts\Interfaces\IActorMotor.cs" />
     <Compile Include="Assets\$Scripts\Interfaces\IActorStats.cs" />
@@ -117,7 +110,6 @@
     <Compile Include="Assets\$Scripts\Managers\NetworkInfoWrapper.cs" />
     <Compile Include="Assets\$Scripts\Managers\NetworkManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\OnGameOpen.cs" />
-    <Compile Include="Assets\$Scripts\Managers\OnLevelOpen.cs" />
     <Compile Include="Assets\$Scripts\Managers\ScoreVictoryManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\SettingsManager.cs" />
     <Compile Include="Assets\$Scripts\Managers\SpawnBonuses.cs" />
@@ -135,7 +127,10 @@
     <Compile Include="Assets\$Scripts\Player\Controller\NewtonianJetpack.cs" />
     <Compile Include="Assets\$Scripts\Player\Controller\NoGravCharacterMotor.cs" />
     <Compile Include="Assets\$Scripts\Player\FloatNameManager.cs" />
-    <Compile Include="Assets\$Scripts\Player\LobbyPlayer.cs" />
+    <Compile Include="Assets\$Scripts\Player\Lobby\LobbyPlayer.cs" />
+    <Compile Include="Assets\$Scripts\Player\Lobby\LobbyPlayerLevelLoad.cs" />
+    <Compile Include="Assets\$Scripts\Player\Lobby\Player.cs" />
+    <Compile Include="Assets\$Scripts\Player\Lobby\PlayerInfo.cs" />
     <Compile Include="Assets\$Scripts\Player\Modules\ActorModules.cs" />
     <Compile Include="Assets\$Scripts\Player\Modules\Module.cs" />
     <Compile Include="Assets\$Scripts\Player\Modules\ModuleMoveSpeed.cs" />
@@ -143,10 +138,8 @@
     <Compile Include="Assets\$Scripts\Player\Motor\ActorJetpackMotor.cs" />
     <Compile Include="Assets\$Scripts\Player\Motor\ActorMotorManager.cs" />
     <Compile Include="Assets\$Scripts\Player\Motor\ActorWalkingMotor.cs" />
-    <Compile Include="Assets\$Scripts\Player\Player.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerColour.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerColourManager.cs" />
-    <Compile Include="Assets\$Scripts\Player\PlayerInfo.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerKillOnContact.cs" />
     <Compile Include="Assets\$Scripts\Player\PlayerResources.cs" />
     <Compile Include="Assets\$Scripts\PreserveObject.cs" />
@@ -184,6 +177,7 @@
     <Compile Include="Assets\$Scripts\UI\ServerListEntry.cs" />
     <Compile Include="Assets\$Scripts\UI\ServerListManager.cs" />
     <Compile Include="Assets\$Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\$Scripts\UI\UISpawner.cs" />
     <Compile Include="Assets\$Scripts\UI\Windows\InitWindows.cs" />
     <Compile Include="Assets\$Scripts\UI\Windows\Options\UIAudioSettings.cs" />
     <Compile Include="Assets\$Scripts\UI\Windows\Options\UIControlSettings.cs" />
@@ -209,6 +203,8 @@
     <Compile Include="Assets\$Scripts\VersionNumber.cs" />
     <Compile Include="Assets\$Scripts\Weapon\FireWeapon.cs" />
     <Compile Include="Assets\$Scripts\Weapon\GrenadeLifetime.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\NetworkObjectLifeTime.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\ObjectLifeTime.cs" />
     <Compile Include="Assets\$Scripts\Weapon\Owner.cs" />
     <Compile Include="Assets\$Scripts\Weapon\Projectiles\DestroyParticleEffect.cs" />
     <Compile Include="Assets\$Scripts\Weapon\Projectiles\ForceShotWarp.cs" />
@@ -218,9 +214,8 @@
     <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\MineDetonation.cs" />
     <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\StickyObject.cs" />
     <Compile Include="Assets\$Scripts\Weapon\Projectiles\Grenades\ThrowGrenade.cs" />
+    <Compile Include="Assets\$Scripts\Weapon\Projectiles\Projectile.cs" />
     <Compile Include="Assets\$Scripts\Weapon\Projectiles\ProjectileCollision.cs" />
-    <Compile Include="Assets\$Scripts\Weapon\Projectiles\RocketBurn.cs" />
-    <Compile Include="Assets\$Scripts\Weapon\ShotLifeTime.cs" />
     <Compile Include="Assets\$Scripts\Weapon\WeaponInventory.cs" />
     <Compile Include="Assets\$Scripts\Weapon\WeaponReloadRotation.cs" />
     <Compile Include="Assets\$Scripts\Weapon\WeaponResources.cs" />

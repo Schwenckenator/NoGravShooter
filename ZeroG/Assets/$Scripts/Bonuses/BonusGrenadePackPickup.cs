@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(ObjectCleanUp))]
 public class BonusGrenadePackPickup : MonoBehaviour {
 
     [SerializeField]

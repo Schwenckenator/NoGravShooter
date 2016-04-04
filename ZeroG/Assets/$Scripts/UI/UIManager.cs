@@ -5,9 +5,8 @@ public class UIManager : MonoBehaviour {
 
     public static UIManager singleton { get; private set; }
 
-    public GameObject lobbyMenu;
+    public GameObject connectedMenu;
     public GameObject mainMenu;
-    public GameObject pauseMenu;
 
     private GameObject currentlyOpen;
 
@@ -18,6 +17,14 @@ public class UIManager : MonoBehaviour {
     void Awake() {
         singleton = this;
         log = new Logger(debugMode);
+    }
+
+    void Start() {
+        if (NetworkManager.single.isNetworkActive) {
+            OpenReplace(connectedMenu);
+        } else {
+            OpenReplace(mainMenu);
+        }
     }
 
     void Update() {

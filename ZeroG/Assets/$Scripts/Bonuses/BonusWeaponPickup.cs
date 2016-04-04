@@ -3,7 +3,6 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-[RequireComponent(typeof(ObjectCleanUp))]
 public class BonusWeaponPickup : NetworkBehaviour {
     [SyncVar]
     public int id;
