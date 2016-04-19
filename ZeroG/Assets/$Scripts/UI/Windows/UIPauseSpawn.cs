@@ -91,9 +91,9 @@ public class UIPauseSpawn : MonoBehaviour {
     }
 
     public static void SetServerNameText() {
-        string newText = NetworkInfoWrapper.singleton.ServerName;
-        newText += ", " + NetworkInfoWrapper.singleton.GameModeName;
-        serverName.SetText(newText);
+        //string newText = NetworkInfoWrapper.singleton.ServerName;
+        //newText += ", " + NetworkInfoWrapper.singleton.GameModeName;
+        //serverName.SetText(newText);
     }
     public static void TutorialModeActive(bool isTutorial) {
         playerList.Show(!isTutorial);
@@ -101,8 +101,8 @@ public class UIPauseSpawn : MonoBehaviour {
     }
     private static void PauseMenu(bool isTutorial = false) {
         if (!isTutorial) {
-            returnToLobby.Show(NetworkManager.isServer);
-            singleton.ShutdownButtonText.text = NetworkManager.isServer ? "Shutdown Server" : "Disconnect";
+            returnToLobby.Show(LobbyManager.isServer);
+            singleton.ShutdownButtonText.text = LobbyManager.isServer ? "Shutdown Server" : "Disconnect";
         }
         GameMenu.OpenMenu();
     }
@@ -112,7 +112,7 @@ public class UIPauseSpawn : MonoBehaviour {
     /// </summary>
     public static void PauseMenuSwitch() {
         if(!IsShown){
-            PauseMenu(GameManager.IsSceneTutorial()); 
+            PauseMenu(GameManager.IsTutorial()); 
         } else {
             GameMenu.OpenHUD();
         }
@@ -126,9 +126,9 @@ public class UIPauseSpawn : MonoBehaviour {
         }
     }
     public void ReturnToLobbyPress() {
-        GameManager.singleton.ReturnToLobby();
+        LobbyManager.s_Singleton.ServerReturnToLobby();
     }
     public void Disconnect() {
-        NetworkManager.Disconnect();
+        LobbyManager.s_Singleton.Disconnect();
     }
 }

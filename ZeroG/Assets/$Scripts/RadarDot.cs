@@ -29,7 +29,7 @@ public class RadarDot{
             return "Item";
         }
         if (tag == "Player") {
-            if (NetworkManager.MyPlayer().IsOnTeam(team)) {
+            if (false/*NetworkManager.MyPlayer().IsOnTeam(team)*/) {
                 return "Ally";
             } else {
                 return "Enemy";

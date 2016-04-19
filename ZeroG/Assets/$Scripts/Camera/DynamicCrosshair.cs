@@ -28,7 +28,7 @@ public class DynamicCrosshair : MonoBehaviour {
         if (inventory == null) return;
         if (inventory.currentWeapon == null) return;
         MoveCrosshair(CalculatePixelMove(inventory.currentWeapon.shotSpread));
-        ColourCrosshair();
+        //ColourCrosshair();
 	}
     float CalculatePixelMove(float currentSpread) {
         float vertFov = Camera.main.fieldOfView;
@@ -45,24 +45,24 @@ public class DynamicCrosshair : MonoBehaviour {
 
     }
 
-    void ColourCrosshair() {
-        // Fire a raycast through crosshair
-        Color newColour = neutral;
-        Transform cam = Camera.main.transform;
-        RaycastHit hit;
+    //void ColourCrosshair() {
+    //    // Fire a raycast through crosshair
+    //    Color newColour = neutral;
+    //    Transform cam = Camera.main.transform;
+    //    RaycastHit hit;
         
-        if (Physics.Raycast(cam.position, cam.forward, out hit)) {
-            if (hit.collider.CompareTag("Player") && !hit.collider.Equals(myActor)) {
-                if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
-                    newColour = ally;
-                } else {
-                    newColour = enemy;
-                }
-            }
-        }
+    //    if (Physics.Raycast(cam.position, cam.forward, out hit)) {
+    //        if (hit.collider.CompareTag("Player") && !hit.collider.Equals(myActor)) {
+    //            if (SettingsManager.singleton.IsTeamGameMode() && NetworkManager.MyPlayer().IsOnTeam(hit.collider.GetComponent<ActorTeam>().GetTeam())){
+    //                newColour = ally;
+    //            } else {
+    //                newColour = enemy;
+    //            }
+    //        }
+    //    }
 
-        ChangeCrosshairColour(newColour);
-    }
+    //    ChangeCrosshairColour(newColour);
+    //}
 
     void ChangeCrosshairColour(Color col) {
         if (currentColour.Equals(col)) return; // Only change if colour is different

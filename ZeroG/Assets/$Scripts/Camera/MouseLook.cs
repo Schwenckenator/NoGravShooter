@@ -47,7 +47,7 @@ public class MouseLook : MonoBehaviour {
     }
 
     void Start() {
-        if (!transform.root.GetComponent<NetworkIdentity>().isLocalPlayer) {
+        if (!transform.root.GetComponent<UnityEngine.Networking.NetworkIdentity>().isLocalPlayer) {
             enabled = false;
         }
         cameraFOV = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<AimingFOVChanger>();

@@ -1,20 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
-public class PlayerColour : MonoBehaviour {
+public class PlayerColour : NetworkBehaviour {
 
-    public string playerGraphicsName = "Test_Rig";
+    public string playerGraphicsName = "Test_Rig"; // TODO <- Phase this out
 
-    //NetworkView //NetworkView;
-    void Awake() {
-        //NetworkView = GetComponent<//NetworkView>();
-    }
-	
     public void AssignPlayerColour() {
-        LobbyPlayer currentPlayer = NetworkManager.MyPlayer();
+        ActorManager currentPlayer = GetComponent<ActorManager>();
         
         // No need to check for team
-        ApplyColour(currentPlayer.Team);
+        //ApplyColour(currentPlayer.Team);
 
     }
     private void ApplyColour(TeamColour team) {

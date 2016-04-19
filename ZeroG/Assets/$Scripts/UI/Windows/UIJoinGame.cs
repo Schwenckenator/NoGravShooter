@@ -26,8 +26,8 @@ public class UIJoinGame : MonoBehaviour {
         Invoke("StartMatchmakerDelay", 0.1f);
     }
     private void StartMatchmakerDelay() {
-        NetworkManager.single.StartMatchMaker();
-        RefreshPress();
+        //NetworkManager.single.StartMatchMaker();
+        //RefreshPress();
     }
 	
     public void RefreshPress() {
@@ -36,7 +36,7 @@ public class UIJoinGame : MonoBehaviour {
     public void PollServerList() {
         ClearServerList();
         
-        NetworkManager.single.matchMaker.ListMatches(0, 10, "", RefreshServerList);
+        //NetworkManager.single.matchMaker.ListMatches(0, 10, "", RefreshServerList);
         
     }
 
@@ -67,7 +67,7 @@ public class UIJoinGame : MonoBehaviour {
         }
     }
     public void ConnectToServer(MatchDesc match) {
-        NetworkManager.SetClientDetailsMatch(match);
-        NetworkManager.single.matchMaker.JoinMatch(match.networkId, "", NetworkManager.single.OnMatchJoined);
+        //NetworkManager.SetClientDetailsMatch(match);
+        //NetworkManager.single.matchMaker.JoinMatch(match.networkId, "", NetworkManager.single.OnMatchJoined);
     }
 }

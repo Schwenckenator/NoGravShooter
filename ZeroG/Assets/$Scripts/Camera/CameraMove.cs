@@ -23,10 +23,10 @@ public class CameraMove : MonoBehaviour {
 		transform.position = new Vector3(0, 30, 0);
 	}
 
-    void OnLevelWasLoaded() {
-        if (GameManager.IsSceneMenu()) {
-            DetachCamera();
-            Destroy(gameObject);
-        }
-    }
+    //void OnLevelWasLoaded() {
+    //    if (GameManager.IsSceneMenu()) {
+    //        DetachCamera();
+    //        Destroy(gameObject);
+    //    }
+    //}
 }

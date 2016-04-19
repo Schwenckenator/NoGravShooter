@@ -5,7 +5,7 @@ using System.Collections;
 public class UIMainMenu : MonoBehaviour {
     public InputField playerName;
     // Use this for initialization
-    void Start () {
+    void OnEnable () {
         playerName.text = SettingsManager.singleton.PlayerName;
 	}
     public void SetPlayerName(string newName) {
@@ -33,7 +33,7 @@ public class UIMainMenu : MonoBehaviour {
     }
 
     public void LoadTutorial() {
-        GameManager.singleton.LoadTutorial();
+        LobbyManager.s_Singleton.LoadTutorial();
     }
     public void QuitGame() {
         if (!Application.isWebPlayer && !Application.isEditor) {

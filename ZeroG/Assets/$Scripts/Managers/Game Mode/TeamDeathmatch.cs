@@ -1,34 +1,35 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 namespace GameMode {
     public class TeamDeathmatch : MonoBehaviour, IGameMode {
 
-        public void Kill(LobbyPlayer killer, LobbyPlayer corpse) {
+        public void Kill(NetworkIdentity killer, NetworkIdentity corpse) {
             // Check if legit kill or friendly fire
-            if (killer.IsOnTeam(corpse.Team)) {
-                FriendlyKill(killer);
-            } else {
-                LegitKill(killer);
-            }
+            //if (killer.IsOnTeam(corpse.Team)) {
+            //    FriendlyKill(killer);
+            //} else {
+            //    LegitKill(killer);
+            //}
         }
 
-        private void LegitKill(LobbyPlayer killer) {
-            ScoreVictoryManager.singleton.PointScored(killer);
+        private void LegitKill(NetworkIdentity killer) {
+            //ScoreVictoryManager.singleton.PointScored(killer);
         }
-        private void FriendlyKill(LobbyPlayer killer) {
-            ScoreVictoryManager.singleton.PointLost(killer);
-        }
-
-        public void Suicide(LobbyPlayer player) {
-            ScoreVictoryManager.singleton.PointLost(player);
+        private void FriendlyKill(NetworkIdentity killer) {
+            //ScoreVictoryManager.singleton.PointLost(killer);
         }
 
-        public void PlayerDied(LobbyPlayer player) {
+        public void Suicide(NetworkIdentity player) {
+            //ScoreVictoryManager.singleton.PointLost(player);
+        }
+
+        public void PlayerDied(NetworkIdentity player) {
             // Do nothing
         }
 
-        public void ObjectiveScored(LobbyPlayer player) {
+        public void ObjectiveScored(NetworkIdentity player) {
             // Do nothing
         }
     }

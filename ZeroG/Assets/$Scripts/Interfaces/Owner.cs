@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 public interface IOwnable {
 
-    LobbyPlayer owner { get; set; }
+    NetworkIdentity owner { get; set; }
 }

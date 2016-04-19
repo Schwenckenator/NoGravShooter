@@ -302,8 +302,8 @@ public class SettingsManager : MonoBehaviour {
     }
 
     //[RPC]
-    void RPC_RelayGameMode(int index) {
-        //SettingsManager.singleton.GameModeIndexClient = index;
-        NetworkManager.single.AssignMyPlayerToTeam();
-    }
+    //void RPC_RelayGameMode(int index) {
+    //    //SettingsManager.singleton.GameModeIndexClient = index;
+    //    NetworkManager.single.AssignMyPlayerToTeam();
+    //}
 }

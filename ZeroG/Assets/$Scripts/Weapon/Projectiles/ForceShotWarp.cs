@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System;
 
@@ -12,7 +13,7 @@ public class ForceShotWarp : MonoBehaviour, IOwnable {
 	public float xWarp;
 	public float yWarp;
 
-    public LobbyPlayer owner {get; set;}
+    public NetworkIdentity owner {get; set;}
 
     void Start(){
 		transform.Translate(new Vector3(0, 0, 1), Space.Self);
@@ -33,7 +34,7 @@ public class ForceShotWarp : MonoBehaviour, IOwnable {
 
 		if(hit.CompareTag("Player")){ // Hit a player!
 			//If you hit yourself, don't do anything
-            if (hit.GetComponent<LobbyPlayer>() == owner) {
+            if (false/*hit.GetComponent<PlayerController>() == owner*/) {
 				push = false;
 			}else{
 				DamagePlayer(hit.gameObject.GetInterface<IDamageable>());

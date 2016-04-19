@@ -12,13 +12,13 @@ public class StickyObject : MonoBehaviour {
 	}
 
     void Freeze() {
-        ChatManager.DebugMessage(gameObject.ToString() + " freezing all rigidbody axes");
+        //ChatManager.DebugMessage(gameObject.ToString() + " freezing all rigidbody axes");
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         GetComponent<Projectile>().Disable();
     }
 
     public void UnStick() {
-        ChatManager.DebugMessage(gameObject.ToString() + " unsticking all rigidbody axes");
+        //ChatManager.DebugMessage(gameObject.ToString() + " unsticking all rigidbody axes");
 
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
     }

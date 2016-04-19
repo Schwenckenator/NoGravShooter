@@ -14,7 +14,7 @@ public class GameMenu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if (!GameManager.IsSceneMenu() && Input.GetKeyDown(KeyCode.Escape)) {
+	    if (!LobbyManager.IsSceneMenu && Input.GetKeyDown(KeyCode.Escape)) {
             if (UIPauseSpawn.IsShown) {
                 OpenHUD();
             } else {
@@ -24,11 +24,11 @@ public class GameMenu : MonoBehaviour {
 	}
 
     public static void OpenMenu() {
-        GameManager.SetCursorVisibility(true);
+        UIManager.SetCursorVisibility(true);
         UIManager.singleton.OpenReplace(singleton.menu);
     }
     public static void OpenHUD() {
-        GameManager.SetCursorVisibility(false);
+        UIManager.SetCursorVisibility(false);
         UIManager.singleton.OpenReplace(singleton.HUD);
     }
 }

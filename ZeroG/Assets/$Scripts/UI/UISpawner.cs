@@ -6,18 +6,27 @@ public class UISpawner : MonoBehaviour {
     public GameObject menuWindows;
     public GameObject gameMenu;
 
-	// Use this for initialization
-	void Start () {
+    private GameObject _menuWindows;
+    private GameObject _gameMenu;
+    // Use this for initialization
+    void Start () {
         //Always start on menu
-        Instantiate(menuWindows);
-	}
+        _menuWindows = Instantiate(menuWindows);
+        _gameMenu = Instantiate(gameMenu);
+        LoadWindows(true);
+    }
 
     void OnLevelWasLoaded() {
-        if (GameManager.IsSceneMenu()) {
-            Instantiate(menuWindows);
+        if (LobbyManager.IsSceneMenu) {
+            LoadWindows(true);
         } else {
-            Instantiate(gameMenu);
+            LoadWindows(false);
         }
+    }
+
+    void LoadWindows(bool isMenu) {
+        _menuWindows.SetActive(isMenu);
+        _gameMenu.SetActive(!isMenu);
     }
 	
 }

@@ -49,7 +49,7 @@ public class BonusWeaponPickup : NetworkBehaviour {
 	
 	void OnTriggerEnter(Collider info){
 		if(info.CompareTag("Player")){
-            if (info.GetComponent<LobbyPlayer>().isLocalPlayer) {
+            if (info.GetComponent<NetworkIdentity>().isLocalPlayer) {
                 playerColliding = true;
                 inventory = info.GetComponent<WeaponInventory>();
                 weaponcount = inventory.NumWeaponsHeld();
@@ -61,7 +61,7 @@ public class BonusWeaponPickup : NetworkBehaviour {
 	
 	void OnTriggerExit(Collider info){
 		if(info.CompareTag("Player")){
-            if (info.GetComponent<LobbyPlayer>().isLocalPlayer) {
+            if (info.GetComponent<NetworkIdentity>().isLocalPlayer) {
                 playerColliding = false;
             }
         }

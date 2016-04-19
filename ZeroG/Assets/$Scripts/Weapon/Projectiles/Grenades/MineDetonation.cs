@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 using System.Linq;
 [RequireComponent(typeof(StickyObject))]
@@ -9,7 +10,7 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 	public float initialWaitTime;
 	public float tickWaitTime;
     
-    public LobbyPlayer owner { get; set; }
+    public NetworkIdentity owner { get; set; }
 
     private bool detonated;
     private bool activated;
@@ -92,7 +93,7 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
         detonated = true;
         activated = true;
 
-        if (isForced || NetworkManager.isServer) {
+        if (isForced || LobbyManager.isServer) {
            // ChatManager.DebugMessage(NetworkManager.MyPlayer().NAme + " says " + gameObject.ToString() + " goes boom.");
 
             SpawnExplosion(transform.position, Quaternion.identity, owner);
@@ -101,8 +102,8 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
 	}
 
     //[RPC]
-    void SpawnExplosion(Vector3 position, Quaternion rotation, LobbyPlayer owner) {
-        if (NetworkManager.isServer) { // TODO
+    void SpawnExplosion(Vector3 position, Quaternion rotation, NetworkIdentity owner) {
+        if (LobbyManager.isServer) { // TODO
             //GameObject newObj = Network.Instantiate(explosion, position, rotation, 0) as GameObject;
             //if (newObj.GetInterface<IOwnable>() != null) {
             //    newObj.GetInterface<IOwnable>().owner = owner;
@@ -125,7 +126,7 @@ public class MineDetonation : MonoBehaviour, IDamageable, IOwnable {
         get { return true; }
     }
 
-    public void TakeDamage(int damage, LobbyPlayer fromPlayer = null, int weaponId = -1) {
+    public void TakeDamage(int damage, NetworkIdentity fromPlayer = null, int weaponId = -1) {
         ForceDetonate();
     }
 

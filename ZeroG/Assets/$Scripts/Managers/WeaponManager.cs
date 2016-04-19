@@ -12,7 +12,10 @@ public class WeaponManager : MonoBehaviour {
     public static int GetMaxHeldWeapons() { return maxHeldWeapons; }
 
     public SyncListInt GetStartingWeapons() {
-        return NetworkInfoWrapper.singleton.startingWeapons;
+        //return NetworkInfoWrapper.singleton.startingWeapons;
+        SyncListInt emptyList = new SyncListInt();
+
+        return emptyList;
     }
 
     // Use this for initialization

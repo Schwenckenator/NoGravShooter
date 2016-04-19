@@ -41,7 +41,7 @@ public class UILobby : MonoBehaviour {
     }
 
     private void SetShutdownButtonText() {
-        if (NetworkManager.isServer) {
+        if (LobbyManager.isServer) {
             disconnectButtonText.text = "Shutdown";
         } else {
             disconnectButtonText.text = "Disconnect";
@@ -60,12 +60,9 @@ public class UILobby : MonoBehaviour {
     }
     #region StartGame
     public void StartCountdown() {
-        StartCountdownStatic();
-    }
-    private void StartCountdownStatic() {
         if (countdown) {
             StopCoroutine("CountdownStartGame");
-            ChatManager.singleton.AddToChat("Countdown cancelled.");
+            //ChatManager.singleton.AddToChat("Countdown cancelled.");
             countdown = false;
         } else {
             StartCoroutine("CountdownStartGame");
@@ -75,7 +72,7 @@ public class UILobby : MonoBehaviour {
     private void StopCountdown() {
         if (countdown) {
             StopCoroutine("CountdownStartGame");
-            ChatManager.singleton.AddToChat("Countdown cancelled.");
+            //ChatManager.singleton.AddToChat("Countdown cancelled.");
             countdown = false;
         }
         ChangeButtonText(countdown);
@@ -83,18 +80,18 @@ public class UILobby : MonoBehaviour {
     IEnumerator CountdownStartGame() {
         if (DebugManager.adminMode) {
             startGameButton.interactable = false;
-            GameManager.singleton.LoadLevel();
+            LobbyManager.s_Singleton.LoadGameScene();
             yield break;
         }
         countdown = true;
-        int waitSeconds = 5;
-        ChatManager.singleton.AddToChat("Game starting in...");
+        int waitSeconds = LobbyManager.s_Singleton.countdownTime;
+        //ChatManager.singleton.AddToChat("Game starting in...");
         do {
-            ChatManager.singleton.AddToChat(waitSeconds.ToString() + "...");
+            //ChatManager.singleton.AddToChat(waitSeconds.ToString() + "...");
             yield return new WaitForSeconds(1.0f);
         } while (waitSeconds-- > 0);
         startGameButton.interactable = false;
-        GameManager.singleton.LoadLevel();
+        LobbyManager.s_Singleton.LoadGameScene();
         countdown = false;
     }
     #endregion
@@ -103,24 +100,24 @@ public class UILobby : MonoBehaviour {
         startButtonText.text = count ? "Cancel" : "Start Game";
     }
     public void ChangeTeam() {
-        NetworkManager.MyPlayer().ChangeTeam();
+        //NetworkManager.MyPlayer().ChangeTeam();
     }
     public void Disconnect() {
         DisconnectStatic();
     }
     
     private void DisconnectStatic() {
-        NetworkManager.Disconnect();
+        //NetworkManager.Disconnect();
         StopCountdown();
     }
 
     public void SetServerName() { // Only call when NetworkInfoWrapper is ready
-        log.Log("Server Name is: " + NetworkInfoWrapper.singleton.ServerName);
-        serverNameText.text = NetworkInfoWrapper.singleton.ServerName;
+        //log.Log("Server Name is: " + NetworkInfoWrapper.singleton.ServerName);
+        //serverNameText.text = NetworkInfoWrapper.singleton.ServerName;
 
-        string text = "IP: " + NetworkManager.single.networkAddress;
-        text += ", Port: " + NetworkManager.single.networkPort;
-        serverSettings.text = text;
+        //string text = "IP: " + NetworkManager.single.networkAddress;
+        //text += ", Port: " + NetworkManager.single.networkPort;
+        //serverSettings.text = text;
 
         myCanvas.enabled = true; // Show canvas, it's ready
     }

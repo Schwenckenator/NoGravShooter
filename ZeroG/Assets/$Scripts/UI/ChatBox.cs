@@ -32,6 +32,6 @@ public class ChatBox : MonoBehaviour {
         }
         isDirty = false;
 
-        myText.text = ChatManager.SubmittedChat;
+        myText.text = "";// ChatManager.SubmittedChat;
     }
 }

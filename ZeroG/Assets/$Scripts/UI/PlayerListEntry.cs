@@ -4,7 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 
 public class PlayerListEntry : MonoBehaviour {
-    public LobbyPlayer myPlayer;
+    //public PlayerController myPlayer;
     public Text myNameText;
     public Text myScoreText;
 	// Use this for initialization
@@ -14,10 +14,10 @@ public class PlayerListEntry : MonoBehaviour {
 	}
 	
     public void UpdateName() {
-        myNameText.text = myPlayer.Name;
+        //myNameText.text = myPlayer.Name;
     }
 
     public void UpdateScore() {
-        myScoreText.text = myPlayer.Score.ToString();
+        //myScoreText.text = myPlayer.Score.ToString();
     }
 }

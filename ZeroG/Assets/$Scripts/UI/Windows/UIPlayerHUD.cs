@@ -70,7 +70,7 @@ public class UIPlayerHUD : MonoBehaviour {
 
 
     public static void ShowSniperScope(bool showSniper) {
-        GameClock.ShowClock(!showSniper);
+        //GameClock.ShowClock(!showSniper);
         // TODO
     }
 
@@ -165,7 +165,7 @@ public class UIPlayerHUD : MonoBehaviour {
     /// <param name="input"></param>
     public static void TutorialPrompt(string input, Sprite sprite = null) {
         // If not tutorial, this is not allowed. Throw exception!
-        if (!GameManager.IsSceneTutorial()) throw new TutorialCodeRunningInMultiplayerException();
+        if (!GameManager.IsTutorial()) throw new TutorialCodeRunningInMultiplayerException();
 
         tutorialPromptText.SetText(input);
         if (sprite != null) {
@@ -183,7 +183,7 @@ public class UIPlayerHUD : MonoBehaviour {
         tutorialPromptUI.Show(false);
         Time.timeScale = 1;
         tutorialPromptActive = false;
-        GameManager.SetCursorVisibility(false); // Make sure cursor is locked.
+        UIManager.SetCursorVisibility(false); // Make sure cursor is locked.
     }
 
     static Color red = new Color(1, 0, 0, 1);

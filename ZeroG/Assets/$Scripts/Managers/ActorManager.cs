@@ -9,8 +9,6 @@ public class ActorManager : NetworkBehaviour {
     public bool debug = true;
     private Logger log;
 
-    public LobbyPlayer myPlayer;
-
     Collider myCollider;
     public Renderer myRenderer;
     Rigidbody myRigidbody;
@@ -21,6 +19,7 @@ public class ActorManager : NetworkBehaviour {
         log = new Logger(debug);
         myCollider = GetComponent<Collider>();
         myRigidbody = GetComponent<Rigidbody>();
+        
 
         ChangeActorState(false);
     }
@@ -32,33 +31,6 @@ public class ActorManager : NetworkBehaviour {
         log.Log("Player Manager Start Local player.");
         cameraMove = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraMove>();
         myRenderer.enabled = false;
-
-        foreach (GameObject lobbyPlayer in GameObject.FindGameObjectsWithTag("LobbyPlayer")) {
-            log.Log(lobbyPlayer.GetComponent<LobbyPlayer>().ToString());
-            if (lobbyPlayer.GetComponent<LobbyPlayer>().isMine) {
-                AssignMyPlayer(lobbyPlayer);
-                CmdAssignMyPlayer(lobbyPlayer);
-                break;
-            }
-        }
-        if (myPlayer == null) {
-            log.Error("My Player not found.");
-        }
-    }
-
-    private void AssignMyPlayer(GameObject myLobbyPlayer) {
-        myPlayer = myLobbyPlayer.GetComponent<LobbyPlayer>();
-        gameObject.name = "Player" + myPlayer.Name;
-        log.Log(myPlayer.ToString());
-    }
-    [Command]
-    private void CmdAssignMyPlayer(GameObject myLobbyPlayer) {
-        AssignMyPlayer(myLobbyPlayer);
-        RpcAssignMyPlayer(myLobbyPlayer);
-    }
-    [ClientRpc]
-    private void RpcAssignMyPlayer(GameObject myLobbyPlayer) {
-        AssignMyPlayer(myLobbyPlayer);
     }
 
     public void SpawnActor() {
@@ -102,10 +74,10 @@ public class ActorManager : NetworkBehaviour {
             isMyActorSpawned = alive;
             if (alive) {
                 // Is alive
-                MyActorAlive();
+                OnActorSpawn();
             } else {
                 // Is Dead
-                MyActorDead();
+                OnActorDied();
             }
         } else {
             // Not my player
@@ -114,10 +86,10 @@ public class ActorManager : NetworkBehaviour {
         }
     }
 
-    private void MyActorAlive() {
+    private void OnActorSpawn() {
         
         UIPlayerHUD.singleton.SetupPlayer(gameObject);
-        GameManager.SetCursorVisibility(false);
+        UIManager.SetCursorVisibility(false);
         UIPauseSpawn.PlayerSpawned();
 
         foreach (MouseLook look in GetComponentsInChildren<MouseLook>()) {
@@ -127,7 +99,7 @@ public class ActorManager : NetworkBehaviour {
 
         cameraMove.AttachToPlayer(gameObject);
 
-        Transform pos = NetworkManager.single.GetStartPosition();
+        Transform pos = NetworkManager.singleton.GetStartPosition();
         transform.position = pos.position;
         transform.rotation = pos.rotation;
 
@@ -138,9 +110,9 @@ public class ActorManager : NetworkBehaviour {
         WeaponManager.singleton.ResetWeapons();
     }
 
-    private void MyActorDead() {
+    private void OnActorDied() {
         cameraMove.DetachCamera();
-        GameManager.SetCursorVisibility(true);
+        UIManager.SetCursorVisibility(true);
         UIPauseSpawn.PlayerDied();
 
     }
@@ -170,7 +142,7 @@ public class ActorManager : NetworkBehaviour {
 
     //    //        //UIPauseSpawn.PlayerDied();
     //    //        //GameManager.singleton.SetPlayerMenu(false);
-    //    //        //GameManager.SetCursorVisibility(true);
+    //    //        //UIManager.SetCursorVisibility(true);
 
     //    //        //cameraMove = null;
     //    //        //spawnPoints = null;
@@ -233,7 +205,7 @@ public class ActorManager : NetworkBehaviour {
     //        actor.GetComponent<ActorMotorManager>().Reset();
     //        actor.GetComponent<ActorGrenades>().Reset();
 
-    //        GameManager.SetCursorVisibility(false);
+    //        UIManager.SetCursorVisibility(false);
 
     //        GetPlayerCameraMouseLook(actor).SetYDirection(SettingsManager.singleton.MouseYDirection);
     //        actor.GetComponent<MouseLook>().SetYDirection(SettingsManager.singleton.MouseYDirection);
@@ -272,7 +244,7 @@ public class ActorManager : NetworkBehaviour {
     //        UIPauseSpawn.PlayerDied();
     //        GameManager.singleton.SetPlayerMenu(false);
     //        cameraMove.DetachCamera();
-    //        GameManager.SetCursorVisibility(true);
+    //        UIManager.SetCursorVisibility(true);
 
     //        actorManager.DisableActor();
 

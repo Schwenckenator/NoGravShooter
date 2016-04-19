@@ -58,11 +58,11 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         maxHealth = stats.maxHealth;
         CmdReset(maxHealth);
     }
-    [Command]
-    private void CmdSetMyPlayer(int ID) {
-        myManager.myPlayer = NetworkManager.GetPlayer(ID);
-        Debug.Log("My player is ID " + myManager.myPlayer.ID.ToString() + ", Name " + myManager.myPlayer.Name);
-    }
+    //[Command]
+    //private void CmdSetMyPlayer(int ID) {
+    //    myManager.myPlayer = NetworkManager.GetPlayer(ID);
+    //    Debug.Log("My player is ID " + myManager.myPlayer.ID.ToString() + ", Name " + myManager.myPlayer.Name);
+    //}
     [Command]
     public void CmdReset(int maxHealth) {
         isDying = false;
@@ -77,11 +77,11 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
 
     [Command]
     void CmdDamageSelf(int damage) {
-        TakeDamage(damage, myManager.myPlayer);
+        TakeDamage(damage, GetComponent<NetworkIdentity>());
     }
    
     [Server]
-    public void TakeDamage(int damage, LobbyPlayer fromPlayer, int weaponID = -1) {
+    public void TakeDamage(int damage, NetworkIdentity fromPlayer, int weaponID = -1) {
         if (isDying) return; // Don't bother if you are already dying
 
         RpcPlayTakeDamageSound();
@@ -98,15 +98,15 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         }
     }
 
-    private void Die(int weaponID, LobbyPlayer fromPlayer) {
-        if (GameManager.IsSceneTutorial()) {
+    private void Die(int weaponID, NetworkIdentity fromPlayer) {
+        if (GameManager.IsTutorial()) {
             // Can't die in tutorial.
             health = 10;
             return;
         }
         health = 0;
 		isDying = true;//You is dead nigs
-        ScoreVictoryManager.singleton.PlayerDied(myManager.myPlayer, fromPlayer, weaponID);
+        //ScoreVictoryManager.singleton.PlayerDied(myManager.myPlayer, fromPlayer, weaponID);
         RpcDie();
 		//StartCoroutine(PlayerCleanup());
     }
@@ -157,7 +157,7 @@ public class ActorHealth : NetworkBehaviour, IDamageable, IResetable {
         
         yield return new WaitForSeconds(playerDyingTime);
 
-        if (NetworkManager.isServer) {
+        if (LobbyManager.isServer) {
             myManager.ActorDied();
         }
 

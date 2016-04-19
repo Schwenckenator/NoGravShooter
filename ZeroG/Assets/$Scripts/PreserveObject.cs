@@ -5,7 +5,7 @@ public class PreserveObject : MonoBehaviour {
 
     public bool dontDestroyOnLoad = true;
 
-    void Start() {
+    void Awake() {
         if (dontDestroyOnLoad) {
             DontDestroyOnLoad(gameObject);
         }

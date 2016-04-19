@@ -36,7 +36,7 @@ public class DestroyOnNextFrame : MonoBehaviour, IDamageable {
         NetworkServer.Destroy(gameObject);
 	}
 
-    public void TakeDamage(int damage, LobbyPlayer from, int weaponId = -1) {
+    public void TakeDamage(int damage, NetworkIdentity fromPlayer, int weaponId = -1) {
         DestroyMe();
     }
 

@@ -6,7 +6,7 @@ using System.Collections;
 public class UICreateGame : MonoBehaviour {
 
 	// Use this for initialization
-	void Start () {
+	void OnEnable () {
         InputField[] inputs = GetComponentsInChildren<InputField>(true);
         inputs[0].text = SettingsManager.singleton.ServerName;
         inputs[1].text = SettingsManager.singleton.PortNumStr;
@@ -14,7 +14,7 @@ public class UICreateGame : MonoBehaviour {
 
 	}
 
-    public void CreateGame(bool online) {
+    public void CreateGame(bool useMatchmaking) {
         SettingsManager.singleton.ParsePortNumber();
         // Check for error
         if (SettingsManager.singleton.ServerName == "") {
@@ -25,19 +25,19 @@ public class UICreateGame : MonoBehaviour {
             UIMessage.ShowMessage("Port number invalid. Please enter a valid port number.");
             return;
         }
-         
 
-        NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum);
-        if (online) {
-            CreateMatchRequest req = new CreateMatchRequest();
-            req.name = SettingsManager.singleton.ServerName;
-            req.size = GameManager.MaxPlayers;
-            req.advertise = true;
-            req.password = "";
-            NetworkManager.single.matchMaker.CreateMatch(req, NetworkManager.single.OnMatchCreate);
-        } else {
-            NetworkManager.single.StartHost();
-        }
+        LobbyManager.s_Singleton.CreateGame(useMatchmaking);
+        //NetworkManager.SetServerDetails(GameManager.MaxPlayers, SettingsManager.singleton.PortNum);
+        //if (online) {
+        //    CreateMatchRequest req = new CreateMatchRequest();
+        //    req.name = SettingsManager.singleton.ServerName;
+        //    req.size = GameManager.MaxPlayers;
+        //    req.advertise = true;
+        //    req.password = "";
+        //    NetworkManager.single.matchMaker.CreateMatch(req, NetworkManager.single.OnMatchCreate);
+        //} else {
+        //    NetworkManager.single.StartHost();
+        //}
         SettingsManager.singleton.SaveSettings();
         
     }

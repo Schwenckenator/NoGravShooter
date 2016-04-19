@@ -50,7 +50,7 @@ public class WeaponInventory : NetworkBehaviour {
         currentWeapon = null;
         heldWeapons.Clear();
 
-        if (GameManager.IsSceneTutorial()) return; // No weapons for tutorial
+        if (GameManager.IsTutorial()) return; // No weapons for tutorial
         SyncListInt IDs = WeaponManager.singleton.GetStartingWeapons();
 
         for(int i=0; i<IDs.Count; i++) { 

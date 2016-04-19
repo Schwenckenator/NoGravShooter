@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 public class DEBUGSummonBoxes : MonoBehaviour {
@@ -21,7 +22,7 @@ public class DEBUGSummonBoxes : MonoBehaviour {
     private bool FindMyPlayer() {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject player in players) {
-            if (player.GetComponent<LobbyPlayer>().isLocalPlayer) {
+            if (player.GetComponent<NetworkIdentity>().isLocalPlayer) {
                 currentPlayer = player;
             }
         }

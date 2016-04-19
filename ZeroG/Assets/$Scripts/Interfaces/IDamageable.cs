@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 public interface IDamageable {
@@ -7,7 +8,7 @@ public interface IDamageable {
     int MaxHealth { get; }
     bool IsFullHealth {get;}
 
-    void TakeDamage(int damage, LobbyPlayer fromPlayer = null, int weaponId = -1);
+    void TakeDamage(int damage, NetworkIdentity fromPlayer = null, int weaponId = -1);
     void RestoreHealth(int restore);
 
 }

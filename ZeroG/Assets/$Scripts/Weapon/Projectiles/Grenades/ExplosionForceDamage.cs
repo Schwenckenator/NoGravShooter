@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 public class ExplosionForceDamage : MonoBehaviour, IOwnable {
@@ -7,7 +8,7 @@ public class ExplosionForceDamage : MonoBehaviour, IOwnable {
 	public float explosionPower;
 	public float explosionRadius;
 
-    public LobbyPlayer owner { get; set; }
+    public NetworkIdentity owner { get; set; }
 
     [SerializeField]
     private int weaponId;

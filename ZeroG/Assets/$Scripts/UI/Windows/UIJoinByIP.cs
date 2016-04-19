@@ -28,8 +28,8 @@ public class UIJoinByIP : MonoBehaviour {
         if (SettingsManager.singleton.PortNum >= 0) { // Check for error
             SettingsManager.singleton.SaveSettings();
 
-            NetworkManager.SetClientDetails(SettingsManager.singleton.IpAddress, SettingsManager.singleton.PortNum);
-            NetworkManager.single.StartClient();
+            //NetworkManager.SetClientDetails(SettingsManager.singleton.IpAddress, SettingsManager.singleton.PortNum);
+            //NetworkManager.single.StartClient();
         }
         UIMessage.ShowMessage("Connecting To Server", false);
     }

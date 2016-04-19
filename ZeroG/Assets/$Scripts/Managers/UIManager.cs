@@ -14,14 +14,19 @@ public class UIManager : MonoBehaviour {
 
     Logger log;
 
+    static public void SetCursorVisibility(bool visible) {
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = visible;
+    }
+
     void Awake() {
         singleton = this;
         log = new Logger(debugMode);
     }
 
     void Start() {
-        if (NetworkManager.single.isNetworkActive) {
-            OpenReplace(connectedMenu);
+        if (LobbyManager.s_Singleton.isNetworkActive) {
+            OpenConnected();
         } else {
             OpenReplace(mainMenu);
         }
@@ -54,5 +59,9 @@ public class UIManager : MonoBehaviour {
     }
     public void SaveKeybinds() {
         SettingsManager.singleton.SaveKeyBinds();
+    }
+
+    public void OpenConnected() {
+        OpenReplace(connectedMenu);
     }
 }

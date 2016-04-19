@@ -39,7 +39,7 @@ public class Radar : NetworkBehaviour {
     //[RPC]
     void GatherDots() {
         dots.Clear();
-        ChatManager.DebugMessage("Gathering Dots.");
+        //ChatManager.DebugMessage("Gathering Dots.");
         GameObject[] actors = GameObject.FindGameObjectsWithTag("Player");
         foreach (GameObject obj in actors) {
             //if (obj.GetComponent<//NetworkView>().isMine) {

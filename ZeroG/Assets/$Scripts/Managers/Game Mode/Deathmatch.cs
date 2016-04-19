@@ -1,24 +1,25 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 using System.Collections;
 
 namespace GameMode {
     public class Deathmatch : MonoBehaviour, IGameMode {
 
-        public void Kill(LobbyPlayer killer, LobbyPlayer corpse) {
+        public void Kill(NetworkIdentity killer, NetworkIdentity corpse) {
             Debug.Log("Kill scored.");
-            ScoreVictoryManager.singleton.PointScored(killer);
+            //ScoreVictoryManager.singleton.PointScored(killer);
         }
 
-        public void Suicide(LobbyPlayer player) {
+        public void Suicide(NetworkIdentity player) {
             Debug.Log("Suicide.");
-            ScoreVictoryManager.singleton.PointLost(player);
+            //ScoreVictoryManager.singleton.PointLost(player);
         }
 
-        public void PlayerDied(LobbyPlayer player) {
+        public void PlayerDied(NetworkIdentity player) {
             // Do Nothing
         }
 
-        public void ObjectiveScored(LobbyPlayer player) {
+        public void ObjectiveScored(NetworkIdentity player) {
             // Do Nothing
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class Projectile : NetworkBehaviour, IOwnable {
 
-    public LobbyPlayer owner { get; set; }
+    public NetworkIdentity owner { get; set; }
 
     private GameObject myPlayer;
 
@@ -25,7 +25,7 @@ public class Projectile : NetworkBehaviour, IOwnable {
 	}
 
 	void FixedUpdate(){
-        if (!NetworkManager.isServer || !moving || (rocketAccel <= 0)) return;
+        if (!LobbyManager.isServer || !moving || (rocketAccel <= 0)) return;
         Push();
         //Rotate();
 	}
