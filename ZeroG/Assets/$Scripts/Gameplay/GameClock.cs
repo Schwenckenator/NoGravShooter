@@ -25,12 +25,15 @@ public class GameClock : MonoBehaviour {
     
     public static void SetEndTime(int seconds) {
         log.Log("Set End Time: " + seconds.ToString());
+
+        NetworkInfoWrapper.singleton.SecondsLeft = seconds;
+
+        ClockPrep();
+    }
+
+    public static void ClockPrep() {
         ShowClock(true);
         singleton.StopAllCoroutines();
-        NetworkInfoWrapper.singleton.SecondsLeft = seconds;
-        minsLeft = Mathf.FloorToInt((seconds) / 60);
-        secsLeft = Mathf.FloorToInt((seconds) - (minsLeft * 60));
-        
         counting = true;
         singleton.StartCoroutine(singleton.DecrementTimer());
     }
@@ -41,14 +44,12 @@ public class GameClock : MonoBehaviour {
             UpdateText();
             yield return new WaitForSeconds(1f);
             NetworkInfoWrapper.singleton.SecondsLeft--;
-            secsLeft--;
-            if (secsLeft >= 0) continue; // Seconds are fine
-            
-            // Decrement minutes
-            secsLeft += 60;
-            minsLeft--;
+            int seconds = NetworkInfoWrapper.singleton.SecondsLeft;
 
-            if (minsLeft >= 0) continue;
+            minsLeft = Mathf.FloorToInt((seconds) / 60);
+            secsLeft = Mathf.FloorToInt((seconds) % 60);
+
+            if (seconds > 0) continue;
 
             // Time out!
             counting = false;
