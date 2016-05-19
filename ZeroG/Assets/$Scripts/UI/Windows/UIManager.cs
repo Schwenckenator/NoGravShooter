@@ -25,7 +25,8 @@ public enum Menu {
     PlayerSettings,
     AudioSettings,
     WinnerSplash,
-    SniperScope
+    SniperScope,
+    Credits
 }
 
 public class UIManager : MonoBehaviour {
@@ -179,6 +180,9 @@ public class UIManager : MonoBehaviour {
     }
     public void GoPlayerHUD() {
         SetMenuWindow(Menu.PlayerHUD);
+    }
+    public void GoCredits() {
+        SetMenuWindow(Menu.Credits);
     }
     #endregion
 
