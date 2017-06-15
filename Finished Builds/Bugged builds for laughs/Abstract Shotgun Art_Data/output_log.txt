@@ -1,0 +1,734 @@
+Mono path[0] = 'D:/GitHub/NoGravShooter/Finished Builds/Bugged builds for laughs/Abstract Shotgun Art_Data/Managed'
+Mono path[1] = 'D:/GitHub/NoGravShooter/Finished Builds/Bugged builds for laughs/Abstract Shotgun Art_Data/Mono'
+Mono config path = 'D:/GitHub/NoGravShooter/Finished Builds/Bugged builds for laughs/Abstract Shotgun Art_Data/Mono/etc'
+PlayerConnection initialized from D:/GitHub/NoGravShooter/Finished Builds/Bugged builds for laughs/Abstract Shotgun Art_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55475
+Multi-casting "[IP] 192.168.1.2 [Port] 55475 [Flags] 3 [Guid] 1487691133 [EditorId] 3929204300 [Version] 1048832 [Id] WindowsPlayer(Nathan-PC) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [192.168.1.2:55475]...
+Timed out. Continuing without host connection.
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56133
+PlayerConnection already initialized - listening to [192.168.1.2:55475]
+Initialize engine version: 5.1.0f3 (ec70b008569d)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 22.21.13.8205]
+    Renderer: NVIDIA GeForce GTX 770
+    Vendor:   NVIDIA
+    VRAM:     1957 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.046 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3688x1080 at 0,0
+<RI> Initialized touch support.
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\Abstract Shotgun Art_Data\Managed\System.dll (this message is harmless)
+Currently running version is 0.1.5695.20673
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+VersionNumber:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\VersionNumber.cs:23)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/VersionNumber.cs Line: 23)
+
+Connected to master server at 67.225.180.24:23466
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp Line: 2494)
+
+Incoming host list query response from master server.
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp Line: 2494)
+
+Running as server. Player ID is 0.
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:103)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Managers/NetworkManager.cs Line: 103)
+
+Sent RPC call 'AddPlayerToList' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+NetworkManager:OnServerInitialized() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:196)
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:103)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'AddPlayerToList' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+NetworkManager:OnServerInitialized() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:196)
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:103)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'RPC_RelayServerName' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+SettingsManager:RelayServerName() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:331)
+NetworkManager:OnServerInitialized() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:197)
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:103)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'RPC_RelayServerName' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+SettingsManager:RelayServerName() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:331)
+NetworkManager:OnServerInitialized() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:197)
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:103)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Attempting to connect to master server at 67.225.180.24:23466
+UnityEngine.MasterServer:RegisterHost(String, String, String)
+UnityEngine.MasterServer:RegisterHost(String, String) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:1080)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:104)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 1080)
+
+Connected to facilitator at 67.225.180.24:50005
+
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp Line: 2494)
+
+Connected to master server at 67.225.180.24:23466
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp Line: 2494)
+
+Sent host registration to master server, registering a NAT assisted game as
+ "Nato's Server", 1, 16, not password protected, ""
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp Line: 2504)
+
+Received identifier 0 from master server
+ 
+(Filename: C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp Line: 2494)
+
+Sent RPC call 'RPC_RelayGameMode' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+SettingsManager:RelayGameMode() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:349)
+UIGameSettings:SaveSettings() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIGameSettings.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'RPC_RelayGameMode' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+SettingsManager:RelayGameMode() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:349)
+UIGameSettings:SaveSettings() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIGameSettings.cs:71)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:90)
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineMonoBehaviourBindings.gen.cs:77)
+UILobby:StartCountdownStatic() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:71)
+UILobby:StartCountdown() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:63)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:92)
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineMonoBehaviourBindings.gen.cs:77)
+UILobby:StartCountdownStatic() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:71)
+UILobby:StartCountdown() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:63)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:92)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:92)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:92)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:92)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'UpdateChatRPC' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ChatManager:AddToChat(String, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\ChatManager.cs:53)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:92)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'RPC_RelayScoreToWin' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+SettingsManager:RelayScoreToWin() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:341)
+GameManager:LoadLevel() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:253)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:95)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'RPC_RelayScoreToWin' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+SettingsManager:RelayScoreToWin() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:341)
+GameManager:LoadLevel() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:253)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:95)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'RPCLoadLevel' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+GameManager:LoadLevel() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:255)
+<CountdownStartGame>c__Iterator26:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:95)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.001899 ms
+System memory in use before: 26.7 MB.
+System memory in use after: 27.0 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 6408.
+Total: 3.210269 ms (FindLiveObjects: 0.248542 ms CreateObjectMapping: 0.213596 ms MarkObjects: 2.724028 ms  DeleteObjects: 0.023498 ms)
+
+Sent RPC call 'SetStartingWeapons' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+<SetStartingWeaponsDelay>c__Iterator5:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:165)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'SetStartingWeapons' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+<SetStartingWeaponsDelay>c__Iterator5:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:165)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Allocating view ID AllocatedID: 1.
+
+UnityEngine.Network:INTERNAL_CALL_Instantiate(Object, Vector3&, Quaternion&, Int32)
+UnityEngine.Network:Instantiate(Object, Vector3, Quaternion, Int32) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:631)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 631)
+
+Sent RPC call '__RPCNetworkInstantiate' to all connected clients
+
+UnityEngine.Network:INTERNAL_CALL_Instantiate(Object, Vector3&, Quaternion&, Int32)
+UnityEngine.Network:Instantiate(Object, Vector3, Quaternion, Int32) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:631)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 631)
+
+Added RPC '__RPCNetworkInstantiate' to buffer.
+UnityEngine.Network:INTERNAL_CALL_Instantiate(Object, Vector3&, Quaternion&, Int32)
+UnityEngine.Network:Instantiate(Object, Vector3, Quaternion, Int32) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:631)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 631)
+
+Assigning a view ID: old view ID 'AllocatedID: 0', new view ID 'AllocatedID: 1'
+
+UnityEngine.Network:INTERNAL_CALL_Instantiate(Object, Vector3&, Quaternion&, Int32)
+UnityEngine.Network:Instantiate(Object, Vector3, Quaternion, Int32) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:631)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2504] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 631)
+
+1
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+WeaponInventory:SetWeaponLoadout() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:50)
+WeaponInventory:Awake() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:27)
+UnityEngine.Network:INTERNAL_CALL_Instantiate(Object, Vector3&, Quaternion&, Int32)
+UnityEngine.Network:Instantiate(Object, Vector3, Quaternion, Int32) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:631)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Weapon/WeaponInventory.cs Line: 50)
+
+3
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+WeaponInventory:SetWeaponLoadout() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:50)
+WeaponInventory:Awake() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:27)
+UnityEngine.Network:INTERNAL_CALL_Instantiate(Object, Vector3&, Quaternion&, Int32)
+UnityEngine.Network:Instantiate(Object, Vector3, Quaternion, Int32) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:631)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:173)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Weapon/WeaponInventory.cs Line: 50)
+
+Sent RPC call 'RPCSetTeam' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ActorTeam:SetTeam(TeamColour) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\ActorTeam.cs:16)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:182)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'RPCSetTeam' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+ActorTeam:SetTeam(TeamColour) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\ActorTeam.cs:16)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:182)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'RPCAssignPlayerColour' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+PlayerColour:ApplyColour(TeamColour) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\PlayerColour.cs:26)
+PlayerColour:AssignPlayerColour() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\PlayerColour.cs:17)
+PlayerColourManager:AssignColour(GameObject) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\PlayerColourManager.cs:28)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:186)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'RPCAssignPlayerColour' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+PlayerColour:ApplyColour(TeamColour) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\PlayerColour.cs:26)
+PlayerColour:AssignPlayerColour() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\PlayerColour.cs:17)
+PlayerColourManager:AssignColour(GameObject) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\PlayerColourManager.cs:28)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:186)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'GatherDots' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+Radar:ActorsChanged() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Radar.cs:47)
+GameManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\GameManager.cs:200)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:111)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:601)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:743)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:363)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:262)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'SetName' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+FloatNameManager:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\FloatNameManager.cs:9)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Added RPC 'SetName' to buffer.
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+FloatNameManager:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\FloatNameManager.cs:9)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'NetworkWeaponChange' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+<WeaponChange>c__Iterator2A:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:167)
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineMonoBehaviourBindings.gen.cs:77)
+WeaponInventory:ChangeWeapon(Int32, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:139)
+WeaponInventory:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:36)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'NetworkWeaponChange' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+<WeaponChange>c__Iterator2A:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:167)
+UnityEngine.MonoBehaviour:StartCoroutine(String, Object)
+UnityEngine.MonoBehaviour:StartCoroutine(String) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineMonoBehaviourBindings.gen.cs:77)
+WeaponInventory:ChangeWeapon(Int32, Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:139)
+WeaponInventory:MouseWheelWeaponChange() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:95)
+WeaponInventory:Update() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\WeaponInventory.cs:62)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'RPCPlayFireWeaponSound' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+FireWeapon:PlayFireWeaponSound() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\FireWeapon.cs:174)
+FireWeapon:WeaponFired() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\FireWeapon.cs:59)
+FireWeapon:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\FireWeapon.cs:46)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+Sent RPC call 'NetworkShotRender' to all connected clients
+
+UnityEngine.NetworkView:Internal_RPC(NetworkView, String, RPCMode, Object[])
+UnityEngine.NetworkView:RPC(String, RPCMode, Object[]) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:410)
+FireWeapon:FireRay(Int32) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\FireWeapon.cs:112)
+FireWeapon:WeaponFired() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\FireWeapon.cs:63)
+FireWeapon:FixedUpdate() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Weapon\FireWeapon.cs:46)
+
+[C:/buildslave/unity/build/Runtime/Network/NetworkManager.cpp line 2494] 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/NetworkingBindings.gen.cs Line: 410)
+
+UnloadTime: 1.471674 ms

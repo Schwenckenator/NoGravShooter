@@ -1,0 +1,39 @@
+Initialize engine version: 5.1.0f3 (ec70b008569d)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvd3dum.dll 22.21.13.8205]
+    Renderer: NVIDIA GeForce GTX 770
+    Vendor:   NVIDIA
+    VRAM:     1957 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.070 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3688x1080 at 0,0
+<RI> Initialized touch support.
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\GitHub\NoGravShooter\Finished Builds\Bugged builds for laughs\MotorBugs_Data\Managed\System.dll (this message is harmless)
+Currently running version is 0.1.5661.18300
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.616281 ms
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 6278.
+Total: 2.625214 ms (FindLiveObjects: 0.221730 ms CreateObjectMapping: 0.183771 ms MarkObjects: 2.195913 ms  DeleteObjects: 0.023197 ms)
+
+UnloadTime: 1.273744 ms

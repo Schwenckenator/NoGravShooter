@@ -26,9 +26,9 @@ public class SettingsManager : MonoBehaviour {
     
 
     private string[] levelList = { "Manufactorium", "DestroyedCruiser", "SpaceStation", "Arena", "TestZone", "AsteroidBunker" };
-    private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
-    private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Team DeathMatch", "Team Skirmish", "DeathMatch", "Skirmish" };
-    private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Capture the Flag", "Extraction", "Elimination", "Infection" };
+    private string[] gameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Elimination", "Capture the Flag", "Extraction", "Infection" };
+    private string[] publicgameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Elimination", "Team DeathMatch", "Team Skirmish", "DeathMatch" };
+    private string[] admingameModeList = { "DeathMatch", "Team DeathMatch", "Skirmish", "Team Skirmish", "Elimination", "Capture the Flag", "Extraction", "Infection" };
 
     public string[] LevelList { get { return levelList; } }
     public string[] GameModeList { get { return gameModeList; } }
@@ -340,7 +340,7 @@ public class SettingsManager : MonoBehaviour {
     public bool IsTeamGameMode() {
         // Team : Team Deathmatch, Capture the Flag, Extraction, Team Skirmish
         // No Team: Deathmatch, Skirmish, Elimination, Infection <- There are teams but no choice.
-        return (GameModeIndexClient == 1 || GameModeIndexClient == 3 || GameModeIndexClient == 4 || GameModeIndexClient == 5);
+        return (GameModeIndexClient == 1 || GameModeIndexClient == 3 || GameModeIndexClient == 5 || GameModeIndexClient == 6);
     }
 
     #region RPCSettings

@@ -1,0 +1,114 @@
+Initialize engine version: 4.6.1f1 (d1db7a1b5196)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [aticfx32.dll 8.17.10.1333]
+    Renderer: AMD Radeon R9 200 Series
+    Vendor:   ATI
+    VRAM:     2021 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=1 INTZ=1 RAWZ=0 NULL=1 RESZ=1 SlowINTZ=1
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\Assembly-UnityScript.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+- Completed reload, in  0.065 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 3840x1080 at 0,0
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Schwenck\Documents\GitHub\NoGravShooter\Finished Builds\DailyBuild_Data\Managed\System.dll (this message is harmless)
+Currently running version is 1.0.5542.42491
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+WARNING: Shader Unsupported: 'Tessellation/Bumped Specular (displacement)' - Pass 'FORWARD' shader state not supported
+UnloadTime: 4.007900 ms
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 22034 unused Assets to reduce memory usage. Loaded Objects now: 3876.
+Total: 36.905052 ms (FindLiveObjects: 1.319735 ms CreateObjectMapping: 2.569197 ms MarkObjects: 0.443216 ms  DeleteObjects: 31.647108 ms)
+
+(-1.0, -1.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(-1.0, -1.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(-1.0, 0.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(-1.0, 0.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(-1.0, 1.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(-1.0, 1.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(0.0, -1.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(0.0, -1.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(0.0, 0.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(0.0, 0.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(0.0, 1.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(1.0, -1.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(1.0, -1.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(1.0, 0.0, 0.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(1.0, 0.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+(1.0, 1.0, 1.0)
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineDebug.cpp Line: 49)
+
+UnloadTime: 67.223389 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 273230 unused Assets to reduce memory usage. Loaded Objects now: 956.
+Total: 812.759460 ms (FindLiveObjects: 26.923061 ms CreateObjectMapping: 62.702290 ms MarkObjects: 0.576181 ms  DeleteObjects: 721.443481 ms)
+
+UnloadTime: 0.968077 ms
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+
+Unloading 1 unused Assets to reduce memory usage. Loaded Objects now: 946.
+Total: 3.552437 ms (FindLiveObjects: 0.085144 ms CreateObjectMapping: 0.054527 ms MarkObjects: 0.717019 ms  DeleteObjects: 0.013996 ms)
+
