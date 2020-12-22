@@ -1,0 +1,192 @@
+Mono path[0] = 'C:/Users/Schwenckenator/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG_Data/Managed'
+Mono path[1] = 'C:/Users/Schwenckenator/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG_Data/Mono'
+Mono config path = 'C:/Users/Schwenckenator/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG_Data/Mono/etc'
+PlayerConnection initialized from C:/Users/Schwenckenator/Documents/GitHub/NoGravShooter/Finished Builds/ZeroG_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55277
+Multi-casting "[IP] 192.168.3.20 [Port] 55277 [Flags] 3 [Guid] 84386885 [EditorId] 209410131 [Version] 1048832 [Id] WindowsPlayer(DESKTOP-BHF1OGE) [Debug] 1" to [225.0.0.222:54997]...
+Waiting for connection from host on [192.168.3.20:55277]...
+Timed out. Continuing without host connection.
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,defer=y,address=0.0.0.0:56885
+PlayerConnection already initialized - listening to [192.168.3.20:55277]
+Initialize engine version: 5.1.3f1 (b0a23b31c3d8)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 9.0c [nvldumd.dll 23.21.13.8927]
+    Renderer: NVIDIA GeForce GTX 1060
+    Vendor:   NVIDIA
+    VRAM:     3072 MB (via DXGI)
+    Caps:     Shader=30 DepthRT=1 NativeDepth=1 NativeShadow=1 DF16=0 INTZ=1 NULL=1 RESZ=0 SlowINTZ=0
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\Assembly-UnityScript-firstpass.dll (this message is harmless)
+Loading C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\Assembly-UnityScript-firstpass.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\System.Core.dll (this message is harmless)
+- Completed reload, in  0.288 seconds
+<RI> Initializing input.
+<RI> Input initialized.
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initialized touch support.
+Platform assembly: C:\Users\Schwenckenator\Documents\GitHub\NoGravShooter\Finished Builds\ZeroG_Data\Managed\System.dll (this message is harmless)
+Currently running version is 0.1.5764.28548
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+VersionNumber:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\VersionNumber.cs:23)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/VersionNumber.cs Line: 23)
+
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+sendto failed with code -1 for char 9 and length 1464.
+Server Name is: Player's Server
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+UILobby:SetServerName() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UILobby.cs:124)
+SettingsManager:RelayServerName() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\SettingsManager.cs:349)
+NetworkManager:OnServerInitialized() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:195)
+UnityEngine.Network:InitializeServer(Int32, Int32, Boolean)
+NetworkManager:InitialiseServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:104)
+UICreateGame:CreateGame(Boolean) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UICreateGame.cs:32)
+UnityEngine.Events.InvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:168)
+UnityEngine.Events.CachedInvokableCall`1:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:286)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/UI/Windows/UILobby.cs Line: 124)
+
+Unragdolling
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+<CoUnRagdoll>c__Iterator16:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorCameraMotor.cs:84)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineMonoBehaviourBindings.gen.cs:62)
+ActorCameraMotor:Reset() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorCameraMotor.cs:79)
+ActorMotorManager:Reset() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:54)
+ActorMotorManager:Start() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:45)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/Motor/ActorCameraMotor.cs Line: 84)
+
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.206700 ms
+System memory in use before: 73.5 MB.
+System memory in use after: 73.8 MB.
+
+Unloading 31 unused Assets to reduce memory usage. Loaded Objects now: 7997.
+Total: 3.654800 ms (FindLiveObjects: 0.303300 ms CreateObjectMapping: 0.312800 ms MarkObjects: 3.007500 ms  DeleteObjects: 0.030400 ms)
+
+Unragdolling
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+<CoUnRagdoll>c__Iterator16:MoveNext() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorCameraMotor.cs:84)
+UnityEngine.MonoBehaviour:StartCoroutine_Auto(IEnumerator)
+UnityEngine.MonoBehaviour:StartCoroutine(IEnumerator) (at C:\buildslave\unity\build\artifacts\generated\common\runtime\UnityEngineMonoBehaviourBindings.gen.cs:62)
+ActorCameraMotor:Reset() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorCameraMotor.cs:79)
+ActorMotorManager:Reset() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:54)
+PlayerManager:SpawnActor() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\PlayerManager.cs:95)
+UIPauseSpawn:PauseSpawnPress() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:122)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/Motor/ActorCameraMotor.cs Line: 84)
+
+6.722954
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ActorMotorManager:ValidLanding(Collision) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:204)
+ActorMotorManager:OnCollisionEnter(Collision) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:123)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/Motor/ActorMotorManager.cs Line: 204)
+
+6.723012
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ActorMotorManager:ValidLanding(Collision) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:204)
+ActorMotorManager:OnCollisionStay(Collision) (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\Motor\ActorMotorManager.cs:133)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/Motor/ActorMotorManager.cs Line: 204)
+
+Destroyed Actor Enable Manager.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+ActorEnableManager:OnDisconnectedFromServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Player\ActorEnableManager.cs:47)
+UnityEngine.Network:Disconnect(Int32)
+UnityEngine.Network:Disconnect() (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:592)
+NetworkManager:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:108)
+UIPauseSpawn:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:129)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Player/ActorEnableManager.cs Line: 47)
+
+Setting time back to normal.
+UnityEngine.Debug:Internal_Log(Int32, String, Object)
+UnityEngine.Debug:Log(Object)
+NetworkManager:OnDisconnectedFromServer() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:166)
+UnityEngine.Network:Disconnect(Int32)
+UnityEngine.Network:Disconnect() (at C:\buildslave\unity\build\artifacts\generated\common\runtime\NetworkingBindings.gen.cs:592)
+NetworkManager:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\Managers\NetworkManager.cs:108)
+UIPauseSpawn:Disconnect() (at C:\Users\Schwenck\Documents\GitHub\NoGravShooter\ZeroG\Assets\$Scripts\UI\Windows\UIPauseSpawn.cs:129)
+UnityEngine.Events.InvokableCall:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:137)
+UnityEngine.Events.InvokableCallList:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:602)
+UnityEngine.Events.UnityEventBase:Invoke(Object[]) (at C:\buildslave\unity\build\Runtime\Export\UnityEvent.cs:744)
+UnityEngine.Events.UnityEvent:Invoke() (at C:\buildslave\unity\build\Runtime\Export\UnityEvent_0.cs:53)
+UnityEngine.UI.Button:Press() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:35)
+UnityEngine.UI.Button:OnPointerClick(PointerEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\UI\Core\Button.cs:44)
+UnityEngine.EventSystems.ExecuteEvents:Execute(IPointerClickHandler, BaseEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:52)
+UnityEngine.EventSystems.ExecuteEvents:Execute(GameObject, BaseEventData, EventFunction`1) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\ExecuteEvents.cs:269)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMousePress(MouseButtonEventData) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:377)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent(Int32) (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:276)
+UnityEngine.EventSystems.StandaloneInputModule:ProcessMouseEvent() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:264)
+UnityEngine.EventSystems.StandaloneInputModule:Process() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\InputModules\StandaloneInputModule.cs:169)
+UnityEngine.EventSystems.EventSystem:Update() (at C:\buildslave\unity\build\Extensions\guisystem\UnityEngine.UI\EventSystem\EventSystem.cs:271)
+ 
+(Filename: C:/Users/Schwenck/Documents/GitHub/NoGravShooter/ZeroG/Assets/$Scripts/Managers/NetworkManager.cs Line: 166)
+
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.593200 ms
+System memory in use before: 73.0 MB.
+System memory in use after: 71.9 MB.
+
+Unloading 134 unused Assets to reduce memory usage. Loaded Objects now: 6773.
+Total: 4.152300 ms (FindLiveObjects: 0.273700 ms CreateObjectMapping: 0.301800 ms MarkObjects: 3.253200 ms  DeleteObjects: 0.322700 ms)
+
